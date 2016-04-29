@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cpi_item_cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/y10"
+        android:layout_marginBottom="2dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y80"
+                android:background="@color/wangyibg2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cpi_item_leagueName_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/y15"
+                    android:layout_weight="0.6"
+                    android:gravity="center|left"
+                    android:text="欧冠是"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/cpi_item_time_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:gravity="center|left"
+                    android:text="22:33"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/cpi_scoreAndName_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.6"
+                    android:gravity="center|left"
+                    android:text="欧冠\t0:0\t淘宝"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/y8"
+                    android:layout_weight="0.2"
+                    android:src="@mipmap/plate_icon" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y80">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/cpi_item_home_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/y10"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
+                    android:text="主队"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/cpi_item_odds_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/y10"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
+                    android:text="盘口"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/y10"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
+                    android:text="客队"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/wangyibg2" />
+
+            <com.hhly.mlottery.widget.CpiListView
+                android:id="@+id/item_cpi_odds_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

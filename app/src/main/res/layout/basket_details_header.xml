@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/basket_details_header_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/header_height"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/status_bar_offset"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/basket_details_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:src="@mipmap/basketball_back" />
+
+
+        <ImageView
+            android:id="@+id/basket_details_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:src="@mipmap/basketball_collect" />
+
+            <RelativeLayout
+                android:id="@+id/ll_basket_title_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/basket_details_back"
+                android:layout_toLeftOf="@id/basket_details_collect"
+                android:visibility="visible"
+                >
+                <TextView
+                    android:id="@+id/title_vs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VS"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:padding="@dimen/x5"
+                    android:textSize="@dimen/text_size_16"/>
+
+                <TextView
+                    android:id="@+id/title_guest_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_centerInParent="true"
+                    android:textColor="#ffffff"
+                    android:singleLine="true"
+                    android:layout_marginRight="@dimen/x5"
+                    android:layout_toLeftOf="@id/title_vs"
+                    android:textSize="@dimen/text_size_16"/>
+
+                <TextView
+                    android:id="@+id/title_home_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_toRightOf="@id/title_vs"
+                    android:textColor="#ffffff"
+                    android:singleLine="true"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/text_size_16" />
+            </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

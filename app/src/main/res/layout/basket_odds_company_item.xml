@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/basket_odds_item_selector"
+    >
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="41dp"-->
+        <!--android:orientation="horizontal">-->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@mipmap/basket_odds_more"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:id="@+id/imageView"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="5dp"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/basket_odds_company_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="-&#45;&#45;"-->
+            <!--android:textColor="@color/black_details_ball_textcolor2"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toRightOf="@+id/imageView"-->
+            <!--android:layout_toEndOf="@+id/imageView" />-->
+    <!--</RelativeLayout>-->
+    <TextView
+        android:id="@+id/basket_odds_company_text"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:text="---"
+        android:textColor="@color/black_details_ball_textcolor2"
+        android:gravity="center"/>
+</LinearLayout>

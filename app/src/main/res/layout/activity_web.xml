@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_header"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_check_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/y24"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginRight="@dimen/x30"
+            android:layout_marginTop="@dimen/y24"
+            android:background="@drawable/number_custom_button_bg_ok"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/y24"
+            android:paddingTop="@dimen/y24"
+            android:text="@string/webview_check_info"
+            android:textColor="@color/white"
+            android:textSize="@dimen/number_title"
+            android:visibility="gone"
+            />
+
+        <com.hhly.mlottery.widget.ProgressWebView
+            android:id="@+id/baseweb_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/tv_check_info"
+            android:fadeScrollbars="true"
+            android:scrollbarStyle="insideOverlay"/>
+
+    </RelativeLayout>
+</LinearLayout>

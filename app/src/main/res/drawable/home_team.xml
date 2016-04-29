@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- 主队颜色 黄色 -->
+    <item android:id="@android:id/secondaryProgress">
+        <clip android:clipOrientation="horizontal"
+            android:gravity="right" >
+            <shape>
+                <corners android:radius="0dip" />
+
+                <gradient
+                    android:angle="270"
+                    android:centerY="0.75"
+                    android:endColor="#eec72c"
+                    android:startColor="#eec72c" />
+            </shape> 
+        </clip>
+    </item>
+
+</layer-list>

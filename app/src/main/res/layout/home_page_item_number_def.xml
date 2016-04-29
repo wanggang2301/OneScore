@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y160"
+    android:background="#fff"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal">
+    <!--默认加载彩票开奖条目-->
+    <ImageView
+        android:layout_width="@dimen/x140"
+        android:layout_height="@dimen/x140"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/home_number_item_icon_def"
+        android:paddingLeft="@dimen/x25" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/y20"
+        android:paddingLeft="@dimen/x20"
+        android:paddingTop="@dimen/y30">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--彩种name-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/content_txt_black"
+                android:textSize="@dimen/home_pager_title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/x20"
+                android:text="@string/number_code_di"
+                android:textColor="@color/content_txt_light_grad"
+                android:textSize="@dimen/number_desc" />
+            <!--开奖期号-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="@color/content_txt_light_grad"
+                android:textSize="@dimen/number_desc" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_code_qi"
+                android:textColor="@color/content_txt_light_grad"
+                android:textSize="@dimen/number_desc" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

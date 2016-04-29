@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_header" />
+
+    <include layout="@layout/network_exception"/>
+    
+    <RadioGroup
+        android:id="@+id/filtrate_tab_rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+
+         >
+
+        <RadioButton
+            android:id="@+id/filtrate_match_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/filtrate_tab_bg"
+            android:button="@null"
+            android:paddingBottom="10dp"
+            android:paddingLeft="26dp"
+            android:paddingRight="26dp"
+            android:paddingTop="10dp"
+            android:text="赛事筛选"
+            android:textColor="@drawable/filtrate_tab_textcolor"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/filtrate_status_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/filtrate_tab_bg"
+            android:button="@null"
+            android:paddingBottom="10dp"
+            android:paddingLeft="26dp"
+            android:paddingRight="26dp"
+            android:paddingTop="10dp"
+            android:text="状态筛选"
+            android:textColor="@drawable/filtrate_tab_textcolor"
+            android:textSize="12sp" 
+            android:visibility="gone"
+            />
+    </RadioGroup>
+
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/line_football_footer" 
+        android:visibility="gone"
+        />
+
+    <FrameLayout
+        android:id="@+id/filtrate_match_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" 
+        >
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/filtrate_submit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/filtrate_submit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/filtrate_submit_btn_bg"
+
+            android:text="@string/filtrate_match_submit"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+             />
+
+       <!--  <Button 
+            android:id="@+id/filtrate_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:text="取消"
+            android:textColor="@android:color/white" 
+            android:background="@drawable/filtrate_cancel_btn_bg"
+            /> -->
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:id="@+id/analyze_layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/y20"
+        android:background="@color/home_item_bg"
+    >
+    <TextView
+        android:id="@+id/analyze_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="积分排名"
+        android:textColor="@color/title"
+        android:textSize="@dimen/text_size_13"
+        android:layout_alignParentLeft="true"
+        />
+    <ImageView
+        android:id="@+id/analyze_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/anabutton"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+
+    </RelativeLayout>
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_football_footer"
+        />
+    <LinearLayout
+    android:id="@+id/analyze_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+        />
+</LinearLayout>

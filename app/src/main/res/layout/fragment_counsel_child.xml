@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffff"
+              android:orientation="vertical">
+    <TextView
+        android:id="@+id/dataloding_ornodata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        />
+    <include
+        layout="@layout/network_exception"
+        >
+    </include>
+    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swiperefreshlayout_counselfragmentchild"
+        >
+
+        <com.hhly.mlottery.view.PullUpRefreshListView
+            android:id="@+id/lv_fg_counsel_child"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#00000000">
+
+        </com.hhly.mlottery.view.PullUpRefreshListView>
+    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+</RelativeLayout>

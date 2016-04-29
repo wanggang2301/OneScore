@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomePagerActivity"
+
+    >
+
+    <!--头部条目标题-->
+    <include layout="@layout/layout_header" />
+    <!--整体下拉刷新控件-->
+    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+        android:id="@+id/home_page_swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--首页列表展示控件-->
+        <ListView
+            android:id="@+id/home_page_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/score_color_white"
+            android:divider="@null"
+            android:scrollbars="none"></ListView>
+    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+</LinearLayout>

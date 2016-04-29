@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+            android:id="@+id/analyze_rereshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <ScrollView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <!--<include layout="@layout/fragment_analyze_rank"/>-->
+                <com.hhly.mlottery.widget.AnalyzeTitle
+                    android:id="@+id/analyze_title_rank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.hhly.mlottery.widget.AnalyzeTitle
+                    android:id="@+id/analyze_title_goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.hhly.mlottery.widget.AnalyzeTitle
+                    android:id="@+id/analyze_title_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.hhly.mlottery.widget.AnalyzeTitle
+                    android:id="@+id/analyze_title_home_recently"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.hhly.mlottery.widget.AnalyzeTitle
+                    android:id="@+id/analyze_title_guest_recently"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.hhly.mlottery.widget.AnalyzeTitle
+                    android:id="@+id/analyze_title_opinion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    />
+
+
+
+                <!--<include layout="@layout/fragment_analyze_goal"/>-->
+
+                <!--<include layout="@layout/fragment_analyze_history"/>-->
+                <!--<include layout="@layout/fragment_analyze_homerecently"/>-->
+                <!--<include layout="@layout/fragment_analyze_guestrecently"/>-->
+                <!--<include layout="@layout/fragment_analyze_opinion"/>-->
+
+            </LinearLayout>
+        </ScrollView>
+        </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/analyze_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/network_exception"/>
+</FrameLayout>

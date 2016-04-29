@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alertdialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="35dp">
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/date_first"
+        android:gravity="center"
+        android:text="@string/tip"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/date_last"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/listdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider ="@color/linecolor"
+            android:dividerHeight="0.5px"
+            android:gravity="center" />
+
+        <View
+            android:id="@+id/cpi_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y1"
+            android:background="@color/homwe_pk10_grey"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/cpi_btn_ok"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/about_confirm"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>

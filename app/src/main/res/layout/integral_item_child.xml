@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/y90"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_weight="0.4"
+                android:id="@+id/football_integral_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="1"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:id="@+id/integral_team"
+                android:layout_height="match_parent"
+                android:layout_weight="2.0">
+
+                <ImageView
+                    android:id="@+id/integral_team_imag"
+                    android:layout_width="@dimen/x35"
+                    android:layout_height="@dimen/y35"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/foot_default"/>
+
+                <TextView
+                    android:gravity="center_vertical"
+                    android:id="@+id/integral_team_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:text="莱切城莱切城莱切"
+                    android:textColor="@color/content_txt_black"
+                    android:textSize="@dimen/text_size_13"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="3.8"
+            >
+
+            <TextView
+                android:layout_weight="1.8"
+                android:id="@+id/integral_round"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="122"
+                android:textColor="@color/content_txt_dark_grad"
+                android:textSize="@dimen/text_size_11"/>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="3.4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                >
+
+                <TextView
+                    android:id="@+id/integral_win"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="16"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="@dimen/text_size_11"/>
+
+                <TextView
+
+                    android:id="@+id/integral_x"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="@dimen/text_size_11"/>
+
+                <TextView
+                    android:id="@+id/integral_equ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="@dimen/text_size_11"/>
+
+                <TextView
+                    android:id="@+id/integral_xx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="@dimen/text_size_11"/>
+
+                <TextView
+                    android:id="@+id/integral_fail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="70"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="@dimen/text_size_11"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="2.6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                >
+                    <TextView
+                        android:id="@+id/integral_goal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="160"
+                        android:textColor="@color/content_txt_dark_grad"
+                        android:textSize="@dimen/text_size_11"/>
+
+                    <TextView
+
+                        android:id="@+id/integral_xxx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="@color/content_txt_dark_grad"
+                        android:textSize="@dimen/text_size_11"/>
+
+
+
+                12<TextView
+                    android:id="@+id/integral_loss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="121"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="@dimen/text_size_11"/>
+            </LinearLayout>
+
+
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_weight="2"
+                    android:id="@+id/integral_abs"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="170"
+                    android:textColor="@color/content_txt_dark_grad"
+                    android:textSize="@dimen/text_size_11"/>
+
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:id="@+id/integral_score"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:text="50"
+                    android:textColor="@color/content_txt_black"
+                    android:textSize="@dimen/text_size_11"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+   <!-- <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginRight="@dimen/y15"
+        android:background="@color/content_txt_grad"/>-->
+</RelativeLayout>

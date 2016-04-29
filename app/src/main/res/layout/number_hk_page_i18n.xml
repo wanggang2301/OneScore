@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/y40"
+            android:orientation="vertical" >
+
+            <!-- 特码 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y480"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number_tm_tm"
+                        android:gravity="center"
+                        android:textColor="@color/title"
+                        android:textSize="@dimen/number_title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/number_text_style4"
+                        android:textColor="@color/title"
+                        android:text="@string/number_tm_tm" />
+
+                    <TextView
+                        style="@style/number_text_style5"
+                        android:textColor="@color/title"
+                        android:text="@string/number_tm_sx" />
+
+                    <TextView
+                        style="@style/number_text_style5"
+                        android:textColor="@color/title"
+                        android:text="@string/number_tm_jy" />
+
+                    <TextView
+                        style="@style/number_text_style5"
+                        android:textColor="@color/title"
+                        android:text="@string/number_bjsc_ds" />
+
+                    <TextView
+                        style="@style/number_text_style5"
+                        android:textColor="@color/title"
+                        android:text="@string/number_bjsc_dx" />
+
+                    <TextView
+                        style="@style/number_text_style5"
+                        android:textColor="@color/title"
+                        android:text="@string/number_tm_bs" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/number_hk_tm"
+                        style="@style/number_text_style3"/>
+
+                    <TextView
+                        android:id="@+id/number_hk_sx"
+                        style="@style/number_text_style1" />
+
+                    <TextView
+                        android:id="@+id/number_hk_jy"
+                        style="@style/number_text_style1" />
+
+                    <TextView
+                        android:id="@+id/number_hk_ds"
+                        style="@style/number_text_style1" />
+
+                    <TextView
+                        android:id="@+id/number_hk_dx"
+                        style="@style/number_text_style1" />
+
+                    <TextView
+                        android:id="@+id/number_hk_ys"
+                        style="@style/number_text_style1" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 总分 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y240"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_l_b_r"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number_tm_zf"
+                        android:textColor="@color/title"
+                        android:textSize="@dimen/number_title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/number_text_style5"
+                        android:textColor="@color/title"
+                        android:text="@string/number_bjsc_fz" />
+
+                    <TextView
+                        style="@style/number_text_style5"
+                        android:textColor="@color/title"
+                        android:text="@string/number_bjsc_dx" />
+
+                    <TextView
+                        style="@style/number_text_style5"
+                        android:textColor="@color/title"
+                        android:text="@string/number_bjsc_ds" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/number_hk__fz"
+                        style="@style/number_text_style1" />
+
+                    <TextView
+                        android:id="@+id/number_hk__zfdx"
+                        style="@style/number_text_style1" />
+
+                    <TextView
+                        android:id="@+id/number_hk__zfds"
+                        style="@style/number_text_style1" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+</LinearLayout>

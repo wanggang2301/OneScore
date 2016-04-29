@@ -1,0 +1,60 @@
+package com.hhly.mlottery.adapter;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
+
+import java.util.List;
+
+public class ScheduleDateAdapter extends BaseAdapter {
+
+	private List<ScheduleDate> dList;
+
+	private Context context;
+
+	public ScheduleDateAdapter(List<ScheduleDate> dList, Context context) {
+		super();
+		this.dList = dList;
+		this.context = context;
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return dList.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		// TODO Auto-generated method stub
+		return position;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		// TODO Auto-generated method stub
+		LayoutInflater _LayoutInflater = LayoutInflater.from(context);
+		convertView = _LayoutInflater.inflate(R.layout.my_spinner_item, null);
+		if (convertView != null) {
+			((TextView) convertView.findViewById(R.id.tv_riqi)).setText(dList.get(position).getDate());
+			((TextView) convertView.findViewById(R.id.tv_xingqi)).setText(dList.get(position).getWeek());
+		/*	if (position == 0) {
+				convertView.setBackgroundColor(context.getResources().getColor(R.color.spinner));
+			}*/
+		}
+		return convertView;
+	}
+
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y160"
+    android:background="#fff"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <!--热门资讯条目-->
+    <LinearLayout
+        android:id="@+id/ll_data_info_item01"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y190"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/x20"
+        android:paddingRight="@dimen/x40">
+
+        <ImageView
+            android:id="@+id/iv_data_info_icon01"
+            android:layout_width="@dimen/x190"
+            android:layout_height="@dimen/y142"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/y20"
+            android:layout_marginTop="@dimen/y20"
+            android:scaleType="fitXY"
+            android:src="@mipmap/home_data_info_def" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_data_info_title01"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:paddingLeft="@dimen/x16"
+                android:paddingTop="@dimen/y24"
+                android:text=""
+                android:textColor="@color/content_txt_black"
+                android:textSize="@dimen/home_pager_title" />
+
+            <TextView
+                android:id="@+id/tv_data_info_date01"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/x16"
+                android:text=""
+                android:textColor="@color/content_txt_light_grad"
+                android:textSize="@dimen/number_desc" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

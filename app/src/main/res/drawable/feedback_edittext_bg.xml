@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <shape android:shape="rectangle" >
+        <solid android:color="@android:color/white" />
+
+        <stroke
+            android:width="0.5dp"
+            android:color="@color/line_football_footer" />
+
+
+    </shape>
+
+</inset>

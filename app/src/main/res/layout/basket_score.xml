@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f5f5f5"
+              android:orientation="vertical" >
+
+    <include layout="@layout/layout_header" />
+
+    <include layout="@layout/network_exception"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/line_football_footer"
+        android:visibility="gone"
+        />
+
+    <!--<ListView-->
+        <!--android:id="@+id/lv_scour"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1">-->
+
+    <!--</ListView>-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/basket_hot_cup"
+                android:paddingTop="@dimen/x16"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x16"
+                android:background="#f5f5f5"
+                android:textSize="@dimen/text_size_14"
+                android:textColor="#999999"/>
+            <com.hhly.mlottery.view.GrapeGridview
+                android:id="@+id/filtrate_hot_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnWidth="0dp"
+                android:gravity="center"
+                android:horizontalSpacing="@dimen/x15"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="@dimen/x18">
+            </com.hhly.mlottery.view.GrapeGridview>
+
+           <!-- <GridView
+                android:id="@+id/filtrate_hot_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="4"
+                >
+
+            </GridView>-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/basket_other_cup"
+                android:background="#f5f5f5"
+                android:paddingTop="@dimen/x16"
+                android:paddingBottom="@dimen/x16"
+                android:paddingLeft="@dimen/x10"
+                android:textSize="@dimen/text_size_14"
+                android:textColor="#999999"/>
+
+            <com.hhly.mlottery.view.GrapeGridview
+                android:id="@+id/filtrate_other_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnWidth="0dp"
+                android:gravity="center"
+                android:horizontalSpacing="@dimen/x15"
+                android:layout_marginLeft="@dimen/x12"
+                android:layout_marginRight="@dimen/x12"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="@dimen/x18" >
+            </com.hhly.mlottery.view.GrapeGridview>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.3dp"-->
+            <!--android:background="@color/line_football_footer" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/x32"
+            android:layout_marginRight="@dimen/x32"
+            android:layout_marginTop="@dimen/x12"
+            android:layout_marginBottom="@dimen/x10"
+            android:orientation="horizontal"
+            android:weightSum="4" >
+
+            <TextView
+                android:id="@+id/filtrate_hot_btn"
+                style="@style/filtrate_match_select_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x16"
+                android:layout_weight="1"
+                android:text="@string/basket_hot" />
+            <TextView
+                android:id="@+id/filtrate_all_btn"
+                style="@style/filtrate_match_select_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_weight="1"
+                android:text="@string/basket_all_checked" />
+            <TextView
+                android:id="@+id/filtrate_inverse_btn"
+                style="@style/filtrate_match_select_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_weight="1"
+                android:text="@string/basket_negate" />
+            <TextView
+                android:id="@+id/filtrate_reset_btn"
+                style="@style/filtrate_match_select_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_weight="1"
+                android:text="@string/basket_reset" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/filtrate_submit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/x20"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/filtrate_submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/filtrate_submit_btn_bg"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:text="@string/basket_isok"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_18"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <!--<FrameLayout-->
+        <!--android:id="@+id/filtrate_match_frame"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!-->-->
+    <!--</FrameLayout>-->
+
+
+
+</LinearLayout>

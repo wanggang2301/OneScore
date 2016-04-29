@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rel_choicewheel_ls_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    >
+
+    <TextView
+
+        android:id="@+id/tv_choicewheel_ls_item"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/y65"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textColor="#333"
+        android:textSize="15sp"
+        />
+
+</RelativeLayout>

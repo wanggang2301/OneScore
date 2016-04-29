@@ -1,0 +1,408 @@
+package com.hhly.mlottery.frame;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
+import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.activity.FootballTypeSettingActivity;
+import com.hhly.mlottery.adapter.PureViewPagerAdapter;
+import com.hhly.mlottery.bean.LeagueCup;
+import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.frame.footframe.ImmediateFragment;
+import com.hhly.mlottery.frame.footframe.ResultFragment;
+import com.hhly.mlottery.frame.footframe.ScheduleFragment;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Tenney
+ * @ClassName: ScoresFragment
+ * @Description: 足球比分
+ * @date 2015-10-15 上午10:05:16
+ */
+@SuppressLint("NewApi")
+public class ScoresFragment extends Fragment {
+
+    private final int IMMEDIA_FRAGMENT = 0;
+    private final int RESULT_FRAGMENT = 1;
+    private final int SCHEDULE_FRAGMENT = 2;
+    private final int FOCUS_FRAGMENT = 3;
+    private final static String TAG = "ScoresFragment";
+    public static List<String> titles;
+
+    private View view;
+    private Context mContext;
+
+    /**
+     * 返回菜单
+     */
+    private ImageView mBackImgBtn;// 返回菜单
+    /**
+     * 帅选
+     */
+    private ImageView mFilterImgBtn;// 筛选
+    /**
+     * 设置
+     */
+    private ImageView mSetImgBtn;// 设置
+    /**
+     * 中间标题
+     */
+    private TextView mTitleTv;// 标题
+
+    /**
+     * 左侧标题
+     */
+    private TextView public_txt_left_title;
+
+    /**
+     * 当前处于哪个比赛fg
+     */
+    private int currentFragmentId = 0;
+
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private PureViewPagerAdapter pureViewPagerAdapter;
+    private List<Fragment> fragments;
+
+    @SuppressLint("ValidFragment")
+    public ScoresFragment(Context context) {
+        this.mContext = context;
+    }
+
+    public ScoresFragment() {
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        mContext = getActivity();
+        view = View.inflate(mContext, R.layout.frage_football, null);
+//        MobclickAgent.openActivityDurationTrack(true);
+        initView();
+        setupViewPager();
+        focusCallback();// 加载关注数
+        initData();
+        return view;
+    }
+
+    private void initView() {
+        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        // 返回菜单
+        mBackImgBtn = (ImageView) view.findViewById(R.id.public_img_back);
+
+        //中心标题
+        mTitleTv = (TextView) view.findViewById(R.id.public_txt_title);
+        //mTitleTv.setVisibility(View.GONE);
+        mTitleTv.setText(R.string.football_frame_txt);
+        //左边标题
+      /*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
+        public_txt_left_title.setVisibility(View.VISIBLE);
+        public_txt_left_title.setText(R.string.football_frame_txt);
+*/
+        // 筛选
+        mFilterImgBtn = (ImageView) view.findViewById(R.id.public_btn_filter);
+        mSetImgBtn = (ImageView) view.findViewById(R.id.public_btn_set);
+        mSetImgBtn.setVisibility(View.VISIBLE);
+    }
+
+    private void setupViewPager() {
+        mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        titles = new ArrayList<>();
+        titles.add(getString(R.string.foot_jishi_txt));
+        titles.add(getString(R.string.foot_saiguo_txt));
+        titles.add(getString(R.string.foot_saicheng_txt));
+        titles.add(getString(R.string.foot_guanzhu_txt));
+        fragments = new ArrayList<>();
+        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT));
+        fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
+        fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
+        fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
+        pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                L.d(TAG, "onPageScrolled");
+                L.d(TAG, "position = " + position);
+                L.d(TAG, "positionOffset = " + positionOffset);
+                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
+
+                if (positionOffsetPixels == 0) {
+                    switch (position) {
+                        case IMMEDIA_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            ((ImmediateFragment) fragments.get(position)).reLoadData();
+                            break;
+                        case RESULT_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            ((ResultFragment) fragments.get(position)).updateAdapter();
+                            break;
+                        case SCHEDULE_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            ((ScheduleFragment) fragments.get(position)).updateAdapter();
+                            break;
+                        case FOCUS_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.GONE);
+                            ((FocusFragment) fragments.get(position)).reLoadData();
+                            break;
+                    }
+                }
+            }
+
+
+            @Override
+            public void onPageSelected(final int position) {
+               /* Handler handler = new Handler();
+                switch (position) {
+                    case IMMEDIA_FRAGMENT:
+                        mFilterImgBtn.setVisibility(View.VISIBLE);
+                        // ((ImmediateFragment) fragments.get(position)).reLoadData();
+                        break;
+                    case RESULT_FRAGMENT:
+                        mFilterImgBtn.setVisibility(View.VISIBLE);
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((ResultFragment) fragments.get(position)).updateAdapter();
+
+                            }
+                        }, 300);
+                        //((ResultFragment) fragments.get(position)).updateAdapter();
+                        break;
+                    case SCHEDULE_FRAGMENT:
+                        mFilterImgBtn.setVisibility(View.VISIBLE);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((ScheduleFragment) fragments.get(position)).updateAdapter();
+
+                            }
+                        }, 300);
+                        //((ScheduleFragment) fragments.get(position)).updateAdapter();
+                        break;
+                    case FOCUS_FRAGMENT:
+                        mFilterImgBtn.setVisibility(View.GONE);
+
+                        //((FocusFragment) fragments.get(position)).reLoadData();
+                        break;
+                }*/
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        mViewPager.setAdapter(pureViewPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+    }
+
+
+    private void initData() {
+        mBackImgBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((FootballActivity) getActivity()).finish();
+                MobclickAgent.onEvent(mContext,"Football_Exit");
+            }
+        });
+
+        mFilterImgBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MobclickAgent.onEvent(mContext,"Football_Filtrate");
+                currentFragmentId = mViewPager.getCurrentItem();
+                if (currentFragmentId == IMMEDIA_FRAGMENT) {
+                    switch (ImmediateFragment.mLoadDataStatus) {
+                        case ImmediateFragment.LOAD_DATA_STATUS_ERROR:
+                            Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ImmediateFragment.isNetSuccess);
+                            bundle.putInt("currentFragmentId", IMMEDIA_FRAGMENT);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            break;
+                        case ImmediateFragment.LOAD_DATA_STATUS_SUCCESS:
+                            intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                            bundle = new Bundle();
+                            LeagueCup[] allCups = ImmediateFragment.mCups.toArray(new LeagueCup[]{});
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS, ImmediateFragment.mCheckedCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                            bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, ImmediateFragment.isCheckedDefualt);// 是否默认选择
+                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ImmediateFragment.isNetSuccess);
+                            bundle.putInt("currentFragmentId", IMMEDIA_FRAGMENT);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            break;
+                        case ImmediateFragment.LOAD_DATA_STATUS_INIT:
+                        case ImmediateFragment.LOAD_DATA_STATUS_LOADING:
+                            if (!ImmediateFragment.isPause) {
+                                Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                } else if (currentFragmentId == RESULT_FRAGMENT) {
+                    switch (ResultFragment.mLoadDataStatus) {
+                        case ResultFragment.LOAD_DATA_STATUS_ERROR:
+                            Intent mIntent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ResultFragment.isNetSuccess);
+                            bundle.putInt("currentFragmentId", RESULT_FRAGMENT);
+                            mIntent.putExtras(bundle);
+                            startActivity(mIntent);
+                            break;
+                        case ResultFragment.LOAD_DATA_STATUS_SUCCESS:
+                            mIntent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                            bundle = new Bundle();
+                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ResultFragment.isNetSuccess);
+                            LeagueCup[] allCups = ResultFragment.mCups.toArray(new LeagueCup[]{});
+                            //所有联赛
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);
+                            //当前 选中联赛
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS, ResultFragment.mCheckedCups);
+                            // 是否默认选择  -- 显示选中（标红）
+                            bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, ResultFragment.isCheckedDefualt);
+                            bundle.putInt("currentFragmentId", RESULT_FRAGMENT);
+                            mIntent.putExtras(bundle);
+                            startActivity(mIntent);
+                            //getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                            break;
+                        case ResultFragment.LOAD_DATA_STATUS_INIT:
+                        case ResultFragment.LOAD_DATA_STATUS_LOADING:
+                            Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+
+                } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
+
+                    if (ScheduleFragment.mLoadDataStatus == ScheduleFragment.LOAD_DATA_STATUS_SUCCESS) {
+                        Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                        Bundle bundle = new Bundle();
+                        LeagueCup[] allCups = ScheduleFragment.mAllCup.toArray(new LeagueCup[]{});
+                        bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);
+                        bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS, ScheduleFragment.mCheckedCups);
+                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ScheduleFragment.isNetSuccess);
+                        bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, ScheduleFragment.isCheckedDefualt);
+                        bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    } else if (ScheduleFragment.mLoadDataStatus == ScheduleFragment.LOAD_DATA_STATUS_ERROR) {
+                        Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ScheduleFragment.isNetSuccess);
+                        bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+
+        mSetImgBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MobclickAgent.onEvent(mContext,"Football_Setting");
+                currentFragmentId = mViewPager.getCurrentItem();
+                if (currentFragmentId == IMMEDIA_FRAGMENT) {
+                    Intent intent = new Intent(mContext, FootballTypeSettingActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("currentFragmentId", IMMEDIA_FRAGMENT);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                } else if (currentFragmentId == RESULT_FRAGMENT) {
+                    Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("currentFragmentId", RESULT_FRAGMENT);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
+                    Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else if (currentFragmentId == FOCUS_FRAGMENT) {
+                    Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("currentFragmentId", FOCUS_FRAGMENT);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+            }
+        });
+    }
+
+
+    public void focusCallback() {
+        String focusIds = PreferenceUtil.getString("focus_ids", "");
+        String[] arrayId = focusIds.split("[,]");
+        if ("".equals(focusIds) || arrayId.length == 0) {
+            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt));
+        } else {
+            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("ScoresFragment");
+        L.d(TAG, "football Fragment resume..");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("ScoresFragment");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        L.d(TAG, "football Fragment destroy..");
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        L.d(TAG, "football Fragment destroy view..");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        L.d(TAG, "football Fragment detach..");
+    }
+}

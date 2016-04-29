@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bb"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/inclu"
+        layout="@layout/layout_header" />
+
+<FrameLayout
+    android:id="@+id/frag_t1"
+    android:layout_below="@id/inclu"
+    android:background="@mipmap/about_football"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inclu"
+
+        >
+
+        <ImageView
+
+            android:id="@+id/im"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:src="@mipmap/about_logo" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:background="@color/score_color_white"
+            android:id="@+id/v"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/im"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_curr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VER："
+                android:textColor="@color/res_name_color"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_currversion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_curr"
+                android:text="0.0.0000000"
+                android:textColor="@color/res_name_color"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/shape_tuijian_bg"
+            android:id="@+id/b"
+            android:layout_width="100dp"
+            android:layout_height="34dp"
+            android:layout_below="@id/v"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:id="@+id/btn_version_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/about_ver_update_txt"
+                android:textColor="@color/listview_bg"
+                android:textSize="15sp" >
+            </TextView>
+            <TextView
+                android:layout_marginRight="22dp"
+                android:layout_marginLeft="23dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/r1"
+        android:id="@+id/r2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_product_intro_txt"
+            android:textColor="@color/msg"
+            android:textSize="16sp" />
+
+        <com.hhly.mlottery.widget.XRTextView
+            android:id="@+id/tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_title"
+            android:textSize="@dimen/item_football_hometeam"/>
+
+        <TextView
+            android:id="@+id/tv_pc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_msg"
+            android:layout_marginTop="@dimen/y60"
+            android:text="@string/about_relation_txt"
+            android:textColor="@color/msg"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_w"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_pc"
+            android:text="@string/about_pc_msg_txt"
+            android:textColor="@color/text_about_color"
+            android:textSize="15sp"
+            android:autoLink="web"/>
+
+        <TextView
+            android:id="@+id/tv_m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_w"
+            android:text="@string/about_wap_msg_txt"
+            android:textColor="@color/text_about_color"
+            android:textSize="15sp"
+            android:autoLink="web" />
+        <TextView
+            android:layout_below="@+id/tv_m"
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y15"
+            android:text="@string/about_subscribe_txt"
+            android:textColor="@color/msg"
+            android:textSize="14sp" />
+<!--
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_marginTop="@dimen/y10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv1"
+            android:text="@string/about_service_txt"
+            android:textColor="@color/msg"
+            android:textSize="14sp" />-->
+        <RelativeLayout
+            android:layout_below="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:id="@+id/tv6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y10"
+                android:text="客    服："
+                android:textColor="@color/msg"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_toRightOf="@+id/tv6"
+                android:id="@+id/tv7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y10"
+                android:text="@string/about_cus_number_txt"
+                android:textColor="@color/text_about_color"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

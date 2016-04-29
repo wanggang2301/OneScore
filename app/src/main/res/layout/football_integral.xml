@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+            android:id="@+id/football_infor_swiperefreshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.hhly.mlottery.widget.PinnedHeaderExpandableListView
+                android:id="@+id/football_integral_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/linecolor"
+                android:dividerHeight="0.5px"
+                android:minHeight="200dp"/>
+
+        </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+
+        <RelativeLayout
+            android:id="@+id/football_integral_unfocus_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/football_integral_unfocus_coffee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/unfocus_coffee"/>
+
+            <TextView
+                android:id="@+id/football_schedule_integral_no_data_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/football_integral_unfocus_coffee"
+                android:layout_centerHorizontal="true"
+                android:text="@string/information_football_integral"
+                android:textColor="@color/unfocus_text"
+                android:textSize="@dimen/text_size_14"/>
+        </RelativeLayout>
+
+
+        <include layout="@layout/network_exception"/>
+    </FrameLayout>
+
+</LinearLayout>

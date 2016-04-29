@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alertdialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="35dp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/about_dialogs"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/y32"
+            android:layout_marginTop="@dimen/y32"
+            android:gravity="center"
+            android:text="@string/about_notice"
+            android:textColor="@color/week"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/line_football_footer" />
+
+        <TextView
+            android:id="@+id/dialog_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/y48"
+            android:layout_marginTop="@dimen/y48"
+            android:gravity="center"
+            android:text="@string/about_notice_msg"
+            android:textColor="@color/msg"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/line_football_footer2" />
+
+        <TextView
+            android:id="@+id/ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/y32"
+            android:layout_marginTop="@dimen/y32"
+            android:gravity="center"
+            android:text="@string/about_confirm"
+            android:textColor="@color/msg"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

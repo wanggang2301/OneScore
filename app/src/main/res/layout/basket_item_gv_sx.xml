@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/item_all"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="@dimen/x170"
+                android:layout_height="@dimen/x164"
+                android:background="#ffffff"
+                android:clickable="true"
+                >
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+        <!--android:textColor="@android:color/darker_gray"-->
+        <TextView
+            android:id="@+id/item_category_name_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:text="阿尔卑斯杯赛"
+            android:textColor="#333333"
+            android:paddingLeft="@dimen/x1"
+            android:textSize="@dimen/text_size_11"
+            />
+
+        <ImageView
+            android:id="@+id/item_category_icon_1"
+            android:layout_width="@dimen/x76"
+            android:layout_height="@dimen/x76"
+            android:layout_marginTop="@dimen/x10"
+            android:background="@mipmap/basket_default"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_basket_filtate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/shaixuan_icon_shoucang"
+        />
+</RelativeLayout>

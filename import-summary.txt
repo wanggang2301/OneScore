@@ -1,0 +1,81 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* ant.properties
+* build.xml
+* channels.properties
+* hhlyybf.keystore
+* ic_launcher-web.png
+* keystore.txt
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:22.2.1
+gson-1.6.jar => com.google.code.gson:gson:1.6
+
+Potentially Missing Dependency:
+-------------------------------
+When we replaced the following .jar files with a Gradle dependency, we
+inferred the dependency version number from the filename. This
+specific version may not actually be available from the repository.
+If you get a build error stating that the dependency is missing, edit
+the version number to for example "+" to pick up the latest version
+instead. (This may require you to update your code if the library APIs
+have changed.)
+
+gson-1.6.jar => version 1.6 in com.google.code.gson:gson:1.6
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* libs\ant.jar => app\libs\ant.jar
+* libs\arm64-v8a\libpl_droidsonroids_gif.so => app\src\main\jniLibs\arm64-v8a\libpl_droidsonroids_gif.so
+* libs\armeabi-v7a\libpl_droidsonroids_gif.so => app\src\main\jniLibs\armeabi-v7a\libpl_droidsonroids_gif.so
+* libs\armeabi\libpl_droidsonroids_gif.so => app\src\main\jniLibs\armeabi\libpl_droidsonroids_gif.so
+* libs\com.android.volley-2015.05.28.jar => app\libs\com.android.volley-2015.05.28.jar
+* libs\fastjson.jar => app\libs\fastjson.jar
+* libs\Java-WebSocket-1.3.1-SNAPSHOT.jar => app\libs\Java-WebSocket-1.3.1-SNAPSHOT.jar
+* libs\microlog4android-1.0.0.jar => app\libs\microlog4android-1.0.0.jar
+* libs\mips64\libpl_droidsonroids_gif.so => app\src\main\jniLibs\mips64\libpl_droidsonroids_gif.so
+* libs\mips\libpl_droidsonroids_gif.so => app\src\main\jniLibs\mips\libpl_droidsonroids_gif.so
+* libs\umeng-analytics-v5.6.1.jar => app\libs\umeng-analytics-v5.6.1.jar
+* libs\universal-image-loader-1.9.3.jar => app\libs\universal-image-loader-1.9.3.jar
+* libs\x86\libpl_droidsonroids_gif.so => app\src\main\jniLibs\x86\libpl_droidsonroids_gif.so
+* libs\x86_64\libpl_droidsonroids_gif.so => app\src\main\jniLibs\x86_64\libpl_droidsonroids_gif.so
+* libs\xUtils-2.5.5.jar => app\libs\xUtils-2.5.5.jar
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

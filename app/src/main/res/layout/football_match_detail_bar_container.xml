@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/football_match_team_detail_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.35"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_weight="1.55"
+        android:gravity="center">
+
+
+        <ImageView
+            android:id="@+id/football_match_detail_home_emblem"
+            style="@style/MatchDetailEmblem" />
+
+        <RelativeLayout
+            android:id="@+id/football_match_detail_home_name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/football_match_detail_home_emblem"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/activity_football_match_detail_home_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/homeBitmap"
+                android:textColor="@color/white"
+                android:textSize="@dimen/activity_football_match_detail_teamname" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/activity_football_match_detail_home_name"
+                android:layout_toRightOf="@id/activity_football_match_detail_home_name"
+                android:text="(主)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/activity_football_match_detail_teamname_hometag" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/football_match_detail_home_like"
+            style="@style/MatchDetailLike"
+            android:layout_below="@id/football_match_detail_home_name_layout"
+            android:src="@mipmap/like_red" />
+
+        <ImageView
+            android:id="@+id/football_match_detail_home_like_anim_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/football_match_detail_home_name_layout"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="4dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="7dp"
+            android:src="@mipmap/like_anim_left"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/football_match_detail_home_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/football_match_detail_home_like_anim_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:text=" "
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/football_match_detail_vs_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VS"
+            android:textColor="@color/vs_grad"
+            android:textSize="18sp" />
+
+
+        <RelativeLayout
+            android:id="@+id/football_match_detail_matchtype_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
+            <ImageView
+                android:id="@+id/football_match_detail_matchtype_bg_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/match_detail_league_bg"
+                android:scaleType="fitCenter"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/match_detail_league_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_alignLeft="@id/football_match_detail_matchtype_bg_img"
+                android:layout_alignRight="@id/football_match_detail_matchtype_bg_img"
+                >
+
+                <TextView
+                    android:id="@+id/football_match_detail_matchtype1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/football_match_detail_matchtype2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_weight="1.55"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/football_match_detail_guest_emblem"
+            style="@style/MatchDetailEmblem" />
+
+        <RelativeLayout
+            android:id="@+id/football_match_detail_guest_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/football_match_detail_guest_emblem"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/activity_football_match_detail_guest_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/guestBitmap"
+                android:textColor="@color/white"
+                android:textSize="@dimen/activity_football_match_detail_teamname" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/football_match_detail_guest_like"
+            style="@style/MatchDetailLike"
+            android:layout_below="@id/football_match_detail_guest_layout"
+            android:src="@mipmap/like_blue" />
+
+        <ImageView
+            android:id="@+id/football_match_detail_guest_like_anim_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/football_match_detail_guest_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
+            android:src="@mipmap/like_anim_right"
+            android:visibility="invisible" />
+
+
+        <TextView
+            android:id="@+id/football_match_detail_guest_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/football_match_detail_guest_like"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:text=" "
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.35"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+</LinearLayout>

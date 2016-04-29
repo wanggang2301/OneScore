@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hhly.mlottery"
+    android:versionCode="11"
+    android:versionName="1.0.8.0428">
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="22" />
+    <!-- 调用系统下载权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <!-- 友盟统计的权限 begin -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 友盟统计的权限 edd -->
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 获取经纬度权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 用于修改电源时间 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <application
+        android:name=".MyApp"
+        android:allowBackup="true"
+        android:configChanges="orientation"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
+
+        </activity>
+        <activity
+            android:name=".activity.FiltrateMatchConfigActivity"
+            android:screenOrientation="portrait" />
+        <!--环境选择-->
+        <activity
+            android:name=".activity.DebugConfigActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 引导页 -->
+        <activity
+            android:name=".activity.WelcomeViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" >
+
+        </activity>
+        <!-- 首页 -->
+
+        <!-- 内地版的key-begin -->
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
+        <!-- 内地版的key-end -->
+        <activity
+            android:name=".activity.FootballInformationActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 足球设置 -->
+        <activity
+            android:name=".activity.FootballTypeSettingActivity"
+            android:screenOrientation="portrait" />
+        <!-- 开奖详情 -->
+        <activity
+            android:name=".activity.NumbersInfoBaseActivity"
+            android:screenOrientation="portrait" />
+        <!-- 彩种定制 -->
+        <activity
+            android:name=".activity.NumberCustomizeActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- webview -->
+        <activity
+            android:name=".activity.WebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.HomeTeamSoundActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FootballMatchDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" />
+        <activity
+            android:name=".activity.LiveChannelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PlayWebViewActivity"
+            android:screenOrientation="portrait" />
+        <!-- 篮球设置 -->
+        <activity
+            android:name=".activity.BasketballSettingActivity"
+            android:screenOrientation="portrait" />
+        <!-- 篮球筛选 -->
+
+        <activity
+            android:name=".activity.BasketFiltrateActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 篮球详情 -->
+        <activity
+            android:name=".activity.BasketDetailsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 篮球赔率详情 -->
+        <activity
+            android:name="com.hhly.mlottery.activity.BasketOddsDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 篮球分析战绩详情 -->
+        <activity
+            android:name=".activity.BasketAnalyzeMoreRecordActivity"
+            android:screenOrientation="portrait" />
+
+        <!--<receiver android:name=".activity.WelcomeActivity$DownLoadBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>-->
+        <!-- 首页Activity -->
+        <activity
+            android:name=".activity.HomePagerActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <!-- 首页用户设置选项 -->
+        <activity
+            android:name=".activity.HomeUserOptionsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 足球比分 -->
+        <activity
+            android:name=".activity.FootballActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 语言切换 -->
+        <activity
+            android:name=".activity.HomeLanguageActivity"
+            android:screenOrientation="portrait" />
+        <!-- 关于我们 -->
+        <activity
+            android:name=".activity.HomeAboutActivity"
+            android:screenOrientation="portrait" />
+        <!-- 彩票列表 -->
+        <activity
+            android:name=".activity.NumbersActivity"
+            android:screenOrientation="portrait" />
+        <!-- 篮球入口 -->
+        <activity
+            android:name=".activity.BasketListActivity"
+            android:screenOrientation="portrait" />
+        
+        <activity android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
+    </application>
+
+</manifest>

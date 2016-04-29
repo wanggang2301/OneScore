@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hhly.mlottery.activity.FeedbackActivity"
+    android:orientation="vertical"
+    android:background="@color/home_item_bg"
+    >
+    <include layout="@layout/layout_header"/>
+
+    
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:padding="10dp"
+        >
+        <EditText
+            android:id="@+id/feedback_content_ed"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="top"
+            android:background="@drawable/feedback_edittext_bg"
+            android:padding="10dp"
+            android:textColor="@color/content_txt_black"
+            android:hint="@string/feedback_edit_hint"
+            android:textColorHint="@color/content_txt_light_grad"
+            android:textSize="15sp"
+            android:longClickable="false"
+            android:maxLength="200"
+            />
+        <TextView
+            android:id="@+id/text_lenght_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+
+            android:textColor="@color/content_txt_black"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            />
+    </FrameLayout>
+
+
+
+
+</LinearLayout>

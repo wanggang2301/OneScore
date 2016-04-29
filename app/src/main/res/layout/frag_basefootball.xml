@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/ly_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="vertical"
+        android:background="@color/bottom_bg_color"
+        android:layout_alignParentBottom="true">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/line_football_footer" />
+        <RadioGroup
+            android:id="@+id/mRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingTop="2dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_football"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/frag_basefootball_menu_foot"
+                android:button="@null"
+                android:text="@string/football_score"
+                android:textSize="11dp"
+                android:textColor="@drawable/frag__base_selector_color" />
+
+            <RadioButton
+                android:id="@+id/rb_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/frag_basefootball_menu_news"
+                android:button="@null"
+                android:text="@string/football_news"
+                android:textSize="11dp"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:visibility="visible"/>
+            <RadioButton
+                android:id="@+id/rb_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/frag_basefootball_menu_video"
+                android:button="@null"
+                android:text="@string/football_video"
+                android:textSize="11dp"
+                android:textColor="@drawable/frag__base_selector_color" />
+            <RadioButton
+                android:id="@+id/rb_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/frag_basefootball_menu_data"
+                android:button="@null"
+                android:text="@string/football_data"
+                android:textSize="11dp"
+                android:textColor="@drawable/frag__base_selector_color" />
+
+            <RadioButton
+                android:id="@+id/rb_cpi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/frag_basefootball_menu_cpi"
+                android:button="@null"
+                android:text="@string/football_cpi"
+                android:textSize="11dp"
+                android:textColor="@drawable/frag__base_selector_color"
+                android:visibility="gone" />
+        </RadioGroup>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ly_tab_bar"
+        android:id="@+id/ly_content">
+    </FrameLayout>
+
+
+
+
+</RelativeLayout>

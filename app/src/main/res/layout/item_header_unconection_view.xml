@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#F9EEB6"
+    android:id="@+id/unconection_layout"
+    android:visibility="gone"
+     >
+    
+    <ImageView 
+        android:id="@+id/unconection_image"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+        android:src="@mipmap/unconection_warn"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/y20"
+        android:layout_marginBottom="@dimen/y20"
+        />
+    
+    <TextView 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_toRightOf="@id/unconection_image"
+    	android:text="@string/immediate_unconection"
+    	android:layout_centerVertical="true"
+        />
+    
+    <ImageView 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentRight="true"
+    	android:background="@mipmap/unconection_next"
+    	android:layout_marginRight="@dimen/x10"
+    	android:layout_centerVertical="true"
+        />
+
+</RelativeLayout>

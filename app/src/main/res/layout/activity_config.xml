@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="环境选择" 
+        android:background="@color/bg_gray"
+        android:textSize="20sp"
+        />
+
+
+    <RadioGroup
+        android:id="@+id/config_rg1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <RadioButton
+            android:id="@+id/config_rb5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开发环境：http://192.168.10.242:8181"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/config_rb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试环境: http://m.1332255.com"
+
+            />
+
+        <RadioButton
+            android:id="@+id/config_rb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生产环境：http://m.13322.com"  />
+
+
+    </RadioGroup>
+    
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="推送环境选择" 
+        android:background="@color/bg_gray"
+        android:textSize="20sp"
+        />
+    
+    
+    <RadioGroup
+        android:id="@+id/config_rg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/config_rb3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开发环境：ws://192.168.10.242:61634"
+            android:checked="true"
+            />
+
+        <RadioButton
+            android:id="@+id/config_rb6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试环境：ws://m.1332255.com/ws"  />
+        <RadioButton
+            android:id="@+id/config_rb4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生产环境：ws://m.13322.com/ws"  />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/config_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="确    定" />
+
+</LinearLayout>

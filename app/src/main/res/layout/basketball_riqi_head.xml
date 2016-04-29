@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:context=".MainActivity"
+                android:background="#F5F5F5">
+
+    <RelativeLayout
+        android:id="@+id/basketball_date_icon"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/iconfont_lanqiu2shixin" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/basketball_riqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/basketball_date_icon"
+        android:paddingLeft="7dp"
+        android:text="2016-01-01"
+        android:textSize="12dp"
+        android:textColor="#0085E1"/>
+
+    <TextView
+        android:id="@+id/basketball_xingqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/basketball_riqi"
+        android:text="周一"
+        android:textSize="12dp"
+        android:textColor="#0085E1" />
+
+    <TextView
+        android:id="@+id/basketball_current_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="5dp"
+        android:layout_toRightOf="@id/basketball_xingqi"
+        android:text="今天"
+        android:textSize="12dp"
+        android:textColor="#666666" />
+
+    <ImageView
+        android:id="@+id/basketball_details_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/iconfont_xiala_2"/>
+
+</RelativeLayout>

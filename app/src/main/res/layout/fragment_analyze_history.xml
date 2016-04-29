@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+    <LinearLayout
+        android:id="@+id/layout_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/x20"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/analyze_history_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_13"
+                android:textColor="@color/title"
+                android:lineSpacingExtra="@dimen/y4"
+                android:text=""
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y45"
+                android:background="@color/tabhost"
+                android:layout_marginTop="@dimen/y20"
+                android:gravity="center_vertical"
+                >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/analyze_date"
+                        android:textSize="@dimen/text_size_13"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/analyze_match"
+                        android:textSize="@dimen/text_size_13"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center_horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/analyze_match_result"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/white"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.hhly.mlottery.widget.NestedListView
+            android:id="@+id/analyze_history_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:listSelector="#00000000"
+            >
+        </com.hhly.mlottery.widget.NestedListView>
+    </LinearLayout>
+
+
+    <include layout="@layout/analyze_nodata"
+        android:id="@+id/history_nodata"
+        />
+
+</FrameLayout>

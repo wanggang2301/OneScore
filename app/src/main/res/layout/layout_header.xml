@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/header_height"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/status_bar_offset">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/public_img_back"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:id="@+id/public_txt_left_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/public_img_back"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/public_live_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x20"
+            android:scaleType="centerInside"
+            android:src="@mipmap/live_refresh"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/public_txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+        <!--addtjl添加中间日期显示-->
+        <LinearLayout
+            android:id="@+id/public_date_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/cpi_date_img" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/public_txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="2016-4-7"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    style="@style/RippleBackgroudBorderless"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--addtjl end 添加中间日期显示-->
+
+        <ImageView
+            android:id="@+id/public_btn_set"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_config_btn"/>
+
+        <ImageView
+            android:id="@+id/public_btn_filter"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/public_btn_set"
+            android:layout_alignTop="@id/public_btn_set"
+            android:layout_toLeftOf="@id/public_btn_set"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@mipmap/cpi_filtrate"
+            />
+        <!--addtjl begin 热门，公司，筛选-->
+        <ImageView
+            android:id="@+id/public_img_filter"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/x12"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@mipmap/cpi_filtrate"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/public_img_company"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/public_img_filter"
+            android:layout_alignTop="@id/public_img_filter"
+            android:layout_toLeftOf="@id/public_img_filter"
+            android:paddingLeft="@dimen/x12"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@mipmap/cpi_company"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/public_img_hot"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/public_img_company"
+            android:layout_alignTop="@id/public_img_company"
+            android:layout_toLeftOf="@id/public_img_company"
+            android:paddingLeft="@dimen/x12"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@drawable/selector_cpi_hot_btn"
+            android:visibility="gone"/>
+        <!--addtjl end 热门，公司，筛选-->
+
+        <Button
+            android:id="@+id/public_btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@null"
+            android:text="@string/public_btn_save"
+            android:textSize="17sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="38dp"
+    android:background="@color/tab_layout_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+
+        >
+
+        <TextView
+            android:id="@+id/football_match_detail_tab1"
+            style="@style/MatchDetailTab"
+            android:text="@string/football_detail_stadium_tab"
+            android:textColor="@color/tab_text"
+            android:clickable="false"
+            />
+
+        <TextView
+            android:id="@+id/football_match_detail_tab2"
+            style="@style/MatchDetailTab"
+            android:text="@string/football_detail_odds_tab"
+            android:textColor="@color/content_txt_black"
+            android:clickable="false"
+            />
+
+        <TextView
+            android:id="@+id/football_match_detail_tab3"
+            style="@style/MatchDetailTab"
+            android:text="@string/football_detail_analyze_tab"
+            android:textColor="@color/content_txt_black"
+            android:clickable="false"
+            />
+
+    </LinearLayout>
+
+
+
+    <View
+        android:id="@+id/football_match_detail_tabline_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/linecolor"
+        android:layout_alignParentBottom="true"
+        />
+
+    <LinearLayout
+        android:id="@+id/football_match_detail_tabline_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@id/football_match_detail_tabline_bottom_line"
+        >
+
+        <LinearLayout
+            android:id="@+id/football_match_detail_tabline"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="@dimen/y2"
+                android:background="@color/tab_text" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

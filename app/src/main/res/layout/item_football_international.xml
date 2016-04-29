@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_football_international_content_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingRight="-90dp"
+    style="@style/RippleBackgroud"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/item_football_international_layout_right"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:id="@+id/item_football_internationl_focus_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/item_football_focus_btn_bg"
+                android:focusable="false"
+                android:gravity="center"
+                android:text="@string/favourite"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/item_football_international_layout_right"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/item_data_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff9e7"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/data_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="33dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/item_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="3dp"
+                        android:text="日期"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/item_xingqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@id/item_data"
+                        android:gravity="center"
+                        android:text="星期"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/down_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/item_xingqi"
+                        android:src="@mipmap/down_icon" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/item_deilse"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/y12"
+                    android:orientation="horizontal">
+
+                    <!-- 时间 -->
+
+                    <TextView
+                        android:id="@+id/item_football_international_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x20"
+                        android:gravity="center"
+                        android:text="23:00"
+                        android:textColor="@color/homwe_lhc_blue"
+                        android:textSize="@dimen/item_football_half_score" />
+                    <!-- 秒 -->
+
+                    <TextView
+                        android:id="@+id/item_football_international_frequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="&apos;"
+                        android:textColor="@color/homwe_lhc_blue"
+                        android:textSize="@dimen/item_football_half_score" />
+
+                    <!-- 半场比分 -->
+
+                    <TextView
+                        android:id="@+id/item_football_international_halfscore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:gravity="center"
+                        android:text="HT(1-1)"
+                        android:textColor="@color/score_red"
+                        android:textSize="@dimen/item_football_half_score" />
+
+                    <!-- 联赛名 -->
+
+                    <TextView
+                        android:id="@+id/item_football_international_racename"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x20"
+                        android:gravity="right"
+                        android:text="League Type"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/item_football_half_score" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/x10"
+                    android:layout_marginRight="@dimen/x20"
+                    android:layout_marginTop="@dimen/x10"
+                    android:orientation="horizontal"
+                    android:weightSum="20">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2.25"
+                        android:paddingLeft="@dimen/x20">
+
+                        <ImageView
+                            android:id="@+id/item_football_international_vs_img"
+                            android:layout_width="@dimen/x46"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@mipmap/vs_icon" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/item_football_international_homescore"
+                                style="@style/itemFootballInterScore"
+                                android:layout_gravity="left"
+                                android:layout_marginBottom="6dp"
+                                android:text="1" />
+
+                            <TextView
+                                android:id="@+id/item_football_international_guestscore"
+                                style="@style/itemFootballInterScore"
+                                android:layout_gravity="left"
+                                android:text="2" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="14"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="6dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/item_football_international_homename"
+                                style="@style/itemFootballInterTeamName"
+                                android:layout_gravity="center"
+                                android:text="Yamagata University Department of Medicine" />
+
+                            <!-- 主队红牌 -->
+
+                            <TextView
+                                android:id="@+id/item_football_international_home_rc"
+                                style="@style/itemFootballCard"
+                                android:layout_gravity="center"
+                                android:background="@mipmap/card_red"
+                                android:text="1" />
+
+                            <!-- 主队黄牌 -->
+
+                            <TextView
+                                android:id="@+id/item_football_international_home_yc"
+                                style="@style/itemFootballCard"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/x2"
+                                android:background="@mipmap/card_yellow"
+                                android:text="2" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/item_football_international_guestname"
+                                style="@style/itemFootballInterTeamName"
+                                android:layout_gravity="center"
+                                android:text="Uniao Recreativa dos Trabalhadores MG/URT" />
+
+                            <!-- 客队红牌 -->
+
+                            <TextView
+                                android:id="@+id/item_football_international_guest_rc"
+                                style="@style/itemFootballCard"
+                                android:layout_gravity="center"
+                                android:background="@mipmap/card_red"
+                                android:text="1" />
+
+                            <!-- 客队黄牌 -->
+
+                            <TextView
+                                android:id="@+id/item_football_international_guest_yc"
+                                style="@style/itemFootballCard"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/x2"
+                                android:background="@mipmap/card_yellow"
+                                android:text="2" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.75"
+                        android:gravity="right">
+
+                        <TableRow android:gravity="right">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/item_football_international_handicap1"
+                                    style="@style/itemFootballInterHandicap"
+                                    android:layout_height="wrap_content"
+                                    android:text="+0.25" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/item_football_international_odd_top"
+                                    style="@style/itemFootballInterOdd"
+                                    android:text="12.00" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow android:gravity="right">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/item_football_international_handicap2"
+                                    style="@style/itemFootballInterHandicap"
+                                    android:layout_height="wrap_content"
+                                    android:text="D"
+
+                                    />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/item_football_international_odd_middle"
+                                    style="@style/itemFootballInterOdd"
+                                    android:text="2.00"
+                                    android:textColor="@color/content_txt_black" />
+                            </LinearLayout>
+                        </TableRow>
+
+                        <TableRow android:gravity="right">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/item_football_international_handicap3"
+                                    style="@style/itemFootballInterHandicap"
+                                    android:layout_height="wrap_content"
+                                    android:text="-0.25" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/item_football_international_odd_bottom"
+                                    style="@style/itemFootballInterOdd"
+                                    android:text="2.00"
+                                    android:textColor="@color/content_txt_light_grad" />
+                            </LinearLayout>
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="#f5f5f5" >
+
+    <include
+        android:id="@+id/include1"
+        layout="@layout/layout_header" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"/> 
+	<!--  简体-->
+    <RelativeLayout
+        android:id="@+id/language_china_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/select_language_btn"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/china_txt"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/x30"/>
+
+        <ImageView
+            android:id="@+id/language_china_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:src="@mipmap/language_choice"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+	<!-- 繁体 -->
+    <RelativeLayout
+        android:id="@+id/language_tw_layout"
+        android:layout_width="fill_parent"
+        android:background="@drawable/select_language_btn"
+        android:clickable="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/china_tw_txt"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/x30"/>
+
+        <ImageView
+            android:id="@+id/language_tw_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:src="@mipmap/language_choice"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+	<!-- 英文 -->
+    <RelativeLayout
+        android:id="@+id/language_en_layout"
+        android:layout_width="fill_parent"
+        android:background="@drawable/select_language_btn"
+        android:clickable="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/china_en_txt"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/x30"/>
+
+        <ImageView
+            android:id="@+id/language_en_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:src="@mipmap/language_choice"
+            android:visibility="gone" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+	<!-- 韩语 -->
+    <RelativeLayout
+        android:id="@+id/language_ko_layout"
+        android:layout_width="fill_parent"
+        android:background="@drawable/select_language_btn"
+        android:clickable="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/china_ko_txt"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/x30"/>
+
+        <ImageView
+            android:id="@+id/language_ko_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:src="@mipmap/language_choice"
+            android:visibility="gone" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+	<!-- 印尼语 -->
+    <RelativeLayout
+        android:id="@+id/language_id_layout"
+        android:layout_width="fill_parent"
+        android:background="@drawable/select_language_btn"
+        android:clickable="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/china_id_txt"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/x30"/>
+
+        <ImageView
+            android:id="@+id/language_id_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:src="@mipmap/language_choice"
+            android:visibility="gone" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+	<!-- 泰语 -->
+    <RelativeLayout
+        android:id="@+id/language_th_layout"
+        android:layout_width="fill_parent"
+        android:background="@drawable/select_language_btn"
+        android:clickable="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/china_th_txt"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/x30"/>
+
+        <ImageView
+            android:id="@+id/language_th_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:src="@mipmap/language_choice"
+            android:visibility="gone" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+	<!-- 越南语 -->
+    <RelativeLayout
+        android:id="@+id/language_vi_layout"
+        android:layout_width="fill_parent"
+        android:background="@drawable/select_language_btn"
+        android:clickable="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/china_vi_txt"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/x30"/>
+
+        <ImageView
+            android:id="@+id/language_vi_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:src="@mipmap/language_choice"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

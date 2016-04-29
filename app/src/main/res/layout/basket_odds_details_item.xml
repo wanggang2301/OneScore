@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/basket_odds_details_time"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="41dp"
+            android:text="----"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:background="@color/black_grounding"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="41dp"
+            android:background="@color/black_grounding"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/basket_odds_details_guestwin"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="---"
+                android:textColor="@color/black_details_ball_textcolor2"
+                android:gravity="center"/>
+            <LinearLayout
+                android:id="@+id/basket_odds_handicp_ll"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:id="@+id/basket_odds_details_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/green"
+                    />
+                <TextView
+                    android:id="@+id/basket_odds_details_handicap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="---"
+                    android:textColor="@color/black_details_ball_textcolor2"
+
+                    />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/basket_odds_details_homewin"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="---"
+                android:textColor="@color/black_details_ball_textcolor2"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!---->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.TranslucentNavigation">
+    </style>
+
+    <style name="AppTheme.BlackStatusBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.BlackStatusBar.ColorGreen">
+    </style>
+
+    <style name="Widget"/>
+
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse"/>
+
+    <style name="Widget.Light"/>
+
+    <style name="Widget.Light.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid"/>
+
+    <style name="Widget.ActionBar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.Light.ActionBar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+
+
+    <!-- 侧滑栏布局图片样式 -->
+    <style name="Image_AccountStyle">
+        <item name="android:layout_height">@dimen/y50</item>
+        <item name="android:layout_width">@dimen/x50</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <!-- 侧滑栏布局文字样式 -->
+    <style name="Text_AccountStyle">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:layout_weight">5</item>
+        <item name="android:layout_marginBottom">3dp</item>
+    </style>
+    <!-- 侧滑栏布局分割线样式 -->
+    <style name="View_AccountStyle">
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:background">@color/frame_txt_color</item>
+    </style>
+    <!-- 加载dialog样式 -->
+    <style name="Dialog_bocop">
+        <item name="android:windowBackground">@color/bocop_dialog_bg</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+    <!-- 彩票开奖数据布局 -->
+    <style name="number_text_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/number_tab_solid_all_t_b</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/number_title</item>
+        <item name="android:textColor">@color/msg</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <style name="number_text_style1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/number_title</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <style name="number_text_style2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/number_tab_solid_all</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/number_title</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <style name="number_text_style3">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/number_tab_s_y_x</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/number_title</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <style name="number_text_style4">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/number_tab_s_y_x2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/number_title</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+
+    <style name="number_text_style5">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/number_tab_solid_all_r_b2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/number_title</item>
+        <item name="android:text">@string/number_info_default</item>
+    </style>
+    <!--  -->
+
+    <style name="filtrate_match_select_btn">
+        <item name="android:background">@drawable/filtrate_select_btn_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:textColor">@color/home_logo_color</item>
+        <item name="android:textSize">@dimen/item_filtrate_match_text</item>
+    </style>
+
+    <style name="tallerBarStyle" parent="@android:style/Widget.SeekBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@android:drawable/progress_horizontal</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_horizontal</item>
+        <item name="android:minHeight">8dip</item>
+        <item name="android:maxHeight">20dip</item>
+    </style>
+
+    <style name="itemFootballInterHandicap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">right</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:textSize">@dimen/item_football_half_score</item>
+    </style>
+
+    <style name="itemFootballInterOddLayout">
+        <item name="android:layout_width">34dp</item>
+        <item name="android:layout_marginRight">@dimen/x20</item>
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="itemFootballInterOdd">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textSize">@dimen/item_football_half_score</item>
+        <item name="android:paddingLeft">@dimen/x2</item>
+        <item name="android:paddingRight">@dimen/x2</item>
+        <item name="android:layout_marginLeft">@dimen/x6</item>
+    </style>
+
+    <style name="itemFootballCard">
+        <item name="android:layout_width">@dimen/x20</item>
+        <item name="android:layout_height">@dimen/x28</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/item_football_international_card</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="itemFootballInterTeamName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">@dimen/item_football_hometeam</item>
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:maxWidth">@dimen/item_football_international_teamname_max_width</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginRight">@dimen/x10</item>
+    </style>
+
+
+    <style name="itemFootballInterScore">
+        <item name="android:layout_width">@dimen/x46</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/item_football_hometeam</item>
+        <item name="android:textColor">@color/homwe_lhc_blue</item>
+        <item name="android:background">@drawable/football_international_score</item>
+    </style>
+    <!-- 客队样式 -->
+    <style name="StyleProgressBarguest_team12" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:minHeight">4dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/guest_team</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">120</item>
+        <item name="android:background">@mipmap/line</item>
+    </style>
+    <!-- 主队样式 -->
+    <style name="StyleProgressBarhome_team12" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:minHeight">4dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/home_team</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">120</item>
+        <item name="android:background">@mipmap/line</item>
+    </style>
+    <!-- 客队样式 -->
+    <style name="StyleProgressBarguest_team24" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:minHeight">4dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/guest_team</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">240</item>
+        <item name="android:background">@mipmap/line</item>
+    </style>
+    <!-- 主队样式 -->
+    <style name="StyleProgressBarhome_team24" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:minHeight">4dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/home_team</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">240</item>
+        <item name="android:background">@mipmap/line</item>
+    </style>
+    <!-- 客队样式 -->
+    <style name="StyleProgressBarguest_team36" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:minHeight">4dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/guest_team</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">360</item>
+        <item name="android:background">@mipmap/line</item>
+    </style>
+    <!-- 主队样式 -->
+    <style name="StyleProgressBarhome_team36" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:minHeight">4dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/home_team</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">360</item>
+        <item name="android:background">@mipmap/line</item>
+    </style>
+    <!--数据统计弹窗layout-->
+    <style name="Style_relative_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:background">@color/white</item>
+
+    </style>
+    <!-- 主队和客队的射门数 begin -->
+    <style name="Style_txt">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/tabhost_unselected_text</item>
+        <item name="android:textSize">13sp</item>
+        <!-- 主队和客队的射门数 end -->
+    </style>
+    <!-- 主队和客队的射门数 begin -->
+    <style name="Style_txt1">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/progress_score</item>
+        <item name="android:textSize">10sp</item>
+        <!-- 主队和客队的射门数 end -->
+    </style>
+
+    <style name="AlertDialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="ProgressDialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="MatchDetailEmblem">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:src">@mipmap/not_emblem</item>
+    </style>
+
+    <style name="MatchDetailLike">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="MatchDetailTab">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
+    <style name="RippleBackgroud">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="RippleBackgroudBorderless">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="MatchSettingLabelText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ItemFootballCard">
+        <item name="android:layout_width">8dp</item>
+        <item name="android:layout_height">12.5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <!--指数详情”亚盘样式“-->
+    <style name="plateTableBg">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/item_football_frequency</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginRight">0.2dp</item>
+        <item name="android:layout_marginBottom">0.2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--指数”亚盘样式2“-->
+    <style name="plateTableBg2">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/item_football_frequency</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginRight">0.2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--指数详情”亚盘样式“详情右边-->
+    <style name="plateTableBg3">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/y65</item>
+        <item name="android:textSize">@dimen/item_football_frequency</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginRight">0.2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <!-- 自定义dialogActivity的样式 -->
+    <style name="MyDialogStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <!--<item name="android:windowIsFloating">true</item> 这个设置了后大分辨率手机不会铺满屏幕-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+    <!--积分排名的几胜几负等-->
+    <style name="AnalyzeTextHomeAndGuest">
+        <item name="android:textColor">@color/res_time_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
+    <!--球队排名等-->
+    <style name="AnalyzeRankTitleText">
+        <item name="android:textColor">@color/version</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay"
+           parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+
+    <!--足球比分-->
+
+    <style name="MyTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#9fff</item>
+    </style>
+
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
+</resources>

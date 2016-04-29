@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+   >
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:text="2015-2016"
+        android:textSize="@dimen/x26"
+        android:id="@+id/tv_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/y80"
+        android:textColor="@color/res_name_color"
+        android:gravity="center_vertical"/>
+
+
+</LinearLayout>

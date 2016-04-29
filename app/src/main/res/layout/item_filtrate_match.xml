@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/item_filtrate_checkbox_layout"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    >
+
+    
+    <CheckBox
+        android:id="@+id/item_filtrate_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/filtrate_match_checkbox_defualt_bg"
+        android:textColor="@drawable/filtrate_match_defualt_textcolor" 
+        android:button="@null"
+        android:gravity="center"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:layout_marginTop="@dimen/y8"
+        android:layout_marginBottom="@dimen/y8"
+        android:textSize="@dimen/item_filtrate_match_text"
+        android:text="英超"
+        />
+
+</LinearLayout>

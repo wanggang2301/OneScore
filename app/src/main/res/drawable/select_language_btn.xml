@@ -1,0 +1,7 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/line_football_footer" android:state_pressed="true"></item>
+    <item android:drawable="@color/line_football_footer" android:state_selected="true"/>
+    <item android:drawable="@color/line_football_footer" android:state_activated="true"/>
+    <item android:drawable="@color/white" />
+</selector>

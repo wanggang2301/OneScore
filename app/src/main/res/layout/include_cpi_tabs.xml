@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="3"
+
+        >
+
+        <TextView
+            android:id="@+id/cpi_match_detail_tab1"
+            style="@style/MatchDetailTab"
+            android:clickable="false"
+            android:text="@string/odd_plate_rb_txt"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/cpi_match_detail_tab2"
+            style="@style/MatchDetailTab"
+            android:clickable="false"
+            android:text="@string/asiasize"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/cpi_match_detail_tab3"
+            style="@style/MatchDetailTab"
+            android:clickable="false"
+            android:text="@string/odd_op_rb_txt"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/cpi_match_detail_tabline_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/linecolor" />
+
+    <LinearLayout
+        android:id="@+id/cpi_match_detail_tabline_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/cpi_match_detail_tabline_bottom_line"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/cpi_match_detail_tabline"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y4"
+                android:background="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

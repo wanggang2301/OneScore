@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!---->
+            <FrameLayout
+                android:id="@+id/content_fragment0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/content_fragment1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/content_fragment2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/content_fragment3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/line_football_footer" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="52dp"
+            android:background="@color/bottom_bg_color"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <Button
+                android:id="@+id/football_footer_immediate_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableTop="@drawable/selector_home_bottom01_btn"
+                android:text="@string/foot_jishi_txt"
+                android:textColor="@color/textcolor_football_footer_normal"
+                android:textSize="@dimen/text_size_12" />
+
+            <Button
+                android:id="@+id/football_footer_result_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableTop="@drawable/selector_home_bottom02_btn"
+                android:text="@string/foot_saiguo_txt"
+                android:textColor="@color/textcolor_football_footer_normal"
+                android:textSize="@dimen/text_size_12" />
+
+            <Button
+                android:id="@+id/football_footer_schedule_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x10"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableTop="@drawable/selector_home_bottom03_btn"
+                android:text="@string/foot_saicheng_txt"
+                android:textColor="@color/textcolor_football_footer_normal"
+                android:textSize="@dimen/text_size_12" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/x10"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/football_footer_focus_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:drawableTop="@drawable/selector_home_bottom04_btn"
+                    android:text="@string/foot_guanzhu_txt"
+                    android:textColor="@color/textcolor_football_footer_normal"
+                    android:textSize="@dimen/text_size_12" />
+
+                <ImageView
+                    android:id="@+id/football_footer_focus_redpoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:paddingLeft="30dp"
+                    android:src="@mipmap/red_point" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
