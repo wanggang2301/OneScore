@@ -1,7 +1,6 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
@@ -27,11 +25,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsBaseFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketOddsAsiaLetFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketOddsAsiaSizeFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketOddsDetailsFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketOddsEuroFragment;
-import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -278,7 +272,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setPadding(0, getResources().getDimensionPixelSize(R.dimen.tab_height), 0, 0);//设置pager的上边距（pager下移一个tab的高度）
         mPager.setAdapter(mPagerAdapter);
-        mPager.setOffscreenPageLimit(3);
+        mPager.setOffscreenPageLimit(3);//不要改动。必须全加载出来。
         mFlexibleSpaceHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
         mTabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
         mHeight = getResources().getDimensionPixelSize(R.dimen.mheight);
@@ -877,11 +871,11 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     }
 
     private boolean enableRefresh;
-    public void scoreAnimation(final TextView scoreView, final String score) {
+    public void scoreAnimation(final TextView changeText, final int changeScore,final TextView noChangeText,final int noChangeScore) {
         enableRefresh = true;
         MyRotateAnimation rotateAnim = null;
-        float cX = scoreView.getWidth() / 2.0f;
-        float cY = scoreView.getHeight() / 2.0f;
+        float cX = changeText.getWidth() / 2.0f;
+        float cY = changeText.getHeight() / 2.0f;
 
         rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
         if (rotateAnim != null) {
@@ -890,13 +884,24 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 public void interpolatedTime(float interpolatedTime) {
                     // 监听到翻转进度过半时，更新显示内容。
                     if (enableRefresh && interpolatedTime > 0.5f) {
-                        scoreView.setText(score);
+                        changeText.setText(changeScore+"");
+
                         enableRefresh = false;
                     }
                 }
             });
             rotateAnim.setFillAfter(true);
-            scoreView.startAnimation(rotateAnim);
+            changeText.startAnimation(rotateAnim);
+        }
+        if (changeScore > noChangeScore) {//得分少的用灰色
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
+        } else if (changeScore < noChangeScore) {
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+        } else {
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
         }
     }
 
@@ -1070,14 +1075,14 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 if (mGuestNum == score.getGuestScore()) {
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
                 }else{
-                    scoreAnimation(mGuestScore, score.getGuestScore() + "");
+                    scoreAnimation(mGuestScore, score.getGuestScore(),mHomeScore,score.getHomeScore());
                     mGuestNum = score.getGuestScore();
                 }
 
                 if (mHomeNum == score.getHomeScore()) {
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
                 }else{
-                    scoreAnimation(mHomeScore , score.getHomeScore() + "");
+                    scoreAnimation(mHomeScore ,score.getHomeScore(),mGuestScore,score.getGuestScore());
                     mHomeNum = score.getHomeScore();
                 }
                 L.d("mGuestNum>>>>...>>>" + mGuestNum);
@@ -1169,17 +1174,17 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     break;
                 }
                 case 1: {
-                    f = BasketOddsEuroFragment.newInstance(mThirdId,ODDS_EURO);
+                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
 
                     break;
                 }
                 case 2: {
-                    f = BasketOddsEuroFragment.newInstance(mThirdId,ODDS_LET);
+                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
                     break;
                 }
                 case 3:
                 default: {
-                    f =BasketOddsEuroFragment.newInstance(mThirdId,ODDS_SIZE);
+                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
                     break;
                 }
             }
