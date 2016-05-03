@@ -52,6 +52,8 @@ public class ScoresFragment extends Fragment {
     private View view;
     private Context mContext;
 
+
+
     /**
      * 返回菜单
      */
