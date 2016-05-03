@@ -358,6 +358,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }
 
         mApos = (TextView) this.findViewById(R.id.backetball_details_apos);
+        mApos.setVisibility(View.GONE);
         setApos();
     }
 
