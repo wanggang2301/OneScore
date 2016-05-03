@@ -264,6 +264,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
      */
     private void loadData(BasketDetailOddsBean oddsBean) {
         if(getActivity()!=null){
+            mOddsCompanyList=oddsBean.getCompanyOdds();
             mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
             //显示无数据界面
             if(mOddsCompanyList.size()==0){
