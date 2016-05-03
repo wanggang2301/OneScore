@@ -137,7 +137,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return dateViewHolder;
 
         } else {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_test, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_new, viewGroup, false);
             ResultViewHolder resultViewHolder = new ResultViewHolder(view);
 
             //将创建的View注册点击事件

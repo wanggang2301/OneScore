@@ -98,7 +98,7 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_test, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_new, viewGroup, false);
         ImmediaViewHolder immediaViewHolder = new ImmediaViewHolder(view);
 
         //将创建的View注册点击事件

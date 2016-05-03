@@ -133,7 +133,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return dateViewHolder;
 
         } else {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_test, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_new, viewGroup, false);
             ScheduleViewHolder resultViewHolder = new ScheduleViewHolder(view);
 
             //将创建的View注册点击事件
