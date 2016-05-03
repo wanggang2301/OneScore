@@ -33,6 +33,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NestedListView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -100,8 +101,8 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
             public void onClick(View v) {
 //                Intent intent = new Intent();
 //                intent.putExtra("resultType", resultstring);
-
-                Toast.makeText(BasketAnalyzeMoreRecordActivity.this, "back", Toast.LENGTH_SHORT).show();
+                MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_Exit");
+//                Toast.makeText(BasketAnalyzeMoreRecordActivity.this, "back", Toast.LENGTH_SHORT).show();
 
                 setResult(Activity.RESULT_OK, null);
                 finish();
@@ -424,9 +425,11 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.basket_analyze_history_screen: //历史交锋 筛选
+                MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_HistoryScreen");
                 setDialog(true);
                 break;
             case R.id.basket_analyze_recent_screen: //近期战绩 筛选
+                MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_RecentScreen");
                 setDialog(false);
                 break;
             default:
@@ -595,5 +598,17 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         mDialog.getWindow().setContentView(view);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("BasketAnalyzeMoreRecordActivity");
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("BasketAnalyzeMoreRecordActivity");
+    }
 }

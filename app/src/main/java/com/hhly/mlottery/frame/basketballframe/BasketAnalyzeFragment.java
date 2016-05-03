@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketAnalyzeMoreRecordActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
@@ -44,6 +45,7 @@ import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -240,7 +242,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         mBasketAnalyzeMoreRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MobclickAgent.onEvent(MyApp.getContext(),"BasketAnalyzeMoreRecordActivity");
                 Intent intent = new Intent(getActivity(), BasketAnalyzeMoreRecordActivity.class);
                 intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_THIRD_ID,mThirdId);//跳转到详情
                 intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_GUEST_TEAM,"老鹰");//跳转到详情
@@ -617,5 +619,17 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             }
         },500);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("BasketAnalyzeFragment");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("BasketAnalyzeFragment");
     }
 }

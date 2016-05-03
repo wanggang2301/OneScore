@@ -576,6 +576,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         //用getActivity().startActivityForResult();不走onActivityResult ;
         startActivityForResult(intent, REQUEST_DETAILSCODE);
         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+        MobclickAgent.onEvent(mContext,"Basketball_ListItem");
         return false;
     }
 

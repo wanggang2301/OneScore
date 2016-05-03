@@ -24,6 +24,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.ObservableListView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -337,5 +338,17 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                 basketDetailsActivity.refreshData();
             }
         }, 1000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("BasketOddsFragment");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("BasketOddsFragment");
     }
 }

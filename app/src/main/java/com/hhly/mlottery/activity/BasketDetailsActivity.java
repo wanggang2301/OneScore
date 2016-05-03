@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
@@ -44,6 +45,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.umeng.analytics.MobclickAgent;
 
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
@@ -171,7 +173,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basket_detailsactivity_activity);
-
+        MobclickAgent.openActivityDurationTrack(false);
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
         }
@@ -586,11 +588,13 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.basket_details_back:
+                MobclickAgent.onEvent(MyApp.getContext(),"BasketDetailsActivity_Exit");
                 setResult(Activity.RESULT_OK);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.basket_details_collect:
+                MobclickAgent.onEvent(MyApp.getContext(),"BasketDetailsActivity_Attention");
                 if (isFocusId(mThirdId)) {
                     deleteFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collect);
