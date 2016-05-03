@@ -359,12 +359,14 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         mApos = (TextView) this.findViewById(R.id.backetball_details_apos);
         mApos.setVisibility(View.GONE);
-        setApos();
+//        setApos();
     }
 
+    /**
+     * 秒闪烁
+     */
     private void setApos() {
         mApos.setText("\'");
-        mApos.setVisibility(View.VISIBLE);
 
         final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
         anim1.setDuration(500);
@@ -421,6 +423,10 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
                     initData(basketDetailsBean);
+                    /**
+                     * 启动秒闪烁
+                     */
+                    setApos();
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         startWebsocket();
                         computeWebSocket();
