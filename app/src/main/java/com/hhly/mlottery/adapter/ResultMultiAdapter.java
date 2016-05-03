@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,9 @@ import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.List;
 
@@ -40,43 +44,78 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context mContext;
     private LayoutInflater mLayoutInflater;
 
-    /**日期Index*/
+    /**
+     * 日期Index
+     */
     public final static int VIEW_DATE_INDEX = 0;
 
-    /**比赛Index*/
+    /**
+     * 比赛Index
+     */
     public final static int VIEW_MATCH_INDEX = 1;
 
     private int handicap = 0;
 
 
-    /**关注比赛*/
-    public  FocusMatchClickListener mFocusMatchClickListener;
+    private String teamLogoPre;
+
+    private String teamLogoSuff;
+
+    private DisplayImageOptions options; //
+    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
+
+
+    /**
+     * 关注比赛
+     */
+    public FocusMatchClickListener mFocusMatchClickListener;
+
     public void setmFocusMatchClickListener(FocusMatchClickListener mFocusMatchClickListener) {
         this.mFocusMatchClickListener = mFocusMatchClickListener;
     }
 
 
-
-    /**赛事item click*/
+    /**
+     * 赛事item click
+     */
     private RecyclerViewItemClickListener mOnItemClickListener = null;
 
     public void setmOnItemClickListener(RecyclerViewItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
-    /**时间选择*/
-    private DateOnClickListener dateOnClickListener=null;
+    /**
+     * 时间选择
+     */
+    private DateOnClickListener dateOnClickListener = null;
+
     public void setDateOnClickListener(DateOnClickListener dateOnClickListener) {
         this.dateOnClickListener = dateOnClickListener;
     }
 
 
-
-
-    public ResultMultiAdapter(Context context, List<ResultMatchDto> datas) {
+    public ResultMultiAdapter(Context context, List<ResultMatchDto> datas, String teamLogoPre, String teamLogoSuff) {
         mLayoutInflater = LayoutInflater.from(context);
         this.datas = datas;
         this.mContext = context;
+
+
+        this.teamLogoPre = teamLogoPre;
+        this.teamLogoSuff = teamLogoSuff;
+
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.mipmap.score_default)   //默认图片
+                .showImageForEmptyUri(R.mipmap.score_default)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.score_default)// 加载失败显示的图片
+                .resetViewBeforeLoading(true)
+                .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
+        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
+        universalImageLoader.init(config);
     }
 
 
@@ -84,13 +123,13 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         final View view;
         if (viewType == VIEW_DATE_INDEX) {
-              view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_date_week, viewGroup, false);
-            final DateViewHolder dateViewHolder=new DateViewHolder(view);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_date_week, viewGroup, false);
+            final DateViewHolder dateViewHolder = new DateViewHolder(view);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (dateOnClickListener!=null){
+                    if (dateOnClickListener != null) {
                         dateOnClickListener.onClick(view);
                     }
                 }
@@ -98,7 +137,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return dateViewHolder;
 
         } else {
-              view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football, viewGroup, false);
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_test, viewGroup, false);
             ResultViewHolder resultViewHolder = new ResultViewHolder(view);
 
             //将创建的View注册点击事件
@@ -119,11 +158,11 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
 
-        if (0==datas.get(position).getType()){
+        if (0 == datas.get(position).getType()) {
             return VIEW_DATE_INDEX;
-        }else if (1==datas.get(position).getType()){
+        } else if (1 == datas.get(position).getType()) {
             return VIEW_MATCH_INDEX;
-        }else {
+        } else {
             return 100;
         }
     }
@@ -131,39 +170,36 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-       ResultMatchDto resultMatchDto=datas.get(position);
+        if (datas.size()<=0 || datas==null ){
+            return;
+        }
+
+        ResultMatchDto resultMatchDto = datas.get(position);
 
         if (holder instanceof DateViewHolder) {
             ((DateViewHolder) holder).tv_date.setText(resultMatchDto.getDate());
             ((DateViewHolder) holder).tv_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, resultMatchDto.getDate()))));
 
         } else if (holder instanceof ResultViewHolder) {
+            if (resultMatchDto.getMatchs() != null) {
+                holder.itemView.setTag(resultMatchDto.getMatchs().getThirdId());
 
+                if (PreferenceUtil.getBoolean(MyConstants.RBSECOND, true)) {
+                    handicap = 1;
+                } else if (PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false)) {
+                    handicap = 2;
+                } else if (PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, false)) {
+                    handicap = 3;
+                } else if (PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false)) {
+                    handicap = 4;
+                } else {
+                    handicap = 1;
+                }
 
-            holder.itemView.setTag(resultMatchDto.getMatchs().getThirdId());
-
-            if (PreferenceUtil.getBoolean(MyConstants.RBSECOND, true)) {
-                handicap = 1;
-            } else if (PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false)) {
-                handicap = 2;
-            } else if (PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, false)) {
-                handicap = 3;
-            } else if (PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false)) {
-                handicap = 4;
-            } else {
-                handicap = 1;
+                convert((ResultMultiAdapter.ResultViewHolder) holder, resultMatchDto.getMatchs(), handicap);
             }
-
-            convert((ResultMultiAdapter.ResultViewHolder)holder, resultMatchDto.getMatchs(), handicap);
-
         }
-
-
     }
-
-
-
-
 
 
     @Override
@@ -171,7 +207,9 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return datas.size();
     }
 
-    /**日期ViewHolder*/
+    /**
+     * 日期ViewHolder
+     */
 
     public static class DateViewHolder extends RecyclerView.ViewHolder {
 
@@ -182,21 +220,26 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public DateViewHolder(View itemView) {
             super(itemView);
-            tv_date=(TextView)itemView.findViewById(R.id.tv_date);
-            tv_week=(TextView)itemView.findViewById(R.id.tv_week);
+            tv_date = (TextView) itemView.findViewById(R.id.tv_date);
+            tv_week = (TextView) itemView.findViewById(R.id.tv_week);
         }
     }
 
 
-    /**数据ViewHolder*/
+    /**
+     * 数据ViewHolder
+     */
 
     static class ResultViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
+
+        TextView keeptime;
+
         TextView item_football_racename;
         TextView item_football_time;
         TextView item_football_half_score;
         TextView item_football_frequency;
-        TextView item_football_right_mid_score;
+        // TextView item_football_right_mid_score;
         TextView item_football_home_yc;
         TextView item_football_home_rc;
         TextView item_football_guest_rc;
@@ -213,15 +256,23 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         //关注
         ImageView Iv_guangzhu;
 
+        ImageView home_icon;
+
+        ImageView guest_icon;
+
+
         public ResultViewHolder(final View itemView) {
             super(itemView);
 
             cardView = (CardView) itemView.findViewById(R.id.card_view);
+
+            keeptime = (TextView) itemView.findViewById(R.id.keeptime);
+
             item_football_racename = (TextView) itemView.findViewById(R.id.item_football_racename);
             item_football_time = (TextView) itemView.findViewById(R.id.item_football_time);
             item_football_half_score = (TextView) itemView.findViewById(R.id.item_football_half_score);
             item_football_frequency = (TextView) itemView.findViewById(R.id.item_football_frequency);
-            item_football_right_mid_score = (TextView) itemView.findViewById(R.id.item_football_right_mid_score);
+            // item_football_right_mid_score = (TextView) itemView.findViewById(R.id.item_football_right_mid_score);
             item_football_home_yc = (TextView) itemView.findViewById(R.id.item_football_home_yc);
             item_football_home_rc = (TextView) itemView.findViewById(R.id.item_football_home_rc);
             item_football_guest_rc = (TextView) itemView.findViewById(R.id.item_football_guest_rc);
@@ -232,15 +283,17 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             item_football_left_odds = (TextView) itemView.findViewById(R.id.item_football_left_odds);
             item_football_handicap_value = (TextView) itemView.findViewById(R.id.item_football_handicap_value);
             item_football_right_odds = (TextView) itemView.findViewById(R.id.item_football_right_odds);
-            item_football_odds_layout=(RelativeLayout)itemView.findViewById(R.id.item_football_odds_layout);
-            item_football_content_ll=(LinearLayout)itemView.findViewById(R.id.item_football_content_ll);
+            item_football_odds_layout = (RelativeLayout) itemView.findViewById(R.id.item_football_odds_layout);
+            item_football_content_ll = (LinearLayout) itemView.findViewById(R.id.item_football_content_ll);
 
-            Iv_guangzhu=(ImageView)itemView.findViewById(R.id.Iv_guangzhu);
+            Iv_guangzhu = (ImageView) itemView.findViewById(R.id.Iv_guangzhu);
+            home_icon = (ImageView) itemView.findViewById(R.id.home_icon);
+            guest_icon = (ImageView) itemView.findViewById(R.id.guest_icon);
         }
 
     }
 
-    private  void convert(final ResultMultiAdapter.ResultViewHolder holder, final Match match, int handicap) {
+    private void convert(final ResultMultiAdapter.ResultViewHolder holder, final Match match, int handicap) {
 
         if (match.getItemBackGroundColorId() == R.color.item_football_event_yellow) {
             holder.item_football_content_ll.setBackgroundResource(match.getItemBackGroundColorId());
@@ -257,8 +310,25 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             match.setGuestHalfScore("0");
         }
 
+        holder.keeptime.setVisibility(View.GONE);
+
         holder.item_football_hometeam.setText(match.getHometeam());
         holder.item_football_guestteam.setText(match.getGuestteam());
+
+        //主队url
+        final String homelogourl = teamLogoPre + match.getHomeId().trim() + teamLogoSuff;  //"http://pic.13322.com/basketball/team/135_135/29.png"
+        //客队url
+        final String guestlogourl = teamLogoPre + match.getGuestId().trim().trim() + teamLogoSuff;
+
+
+        holder.home_icon.setTag(homelogourl);
+        holder.guest_icon.setTag(guestlogourl);
+        //ImagaeLoader -- 加载图片
+
+
+        universalImageLoader.displayImage(homelogourl, holder.home_icon, options);
+        universalImageLoader.displayImage(guestlogourl, holder.guest_icon, options);
+
         holder.item_football_racename.setText(match.getRacename());
         holder.item_football_racename.setTextColor(Color.parseColor(match.getRaceColor()));
         holder.item_football_time.setText(match.getTime());
@@ -267,8 +337,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             holder.item_football_full_score.setText("VS");
 
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
-           // holder.setFakeBoldText(R.id.item_football_full_score, false);
-            holder.item_football_half_score.setVisibility(View.GONE);
+            // holder.setFakeBoldText(R.id.item_football_full_score, false);
+            holder.item_football_half_score.setVisibility(View.INVISIBLE);
 
         } else if ("1".equals(match.getStatusOrigin())) {// 上半场
 
@@ -277,19 +347,21 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             try {
                 int keeptime = Integer.parseInt(match.getKeepTime());// 设置时间
                 if (keeptime > 45) {
-                    holder.item_football_half_score.setText("45+");
-                    holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+                    holder.keeptime.setText("45+");
+                    holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
 
                 } else {
-                    holder.item_football_half_score.setText(keeptime + "");
-                    holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+                    holder.keeptime.setText(keeptime + "");
+                    holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
                 }
             } catch (Exception e) {
 
-                holder.item_football_half_score.setText("E");
-                holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+                holder.keeptime.setText("E");
+                holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
             }
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+            holder.keeptime.setVisibility(View.VISIBLE);
+            holder.item_football_half_score.setVisibility(View.INVISIBLE);
+
 
         } else if ("3".equals(match.getStatusOrigin())) {// 下半场
             holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
@@ -298,113 +370,153 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             try {
                 int keeptime = Integer.parseInt(match.getKeepTime());
                 if (keeptime > 90) {
-                    holder.item_football_half_score.setText("90+");
-                    holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+                    holder.keeptime.setText("90+");
+                    holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
                 } else {
 
-                    holder.item_football_half_score.setText(keeptime + "");
-                    holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+                    holder.keeptime.setText(keeptime + "");
+                    holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
                 }
+
+                holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
+                holder.item_football_half_score.setVisibility(View.VISIBLE);
+
             } catch (Exception e) {
 
-                holder.item_football_half_score.setText("E");
-                holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+                holder.keeptime.setText("E");
+                holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
             }
 
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+            holder.keeptime.setVisibility(View.VISIBLE);
         } else if ("4".equals(match.getStatusOrigin())) {// 加时
             holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
-            holder.item_football_half_score.setText(mContext.getString(R.string.immediate_status_overtime));
-            holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+            holder.keeptime.setText(mContext.getString(R.string.immediate_status_overtime));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
 
+            holder.keeptime.setVisibility(View.VISIBLE);
+
+            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
             holder.item_football_half_score.setVisibility(View.VISIBLE);
+
         } else if ("5".equals(match.getStatusOrigin())) {// 点球
 
 
             holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
 
-            holder.item_football_half_score.setText(mContext.getString(R.string.immediate_status_point));
-            holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+            holder.keeptime.setText(mContext.getString(R.string.immediate_status_point));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
 
+            holder.keeptime.setVisibility(View.VISIBLE);
+
+            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
             holder.item_football_half_score.setVisibility(View.VISIBLE);
+
 
         } else if ("-1".equals(match.getStatusOrigin())) {// 完场
 
 
             holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.item_football_full_score.setVisibility(View.VISIBLE);
 
-            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
+            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
             holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.red));
             holder.item_football_half_score.setVisibility(View.VISIBLE);
+            holder.keeptime.setVisibility(View.GONE);
+
         } else if ("2".equals(match.getStatusOrigin())) {// 中场
             holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            holder.item_football_half_score.setText(mContext.getString(R.string.immediate_status_midfield));
-            holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+            holder.item_football_full_score.setVisibility(View.VISIBLE);
+
+
+            holder.keeptime.setText(mContext.getString(R.string.immediate_status_midfield));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.football_keeptime));
+            holder.keeptime.setVisibility(View.VISIBLE);
+
+            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + ":" + match.getGuestHalfScore() + ")");
             holder.item_football_half_score.setVisibility(View.VISIBLE);
+
 
         } else if ("-10".equals(match.getStatusOrigin())) {// 取消
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-           // holder.setFakeBoldText(R.id.item_football_full_score, false);
+            // holder.setFakeBoldText(R.id.item_football_full_score, false);
             holder.item_football_full_score.setText("VS");
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
-            holder.item_football_half_score.setText(mContext.getString(R.string.immediate_status_cancel));
-            holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.item_football_full_score.setVisibility(View.VISIBLE);
+
+
+            holder.keeptime.setVisibility(View.VISIBLE);
+            holder.keeptime.setText(mContext.getString(R.string.immediate_status_cancel));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
+
+            holder.item_football_half_score.setVisibility(View.INVISIBLE);
+
+
         } else if ("-11".equals(match.getStatusOrigin())) {// 待定
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
             // holder.setFakeBoldText(R.id.item_football_full_score, false);
-            holder.item_football_half_score.setText(mContext.getString(R.string.immediate_status_hold));
-            holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.red));
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+            holder.keeptime.setText(mContext.getString(R.string.immediate_status_hold));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.keeptime.setVisibility(View.VISIBLE);
             holder.item_football_full_score.setText("VS");
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
+            holder.item_football_full_score.setVisibility(View.VISIBLE);
+
+
+            holder.item_football_half_score.setVisibility(View.INVISIBLE);
+
         } else if ("-12".equals(match.getStatusOrigin())) {// 腰斩
-            holder.item_football_half_score.setText(mContext.getString(R.string.immediate_status_cut));
-            holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.keeptime.setText(mContext.getString(R.string.immediate_status_cut));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
             holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+            holder.item_football_full_score.setVisibility(View.VISIBLE);
+
+            holder.keeptime.setVisibility(View.VISIBLE);
+
 
         } else if ("-13".equals(match.getStatusOrigin())) {// 中断
 
-            holder.item_football_half_score.setText(mContext.getString(R.string.immediate_status_mesomere));
-            holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.keeptime.setText(mContext.getString(R.string.immediate_status_mesomere));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
             holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+            holder.item_football_full_score.setVisibility(View.VISIBLE);
+
+            holder.keeptime.setVisibility(View.VISIBLE);
 
 
         } else if ("-14".equals(match.getStatusOrigin())) {// 推迟
 
 
-
-            holder.item_football_half_score.setText(mContext.getString(R.string.immediate_status_postpone));
-            holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.keeptime.setText(mContext.getString(R.string.immediate_status_postpone));
+            holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
             holder.item_football_full_score.setText(match.getHomeScore() + "-" + match.getGuestScore());
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
-            holder.item_football_half_score.setVisibility(View.VISIBLE);
+
+            holder.keeptime.setVisibility(View.VISIBLE);
 
 
             holder.item_football_full_score.setText("VS");
             holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_grad));
-            holder.item_football_full_score.setVisibility(View.GONE);
+            holder.item_football_full_score.setVisibility(View.VISIBLE);
+            holder.item_football_half_score.setVisibility(View.INVISIBLE);
 
 
         }
 
         if (match.getHomeTeamTextColorId() == R.color.red || match.getHomeTeamTextColorId() == R.color.content_txt_black) {
-            holder.item_football_hometeam.setTextColor(mContext.getResources().getColor(match.getHomeTeamTextColorId()));
+            holder.item_football_hometeam.setTextColor(match.getHomeTeamTextColorId());
 
         } else {
             holder.item_football_hometeam.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
         }
         if (match.getGuestTeamTextColorId() == R.color.red || match.getGuestTeamTextColorId() == R.color.content_txt_black) {
-            holder.item_football_hometeam.setTextColor(mContext.getResources().getColor(match.getGuestTeamTextColorId()));
+            holder.item_football_hometeam.setTextColor(match.getGuestTeamTextColorId());
 
 
         } else {
@@ -472,25 +584,24 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if ("3".equals(match.getStatusOrigin()) || "2".equals(match.getStatusOrigin())) {// 显示右上角上半场比分
 
-            holder.item_football_right_mid_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
-            holder.item_football_right_mid_score.setVisibility(View.VISIBLE);
+            holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
+            holder.item_football_half_score.setVisibility(View.VISIBLE);
 
 
         } else if ("-12".equals(match.getStatusOrigin()) || "-13".equals(match.getStatusOrigin())) {// 中断和腰斩
             // 有中场比分显示中场比分
             if (match.getHomeHalfScore() != null && match.getGuestHalfScore() != null) {
-                holder.item_football_right_mid_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
-                holder.item_football_right_mid_score.setVisibility(View.VISIBLE);
+                holder.item_football_half_score.setText("(" + match.getHomeHalfScore() + "-" + match.getGuestHalfScore() + ")");
+                holder.item_football_half_score.setVisibility(View.VISIBLE);
             } else {
-                holder.item_football_right_mid_score.setVisibility(View.GONE);
+                holder.item_football_half_score.setVisibility(View.INVISIBLE);
             }
-        } else {
-            holder.item_football_right_mid_score.setVisibility(View.GONE);
         }
 
 
         if ("".equals(match.getHome_rc()) || "0".equals(match.getHome_rc()) || match.getHome_rc() == null) {
             holder.item_football_home_rc.setVisibility(View.GONE);
+            // holder.item_football_hometeam.set
         } else {
             holder.item_football_home_rc.setText(match.getHome_rc());
             holder.item_football_home_rc.setVisibility(View.VISIBLE);
@@ -510,6 +621,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             holder.item_football_guest_rc.setText(match.getGuest_rc());
             holder.item_football_guest_rc.setVisibility(View.VISIBLE);
         }
+
+
         if ("".equals(match.getGuest_yc()) || "0".equals(match.getGuest_yc()) || match.getGuest_yc() == null) {
             holder.item_football_guest_yc.setVisibility(View.GONE);
         } else {
@@ -553,18 +666,18 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     holder.item_football_right_odds.setVisibility(View.VISIBLE);
                     holder.item_football_handicap_value.setText(HandicapUtils.changeHandicap(handicapValue));
                     holder.item_football_left_odds.setText(odd.getLeftOdds());
-                    holder.item_football_right_odds.setText( odd.getRightOdds());
+                    holder.item_football_right_odds.setText(odd.getRightOdds());
                     if (match.getLeftOddTextColorId() != 0) {
 
-                        holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(match.getLeftOddTextColorId()));
+                        holder.item_football_left_odds.setTextColor(match.getLeftOddTextColorId());
 
                     }
                     if (match.getRightOddTextColorId() != 0) {
-                        holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(match.getRightOddTextColorId()));
+                        holder.item_football_right_odds.setTextColor(match.getRightOddTextColorId());
 
                     }
                     if (match.getMidOddTextColorId() != 0) {
-                        holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(match.getMidOddTextColorId()));
+                        holder.item_football_handicap_value.setTextColor(match.getMidOddTextColorId());
 
                     }
                 }
@@ -612,7 +725,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
                     } else {
-                        holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(match.getLeftOddTextColorId()));
+                        holder.item_football_left_odds.setTextColor(match.getLeftOddTextColorId());
                     }
 
                     if (match.getRightOddTextColorId() == 0) {
@@ -620,7 +733,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
 
                     } else {
-                        holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(match.getMidOddTextColorId()));
+                        holder.item_football_handicap_value.setTextColor(match.getMidOddTextColorId());
 
                     }
 
@@ -628,7 +741,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
 
                     } else {
-                        holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(match.getRightOddTextColorId()));
+                        holder.item_football_right_odds.setTextColor(match.getRightOddTextColorId());
                     }
 
                     holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
@@ -666,23 +779,23 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     holder.item_football_left_odds.setVisibility(View.VISIBLE);
                     holder.item_football_handicap_value.setVisibility(View.VISIBLE);
                     holder.item_football_right_odds.setVisibility(View.VISIBLE);
-                    holder.item_football_handicap_value.setText( HandicapUtils.changeHandicapByBigLittleBall(handicapValue));
+                    holder.item_football_handicap_value.setText(HandicapUtils.changeHandicapByBigLittleBall(handicapValue));
                     holder.item_football_left_odds.setText(odd.getLeftOdds());
                     holder.item_football_right_odds.setText(odd.getRightOdds());
 
 
                     if (match.getLeftOddTextColorId() != 0) {
-                        holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(match.getLeftOddTextColorId()));
+                        holder.item_football_left_odds.setTextColor(match.getLeftOddTextColorId());
                     }
                     if (match.getRightOddTextColorId() != 0) {
-                        holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(match.getRightOddTextColorId()));
+                        holder.item_football_right_odds.setTextColor(match.getRightOddTextColorId());
 
 
                     }
 
                     if (match.getMidOddTextColorId() != 0) {
 
-                        holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(match.getMidOddTextColorId()));
+                        holder.item_football_handicap_value.setTextColor(match.getMidOddTextColorId());
 
                     }
                 }
@@ -702,8 +815,6 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
                             holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
                             holder.item_football_right_odds.setBackgroundResource(R.color.transparent);
-
-
 
 
                         } else if (re < 0) {
@@ -736,7 +847,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
 
                     } else {
-                        holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(match.getLeftOddTextColorId()));
+                        holder.item_football_left_odds.setTextColor(match.getLeftOddTextColorId());
 
 
                     }
@@ -746,13 +857,13 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
 
                     } else {
-                        holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(match.getMidOddTextColorId()));
+                        holder.item_football_handicap_value.setTextColor(match.getMidOddTextColorId());
                     }
 
                     if (match.getMidOddTextColorId() == 0) {
                         holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
                     } else {
-                        holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(match.getRightOddTextColorId()));
+                        holder.item_football_right_odds.setTextColor(match.getRightOddTextColorId());
                     }
                     holder.item_football_left_odds.setBackgroundResource(R.color.transparent);
                     holder.item_football_handicap_value.setBackgroundResource(R.color.transparent);
@@ -786,14 +897,15 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     holder.item_football_right_odds.setText(odd.getRightOdds());
 
                     if (match.getLeftOddTextColorId() != 0) {
-                        holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(match.getLeftOddTextColorId()));
+                        holder.item_football_left_odds.setTextColor(match.getLeftOddTextColorId());
+
                     }
                     if (match.getRightOddTextColorId() != 0) {
-                        holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(match.getRightOddTextColorId()));
+                        holder.item_football_right_odds.setTextColor(match.getRightOddTextColorId());
 
                     }
                     if (match.getMidOddTextColorId() != 0) {
-                        holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(match.getMidOddTextColorId()));
+                        holder.item_football_handicap_value.setTextColor(match.getMidOddTextColorId());
                     }
                 }
                 // 完场赔率颜色
@@ -844,7 +956,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     } else {
 
-                        holder.item_football_left_odds.setTextColor(mContext.getResources().getColor(match.getLeftOddTextColorId()));
+                        holder.item_football_left_odds.setTextColor(match.getLeftOddTextColorId());
 
 
                     }
@@ -854,7 +966,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
                     } else {
-                        holder.item_football_handicap_value.setTextColor(mContext.getResources().getColor(match.getMidOddTextColorId()));
+                        holder.item_football_handicap_value.setTextColor(match.getMidOddTextColorId());
 
                     }
 
@@ -863,7 +975,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     } else {
 
-                        holder.item_football_right_odds.setTextColor(mContext.getResources().getColor(match.getRightOddTextColorId()));
+                        holder.item_football_right_odds.setTextColor(match.getRightOddTextColorId());
 
                     }
 
@@ -901,9 +1013,12 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             }
         });
+
+        holder.item_football_home_rc.setVisibility(View.VISIBLE);
+        holder.item_football_home_yc.setVisibility(View.VISIBLE);
+        holder.item_football_guest_rc.setVisibility(View.VISIBLE);
+        holder.item_football_guest_yc.setVisibility(View.VISIBLE);
     }
-
-
 
 
     public void updateDatas(List<ResultMatchDto> mMatch) {

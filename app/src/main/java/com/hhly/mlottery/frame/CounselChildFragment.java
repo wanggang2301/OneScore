@@ -21,7 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.CounselFragmentLvAdapter;
 import com.hhly.mlottery.adapter.CounselPageAdapter;
-import com.hhly.mlottery.bean.footballsecond.CounselBean;
+import com.hhly.mlottery.bean.footballDetails.CounselBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;

@@ -36,7 +36,7 @@ public class BaseURLs {
             }
         }
 
-		return  "m.13322.com";
+        return  "m.13322.com";
 
     }
 
@@ -467,18 +467,38 @@ public class BaseURLs {
     // main.findMainResult.do
 
     // 即时
-    private final static String URL_IMMEDIATE = "matchResults.findImmediateMatchs.do";
+    //  private final static String URL_IMMEDIATE = "matchResults.findImmediateMatchs.do";
+
+    //即时(增加队徽请求字段)
+    private final static String URL_IMMEDIATE = "androidMatchResults.findImmediateMatchs.do";
+
+
     // 热门和焦点
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
 
+
+
     // 赛果
-    private final static String URL_RESULT = "appMatchResults.findResultOfBallMatch.do";// 新接口
+    //  private final static String URL_RESULT = "appMatchResults.findResultOfBallMatch.do";//
+
+    //赛果(增加队徽请求字段)
+    private final static String URL_RESULT = "androidMatchResults.findResultOfBallMatch.do";// 新接口
+
 
     // 赛程
-    private final static String URL_CEASELESS = "appMatchResults.findCeaselessMatch.do";
+    //  private final static String URL_CEASELESS = "appMatchResults.findCeaselessMatch.do";
+
+    //赛程(增加队徽请求字段)
+    private final static String URL_CEASELESS = "androidMatchResults.findCeaselessMatch.do";
+
 
     // 关注
-    private final static String URL_FOCUS = "matchResults.findFocusMatchs.do";
+    //  private final static String URL_FOCUS = "matchResults.findFocusMatchs.do";
+
+
+    //关注(增加队徽请求字段)
+    private final static String URL_FOCUS = "androidMatchResults.findFocusMatchs.do";
+
 
     // 刷新
     private final static String URL_INCREMENT = "matchResults.findIncrementMatchs.do";

@@ -1,7 +1,6 @@
 package com.hhly.mlottery.adapter;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.AnalyzeBean;
-import com.hhly.mlottery.bean.footballsecond.Battels;
+import com.hhly.mlottery.bean.footballDetails.AnalyzeBean;
+import com.hhly.mlottery.bean.footballDetails.Battels;
 
 import java.util.ArrayList;
 import java.util.List;

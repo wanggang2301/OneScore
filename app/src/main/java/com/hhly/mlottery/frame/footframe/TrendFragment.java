@@ -12,15 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.bean.footballsecond.AttackTrendBean;
-import com.hhly.mlottery.bean.footballsecond.CornerTrendBean;
-import com.hhly.mlottery.bean.footballsecond.TrendAllBean;
+import com.hhly.mlottery.bean.footballDetails.TrendAllBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="item_filtrate_match_text">12sp</dimen>
+    
+    <dimen name="item_football_racename">14sp</dimen>
+    <dimen name="item_football_time">14sp</dimen>
+    <dimen name="keep_time">14sp</dimen>
+    <dimen name="item_football_half_score">13sp</dimen>
+
+
+    <dimen name="item_football_hometeam">14sp</dimen>
+    <dimen name="item_football_guestteam">14sp</dimen>
+    <dimen name="item_football_card">10sp</dimen>
+    <dimen name="item_football_frequency">14sp</dimen>
+    <dimen name="item_football_full_score">27sp</dimen>
+    <dimen name="item_football_left_odds">14sp</dimen>
+    <dimen name="item_football_handicap_value">14sp</dimen>
+    <dimen name="item_football_right_odds">14sp</dimen>
+    <dimen name="item_football_right_mid_score">14sp</dimen>
+    
+    
+
+    
+    <dimen name="item_football_international_teamname_max_width">214dp</dimen>
+	
+    <dimen name="item_football_international_card">10sp</dimen>
+
+    <dimen name="activity_football_match_detail_teamname">15sp</dimen>
+    <dimen name="activity_football_match_detail_teamname_hometag">10sp</dimen>
+
+
+
+    <dimen name="football_icon_x">130px</dimen>
+    <dimen name="football_icon_y">130px</dimen>
+    <dimen name="football_offset">20dp</dimen>
+    <dimen name="football_icon_padding">35dp</dimen>
+
+    <dimen name="football_cardview_margin">2.5dp</dimen>
+
+</resources>
+
