@@ -548,9 +548,6 @@
     <color name="radiobutton_normal">#fff</color>
     <color name="radiobutton_pressed">#21b11e</color>
     <color name="radio_colors">#FFFFFFFF</color>
-    <color name="odds_up">#FF1F1F</color>
-    <color name="odds_down">#21b11e</color>
-    <color name="basket_odds_divider">#2e2d32</color>
 
 
     <!--分析界面部分顏色-->
@@ -558,4 +555,6 @@
     <color name="equ_color">#0eae7e</color>
     <color name="defeat_color">#1756e5</color>
     <color name="team_name_color">#333333</color>
+
+    <color name="football_keeptime">#1CDA4A</color>
 </resources>
