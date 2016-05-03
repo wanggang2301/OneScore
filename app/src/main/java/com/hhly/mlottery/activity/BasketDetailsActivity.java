@@ -422,6 +422,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mApos.setVisibility(View.GONE);
             }
         }, BasketballDetailsBean.class);
     }
