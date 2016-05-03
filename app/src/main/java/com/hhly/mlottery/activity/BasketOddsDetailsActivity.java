@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketOddsDetailsAdapter;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
@@ -23,6 +24,7 @@ import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,6 +110,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         mBackImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(MyApp.getContext(),"BasketOddsDetailsActivity_Exit");
                 finish();
             }
         });
@@ -278,5 +281,19 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
                 holder.setBackgroundColor(R.id.basket_odds_company_text, getResources().getColor(R.color.black_title));
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("BasketOddsDetailsActivity");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("BasketOddsDetailsActivity");
     }
 }
