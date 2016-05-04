@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
 import com.hhly.mlottery.adapter.basketball.BasketOddsAdapter;
@@ -286,6 +287,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.network_exception_reload_btn:
+                MobclickAgent.onEvent(MyApp.getContext(),"BasketOddsFragment_NotNet");
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 initData();
 

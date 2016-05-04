@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
 import com.hhly.mlottery.activity.BasketOddsDetailsActivity;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.OddsDataEntity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +128,7 @@ public class BasketOddsAdapter  extends BaseAdapter{
             if(mType.equals(BasketDetailsActivity.ODDS_EURO)&&position==0){
                 return;
             }
+            MobclickAgent.onEvent(MyApp.getContext(),"BasketOddsDetailsActivity");
             Intent intent = new Intent(context, BasketOddsDetailsActivity.class);
             Bundle bundle=new Bundle();
             bundle.putString("type", mType);
