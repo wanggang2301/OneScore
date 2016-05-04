@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.basketballframe;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,6 +23,7 @@ import com.hhly.mlottery.adapter.basketball.BasketOddsAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketOddsDetailsAdapter;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.ObservableListView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -169,6 +172,8 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
         //头部
         View paddingView = new View(getActivity());
         final int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
+        int itemHeight=getResources().getDimensionPixelSize(R.dimen.item_height);//53dp
+        int itemTitleHeight=getResources().getDimensionPixelSize(R.dimen.item_title_height);
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
                 flexibleSpaceImageHeight);
         paddingView.setLayoutParams(lp);
@@ -214,15 +219,19 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
         View errorView=View.inflate(getActivity(), R.layout.basket_odds_new_error,null);
         mExceptionLayout= (LinearLayout) errorView.findViewById(R.id.basket_odds_net_error);
         mExceptionLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
+        mExceptionLayout.setVisibility(View.GONE);
         listView.addHeaderView(errorView);
         //点击刷新
         errorView.findViewById(R.id.network_exception_reload_btn).setOnClickListener(BasketOddsFragment.this);
 
-
+        WindowManager wm= (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        int h=wm.getDefaultDisplay().getHeight();
+//        L.e("AAAAAA","height"+h);
+//        L.e("AAAAAA",flexibleSpaceImageHeight+"");
 
         View paddingviewButtom=new View(getActivity());
         AbsListView.LayoutParams lp1 = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                2*flexibleSpaceImageHeight );
+                36*flexibleSpaceImageHeight/20);
         paddingviewButtom.setLayoutParams(lp1);
         paddingviewButtom.setBackgroundColor(getResources().getColor(R.color.black_title));
         listView.addFooterView(paddingviewButtom);

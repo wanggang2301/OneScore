@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:background="@color/black_title"
     android:layout_marginLeft="@dimen/x15"
-
     android:layout_marginRight="@dimen/x15"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/y106">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"

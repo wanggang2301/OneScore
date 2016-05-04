@@ -105,8 +105,8 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private SlidingTabLayout mSlidingTabLayout;
     private int mFlexibleSpaceHeight;
     private int mTabHeight;
-    private int mHeight;//整个头部
-    // 高度240减去tablayout的48再减去paddingtop的24（微调改为减20.）
+    private int mHeight;//整个头部 高度240减去title栏（header）的44再减去paddingtop的24=172
+
     private DisplayImageOptions mOptions;
     private DisplayImageOptions mOptionsHead;
     private ImageLoader mImageLoader;
