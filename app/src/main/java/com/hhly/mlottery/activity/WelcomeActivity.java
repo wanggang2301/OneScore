@@ -465,14 +465,14 @@ public class WelcomeActivity extends BaseActivity {
 
              } else {
                  //如过json为空代表无图片显示
-
+                 imageHandler.sendEmptyMessage(GET_IMAGE_NODATA);
 
              }
          }
      }, new VolleyContentFast.ResponseErrorListener() {
          @Override
          public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+             //请求失败
              imageHandler.sendEmptyMessage(INIT_IMAGE_ERROR);
 
          }
