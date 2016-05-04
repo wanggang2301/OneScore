@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.UmengInfo;
 import com.hhly.mlottery.bean.UpdateInfo;
+import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -37,6 +39,7 @@ import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.bitmap.core.BitmapCache;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.HttpHandler;
 import com.lidroid.xutils.http.RequestParams;
@@ -49,14 +52,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +69,10 @@ import java.util.TimerTask;
  * @date 2015-11-5 上午11:32:35
  */
 public class WelcomeActivity extends BaseActivity {
+    private static final int TIMEOUT_IMAGE_ERROR =1 ;
+    private static final int GET_IMAGE_SUCCESS = 2;
+    private static final int INIT_IMAGE_ERROR = 3;
+    private static final int GET_IMAGE_NODATA = 4;
     private boolean isToHome = true;
     private ImageView imageAD;// 启动图
 
@@ -129,6 +132,7 @@ public class WelcomeActivity extends BaseActivity {
     //	private LocationManager locationManager;
     public PackageManager mPackageManager;
     public static PackageInfo mPackageInfo;
+    private String mStartimageUrl;
 
     @SuppressWarnings("unused")
     @Override
@@ -164,7 +168,9 @@ public class WelcomeActivity extends BaseActivity {
         getUmeng();
         msg = Message.obtain();
 
-        thread = new Thread(new CheckVersionTask());
+       /* thread = new Thread(new CheckVersionTask());
+        thread.start();*/
+        thread = new Thread(new getStartImage());
         thread.start();
 
         final long start = System.currentTimeMillis(); // 记录起始时间
@@ -412,7 +418,18 @@ public class WelcomeActivity extends BaseActivity {
     // mRequestQueue.add(stringRequest);
     // }
 
-    private class CheckVersionTask implements Runnable {
+       private class getStartImage implements Runnable {
+
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            //启动获取图片url
+            getStartImageUrl();
+
+        }
+    }
+
+ /*   private class CheckVersionTask implements Runnable {
 
         @Override
         public void run() {
@@ -422,6 +439,48 @@ public class WelcomeActivity extends BaseActivity {
 
         }
     }
+*/
+ private void getStartImageUrl() {
+
+     // 1、取得启动也url
+
+     String serverUrl ="http://192.168.10.242:8181/mlottery/core/basketballMatch.findLiveMatch.do?lang=zh&appType=2&version=11";
+
+
+
+     // 2、连接服务器
+     VolleyContentFast.requestJsonByGet(serverUrl, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
+         @Override
+         public synchronized void onResponse(final BasketRoot json) {
+             if (json != null) {
+
+                 mStartimageUrl = json.getMatchData().get(1).getMatch().get(1).getGuestLogoUrl();
+                 //保存启动页图片url
+               // PreferenceUtil.commitString(MyConstants.START_IMAGE_URL,mStartimage);
+                 //网络请求图片成功
+                 imageHandler.sendEmptyMessage(GET_IMAGE_SUCCESS);
+
+
+
+
+             } else {
+                 //如过json为空代表无图片显示
+
+
+             }
+         }
+     }, new VolleyContentFast.ResponseErrorListener() {
+         @Override
+         public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+             imageHandler.sendEmptyMessage(INIT_IMAGE_ERROR);
+
+         }
+     }, BasketRoot.class);
+
+
+//
+ }
 
     private void checkVersionUpdate() {
 
@@ -486,6 +545,31 @@ public class WelcomeActivity extends BaseActivity {
 
     }
 
+    private Handler imageHandler=new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what){
+                case INIT_IMAGE_ERROR://网络请求失败
+
+                    break;
+                case TIMEOUT_IMAGE_ERROR://网络请求超时
+
+                break;
+
+                case GET_IMAGE_SUCCESS://图片获取成功
+
+
+                break ;
+                case GET_IMAGE_NODATA://无图片显示
+
+            }
+
+
+
+        }
+    };
     private Handler handler = new Handler() {
 
         @Override
