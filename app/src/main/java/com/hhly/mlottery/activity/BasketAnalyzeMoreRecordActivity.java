@@ -439,6 +439,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 setDialog(false);
                 break;
             case R.id.basketball_details_error_btn: //点击刷新
+                MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_Refresh");
                 mHandler.postDelayed(mRun , 0);
                 break;
             default:
