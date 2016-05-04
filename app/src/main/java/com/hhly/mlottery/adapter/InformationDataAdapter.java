@@ -2,13 +2,10 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.InforListData;
+import com.hhly.mlottery.bean.footballDetails.InforListData;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

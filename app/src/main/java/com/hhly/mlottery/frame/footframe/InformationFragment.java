@@ -22,7 +22,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballInformationActivity;
 import com.hhly.mlottery.adapter.InformationDataAdapter;
-import com.hhly.mlottery.bean.footballsecond.InforListData;
+import com.hhly.mlottery.bean.footballDetails.InforListData;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;

@@ -52,8 +52,6 @@ public class ScoresFragment extends Fragment {
     private View view;
     private Context mContext;
 
-
-
     /**
      * 返回菜单
      */
@@ -99,7 +97,7 @@ public class ScoresFragment extends Fragment {
         // TODO Auto-generated method stub
         mContext = getActivity();
         view = View.inflate(mContext, R.layout.frage_football, null);
-//        MobclickAgent.openActivityDurationTrack(true);
+        MobclickAgent.openActivityDurationTrack(true);
         initView();
         setupViewPager();
         focusCallback();// 加载关注数
@@ -227,14 +225,14 @@ public class ScoresFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ((FootballActivity) getActivity()).finish();
-                MobclickAgent.onEvent(mContext,"Football_Exit");
+                MobclickAgent.onEvent(mContext, "Football_Exit");
             }
         });
 
         mFilterImgBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MobclickAgent.onEvent(mContext,"Football_Filtrate");
+                MobclickAgent.onEvent(mContext, "Football_Filtrate");
                 currentFragmentId = mViewPager.getCurrentItem();
                 if (currentFragmentId == IMMEDIA_FRAGMENT) {
                     switch (ImmediateFragment.mLoadDataStatus) {
@@ -267,7 +265,6 @@ public class ScoresFragment extends Fragment {
                         default:
                             break;
                     }
-
                 } else if (currentFragmentId == RESULT_FRAGMENT) {
                     switch (ResultFragment.mLoadDataStatus) {
                         case ResultFragment.LOAD_DATA_STATUS_ERROR:
@@ -299,9 +296,7 @@ public class ScoresFragment extends Fragment {
                             Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
                             break;
                     }
-
                 } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
-
                     if (ScheduleFragment.mLoadDataStatus == ScheduleFragment.LOAD_DATA_STATUS_SUCCESS) {
                         Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
                         Bundle bundle = new Bundle();
@@ -331,7 +326,7 @@ public class ScoresFragment extends Fragment {
         mSetImgBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                MobclickAgent.onEvent(mContext,"Football_Setting");
+                MobclickAgent.onEvent(mContext, "Football_Setting");
                 currentFragmentId = mViewPager.getCurrentItem();
                 if (currentFragmentId == IMMEDIA_FRAGMENT) {
                     Intent intent = new Intent(mContext, FootballTypeSettingActivity.class);
@@ -379,14 +374,7 @@ public class ScoresFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("ScoresFragment");
         L.d(TAG, "football Fragment resume..");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("ScoresFragment");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.footballsecond;
+package com.hhly.mlottery.bean.footballDetails;
 
 import android.os.Parcel;
 import android.os.Parcelable;

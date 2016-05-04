@@ -172,6 +172,12 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
      */
     private boolean mHasLoadedOnce;
 
+
+    private String teamLogoSuff;
+
+    private String teamLogoPre;
+
+
     public static FocusFragment newInstance(String param1, String param2) {
         FocusFragment fragment = new FocusFragment();
         Bundle args = new Bundle();
@@ -354,7 +360,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                         String newIds = focusIds + "," + third;
                         PreferenceUtil.commitString("focus_ids", newIds);
                     }
-                    ((ImageView) view).setImageResource(R.mipmap.article_like_hover);
+                    ((ImageView) view).setImageResource(R.mipmap.football_focus);
 
                 } else {// 删除
                     String[] idArray = focusIds.split("[,]");
@@ -370,7 +376,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                         }
                     }
                     PreferenceUtil.commitString("focus_ids", sb.toString());
-                    ((ImageView) view).setImageResource(R.mipmap.article_like);
+                    ((ImageView) view).setImageResource(R.mipmap.football_nomal);
 
                     List<Match> allList = new ArrayList<Match>();
                     for (Match m : mAllMatchs) {
@@ -574,7 +580,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                                 }
                             });*/
                 } else {
-                    mAdapter = new ImmediateAdapter(mContext, mMatchs);
+                    mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                     mAdapter.setmFocusMatchClickListener(mFocusClickListener);
 
 
@@ -586,7 +592,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                             String thirdId = data;
                             Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                             intent.putExtra("thirdId", thirdId);
-                            intent.putExtra("currentFragmentId",3);
+                            intent.putExtra("currentFragmentId", 3);
 
                             getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                         }
@@ -1117,6 +1123,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart("FocusFragment");
         isPause = false;
         L.v(TAG, "___onResume___");
 
@@ -1333,14 +1340,12 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
-            MobclickAgent.onPageEnd("FocusFragment");
             isPause = true;
             if (mSocketClient != null) {
                 isDestroy = true;
                 mSocketClient.close();
             }
         } else {
-            MobclickAgent.onPageStart("FocusFragment");
             isPause = false;
             isDestroy = false;
             String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
@@ -1461,6 +1466,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd("FocusFragment");
         isPause = true;
     }
 }

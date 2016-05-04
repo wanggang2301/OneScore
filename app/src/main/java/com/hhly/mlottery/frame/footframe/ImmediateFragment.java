@@ -201,6 +201,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     LinearLayoutManager layoutManager;
 
 
+    private String teamLogoPre;
+
+    private String teamLogoSuff;
+
+
+
 
     public static ImmediateFragment newInstance(String param1, String param2) {
         ImmediateFragment fragment = new ImmediateFragment();
@@ -482,6 +488,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                     return;
                 }
 
+
+                teamLogoPre = jsonMatch.getTeamLogoPre();
+                teamLogoSuff = jsonMatch.getTeamLogoSuff();
+
+
                 HotFocusUtils hotFocusUtils = new HotFocusUtils();
                 hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
 
@@ -525,7 +536,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                             mMatchs.addAll(mAllMatchs);
                             mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
                             if (mMatchs.size() == 0) {// 一个赛事都没有，显示“暂无赛事”
-                              //  mRecyclerView.setLayoutManager(layoutManager);
+                                //  mRecyclerView.setLayoutManager(layoutManager);
 
                                 if (AppConstants.isGOKeyboard) {
                                     /*mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
@@ -533,8 +544,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                     mInternationalAdapter.setFocusClickListener(mFocusClickListener);
                                     mListView.setAdapter(mInternationalAdapter);*/
                                 } else {
-                                    mAdapter = new ImmediateAdapter(mContext, mMatchs);
-                                  //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
+                                    mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                                    //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                                     mAdapter.setmFocusMatchClickListener(mFocusClickListener);
                                     mRecyclerView.setAdapter(mAdapter);
 
@@ -545,7 +556,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                             String thirdId = data;
                                             Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                                             intent.putExtra("thirdId", thirdId);
-                                            intent.putExtra("currentFragmentId",0);
+                                            intent.putExtra("currentFragmentId", 0);
 
                                             getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                                         }
@@ -592,8 +603,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                             mInternationalAdapter.setFocusClickListener(mFocusClickListener);
                             mListView.setAdapter(mInternationalAdapter);*/
                         } else {
-                            mAdapter = new ImmediateAdapter(mContext, mMatchs);
-                          //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
+                            mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                            //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                             mAdapter.setmFocusMatchClickListener(mFocusClickListener);
                             mRecyclerView.setAdapter(mAdapter);
 
@@ -1385,6 +1396,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart("ImmediateFragment");
         L.v(TAG, "___onResume___");
 
         isPause = false;
@@ -1409,14 +1421,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 //        L.v(TAG, "hidden = "+hidden);
 
         if (hidden) {
-            MobclickAgent.onPageEnd("ImmediateFragment");
             isPause = true;
             if (mSocketClient != null) {
                 isDestroy = true;
                 mSocketClient.close();
             }
         } else {
-            MobclickAgent.onPageStart("ImmediateFragment");
             isPause = false;
             isDestroy = false;
             if (mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
@@ -1592,7 +1602,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     public void onPause() {
         isPause = true;
         super.onPause();
-
+        MobclickAgent.onPageEnd("ImmediateFragment");
     }
 
 
@@ -1609,7 +1619,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
       //  EventBus.getDefault().unregister(this);
         imEventBus.unregister(this);
 
-        L.d("100","onDestroyView");
+        L.d("100", "onDestroyView");
         L.w(TAG, "immediate fragment destroy view..");
     }
 }
