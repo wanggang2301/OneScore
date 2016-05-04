@@ -22,6 +22,7 @@ import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.service.umengPushService;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -71,6 +72,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         initView();
         initData();
         initEvent();
+        startService(new Intent(mContext,umengPushService.class));
     }
 
     /**

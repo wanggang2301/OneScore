@@ -8,7 +8,7 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="22" />
     <!-- 调用系统下载权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
@@ -52,7 +52,7 @@
         <activity
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" >
+            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,15 +63,19 @@
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" >
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
         </activity>
-        <!-- 首页 -->
-
         <!-- 内地版的key-begin -->
-        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
-        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5625a606e0f55aad6700244f" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="BETA" />
         <!-- 内地版的key-end -->
         <activity
             android:name=".activity.FootballInformationActivity"
@@ -124,7 +128,7 @@
         <!-- 篮球赔率详情 -->
         <activity
             android:name="com.hhly.mlottery.activity.BasketOddsDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!-- 篮球分析战绩详情 -->
         <activity
@@ -168,12 +172,15 @@
         <activity
             android:name=".activity.BasketListActivity"
             android:screenOrientation="portrait" />
-        
-        <activity android:name=".activity.FeedbackActivity"
-            android:screenOrientation="portrait"
-            >
+
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait">
 
         </activity>
+        <!--消息推送服务-->
+        <service
+            android:name=".service.umengPushService"/>
     </application>
 
 </manifest>
