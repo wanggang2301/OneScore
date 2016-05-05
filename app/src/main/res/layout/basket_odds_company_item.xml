@@ -35,8 +35,9 @@
     <TextView
         android:id="@+id/basket_odds_company_text"
         android:layout_width="match_parent"
-        android:layout_height="41dp"
+        android:layout_height="@dimen/y110"
         android:text="---"
+        android:singleLine="true"
         android:textColor="@color/black_details_ball_textcolor2"
         android:gravity="center"/>
 </LinearLayout>
