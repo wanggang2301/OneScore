@@ -222,9 +222,10 @@ public class VolleyContentFast {
     }
 
     /**
-     * 网络请求，GET方式，返回没有转化的string（无参）
+     * 网络请求，GET方式，返回没有转化的string（无参），可设置超时参数和重复请求
      *
      * @param url
+     * @param retryPolicy 可设置超时参数和重复请求
      * @param successlistener
      * @param errorListener
      */
