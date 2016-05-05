@@ -4,7 +4,7 @@
     android:background="@color/black_title"
     android:layout_marginLeft="@dimen/x15"
     android:layout_marginRight="@dimen/x15"
-    android:layout_height="@dimen/y106">
+    android:layout_height="@dimen/item_height">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -14,6 +14,7 @@
         android:gravity="center_vertical"
         >
         <ImageView
+            android:id="@+id/item_image_basket_odds_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/basket_odds_more"
@@ -58,7 +59,7 @@
                 android:textSize="@dimen/text_size_11"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:text="1.62"
+                android:text=""
                 />
             <TextView
                 android:id="@+id/item_basket_odds_guest_win_history"
@@ -68,7 +69,7 @@
                 android:textSize="@dimen/text_size_11"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:text="1.53"
+                android:text=""
                 />
         </LinearLayout>
         <!--盘口-->
@@ -103,7 +104,7 @@
                            android:textSize="@dimen/text_size_11"
                            android:textColor="@color/white"
                            android:gravity="center"
-                           android:text="1.62"
+                           android:text=""
                            />
                    </LinearLayout>
                    <LinearLayout
@@ -127,7 +128,7 @@
                            android:textSize="@dimen/text_size_11"
                            android:textColor="@color/white"
                            android:gravity="center"
-                           android:text="1.53"
+                           android:text=""
                            />
                    </LinearLayout>
 
@@ -148,7 +149,7 @@
                 android:textSize="@dimen/text_size_11"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:text="1.62"
+                android:text=""
                 />
             <TextView
                 android:id="@+id/item_basket_odds_home_win_history"
@@ -158,7 +159,7 @@
                 android:textSize="@dimen/text_size_11"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:text="1.53"
+                android:text=""
                 />
         </LinearLayout>
     </LinearLayout>

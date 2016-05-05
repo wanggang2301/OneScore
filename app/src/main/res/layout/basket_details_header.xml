@@ -20,9 +20,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/x12"
+            android:paddingLeft="@dimen/x15"
             android:paddingRight="@dimen/x12"
-            android:src="@mipmap/back" />
+            android:src="@mipmap/basketball_back" />
 
 
         <ImageView
@@ -31,17 +31,15 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/x24"
-            android:paddingRight="@dimen/x24"
+            android:paddingLeft="@dimen/x15"
+            android:paddingRight="@dimen/x12"
             android:src="@mipmap/basketball_collect" />
 
             <RelativeLayout
                 android:id="@+id/ll_basket_title_score"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/x600"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/basket_details_back"
-                android:layout_toLeftOf="@id/basket_details_collect"
                 android:visibility="visible"
                 >
                 <TextView
