@@ -29,8 +29,10 @@ import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,6 +148,14 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     }
 
+    /**指数三个Fragment的页面统计*/
+    private boolean isPlateFragment = true;
+    private boolean isPlate = false;
+    private boolean isBigFragment = false;
+    private boolean isBig = false;
+    private boolean isOpFragment = false;
+    private boolean isOp = false;
+
     //初始化viewPager
     private void initViewPager() {
         mTab1 = (TextView) mView.findViewById(R.id.cpi_match_detail_tab1);
@@ -190,15 +200,70 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     case 0:
                         mTab1.setTextColor(getResources().getColor(R.color.white));
                         mRefreshLayout.setEnabled(true);
+                        isPlateFragment = true;
+                        isBigFragment = false;
+                        isOpFragment = false;
                         break;
                     case 1:
                         mTab2.setTextColor(getResources().getColor(R.color.white));
                         mRefreshLayout.setEnabled(true);
+                        isPlateFragment = false;
+                        isBigFragment = true;
+                        isOpFragment = false;
                         break;
                     case 2:
                         mTab3.setTextColor(getResources().getColor(R.color.white));
                         mRefreshLayout.setEnabled(true);
+                        isPlateFragment = false;
+                        isBigFragment = false;
+                        isOpFragment = true;
                         break;
+                }
+
+                if (isPlateFragment) {
+                    if (isBig) {
+                        MobclickAgent.onPageEnd("Football_Odd_BigFragment");
+                        isBig = false;
+                        L.d("xxx", "isBig>>>隐藏");
+                    }
+                    if (isOp) {
+                        MobclickAgent.onPageEnd("Football_Odd_OpFragment");
+                        isOp = false;
+                        L.d("xxx", "isOp>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_Odd_PlateFragment");
+                    isPlate = true;
+                    L.d("xxx", "isPlate>>>显示");
+                }
+                if (isBigFragment) {
+                    if (isPlate) {
+                        MobclickAgent.onPageEnd("Football_Odd_PlateFragment");
+                        isPlate = false;
+                        L.d("xxx", "isPlate>>>隐藏");
+                    }
+                    if (isOp) {
+                        MobclickAgent.onPageEnd("Football_Odd_OpFragment");
+                        isOp = false;
+                        L.d("xxx", "isOp>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_Odd_BigFragment");
+                    isBig = true;
+                    L.d("xxx", "isBig>>>显示");
+                }
+                if (isOpFragment) {
+                    if (isPlate) {
+                        MobclickAgent.onPageEnd("Football_Odd_PlateFragment");
+                        isPlate = false;
+                        L.d("xxx", "isPlate>>>隐藏");
+                    }
+                    if (isBig) {
+                        MobclickAgent.onPageEnd("Football_Odd_BigFragment");
+                        isBig = false;
+                        L.d("xxx", "isBig>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_Odd_OpFragment");
+                    isOp = true;
+                    L.d("xxx", "isOp>>>显示");
                 }
             }
 
@@ -215,27 +280,40 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     private void initData() {
     }
 
+    /*private boolean isPlateFragment = true;
+    private boolean isPlate = false;
+    private boolean isBigFragment = false;
+    private boolean isBig = false;
+    private boolean isOpFragment = false;
+    private boolean isOp = false;*/
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.public_img_back:
+                MobclickAgent.onEvent(mContext, "Football_CPIFragment_Exit");
                 if (getActivity() == null) return;
                 ((FootballActivity) getActivity()).finish();
                 break;
             case R.id.cpi_match_detail_tab1:
+                MobclickAgent.onEvent(mContext, "Football_CPIFragment_Plate");
                 mViewPager.setCurrentItem(0);
                 break;
             case R.id.cpi_match_detail_tab2:
+                MobclickAgent.onEvent(mContext, "Football_CPIFragment_Big");
                 mViewPager.setCurrentItem(1);
                 break;
             case R.id.cpi_match_detail_tab3:
+                MobclickAgent.onEvent(mContext, "Football_CPIFragment_Op");
                 mViewPager.setCurrentItem(2);
 
                 break;
             case R.id.public_txt_date://点击日期的textview
+                MobclickAgent.onEvent(mContext, "Football_CPIFragment_date");
                 setDialog(0);//代表日期
                 break;
             case R.id.public_img_hot://点击热门
+                MobclickAgent.onEvent(mContext, "Football_CPIFragment_Hot");
                 //如果当前选择了热门
                 if (isSelectHot) {
                     public_img_hot.setSelected(true);
@@ -249,9 +327,11 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 }
                 break;
             case R.id.public_img_company://点击公司
+                MobclickAgent.onEvent(mContext, "Football_CPIFragment_Company");
                 setDialog(1);//代表公司
                 break;
             case R.id.public_img_filter://点击筛选
+                MobclickAgent.onEvent(mContext, "Football_CPIFragment_Filter");
                 startActivity(new Intent(mContext, FiltrateMatchConfigActivity.class));
                 break;
             default:
@@ -427,6 +507,58 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         @Override
         public int getCount() {
             return mFragmentList.size();
+        }
+    }
+
+    private boolean isHidden;// 当前Fragment是否显示
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isHidden = hidden;
+        if (hidden) {
+            onPause();
+        } else {
+            onResume();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isPlateFragment) {
+            MobclickAgent.onPageStart("Football_Odd_PlateFragment");
+            isPlate = true;
+            L.d("xxx", "isPlate>>>显示");
+        }
+        if (isBigFragment) {
+            MobclickAgent.onPageStart("Football_Odd_BigFragment");
+            isBig = true;
+            L.d("xxx", "isBig>>>显示");
+        }
+        if (isOpFragment) {
+            MobclickAgent.onPageStart("Football_Odd_OpFragment");
+            isOp = true;
+            L.d("xxx", "isOp>>>显示");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isPlate) {
+            MobclickAgent.onPageEnd("Football_Odd_PlateFragment");
+            isPlate = false;
+            L.d("xxx", "isPlate>>>隐藏");
+        }
+        if (isBig) {
+            MobclickAgent.onPageEnd("Football_Odd_BigFragment");
+            isBig = false;
+            L.d("xxx", "isBig>>>隐藏");
+        }
+        if (isOp) {
+            MobclickAgent.onPageEnd("Football_Odd_OpFragment");
+            isOp = false;
+            L.d("xxx", "isOp>>>隐藏");
         }
     }
 }
