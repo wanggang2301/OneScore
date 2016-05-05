@@ -65,7 +65,6 @@ import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseCloseLis
 import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseErrorListener;
 import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseMessageListener;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.umeng.analytics.MobclickAgent;
 
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
@@ -1396,7 +1395,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("ImmediateFragment");
         L.v(TAG, "___onResume___");
 
         isPause = false;
@@ -1419,7 +1417,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         super.onHiddenChanged(hidden);
 //        L.v(TAG, "___onHiddenChanged___");
 //        L.v(TAG, "hidden = "+hidden);
-
         if (hidden) {
             isPause = true;
             if (mSocketClient != null) {
@@ -1602,10 +1599,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     public void onPause() {
         isPause = true;
         super.onPause();
-        MobclickAgent.onPageEnd("ImmediateFragment");
     }
-
-
 
     @Override
     public void onDetach() {

@@ -484,13 +484,6 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         if (!isCreated) {
             return;
         }
-
-        if (isVisibleToUser) {
-            MobclickAgent.onPageStart("CounselChildFragment" + index);
-        }else {
-            MobclickAgent.onPageEnd("CounselChildFragment" + index);
-        }
-
     }
 
     /**

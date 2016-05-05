@@ -44,10 +44,10 @@ import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -681,17 +681,21 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("ScheduleFragment");
-        //为什么要这样，不懂。
-        //updateAdapter();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            L.d("xxx","Schedule>>>>isVisibleToUser...显示了");
+        }else {
+            L.d("xxx","Schedule>>>>isVisibleToUser...隐藏了");
+        }
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("ScheduleFragment");
+    public void onResume() {
+        super.onResume();
+        //为什么要这样，不懂。
+        //updateAdapter();
     }
 
     @Override

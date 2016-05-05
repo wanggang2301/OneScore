@@ -97,7 +97,6 @@ public class ScoresFragment extends Fragment {
         // TODO Auto-generated method stub
         mContext = getActivity();
         view = View.inflate(mContext, R.layout.frage_football, null);
-        MobclickAgent.openActivityDurationTrack(true);
         initView();
         setupViewPager();
         focusCallback();// 加载关注数
@@ -124,6 +123,15 @@ public class ScoresFragment extends Fragment {
         mSetImgBtn = (ImageView) view.findViewById(R.id.public_btn_set);
         mSetImgBtn.setVisibility(View.VISIBLE);
     }
+    /**判断四个Fragment切换显示或隐藏的状态 */
+    private boolean isImmediateFragment = true;
+    private boolean isImmediate = false;
+    private boolean isResultFragment = false;
+    private boolean isResult = false;
+    private boolean isScheduleFragment = false;
+    private boolean isSchedule = false;
+    private boolean isFocusFragment = false;
+    private boolean isFocus = false;
 
     private void setupViewPager() {
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
@@ -172,46 +180,117 @@ public class ScoresFragment extends Fragment {
 
             @Override
             public void onPageSelected(final int position) {
-               /* Handler handler = new Handler();
+                /**判断四个Fragment切换显示或隐藏的状态 */
                 switch (position) {
                     case IMMEDIA_FRAGMENT:
-                        mFilterImgBtn.setVisibility(View.VISIBLE);
-                        // ((ImmediateFragment) fragments.get(position)).reLoadData();
+                        isImmediateFragment = true;
+                        isResultFragment = false;
+                        isScheduleFragment = false;
+                        isFocusFragment = false;
                         break;
                     case RESULT_FRAGMENT:
-                        mFilterImgBtn.setVisibility(View.VISIBLE);
-
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                ((ResultFragment) fragments.get(position)).updateAdapter();
-
-                            }
-                        }, 300);
-                        //((ResultFragment) fragments.get(position)).updateAdapter();
+                        isResultFragment = true;
+                        isImmediateFragment = false;
+                        isScheduleFragment = false;
+                        isFocusFragment = false;
                         break;
                     case SCHEDULE_FRAGMENT:
-                        mFilterImgBtn.setVisibility(View.VISIBLE);
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                ((ScheduleFragment) fragments.get(position)).updateAdapter();
-
-                            }
-                        }, 300);
-                        //((ScheduleFragment) fragments.get(position)).updateAdapter();
+                        isScheduleFragment = true;
+                        isResultFragment = false;
+                        isImmediateFragment = false;
+                        isFocusFragment = false;
                         break;
                     case FOCUS_FRAGMENT:
-                        mFilterImgBtn.setVisibility(View.GONE);
-
-                        //((FocusFragment) fragments.get(position)).reLoadData();
+                        isFocusFragment = true;
+                        isScheduleFragment = false;
+                        isResultFragment = false;
+                        isImmediateFragment = false;
                         break;
-                }*/
+                }
+                if (isImmediateFragment) {
+                    if(isResult){
+                        MobclickAgent.onPageEnd("Football_ResultFragment");
+                        isResult = false;
+                        L.d("xxx", "ResultFragment>>>隐藏");
+                    }
+                    if(isSchedule) {
+                        MobclickAgent.onPageEnd("Football_ScheduleFragment");
+                        isSchedule = false;
+                        L.d("xxx", "ScheduleFragment>>>隐藏");
+                    }
+                    if(isFocus)  {
+                        MobclickAgent.onPageEnd("Football_FocusFragment");
+                        isFocus = false;
+                        L.d("xxx", "FocusFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_ImmediateFragment");
+                    isImmediate = true;
+                    L.d("xxx", "ImmediateFragment>>>显示");
+                }
+                if (isResultFragment) {
+                    if(isImmediate) {
+                        MobclickAgent.onPageEnd("Football_ImmediateFragment");
+                        isImmediate = false;
+                        L.d("xxx", "ImmediateFragment>>>隐藏");
+                    }
+                    if(isSchedule) {
+                        MobclickAgent.onPageEnd("Football_ScheduleFragment");
+                        isSchedule = false;
+                        L.d("xxx", "ScheduleFragment>>>隐藏");
+                    }
+                    if(isFocus)  {
+                        MobclickAgent.onPageEnd("Football_FocusFragment");
+                        isFocus = false;
+                        L.d("xxx", "FocusFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_ResultFragment");
+                    isResult = true;
+                    L.d("xxx", "ResultFragment>>>显示");
+                }
+                if (isScheduleFragment) {
+                    if(isImmediate) {
+                        MobclickAgent.onPageEnd("Football_ImmediateFragment");
+                        isImmediate = false;
+                        L.d("xxx", "ImmediateFragment>>>隐藏");
+                    }
+                    if(isResult){
+                        MobclickAgent.onPageEnd("Football_ResultFragment");
+                        isResult = false;
+                        L.d("xxx", "ResultFragment>>>隐藏");
+                    }
+                    if(isFocus)  {
+                        MobclickAgent.onPageEnd("Football_FocusFragment");
+                        isFocus = false;
+                        L.d("xxx", "FocusFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_ScheduleFragment");
+                    isSchedule = true;
+                    L.d("xxx", "ScheduleFragment>>>显示");
+                }
+                if (isFocusFragment) {
+                    if(isImmediate) {
+                        MobclickAgent.onPageEnd("Football_ImmediateFragment");
+                        isImmediate = false;
+                        L.d("xxx", "ImmediateFragment>>>隐藏");
+                    }
+                    if(isResult){
+                        MobclickAgent.onPageEnd("Football_ResultFragment");
+                        isResult = false;
+                        L.d("xxx", "ResultFragment>>>隐藏");
+                    }
+                    if(isSchedule) {
+                        MobclickAgent.onPageEnd("Football_ScheduleFragment");
+                        isSchedule = false;
+                        L.d("xxx", "ScheduleFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_FocusFragment");
+                    isFocus = true;
+                    L.d("xxx", "FocusFragment>>>显示");
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
         mViewPager.setAdapter(pureViewPagerAdapter);
@@ -375,6 +454,53 @@ public class ScoresFragment extends Fragment {
     public void onResume() {
         super.onResume();
         L.d(TAG, "football Fragment resume..");
+
+        if (isImmediateFragment) {
+            MobclickAgent.onPageStart("Football_ImmediateFragment");
+            isImmediate = true;
+            L.d("xxx", "ImmediateFragment>>>显示");
+        }
+        if (isResultFragment) {
+            MobclickAgent.onPageStart("Football_ResultFragment");
+            isResult = true;
+            L.d("xxx", "ResultFragment>>>显示");
+        }
+        if (isScheduleFragment) {
+            MobclickAgent.onPageStart("Football_ScheduleFragment");
+            isSchedule = true;
+            L.d("xxx", "ScheduleFragment>>>显示");
+        }
+        if (isFocusFragment) {
+            MobclickAgent.onPageStart("Football_FocusFragment");
+            isFocus = true;
+            L.d("xxx", "FocusFragment>>>显示");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (isImmediate) {
+            MobclickAgent.onPageEnd("Football_ImmediateFragment");
+            isImmediate = false;
+            L.d("xxx", "ImmediateFragment>>>隐藏");
+        }
+        if (isResult) {
+            MobclickAgent.onPageEnd("Football_ResultFragment");
+            isResult = false;
+            L.d("xxx", "ResultFragment>>>隐藏");
+        }
+        if (isSchedule) {
+            MobclickAgent.onPageEnd("Football_ScheduleFragment");
+            isSchedule = false;
+            L.d("xxx", "ScheduleFragment>>>隐藏");
+        }
+        if (isFocus) {
+            MobclickAgent.onPageEnd("Football_FocusFragment");
+            isFocus = false;
+            L.d("xxx", "FocusFragment>>>隐藏");
+        }
     }
 
     @Override
