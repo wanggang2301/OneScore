@@ -22,9 +22,14 @@ import java.util.Map;
 public class CardViewListAdapter extends BaseAdapter {
     //公司水位信息
     private List<NewOddsInfo.AllInfoBean.ComListBean> mComList;
-
+    //即时数据
+    private String currentData;
+    //初赔数据
+    private String nextData;
     private Context context;
     private LayoutInflater mInflater;
+    private NewOddsInfo.AllInfoBean.ComListBean.CurrLevelBean mCurrLevelBean;
+    private NewOddsInfo.AllInfoBean.ComListBean.PreLevelBean mPreLevelBean;
 
     public CardViewListAdapter(Context context, List<NewOddsInfo.AllInfoBean.ComListBean> mComList) {
         super();
@@ -61,16 +66,48 @@ public class CardViewListAdapter extends BaseAdapter {
         } else {
             item = (ListViewItem) convertView.getTag();
         }
+        mCurrLevelBean = mComList.get(position).getCurrLevel();
+        mPreLevelBean = mComList.get(position).getPreLevel();
         //公司名称
         item.cpi_item_list_company_txt.setText(mComList.get(position).getComName());
+        //即赔小于初赔
+        if (!"".equals(mCurrLevelBean.getLeft()) && !"".equals(mPreLevelBean.getLeft())) {
+            if (Double.valueOf(mCurrLevelBean.getLeft()) < Double.valueOf(mPreLevelBean.getLeft())) {
+                item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
+            }
+            //即赔大于初赔
+            else if (Double.valueOf(mCurrLevelBean.getLeft()) > Double.valueOf(mPreLevelBean.getLeft())) {
+                item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
+            } else {
+                item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.black));
+            }
+        }
+        if (!"".equals(mCurrLevelBean.getMiddle()) && !"".equals(mPreLevelBean.getMiddle())) {
+            if (Double.valueOf(mCurrLevelBean.getMiddle()) < Double.valueOf(mPreLevelBean.getMiddle())) {
+                item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
+            } else if (Double.valueOf(mCurrLevelBean.getMiddle()) > Double.valueOf(mPreLevelBean.getMiddle())) {
+                item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
+            } else {
+                item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.black));
+            }
+        }
+        if (!"".equals(mCurrLevelBean.getRight()) && !"".equals(mPreLevelBean.getRight())) {
+            if (Double.valueOf(mCurrLevelBean.getRight()) < Double.valueOf(mPreLevelBean.getRight())) {
+                item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
+            } else if (Double.valueOf(mCurrLevelBean.getRight()) > Double.valueOf(mPreLevelBean.getRight())) {
+                item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
+            } else {
+                item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.black));
+            }
+        }
         //即赔
-        item.cpi_item_list_home_txt.setText(mComList.get(position).getCurrLevel().getLeft());
-        item.cpi_item_list_odds_txt.setText(mComList.get(position).getCurrLevel().getMiddle());
-        item.cpi_item_list_guest_txt.setText(mComList.get(position).getCurrLevel().getRight());
+        item.cpi_item_list_home_txt.setText(mCurrLevelBean.getLeft());
+        item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
+        item.cpi_item_list_guest_txt.setText(mCurrLevelBean.getRight());
         //初赔
-        item.cpi_item_list_home2_txt.setText(mComList.get(position).getPreLevel().getLeft());
-        item.cpi_item_list_odds2_txt.setText(mComList.get(position).getPreLevel().getMiddle());
-        item.cpi_item_list_guest2_txt.setText(mComList.get(position).getPreLevel().getRight());
+        item.cpi_item_list_home2_txt.setText(mPreLevelBean.getLeft());
+        item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
+        item.cpi_item_list_guest2_txt.setText(mPreLevelBean.getRight());
 
         return convertView;
     }

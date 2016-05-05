@@ -25,11 +25,15 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
+import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.ArrayList;
@@ -81,6 +85,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     private CpiDateAdapter cpiDateAdapter;
     //公司
     private CpiCompanyAdapter cpiCompanyAdapter;
+    //公司名称
+    private List<NewOddsInfo.CompanyBean> mCompanyBean;
 
 
 
@@ -213,7 +219,26 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     }
 
     private void initData() {
-    }
+            //http://192.168.10.242:8989/mlottery/core/footBallIndexCenter.findIosIndexCenter.do?date=2016-05-04&lang=zh&type=1
+            String stUrl = "http://192.168.10.242:8989/mlottery/core/footBallIndexCenter.findIosIndexCenter.do?";
+            Map<String, String> map = new HashMap<>();
+                map.put("date", UiUtils.getDay(0));
+                map.put("type", "1");
+            // 2、连接服务器
+            VolleyContentFast.requestJsonByPost(stUrl, map, new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
+                @Override
+                public synchronized void onResponse(final NewOddsInfo json) {
+
+                    if (json != null) {
+                        mCompanyBean = json.getCompany();
+                    }
+                }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                }
+            }, NewOddsInfo.class);
+        }
 
     @Override
     public void onClick(View view) {
@@ -302,7 +327,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     //设置标题时间
                     public_txt_date.setText(mMapList.get(position).get("date"));
                     for(Fragment fragment:fragments){
-                        ((CPIOddsFragment)fragment).InitData(mMapList.get(position).get("date"), 0,1,2);
+                        ((CPIOddsFragment)fragment).switchd(mMapList.get(position).get("date"),"");
+                        //保存选择的时间
+                        PreferenceUtil.commitString("position", mMapList.get(position).get("date").trim());
                     }
                     // 关闭 dialog弹窗
                     mAlertDialog.dismiss();
@@ -313,9 +340,15 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         } else {
             //否则就是公司
             titleView.setText(R.string.odd_company_txt);
-            cpiCompanyAdapter = new CpiCompanyAdapter(mContext, getDate(), dialog_list);
+//            cpiCompanyAdapter = new CpiCompanyAdapter(mContext, getComPany(mCompanyBean), dialog_list);
 //            SimpleAdapter companyAdapter = new SimpleAdapter(mContext, getDate(), R.layout.item_dialog_company, new String[]{"date"}, new int[]{R.id.item_checkedTextView});
-            dialog_list.setAdapter(cpiCompanyAdapter);
+//            dialog_list.setAdapter(cpiCompanyAdapter);
+//            initData();
+            if (mCompanyBean != null && mCompanyBean.size() > 0) {
+                cpiCompanyAdapter = new CpiCompanyAdapter(mContext,mCompanyBean, dialog_list);
+                dialog_list.setAdapter(cpiCompanyAdapter);
+            }
+
             //设置你的listview的item不能被获取焦点,焦点由listview里的控件获得
             dialog_list.setItemsCanFocus(false);
             //设置多选
@@ -342,10 +375,13 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             cpi_btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    for (int i = 0; i < getDate().size(); i++) {
+                    for (int i = 0; i < mCompanyBean.size(); i++) {
                         dialog_list.isItemChecked(i);
                         if (dialog_list.isItemChecked(i) == true) {
-                            System.out.println(">>>true++" + mMapList.get(i).get("date"));
+                            for (Fragment fragment : fragments) {
+                                //获取保存时间
+                                ((CPIOddsFragment) fragment).switchd(PreferenceUtil.getString("position", ""), mCompanyBean.get(i).getComName());
+                            }
                         } else {
                             System.out.println(">>>false++");
 

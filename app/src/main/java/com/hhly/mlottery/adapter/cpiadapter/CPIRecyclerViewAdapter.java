@@ -35,7 +35,6 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
     private NewOddsInfo.AllInfoBean.MatchInfoBean mMatchInfoBean;
     //标记是哪个类型“亚盘，大小，欧赔
     private String stType;
-
     public CPIRecyclerViewAdapter(List<NewOddsInfo.AllInfoBean> mAllInfoBean, Context context,String stType) {
         this.mAllInfoBean = mAllInfoBean;
         this.context=context;

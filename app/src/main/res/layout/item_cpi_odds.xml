@@ -36,6 +36,7 @@
                     android:layout_weight="0.6"
                     android:gravity="center|left"
                     android:text="欧冠是"
+                    android:textColor="@color/basket_over_score"
                     android:textSize="13sp" />
 
                 <TextView
