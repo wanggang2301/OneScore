@@ -360,8 +360,8 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
 //        L.d("mHistory 历史交锋对比",mHistory+"");
         mProgressBar.setProgress(progressNum);
-        mBasketProgressbarGuest.setText(mAnalyzeDatas.get(0).getHistoryWin() + "");
-        mBasketProgressbarHome.setText(mAnalyzeDatas.get(1).getHistoryWin() + "");
+        mBasketProgressbarGuest.setText(mAnalyzeDatas.get(0).getHistoryWin() + "" + getResources().getText(R.string.basket_analyze_win));
+        mBasketProgressbarHome.setText(mAnalyzeDatas.get(1).getHistoryWin() + "" + getResources().getText(R.string.basket_analyze_win));
 
         /**
          * 近期战绩
@@ -566,7 +566,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private void setFutureMatch(TextView mTextData , TextView mTextName , ImageView mLogo , BasketAnalyzeFutureMatchBean mFutureMatch , boolean isValue){
 
         if(isValue){
-            mTextData.setText(mFutureMatch.getDiffdays());
+            mTextData.setText(mFutureMatch.getDiffdays() + getResources().getText(R.string.basket_analyze_day));
             mTextName.setText(mFutureMatch.getTeam());
             universalImageLoader.displayImage(mFutureMatch.getLogourl(), mLogo,options);
         }else{

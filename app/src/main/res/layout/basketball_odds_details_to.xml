@@ -17,7 +17,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y82"
+                android:layout_height="@dimen/y110"
                 android:orientation="horizontal"
                 >
 
@@ -31,9 +31,12 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="4"
+                    android:layout_weight="5"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:orientation="vertical"
+                    android:background="@color/black_grounding">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -87,7 +90,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@color/black_details_ball_textcolor"
+                        android:background="@color/basket_parting_line"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -100,7 +103,8 @@
                 android:id="@+id/basket_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
                 <ListView
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -110,29 +114,143 @@
                     android:dividerHeight="0dip"
                     android:background="@color/black_title"
                     android:listSelector="@drawable/basket_odds_item_selector"
-                    android:cacheColorHint="@android:color/transparent"/>
-                <ListView
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="match_parent"
-                    android:id="@+id/basket_odds_listview2"
-                    android:divider="#00000000"
-                    android:dividerHeight="0dip"
-                    android:background="@color/black_grounding"
-                    android:listSelector="@android:color/transparent"
+                    android:cacheColorHint="@android:color/transparent"
                     />
-                <TextView
-                    android:id="@+id/basket_odds_no_data"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="match_parent"
-                    android:text="暂无数据"
-                    android:textColor="@color/black_details_ball_textcolor"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:visibility="gone"/>
 
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="match_parent">
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/basket_odds_listview2"
+                        android:divider="@color/basket_parting_line"
+                        android:dividerHeight="1dip"
+                        android:background="@color/black_grounding"
+                        android:listSelector="@android:color/transparent"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        />
+                    <TextView
+                        android:id="@+id/basket_odds_no_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/basket_nodata"
+                        android:textColor="@color/black_details_ball_textcolor"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:background="@color/black_grounding"
+                        android:visibility="gone"
+                        />
+                    <LinearLayout
+                        android:id="@+id/basketball_odds_details_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/refresh" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/exp_net_status_txt"
+                            android:textColor="@color/version"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dip"
+                                android:text="@string/exp__check_txt"
+                                android:textColor="@color/black_title"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/basketball_odds_details_error_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exp_refresh_txt"
+                                android:textColor="@color/exp_refresh"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
+
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/basketball_immediate_error"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical"-->
+                <!--android:visibility="gone"-->
+                 <!-->-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/refresh" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="6dp"-->
+                    <!--android:text="@string/exp_net_status_txt"-->
+                    <!--android:textColor="@color/version"-->
+                    <!--android:textSize="14sp" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="0dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="horizontal" >-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginRight="5dip"-->
+                        <!--android:text="@string/exp__check_txt"-->
+                        <!--android:textColor="@color/black_title"-->
+                        <!--android:textSize="14sp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/basketball_immediate_error_btn"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/exp_refresh_txt"-->
+                        <!--android:textColor="@color/exp_refresh"-->
+                        <!--android:textSize="14sp" />-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/basket_odds_no_data"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="5"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="暂无数据"-->
+                <!--android:textColor="@color/black_details_ball_textcolor"-->
+                <!--android:textSize="20sp"-->
+                <!--android:gravity="center"-->
+                <!--android:background="@color/black_grounding"-->
+                <!--/>-->
         </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
     </LinearLayout>
 </FrameLayout>

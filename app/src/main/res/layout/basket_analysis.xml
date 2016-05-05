@@ -19,9 +19,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/flexible_space_image_height"
-                android:background="@android:color/transparent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/flexible_space_image_height"
+                    android:background="@android:color/transparent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -39,7 +39,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@color/black_grounding">
+                        android:background="@color/black_grounding"
+                        >
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -154,7 +155,7 @@
                             <View
                                 android:layout_width="1px"
                                 android:layout_height="@dimen/basket_details_item_height1"
-                                android:background="#ffffff"
+                                android:background="@color/basket_parting_line"
                                 android:layout_marginLeft="@dimen/basket_details_item_height4"
                                 android:layout_marginRight="@dimen/basket_details_item_height4"
                                 />
@@ -229,7 +230,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
-                                        android:paddingLeft="@dimen/basket_details_ball4"
+                                        android:paddingLeft="@dimen/basket_details_ball7"
                                         android:textColor="@color/black_details_ball_textcolor"
                                         android:layout_centerVertical="true" />
                                     <ImageView
@@ -242,13 +243,15 @@
                                         android:layout_alignParentEnd="true" />
                                     <TextView
                                         android:id="@+id/basket_future_guest_name1"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="@dimen/x200"
                                         android:layout_height="wrap_content"
+                                        android:singleLine="true"
                                         android:text="--"
                                         android:textColor="@color/black_details_ball_textcolor"
                                         android:textSize="@dimen/text_size_12"
-                                        android:paddingRight="@dimen/basket_details_item_height2"
+                                        android:paddingRight="@dimen/basket_details_item_height4"
                                         android:layout_centerVertical="true"
+                                        android:gravity="right"
                                         android:layout_toLeftOf="@id/basket_future_guest_image1"/>
 
                                 </RelativeLayout>
@@ -264,7 +267,7 @@
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
                                         android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingLeft="@dimen/basket_details_ball4"
+                                        android:paddingLeft="@dimen/basket_details_ball7"
                                         android:layout_centerVertical="true" />
                                     <ImageView
                                         android:id="@+id/basket_future_guest_image2"
@@ -276,13 +279,15 @@
                                         android:layout_alignParentEnd="true" />
                                     <TextView
                                         android:id="@+id/basket_future_guest_name2"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="@dimen/x200"
                                         android:layout_height="wrap_content"
                                         android:text="--"
+                                        android:singleLine="true"
                                         android:textColor="@color/black_details_ball_textcolor"
                                         android:textSize="@dimen/text_size_12"
-                                        android:paddingRight="@dimen/basket_details_item_height2"
+                                        android:paddingRight="@dimen/basket_details_item_height4"
                                         android:layout_centerVertical="true"
+                                        android:gravity="right"
                                         android:layout_toLeftOf="@id/basket_future_guest_image2"/>
 
                                 </RelativeLayout>
@@ -298,7 +303,7 @@
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
                                         android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingLeft="@dimen/basket_details_ball4"
+                                        android:paddingLeft="@dimen/basket_details_ball7"
                                         android:layout_centerVertical="true" />
                                     <ImageView
                                         android:id="@+id/basket_future_guest_image3"
@@ -310,13 +315,15 @@
                                         android:layout_alignParentEnd="true" />
                                     <TextView
                                         android:id="@+id/basket_future_guest_name3"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="@dimen/x200"
                                         android:layout_height="wrap_content"
                                         android:text="--"
+                                        android:singleLine="true"
                                         android:textColor="@color/black_details_ball_textcolor"
                                         android:textSize="@dimen/text_size_12"
-                                        android:paddingRight="@dimen/basket_details_item_height2"
+                                        android:paddingRight="@dimen/basket_details_item_height4"
                                         android:layout_centerVertical="true"
+                                        android:gravity="right"
                                         android:layout_toLeftOf="@id/basket_future_guest_image3"/>
 
                                 </RelativeLayout>
@@ -336,7 +343,7 @@
                             <View
                                 android:layout_width="1px"
                                 android:layout_height="@dimen/basket_details_item_height3"
-                                android:background="#ffffff"
+                                android:background="@color/basket_parting_line"
                                 android:layout_marginLeft="@dimen/basket_details_item_height"
                                 android:layout_marginRight="@dimen/basket_details_item_height"
                                 />
@@ -358,14 +365,15 @@
                                         android:layout_centerVertical="true"/>
                                     <TextView
                                         android:id="@+id/basket_future_home_name1"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="@dimen/x200"
                                         android:layout_height="wrap_content"
                                         android:text="--"
+                                        android:singleLine="true"
                                         android:textColor="@color/black_details_ball_textcolor"
                                         android:textSize="@dimen/text_size_12"
                                         android:layout_centerVertical="true"
                                         android:layout_toRightOf="@id/basket_future_home_image1"
-                                        android:paddingLeft="@dimen/basket_details_item_height2"/>
+                                        android:paddingLeft="@dimen/basket_details_item_height4"/>
                                     <TextView
                                         android:id="@+id/basket_future_home_date1"
                                         android:layout_width="wrap_content"
@@ -373,7 +381,7 @@
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
                                         android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingRight="@dimen/basket_details_ball4"
+                                        android:paddingRight="@dimen/basket_details_ball7"
                                         android:layout_centerVertical="true"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentRight="true"
@@ -391,14 +399,15 @@
                                         android:layout_centerVertical="true"/>
                                     <TextView
                                         android:id="@+id/basket_future_home_name2"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="@dimen/x200"
                                         android:layout_height="wrap_content"
                                         android:text="--"
+                                        android:singleLine="true"
                                         android:textColor="@color/black_details_ball_textcolor"
                                         android:textSize="@dimen/text_size_12"
                                         android:layout_centerVertical="true"
                                         android:layout_toRightOf="@id/basket_future_home_image2"
-                                        android:paddingLeft="@dimen/basket_details_item_height2"/>
+                                        android:paddingLeft="@dimen/basket_details_item_height4"/>
                                     <TextView
                                         android:id="@+id/basket_future_home_date2"
                                         android:layout_width="wrap_content"
@@ -406,7 +415,7 @@
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
                                         android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingRight="@dimen/basket_details_ball4"
+                                        android:paddingRight="@dimen/basket_details_ball7"
                                         android:layout_centerVertical="true"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentRight="true"
@@ -424,14 +433,15 @@
                                         android:layout_centerVertical="true"/>
                                     <TextView
                                         android:id="@+id/basket_future_home_name3"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="@dimen/x200"
                                         android:layout_height="wrap_content"
                                         android:text="--"
+                                        android:singleLine="true"
                                         android:textColor="@color/black_details_ball_textcolor"
                                         android:textSize="@dimen/text_size_12"
                                         android:layout_centerVertical="true"
                                         android:layout_toRightOf="@id/basket_future_home_image3"
-                                        android:paddingLeft="@dimen/basket_details_item_height2"/>
+                                        android:paddingLeft="@dimen/basket_details_item_height4"/>
                                     <TextView
                                         android:id="@+id/basket_future_home_date3"
                                         android:layout_width="wrap_content"
@@ -439,7 +449,7 @@
                                         android:text="--"
                                         android:textSize="@dimen/text_size_10"
                                         android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingRight="@dimen/basket_details_ball4"
+                                        android:paddingRight="@dimen/basket_details_ball7"
                                         android:layout_centerVertical="true"
                                         android:layout_alignParentTop="true"
                                         android:layout_alignParentRight="true"
@@ -477,8 +487,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/basket_details_ball4"
-                        android:paddingRight="@dimen/basket_details_ball4"
+                        android:paddingLeft="@dimen/basket_details_item_height2"
+                        android:paddingRight="@dimen/basket_details_item_height2"
                         android:orientation="vertical"
                         android:background="@color/black_grounding"
                         >
@@ -491,7 +501,7 @@
                             android:paddingRight="@dimen/basket_details_item_height2">
                             <TextView
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_12"
                                 android:textColor="@color/black_details_ball_textcolor"
@@ -537,10 +547,14 @@
                             <!--android:textColor="@color/black_details_ball_textcolor"-->
                             <!--android:text="近况"/>-->
                         </LinearLayout>
-                        <TextView
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="1dp"-->
+                            <!--android:background="#55000000"/>-->
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#55000000"/>
+                            android:layout_height="1px"
+                            android:background="@color/basket_parting_line" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -552,7 +566,7 @@
                             <TextView
                                 android:id="@+id/basket_ranking_guest_name"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_11"
                                 android:textColor="@color/black_details_ball_textcolor2"
@@ -595,7 +609,7 @@
                             <TextView
                                 android:id="@+id/basket_ranking_home_name"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_11"
                                 android:textColor="@color/black_details_ball_textcolor2"

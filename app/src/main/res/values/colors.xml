@@ -543,6 +543,7 @@
     <color name="basket_score_gray">#999999</color>
     <color name="basket_score_white">#FFFFFF</color>
     <color name="basket_win_color">#FF1F1F</color>
+    <color name="basket_parting_line">#444</color>
 
 
     <color name="radiobutton_normal">#fff</color>

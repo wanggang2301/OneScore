@@ -566,9 +566,12 @@
     <string name="basket_analyze_defult_text">--</string>
     <string name="basket_analyze_win">勝</string>
     <string name="basket_analyze_lost">負</string>
-    <string name="basket_analyze_recently">最近6場，</string>
+    <string name="basket_analyze_recently">最近</string>
+    <string name="basket_analyze_recently2">場，</string>
     <string name="basket_analyze_home_field">,主場</string>
     <string name="basket_company">公司</string>
+    <string name="basket_analyze_day">天</string>
+    <string name="basket_nodata">暫無數據</string>
 
     <string name="basket_odds_euro_details">歐賠詳情</string>
     <string name="basket_odds_asiaLet_details">亞盤詳情</string>
