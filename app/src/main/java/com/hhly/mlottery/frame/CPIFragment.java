@@ -82,7 +82,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //公司
     private CpiCompanyAdapter cpiCompanyAdapter;
 
-    private CPIOddsFragment mCPIOddsFragment;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,14 +157,11 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         mViewPager = (ViewPager) mView.findViewById(R.id.cpi_viewpager);
         fragments = new ArrayList<>();
         //亚盘
-        mCPIOddsFragment = CPIOddsFragment.newInstance("plate", "");
-        fragments.add(mCPIOddsFragment);
+        fragments.add(CPIOddsFragment.newInstance("plate", ""));
         //大小
-        mCPIOddsFragment = CPIOddsFragment.newInstance("big", "");
-        fragments.add(mCPIOddsFragment);
+        fragments.add(CPIOddsFragment.newInstance("big", ""));
         //欧赔
-        mCPIOddsFragment = CPIOddsFragment.newInstance("op", "");
-        fragments.add(mCPIOddsFragment);
+        fragments.add(CPIOddsFragment.newInstance("op", ""));
 
 
         mCPIViewPagerAdapter = new CPIFragmentAdapter(getChildFragmentManager(), fragments);
@@ -304,7 +301,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                     //设置标题时间
                     public_txt_date.setText(mMapList.get(position).get("date"));
-                    mCPIOddsFragment.InitData(mMapList.get(position).get("date"), mViewPager.getCurrentItem());
+                    for(Fragment fragment:fragments){
+                        ((CPIOddsFragment)fragment).InitData(mMapList.get(position).get("date"), 0,1,2);
+                    }
                     // 关闭 dialog弹窗
                     mAlertDialog.dismiss();
                     // 记录点击的 item 位置
