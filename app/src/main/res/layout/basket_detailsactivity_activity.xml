@@ -74,7 +74,7 @@
             android:layout_alignStart="@+id/rl_iv"
             android:layout_below="@+id/rl_iv"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/y30"
+            android:layout_marginTop="@dimen/y20"
             android:orientation="vertical">
 
             <TextView
@@ -196,7 +196,7 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/x6"
-                android:layout_marginTop="@dimen/y60"
+                android:layout_marginTop="@dimen/y70"
                 android:layout_below="@id/basket_details_times"
                 android:layout_centerHorizontal="true"
                 >
@@ -207,7 +207,7 @@
                     android:orientation="vertical"
                     android:padding="@dimen/x4"
                     android:gravity="center_horizontal"
-                    android:layout_marginRight="@dimen/y15"
+                    android:layout_marginRight="@dimen/y12"
                     >
                     <TextView
                         android:id="@+id/basket_details_guest_first"
@@ -230,7 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x4"
-                    android:layout_marginRight="@dimen/y15"
+                    android:layout_marginRight="@dimen/y12"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <TextView
@@ -254,7 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x4"
-                    android:layout_marginRight="@dimen/y15"
+                    android:layout_marginRight="@dimen/y12"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <TextView
@@ -278,7 +278,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x4"
-                    android:layout_marginRight="@dimen/y15"
+                    android:layout_marginRight="@dimen/y12"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <TextView
@@ -302,7 +302,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x4"
-                    android:layout_marginRight="@dimen/y15"
+                    android:layout_marginRight="@dimen/y12"
                     android:gravity="center_horizontal"
                     android:visibility="gone"
                     android:orientation="vertical">
@@ -328,7 +328,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x4"
-                    android:layout_marginRight="@dimen/y15"
+                    android:layout_marginRight="@dimen/y12"
                     android:gravity="center_horizontal"
                     android:visibility="gone"
                     android:orientation="vertical">
@@ -395,7 +395,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x4"
-                    android:layout_marginLeft="@dimen/y15"
+                    android:layout_marginLeft="@dimen/y12"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <TextView
@@ -446,7 +446,7 @@
             android:layout_alignRight="@+id/rl_iv2"
             android:layout_alignStart="@+id/rl_iv2"
             android:layout_below="@+id/rl_iv2"
-            android:layout_marginTop="@dimen/y30"
+            android:layout_marginTop="@dimen/y20"
             android:orientation="vertical">
 
             <TextView

@@ -3,9 +3,9 @@
     android:id="@+id/basket_odds_title_layout"
     android:layout_width="match_parent"
     android:background="@color/black_title"
-    android:paddingTop="@dimen/y15"
+    android:paddingTop="@dimen/y25"
     android:paddingBottom="@dimen/y12"
-    android:layout_height="@dimen/y56"
+    android:layout_height="@dimen/y70"
    >
     <LinearLayout
         android:layout_width="0dp"
