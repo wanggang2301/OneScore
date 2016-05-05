@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.MatchTimeLiveBean;
+import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 
 import java.util.ArrayList;
 import java.util.Collections;

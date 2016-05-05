@@ -150,7 +150,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
      * 是否已被加载过一次，第二次就不再去请求数据了
      */
     private boolean mHasLoadedOnce;
-   private   LinearLayoutManager layoutManager;
+   private LinearLayoutManager layoutManager;
+
+    private String teamLogoPre;
+
+    private String teamLogoSuff;
 
 
     public static ResultFragment newInstance(String param1, String param2) {
@@ -496,6 +500,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 mCurrentDate = json.getCurrent().getDate();
 
 
+                teamLogoPre = json.getTeamLogoPre();
+                teamLogoSuff = json.getTeamLogoSuff();
+
+
                 /**
                  * 标记 Type 1--只加载 current下的 Date数据
                  * 2--只加载current下的match字段数据
@@ -584,7 +592,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 // }
 
 
-                mAdapter = new ResultMultiAdapter(mContext, mMatchs);
+                mAdapter = new ResultMultiAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                 //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                 //  mAdapter.setSchfocusClickListener(mSchfocusClickListener);
 
@@ -599,11 +607,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         String thirdId = data;
                         Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                         intent.putExtra("thirdId", thirdId);
-                        intent.putExtra("currentFragmentId",1);
+                        intent.putExtra("currentFragmentId", 1);
                         getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                     }
                 });
-
 
 
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
@@ -813,18 +820,21 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart("ResultFragment");
+
         //updateAdapter();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("ResultFragment");
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         updateAdapter();
-        if(hidden){
-            MobclickAgent.onPageEnd("ResultFragment");
-        }else{
-            MobclickAgent.onPageStart("ResultFragment");
-        }
     }
 
     @Override

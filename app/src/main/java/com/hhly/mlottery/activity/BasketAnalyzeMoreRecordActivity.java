@@ -3,24 +3,20 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketAnalyzeAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketAnalyzeFutureAdapter;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreBean;
@@ -28,13 +24,10 @@ import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreFutureBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreRecentHistoryBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.MyConstants;
-import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NestedListView;
+import com.umeng.analytics.MobclickAgent;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +71,8 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     private LinearLayout mHomeFuture_ll;
     private TextView mGuestFruture;
     private TextView mHomeFruture;
+    Handler mHandler = new Handler();
+    private TextView mError;
 
 
     @Override
@@ -90,8 +85,19 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         }
 
         initView();
-        initData();
+//        initData();
+        mHandler.postDelayed(mRun , 0); // 加载数据
     }
+
+    /**
+     * 子线程 处理数据加载
+     */
+    private Runnable mRun = new Runnable() {
+        @Override
+        public void run() {
+            initData();
+        }
+    };
 
     private void initView (){
         mBack = (ImageButton)findViewById(R.id.basket_analyze_img_back);
@@ -100,8 +106,8 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
             public void onClick(View v) {
 //                Intent intent = new Intent();
 //                intent.putExtra("resultType", resultstring);
-
-                Toast.makeText(BasketAnalyzeMoreRecordActivity.this, "back", Toast.LENGTH_SHORT).show();
+                MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_Exit");
+//                Toast.makeText(BasketAnalyzeMoreRecordActivity.this, "back", Toast.LENGTH_SHORT).show();
 
                 setResult(Activity.RESULT_OK, null);
                 finish();
@@ -138,7 +144,8 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
 
         mGuestFruture = (TextView) findViewById(R.id.basket_guest_fruture_tv_list);
         mHomeFruture = (TextView) findViewById(R.id.basket_home_fruture_tv_list);
-
+        mError = (TextView)findViewById(R.id.basketball_details_error_btn);
+        mError.setOnClickListener(this);
 
     }
 
@@ -286,7 +293,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                Toast.makeText(BasketAnalyzeMoreRecordActivity.this, "Error2", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BasketAnalyzeMoreRecordActivity.this, "Error2", Toast.LENGTH_SHORT).show();
 
                 mErrorLoad.setVisibility(View.VISIBLE);
                 mSuccessLoad.setVisibility(View.GONE);
@@ -424,10 +431,16 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.basket_analyze_history_screen: //历史交锋 筛选
+                MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_HistoryScreen");
                 setDialog(true);
                 break;
             case R.id.basket_analyze_recent_screen: //近期战绩 筛选
+                MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_RecentScreen");
                 setDialog(false);
+                break;
+            case R.id.basketball_details_error_btn: //点击刷新
+                MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_Refresh");
+                mHandler.postDelayed(mRun , 0);
                 break;
             default:
                 break;
@@ -595,5 +608,17 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         mDialog.getWindow().setContentView(view);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("BasketAnalyzeMoreRecordActivity");
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("BasketAnalyzeMoreRecordActivity");
+    }
 }

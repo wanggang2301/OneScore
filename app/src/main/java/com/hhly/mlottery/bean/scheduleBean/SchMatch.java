@@ -9,10 +9,32 @@ public class SchMatch {
 	private String time;
 	private String hometeam;
 	private String guestteam;
-	
+	private String homeId;
+
+
+	private String guestId;
+
 	private String statusOrigin;
-	
+
 	private ScheduleMatchOdd matchOdds;
+
+	public String getHomeId() {
+		return homeId;
+	}
+
+	public void setHomeId(String homeId) {
+		this.homeId = homeId;
+	}
+
+	public String getGuestId() {
+		return guestId;
+	}
+
+	public void setGuestId(String guestId) {
+		this.guestId = guestId;
+	}
+
+
 
 	public String getThirdId() {
 		return thirdId;
@@ -94,9 +116,6 @@ public class SchMatch {
 		this.matchOdds = matchOdds;
 	}
 
-	
-	
-	
-	
-	
+
+
 }

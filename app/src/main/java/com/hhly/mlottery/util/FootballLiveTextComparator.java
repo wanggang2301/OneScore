@@ -1,6 +1,6 @@
 package com.hhly.mlottery.util;
 
-import com.hhly.mlottery.bean.footballsecond.MatchTextLiveBean;
+import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 
 import java.util.Comparator;
 

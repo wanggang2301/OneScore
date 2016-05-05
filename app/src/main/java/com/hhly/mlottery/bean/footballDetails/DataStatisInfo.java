@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.footballsecond;
+package com.hhly.mlottery.bean.footballDetails;
 
 /**
  * Created by 103TJL on 2015/12/31.

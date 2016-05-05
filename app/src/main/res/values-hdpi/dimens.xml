@@ -3,32 +3,51 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="item_filtrate_match_text">9sp</dimen>
-    
-	<dimen name="item_football_racename">12sp</dimen>
-    <dimen name="item_football_time">12sp</dimen>
+
+    <dimen name="item_football_racename">13sp</dimen>
+    <dimen name="item_football_time">13sp</dimen>
+    <dimen name="keep_time">13sp</dimen>
+
+
     <dimen name="item_football_hometeam">13sp</dimen>
     <dimen name="item_football_guestteam">13sp</dimen>
-    <dimen name="item_football_card">9.5sp</dimen>
+
+
+    <dimen name="item_football_card">9sp</dimen>
+
+    <dimen name="item_football_frequency">13sp</dimen>
+
+
+    <dimen name="item_football_full_score">22sp</dimen>
     <dimen name="item_football_half_score">12sp</dimen>
-    <dimen name="item_football_frequency">12sp</dimen>
-    <dimen name="item_football_full_score">13sp</dimen>
-    <dimen name="item_football_left_odds">12sp</dimen>
-    <dimen name="item_football_handicap_value">12sp</dimen>
-    <dimen name="item_football_right_odds">12sp</dimen>
-    <dimen name="item_football_right_mid_score">12sp</dimen>
-    
+
+
+    <dimen name="item_football_left_odds">13sp</dimen>
+    <dimen name="item_football_handicap_value">13sp</dimen>
+    <dimen name="item_football_right_odds">13sp</dimen>
+    <dimen name="item_football_right_mid_score">13sp</dimen>
+
     <dimen name="number_title">12sp</dimen>
     <dimen name="home_pager_title">13sp</dimen>
     <dimen name="home_pager_user_title">15sp</dimen>
     <dimen name="number_desc">10sp</dimen>
-    
+
     <dimen name="item_football_international_teamname_max_width">190dp</dimen>
     <dimen name="item_football_international_card">9.5sp</dimen>
 
     <dimen name="activity_football_match_detail_teamname">14sp</dimen>
     <dimen name="activity_football_match_detail_teamname_hometag">8sp</dimen>
 
+
+    <dimen name="football_icon_x">50px</dimen>
+    <dimen name="football_icon_y">50px</dimen>
+
+    <dimen name="football_offset">6dp</dimen>
+    <dimen name="football_icon_padding">40dp</dimen>
     <dimen name="football_cardview_margin">0.5dp</dimen>
-    
+
+    <!--  <dimen name="football_offset">14px</dimen>
+      <dimen name="football_icon_padding">40px</dimen>-->
+
 </resources>
 

@@ -558,4 +558,7 @@
     <color name="equ_color">#0eae7e</color>
     <color name="defeat_color">#1756e5</color>
     <color name="team_name_color">#333333</color>
+
+    <color name="football_keeptime">#1CDA4A</color>
+
 </resources>
