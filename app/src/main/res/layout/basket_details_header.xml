@@ -20,9 +20,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/x24"
-            android:paddingRight="@dimen/x24"
-            android:src="@mipmap/basketball_back" />
+            android:paddingLeft="@dimen/x12"
+            android:paddingRight="@dimen/x12"
+            android:src="@mipmap/back" />
 
 
         <ImageView

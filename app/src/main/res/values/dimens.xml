@@ -34,6 +34,8 @@
     <dimen name="flexible_space_image_height">240dp</dimen>
     <dimen name="flexible_space_show_fab_offset">120dp</dimen>
 	<dimen name="mheight">172dp</dimen>
+    <dimen name="item_height">53dp</dimen>
+    <dimen name="item_title_height">30dp</dimen>
     <dimen name="paddingtop">68dp</dimen>
     <dimen name="list_paddintop">100dp</dimen>
     <dimen name="margin_standard">16dp</dimen>

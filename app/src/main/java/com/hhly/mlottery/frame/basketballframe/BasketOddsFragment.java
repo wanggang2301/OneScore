@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.basketballframe;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,6 +23,7 @@ import com.hhly.mlottery.adapter.basketball.BasketOddsAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketOddsDetailsAdapter;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.ObservableListView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -35,7 +38,7 @@ import java.util.Map;
  * <p/>
  * 描述：篮球 欧赔亚盘 大小球
  */
-public class BasketOddsEuroFragment extends BasketDetailsBaseFragment<ObservableListView> implements SwipeRefreshLayout.OnRefreshListener ,View.OnClickListener{
+public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableListView> implements SwipeRefreshLayout.OnRefreshListener ,View.OnClickListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -93,11 +96,11 @@ public class BasketOddsEuroFragment extends BasketDetailsBaseFragment<Observable
      */
     private List<BasketDetailOddsBean.CompanyOddsEntity> mOddsCompanyList = new ArrayList<>();
 
-    public BasketOddsEuroFragment() {
+    public BasketOddsFragment() {
     }
 
-    public static BasketOddsEuroFragment newInstance(String param1, String param2) {
-        BasketOddsEuroFragment fragment = new BasketOddsEuroFragment();
+    public static BasketOddsFragment newInstance(String param1, String param2) {
+        BasketOddsFragment fragment = new BasketOddsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -169,6 +172,8 @@ public class BasketOddsEuroFragment extends BasketDetailsBaseFragment<Observable
         //头部
         View paddingView = new View(getActivity());
         final int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
+        int itemHeight=getResources().getDimensionPixelSize(R.dimen.item_height);//53dp
+        int itemTitleHeight=getResources().getDimensionPixelSize(R.dimen.item_title_height);
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
                 flexibleSpaceImageHeight);
         paddingView.setLayoutParams(lp);
@@ -176,7 +181,7 @@ public class BasketOddsEuroFragment extends BasketDetailsBaseFragment<Observable
         // This is required to disable header's list selector effect
         paddingView.setClickable(true);
        //标题
-        View viewTitle = View.inflate(getActivity(),R.layout.basket_odds_title,null);
+        View viewTitle = View.inflate(getActivity(), R.layout.basket_odds_title,null);
         //欧赔亚盘大小球标题设置
         mTitleHandicap= (TextView) viewTitle.findViewById(R.id.basket_odds_handicap);
 
@@ -204,25 +209,29 @@ public class BasketOddsEuroFragment extends BasketDetailsBaseFragment<Observable
         listView.addHeaderView(viewTitle);
 
         //无数据界面
-        View noDataView =View.inflate(getActivity(),R.layout.basket_odds_nodata,null);
+        View noDataView =View.inflate(getActivity(), R.layout.basket_odds_nodata,null);
         mNodataLayout= (LinearLayout) noDataView.findViewById(R.id.odds_nodata_container);
         mNodataLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
         mNodataLayout.setVisibility(View.GONE);
         listView.addHeaderView(noDataView);
 
         //网络异常的
-        View errorView=View.inflate(getActivity(),R.layout.basket_odds_new_error,null);
+        View errorView=View.inflate(getActivity(), R.layout.basket_odds_new_error,null);
         mExceptionLayout= (LinearLayout) errorView.findViewById(R.id.basket_odds_net_error);
         mExceptionLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
+        mExceptionLayout.setVisibility(View.GONE);
         listView.addHeaderView(errorView);
         //点击刷新
-        errorView.findViewById(R.id.network_exception_reload_btn).setOnClickListener(BasketOddsEuroFragment.this);
+        errorView.findViewById(R.id.network_exception_reload_btn).setOnClickListener(BasketOddsFragment.this);
 
-
+        WindowManager wm= (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        int h=wm.getDefaultDisplay().getHeight();
+//        L.e("AAAAAA","height"+h);
+//        L.e("AAAAAA",flexibleSpaceImageHeight+"");
 
         View paddingviewButtom=new View(getActivity());
         AbsListView.LayoutParams lp1 = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                2*flexibleSpaceImageHeight );
+                36*flexibleSpaceImageHeight/20);
         paddingviewButtom.setLayoutParams(lp1);
         paddingviewButtom.setBackgroundColor(getResources().getColor(R.color.black_title));
         listView.addFooterView(paddingviewButtom);
@@ -263,18 +272,20 @@ public class BasketOddsEuroFragment extends BasketDetailsBaseFragment<Observable
      * 请求到网络数据后加载数据
      */
     private void loadData(BasketDetailOddsBean oddsBean) {
-
-        mOddsCompanyList = oddsBean.getCompanyOdds();
-        mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
-        //显示无数据界面
-        if(mOddsCompanyList.size()==0){
-            mNodataLayout.setVisibility(View.VISIBLE);
-            listView.setDivider(getActivity().getResources().getDrawable(R.color.black_title));
-            listView.setDividerHeight(1);
+        if(getActivity()!=null){
+            mOddsCompanyList=oddsBean.getCompanyOdds();
+            mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
+            //显示无数据界面
+            if(mOddsCompanyList.size()==0){
+                mNodataLayout.setVisibility(View.VISIBLE);
+                listView.setDivider(getActivity().getResources().getDrawable(R.color.black_title));
+                listView.setDividerHeight(1);
+            }
+            listView.setAdapter(mOddsAdapter);
+            mOddsAdapter.notifyDataSetChanged();
+            mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
         }
-        listView.setAdapter(mOddsAdapter);
-        mOddsAdapter.notifyDataSetChanged();
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+
 
     }
 //

@@ -24,7 +24,7 @@
             android:paddingLeft="@dimen/x24"
             android:paddingRight="@dimen/x24"
             android:scaleType="centerInside"
-            android:src="@mipmap/basketball_back" />
+            android:src="@mipmap/back" />
 
         <TextView
             android:id="@+id/public_txt_title"
@@ -89,7 +89,7 @@
                         android:id="@+id/basket_analyze_history_screen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/basket_analyze_screen"
+                        android:src="@mipmap/cpi_filtrate"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/basket_details_item_height"
@@ -234,7 +234,7 @@
                         android:id="@+id/basket_analyze_recent_screen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/basket_analyze_screen"
+                        android:src="@mipmap/cpi_filtrate"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/basket_details_item_height"
