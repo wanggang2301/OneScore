@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -217,7 +218,18 @@ public class VolleyContentFast {
      * @param errorListener
      */
     public static void requestStringByGet(String url, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener) {
-        requestStringByGet(url, null, successlistener, errorListener);
+        requestStringByGet(url, null, null, successlistener, errorListener);
+    }
+
+    /**
+     * 网络请求，GET方式，返回没有转化的string（无参）
+     *
+     * @param url
+     * @param successlistener
+     * @param errorListener
+     */
+    public static void requestStringByGet(String url, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener) {
+        requestStringByGet(url, null, retryPolicy, successlistener, errorListener);
     }
 
     /**
@@ -228,7 +240,7 @@ public class VolleyContentFast {
      * @param successlistener 成功回调接口
      * @param errorListener   错误回掉接口
      */
-    public static void requestStringByGet(final String url, Map<String, String> params, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener) {
+    public static void requestStringByGet(final String url, Map<String, String> params, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener) {
         String tempUrl = appendLanguage(url);
         if (params != null) {
             for (String key : params.keySet()) {
@@ -268,6 +280,10 @@ public class VolleyContentFast {
                 errorListener.onErrorResponse(volleyException);
             }
         });
+
+        if (retryPolicy != null) {
+            stringRequest.setRetryPolicy(retryPolicy);
+        }
         mQueue.add(stringRequest);
     }
 
