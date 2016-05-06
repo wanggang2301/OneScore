@@ -64,15 +64,17 @@ public class BasketAnalyzeAdapter extends CommonAdapter<BasketAnalyzeMoreRecentH
         if (historyBean.getHighLow().equals("")) {
             holder.setText(R.id.basket_details_big_small , "--");
         }else if (historyBean.getHighLow().equals("1")){
-            holder.setText(R.id.basket_details_big_small , "大");
+//            holder.setText(R.id.basket_details_big_small, getCount().getText(R.string.china_id_txt));
+            holder.setText(R.id.basket_details_big_small,R.string.basket_handicap_big);
         }else if(historyBean.getHighLow().equals("0")) {
-            holder.setText(R.id.basket_details_big_small, "小");
+            holder.setText(R.id.basket_details_big_small, R.string.basket_handicap_small);
+        }else if(historyBean.getHighLow().equals("-1")){
+            holder.setText(R.id.basket_details_big_small, R.string.basket_handicap_zou);
         }
-        //TODO---------
         else{
-//            holder.setText(R.id.basket_details_big_small , historyBean.getHighLow());
-            holder.setText(R.id.basket_details_big_small , "--");
+            holder.setText(R.id.basket_details_big_small , "--"); // 1 大  0 小 -1 走水 其它不显示
         }
+
         if (historyBean.getConcede().equals("")) {
             holder.setText(R.id.basket_details_concede ,"--");
         }else{
