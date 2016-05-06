@@ -525,12 +525,12 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         // Set scrollY for the active fragments
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
-            // Skip current item
+            // Skip current item_share
             if (i == mPager.getCurrentItem()) {
                 continue;
             }
 
-            // Skip destroyed or not created item
+            // Skip destroyed or not created item_share
             BasketDetailsBaseFragment f =
                     (BasketDetailsBaseFragment) mPagerAdapter.getItemAt(i);
             if (f == null) {
@@ -552,12 +552,12 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     public void refreshData(){
         loadData();
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
-            // Skip current item
+            // Skip current item_share
             if (i == mPager.getCurrentItem()) {
                 continue;
             }
 
-            // Skip destroyed or not created item
+            // Skip destroyed or not created item_share
             BasketDetailsBaseFragment f =
                     (BasketDetailsBaseFragment) mPagerAdapter.getItemAt(i);
             if (f == null) {

@@ -51,7 +51,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private CounselFragmentAdapter mCounselFragmentAdapter;
     private List<Boolean> isImageLeft = new ArrayList<>();//是否图片左边布局
     private ImageView public_img_back, public_btn_filter, public_btn_set;
-    private TextView public_txt_title,  public_txt_left_title;//标题，暂无数据
+    private TextView public_txt_title, public_txt_left_title,btn_clear;//标题，暂无数据
     private List<CounselBean.InfoIndexBean.HeadTitlesBean> mHeadList;//头数据集合
     private List<CounselBean.InfoIndexBean.AdsBean> mAdsList;//轮播数据集合
     private List<CounselBean.InfoIndexBean.InfosBean> mInfosList;//资讯列表数据集合
@@ -59,6 +59,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private ArrayList<Integer> infotype = new ArrayList<>();//信息类型集合
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Context mContext;
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -122,6 +123,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         loadHeadData(BaseURLs.URL_FOOTBALL_INFOINDEX);
         return mView;
     }
+
 
     //请求头数据  发起网络请求
     private void loadHeadData(String url) {
@@ -230,15 +232,23 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         //设置
         public_btn_set = (ImageView) mView.findViewById(R.id.public_btn_set);
         public_btn_set.setVisibility(View.GONE);
+
+
+
+
         //返回
         public_img_back = (ImageView) mView.findViewById(R.id.public_img_back);
         public_img_back.setOnClickListener(this);
+
+
         mViewPager = (ViewPager) mView.findViewById(R.id.counselfragment_viewpager);
         mTabLayout = (TabLayout) mView.findViewById(R.id.tabs);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.counselfragment_SwipeRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
+
+
     }
 
     @Override
@@ -259,5 +269,9 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     public void onRefresh() {
 
     }
+
+
+
+
 
 }

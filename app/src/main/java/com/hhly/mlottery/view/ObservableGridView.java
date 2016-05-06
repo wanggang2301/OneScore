@@ -837,7 +837,7 @@ public class ObservableGridView extends GridView implements Scrollable {
                     if (convertView == null) {
                         convertView = new View(parent.getContext());
                     }
-                    // We need to do this because GridView uses the height of the last item
+                    // We need to do this because GridView uses the height of the last item_share
                     // in a row to determine the height for the entire row.
                     convertView.setVisibility(View.INVISIBLE);
                     convertView.setMinimumHeight(headerViewContainer.getHeight());
@@ -873,7 +873,7 @@ public class ObservableGridView extends GridView implements Scrollable {
                     if (convertView == null) {
                         convertView = new View(parent.getContext());
                     }
-                    // We need to do this because GridView uses the height of the last item
+                    // We need to do this because GridView uses the height of the last item_share
                     // in a row to determine the height for the entire row.
                     convertView.setVisibility(View.INVISIBLE);
                     convertView.setMinimumHeight(footViewContainer.getHeight());

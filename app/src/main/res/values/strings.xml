@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--分享-->
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+    <string name="webchat">微信</string>
+    <string name="friends">朋友圈</string>
+    <string name="qq">QQ</string>
+    <string name="qzone">空间</string>
+    <string name="sina">新浪</string>
+    <string name="copy">复制链接</string>
+    <string name="share_cancel">取消</string>
+
+
+
+
+
     <!--指数-->
     <string name="odd_plate_rb_txt">亚盘</string>
     <string name="odd_op_rb_txt">欧赔</string>
