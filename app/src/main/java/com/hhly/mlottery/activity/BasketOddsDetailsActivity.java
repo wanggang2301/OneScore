@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,7 +35,7 @@ import java.util.Map;
 /**
  * Created by A on 2016/4/1.
  */
-public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private ListView mListView1;
     private ListView mListView2;
@@ -56,6 +57,8 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
     private List<BasketDetailOddsBean.CompanyOddsEntity> mOddsCompanyList = new ArrayList<>();
     private TextView mNoData;
     private ExactSwipeRefrashLayout mRefresh;
+    private LinearLayout mEerrorll;
+    private TextView mErrorBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +128,10 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         mListView1.setOnItemClickListener(new ItemClick());
 
         mNoData = (TextView) findViewById(R.id.basket_odds_no_data);
+        mEerrorll = (LinearLayout) findViewById(R.id.basketball_odds_details_error);
+
+        mErrorBtn = (TextView) findViewById(R.id.basketball_odds_details_error_btn);
+        mErrorBtn.setOnClickListener(this);
 
         mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.basket_odds_details_refreshlayout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
@@ -165,8 +172,10 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
     private void initData(String oddsId){
 
 //        String url = "http://192.168.10.242:8181/mlottery/core/basketballDetail.findOddsDetail.do"; //?oddsId=2652491&lang=zh&oddsType=euro
+//        String url = "http://192.168.31.48:8888/mlottery/core/basketballDetail.findOddsDetail.do"; //?oddsId=2652491&lang=zh&oddsType=euro
         String url = BaseURLs.URL_BASKET_ODDS_DETAILS;
         Map<String , String> map = new HashMap<>();
+//        map.put("oddsId", "2738173");
         map.put("oddsId", oddsId);
         map.put("oddsType" , mOddsType);
 
@@ -188,10 +197,13 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
 //                    }
                     mListView2.setVisibility(View.VISIBLE);
                     mNoData.setVisibility(View.GONE);
+                    mEerrorll.setVisibility(View.GONE);
                 } else {
                     mListView2.setVisibility(View.GONE);
                     mNoData.setVisibility(View.VISIBLE);
-                    mNoData.setText("暂无数据");
+                    mEerrorll.setVisibility(View.GONE);
+//                    mNoData.setText("暂无数据");
+//                    mNoData.setText(getResources().getText(R.string.basket_nodata));
                 }
 //                mListView2.setVisibility(View.VISIBLE);
             }
@@ -200,8 +212,9 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 //                L.d("oddsID >>>>>>>>>>>>>>>>" , "Error");
                 mListView2.setVisibility(View.GONE);
-                mNoData.setVisibility(View.VISIBLE);
-                mNoData.setText("网络异常");
+                mNoData.setVisibility(View.GONE);
+                mEerrorll.setVisibility(View.VISIBLE);
+//                mNoData.setText("网络异常");
             }
         }, BasketDetailOddsDetailsBean.class);
     }
@@ -234,6 +247,17 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         },500);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.basketball_odds_details_error_btn:
+                mHandler.postDelayed(mRun , 0); // 加载数据
+                break;
+            default:
+                break;
+        }
+    }
+
     private class ItemClick implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
@@ -246,10 +270,9 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
 
 //            mOddsId , mOddsType
             mOddsId = mOddsCompanyList.get(position).getOddsId();
-//            updateRightList(mOddsId);
-            initData(mOddsId);
+//            initData(mOddsId);
 //            initData(mOddsId , mOddsType);
-//            mHandler.postDelayed(mRun , 0); // 加载数据
+            mHandler.postDelayed(mRun , 0); // 加载数据
 
         }
     }

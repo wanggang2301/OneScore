@@ -107,8 +107,8 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private SlidingTabLayout mSlidingTabLayout;
     private int mFlexibleSpaceHeight;
     private int mTabHeight;
-    private int mHeight;//整个头部
-    // 高度240减去tablayout的48再减去paddingtop的24（微调改为减20.）
+    private int mHeight;//整个头部 高度240减去title栏（header）的44再减去paddingtop的24=172
+
     private DisplayImageOptions mOptions;
     private DisplayImageOptions mOptionsHead;
     private ImageLoader mImageLoader;
@@ -506,7 +506,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         int position[] = new int[2];
         mSlidingTabLayout.getLocationInWindow(position);
         int paddingtop = getResources().getDimensionPixelOffset(R.dimen.paddingtop);
-        L.d(TAG, "translateTab ---- scrollY" + scrollY);
         if (position[1] == paddingtop) {//tablayout到达顶部时显示黑色背景
             mTitleScore.setVisibility(View.VISIBLE);
             headLayout.setBackgroundColor(getResources().getColor(R.color.black));
@@ -639,8 +638,8 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         mHomeTeam.setText(mMatch.getHomeTeam());
         mGuestTeam.setText(mMatch.getGuestTeam());
 
-        mHomeRanking.setText(mMatch.getHomeRanking());
-        mGuestRanking.setText(mMatch.getGuestRanking());
+        mHomeRanking.setText("[ "+mMatch.getHomeRanking()+" ]");
+        mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
 
         //图标
         mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
@@ -1172,7 +1171,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         //        private static final String[] TITLES = new String[]{"Applepie", "Butter Cookie", "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "KitKat", "Lollipop"};
         private String[] TITLES = new String[]{BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze), BasketDetailsActivity.this.getResources().getString(R.string.basket_eur),
-                BasketDetailsActivity.this.getResources().getString(R.string.basket_alet), BasketDetailsActivity.this.getResources().getString(R.string.basket_asize)};
+                BasketDetailsActivity.this.getResources().getString(R.string.basket_alet), BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze_sizeof)};
 
         private int mScrollY;
         private String mThirdId;
