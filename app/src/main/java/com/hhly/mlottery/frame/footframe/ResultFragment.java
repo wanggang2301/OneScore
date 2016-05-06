@@ -399,7 +399,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         historyInitData(position);
                         // 关闭 dialog弹窗
                         mAlertDialog.dismiss();
-                        // 记录点击的 item 位置
+                        // 记录点击的 item_share 位置
                         mItems = position;
                     }
                 });
@@ -434,7 +434,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         historyInitData(position);
                         // 关闭 dialog弹窗
                         mAlertDialog.dismiss();
-                        // 记录点击的 item 位置
+                        // 记录点击的 item_share 位置
                         mItems = position;
                         // System.out.println("position=========="+position);
                     }

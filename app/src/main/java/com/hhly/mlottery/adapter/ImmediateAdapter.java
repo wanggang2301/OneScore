@@ -474,7 +474,13 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.item_football_half_score.setVisibility(View.INVISIBLE);
             }
         } else {
-            holder.item_football_half_score.setVisibility(View.INVISIBLE);
+
+            if ("-1".equals(match.getStatusOrigin())){
+                holder.item_football_half_score.setVisibility(View.VISIBLE);
+
+            } else {
+                holder.item_football_half_score.setVisibility(View.INVISIBLE);
+            }
         }
 
 
