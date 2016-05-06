@@ -596,6 +596,10 @@
     <string name="basket_six_average_win_score">6场平均得分</string>
     <string name="basket_six_average_lost_score">6场平均失分</string>
 
+    <string name="basket_handicap_big">大</string>
+    <string name="basket_handicap_small">小</string>
+    <string name="basket_handicap_zou">走</string>
+
     <string name="basket_analyze_dialog_site">场地</string>
     <string name="basket_analyze_dialog_num">场数</string>
     <string name="basket_analyze_dialog_allgame">全部</string>
