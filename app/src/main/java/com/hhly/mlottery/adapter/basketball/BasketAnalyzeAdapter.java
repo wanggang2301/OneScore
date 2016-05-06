@@ -69,14 +69,14 @@ public class BasketAnalyzeAdapter extends CommonAdapter<BasketAnalyzeMoreRecentH
 //            holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#21B11E'><b>" + historyBean.getHomeTeam() + "</b></font>"));
 //        }
 
-        if(historyBean.getScore().equals(":")){
+        if(historyBean.getScore().equals(":") || historyBean.getScore().equals("") ||  historyBean.getScore() == null){
             holder.setText(R.id.basket_details_score, "--");
         }else{
             holder.setText(R.id.basket_details_score, historyBean.getScore());
         }
 //        holder.setText(R.id.basket_details_score, "105:105");
 
-        if (historyBean.getHighLow().equals("")) {
+        if (historyBean.getHighLow().equals("") || historyBean.getHighLow() == null) {
             holder.setText(R.id.basket_details_big_small , "--");
         }else if (historyBean.getHighLow().equals("1")){
 //            holder.setText(R.id.basket_details_big_small, getCount().getText(R.string.china_id_txt));
@@ -90,7 +90,7 @@ public class BasketAnalyzeAdapter extends CommonAdapter<BasketAnalyzeMoreRecentH
             holder.setText(R.id.basket_details_big_small , "--"); // 1 大  0 小 -1 走水 其它不显示
         }
 
-        if (historyBean.getConcede().equals("")) {
+        if (historyBean.getConcede().equals("") || historyBean.getConcede() == null) {
             holder.setText(R.id.basket_details_concede ,"--");
         }else{
             holder.setText(R.id.basket_details_concede, historyBean.getConcede());
