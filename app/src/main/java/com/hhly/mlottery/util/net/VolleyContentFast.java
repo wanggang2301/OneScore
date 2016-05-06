@@ -219,7 +219,7 @@ public class VolleyContentFast {
      * @param errorListener
      * @param clazz
      */
-    public static void requestJsonByGet(String url, Map<String, String> params, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener, final Class clazz) {
+    public static <T> void requestJsonByGet(String url, Map<String, String> params, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<T> successlistener, final ResponseErrorListener errorListener, final Class clazz) {
         request(url, params, Request.Method.GET, retryPolicy, successlistener, errorListener, clazz, RESPONSE_TYPE_JSON);
     }
 
