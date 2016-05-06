@@ -614,9 +614,9 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
             case R.id.basketball_immediate_error_btn:
                 MobclickAgent.onEvent(mContext, "Basketball_Refresh");
-                mLoadingLayout.setVisibility(View.GONE);
+                mLoadingLayout.setVisibility(View.VISIBLE);
                 mSwipeRefreshLayout.setRefreshing(true);
-                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                mSwipeRefreshLayout.setVisibility(View.GONE);
                 mLoadHandler.postDelayed(mRun, 0);
                 break;
             default:

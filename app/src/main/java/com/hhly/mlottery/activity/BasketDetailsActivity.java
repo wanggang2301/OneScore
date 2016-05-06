@@ -179,18 +179,16 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_default)   //默认图片
+              //  .showImageOnLoading(R.mipmap.basket_default)
                 .showImageForEmptyUri(R.mipmap.basket_default)
                 .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
                 .build();
         mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.color.black)   //默认图片
+                .showImageOnLoading(R.color.black)
                 .showImageForEmptyUri(R.color.black)
                 .showImageOnFail(R.color.black)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
                 .displayer(new FadeInBitmapDisplayer(2000))
                 .build();
 
@@ -762,7 +760,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("1st half  " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("2st  " + score.getRemainTime());
+                        mMatchState.setText("2nd  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == HALF_GAME) {
@@ -772,14 +770,14 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("2nd half" + score.getRemainTime());
                     } else {
-                        mMatchState.setText("3st  " + score.getRemainTime());
+                        mMatchState.setText("3rd  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == FOURTH_QUARTER) {
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("2nd half  " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("4st  " + score.getRemainTime());
+                        mMatchState.setText("4th  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == OT1) {
@@ -789,7 +787,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     mMatchState.setText("OT2  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 } else {
-                    mMatchState.setText("Ot3  " + score.getRemainTime());
+                    mMatchState.setText("OT3  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -1125,7 +1123,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("1st half " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("2st  " + score.getRemainTime());
+                        mMatchState.setText("2nd  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == HALF_GAME) {
@@ -1135,24 +1133,24 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("2nd half " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("3st  " + score.getRemainTime());
+                        mMatchState.setText("3rd  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == FOURTH_QUARTER) {
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("2nd half  " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("4st  " + score.getRemainTime());
+                        mMatchState.setText("4th  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == OT1) {
-                    mMatchState.setText("OT1" + score.getRemainTime());
+                    mMatchState.setText("OT1  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == OT2) {
-                    mMatchState.setText("OT2" + score.getRemainTime());
+                    mMatchState.setText("OT2  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 } else {
-                    mMatchState.setText("Ot3" + score.getRemainTime());
+                    mMatchState.setText("OT3  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 }
                 break;
