@@ -1,14 +1,13 @@
 package com.hhly.mlottery.bean.scheduleBean;
 
-import java.util.List;
-import java.util.Map;
-
 import com.hhly.mlottery.bean.LeagueCup;
+
+import java.util.List;
 
 
 /***
- * 
- * @ClassName: ScheduleMatchs 
+ *
+ * @ClassName: ScheduleMatchs
  * @Description: URL:：http://m.13322.com/mlottery/core/matchResults.findCeaselessMatchs.do
  * @author wangg
  * @date 2015-10-15 上午10:18:37
@@ -18,8 +17,27 @@ public class ScheduleMatchs {
 	private List<LeagueCup>  ceaselessFilter;
 
 	private ScheduleCurrent current;
-	
-		
+
+	private String teamLogoPre;
+
+	private String teamLogoSuff;
+
+	public String getTeamLogoSuff() {
+		return teamLogoSuff;
+	}
+
+	public void setTeamLogoSuff(String teamLogoSuff) {
+		this.teamLogoSuff = teamLogoSuff;
+	}
+
+	public String getTeamLogoPre() {
+		return teamLogoPre;
+	}
+
+	public void setTeamLogoPre(String teamLogoPre) {
+		this.teamLogoPre = teamLogoPre;
+	}
+
 	public List<LeagueCup> getCeaselessFilter() {
 		return ceaselessFilter;
 	}
@@ -36,12 +54,6 @@ public class ScheduleMatchs {
 		this.current = current;
 	}
 
-	
 
 
-		
-
-	
-
-		
 }

@@ -1006,7 +1006,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if(mHomePagerEntity.getOtherLists() != null){
             return mHomePagerEntity.getOtherLists().size() + 1;
         }
-       return 0;
+       return 1;
     }
 
     @Override

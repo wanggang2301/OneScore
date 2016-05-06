@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.LeagueRoundInfo;
+import com.hhly.mlottery.bean.footballDetails.LeagueRoundInfo;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
 
 import java.util.List;

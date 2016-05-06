@@ -325,17 +325,31 @@ public class VideoFragment extends Fragment implements View.OnClickListener, Swi
         }
 
     };
+    private boolean isHidden;// 当前Fragment是否显示
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isHidden = hidden;
+        if (hidden) {
+            MobclickAgent.onPageEnd("VideoFragment");
+        } else {
+            MobclickAgent.onPageStart("VideoFragment");
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("VideoFragment");
+        L.d("video","onResume...");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("VideoFragment");
+        if(!isHidden){
+            MobclickAgent.onPageEnd("VideoFragment");
+        }
     }
 }
 

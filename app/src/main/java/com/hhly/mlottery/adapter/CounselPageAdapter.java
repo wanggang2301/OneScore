@@ -16,7 +16,7 @@ import android.widget.Scroller;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.WebActivity;
-import com.hhly.mlottery.bean.footballsecond.CounselBean;
+import com.hhly.mlottery.bean.footballDetails.CounselBean;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.MyLineChart;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

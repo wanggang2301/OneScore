@@ -581,9 +581,24 @@
     <string name="basket_analyze_defult_text">--</string>
     <string name="basket_analyze_win">胜</string>
     <string name="basket_analyze_lost">负</string>
-    <string name="basket_analyze_recently">最近6场，</string>
+    <string name="basket_analyze_recently">最近</string>
+    <string name="basket_analyze_recently2">场，</string>
     <string name="basket_analyze_home_field">,主场</string>
     <string name="basket_company">公司</string>
+    <string name="basket_analyze_day">天</string>
+    <string name="basket_nodata">暂无数据</string>
+    <string name="basket_six_average_win_score">6场平均得分</string>
+    <string name="basket_six_average_lost_score">6场平均失分</string>
+
+    <string name="basket_analyze_dialog_site">场地</string>
+    <string name="basket_analyze_dialog_num">场数</string>
+    <string name="basket_analyze_dialog_allgame">全部</string>
+    <string name="basket_analyze_dialog_samegame">相同主客场</string>
+    <string name="basket_analyze_dialog_six">6场</string>
+    <string name="basket_analyze_dialog_ten">10场</string>
+    <string name="basket_analyze_dialog_fifteen">15场</string>
+    <string name="basket_analyze_dialog_cancle">取消</string>
+    <string name="basket_analyze_dialog_ok">确定</string>
 
     <string name="basket_odds_euro_details">欧赔详情</string>
     <string name="basket_odds_asiaLet_details">亚盘详情</string>

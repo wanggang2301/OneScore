@@ -12,14 +12,14 @@
         android:layout_height="38dip"
         android:background="@drawable/basket_screen_title"
         android:gravity="center"
-        android:text="筛选"
+        android:text="@string/basket_analyze_screen"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="场地"
+        android:text="@string/basket_analyze_dialog_site"
         android:background="@color/black_grounding"
         android:paddingTop="15dp"
         android:paddingLeft="30dp"
@@ -39,7 +39,7 @@
             android:id="@+id/basket_analyze_allsite"
             android:layout_width="96dp"
             android:layout_height="29dp"
-            android:text="全部"
+            android:text="@string/basket_analyze_dialog_allgame"
             android:button="@null"
             android:gravity="center"
             android:checked="true"
@@ -50,7 +50,7 @@
             android:id="@+id/basket_analyze_samesite"
             android:layout_width="96dp"
             android:layout_height="29dp"
-            android:text="相同主客场"
+            android:text="@string/basket_analyze_dialog_samegame"
             android:button="@null"
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"
@@ -60,7 +60,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="场数"
+        android:text="@string/basket_analyze_dialog_num"
         android:background="@color/black_grounding"
         android:paddingTop="15dp"
         android:paddingLeft="30dp"
@@ -81,7 +81,7 @@
             android:id="@+id/basket_analyze_num_six"
             android:layout_width="96dp"
             android:layout_height="29dp"
-            android:text="6场"
+            android:text="@string/basket_analyze_dialog_six"
             android:button="@null"
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"
@@ -92,7 +92,7 @@
             android:id="@+id/basket_analyze_num_ten"
             android:layout_width="96dp"
             android:layout_height="29dp"
-            android:text="10场"
+            android:text="@string/basket_analyze_dialog_ten"
             android:button="@null"
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"
@@ -103,7 +103,7 @@
             android:id="@+id/basket_analyze_num_fifteen"
             android:layout_width="96dp"
             android:layout_height="29dp"
-            android:text="15场"
+            android:text="@string/basket_analyze_dialog_fifteen"
             android:button="@null"
             android:gravity="center"
             android:textColor="@color/basket_screen_text_color"
@@ -111,10 +111,9 @@
     </RadioGroup>
 
     <View
-        android:layout_width="1px"
+        android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/basket_score_gray"
-        />
+        android:background="@color/basket_parting_line" />
 
     <!--<RadioGroup-->
         <!--android:id="@+id/gendergroup3"-->
@@ -155,7 +154,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="40dp"
-            android:text="取消"
+            android:text="@string/basket_analyze_dialog_cancle"
             android:gravity="center"
             android:textColor="@color/basket_screen_checked_text_color"
             android:background="@color/black_grounding"/>
@@ -164,10 +163,10 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="40dp"
-            android:text="确认"
+            android:text="@string/basket_analyze_dialog_ok"
             android:gravity="center"
             android:textColor="@color/basket_screen_checked_text_color"
-            android:background="@color/black_grounding"/>
+            android:background="@color/basket_parting_line"/>
     </LinearLayout>
 
 

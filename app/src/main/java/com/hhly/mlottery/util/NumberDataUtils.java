@@ -544,15 +544,19 @@ public class NumberDataUtils {
                 ll.setLayoutParams(params);
 
             } else if ("16".equals(mNumberInfo.getName()) || "10".equals(mNumberInfo.getName()) || "18".equals(mNumberInfo.getName())) {
-                // 江苏快三
-                int num = Integer.parseInt(numbers.get(i));
+                // 快三
+                try {
+                    int num = Integer.parseInt(numbers.get(i));
 
-                ImageView iv_car = new ImageView(context);
+                    ImageView iv_car = new ImageView(context);
 
-                iv_car.setLayoutParams(params);
-                iv_car.setBackgroundResource(AppConstants.numberKSNos[num - 1]);
+                    iv_car.setLayoutParams(params);
+                    iv_car.setBackgroundResource(AppConstants.numberKSNos[num - 1]);
 
-                ll.addView(iv_car);
+                    ll.addView(iv_car);
+                } catch (Exception e) {
+                    L.d("快三号码异常：" + e.getMessage());
+                }
 
             } else {
                 // 其它号码

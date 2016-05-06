@@ -4,8 +4,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
-import com.hhly.mlottery.bean.footballsecond.MatchDetail;
-
 /**
  * Created by asus1 on 2016/1/7.
  */

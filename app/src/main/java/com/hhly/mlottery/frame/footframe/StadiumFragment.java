@@ -29,12 +29,12 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.LiveTextAdapter;
-import com.hhly.mlottery.bean.footballsecond.MatchDetail;
-import com.hhly.mlottery.bean.footballsecond.MatchTextLiveBean;
-import com.hhly.mlottery.bean.footballsecond.MatchTimeLiveBean;
-import com.hhly.mlottery.bean.footballsecond.MathchStatisInfo;
-import com.hhly.mlottery.bean.footballsecond.PlayerInfo;
-import com.hhly.mlottery.bean.footballsecond.PreLiveText;
+import com.hhly.mlottery.bean.footballDetails.MatchDetail;
+import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
+import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
+import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
+import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.config.BaseURLs;
@@ -424,6 +424,8 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                     webSocketStadiumLiveTextEvent = JSON.parseObject(ws_json, WebSocketStadiumLiveTextEvent.class);
 
                 }
+
+              //  L.i("1029",ws_json);
                 L.i("1029", "===直播事件===" + "msgId=" + webSocketStadiumLiveTextEvent.getData().get("msgId") + ",,,時間" + StadiumUtils.convertStringToInt(webSocketStadiumLiveTextEvent.getData().get("time")) + ",,,msgText=" + webSocketStadiumLiveTextEvent.getData().get("msgText"));
 
                 if (AppConstants.isTestEnv) {
@@ -453,13 +455,13 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 Collections.sort(allMatchLiveMsgId,Collections.reverseOrder());
 
                 if ((Integer.parseInt(currMsgId) - allMatchLiveMsgId.get(0) >= 2)) {
-                    L.i("1028", "------"+currMsgId + "---" + allMatchLiveMsgId.get(0));
+                    L.i("1028", "------" + currMsgId + "---" + allMatchLiveMsgId.get(0));
                     isRequestMsgIdRepeat(String.valueOf(allMatchLiveMsgId.get(0)), currMsgId);
                 } else {
                     for (int i = 0; i < allMatchLiveMsgId.size() - 1; i++) {
                         boolean flag = false;
                         if ((allMatchLiveMsgId.get(i) - allMatchLiveMsgId.get(i+1)) >= 2) {
-                            L.i("1028", allMatchLiveMsgId.get(i) + "---" + allMatchLiveMsgId.get(i+1));
+                            L.i("1028", allMatchLiveMsgId.get(i) + "---" + allMatchLiveMsgId.get(i + 1));
                             isRequestMsgIdRepeat(String.valueOf(allMatchLiveMsgId.get(i + 1)), String.valueOf(allMatchLiveMsgId.get(i)));
                             flag = true;
                         }

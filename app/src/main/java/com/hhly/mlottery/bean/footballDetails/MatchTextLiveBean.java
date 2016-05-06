@@ -1,9 +1,7 @@
-package com.hhly.mlottery.bean.footballsecond;
+package com.hhly.mlottery.bean.footballDetails;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.Arrays;
 
 /**
  * Created by asus1 on 2015/12/30.

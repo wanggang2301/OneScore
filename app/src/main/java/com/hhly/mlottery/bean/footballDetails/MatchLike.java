@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.footballsecond;
+package com.hhly.mlottery.bean.footballDetails;
 
 /**
  * 点赞返回实体对象

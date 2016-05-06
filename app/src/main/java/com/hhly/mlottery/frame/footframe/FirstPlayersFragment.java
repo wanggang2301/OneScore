@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.bean.footballsecond.FirstPlayersBean;
-import com.hhly.mlottery.bean.footballsecond.PlayerInfo;
+import com.hhly.mlottery.bean.footballDetails.FirstPlayersBean;
+import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;

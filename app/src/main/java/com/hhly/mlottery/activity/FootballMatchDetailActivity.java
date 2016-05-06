@@ -25,9 +25,9 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.MatchDetail;
-import com.hhly.mlottery.bean.footballsecond.MatchLike;
-import com.hhly.mlottery.bean.footballsecond.PlayerInfo;
+import com.hhly.mlottery.bean.footballDetails.MatchDetail;
+import com.hhly.mlottery.bean.footballDetails.MatchLike;
+import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
@@ -754,15 +754,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 mViewPager.setCurrentItem(2);
                 break;
             case R.id.layout_match_header_back:
-                if (currentFragmentId == IMMEDIA_FRAGMENT) {
-                    ImmediateFragment.imEventBus.post("");
-                } else if (currentFragmentId == RESULT_FRAGMENT) {
-                    ResultFragment.resultEventBus.post("");
-                } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
-                    ScheduleFragment.schEventBus.post("");
-                } else if (currentFragmentId == FOCUS_FRAGMENT) {
-                    FocusFragment.focusEventBus.post("");
-                }
+                eventBusPost();
 
                 // setResult(Activity.RESULT_OK);
                 finish();
@@ -877,17 +869,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-
-            if (currentFragmentId == 0) {
-                ImmediateFragment.imEventBus.post("");
-            } else if (currentFragmentId == 1) {
-                ResultFragment.resultEventBus.post("");
-            } else if (currentFragmentId == 2) {
-                ScheduleFragment.schEventBus.post("");
-            } else if (currentFragmentId == 3) {
-                FocusFragment.focusEventBus.post("");
-            }
-
+            eventBusPost();
             //setResult(Activity.RESULT_OK);
             finish();
             return true;
@@ -895,6 +877,26 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         return super.onKeyDown(keyCode, event);
     }
 
+
+    private void eventBusPost() {
+        if (currentFragmentId == IMMEDIA_FRAGMENT) {
+            if (ImmediateFragment.imEventBus != null) {
+                ImmediateFragment.imEventBus.post("");
+            }
+        } else if (currentFragmentId == RESULT_FRAGMENT) {
+            if (ResultFragment.resultEventBus != null) {
+                ResultFragment.resultEventBus.post("");
+            }
+        } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
+            if (ScheduleFragment.schEventBus != null) {
+                ScheduleFragment.schEventBus.post("");
+            }
+        } else if (currentFragmentId == FOCUS_FRAGMENT) {
+            if (FocusFragment.focusEventBus != null) {
+                FocusFragment.focusEventBus.post("");
+            }
+        }
+    }
 
     /**
      * 不要删除以下代码
