@@ -243,8 +243,8 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
                 Intent intent = new Intent(getActivity(), BasketAnalyzeMoreRecordActivity.class);
                 intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_THIRD_ID,mThirdId);//跳转到详情
-                intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_GUEST_TEAM,"老鹰");//跳转到详情
-                intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_HOME_TEAM,"凯尔特人");//跳转到详情
+//                intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_GUEST_TEAM,"老鹰");//跳转到详情
+//                intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_HOME_TEAM,"凯尔特人");//跳转到详情
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
             }
@@ -501,10 +501,18 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             mHomeWinRate = mAnalyzeDatas.get(1).getMatchWinRate();
         }
         //排名/球队
-//        mRankingGuestName.setText(mAnalyzeDatas.get(0).getRanking() + "  " + mAnalyzeDatas.get(0).getTeam());
         mRankingGuestName.setText(mGuestRanking + "  " +mGuestTeam);
-//        mRankingHomeName.setText(mAnalyzeDatas.get(1).getRanking() + "  " + mAnalyzeDatas.get(1).getTeam());
         mRankingHomeName.setText(mHomeRanking + "  " + mHomeTeam);
+        if (mGuestRanking.equals("--") || mGuestTeam.equals("--")) {
+            mRankingGuestName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }else{
+            mRankingGuestName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+        }
+        if (mHomeRanking.equals("--") || mHomeTeam.equals("--")) {
+            mRankingHomeName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }else{
+            mRankingHomeName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+        }
         //已赛
 //        mRankingGuestOverGame.setText(mAnalyzeDatas.get(0).getMatchAll());
         mRankingGuestOverGame.setText(mGuestMatchAll);
@@ -515,6 +523,16 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         //胜率
         mRankingGuestWinRate.setText(mGuestWinRate);
         mRankingHomeWinRate.setText(mHomeWinRate);
+        if (mGuestWinRate.equals("--")) {
+            mRankingGuestWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }else{
+            mRankingGuestWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+        }
+        if (mHomeWinRate.equals("--")) {
+            mRankingHomeWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }else{
+            mRankingHomeWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+        }
         /**
          * 最近表现
          */
@@ -523,6 +541,11 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         String mGuestScoreLose;
         String mHomeScoreWin;
         String mHomeScoreLose;
+
+        Double guestWin;
+        Double homeWin;
+        Double guestLose;
+        Double homeLose;
 
         if (mAnalyzeDatas.get(0).getScoreWinSix() == null || mAnalyzeDatas.get(0).getScoreWinSix().equals("")) {
             mGuestScoreWin = "--";
@@ -545,12 +568,58 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             mHomeScoreLose = mAnalyzeDatas.get(1).getScoreLoseSix();
         }
         mGuestScoreWinSix.setText(mGuestScoreWin);
-        mGuestScoreLoseSix.setText(mGuestScoreLose);
         mHomeScoreWinSix.setText(mHomeScoreWin);
+        mGuestScoreLoseSix.setText(mGuestScoreLose);
         mHomeScoreLoseSix.setText(mHomeScoreLose);
 
-        mScoreWin.setText("6场平均得分");
-        mScoreLose.setText("6场平均失分");
+        /**
+         * 设置最近表现平均分颜色
+         */
+        if (!mGuestScoreWin.equals("--")) {
+            guestWin = Double.parseDouble(mGuestScoreWin);
+        }else{
+            guestWin = 0d;
+        }
+        if (!mHomeScoreWin.equals("--")) {
+            homeWin = Double.parseDouble(mHomeScoreWin);
+        }else{
+            homeWin = 0d;
+        }
+        if (!mGuestScoreLose.equals("--")) {
+            guestLose = Double.parseDouble(mGuestScoreLose);
+        }else{
+            guestLose = 0d;
+        }
+        if (!mHomeScoreLose.equals("--")) {
+            homeLose = Double.parseDouble(mHomeScoreLose);
+        }else{
+            homeLose = 0d;
+        }
+
+        if(guestWin > homeWin){
+            mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+            mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }else if (guestWin < homeWin) {
+            mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+            mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }else{
+            mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+            mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }
+
+        if(guestLose > homeLose){
+            mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+            mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }else if (guestWin < homeWin) {
+            mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
+            mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }else{
+            mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+            mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
+        }
+
+        mScoreWin.setText(getResources().getText(R.string.basket_six_average_win_score));
+        mScoreLose.setText(getResources().getText(R.string.basket_six_average_lost_score));
     }
 
     private void setRecent(ImageView mImage , int recent){
