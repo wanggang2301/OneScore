@@ -199,9 +199,15 @@ public class WelcomeActivity extends BaseActivity {
 
        /* thread = new Thread(new CheckVersionTask());
         thread.start();*/
-        //启动页加载图片url
 
-        getStartImageUrl();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getStartImageUrl();
+            }
+        }, 1000);
+        //启动页加载图片url
+        // getStartImageUrl();
       /*  final long start = System.currentTimeMillis(); // 记录起始时间
 
         timer = new Timer();
