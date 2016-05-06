@@ -407,15 +407,15 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
         List<BasketAnalyzeFutureMatchBean> mFutureMatchHome = mAnalyzeDatas.get(1).getFutureMatch();
         if (mFutureMatchHome.size() != 0) {
-            if (mFutureMatchGuest.size() == 1) {
+            if (mFutureMatchHome.size() == 1) {
                 setFutureMatch(mFutureHomeDate1 , mFutureHomeName1 , mFutureHomeImg1 , mFutureMatchHome.get(0) , true);
                 setFutureMatch(mFutureHomeDate2 , mFutureHomeName2 , mFutureHomeImg2 , null , false);
                 setFutureMatch(mFutureHomeDate3 , mFutureHomeName3 , mFutureHomeImg3 , null , false);
-            }else if(mFutureMatchGuest.size() == 2){
+            }else if(mFutureMatchHome.size() == 2){
                 setFutureMatch(mFutureHomeDate1 , mFutureHomeName1 , mFutureHomeImg1 , mFutureMatchHome.get(0) , true);
                 setFutureMatch(mFutureHomeDate2 , mFutureHomeName2 , mFutureHomeImg2 , mFutureMatchHome.get(1) , true);
                 setFutureMatch(mFutureHomeDate3 , mFutureHomeName3 , mFutureHomeImg3 , null , false);
-            }else if(mFutureMatchGuest.size() == 3){
+            }else if(mFutureMatchHome.size() == 3){
                 setFutureMatch(mFutureHomeDate1 , mFutureHomeName1 , mFutureHomeImg1 , mFutureMatchHome.get(0) , true);
                 setFutureMatch(mFutureHomeDate2 , mFutureHomeName2 , mFutureHomeImg2 , mFutureMatchHome.get(1) , true);
                 setFutureMatch(mFutureHomeDate3 , mFutureHomeName3 , mFutureHomeImg3 , mFutureMatchHome.get(2) , true);

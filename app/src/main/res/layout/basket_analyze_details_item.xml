@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="老鹰"
+            android:text=""
             android:singleLine="true"
             android:textColor="@color/black_details_textcolor"
             android:textSize="@dimen/text_size_10" />
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="鹈鹕"
+            android:text=""
             android:singleLine="true"
             android:textColor="@color/black_details_textcolor"
             android:textSize="@dimen/text_size_10" />

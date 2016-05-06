@@ -31,6 +31,7 @@ public class BasketAnalyzeAdapter extends CommonAdapter<BasketAnalyzeMoreRecentH
     @Override
     public void convert(ViewHolder holder, BasketAnalyzeMoreRecentHistoryBean historyBean) {
 
+
         holder.setText(R.id.basket_details_team_name ,historyBean.getLeagueName());
         holder.setText(R.id.basket_details_data , historyBean.getDate());
         holder.setText(R.id.basket_details_guest_name , historyBean.getGuestTeam());
@@ -43,16 +44,30 @@ public class BasketAnalyzeAdapter extends CommonAdapter<BasketAnalyzeMoreRecentH
          */
 //        holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#FF1F1F'><b>" + historyBean.getHomeTeam() + "</b></font>"));
 
+        if (historyBean.isHomeGround()) {
+            if(historyBean.getResult() == 1){
+                holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#FF1F1F'><b>" + historyBean.getHomeTeam() + "</b></font>"));
+            }else{
+                holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#21B11E'><b>" + historyBean.getHomeTeam() + "</b></font>"));
+            }
 
-        if(historyBean.getResult() == 1){
-//            holder.setTextColor(R.id.basket_details_home_name , R.color.basket_win_color);
-            holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#FF1F1F'><b>" + historyBean.getHomeTeam() + "</b></font>"));
-//            holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#FF1F1F'><b>" + "乙蓝甲乙蓝甲乙蓝" + "</b></font>"));
+            holder.setText(R.id.basket_details_guest_name , historyBean.getGuestTeam());
         }else{
-//            holder.setTextColor(R.id.basket_details_home_name , R.color.tabtitle);
-            holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#21B11E'><b>" + historyBean.getHomeTeam() + "</b></font>"));
-//            holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#21B11E'><b>" + "乙蓝甲乙蓝甲乙蓝" + "</b></font>"));
+            holder.setText(R.id.basket_details_home_name , historyBean.getHomeTeam());
+
+            if(historyBean.getResult() == 1){
+                holder.setText(R.id.basket_details_guest_name , Html.fromHtml("<font color='#FF1F1F'><b>" + historyBean.getGuestTeam() + "</b></font>"));
+            }else{
+                holder.setText(R.id.basket_details_guest_name , Html.fromHtml("<font color='#21B11E'><b>" + historyBean.getGuestTeam() + "</b></font>"));
+            }
         }
+        
+        
+//        if(historyBean.getResult() == 1){
+//            holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#FF1F1F'><b>" + historyBean.getHomeTeam() + "</b></font>"));
+//        }else{
+//            holder.setText(R.id.basket_details_home_name , Html.fromHtml("<font color='#21B11E'><b>" + historyBean.getHomeTeam() + "</b></font>"));
+//        }
 
         if(historyBean.getScore().equals(":")){
             holder.setText(R.id.basket_details_score, "--");
