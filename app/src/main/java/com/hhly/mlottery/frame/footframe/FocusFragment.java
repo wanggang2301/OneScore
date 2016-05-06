@@ -60,8 +60,6 @@ import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseCloseLis
 import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseErrorListener;
 import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseMessageListener;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.umeng.analytics.MobclickAgent;
-
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -489,7 +487,16 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                 }
 
                 mAllMatchs = json.getFocus();
+
+                teamLogoPre=json.getTeamLogoPre();
+
+                teamLogoSuff=json.getTeamLogoSuff();
+
+
+
                 mMatchs = new ArrayList<Match>();
+
+
                 // mMatchs.addAll(mAllMatchs);//用这种方式是把all的引用赋给它了，操作起来比较麻烦
 
 
@@ -1123,7 +1130,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("FocusFragment");
         isPause = false;
         L.v(TAG, "___onResume___");
 
@@ -1466,7 +1472,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("FocusFragment");
         isPause = true;
     }
 }
