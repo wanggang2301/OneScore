@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true"><shape>
+
+            <!-- 内部填充色 -->
+            <solid android:color="#098FFD" />
+            <!-- 描边 -->
+            <stroke android:width="0dp" android:color="#098FFD" />
+
+            <!-- 圆角 -->
+            <corners android:radius="4dp"/>
+            
+        </shape></item>
+    <item><shape>
+
+            <!-- 内部填充色 -->
+            <solid android:color="#CFCFCF" />
+            <!-- 描边 -->
+            <stroke android:width="0dp" android:color="#CFCFCF" />
+            <!-- 圆角 -->
+            <corners 
+               android:radius="4dp"
+                />
+        </shape></item>
+
+</selector>

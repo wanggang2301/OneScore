@@ -29,6 +29,8 @@
 
     <!-- 用于修改电源时间 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!--畅言权限-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".MyApp"
@@ -97,7 +99,13 @@
         <!-- webview -->
         <activity
             android:name=".activity.WebActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+           android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!--评论activity-->
+        <activity
+            android:name=".activity.CounselCommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".activity.HomeTeamSoundActivity"
             android:screenOrientation="portrait" />
