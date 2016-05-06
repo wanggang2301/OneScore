@@ -23,6 +23,7 @@ import com.hhly.mlottery.bean.footballDetails.CounselBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -51,7 +52,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private CounselFragmentAdapter mCounselFragmentAdapter;
     private List<Boolean> isImageLeft = new ArrayList<>();//是否图片左边布局
     private ImageView public_img_back, public_btn_filter, public_btn_set;
-    private TextView public_txt_title, public_txt_left_title,btn_clear;//标题，暂无数据
+    private TextView public_txt_title, public_txt_left_title;//标题，暂无数据
     private List<CounselBean.InfoIndexBean.HeadTitlesBean> mHeadList;//头数据集合
     private List<CounselBean.InfoIndexBean.AdsBean> mAdsList;//轮播数据集合
     private List<CounselBean.InfoIndexBean.InfosBean> mInfosList;//资讯列表数据集合
@@ -59,7 +60,6 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private ArrayList<Integer> infotype = new ArrayList<>();//信息类型集合
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Context mContext;
-
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -116,14 +116,12 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mContext = getActivity();
-        MobclickAgent.openActivityDurationTrack(true);
         mView = inflater.inflate(R.layout.fragment_counsel, null);
         initView();
         //请求头数据
         loadHeadData(BaseURLs.URL_FOOTBALL_INFOINDEX);
         return mView;
     }
-
 
     //请求头数据  发起网络请求
     private void loadHeadData(String url) {
@@ -232,32 +230,26 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         //设置
         public_btn_set = (ImageView) mView.findViewById(R.id.public_btn_set);
         public_btn_set.setVisibility(View.GONE);
-
-
-
-
         //返回
         public_img_back = (ImageView) mView.findViewById(R.id.public_img_back);
         public_img_back.setOnClickListener(this);
-
-
         mViewPager = (ViewPager) mView.findViewById(R.id.counselfragment_viewpager);
         mTabLayout = (TabLayout) mView.findViewById(R.id.tabs);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.counselfragment_SwipeRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
-
-
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.public_img_back:
+                MobclickAgent.onEvent(mContext, "CounselChildFragment_Exit");
                 ((FootballActivity) mContext).finish();
                 break;
             case R.id.network_exception_reload_btn:
+                MobclickAgent.onEvent(mContext, "CounselChildFragment_NotNet");
                 loadHeadData(BaseURLs.URL_FOOTBALL_INFOINDEX);
                 break;
             default:
@@ -270,8 +262,29 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
 
     }
 
+    private boolean isHidden;// 当前Fragment是否显示
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isHidden = hidden;
+        if (hidden) {
+            MobclickAgent.onPageEnd("CounselChildFragment");
+        } else {
+            MobclickAgent.onPageStart("CounselChildFragment");
+        }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("CounselChildFragment");
+    }
 
-
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(!isHidden){
+            MobclickAgent.onPageEnd("CounselChildFragment");
+        }
+    }
 }

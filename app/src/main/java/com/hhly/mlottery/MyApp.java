@@ -36,6 +36,7 @@ public class MyApp extends Application {
 	public void onCreate() {
 		appcontext = this;
 		initImageLoader(this);
+//		CyUtils.initCy(this);
 		// 初始化PreferenceUtil
 		PreferenceUtil.init(this);
 		//初始化获取语言环境

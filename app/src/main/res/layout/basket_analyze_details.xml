@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/basket_analyze_history_record"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/basket_analyze_history_record"
-    >
+    android:orientation="vertical">
 
     <!--<include layout="@layout/basket_analyze_layout_header" />-->
     <RelativeLayout
@@ -24,7 +23,7 @@
             android:paddingLeft="@dimen/x24"
             android:paddingRight="@dimen/x24"
             android:scaleType="centerInside"
-            android:src="@mipmap/basketball_back" />
+            android:src="@mipmap/back" />
 
         <TextView
             android:id="@+id/public_txt_title"
@@ -45,8 +44,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/basketball_loading"
@@ -56,152 +54,158 @@
             android:textColor="@color/loading_txt_color" />
     </LinearLayout>
 
-    <ScrollView
+    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+        android:id="@+id/basket_analyze_details_refreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black_grounding">
-        <RelativeLayout
+        android:layout_height="wrap_content">
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
-            <LinearLayout
-                android:id="@+id/basket_loading_success_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/basket_analyze"
-                    android:background="@color/black_title"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/basket_analyze_history"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:paddingLeft="@dimen/basket_details_item_height"
-                        android:textSize="@dimen/text_size_12"
-                        android:textColor="@color/black_details_ball_textcolor2"
-                        />
-                    <ImageView
-                        android:id="@+id/basket_analyze_history_screen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/basket_analyze_screen"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/basket_details_item_height"
-                        />
-                </RelativeLayout>
+            android:background="@color/black_grounding">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/basket_analyze_details_history"
+                    android:id="@+id/basket_loading_success_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/black_grounding"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:id="@+id/basket_analyze_history"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_14"
-                        android:textColor="@color/black_details_ball_textcolor2"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:gravity="center"
-                        />
-                    <!--android:text="最近&#45;&#45;场，-&#45;&#45;胜&#45;&#45;负，主场&#45;&#45;胜&#45;&#45;负"    -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:paddingBottom="@dimen/basket_details_ball5"
-                        >
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_event"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_date"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_guest"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_home"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_score"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_sizeof"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_let_points"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/black_details_textcolor"
-                    />
+                    android:orientation="vertical">
 
-                <com.hhly.mlottery.widget.NestedListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/basket_histroy_list"
-                    android:divider="#00000000"
-                    android:dividerHeight="0dip"
-                    android:listSelector="@android:color/transparent"
-                    >
-                </com.hhly.mlottery.widget.NestedListView>
-                <!--<TextView-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/basket_analyze"
+                        android:background="@color/black_title">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:paddingLeft="@dimen/basket_details_item_height"
+                            android:text="@string/basket_analyze_history"
+                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textSize="@dimen/text_size_12" />
+
+                        <ImageView
+                            android:id="@+id/basket_analyze_history_screen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:paddingRight="@dimen/basket_details_item_height"
+                            android:src="@mipmap/cpi_filtrate" />
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/basket_analyze_details_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/black_grounding"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/basket_analyze_history"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textSize="@dimen/text_size_14" />
+                        <!--android:text="最近&#45;&#45;场，-&#45;&#45;胜&#45;&#45;负，主场&#45;&#45;胜&#45;&#45;负"    -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:paddingLeft="@dimen/basket_details_ball5"
+                            android:paddingRight="@dimen/basket_details_ball5"
+                            >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_event"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_date"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_guest"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_home"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_score"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_sizeof"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_let_points"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="@dimen/margin_standard"
+                        android:layout_marginRight="@dimen/margin_standard"
+                        android:background="@color/basket_parting_line" />
+
+                    <com.hhly.mlottery.widget.NestedListView
+                        android:id="@+id/basket_histroy_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="#00000000"
+                        android:dividerHeight="0dip"
+                        android:listSelector="@android:color/transparent"></com.hhly.mlottery.widget.NestedListView>
+                    <!--<TextView-->
                     <!--android:id="@+id/basket_analyze_nodata1"-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content"-->
@@ -215,641 +219,484 @@
                     <!--android:visibility="gone"-->
                     <!--/>-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/basket_analyze"
-                    android:background="@color/black_title"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/basket_analyze"
+                        android:background="@color/black_title">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:paddingLeft="@dimen/basket_details_item_height"
+                            android:text="@string/basket_analyze_recent"
+                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textSize="@dimen/text_size_12" />
+
+                        <ImageView
+                            android:id="@+id/basket_analyze_recent_screen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:paddingRight="@dimen/basket_details_item_height"
+                            android:src="@mipmap/cpi_filtrate" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/basket_analyze_details_recent_guest"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/basket_analyze_recent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:paddingLeft="@dimen/basket_details_item_height"
-                        android:textSize="@dimen/text_size_12"
-                        android:textColor="@color/black_details_ball_textcolor2"
-                        />
+                        android:background="@color/black_grounding"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/basket_analyze_record_guest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:paddingLeft="@dimen/basket_details_ball5"
+                            android:paddingRight="@dimen/basket_details_ball5"
+                            >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_event"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_date"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_guest"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_home"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_score"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_sizeof"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_let_points"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="@dimen/margin_standard"
+                        android:layout_marginRight="@dimen/margin_standard"
+                        android:background="@color/basket_parting_line" />
+
+                    <com.hhly.mlottery.widget.NestedListView
+                        android:id="@+id/basket_recent_exploits_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="#00000000"
+                        android:dividerHeight="0dip"
+                        android:listSelector="@android:color/transparent"></com.hhly.mlottery.widget.NestedListView>
+
+                    <LinearLayout
+                        android:id="@+id/basket_analyze_details_recent_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/black_grounding"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/basket_analyze_record_home"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:paddingLeft="@dimen/basket_details_ball5"
+                            android:paddingRight="@dimen/basket_details_ball5"
+                            >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_event"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_date"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_guest"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_home"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_score"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.7"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_sizeof"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_let_points"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="@dimen/margin_standard"
+                        android:layout_marginRight="@dimen/margin_standard"
+                        android:background="@color/basket_parting_line" />
+
+                    <com.hhly.mlottery.widget.NestedListView
+                        android:id="@+id/basket_recent_exploits_list_to"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="#00000000"
+                        android:dividerHeight="0dip"
+                        android:listSelector="@android:color/transparent"></com.hhly.mlottery.widget.NestedListView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/basket_analyze"
+                        android:background="@color/black_title">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:paddingLeft="@dimen/basket_details_item_height"
+                            android:text="@string/basket_analyze_fruture_competition"
+                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textSize="@dimen/text_size_12" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/basket_analyze_details_future_guest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/black_grounding"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/basket_guest_fruture_tv_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_event"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_date"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_guest"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_home"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_interval"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginRight="@dimen/margin_standard"
+                            android:background="@color/basket_parting_line" />
+
+                        <com.hhly.mlottery.widget.NestedListView
+                            android:id="@+id/basket_future_exploits_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:divider="#00000000"
+                            android:dividerHeight="0dip"
+                            android:listSelector="@android:color/transparent"></com.hhly.mlottery.widget.NestedListView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/basket_analyze_details_future_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/black_grounding"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/basket_home_fruture_tv_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_event"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_date"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_guest"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_home"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/basket_analyze_interval"
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_11" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginRight="@dimen/margin_standard"
+                            android:background="@color/basket_parting_line" />
+
+                        <com.hhly.mlottery.widget.NestedListView
+                            android:id="@+id/basket_future_exploits_list_to"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:divider="#00000000"
+                            android:dividerHeight="0dip"
+                            android:listSelector="@android:color/transparent"></com.hhly.mlottery.widget.NestedListView>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="1px"
+                        android:background="@color/black_details_textcolor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/basketball_details_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/black_grounding"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/y400"
+                    android:visibility="gone">
+
                     <ImageView
-                        android:id="@+id/basket_analyze_recent_screen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/basket_analyze_screen"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/basket_details_item_height"
-                        />
-                </RelativeLayout>
+                        android:src="@mipmap/refresh" />
 
-                <LinearLayout
-                    android:id="@+id/basket_analyze_details_recent_guest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/black_grounding"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:id="@+id/basket_analyze_record_guest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_14"
-                        android:textColor="@color/black_details_ball_textcolor2"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:gravity="center"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:paddingBottom="@dimen/basket_details_ball5"
-                        >
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_event"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_date"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_guest"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_home"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_score"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_sizeof"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_let_points"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-
-
-
-                    </LinearLayout>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/black_details_textcolor"
-                    />
-
-                <com.hhly.mlottery.widget.NestedListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/basket_recent_exploits_list"
-                    android:divider="#00000000"
-                    android:dividerHeight="0dip"
-                    android:listSelector="@android:color/transparent"
-                    >
-                </com.hhly.mlottery.widget.NestedListView>
-
-                <LinearLayout
-                    android:id="@+id/basket_analyze_details_recent_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/black_grounding"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:id="@+id/basket_analyze_record_home"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_14"
-                        android:textColor="@color/black_details_ball_textcolor2"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:gravity="center"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:paddingBottom="@dimen/basket_details_ball5"
-                        >
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_event"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_date"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_guest"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_home"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_score"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_sizeof"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_let_points"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/black_details_textcolor"
-                    />
-
-                <com.hhly.mlottery.widget.NestedListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/basket_recent_exploits_list_to"
-                    android:divider="#00000000"
-                    android:dividerHeight="0dip"
-                    android:listSelector="@android:color/transparent"
-                    >
-                </com.hhly.mlottery.widget.NestedListView>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/basket_analyze"
-                    android:background="@color/black_title"
-                    >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/basket_analyze_fruture_competition"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:paddingLeft="@dimen/basket_details_item_height"
-                        android:textSize="@dimen/text_size_12"
-                        android:textColor="@color/black_details_ball_textcolor2"
-                        />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/basket_analyze_details_future_guest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/black_grounding"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:id="@+id/basket_guest_fruture_tv_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_14"
-                        android:textColor="@color/black_details_ball_textcolor2"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:gravity="center"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:paddingBottom="@dimen/basket_details_ball5"
-                        >
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_event"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_date"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_guest"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_home"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_interval"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/black_details_textcolor"
-                        />
-                    <com.hhly.mlottery.widget.NestedListView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/basket_future_exploits_list"
-                        android:divider="#00000000"
-                        android:dividerHeight="0dip"
-                        android:listSelector="@android:color/transparent"
-                        >
-                    </com.hhly.mlottery.widget.NestedListView>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/basket_analyze_details_future_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/black_grounding"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:id="@+id/basket_home_fruture_tv_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_14"
-                        android:textColor="@color/black_details_ball_textcolor2"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:gravity="center"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/basket_details_item"
-                        android:paddingBottom="@dimen/basket_details_ball5"
-                        >
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_event"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_date"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_guest"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_home"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/basket_analyze_interval"
-                            android:textSize="@dimen/text_size_11"
-                            android:textColor="@color/black_details_textcolor"
-                            android:gravity="center"
-                            />
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/black_details_textcolor"
-                        />
-                    <com.hhly.mlottery.widget.NestedListView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/basket_future_exploits_list_to"
-                        android:divider="#00000000"
-                        android:dividerHeight="0dip"
-                        android:listSelector="@android:color/transparent"
-                        >
-                    </com.hhly.mlottery.widget.NestedListView>
-                </LinearLayout>
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="1px"
-                    android:background="@color/black_details_textcolor"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/basketball_details_error"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@color/black_grounding"
-                android:paddingTop="@dimen/y400"
-                android:visibility="gone"
-                >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/refresh" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/exp_net_status_txt"
-                    android:textColor="@color/version"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:orientation="horizontal" >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dip"
-                        android:text="@string/exp__check_txt"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/exp_net_status_txt"
                         android:textColor="@color/version"
                         android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/basketball_details_error_btn"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/exp_refresh_txt"
-                        android:textColor="@color/basket_score"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
+                        android:layout_marginTop="0dp"
+                        android:orientation="horizontal">
 
-    </ScrollView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dip"
+                            android:text="@string/exp__check_txt"
+                            android:textColor="@color/version"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/basketball_details_error_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/exp_refresh_txt"
+                            android:textColor="@color/basket_score"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
 </LinearLayout>
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:paddingTop="@dimen/basket_details_ball6"-->
-    <!--android:paddingBottom="@dimen/basket_details_ball6"-->
-    <!-->-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="NBA"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="16-03-31"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="老鹰"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="鹈鹕"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="间隔"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--</LinearLayout>-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:paddingTop="@dimen/basket_details_ball6"-->
-    <!--android:paddingBottom="@dimen/basket_details_ball6"-->
-    <!-->-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="NBA"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="16-03-31"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="老鹰"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="鹈鹕"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="间隔"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--</LinearLayout>-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:paddingTop="@dimen/basket_details_ball6"-->
-    <!--android:paddingBottom="@dimen/basket_details_ball6"-->
-    <!-->-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="NBA"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="16-03-31"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="老鹰"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="鹈鹕"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="间隔"-->
-    <!--android:textSize="@dimen/text_size_11"-->
-    <!--android:textColor="@color/black_details_textcolor"-->
-    <!--android:gravity="center"-->
-    <!--/>-->
-    <!--</LinearLayout>-->
+    <!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>--><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>--><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>-->

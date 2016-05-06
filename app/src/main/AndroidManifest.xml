@@ -8,7 +8,7 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="22" />
     <!-- 调用系统下载权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
@@ -52,29 +52,20 @@
         <activity
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
+            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-
-
             </intent-filter>
-
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
         </activity>
         <!-- 引导页 -->
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" >
 
         </activity>
-        <!-- 首页 -->
-
         <!-- 内地版的key-begin -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -106,7 +97,13 @@
         <!-- webview -->
         <activity
             android:name=".activity.WebActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+           android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!--评论activity-->
+        <activity
+            android:name=".activity.CounselCommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".activity.HomeTeamSoundActivity"
             android:screenOrientation="portrait" />
@@ -184,9 +181,9 @@
 
         <activity
             android:name=".activity.FeedbackActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"></activity>
 
-        </activity>
+        
 
         <!--微信分享-->
         <activity
@@ -220,6 +217,9 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="true" >
         </activity>
+        <!--消息推送服务-->
+        <service
+            android:name=".service.umengPushService"/>
     </application>
 
 </manifest>

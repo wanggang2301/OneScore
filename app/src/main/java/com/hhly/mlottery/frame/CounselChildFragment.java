@@ -357,6 +357,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(mContext, WebActivity.class);
         String jumpurl;//跳转url
+        String title;//标题
+        String subtitle;//副标题
+        String imageurl;//图片url
         boolean isRelateMatch;//是否关联比赛
         String ThirdId;//联赛id
         int type;//联赛id类型  1篮球 2足球
@@ -364,11 +367,19 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
             if (mAdsList!=null&&mAdsList.size()!=0) {//有轮播图
                 //因为头部下标是0，item下标变成从1开始，所以要减去1
                 jumpurl = mInfosList.get(position - 1).getInfoUrl();
+                title = mInfosList.get(position - 1).getTitle();
+                subtitle = mInfosList.get(position - 1).getSubTitle();
+                imageurl = mInfosList.get(position - 1).getPicUrl();
+
                 ThirdId = mInfosList.get(position - 1).getThirdId();
                 isRelateMatch = mInfosList.get(position - 1).isRelateMatch();
                 type = mInfosList.get(position - 1).getType();
             }else {//没有轮播图
                 jumpurl = mInfosList.get(position ).getInfoUrl();
+                title = mInfosList.get(position ).getTitle();
+                subtitle = mInfosList.get(position ).getSubTitle();
+                imageurl = mInfosList.get(position ).getPicUrl();
+
                 ThirdId = mInfosList.get(position ).getThirdId();
                 isRelateMatch = mInfosList.get(position ).isRelateMatch();
                 type = mInfosList.get(position ).getType();
@@ -377,6 +388,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
         } else {
             jumpurl = mInfos.get(position).getInfoUrl();
+            title = mInfos.get(position).getTitle();
+            subtitle = mInfos.get(position).getSubTitle();
+            imageurl = mInfos.get(position).getPicUrl();
             ThirdId = mInfos.get(position).getThirdId();
             isRelateMatch = mInfos.get(position).isRelateMatch();
             type = mInfos.get(position).getType();
@@ -387,6 +401,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         }
         intent.putExtra(INTENT_PARAM_TITLE, mHeadName);//头部名称
         intent.putExtra(INTENT_PARAM_JUMPURL, jumpurl);
+        intent.putExtra("title", title);
+        intent.putExtra("subtitle", subtitle);
+        intent.putExtra("imageurl", imageurl);
         mContext.startActivity(intent);
     }
 
@@ -484,13 +501,6 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         if (!isCreated) {
             return;
         }
-
-        if (isVisibleToUser) {
-            MobclickAgent.onPageStart("CounselChildFragment" + index);
-        }else {
-            MobclickAgent.onPageEnd("CounselChildFragment" + index);
-        }
-
     }
 
     /**
