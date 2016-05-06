@@ -129,12 +129,18 @@ public class CounselPageAdapter extends PagerAdapter {
         String ThirdId = mAdsList.get(index).getThirdId();
         int type = mAdsList.get(index).getType();
 
+        String  title = mAdsList.get(index ).getTitle();;//标题
+//      String  subtitle = mAdsList.get(index ).getSubTitle();//轮播图没有副标题
+        String imageurl = mAdsList.get(index ).getPicUrl();//图片url
+
         if (isRelateMatch) {
             intent.putExtra(INTENT_PARAM_THIRDID, ThirdId);
             intent.putExtra(INTENT_PARAM_TYPE, type);
         }
         intent.putExtra(INTENT_PARAM_TITLE, mHeadName);
         intent.putExtra(INTENT_PARAM_JUMPURL, jumpurl);
+        intent.putExtra("title", title);
+        intent.putExtra("imageurl", imageurl);
         mContext.startActivity(intent);
 
     }

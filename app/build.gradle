@@ -45,4 +45,5 @@ dependencies {
     compile 'com.code-troopers.betterpickers:library:2.5.2'
     compile files('libs/eventbus.jar')
     compile project(':PushSDK')
+    compile files('libs/CySDK.jar')
 }

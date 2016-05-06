@@ -71,12 +71,14 @@ public class CounselFragmentLvAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mInfosList.size();
+
+        return mInfosList==null?0:mInfosList.size() ;
     }
 
     @Override
     public Object getItem(int position) {
-        return mInfosList.get(position);
+
+        return mInfosList==null?null:mInfosList.get(position);
     }
 
     @Override
