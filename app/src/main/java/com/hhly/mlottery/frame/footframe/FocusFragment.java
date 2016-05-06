@@ -489,7 +489,16 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                 }
 
                 mAllMatchs = json.getFocus();
+
+                teamLogoPre=json.getTeamLogoPre();
+
+                teamLogoSuff=json.getTeamLogoSuff();
+
+
+
                 mMatchs = new ArrayList<Match>();
+
+
                 // mMatchs.addAll(mAllMatchs);//用这种方式是把all的引用赋给它了，操作起来比较麻烦
 
 
