@@ -18,10 +18,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/flexible_space_image_height"
-                    android:background="@android:color/transparent" />
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/flexible_space_image_height"-->
+                    <!--android:background="@android:color/transparent" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -495,8 +495,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/basket_details_ball5"
-                            android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item_height2"
+                            android:paddingBottom="@dimen/basket_details_item_height2"
                             android:paddingLeft="@dimen/basket_details_item_height2"
                             android:paddingRight="@dimen/basket_details_item_height2">
                             <TextView
@@ -559,8 +559,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/basket_details_ball5"
-                            android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item_height2"
+                            android:paddingBottom="@dimen/basket_details_item_height2"
                             android:paddingLeft="@dimen/basket_details_item_height2"
                             android:paddingRight="@dimen/basket_details_item_height2">
                             <TextView
@@ -602,8 +602,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/basket_details_ball5"
-                            android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item_height2"
+                            android:paddingBottom="@dimen/basket_details_item_height2"
                             android:paddingLeft="@dimen/basket_details_item_height2"
                             android:paddingRight="@dimen/basket_details_item_height2">
                             <TextView
