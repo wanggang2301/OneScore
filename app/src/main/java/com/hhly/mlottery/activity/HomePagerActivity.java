@@ -3,6 +3,8 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -19,6 +21,9 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
+import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
+import com.hhly.mlottery.bean.homepagerentity.HomeMenusEntity;
+import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
@@ -37,6 +42,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -63,16 +72,31 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private Integer mDataType;// 资讯类型 1、篮球  2、足球
     private String mUrl;// 资讯中转URL
     private String mInfoTypeName;// 资讯标题
+    private String version;// 当前版本号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = HomePagerActivity.this;
+        getVersion();
         pushData();
         initView();
         initData();
         initEvent();
-        startService(new Intent(mContext,umengPushService.class));
+        startService(new Intent(mContext, umengPushService.class));
+    }
+
+    /**
+     * 获取版本号
+     */
+    private void getVersion() {
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            version = info.versionName.replace(".", "");
+        } catch (Exception e) {
+            L.d(e.getMessage());
+        }
     }
 
     /**
@@ -231,11 +255,15 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      */
     public synchronized void getRequestData(final int num) {
         mHandler.sendEmptyMessage(LOADING_DATA_START);// 开始加载数据
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_HOME_PAGER_INFO, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
+        // 设置参数
+        Map<String, String> myPostParams = new HashMap<>();
+        myPostParams.put("version", version);
+        VolleyContentFast.requestJsonByPost(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
             @Override
             public synchronized void onResponse(final HomePagerEntity jsonObject) {
                 if (jsonObject != null) {// 请求成功
                     mHomePagerEntity = jsonObject;
+                    isAuditHandle(jsonObject);
                     if (mHomePagerEntity.getResult() == 200) {
                         switch (num) {
                             case 0:// 首次加载
@@ -260,6 +288,70 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
             }
         }, HomePagerEntity.class);
+    }
+
+    /**
+     * 审核数据处理
+     *
+     * @审核中需要隐藏彩票相关内容
+     */
+    private void isAuditHandle(HomePagerEntity jsonObject) {
+        // 过虑彩票菜单
+        HomeMenusEntity menusEntity = new HomeMenusEntity();
+        List<HomeContentEntity> contentList = new ArrayList<>();
+        for (int i = 0, len = jsonObject.getMenus().getContent().size(); i < len; i++) {
+            HomeContentEntity homeContentEntity = jsonObject.getMenus().getContent().get(i);
+            switch (homeContentEntity.getJumpAddr()){
+                case "30":
+                case "31":
+                case "350":
+                case "32":
+                case "33":
+                case "34":
+                case "35":
+                case "36":
+                case "37":
+                case "38":
+                case "39":
+                case "310":
+                case "311":
+                case "312":
+                case "313":
+                case "314":
+                case "315":
+                case "316":
+                case "317":
+                case "318":
+                case "319":
+                case "320":
+                case "321":
+                case "322":
+                case "323":
+                    // 正在审核中，不显示彩票信息
+                    if(!jsonObject.isAudit()){
+                        contentList.add(homeContentEntity);
+                    }
+                    break;
+                default:
+                    contentList.add(homeContentEntity);
+                    break;
+            }
+        }
+        menusEntity.setContent(contentList);
+        menusEntity.setResult(jsonObject.getMenus().getResult());
+        // 过虑彩票条目
+        List<HomeOtherListsEntity> otherList = new ArrayList<>();
+        for (int i = 0, len = jsonObject.getOtherLists().size(); i < len; i++) {
+            HomeOtherListsEntity homeOtherListsEntity = jsonObject.getOtherLists().get(i);
+            if (homeOtherListsEntity.getContent().getLabType() == 3 && jsonObject.isAudit()) {
+                // 正在审核中，不显示彩票信息
+            } else {
+                // 审核完成，显示全部内容
+                otherList.add(homeOtherListsEntity);
+            }
+        }
+        mHomePagerEntity.setOtherLists(otherList);
+        mHomePagerEntity.setMenus(menusEntity);
     }
 
     /**
