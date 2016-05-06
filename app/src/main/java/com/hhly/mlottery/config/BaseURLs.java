@@ -36,7 +36,7 @@ public class BaseURLs {
             }
         }
 
-		return  "m.13322.com";
+        return "m.13322.com";
 
     }
 
@@ -567,7 +567,7 @@ public class BaseURLs {
     //头部比分字段
     public final static String URL_BASKET_FINDSCORE = "basketballDetail.findScore.do";
     //篮球赔率界面接口
-    public final static String URL_BASKET_FINDODDS="basketballDetail.findOdds.do";
+    public final static String URL_BASKET_FINDODDS = "basketballDetail.findOdds.do";
 
     //即时接口  //HOST ==>  192.168.10.242:8181 / m.1332255.com
     public final static String URL_BASKET_IMMEDIATE = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDLIVEMATCH;
@@ -580,7 +580,7 @@ public class BaseURLs {
     //头部字段
     public final static String URL_BASKET_DETAILS = HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDSCORE;
     //篮球赔率界面
-    public final static String URL_BASKET_ODDS=HTTP+HOST+URL_BASKET_PROJECT+URL_BASKET_FINDODDS;
+    public final static String URL_BASKET_ODDS = HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDODDS;
 
     //篮球推送
 //	public final static String URL_BASKET_SCOKET = "ws://192.168.10.242:61634/ws";
@@ -595,9 +595,9 @@ public class BaseURLs {
     public final static String URL_BASKET_FINDANALYSISDETAIL = "basketballDetail.findAnalysisDetail.do";
     public final static String URL_BASKET_FINDODDSDETAIL = "basketballDetail.findOddsDetail.do";
     //篮球分析
-    public final static String URL_BASKET_ANALYZE = URL_BASKET_HTTP +HOST + URL_BASKET_PROJECT + URL_BASKET_FINDANALYSIS; //"http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysis.do";
+    public final static String URL_BASKET_ANALYZE = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDANALYSIS; //"http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysis.do";
     //篮球分析详情
-    public final static String URL_BASKET_ANALYZE_DETAILS =  URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDANALYSISDETAIL; //"http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysisDetail.do";
+    public final static String URL_BASKET_ANALYZE_DETAILS = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDANALYSISDETAIL; //"http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysisDetail.do";
     //赔率详情
     public final static String URL_BASKET_ODDS_DETAILS = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDODDSDETAIL; //http://192.168.10.242:8181/mlottery/core/basketballDetail.findOddsDetail.do
 
@@ -606,25 +606,28 @@ public class BaseURLs {
     //足球联赛赛程请求url
     public final static String URL_FOOTBALL_LEAGUERACE = URL_API_HOST + "footballLeagueData.qLeagueRace.do";
 
-   //足球资料库
-   //联赛列表
-   public final static String URL_QLIBARYLEAGUES= "footballLeagueData.qLibaryLeagues.do";
-   public final static String URL_INFORMATION = URL_API_HOST +URL_QLIBARYLEAGUES;
+    //足球资料库
+    //联赛列表
+    public final static String URL_QLIBARYLEAGUES = "footballLeagueData.qLibaryLeagues.do";
+    public final static String URL_INFORMATION = URL_API_HOST + URL_QLIBARYLEAGUES;
     //查询联赛所有赛季时间和默认积分榜
-    public final static String URL_QLEAGUEDATE= "footballLeagueData.qLeagueDate.do";
-    public final static String URL_FOOT_QLEAGUEDATE= URL_API_HOST +URL_QLEAGUEDATE;
+    public final static String URL_QLEAGUEDATE = "footballLeagueData.qLeagueDate.do";
+    public final static String URL_FOOT_QLEAGUEDATE = URL_API_HOST + URL_QLEAGUEDATE;
     //查询联赛详情
-    public final static String URL_QLEAGUESCORE= "footballLeagueData.qLeagueScore.do";
-    public final static String URL_FOOT_QLEAGUESCORE= URL_API_HOST +URL_QLEAGUEDATE;
+    public final static String URL_QLEAGUESCORE = "footballLeagueData.qLeagueScore.do";
+    public final static String URL_FOOT_QLEAGUESCORE = URL_API_HOST + URL_QLEAGUEDATE;
     // 联赛 qLeagueRace
 
     //足球资讯列表请求url
-    public final static String URL_FOOTBALL_INFOLIST= URL_API_HOST + "info.findAndroidLstInfo.do";
+    public final static String URL_FOOTBALL_INFOLIST = URL_API_HOST + "info.findAndroidLstInfo.do";
     //足球资讯头和首页请求url
     public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfo.do";
 
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
 
+    //开机屏地址获取
+    public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
+    public final static String URL_STARTPIC = URL_API_HOST + STARTPIC;
 
 
 }
