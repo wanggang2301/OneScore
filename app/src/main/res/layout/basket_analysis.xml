@@ -569,7 +569,7 @@
                                 android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor2"
+                                android:textColor="@color/black_details_ball_textcolor"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_ranking_guest_overgame"
@@ -596,7 +596,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor2"
+                                android:textColor="@color/black_details_ball_textcolor"
                                 android:text="--"/>
                         </LinearLayout>
                         <LinearLayout
@@ -612,7 +612,7 @@
                                 android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor2"
+                                android:textColor="@color/black_details_ball_textcolor"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_ranking_home_overgame"
@@ -639,7 +639,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="@color/black_details_ball_textcolor2"
+                                android:textColor="@color/black_details_ball_textcolor"
                                 android:text="--"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -685,7 +685,7 @@
                             android:gravity="center"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/black_details_ball_textcolor"
                             android:text="--"/>
                     </LinearLayout>
                     <LinearLayout
@@ -702,7 +702,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_ball_textcolor2"
+                            android:textColor="@color/black_details_ball_textcolor"
                             android:text="--"/>
                         <TextView
                             android:id="@+id/basket_score_lose"
