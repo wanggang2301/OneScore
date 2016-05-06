@@ -1176,12 +1176,13 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 mbasket_unfiltrate.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+                updateAdapter();
+                // 设置打开全部日期内容
+                for (int i = 0; i < groupDataList.size(); i++) {
+                    explistview.expandGroup(i);
+                }
             }
-            updateAdapter();
-           // 设置打开全部日期内容
-        for (int i = 0; i < groupDataList.size(); i++) {
-            explistview.expandGroup(i);
-        }
         }
     }
 }

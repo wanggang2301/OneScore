@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.basketballframe;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +24,7 @@ import com.hhly.mlottery.adapter.basketball.BasketOddsAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketOddsDetailsAdapter;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.ObservableListView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -29,6 +32,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +52,12 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
 
     private String mThirdId="100";
     private String mType="euro";
+    private int mItemCount;//listview Item的数量
+    private int itemHeight; //一个listview的item的高度。
+    private int h;//屏幕的绝对高度
+    private View paddingviewButtom;//footer view
 
+    private int mFooterHeight;
     private View mView;
     /**外层listview*/
     private ObservableListView listView;
@@ -139,8 +148,24 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
 
                     break;
                 case VIEW_STATUS_SUCCESS:
-                     mProgressBarLayout.setVisibility(View.GONE);
-                     mExceptionLayout.setVisibility(View.GONE);
+                  //footer view's height is  the screen's  height - title's height(2*53)-item's count*53
+                    if(listView.getFooterViewsCount()==1){ //从网络异常到加载成功。footerview的高度需要重新计算。所以先remove掉。再加。
+                        listView.removeFooterView(paddingviewButtom);
+                    }
+                    if(listView.getFooterViewsCount()==0){//防止刷新的时候不停的加
+                        paddingviewButtom=new View(getActivity());
+                        AbsListView.LayoutParams lp1 = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,mFooterHeight);
+
+                        paddingviewButtom.setLayoutParams(lp1);
+                        paddingviewButtom.setBackgroundColor(getResources().getColor(R.color.black_title));
+                        listView.addFooterView(paddingviewButtom);
+                    }
+
+                    listView.setAdapter(mOddsAdapter);
+                    mOddsAdapter.notifyDataSetChanged();
+
+                    mProgressBarLayout.setVisibility(View.GONE);
+                    mExceptionLayout.setVisibility(View.GONE);
 
                     if(mOddsCompanyList.size()!=0){//有数据则显示分割线
                         listView.setDivider(getActivity().getResources().getDrawable(R.color.basket_odds_divider));
@@ -148,7 +173,21 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                     }
                     break;
                 case VIEW_STATUS_NET_ERROR:
+                    if(listView.getFooterViewsCount()==1){   // 从有数据到网络异常   footerview的高度需要重新计算。所以先remove掉。再加。
+                        listView.removeFooterView(paddingviewButtom);
+                    }
+                    if(listView.getFooterViewsCount()==0){//防止刷新的时候不停的加
+
+                        paddingviewButtom=new View(getActivity());
+
+                        AbsListView.LayoutParams lp1 = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,mFooterHeight);
+
+                        paddingviewButtom.setLayoutParams(lp1);
+                        paddingviewButtom.setBackgroundColor(getResources().getColor(R.color.black_title));
+                        listView.addFooterView(paddingviewButtom);
+                    }
                     listView.setAdapter(mOddsAdapter);
+
                     mProgressBarLayout.setVisibility(View.GONE);
                     mNodataLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.VISIBLE);
@@ -165,6 +204,11 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
+
+         itemHeight=getResources().getDimensionPixelSize(R.dimen.item_height);//53dp
+         WindowManager wm= (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+         h=wm.getDefaultDisplay().getHeight();
+
         //异常数据 处理
         mProgressBarLayout= (RelativeLayout) mView.findViewById(R.id.basket_odds_progressbar);
         listView = (ObservableListView) mView.findViewById(R.id.scroll);
@@ -216,20 +260,10 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
         View errorView=View.inflate(getActivity(), R.layout.basket_odds_new_error,null);
         mExceptionLayout= (LinearLayout) errorView.findViewById(R.id.basket_odds_net_error);
         mExceptionLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
+        mExceptionLayout.setVisibility(View.GONE);
         listView.addHeaderView(errorView);
         //点击刷新
         errorView.findViewById(R.id.network_exception_reload_btn).setOnClickListener(BasketOddsFragment.this);
-
-
-
-        View paddingviewButtom=new View(getActivity());
-        AbsListView.LayoutParams lp1 = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                2*flexibleSpaceImageHeight );
-        paddingviewButtom.setLayoutParams(lp1);
-        paddingviewButtom.setBackgroundColor(getResources().getColor(R.color.black_title));
-        listView.addFooterView(paddingviewButtom);
-        paddingviewButtom.setClickable(false);
-        paddingviewButtom.setFocusable(false);
 
         listView.setTouchInterceptionViewGroup((ViewGroup) mView.findViewById(R.id.basket_odds_root));
 
@@ -256,6 +290,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mFooterHeight=h-(2+3)*itemHeight;//网络异常界面的高度等于3个item
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
             }
         }, BasketDetailOddsBean.class);
@@ -267,18 +302,18 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
     private void loadData(BasketDetailOddsBean oddsBean) {
         if(getActivity()!=null){
             mOddsCompanyList=oddsBean.getCompanyOdds();
+            mItemCount=mOddsCompanyList.size();
+            mFooterHeight=h-(2+mItemCount)*itemHeight;
             mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
             //显示无数据界面
             if(mOddsCompanyList.size()==0){
                 mNodataLayout.setVisibility(View.VISIBLE);
                 listView.setDivider(getActivity().getResources().getDrawable(R.color.black_title));
                 listView.setDividerHeight(1);
+                mFooterHeight=h-(2+3)*itemHeight;//没数据的界面的高度等于3个item
             }
-            listView.setAdapter(mOddsAdapter);
-            mOddsAdapter.notifyDataSetChanged();
             mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
         }
-
 
     }
 //
