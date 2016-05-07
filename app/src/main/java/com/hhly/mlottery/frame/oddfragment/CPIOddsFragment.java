@@ -8,8 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.OddDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
@@ -39,8 +45,7 @@ public class CPIOddsFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private List<NewOddsInfo.AllInfoBean> mAllInfoBean;
     private List<NewOddsInfo.AllInfoBean> mAllInfoBeans = new ArrayList<>();
-    //公司列表
-//    private List<NewOddsInfo.AllInfoBean.ComListBean> mCompanyBean = new ArrayList<>();
+
 
     public static CPIOddsFragment newInstance(String param1, String param2) {
         CPIOddsFragment fragment = new CPIOddsFragment();
@@ -61,7 +66,7 @@ public class CPIOddsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_cpi_odds, container, false);//item_cpi_odds
         InitView();
@@ -74,12 +79,12 @@ public class CPIOddsFragment extends Fragment {
         cpi_odds_recyclerView = (RecyclerView) mView.findViewById(R.id.cpi_odds_recyclerView);
         cpi_odds_recyclerView.setHasFixedSize(true);
         cpi_odds_recyclerView.setLayoutManager(linearLayoutManager);
+
     }
 
     public void InitData(String date, final int cpiNumber, final String company) {
-        System.out.println(">>>dd" + "dd>>" + date + "<<" + cpiNumber);
         //http://192.168.10.242:8989/mlottery/core/footBallIndexCenter.findIosIndexCenter.do?date=2016-05-04&lang=zh&type=1
-        String stUrl = "http://192.168.10.242:8989/mlottery/core/footBallIndexCenter.findIosIndexCenter.do?";
+        String stUrl = "http://192.168.10.242:8181/mlottery/core/footBallIndexCenter.findIosIndexCenter.do?";
         Map<String, String> map = new HashMap<>();
 //        System.out.println(">>>date+" + date);
 
@@ -241,6 +246,10 @@ public class CPIOddsFragment extends Fragment {
                 else if (!"".equals(dates) && !"".equals(companyBeans)) {
                     InitData(dates.trim(), 0, companyBeans);
                 }
+                //如果时间为空，公司不为空，传当前时间，传公司
+                else if ("".equals(dates) && !"".equals(companyBeans)) {
+                    InitData(UiUtils.getDay(0), 0, companyBeans);
+                }
                 break;
             case "big":
                 //大小
@@ -259,6 +268,10 @@ public class CPIOddsFragment extends Fragment {
                 else if (!"".equals(dates) && !"".equals(companyBeans)) {
                     InitData(dates.trim(), 1, companyBeans);
                 }
+                //如果时间为空，公司不为空，传当前时间，传公司
+                else if ("".equals(dates) && !"".equals(companyBeans)) {
+                    InitData(UiUtils.getDay(0), 1, companyBeans);
+                }
                 break;
             case "op":
                 //欧赔
@@ -273,9 +286,13 @@ public class CPIOddsFragment extends Fragment {
                     InitData(dates.trim(), 2, "");
 
                 }
-                //如果时间为空，公司不为空，传时间，公司传空
+                //如果时间不为空，公司不为空，传时间，公司传空
                 else if (!"".equals(dates) && !"".equals(companyBeans)) {
                     InitData(dates.trim(), 2, companyBeans);
+                }
+                //如果时间为空，公司不为空，传当前时间，传公司
+                else if ("".equals(dates) && !"".equals(companyBeans)) {
+                    InitData(UiUtils.getDay(0), 2, companyBeans);
                 }
 
                 break;
@@ -285,5 +302,4 @@ public class CPIOddsFragment extends Fragment {
 
         }
     }
-
 }

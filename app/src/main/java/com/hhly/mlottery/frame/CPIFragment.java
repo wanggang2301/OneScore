@@ -220,7 +220,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     private void initData() {
             //http://192.168.10.242:8989/mlottery/core/footBallIndexCenter.findIosIndexCenter.do?date=2016-05-04&lang=zh&type=1
-            String stUrl = "http://192.168.10.242:8989/mlottery/core/footBallIndexCenter.findIosIndexCenter.do?";
+            String stUrl = "http://192.168.10.242:8181/mlottery/core/footBallIndexCenter.findIosIndexCenter.do?";
             Map<String, String> map = new HashMap<>();
                 map.put("date", UiUtils.getDay(0));
                 map.put("type", "1");
@@ -444,7 +444,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         return mMapList;
     }
 
-    public class CPIFragmentAdapter extends FragmentPagerAdapter {
+    private class CPIFragmentAdapter extends FragmentPagerAdapter {
 
 
         private List<Fragment> mFragmentList;
