@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--分享-->
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+    <string name="webchat">微信</string>
+    <string name="friends">朋友圈</string>
+    <string name="qq">QQ</string>
+    <string name="qzone">空间</string>
+    <string name="sina">新浪</string>
+    <string name="copy">复制链接</string>
+    <string name="share_cancel">取消</string>
+    <string name="share_summary">一比分,更新了比赛情报</string>
+    <string name="share_to_qq_app_name">一比分</string>
+    <string name="share_copy">复制链接成功</string>
+    <string name="share_from">来自一比分:</string>
+    <string name="share_uninstall_webchat">您还未安装微信客户端</string>
+
+
+
+
+
     <!--指数-->
     <string name="odd_plate_rb_txt">亚盘</string>
     <string name="odd_op_rb_txt">欧赔</string>
@@ -587,9 +610,26 @@
     <string name="basket_analyze_defult_text">--</string>
     <string name="basket_analyze_win">胜</string>
     <string name="basket_analyze_lost">负</string>
-    <string name="basket_analyze_recently">最近6场，</string>
+    <string name="basket_analyze_recently">最近</string>
+    <string name="basket_analyze_recently2">场，</string>
     <string name="basket_analyze_home_field">,主场</string>
     <string name="basket_company">公司</string>
+    <string name="basket_analyze_day">天</string>
+    <string name="basket_nodata">暂无数据</string>
+    <string name="basket_six_average_win_score">6场平均得分</string>
+    <string name="basket_six_average_lost_score">6场平均失分</string>
+
+    <string name="basket_analyze_dialog_site">场地</string>
+    <string name="basket_analyze_dialog_num">场数</string>
+    <string name="basket_analyze_dialog_allgame">全部</string>
+    <string name="basket_analyze_dialog_samegame">相同主客场</string>
+    <string name="basket_analyze_dialog_six">6场</string>
+    <string name="basket_analyze_dialog_ten">10场</string>
+    <string name="basket_analyze_dialog_fifteen">15场</string>
+    <string name="basket_analyze_dialog_cancle">取消</string>
+    <string name="basket_analyze_dialog_ok">确定</string>
+
+
 
     <string name="basket_odds_euro_details">欧赔详情</string>
     <string name="basket_odds_asiaLet_details">亚盘详情</string>

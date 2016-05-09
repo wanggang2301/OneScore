@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--分享-->
+    <string name="errcode_success">發送成功</string>
+    <string name="errcode_cancel">發送取消</string>
+    <string name="errcode_deny">發送被拒絕</string>
+    <string name="errcode_unknown">發送返回</string>
+    <string name="webchat">微信</string>
+    <string name="friends">朋友圈</string>
+    <string name="qq">QQ</string>
+    <string name="qzone">空間</string>
+    <string name="sina">新浪</string>
+    <string name="copy">複製鏈接</string>
+    <string name="share_cancel">取消</string>
+    <string name="share_summary">壹比分,更新了比賽情報</string>
+    <string name="share_to_qq_app_name">壹比分</string>
+    <string name="share_copy">複製鏈接成功</string>
+    <string name="share_from">来自壹比分:</string>
+    <string name="share_uninstall_webchat">您還未安裝微信客戶端</string>
+
+
+
+
+
+
+
+
     <!--指数-->
     <string name="odd_plate_rb_txt">亞盤</string>
     <string name="odd_op_rb_txt">歐賠</string>
@@ -63,7 +89,7 @@
     <string name="game_time">(时间)</string>
     <!--首发阵容 End-->
     <!--2期end-->
-    <string name="app_name">一比分</string>
+    <string name="app_name">壹比分</string>
     <string name="menu_name">菜單</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open drawer</string>
@@ -566,9 +592,24 @@
     <string name="basket_analyze_defult_text">--</string>
     <string name="basket_analyze_win">勝</string>
     <string name="basket_analyze_lost">負</string>
-    <string name="basket_analyze_recently">最近6場，</string>
+    <string name="basket_analyze_recently">最近</string>
+    <string name="basket_analyze_recently2">場，</string>
     <string name="basket_analyze_home_field">,主場</string>
     <string name="basket_company">公司</string>
+    <string name="basket_analyze_day">天</string>
+    <string name="basket_nodata">暫無數據</string>
+    <string name="basket_six_average_win_score">6場平均得分</string>
+    <string name="basket_six_average_lost_score">6場平均失分</string>
+
+    <string name="basket_analyze_dialog_site">場地</string>
+    <string name="basket_analyze_dialog_num">場數</string>
+    <string name="basket_analyze_dialog_allgame">全部</string>
+    <string name="basket_analyze_dialog_samegame">相同主客場</string>
+    <string name="basket_analyze_dialog_six">6場</string>
+    <string name="basket_analyze_dialog_ten">10場</string>
+    <string name="basket_analyze_dialog_fifteen">15場</string>
+    <string name="basket_analyze_dialog_cancle">取消</string>
+    <string name="basket_analyze_dialog_ok">確定</string>
 
     <string name="basket_odds_euro_details">歐賠詳情</string>
     <string name="basket_odds_asiaLet_details">亞盤詳情</string>

@@ -1,7 +1,6 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,20 +17,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsBaseFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketOddsAsiaLetFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketOddsAsiaSizeFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketOddsDetailsFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketOddsEuroFragment;
-import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -50,6 +45,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.umeng.analytics.MobclickAgent;
 
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
@@ -86,12 +82,18 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private final static int GAME_CANCLE = -4;
     private final static int GAME_DELAY = -5;
     private final static int HALF_GAME = 50;
-    /**欧赔*/
-    public final static String ODDS_EURO="euro";
-    /**亚盘*/
-    public final static String ODDS_LET="asiaLet";
-    /**大小球*/
-    public final static String ODDS_SIZE="asiaSize";
+    /**
+     * 欧赔
+     */
+    public final static String ODDS_EURO = "euro";
+    /**
+     * 亚盘
+     */
+    public final static String ODDS_LET = "asiaLet";
+    /**
+     * 大小球
+     */
+    public final static String ODDS_SIZE = "asiaSize";
 
 
     private String mThirdId = "936707";
@@ -105,8 +107,8 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private SlidingTabLayout mSlidingTabLayout;
     private int mFlexibleSpaceHeight;
     private int mTabHeight;
-    private int mHeight;//整个头部
-    // 高度240减去tablayout的48再减去paddingtop的24（微调改为减20.）
+    private int mHeight;//整个头部 高度240减去title栏（header）的44再减去paddingtop的24=172
+
     private DisplayImageOptions mOptions;
     private DisplayImageOptions mOptionsHead;
     private ImageLoader mImageLoader;
@@ -171,7 +173,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basket_detailsactivity_activity);
-
+        MobclickAgent.openActivityDurationTrack(false);
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
         }
@@ -242,6 +244,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
 
     }
+
     private long pushStartTime;
 
     private Timer computeWebSocketConnTimer = new Timer();
@@ -274,11 +277,11 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
      * 初始化界面
      */
     private void initView() {
-        mPagerAdapter = new NavigationAdapter(getSupportFragmentManager(),mThirdId);
+        mPagerAdapter = new NavigationAdapter(getSupportFragmentManager(), mThirdId);
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setPadding(0, getResources().getDimensionPixelSize(R.dimen.tab_height), 0, 0);//设置pager的上边距（pager下移一个tab的高度）
         mPager.setAdapter(mPagerAdapter);
-        mPager.setOffscreenPageLimit(3);
+        mPager.setOffscreenPageLimit(3);//不要改动。必须全加载出来。
         mFlexibleSpaceHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
         mTabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
         mHeight = getResources().getDimensionPixelSize(R.dimen.mheight);
@@ -356,14 +359,16 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             mCollect.setImageResource(R.mipmap.basketball_collect);
         }
 
-        mApos = (TextView)this.findViewById(R.id.backetball_details_apos);
+        mApos = (TextView) this.findViewById(R.id.backetball_details_apos);
         mApos.setVisibility(View.GONE);
-        setApos();
+//        setApos();
     }
 
-    private void setApos(){
+    /**
+     * 秒闪烁
+     */
+    private void setApos() {
         mApos.setText("\'");
-        mApos.setVisibility(View.VISIBLE);
 
         final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
         anim1.setDuration(500);
@@ -399,6 +404,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         });
         mApos.startAnimation(anim1);
     }
+
     /**
      * 设置监听
      */
@@ -419,6 +425,10 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
                     initData(basketDetailsBean);
+                    /**
+                     * 启动秒闪烁
+                     */
+                    setApos();
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         startWebsocket();
                         computeWebSocket();
@@ -428,6 +438,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mApos.setVisibility(View.GONE);
             }
         }, BasketballDetailsBean.class);
     }
@@ -450,7 +461,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }
         Scrollable scrollable;
 
-            scrollable = (Scrollable) view.findViewById(R.id.scroll);
+        scrollable = (Scrollable) view.findViewById(R.id.scroll);
 
         if (scrollable == null) {
             return;
@@ -495,10 +506,9 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         int position[] = new int[2];
         mSlidingTabLayout.getLocationInWindow(position);
         int paddingtop = getResources().getDimensionPixelOffset(R.dimen.paddingtop);
-        L.d(TAG, "translateTab ---- scrollY" + scrollY);
         if (position[1] == paddingtop) {//tablayout到达顶部时显示黑色背景
             mTitleScore.setVisibility(View.VISIBLE);
-          headLayout.setBackgroundColor(getResources().getColor(R.color.black));
+            headLayout.setBackgroundColor(getResources().getColor(R.color.black));
         } else {
             mTitleScore.setVisibility(View.INVISIBLE);
             headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
@@ -517,7 +527,8 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
     /**
      * 设置每个viewpager里面的对应的listview或者scrollview移动后的位置
-     * @param scrollY  移动的距离
+     *
+     * @param scrollY 移动的距离
      */
     private void propagateScroll(int scrollY) {
         // Set scrollY for the fragments that are not created yet
@@ -525,12 +536,12 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         // Set scrollY for the active fragments
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
-            // Skip current item
+            // Skip current item_share
             if (i == mPager.getCurrentItem()) {
                 continue;
             }
 
-            // Skip destroyed or not created item
+            // Skip destroyed or not created item_share
             BasketDetailsBaseFragment f =
                     (BasketDetailsBaseFragment) mPagerAdapter.getItemAt(i);
             if (f == null) {
@@ -549,15 +560,15 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     /**
      * 刷新这4个fragment界面的数据（initdata）
      */
-    public void refreshData(){
+    public void refreshData() {
         loadData();
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
-            // Skip current item
+            // Skip current item_share
             if (i == mPager.getCurrentItem()) {
                 continue;
             }
 
-            // Skip destroyed or not created item
+            // Skip destroyed or not created item_share
             BasketDetailsBaseFragment f =
                     (BasketDetailsBaseFragment) mPagerAdapter.getItemAt(i);
             if (f == null) {
@@ -576,11 +587,13 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.basket_details_back:
+                MobclickAgent.onEvent(MyApp.getContext(),"BasketDetailsActivity_Exit");
                 setResult(Activity.RESULT_OK);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.basket_details_collect:
+                MobclickAgent.onEvent(MyApp.getContext(),"BasketDetailsActivity_Attention");
                 if (isFocusId(mThirdId)) {
                     deleteFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collect);
@@ -605,13 +618,15 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
     /**
      * 请求数据之后展示
-     */;
+     */
+    ;
+
     private void initData(BasketballDetailsBean bean) {
 
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
         mMatch = bean.getMatch();
 
-        if(score != null){
+        if (score != null) {
             mGuestNum = score.getGuestScore();
             mHomeNum = score.getHomeScore();
         }
@@ -623,8 +638,8 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         mHomeTeam.setText(mMatch.getHomeTeam());
         mGuestTeam.setText(mMatch.getGuestTeam());
 
-        mHomeRanking.setText(mMatch.getHomeRanking());
-        mGuestRanking.setText(mMatch.getGuestRanking());
+        mHomeRanking.setText("[ "+mMatch.getHomeRanking()+" ]");
+        mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
 
         //图标
         mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
@@ -654,7 +669,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 mTitleHome.setText(bean.getMatch().getHomeTeam());
                 mTitleVS.setText("VS");
                 if (mMatch.getMatchStatus() == PRE_MATCH) {
-                    mMatchState.setText(bean.getMatch().getDate() + "  " + bean.getMatch().getTime() + "   "+getResources().getString(R.string.basket_begin_game));
+                    mMatchState.setText(bean.getMatch().getDate() + "  " + bean.getMatch().getTime() + "   " + getResources().getString(R.string.basket_begin_game));
                 } else if (mMatch.getMatchStatus() == DETERMINED) {
                     mMatchState.setText(R.string.basket_undetermined);
                 } else if (mMatch.getMatchStatus() == GAME_CANCLE) {
@@ -787,8 +802,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     }
 
 
-
-
     /**
      * 判断thirdId是否已经关注
      *
@@ -877,11 +890,12 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     }
 
     private boolean enableRefresh;
-    public void scoreAnimation(final TextView scoreView, final String score) {
+
+    public void scoreAnimation(final TextView changeText, final int changeScore, final TextView noChangeText, final int noChangeScore) {
         enableRefresh = true;
         MyRotateAnimation rotateAnim = null;
-        float cX = scoreView.getWidth() / 2.0f;
-        float cY = scoreView.getHeight() / 2.0f;
+        float cX = changeText.getWidth() / 2.0f;
+        float cY = changeText.getHeight() / 2.0f;
 
         rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
         if (rotateAnim != null) {
@@ -890,13 +904,24 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 public void interpolatedTime(float interpolatedTime) {
                     // 监听到翻转进度过半时，更新显示内容。
                     if (enableRefresh && interpolatedTime > 0.5f) {
-                        scoreView.setText(score);
+                        changeText.setText(changeScore + "");
+
                         enableRefresh = false;
                     }
                 }
             });
             rotateAnim.setFillAfter(true);
-            scoreView.startAnimation(rotateAnim);
+            changeText.startAnimation(rotateAnim);
+        }
+        if (changeScore > noChangeScore) {//得分少的用灰色
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
+        } else if (changeScore < noChangeScore) {
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+        } else {
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
         }
     }
 
@@ -968,7 +993,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     };
 
 
-
     /**
      * 接受推送，更新数据
      *
@@ -979,6 +1003,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         switch (basketBallDetails.getData().getMatchStatus()) {
 
             case END://完场
+                mApos.setVisibility(View.GONE);
                 mGuestScore.setText(score.getGuestScore() + "");
                 mGuestScore.setTextColor(getResources().getColor(R.color.score_color_white));
                 mHomeScore.setText(score.getHomeScore() + "");
@@ -1043,7 +1068,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     mHomeOt1.setText(score.getHomeOt1() + "");
                     mHomeOt1.setTextColor(getResources().getColor(R.color.score_color_white));
                 }
-                mApos.setVisibility(View.GONE);
                 break;
             case OT3:
                 mLayoutOt3.setVisibility(View.VISIBLE);
@@ -1067,23 +1091,24 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 setScore(score.getGuest1(), mGuest1, score.getHome1(), mHome1);
                 //不管是第几节都设置总比分.推送過來的話比分有变化要价格翻转
 //                setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
+
+                L.d("mGuestNum>>>>...>>>" + mGuestNum);
+                L.d("score.getGuestScore()>>>>...>>>" + score.getGuestScore());
+
+                L.d("mHomeNum>>>>...>>>" + mHomeNum);
                 if (mGuestNum == score.getGuestScore()) {
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-                }else{
-                    scoreAnimation(mGuestScore, score.getGuestScore() + "");
+                } else {
+                    scoreAnimation(mGuestScore, score.getGuestScore(), mHomeScore, score.getHomeScore());
                     mGuestNum = score.getGuestScore();
                 }
 
                 if (mHomeNum == score.getHomeScore()) {
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-                }else{
-                    scoreAnimation(mHomeScore , score.getHomeScore() + "");
+                } else {
+                    scoreAnimation(mHomeScore, score.getHomeScore(), mGuestScore, score.getGuestScore());
                     mHomeNum = score.getHomeScore();
                 }
-                L.d("mGuestNum>>>>...>>>" + mGuestNum);
-                L.d("score.getGuestScore()>>>>...>>>" + score.getGuestScore());
-
-                L.d("mHomeNum>>>>...>>>" + mHomeNum);
                 L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());
                 setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
 
@@ -1142,18 +1167,18 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
      * This adapter provides three types of fragments as an example.
      * {@linkplain #createItem(int)} should be modified if you use this example for your app.
      */
-    private  class NavigationAdapter extends CacheFragmentStatePagerAdapter {
+    private class NavigationAdapter extends CacheFragmentStatePagerAdapter {
 
         //        private static final String[] TITLES = new String[]{"Applepie", "Butter Cookie", "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "KitKat", "Lollipop"};
         private String[] TITLES = new String[]{BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze), BasketDetailsActivity.this.getResources().getString(R.string.basket_eur),
-                BasketDetailsActivity.this.getResources().getString(R.string.basket_alet),BasketDetailsActivity.this.getResources().getString(R.string.basket_asize)};
+                BasketDetailsActivity.this.getResources().getString(R.string.basket_alet), BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze_sizeof)};
 
         private int mScrollY;
         private String mThirdId;
 
-        public NavigationAdapter(FragmentManager fm,String mThirdId) {
+        public NavigationAdapter(FragmentManager fm, String mThirdId) {
             super(fm);
-            this.mThirdId=mThirdId;
+            this.mThirdId = mThirdId;
         }
 
         public void setScrollY(int scrollY) {
@@ -1169,21 +1194,21 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     break;
                 }
                 case 1: {
-                    f = BasketOddsEuroFragment.newInstance(mThirdId,ODDS_EURO);
+                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
 
                     break;
                 }
                 case 2: {
-                    f = BasketOddsEuroFragment.newInstance(mThirdId,ODDS_LET);
+                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
                     break;
                 }
                 case 3:
                 default: {
-                    f =BasketOddsEuroFragment.newInstance(mThirdId,ODDS_SIZE);
+                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
                     break;
                 }
             }
-         //   f.setArguments(mScrollY);
+            //   f.setArguments(mScrollY);
             return f;
         }
 

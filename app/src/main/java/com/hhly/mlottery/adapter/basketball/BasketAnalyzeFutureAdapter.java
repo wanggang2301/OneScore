@@ -31,10 +31,8 @@ public class BasketAnalyzeFutureAdapter extends CommonAdapter<BasketAnalyzeMoreF
         holder.setText(R.id.basket_data , historyBean.getDate());
         holder.setText(R.id.basket_guest_name , historyBean.getGuestTeam());
         holder.setText(R.id.basket_home_name , historyBean.getHomeTeam());
-        holder.setText(R.id.basket_space , historyBean.getDiffDays());
-
+        holder.setText(R.id.basket_space , historyBean.getDiffDays() + mContext.getResources().getText(R.string.basket_analyze_day));
 
         L.d("BasketAnalyzeFutureAdapter : ", historyBean.getDate() + "");
-
     }
 }

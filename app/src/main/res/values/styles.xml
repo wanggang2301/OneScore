@@ -425,7 +425,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
-        <!--<item name="android:windowIsFloating">true</item> 这个设置了后大分辨率手机不会铺满屏幕-->
+        <!--<item_share name="android:windowIsFloating">true</item_share> 这个设置了后大分辨率手机不会铺满屏幕-->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@style/AnimBottom</item>
@@ -468,6 +468,13 @@
 
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
+    </style>
+
+
+    <!--分享-->
+    <style name="popuStyle">
+        <item name="android:windowEnterAnimation">@anim/popup_anim_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_anim_out</item>
     </style>
 
 </resources>

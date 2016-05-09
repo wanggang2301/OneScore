@@ -43,12 +43,15 @@
     <dimen name="flexible_space_image_height">240dp</dimen>
     <dimen name="flexible_space_show_fab_offset">120dp</dimen>
 	<dimen name="mheight">172dp</dimen>
+    <dimen name="item_height">53dp</dimen>
+    <dimen name="item_title_height">30dp</dimen>
     <dimen name="paddingtop">68dp</dimen>
     <dimen name="list_paddintop">100dp</dimen>
     <dimen name="margin_standard">16dp</dimen>
     <dimen name="tab_height">38dp</dimen>
     <dimen name="title_height">44dp</dimen>
     <dimen name="basket_header_height">72dp</dimen>
+    <dimen name="basket_no_data_height">159dp</dimen>
 
     <dimen name="basket_item_height">35dp</dimen>
     <dimen name="basket_details_item">20dp</dimen>
@@ -64,6 +67,7 @@
     <dimen name="basket_details_ball4">20dp</dimen>
     <dimen name="basket_details_ball5">6dp</dimen>
     <dimen name="basket_details_ball6">12dp</dimen>
+    <dimen name="basket_details_ball7">8dp</dimen>
 
     <dimen name="basket_analyze">40dp</dimen>
 
