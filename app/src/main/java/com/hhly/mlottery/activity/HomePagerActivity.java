@@ -149,9 +149,10 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     case "footballInfo":// 足球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {
                             Intent footIntent = new Intent(mContext, FootballMatchDetailActivity.class);
-                            footIntent.putExtra("currentFragmentId", 0);
+                            footIntent.putExtra("currentFragmentId", -1);
                             footIntent.putExtra("thirdId", mThirdId);
                             startActivity(footIntent);
+                            L.d("xxx","mThirdId: " + mThirdId);
                         }
                         break;
                     case "dataInfo":// 资讯详情页面
@@ -162,6 +163,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                             basketDataIntent.putExtra("type", mDataType);
                             basketDataIntent.putExtra("infoTypeName", mInfoTypeName);
                             startActivity(basketDataIntent);
+                            L.d("xxx","mUrl: " + mUrl);
                         }
                         break;
                     case "basketball":// 篮球列表
