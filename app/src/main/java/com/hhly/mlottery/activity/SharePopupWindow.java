@@ -60,9 +60,9 @@ import java.util.Map;
  */
 public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Response {
     //微信好友
-    private final static int WEB_CHAT = 0;
+    private final static int WE_CHAT = 0;
     //微信朋友圈
-    private final static int WEB_FRIENDS = 1;
+    private final static int WE_FRIENDS = 1;
     //QQ
     private final static int QQ = 2;
     //QQ空间
@@ -166,11 +166,11 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case WEB_CHAT:
+                    case WE_CHAT:
                         // Toast.makeText(mContext, "微信", Toast.LENGTH_SHORT).show();
                         shareweixin(0);
                         break;
-                    case WEB_FRIENDS:
+                    case WE_FRIENDS:
                         //Toast.makeText(mContext, "朋友圈", Toast.LENGTH_SHORT).show();
                         shareweixin(1);
                         break;
@@ -212,7 +212,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
     }
 
     private void shareweixin(final int flag) {
-        api = WXAPIFactory.createWXAPI(mContext, ShareConstants.WEB_CHAT_APP_ID, false);
+        api = WXAPIFactory.createWXAPI(mContext, ShareConstants.WE_CHAT_APP_ID, false);
         if (!api.isWXAppInstalled()) {
             Toast.makeText(mContext, mContext.getResources().getString(R.string.share_uninstall_webchat), Toast.LENGTH_SHORT).show();
             popupWindow.dismiss();
