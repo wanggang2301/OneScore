@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -149,10 +150,9 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_default)   //默认图片
+//                .showImageOnLoading(R.mipmap.basket_default)
                 .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
                 .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
                 .build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext()).build();
@@ -242,7 +242,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), BasketAnalyzeMoreRecordActivity.class);
-                intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_THIRD_ID,mThirdId);//跳转到详情
+                intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_THIRD_ID, mThirdId);//跳转到详情
 //                intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_GUEST_TEAM,"老鹰");//跳转到详情
 //                intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_HOME_TEAM,"凯尔特人");//跳转到详情
                 startActivity(intent);
@@ -277,7 +277,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                 mAnalyzeDatas.add(json.getHomeData());
                 if (json.getGuestData() != null && json.getHomeData() != null) {
                     setDatas(mAnalyzeDatas);
-                    Integer data = json.getGuestData().getRecentLW().get(0);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -348,20 +347,38 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         /**
          * 历史交锋
          */
-        int mGuestWin = mAnalyzeDatas.get(0).getHistoryWin();
-        int mHomeWin = mAnalyzeDatas.get(1).getHistoryWin();
+        int guestWins = mAnalyzeDatas.get(0).getHistoryWin();
+        int homeWins = mAnalyzeDatas.get(1).getHistoryWin();
         int progressNum;
 
-        if (mGuestWin == 0 && mHomeWin == 0){
+        int guestNumWin;
+        int homeNumWin;
+
+        if (guestWins == 0 && homeWins == 0){
             progressNum = 50;
         }else{
-            progressNum = mGuestWin * 100 / (mHomeWin + mGuestWin);
+            progressNum = guestWins * 100 / (homeWins + guestWins);
         }
 
-//        L.d("mHistory 历史交锋对比",mHistory+"");
+        if (guestWins == 0) {
+            guestNumWin = 1;
+        }else{
+            guestNumWin = guestWins;
+        }
+        if (homeWins == 0) {
+            homeNumWin = 1;
+        }else{
+            homeNumWin = homeWins;
+        }
+        //设置textview位置（权重）
+        mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin));
+        mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
+
         mProgressBar.setProgress(progressNum);
         mBasketProgressbarGuest.setText(mAnalyzeDatas.get(0).getHistoryWin() + "" + getResources().getText(R.string.basket_analyze_win));
         mBasketProgressbarHome.setText(mAnalyzeDatas.get(1).getHistoryWin() + "" + getResources().getText(R.string.basket_analyze_win));
+
+
 
         /**
          * 近期战绩
