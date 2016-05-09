@@ -89,6 +89,7 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
         v.setSelected(true);
         switch (v.getId()) {
             case R.id.odd_plate_btn://亚盘
+                MobclickAgent.onEvent(mContext, "Football_MatchData_OddPlateBtn");
                 odd_plate_btn.setTextColor(getResources().getColor(R.color.tabhost__selected_text));
                 odd_op_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
                 odd_big_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
@@ -102,6 +103,7 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
                 mPlateFragment.setArguments(bundle);
                 break;
             case R.id.odd_op_btn://欧赔
+                MobclickAgent.onEvent(mContext, "Football_MatchData_OddOpBtn");
                 odd_plate_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
                 odd_op_btn.setTextColor(getResources().getColor(R.color.tabhost__selected_text));
                 odd_big_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
@@ -117,6 +119,7 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.odd_big_btn://大小
+                MobclickAgent.onEvent(mContext, "Football_MatchData_OddBigBtn");
                 odd_plate_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
                 odd_op_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
                 odd_big_btn.setTextColor(getResources().getColor(R.color.tabhost__selected_text));
