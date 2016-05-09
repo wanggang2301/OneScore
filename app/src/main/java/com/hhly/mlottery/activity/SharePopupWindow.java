@@ -401,14 +401,13 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         if (baseResp != null) {
             switch (baseResp.errCode) {
                 case WBConstants.ErrorCode.ERR_OK:
-                    Toast.makeText(mContext, "成功", Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(mContext, "成功", Toast.LENGTH_LONG).show();
                     break;
                 case WBConstants.ErrorCode.ERR_CANCEL:
-                    Toast.makeText(mContext, "取消", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(mContext, "取消", Toast.LENGTH_LONG).show();
                     break;
                 case WBConstants.ErrorCode.ERR_FAIL:
-                    Toast.makeText(mContext, "失败" + "Error Message: " + baseResp.errMsg,
-                            Toast.LENGTH_LONG).show();
+                   // Toast.makeText(mContext, "失败" + "Error Message: " + baseResp.errMsg,Toast.LENGTH_LONG).show();
                     break;
             }
         }
