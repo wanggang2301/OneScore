@@ -75,7 +75,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
     private final static int MAX_IMAGE_SIZE = 200;
 
     private Context mContext;
-    private PopupWindow popupWindow;
+    public PopupWindow popupWindow;
     private GridView gview;
     private ImageView share;
     private SimpleAdapter sim_adapter;
@@ -105,6 +105,8 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
     public ShareCopyLinkCallBack mShareCopyLinkCallBack;
 
     public SharePopupWindow(Activity mContext, ImageView btn_share, Map<String, String> data) {
+
+
         this.mContext = mContext;
         this.share = btn_share;
         this.map = data;
@@ -114,6 +116,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         int[] to = {R.id.image, R.id.text};
         sim_adapter = new SimpleAdapter(mContext, data_list, R.layout.item_share, from, to);
         showPopupWindow();
+
     }
 
     private List<Map<String, Object>> getData() {
@@ -131,6 +134,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
     private void showPopupWindow() {
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.share_popmenu, null);
+
         gview = (GridView) view.findViewById(R.id.gview);
         gview.setAdapter(sim_adapter);
         TextView bt_clear = (TextView) view.findViewById(R.id.bt_clear);
@@ -144,9 +148,12 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         if (popupWindow == null) {
             popupWindow = new PopupWindow(mContext);
             popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+            popupWindow.setFocusable(true); // 设置PopupWindow可获得焦点
             popupWindow.setTouchable(true); // 设置PopupWindow可触摸
             popupWindow.setOutsideTouchable(true); // 设置非PopupWindow区域可触摸
             popupWindow.setContentView(view);
+
             popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
             popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
             popupWindow.setAnimationStyle(R.style.popuStyle);    //设置 popupWindow 动画样式
@@ -156,12 +163,27 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         popupWindow.update();
 
 
+      /*  // 设置背景颜色变暗
+        WindowManager.LayoutParams lp = mContext.getApplicationContext().getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        getWindow().setAttributes(lp);
+        mPopupWindow.setOnDismissListener(new OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
+            }
+        });*/
+
+
         gview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case WEB_CHAT:
-                       // Toast.makeText(mContext, "微信", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(mContext, "微信", Toast.LENGTH_SHORT).show();
                         shareweixin(0);
                         break;
                     case WEB_FRIENDS:
@@ -169,29 +191,29 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                         shareweixin(1);
                         break;
                     case QQ:
-                        if (mShareTencentCallBack!=null){
+                        if (mShareTencentCallBack != null) {
                             mShareTencentCallBack.onClick(0);
                         }
                         popupWindow.dismiss();
-                       // Toast.makeText(mContext, "QQ", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(mContext, "QQ", Toast.LENGTH_SHORT).show();
                         break;
                     case QZONE:
-                        if (mShareTencentCallBack!=null){
+                        if (mShareTencentCallBack != null) {
                             mShareTencentCallBack.onClick(1);
                         }
                         popupWindow.dismiss();
 
-                       // Toast.makeText(mContext, "空间", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(mContext, "空间", Toast.LENGTH_SHORT).show();
                         break;
                     case SINA:
                         mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(mContext, ShareConstants.SINA);
                         mWeiboShareAPI.registerApp();
                         shareSina();
                         //注册
-                     //   Toast.makeText(mContext, "新浪微博", Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(mContext, "新浪微博", Toast.LENGTH_SHORT).show();
                         break;
                     case COPY:
-                        if (mShareCopyLinkCallBack!=null){
+                        if (mShareCopyLinkCallBack != null) {
                             mShareCopyLinkCallBack.onClick();
                         }
                         popupWindow.dismiss();
@@ -204,7 +226,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         });
 
     }
-
 
     private void shareweixin(final int flag) {
         api = WXAPIFactory.createWXAPI(mContext, ShareConstants.WEB_CHAT_APP_ID, false);
@@ -241,7 +262,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 final WXMediaMessage wxmsg = new WXMediaMessage(webpage);
                 wxmsg.title = map.get(ShareConstants.TITLE);
                 wxmsg.description = map.get(ShareConstants.SUMMARY);
-                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
+                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.share_default);
                 wxmsg.setThumbImage(bitmap);
                 SendMessageToWX.Req req = new SendMessageToWX.Req();
                 req.transaction = String.valueOf(System.currentTimeMillis());
@@ -256,7 +277,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
 
 
     private TextObject getTextObj() {
-        String text=mContext.getResources().getString(R.string.share_from);
+        String text = mContext.getResources().getString(R.string.share_from);
         TextObject textObject = new TextObject();
         textObject.text = text;
         return textObject;
@@ -308,7 +329,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                         // TODO Auto-generated method stub
                         Oauth2AccessToken newToken = Oauth2AccessToken.parseAccessToken(bundle);
                         AccessTokenKeeper.writeAccessToken(mContext, newToken);
-                       // Toast.makeText(mContext, "onAuthorizeComplete token = " + newToken.getToken(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(mContext, "onAuthorizeComplete token = " + newToken.getToken(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -324,7 +345,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
                 weiboMessage.textObject = getTextObj();
                 ImageObject imageObject = new ImageObject();
-                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
+                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.share_default);
                 imageObject.setImageObject(bitmap);
                 weiboMessage.imageObject = imageObject;
                 WebpageObject mediaObject = new WebpageObject();

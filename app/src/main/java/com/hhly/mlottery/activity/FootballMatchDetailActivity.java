@@ -14,12 +14,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -207,6 +209,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         L.w(TAG, "onCreate");
         setContentView(R.layout.activity_football_match_detail);
         MobclickAgent.openActivityDurationTrack(false);
@@ -260,7 +264,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
             }
         };
 
-        mShareCopyLinkCallBack=new ShareCopyLinkCallBack() {
+        mShareCopyLinkCallBack = new ShareCopyLinkCallBack() {
             @Override
             public void onClick() {
                 ClipboardManager cmb = (ClipboardManager) FootballMatchDetailActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -815,10 +819,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 break;
 
             case R.id.iv_share: //分享
-
                 Map<String, String> data = new HashMap<String, String>();
-                String title =mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
-                String summary=getString(R.string.share_summary);
+                String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
+                String summary = getString(R.string.share_summary);
                 data.put(ShareConstants.TITLE, title);
                 data.put(ShareConstants.SUMMARY, summary);
                 data.put(ShareConstants.TARGET_URL, "http://m.13322.com");
@@ -826,6 +829,15 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 sharePopupWindow = new SharePopupWindow(this, mShare, data);
                 sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
                 sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);
+                sharePopupWindow.popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        backgroundAlpha(1f);
+                    }
+                });
+
+                backgroundAlpha(0.5f);
+
                 break;
             case R.id.network_exception_reload_btn:
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -834,6 +846,12 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
             default:
                 break;
         }
+    }
+
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
     }
 
 
@@ -860,11 +878,11 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
 
         String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
-        String appname=getString(R.string.share_to_qq_app_name);
-        String summary=getString(R.string.share_summary);
+        String appname = getString(R.string.share_to_qq_app_name);
+        String summary = getString(R.string.share_summary);
 
         params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,summary);
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY, summary);
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://m.13322.com");
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, shareHomeIconUrl);
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);

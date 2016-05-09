@@ -9,12 +9,14 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,9 +79,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private Tencent mTencent;
 
     private SharePopupWindow sharePopupWindow;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,14 +230,14 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             /**加載成功显示 分享按钮*/
             public_btn_set.setVisibility(View.VISIBLE);
 
-            mShareTencentCallBack=new ShareTencentCallBack() {
+            mShareTencentCallBack = new ShareTencentCallBack() {
                 @Override
                 public void onClick(int flag) {
                     shareQQ(flag);
                 }
             };
 
-            mShareCopyLinkCallBack=new ShareCopyLinkCallBack() {
+            mShareCopyLinkCallBack = new ShareCopyLinkCallBack() {
                 @Override
                 public void onClick() {
                     ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -305,27 +304,37 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
                 map.put(ShareConstants.TARGET_URL, url != null ? url : "");
                 map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
-
-                sharePopupWindow=new SharePopupWindow(this, public_btn_set, map);
+                sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
                 sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
                 sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);
-
+                sharePopupWindow.popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        backgroundAlpha(1f);
+                    }
+                });
+                backgroundAlpha(0.5f);
                 break;
         }
     }
 
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
 
     private void shareQQ(int falg) {
         mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
         final Bundle bundle = new Bundle();
         //这条分享消息被好友点击后的跳转URL。
 
-        String appname=getString(R.string.share_to_qq_app_name);
+        String appname = getString(R.string.share_to_qq_app_name);
 
         bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
-        bundle.putString(QQShare.SHARE_TO_QQ_TITLE,title != null ? title : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_TITLE, title != null ? title : "");
         bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, subtitle != null ? subtitle : "");
-        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL,url != null ? url : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url != null ? url : "");
         bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageurl != null ? imageurl : "");
         bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
         bundle.putInt(QQShare.SHARE_TO_QQ_EXT_INT, falg);
