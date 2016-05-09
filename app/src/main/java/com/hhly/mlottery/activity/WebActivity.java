@@ -277,11 +277,13 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_commentcount://评论数
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_CommentCount");
                 Intent intent = new Intent(this, CounselCommentActivity.class);
                 intent.putExtra(INTENT_PARAMS_URL, url);
                 startActivity(intent);
                 break;
             case R.id.public_img_back://返回
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_Exit");
                 finish();
                 break;
             case R.id.et_comment://输入评论
@@ -289,6 +291,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //                mCommentCount.setVisibility(View.GONE);
                 break;
             case R.id.iv_send://发送评论
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_Send");
                 if (CyUtils.isLogin) {
                     CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                 } else {
@@ -299,6 +302,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 break;
 
             case R.id.public_btn_set: //分享
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
                 Map<String, String> map = new HashMap<String, String>();
                 map.put(ShareConstants.TITLE, title != null ? title : "");
                 map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");

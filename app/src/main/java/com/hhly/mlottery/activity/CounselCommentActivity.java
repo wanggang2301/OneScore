@@ -27,6 +27,7 @@ import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.sohu.cyan.android.sdk.http.CyanRequestListener;
 import com.sohu.cyan.android.sdk.http.response.SubmitResp;
 import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -128,6 +129,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
             case R.id.tv_commentcount://评论数
                 break;
             case R.id.public_img_back://返回
+                MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Exit");
                 finish();
                 break;
             case R.id.et_comment://输入评论
@@ -135,6 +137,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
 //                mCommentCount.setVisibility(View.GONE);
                 break;
             case R.id.iv_send://发送评论
+                MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");
                 if (TextUtils.isEmpty(mEditText.getText())){//没有输入内容
                     ToastTools.ShowQuickCenter(this, "请先输入内容");
                 }else {//有输入内容
@@ -229,5 +232,19 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     @Override
     public void onRequestFailed(CyanException e) {
         ToastTools.ShowQuickCenter(this, "发送失败，请重试");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("Football_CounselCommentActivity");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("Football_CounselCommentActivity");
     }
 }

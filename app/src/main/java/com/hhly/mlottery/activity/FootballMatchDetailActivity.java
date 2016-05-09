@@ -893,21 +893,26 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
         switch (v.getId()) {
             case R.id.football_match_detail_tab1:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_CourtTab");
                 mViewPager.setCurrentItem(0);
                 break;
             case R.id.football_match_detail_tab2:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_CPITab");
                 mViewPager.setCurrentItem(1);
                 break;
             case R.id.football_match_detail_tab3:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_AnalysisTab");
                 mViewPager.setCurrentItem(2);
                 break;
             case R.id.layout_match_header_back:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
 
                 // setResult(Activity.RESULT_OK);
                 finish();
                 break;
             case R.id.layout_match_header_focus_img:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");
                 if (FocusFragment.isFocusId(mThirdId)) {
                     FocusFragment.deleteFocusId(mThirdId);
                     mFocusImg.setImageResource(R.mipmap.article_like);
@@ -919,6 +924,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 break;
 
             case R.id.iv_share: //分享
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Share");
                 Map<String, String> data = new HashMap<String, String>();
                 String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
                 String summary = getString(R.string.share_summary);
@@ -940,6 +946,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
                 break;
             case R.id.network_exception_reload_btn:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Refresh");
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 loadData();
                 break;
