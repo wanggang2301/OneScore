@@ -3,9 +3,10 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:orientation="vertical" >
-
+    android:orientation="vertical"
+   >
     <TextView
+        android:id="@+id/bottomline"
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="#D4D4D4" />

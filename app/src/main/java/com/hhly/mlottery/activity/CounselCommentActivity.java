@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
@@ -8,9 +9,12 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -26,6 +30,7 @@ import com.sohu.cyan.android.sdk.entity.Comment;
 import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.sohu.cyan.android.sdk.http.CyanRequestListener;
 import com.sohu.cyan.android.sdk.http.response.SubmitResp;
+import com.sohu.cyan.android.sdk.http.response.TopicCommentsResp;
 import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
 
 import java.util.ArrayList;
@@ -43,14 +48,21 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     private EditText mEditText;//输入评论
     private TextView mSend;//发送评论
     private TextView mNoData;//暂无评论
-    private SwipeRefreshLayout mSwipeRefreshLayout;//发送评论
-    private PullUpRefreshListView mListView;//发送评论
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private PullUpRefreshListView mListView;
     private CounselComentLvAdapter mAdapter;
+    private TextView mLoadMore;//加载更多
+    private ProgressBar mProgressBar;//上拉加载的进度条
     private ArrayList<Comment> mCommentArrayList;//最新评论数据
     private CyanSdk sdk;
     private String url;
+    private String title;
     private static final String INTENT_PARAMS_URL = "url";
+    private static final String INTENT_PARAMS_TITLE = "title";
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
+    private int cmt_sum;//评论总数
+    private int mCurrentPager = 1;
+    private boolean isRequestFinish = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +70,16 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         setContentView(R.layout.activity_counselcomment);
         Intent intent = getIntent();
         url = intent.getStringExtra(INTENT_PARAMS_URL);
+        title = intent.getStringExtra(INTENT_PARAMS_TITLE);
         sdk = CyanSdk.getInstance(this);
         initView();
+        initScrollView();
         initListView();
         if (!TextUtils.isEmpty(url)) {
-            loadTopic(url);
+            loadTopic(url, title);
         }
 
-
+        pullUpLoad();
     }
 
     private void initListView() {
@@ -73,16 +87,39 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mListView.setAdapter(mAdapter);
     }
 
+    private void initScrollView() {
+        //解决adjustresize和透明状态栏的冲突
+        final ScrollView scrollview = (ScrollView) findViewById(R.id.scrollview);
+        final View decview = getWindow().getDecorView();
+        decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                decview.getWindowVisibleDisplayFrame(r);
+                int screenheight = decview.getRootView().getHeight();
+                int h = screenheight - r.bottom;
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+                lp.setMargins(0, 0, 0, h);
+                scrollview.requestLayout();
+                if (h > 0) {//软键盘显示
+//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
+//                    Log.e("lzf", "软件盘显示");
+                    mEditText.setHint("");
+
+                } else if (h == 0) {//软键盘隐藏
+//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘隐藏");
+//                    Log.e("lzf", "软件盘隐藏");
+                    mEditText.setHint(R.string.hint_content);
+                }
+            }
+        });
+    }
 
     private void initView() {
-        ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
-        public_btn_filter.setVisibility(View.GONE);
-        ImageView public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
-        public_btn_set.setVisibility(View.GONE);
         mPublic_img_back = (ImageView) findViewById(R.id.public_img_back);
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
         mNoData = (TextView) findViewById(R.id.nodata);
-        mPublic_txt_title.setText("全部留言");
+        mPublic_txt_title.setText(R.string.comment_title);
         mListView = (PullUpRefreshListView) findViewById(R.id.comment_lv);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.comment_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
@@ -94,7 +131,6 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mEditText = (EditText) findViewById(R.id.et_comment);
         mSend = (TextView) findViewById(R.id.iv_send);
         mEditText.setOnClickListener(this);
-        mCommentCount.setOnClickListener(this);
         mSend.setOnClickListener(this);
         mPublic_img_back.setOnClickListener(this);
         mSend.setVisibility(View.VISIBLE);
@@ -120,62 +156,61 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
 
             }
         });
+        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                mEditText.setSelected(hasFocus);
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_commentcount://评论数
-                break;
             case R.id.public_img_back://返回
+                CyUtils.hideKeyBoard(this);
+                setResult(2, new Intent().putExtra("cmt_sum", cmt_sum));
                 finish();
                 break;
-            case R.id.et_comment://输入评论
-//                mSend.setVisibility(View.VISIBLE);
-//                mCommentCount.setVisibility(View.GONE);
-                break;
             case R.id.iv_send://发送评论
-                if (TextUtils.isEmpty(mEditText.getText())){//没有输入内容
-                    ToastTools.ShowQuickCenter(this, "请先输入内容");
-                }else {//有输入内容
+                mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
+                mLoadMore.setText(R.string.foot_loadmore);
+                if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
+                    ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
+                } else {//有输入内容
                     if (CyUtils.isLogin) {//已登录
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
-                        ToastTools.ShowQuickCenter(this, "发送失败，请重试");
+                        ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
                         CyUtils.loginSso("heheheid", "lzfgege", sdk);
                     }
+                    CyUtils.hideKeyBoard(this);
+                    mEditText.clearFocus();
                 }
 
-                hideKeyBoard();
+
                 break;
         }
-    }
-
-    /**
-     * 隐藏原生键盘
-     */
-    public void hideKeyBoard() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
-                .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        // ToastTools.shortShow(activity, "隐藏键盘");
-
     }
 
     //下拉刷新回调
     @Override
     public void onRefresh() {
-        loadTopic(url);
+        //下拉刷新后当前页数重新为1，不然先上拉加载到没有数据  再回去下拉刷新  然后再上拉就没有数据了，其实是有的
+        mCurrentPager = 1;
+        mLoadMore.setText(R.string.foot_loadmore);
+        loadTopic(url, title);
     }
 
     //获取评论的一切消息  无需登录  并刷新listview
-    public void loadTopic(String url) {
+    public void loadTopic(String url, String title) {
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-        sdk.loadTopic("", url, "title", null, 150, 150, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+        sdk.loadTopic("", url, title, null, 10, 10, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;
+                cmt_sum = topicLoadResp.cmt_sum;
                 mCommentArrayList = topicLoadResp.comments;
                 if (mCommentArrayList.size() == 0) {
                     mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -190,15 +225,6 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 mSwipeRefreshLayout.setRefreshing(false);
                 L.i("lzf最新列表=" + mCommentArrayList.size());
                 L.i("lzf最热列表=" + topicLoadResp.hots.size());
-//                for (int i=0;i<mCommentArrayList.size();i++){
-//                    L.e("lzf内容=" + mCommentArrayList.get(i).content); //评论的内容
-//                    L.e("lzf时间=" + mCommentArrayList.get(i).create_time); //评论的时间
-//                    String s1= DateUtil.transferLongToDate(mCommentArrayList.get(i).create_time);
-//                    L.e("lzf时间=" +s1); //评论的时间
-//
-////                    L.e("lzf用户名=" + mCommentArrayList.get(i).passport); ;//评论的用户名
-//                }
-
             }
 
             @Override
@@ -217,17 +243,85 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         });
     }
 
+    //上拉加载
+    public void pullUpLoad() {
+        //listview上拉加载
+        View view = getLayoutInflater().inflate(R.layout.listfooter_more, null);
+        mLoadMore = (TextView) view.findViewById(R.id.load_more);
+        TextView bottomline = (TextView) view.findViewById(R.id.bottomline);
+        bottomline.setVisibility(View.GONE);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
+                    mCurrentPager++;
+                    //请求下一页数据
+                    getTopicComments(mCurrentPager);
+                }
+            }
+        });
+        mProgressBar = (ProgressBar) view.findViewById(R.id.pull_to_refresh_progress);
+        mLoadMore.setText(R.string.foot_loadmore);
+        mListView.initBottomView(view);
+        mListView.setMyPullUpListViewCallBack(new PullUpRefreshListView.MyPullUpListViewCallBack() {
+            @Override
+            public void scrollBottomState() {
+                //上拉加载的逻辑
+                //index代表当前的页面
+                if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
+                    mCurrentPager++;
+                    //请求下一页数据
+                    getTopicComments(mCurrentPager);
+                }
+            }
+        });
+
+    }
+
+    //分页查询文章怕评论数据 无需登录
+    public void getTopicComments(int page) {
+        mProgressBar.setVisibility(View.VISIBLE);
+        isRequestFinish = false;
+        mLoadMore.setText(R.string.foot_loadingmore);
+        sdk.getTopicComments(topicid, 10, page, null, "", 1, 5, new CyanRequestListener<TopicCommentsResp>() {
+            @Override
+            public void onRequestSucceeded(TopicCommentsResp topicCommentsResp) {
+                isRequestFinish = true;
+                mProgressBar.setVisibility(View.GONE);
+                mLoadMore.setText(R.string.foot_loadmore);
+                if (mCommentArrayList != null) {
+                    if (topicCommentsResp.comments.size() == 0) {
+                        mLoadMore.setText(R.string.foot_nomoredata);
+                    } else {
+                        mCommentArrayList.addAll(topicCommentsResp.comments);
+                        mAdapter.setInfosList(mCommentArrayList);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onRequestFailed(CyanException e) {
+                isRequestFinish = true;
+                mProgressBar.setVisibility(View.GONE);
+                mLoadMore.setText(R.string.foot_neterror);
+            }
+        });
+    }
+
     //评论提交成功回调接口
     @Override
     public void onRequestSucceeded(SubmitResp submitResp) {
         mEditText.setText("");
         //刷新界面
-        loadTopic(url);
+        loadTopic(url, title);
     }
 
     //评论提交失败回调接口
     @Override
     public void onRequestFailed(CyanException e) {
-        ToastTools.ShowQuickCenter(this, "发送失败，请重试");
+        ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
     }
 }
