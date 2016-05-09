@@ -64,29 +64,30 @@
                             android:progressDrawable="@drawable/basket_progressbar_color"
                             />
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/basket_details_item"
                             android:paddingRight="@dimen/basket_details_item"
                             android:paddingTop="@dimen/basket_details_item_height2">
                             <TextView
-                                android:id="@+id/basket_progressbar_guest"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/basket_progressbar_guest"
                                 android:layout_alignParentLeft="true"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_12"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_progressbar_home"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_12"
                                 android:text="--"/>
-                        </RelativeLayout>
+                        </LinearLayout>
 
                         <!--<ProgressBar-->
                         <!--android:id="@+id/pgb"-->
