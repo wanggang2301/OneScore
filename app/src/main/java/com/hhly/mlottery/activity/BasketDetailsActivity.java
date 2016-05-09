@@ -631,9 +631,18 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         mHomeTeam.setText(mMatch.getHomeTeam());
         mGuestTeam.setText(mMatch.getGuestTeam());
+        if(mMatch.getHomeRanking().equals("")){
+            mHomeRanking.setText("");
+        }else{
+            mHomeRanking.setText("[ "+mMatch.getHomeRanking()+" ]");
+        }
+        if(mMatch.getGuestRanking().equals("")){
+            mGuestRanking.setText("");
+        }else {
+            mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
+        }
 
-        mHomeRanking.setText("[ "+mMatch.getHomeRanking()+" ]");
-        mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
+
 
         //图标
         mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
