@@ -457,16 +457,4 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("AnalyzeFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("AnalyzeFragment");
-    }
 }

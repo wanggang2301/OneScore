@@ -159,17 +159,4 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
             //刷新无效
         }
     }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("OddsFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("OddsFragment");
-    }
 }

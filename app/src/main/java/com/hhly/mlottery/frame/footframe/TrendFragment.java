@@ -302,10 +302,6 @@ public class TrendFragment extends Fragment {
         }
         super.onHiddenChanged(hidden);
 
-        if(!hidden){
-            MobclickAgent.onPageStart("TrendFragment");
-        }else{
-            MobclickAgent.onPageEnd("TrendFragment");
-        }
+
     }
 }

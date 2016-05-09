@@ -546,12 +546,6 @@ public class StatisticsFragment extends Fragment {
 
         }
         super.onHiddenChanged(hidden);
-
-        if(!hidden){
-            MobclickAgent.onPageStart("StatisticsFragment");
-        }else{
-            MobclickAgent.onPageEnd("StatisticsFragment");
-        }
     }
 
 }

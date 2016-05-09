@@ -22,6 +22,7 @@ import com.hhly.mlottery.adapter.LiveTextAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -255,17 +256,5 @@ public class LiveTextFragment extends Fragment implements AbsListView.OnScrollLi
         }
 
         return list;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("LiveTextFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("LiveTextFragment");
     }
 }

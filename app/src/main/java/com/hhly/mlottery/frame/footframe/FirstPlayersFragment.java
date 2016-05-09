@@ -21,6 +21,7 @@ import com.hhly.mlottery.bean.footballDetails.FirstPlayersBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -255,17 +256,10 @@ public class FirstPlayersFragment extends Fragment {
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-
         if (!hidden) {
             initData();
         }
         super.onHiddenChanged(hidden);
-
-        if(!hidden){
-            MobclickAgent.onPageStart("FirstPlayersFragment");
-        }else{
-            MobclickAgent.onPageEnd("FirstPlayersFragment");
-        }
     }
 
     public void refershData() {

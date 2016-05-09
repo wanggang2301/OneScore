@@ -591,6 +591,13 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         findViewById(R.id.football_match_detail_tab3).setOnClickListener(this);
     }
 
+    /**赛场、指数、分析Fragment页面统计*/
+    private boolean isStadiumFragment = true;
+    private boolean isStadium = false;
+    private boolean isOddsFragment = false;
+    private boolean isOdds = false;
+    private boolean isAnalyzeFragment = false;
+    private boolean isAnalyze = false;
 
     private void initViewPager(MatchDetail matchDetail) {
         mViewPager = (ViewPager) findViewById(R.id.football_match_detail_viewpager);
@@ -641,17 +648,71 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
                 switch (position) {
                     case 0:
+                        isStadiumFragment = true;
+                        isOddsFragment = false;
+                        isAnalyzeFragment = false;
                         mTab1.setTextColor(getResources().getColor(R.color.tab_text));
                         mRefreshLayout.setEnabled(true);
                         break;
                     case 1:
+                        isStadiumFragment = false;
+                        isOddsFragment = true;
+                        isAnalyzeFragment = false;
                         mTab2.setTextColor(getResources().getColor(R.color.tab_text));
                         mRefreshLayout.setEnabled(true);
                         break;
                     case 2:
+                        isStadiumFragment = false;
+                        isOddsFragment = false;
+                        isAnalyzeFragment = true;
                         mTab3.setTextColor(getResources().getColor(R.color.tab_text));
                         mRefreshLayout.setEnabled(false);
                         break;
+                }
+                if (isStadiumFragment) {
+                    if (isOdds) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_OddsFragment");
+                        isOdds = false;
+                        L.d("xxx", "isOddsFragment>>>隐藏");
+                    }
+                    if (isAnalyze) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_AnalyzeFragment");
+                        isAnalyze = false;
+                        L.d("xxx", "isAnalyzeFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_MatchDataInfo_StadiumFragment");
+                    isStadium = true;
+                    L.d("xxx", "isStadiumFragment>>>显示");
+                }
+                if (isOddsFragment) {
+                    if (isStadium) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_StadiumFragment");
+                        isStadium = false;
+                        L.d("xxx", "StadiumFragment>>>隐藏");
+                    }
+                    if (isAnalyze) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_AnalyzeFragment");
+                        isAnalyze = false;
+                        L.d("xxx", "isAnalyzeFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_MatchDataInfo_OddsFragment");
+                    isOdds = true;
+                    L.d("xxx", "isOddsFragment>>>显示");
+                }
+                if (isAnalyzeFragment) {
+                    if (isStadium) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_StadiumFragment");
+                        isStadium = false;
+                        L.d("xxx", "StadiumFragment>>>隐藏");
+                    }
+                    if (isOdds) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_OddsFragment");
+                        isOdds = false;
+                        L.d("xxx", "isOddsFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_MatchDataInfo_AnalyzeFragment");
+                    isAnalyze = true;
+                    L.d("xxx", "isOddsFragment>>>显示");
                 }
             }
 
@@ -680,6 +741,45 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         });*/
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isStadiumFragment) {
+            MobclickAgent.onPageStart("Football_MatchDataInfo_StadiumFragment");
+            isStadium = true;
+            L.d("xxx", "isStadiumFragment>>>显示");
+        }
+        if (isOddsFragment) {
+            MobclickAgent.onPageStart("Football_MatchDataInfo_OddsFragment");
+            isOdds = true;
+            L.d("xxx", "isOddsFragment>>>显示");
+        }
+        if (isAnalyzeFragment) {
+            MobclickAgent.onPageStart("Football_MatchDataInfo_AnalyzeFragment");
+            isAnalyze = true;
+            L.d("xxx", "isAnalyzeFragment>>>显示");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isStadium) {
+            MobclickAgent.onPageEnd("Football_MatchDataInfo_StadiumFragment");
+            isStadium = false;
+            L.d("xxx", "isStadiumFragment>>>隐藏");
+        }
+        if (isOdds) {
+            MobclickAgent.onPageEnd("Football_MatchDataInfo_OddsFragment");
+            isOdds = false;
+            L.d("xxx", "isOddsFragment>>>隐藏");
+        }
+        if (isAnalyze) {
+            MobclickAgent.onPageEnd("Football_MatchDataInfo_AnalyzeFragment");
+            isAnalyze = false;
+            L.d("xxx", "isAnalyzeFragment>>>隐藏");
+        }
+    }
 
     private TextView mHeaderHomeNameText;
     private TextView mHeaderGuestNameText;
@@ -857,13 +957,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
             mReloadTimer.cancel();
         }
 //        Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_OFF_TIMEOUT, mScreenOffTimeoutTemp);
-    }
-
-    @Override
-    protected void onResume() {
-        L.w(TAG, "onResume");
-        super.onResume();
-
     }
 
     @Override
