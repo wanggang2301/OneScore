@@ -2,7 +2,6 @@ package com.hhly.mlottery.wxapi;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.hhly.mlottery.util.ShareConstants;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -36,20 +35,20 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 //                + resp.errStr, 1);
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
-                Toast.makeText(getApplicationContext(), "分享成功", Toast.LENGTH_SHORT).show();
-                System.out.println("success");
+               // Toast.makeText(getApplicationContext(), "分享成功eeee", Toast.LENGTH_SHORT).show();
+               // System.out.println("success");
                 this.finish();
                 //分享成功
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 //分享取消
-                Toast.makeText(getApplicationContext(), "分享取消", Toast.LENGTH_SHORT).show();
-                System.out.println("ERR_USER_CANCEL");
+               // Toast.makeText(getApplicationContext(), "分享取消fffff", Toast.LENGTH_SHORT).show();
+              //  System.out.println("ERR_USER_CANCEL");
                 this.finish();
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                Toast.makeText(getApplicationContext(), "分享成功", Toast.LENGTH_SHORT).show();
-                System.out.println("ERR_AUTH_DENIED");
+              //  Toast.makeText(getApplicationContext(), "分享成功vvvvv", Toast.LENGTH_SHORT).show();
+              //  System.out.println("ERR_AUTH_DENIED");
                 this.finish();
                 //分享拒绝
                 break;

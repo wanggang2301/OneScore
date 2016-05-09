@@ -12,7 +12,12 @@
     <string name="qzone">空间</string>
     <string name="sina">新浪</string>
     <string name="copy">复制链接</string>
-    <string name="share_cancel">取消</string>
+    <string name="share_cancel">取消分享</string>
+    <string name="share_summary">一比分,更新了比赛情报</string>
+    <string name="share_to_qq_app_name">一比分</string>
+    <string name="share_copy">复制链接成功</string>
+    <string name="share_from">来自一比分:</string>
+
 
 
     <!--指数-->

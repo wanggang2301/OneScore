@@ -138,7 +138,7 @@ public class DebugConfigActivity extends BaseActivity implements IWeiboHandler.R
             @Override
             public void onClick(View v) {
 
-                shareFragment=new SharePopupWindow(mContext,share);
+               // shareFragment=new SharePopupWindow(mContext,share);
             }
         });
 

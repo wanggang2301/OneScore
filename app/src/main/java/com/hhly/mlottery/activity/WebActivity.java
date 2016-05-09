@@ -1,5 +1,7 @@
 package com.hhly.mlottery.activity;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,8 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
+import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
@@ -27,7 +32,14 @@ import com.sohu.cyan.android.sdk.http.CyanRequestListener;
 import com.sohu.cyan.android.sdk.http.response.SubmitResp;
 import com.sohu.cyan.android.sdk.http.response.TopicCountResp;
 import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
+import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * WebView显示H5
@@ -53,9 +65,21 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private CyanSdk sdk;
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
     private int cmt_sum;//评论总数
-    private static final  String INTENT_PARAMS_URL="url";
+    private static final String INTENT_PARAMS_URL = "url";
 
     private ImageView public_btn_set;
+
+    private ShareTencentCallBack mShareTencentCallBack;
+
+    private ShareCopyLinkCallBack mShareCopyLinkCallBack;
+
+
+    private Tencent mTencent;
+
+    private SharePopupWindow sharePopupWindow;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +89,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         CyUtils.initCy(this);
         sdk = CyanSdk.getInstance(this);
         //单点登录
-        CyUtils.loginSso("heheheid","lzfgege",sdk);
+        CyUtils.loginSso("heheheid", "lzfgege", sdk);
         initView();
         initData();
         //获取评论信息 无需登录  这里主要拿评论总数和文章id
@@ -152,8 +176,10 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
         public_btn_filter.setVisibility(View.GONE);
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
-      //  public_btn_set.setImageResource(R.mipmap.share);
+        public_btn_set.setImageResource(R.mipmap.share);
         public_btn_set.setVisibility(View.GONE);
+
+        public_btn_set.setOnClickListener(this);
 
 
         mPublic_img_back = (ImageView) findViewById(R.id.public_img_back);
@@ -203,13 +229,26 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             mWebView.loadUrl(url);
 
             /**加載成功显示 分享按钮*/
+            public_btn_set.setVisibility(View.VISIBLE);
+
+            mShareTencentCallBack=new ShareTencentCallBack() {
+                @Override
+                public void onClick(int flag) {
+                    shareQQ(flag);
+                }
+            };
+
+            mShareCopyLinkCallBack=new ShareCopyLinkCallBack() {
+                @Override
+                public void onClick() {
+                    ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    cmb.setText(url);
+                    Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
+                }
+            };
 
 
-        public_btn_set.setVisibility(View.VISIBLE);
-
-
-
-            L.d("lzf:" +"imageurl="+imageurl+"title"+title+"subtitle"+subtitle);
+            L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
         } catch (Exception e) {
             L.d("initData初始化失败:" + e.getMessage());
         }
@@ -239,8 +278,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_commentcount://评论数
-                Intent intent=new Intent(this, CounselCommentActivity.class);
-                intent.putExtra(INTENT_PARAMS_URL,url);
+                Intent intent = new Intent(this, CounselCommentActivity.class);
+                intent.putExtra(INTENT_PARAMS_URL, url);
                 startActivity(intent);
                 break;
             case R.id.public_img_back://返回
@@ -253,14 +292,59 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             case R.id.iv_send://发送评论
                 if (CyUtils.isLogin) {
                     CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                }else {
+                } else {
                     ToastTools.ShowQuickCenter(this, "发送失败，请重试");
-                    CyUtils.loginSso("heheheid","lzfgege",sdk);
+                    CyUtils.loginSso("heheheid", "lzfgege", sdk);
                 }
                 hideKeyBoard();
                 break;
+
+            case R.id.public_btn_set: //分享
+                Map<String, String> map = new HashMap<String, String>();
+                map.put(ShareConstants.TITLE, title != null ? title : "");
+                map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
+                map.put(ShareConstants.TARGET_URL, url != null ? url : "");
+                map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
+
+                sharePopupWindow=new SharePopupWindow(this, public_btn_set, map);
+                sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
+                sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);
+
+                break;
         }
     }
+
+
+    private void shareQQ(int falg) {
+        mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
+        final Bundle bundle = new Bundle();
+        //这条分享消息被好友点击后的跳转URL。
+
+        String appname=getString(R.string.share_to_qq_app_name);
+
+        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+        bundle.putString(QQShare.SHARE_TO_QQ_TITLE,title != null ? title : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, subtitle != null ? subtitle : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL,url != null ? url : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageurl != null ? imageurl : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
+        bundle.putInt(QQShare.SHARE_TO_QQ_EXT_INT, falg);
+        mTencent.shareToQQ(WebActivity.this, bundle, qqShareListener);
+    }
+
+    IUiListener qqShareListener = new IUiListener() {
+        @Override
+        public void onCancel() {
+        }
+
+        @Override
+        public void onComplete(Object response) {
+        }
+
+        @Override
+        public void onError(UiError e) {
+        }
+    };
 
     /**
      * 隐藏原生键盘

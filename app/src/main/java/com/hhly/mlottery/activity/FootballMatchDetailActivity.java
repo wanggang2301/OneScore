@@ -1,6 +1,8 @@
 package com.hhly.mlottery.activity;
 
 import android.animation.ObjectAnimator;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +30,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
+import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
+import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
@@ -39,10 +43,15 @@ import com.hhly.mlottery.frame.footframe.StadiumFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.ToolbarScrollerView;
+import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -179,6 +188,18 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
     private int currentFragmentId = 0;
 
+
+    private String shareHomeIconUrl;
+
+
+    private SharePopupWindow sharePopupWindow;
+
+    private ShareTencentCallBack mShareTencentCallBack;
+
+    private ShareCopyLinkCallBack mShareCopyLinkCallBack;
+
+    private Tencent mTencent;
+
     /**
      * 备份用户本身屏幕的时间
      */
@@ -230,6 +251,24 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         loadData();
 //        loadImage();
+
+        mShareTencentCallBack = new ShareTencentCallBack() {
+            @Override
+            public void onClick(int flag) {
+                // shareQQ(flag);
+                onClickShare(flag);
+            }
+        };
+
+        mShareCopyLinkCallBack=new ShareCopyLinkCallBack() {
+            @Override
+            public void onClick() {
+                ClipboardManager cmb = (ClipboardManager) FootballMatchDetailActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                cmb.setText("http://m.13322.com");
+                Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
+
+            }
+        };
     }
 
     private final static int VIEW_STATUS_LOADING = 1;
@@ -511,6 +550,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 mGuestLikeCount.setText(matchDetail.getGuestTeamInfo().getGas());
                 mHeaderGuestNameText.setText(matchDetail.getGuestTeamInfo().getName());
 
+                shareHomeIconUrl = matchDetail.getHomeTeamInfo().getUrl();
+
                 loadImage(matchDetail.getHomeTeamInfo().getUrl(), mHomeEmblem);
                 loadImage(matchDetail.getGuestTeamInfo().getUrl(), mGuestEmblem);
                 mTab1.setClickable(true);
@@ -684,6 +725,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     private TextView mHeaderHomeNameText;
     private TextView mHeaderGuestNameText;
     private ImageView mFocusImg;
+    private ImageView mShare;
 
 
     private void initToolbar() {
@@ -724,10 +766,12 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mHeaderHomeNameText = (TextView) findViewById(R.id.layout_match_header_hometeam_name);
         mHeaderGuestNameText = (TextView) findViewById(R.id.layout_match_header_guest_name);
         mFocusImg = (ImageView) findViewById(R.id.layout_match_header_focus_img);
+        mShare = (ImageView) findViewById(R.id.iv_share);
 
 
         findViewById(R.id.layout_match_header_back).setOnClickListener(this);
         mFocusImg.setOnClickListener(this);
+        mShare.setOnClickListener(this);
 
         boolean isFocus = FocusFragment.isFocusId(mThirdId);
 
@@ -767,6 +811,21 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     FocusFragment.addFocusId(mThirdId);
                     mFocusImg.setImageResource(R.mipmap.article_like_hover);
                 }
+
+                break;
+
+            case R.id.iv_share: //分享
+
+                Map<String, String> data = new HashMap<String, String>();
+                String title =mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
+                String summary=getString(R.string.share_summary);
+                data.put(ShareConstants.TITLE, title);
+                data.put(ShareConstants.SUMMARY, summary);
+                data.put(ShareConstants.TARGET_URL, "http://m.13322.com");
+                data.put(ShareConstants.IMAGE_URL, shareHomeIconUrl != null ? shareHomeIconUrl : "");
+                sharePopupWindow = new SharePopupWindow(this, mShare, data);
+                sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
+                sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);
                 break;
             case R.id.network_exception_reload_btn:
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -776,6 +835,43 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 break;
         }
     }
+
+
+    IUiListener qqShareListener = new IUiListener() {
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onComplete(Object response) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onError(UiError e) {
+            // TODO Auto-generated method stub
+        }
+    };
+
+    private void onClickShare(int flag) {
+        mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+
+        String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
+        String appname=getString(R.string.share_to_qq_app_name);
+        String summary=getString(R.string.share_summary);
+
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,summary);
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://m.13322.com");
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, shareHomeIconUrl);
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
+        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, flag);
+        mTencent.shareToQQ(FootballMatchDetailActivity.this, params, qqShareListener);
+    }
+
 
     public class MatchDetailFragmentAdapter extends FragmentPagerAdapter {
 

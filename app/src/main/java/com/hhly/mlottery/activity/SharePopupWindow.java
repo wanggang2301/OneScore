@@ -1,28 +1,35 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
+import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.util.AccessTokenKeeper;
 import com.hhly.mlottery.util.ShareConstants;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
+import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.api.share.BaseResponse;
 import com.sina.weibo.sdk.api.share.IWeiboHandler;
@@ -34,15 +41,12 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.constant.WBConstants;
 import com.sina.weibo.sdk.exception.WeiboException;
-import com.tencent.connect.share.QQShare;
+import com.sina.weibo.sdk.utils.Utility;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,41 +59,56 @@ import java.util.Map;
  * @des ${TODO}
  */
 public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Response {
-
-
+    //微信好友
     private final static int WEB_CHAT = 0;
+    //微信朋友圈
     private final static int WEB_FRIENDS = 1;
+    //QQ
     private final static int QQ = 2;
+    //QQ空间
     private final static int QZONE = 3;
+    //新浪微博
     private final static int SINA = 4;
+    //复制链接
     private final static int COPY = 5;
+
+    private final static int MAX_IMAGE_SIZE = 200;
 
     private Context mContext;
     private PopupWindow popupWindow;
     private GridView gview;
-    private List<Map<String, Object>> data_list;
+    private ImageView share;
     private SimpleAdapter sim_adapter;
     // 图片封装为一个数组
     private int[] icon = {R.mipmap.webchat, R.mipmap.friends, R.mipmap.qq, R.mipmap.qzone, R.mipmap.sina, R.mipmap.copy};
     private int[] iconName = {R.string.webchat, R.string.friends, R.string.qq, R.string.qzone, R.string.sina, R.string.copy};
 
-    private Button share;
-
-
+    //微信Api
     private IWXAPI api;
 
-    public static Tencent mTencent;
-
+    //新浪微博Api
     private IWeiboShareAPI mWeiboShareAPI;
 
-    private int mExtarFlag = 0x00;
+    private Map<String, String> map = new HashMap<>();
+    private List<Map<String, Object>> data_list;
 
+    public void setmShareTencentCallBack(ShareTencentCallBack mShareTencentCallBack) {
+        this.mShareTencentCallBack = mShareTencentCallBack;
+    }
 
+    public ShareTencentCallBack mShareTencentCallBack;
 
-    public SharePopupWindow(Context mContext, Button btn_share) {
+    public void setmShareCopyLinkCallBack(ShareCopyLinkCallBack mShareCopyLinkCallBack) {
+        this.mShareCopyLinkCallBack = mShareCopyLinkCallBack;
+    }
+
+    public ShareCopyLinkCallBack mShareCopyLinkCallBack;
+
+    public SharePopupWindow(Activity mContext, ImageView btn_share, Map<String, String> data) {
         this.mContext = mContext;
-        share=btn_share;
-        data_list = new ArrayList<Map<String, Object>>();
+        this.share = btn_share;
+        this.map = data;
+        this.data_list = new ArrayList<Map<String, Object>>();
         getData();
         String[] from = {"image", "text"};
         int[] to = {R.id.image, R.id.text};
@@ -97,7 +116,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         showPopupWindow();
     }
 
-    public List<Map<String, Object>> getData() {
+    private List<Map<String, Object>> getData() {
         //cion和iconName的长度是相同的，这里任选其一都可以
         for (int i = 0; i < icon.length; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
@@ -125,7 +144,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         if (popupWindow == null) {
             popupWindow = new PopupWindow(mContext);
             popupWindow.setBackgroundDrawable(new BitmapDrawable());
-//			popupWindow.setFocusable(true); // 设置PopupWindow可获得焦点
             popupWindow.setTouchable(true); // 设置PopupWindow可触摸
             popupWindow.setOutsideTouchable(true); // 设置非PopupWindow区域可触摸
             popupWindow.setContentView(view);
@@ -143,37 +161,41 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case WEB_CHAT:
-                        Toast.makeText(mContext, "微信", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(mContext, "微信", Toast.LENGTH_SHORT).show();
                         shareweixin(0);
                         break;
                     case WEB_FRIENDS:
-                        Toast.makeText(mContext, "朋友圈", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "朋友圈", Toast.LENGTH_SHORT).show();
                         shareweixin(1);
                         break;
                     case QQ:
-                        mExtarFlag &= (0xFFFFFFFF - QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);
-                        shareQQ();
-                        Toast.makeText(mContext, "QQ", Toast.LENGTH_SHORT).show();
+                        if (mShareTencentCallBack!=null){
+                            mShareTencentCallBack.onClick(0);
+                        }
+                        popupWindow.dismiss();
+                       // Toast.makeText(mContext, "QQ", Toast.LENGTH_SHORT).show();
                         break;
                     case QZONE:
-                        mExtarFlag |= QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN;
-                        shareQQ();
-                        Toast.makeText(mContext, "空间", Toast.LENGTH_SHORT).show();
+                        if (mShareTencentCallBack!=null){
+                            mShareTencentCallBack.onClick(1);
+                        }
+                        popupWindow.dismiss();
+
+                       // Toast.makeText(mContext, "空间", Toast.LENGTH_SHORT).show();
                         break;
                     case SINA:
                         mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(mContext, ShareConstants.SINA);
-
                         mWeiboShareAPI.registerApp();
-
-
                         shareSina();
                         //注册
-                        Toast.makeText(mContext, "新浪微博", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(mContext, "新浪微博", Toast.LENGTH_SHORT).show();
                         break;
                     case COPY:
-                        ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                        cmb.setText("复制的内容：www.13322.com");
-                        Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
+                        if (mShareCopyLinkCallBack!=null){
+                            mShareCopyLinkCallBack.onClick();
+                        }
+                        popupWindow.dismiss();
+                        Toast.makeText(mContext, mContext.getResources().getString(R.string.share_copy), Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;
@@ -184,110 +206,99 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
     }
 
 
-    private void shareweixin(int flag) {
-
+    private void shareweixin(final int flag) {
         api = WXAPIFactory.createWXAPI(mContext, ShareConstants.WEB_CHAT_APP_ID, false);
-
-        if (!api.isWXAppInstalled()) {
+      /*  if (!api.isWXAppInstalled()) {
             Toast.makeText(mContext, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
             return;
-        }
-        WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://baidu.com";
-        WXMediaMessage msg = new WXMediaMessage(webpage);
+        }*/
+        VolleyContentFast.requestImage(map.get(ShareConstants.IMAGE_URL), new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                WXWebpageObject webpage = new WXWebpageObject();
+                webpage.webpageUrl = map.get(ShareConstants.TARGET_URL);
+                final WXMediaMessage wxmsg = new WXMediaMessage(webpage);
+                wxmsg.title = map.get(ShareConstants.TITLE);
+                wxmsg.description = map.get(ShareConstants.SUMMARY);
+                if (response.getWidth() > 200 || response.getHeight() > 200) {
+                    response = ThumbnailUtils.extractThumbnail(response, MAX_IMAGE_SIZE, MAX_IMAGE_SIZE);
+                }
+                wxmsg.setThumbImage(response);
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = String.valueOf(System.currentTimeMillis());
+                req.message = wxmsg;
+                req.scene = flag;
+                boolean flg = api.sendReq(req);
+            }
+        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-        msg.title = "标题";
-        msg.description = "描述：一比分微信分享测试";
+                // Volley请求出错的图片
 
-        Bitmap thumb = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
-        msg.setThumbImage(thumb);
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = String.valueOf(System.currentTimeMillis());
-        req.message = msg;
-        req.scene = flag;
-        boolean flg = api.sendReq(req);
+                WXWebpageObject webpage = new WXWebpageObject();
+                webpage.webpageUrl = map.get(ShareConstants.TARGET_URL);
+                final WXMediaMessage wxmsg = new WXMediaMessage(webpage);
+                wxmsg.title = map.get(ShareConstants.TITLE);
+                wxmsg.description = map.get(ShareConstants.SUMMARY);
+                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
+                wxmsg.setThumbImage(bitmap);
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = String.valueOf(System.currentTimeMillis());
+                req.message = wxmsg;
+                req.scene = flag;
+                boolean flg = api.sendReq(req);
+            }
+        });
 
-    }
-
-
-    public void shareQQ() {
-
-        if (mTencent == null) {
-            mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, mContext);
-        }
-
-        final Bundle bundle = new Bundle();
-        //这条分享消息被好友点击后的跳转URL。
-        bundle.putString(QQShare.SHARE_TO_QQ_TITLE, "来自一比分");
-        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, "豆瓣音乐-Lollipop &lt;Stand By Me> 1990 字数不够？再加点？");
-        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://douban.fm/?start=8508g3c27g-3&amp;cid=-3");
-        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://img3.douban.com/lpic/s3635685.jpg");
-        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, "测试应用");
-        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
-        bundle.putInt(QQShare.SHARE_TO_QQ_EXT_INT, mExtarFlag);
-
-        mTencent.shareToQQ((Activity) mContext, bundle, qqShareListener);
-    }
-
-
-    IUiListener qqShareListener = new IUiListener() {
-        @Override
-        public void onCancel() {
-
-        }
-
-        @Override
-        public void onComplete(Object response) {
-            // TODO Auto-generated method stub
-        }
-
-        @Override
-        public void onError(UiError e) {
-            // TODO Auto-generated method stub
-        }
-    };
-
-
-    public void shareSina() {
-
-        boolean isInstalledWeibo = mWeiboShareAPI.isWeiboAppInstalled();
-        int supportApiLevel = mWeiboShareAPI.getWeiboAppSupportAPI();
-
-        sendMultiMessage();
-
+        popupWindow.dismiss();
     }
 
 
     private TextObject getTextObj() {
+        String text=mContext.getResources().getString(R.string.share_from);
         TextObject textObject = new TextObject();
-        textObject.text = "微博分享";
+        textObject.text = text;
         return textObject;
     }
 
-    private void sendMultiMessage() {
+    private void shareSina() {
+        VolleyContentFast.requestImage(map.get(ShareConstants.IMAGE_URL), new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                // 1. 初始化微博的分享消息
+                WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
+                weiboMessage.textObject = getTextObj();
+                ImageObject imageObject = new ImageObject();
+                if (response.getWidth() > 200 || response.getHeight() > 200) {
+                    response = ThumbnailUtils.extractThumbnail(response, MAX_IMAGE_SIZE, MAX_IMAGE_SIZE);
+                }
 
-        // 1. 初始化微博的分享消息
-        WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
-        // if (hasText) {
-        weiboMessage.textObject = getTextObj();
+                imageObject.setImageObject(response);
+                weiboMessage.imageObject = imageObject;
+                WebpageObject mediaObject = new WebpageObject();
+                mediaObject.identify = Utility.generateGUID();
+                mediaObject.title = map.get(ShareConstants.TITLE);
+                mediaObject.description = map.get(ShareConstants.SUMMARY);
+                mediaObject.setThumbImage(response);
+                mediaObject.actionUrl = map.get(ShareConstants.TARGET_URL);
+                mediaObject.defaultText = "Webpage";
+                weiboMessage.mediaObject = mediaObject;
 
-        // 2. 初始化从第三方到微博的消息请求
-        SendMultiMessageToWeiboRequest request = new SendMultiMessageToWeiboRequest();
-        // 用transaction唯一标识一个请求
-        request.transaction = String.valueOf(System.currentTimeMillis());
-        request.multiMessage = weiboMessage;
+                // 2. 初始化从第三方到微博的消息请求
+                SendMultiMessageToWeiboRequest request = new SendMultiMessageToWeiboRequest();
+                // 用transaction唯一标识一个请求
+                request.transaction = String.valueOf(System.currentTimeMillis());
+                request.multiMessage = weiboMessage;
+                AuthInfo authInfo = new AuthInfo(mContext, ShareConstants.SINA, ShareConstants.REDIRECT_URL, ShareConstants.SCOPE);
+                Oauth2AccessToken accessToken = AccessTokenKeeper.readAccessToken(mContext);
 
-        AuthInfo authInfo = new AuthInfo(mContext, ShareConstants.SINA, ShareConstants.REDIRECT_URL, ShareConstants.SCOPE);
+                String token = "";
+                if (accessToken != null) {
+                    token = accessToken.getToken();
+                }
 
-        Oauth2AccessToken accessToken = AccessTokenKeeper.readAccessToken(mContext);
-
-        String token = "";
-        if (accessToken != null) {
-            token = accessToken.getToken();
-        }
-
-        mWeiboShareAPI.sendRequest((Activity)mContext, request, authInfo, token,
-                new WeiboAuthListener() {
+                mWeiboShareAPI.sendRequest((Activity) mContext, request, authInfo, token, new WeiboAuthListener() {
                     @Override
                     public void onWeiboException(WeiboException arg0) {
                     }
@@ -297,13 +308,70 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                         // TODO Auto-generated method stub
                         Oauth2AccessToken newToken = Oauth2AccessToken.parseAccessToken(bundle);
                         AccessTokenKeeper.writeAccessToken(mContext, newToken);
-                        Toast.makeText(mContext, "onAuthorizeComplete token = " + newToken.getToken(), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(mContext, "onAuthorizeComplete token = " + newToken.getToken(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onCancel() {
                     }
                 });
+
+            }
+        }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //出错加载默认图片
+                WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
+                weiboMessage.textObject = getTextObj();
+                ImageObject imageObject = new ImageObject();
+                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
+                imageObject.setImageObject(bitmap);
+                weiboMessage.imageObject = imageObject;
+                WebpageObject mediaObject = new WebpageObject();
+                mediaObject.identify = Utility.generateGUID();
+                mediaObject.title = map.get(ShareConstants.TITLE);
+                mediaObject.description = map.get(ShareConstants.SUMMARY);
+                mediaObject.setThumbImage(bitmap);
+                mediaObject.actionUrl = map.get(ShareConstants.TARGET_URL);
+                mediaObject.defaultText = "Webpage";
+                weiboMessage.mediaObject = mediaObject;
+
+                // 2. 初始化从第三方到微博的消息请求
+                SendMultiMessageToWeiboRequest request = new SendMultiMessageToWeiboRequest();
+                // 用transaction唯一标识一个请求
+                request.transaction = String.valueOf(System.currentTimeMillis());
+                request.multiMessage = weiboMessage;
+
+                AuthInfo authInfo = new AuthInfo(mContext, ShareConstants.SINA, ShareConstants.REDIRECT_URL, ShareConstants.SCOPE);
+
+                Oauth2AccessToken accessToken = AccessTokenKeeper.readAccessToken(mContext);
+
+                String token = "";
+                if (accessToken != null) {
+                    token = accessToken.getToken();
+                }
+
+                mWeiboShareAPI.sendRequest((Activity) mContext, request, authInfo, token, new WeiboAuthListener() {
+                    @Override
+                    public void onWeiboException(WeiboException arg0) {
+                    }
+
+                    @Override
+                    public void onComplete(Bundle bundle) {
+                        // TODO Auto-generated method stub
+                        Oauth2AccessToken newToken = Oauth2AccessToken.parseAccessToken(bundle);
+                        AccessTokenKeeper.writeAccessToken(mContext, newToken);
+                        //Toast.makeText(mContext, "onAuthorizeComplete token = " + newToken.getToken(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                    }
+                });
+            }
+        });
+
+        popupWindow.dismiss();
     }
 
 
@@ -312,7 +380,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         if (baseResp != null) {
             switch (baseResp.errCode) {
                 case WBConstants.ErrorCode.ERR_OK:
-                    share.setText("微博分享成功");
                     Toast.makeText(mContext, "成功", Toast.LENGTH_LONG).show();
                     break;
                 case WBConstants.ErrorCode.ERR_CANCEL:

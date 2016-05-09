@@ -20,4 +20,11 @@ public class ShareConstants {
                     + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
                     + "follow_app_official_microblog," + "invitation_write";
 
+
+    public final static String TITLE = "title";
+    public final static String SUMMARY = "summary";
+    public final static String TARGET_URL = "target_url";
+    public final static String IMAGE_URL = "iamge_url";
+
+
 }
