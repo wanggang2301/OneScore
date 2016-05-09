@@ -75,10 +75,10 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_default)   //默认图片
+                .showImageOnLoading(R.mipmap.basket_default)
                 .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
                 .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
+//                .resetViewBeforeLoading(true)
                 .build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();

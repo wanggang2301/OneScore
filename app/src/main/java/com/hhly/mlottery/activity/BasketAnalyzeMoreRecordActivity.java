@@ -74,6 +74,11 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     Handler mHandler = new Handler();
     private TextView mError;
     private ExactSwipeRefrashLayout mRefresh;
+    private TextView mNoData1;
+    private TextView mNoData2;
+    private TextView mNoData3;
+    private TextView mNoData4;
+    private TextView mNoData5;
 
 
     @Override
@@ -117,8 +122,8 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         });
 
         mHistoryListView = (NestedListView)findViewById(R.id.basket_histroy_list);
-        mRecentListView1 = (NestedListView)findViewById(R.id.basket_recent_exploits_list);
         mRecentListView2 = (NestedListView)findViewById(R.id.basket_recent_exploits_list_to);
+        mRecentListView1 = (NestedListView)findViewById(R.id.basket_recent_exploits_list);
         mFutureListView1 = (NestedListView)findViewById(R.id.basket_future_exploits_list);
         mFutureListView2 = (NestedListView)findViewById(R.id.basket_future_exploits_list_to);
 
@@ -151,6 +156,12 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.basket_analyze_details_refreshlayout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(BasketAnalyzeMoreRecordActivity.this);
+
+        mNoData1 = (TextView) findViewById(R.id.basket_analyze_nodata1);
+        mNoData2 = (TextView) findViewById(R.id.basket_analyze_nodata2);
+        mNoData3 = (TextView) findViewById(R.id.basket_analyze_nodata3);
+        mNoData4 = (TextView) findViewById(R.id.basket_analyze_nodata4);
+        mNoData5 = (TextView) findViewById(R.id.basket_analyze_nodata5);
     }
 
     private List<BasketAnalyzeMoreRecentHistoryBean> mHistoryData = new ArrayList<>();//历史交锋所有比赛
@@ -163,7 +174,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
 
     private List<BasketAnalyzeMoreRecentHistoryBean> mHistoryScreenNum;; //筛选后的历史交锋
     private List<BasketAnalyzeMoreRecentHistoryBean> mGuestRecentScreenNum; //筛选后客队的近期战绩
-    private List<BasketAnalyzeMoreRecentHistoryBean> mHomeRecentScreenNum; //筛选后客队的近期战绩
+    private List<BasketAnalyzeMoreRecentHistoryBean> mHomeRecentScreenNum; //筛选后主队的近期战绩
 
     private boolean mHistorySite = true; //产地选择
     private int mHistoryNum = 6; //场数选择
@@ -205,7 +216,10 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                  */
                 if (json.getHistory() != null) {
                     mHistoryData = json.getHistory();
-
+                    //暂无数据提示
+                    if (mHistoryData.isEmpty()) {
+                        mNoData1.setVisibility(View.VISIBLE);
+                    }
                     //取前六场
                     List<BasketAnalyzeMoreRecentHistoryBean> list = new ArrayList<>();
                     if (mHistoryData.size() <= 6) {
@@ -225,13 +239,11 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                         setHomeWinLoseData(list, mBasketAnalyzeHistory, mHomeTeam);
                     }else{
                         if (mHistoryScreenNum != null) {
-                            updateAdapter(mHistoryScreenNum , mHistoryAdaptey);
+                            updateAdapter(mHistoryScreenNum , mHistoryAdaptey , 0);
                         }else{
-                            updateAdapter(fistData , mHistoryAdaptey);
+                            updateAdapter(fistData , mHistoryAdaptey , 0);
                         }
                     }
-
-
 
                     mHistory_ll.setVisibility(View.VISIBLE);
                 }else{
@@ -243,6 +255,10 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 if (json.getGuestRecent() != null) {
                     mRecentData1 = json.getGuestRecent();
 
+                    //暂无数据提示
+                    if (mRecentData1.isEmpty()) {
+                        mNoData3.setVisibility(View.VISIBLE);
+                    }
                     //默认选中全部场地6场
                     List<BasketAnalyzeMoreRecentHistoryBean> fistData = new ArrayList<>();
                     setScreen(true, 6, fistData, mRecentData1);
@@ -256,9 +272,18 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                             list.add(mRecentData1.get(i));
                         }
                     }
-                    mRecentAdapter1 = new BasketAnalyzeAdapter(mContext, fistData, R.layout.basket_analyze_details_item);
-                    mRecentListView1.setAdapter(mRecentAdapter1);
-                    setHomeWinLoseData(list, mBasketAnalyzeRecent1, mHomeTeam);
+
+                    if (mRecentAdapter1 == null) {
+                        mRecentAdapter1 = new BasketAnalyzeAdapter(mContext, fistData, R.layout.basket_analyze_details_item);
+                        mRecentListView1.setAdapter(mRecentAdapter1);
+                        setHomeWinLoseData(list, mBasketAnalyzeRecent1, mGuestTeam);
+                    }else{
+                        if (mGuestRecentScreenNum != null) {
+                            updateAdapter(mGuestRecentScreenNum , mRecentAdapter1 , 2);
+                        }else{
+                            updateAdapter(fistData , mRecentAdapter1 , 2);
+                        }
+                    }
 //                    mNoData2.setVisibility(View.GONE);
                     mGuestRecent_ll.setVisibility(View.VISIBLE);
                 }else{
@@ -270,6 +295,11 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                  */
                 if (json.getHomeRecent() != null) {
                     mRecentData2 = json.getHomeRecent();
+
+                    //暂无数据提示
+                    if (mRecentData2.isEmpty()) {
+                        mNoData2.setVisibility(View.VISIBLE);
+                    }
 
                     List<BasketAnalyzeMoreRecentHistoryBean> fistData = new ArrayList<>();
                     setScreen(true, 6, fistData, mRecentData2);
@@ -283,9 +313,18 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                             list.add(mRecentData2.get(i));
                         }
                     }
-                    mRecentAdapter2 = new BasketAnalyzeAdapter(mContext, fistData, R.layout.basket_analyze_details_item);
-                    mRecentListView2.setAdapter(mRecentAdapter2);
-                    setHomeWinLoseData(list, mBasketAnalyzeRecent2, mGuestTeam);
+
+                    if (mRecentAdapter2 == null) {
+                        mRecentAdapter2 = new BasketAnalyzeAdapter(mContext, fistData, R.layout.basket_analyze_details_item);
+                        mRecentListView2.setAdapter(mRecentAdapter2);
+                        setHomeWinLoseData(list, mBasketAnalyzeRecent2, mHomeTeam);
+                    }else{
+                        if (mHomeRecentScreenNum != null) {
+                            updateAdapter(mHomeRecentScreenNum , mRecentAdapter2 , 1);
+                        }else{
+                            updateAdapter(fistData , mRecentAdapter2 , 1);
+                        }
+                    }
 //                    mNoData3.setVisibility(View.GONE);
                     mHomeRecent_ll.setVisibility(View.VISIBLE);
                 }else{
@@ -298,10 +337,14 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                  */
                 if (json.getGuestFuture() != null) {
                     mFutureData1 = json.getGuestFuture();
+                    //暂无数据提示
+                    if (mFutureData1.isEmpty()) {
+                        mNoData4.setVisibility(View.VISIBLE);
+                    }
                     if (json.getGuestTeam() != null) {
                         mGuestFruture.setText(json.getGuestTeam() + getResources().getText(R.string.basket_analyze_future) + mFutureData1.size() + getResources().getText(R.string.basket_analyze_field));
                     }else{
-                        mGuestFruture.setText(getResources().getText(R.string.basket_analyze_defult_text) +""+ getResources().getText(R.string.basket_analyze_future) + mFutureData1.size() + getResources().getText(R.string.basket_analyze_field));
+                        mGuestFruture.setText(getResources().getText(R.string.basket_analyze_defult_text) + "" + getResources().getText(R.string.basket_analyze_future) + mFutureData1.size() + getResources().getText(R.string.basket_analyze_field));
                     }
 
                     mFutureAdapter1 = new BasketAnalyzeFutureAdapter(mContext, mFutureData1, R.layout.basket_analyze_item);
@@ -316,6 +359,12 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                  */
                 if (json.getHomeFuture() != null) {
                     mFutureData2 = json.getHomeFuture();
+
+                    //暂无数据提示
+                    if (mFutureData2.isEmpty()) {
+                        mNoData5.setVisibility(View.VISIBLE);
+                    }
+
                     if (json.getHomeTeam() != null) {
                         mHomeFruture.setText(json.getHomeTeam() + getResources().getText(R.string.basket_analyze_future) + mFutureData2.size() + getResources().getText(R.string.basket_analyze_field));
                     }else{
@@ -403,7 +452,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 }
             }
         }
-        L.d("dataBBBBBBBBBBBBB =",screenData.size()+"");
+        L.d("dataBBBBBBBBBBBBB =", screenData.size() + "");
     }
 
     /**
@@ -413,31 +462,37 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
      * @param mTeam
      */
     private void setHomeWinLoseData(List<BasketAnalyzeMoreRecentHistoryBean> mData , TextView mText ,String mTeam){
-        if (mData.isEmpty() || mData.size()==0) {
-            return;
-        }
-        //所显示的总场数
-        String matchNum = mData.size()+"";
 
         String homeWin , homeLose , homeCourtWin , homeCourtLose;
+
+        //所显示的总场数
+        String matchNum;
+
         int count1 = 0 ;
         int count2 = 0 ;
         int count3 = 0 ;
         int count4 = 0 ;
-        for (BasketAnalyzeMoreRecentHistoryBean history : mData) {
-            if (history.getResult() == 1) {
-                count1++;
-            }else if (history.getResult() == 0){
-                count2++;
-            }
-            if (history.isHomeGround()) {
+
+        if (mData.isEmpty() || mData.size()==0) {
+            matchNum = "0";
+        }else{
+            matchNum = mData.size()+"";
+            for (BasketAnalyzeMoreRecentHistoryBean history : mData) {
                 if (history.getResult() == 1) {
-                    count3++;
+                    count1++;
                 }else if (history.getResult() == 0){
-                    count4++;
+                    count2++;
+                }
+                if (history.isHomeGround()) {
+                    if (history.getResult() == 1) {
+                        count3++;
+                    }else if (history.getResult() == 0){
+                        count4++;
+                    }
                 }
             }
         }
+
         homeWin = count1 + "" + getResources().getText(R.string.basket_analyze_win);
         homeLose = count2 + "" + getResources().getText(R.string.basket_analyze_lost);
         homeCourtWin = count3 + "" + getResources().getText(R.string.basket_analyze_win);
@@ -446,7 +501,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         //"<font color='#ff0000'><b>" + win + getActivity().getString(R.string.analyze_win) + "、 " + "</b></font> "   #FF1F1F  #21B11E
 
         mText.setText(Html.fromHtml(getResources().getText(R.string.basket_analyze_recently) + matchNum + getResources().getText(R.string.basket_analyze_recently2) + mTeam + "<font color='#FF1F1F'><b>" + homeWin + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
-                        + getResources().getText(R.string.basket_analyze_home_field) + "<font color='#FF1F1F'><b>" + homeCourtWin + "</b></font>" + "<font color='#21B11E'><b>" + homeCourtLose + "</b></font>"));
+                + getResources().getText(R.string.basket_analyze_home_field) + "<font color='#FF1F1F'><b>" + homeCourtWin + "</b></font>" + "<font color='#21B11E'><b>" + homeCourtLose + "</b></font>"));
     }
 
     @Override
@@ -462,12 +517,41 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     }
 
     /**
-     * 更新数据
+     *
+     * @param mListData
+     * @param mAdapter
+     * @param type  区分对应位置的数据更新 0 历史交锋  1 主队近期  2 客队近期
      */
-    public void updateAdapter(List<BasketAnalyzeMoreRecentHistoryBean> mListData , BasketAnalyzeAdapter mAdapter) {
+    public void updateAdapter(List<BasketAnalyzeMoreRecentHistoryBean> mListData , BasketAnalyzeAdapter mAdapter , int type) {
             if (mAdapter == null) {
                 return;
             }
+        if (mListData.size() == 0) {
+            switch (type){
+                case 0:
+                    mNoData1.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    mNoData2.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    mNoData3.setVisibility(View.VISIBLE);
+                    break;
+
+            }
+        }else{
+            switch (type){
+                case 0:
+                    mNoData1.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    mNoData2.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    mNoData3.setVisibility(View.GONE);
+                    break;
+            }
+        }
 
         mAdapter.updateDatas(mListData);
         mAdapter.notifyDataSetChanged();
@@ -640,13 +724,14 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 setScreen(mHomeRecentSite, mHomeRecentNum, mHomeRecentScreenNum, mRecentData2);
 
                 if (type) {
-                    updateAdapter(mHistoryScreenNum, mHistoryAdaptey);
+                    updateAdapter(mHistoryScreenNum, mHistoryAdaptey , 0);
                     setHomeWinLoseData(mHistoryScreenNum, mBasketAnalyzeHistory, mHomeTeam);
+
                 } else {
-                    updateAdapter(mGuestRecentScreenNum , mRecentAdapter1);
+                    updateAdapter(mGuestRecentScreenNum , mRecentAdapter1 , 2);
                     setHomeWinLoseData(mGuestRecentScreenNum, mBasketAnalyzeRecent1, mGuestTeam);
 
-                    updateAdapter(mHomeRecentScreenNum, mRecentAdapter2);
+                    updateAdapter(mHomeRecentScreenNum, mRecentAdapter2 , 1);
                     setHomeWinLoseData(mHomeRecentScreenNum, mBasketAnalyzeRecent2, mHomeTeam);
                 }
                 mDialog.dismiss();

@@ -82,8 +82,10 @@ public class BasketOddsAdapter  extends BaseAdapter{
         if(mType.equals(EURO)){
             holder.handicap_layout.setVisibility(View.GONE);
         }
-        if(mType.equals(EURO)&&position==0){
+        if(mType.equals(EURO)&&mOddsList.get(position).getCompany().equals("平均")){
             holder.image_more.setVisibility(View.INVISIBLE);
+        }else{
+            holder.image_more.setVisibility(View.VISIBLE);
         }
         List<OddsDataEntity> oddsData=mOddsList.get(position).getOddsData();
         holder.company.setText(mOddsList.get(position).getCompany());
