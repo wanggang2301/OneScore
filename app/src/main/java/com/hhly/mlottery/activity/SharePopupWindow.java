@@ -162,22 +162,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         popupWindow.showAtLocation(share, Gravity.BOTTOM, 0, 0);
         popupWindow.update();
 
-
-      /*  // 设置背景颜色变暗
-        WindowManager.LayoutParams lp = mContext.getApplicationContext().getWindow().getAttributes();
-        lp.alpha = 0.7f;
-        getWindow().setAttributes(lp);
-        mPopupWindow.setOnDismissListener(new OnDismissListener() {
-
-            @Override
-            public void onDismiss() {
-                WindowManager.LayoutParams lp = getWindow().getAttributes();
-                lp.alpha = 1f;
-                getWindow().setAttributes(lp);
-            }
-        });*/
-
-
         gview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
