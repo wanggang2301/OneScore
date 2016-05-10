@@ -96,16 +96,17 @@
             android:name=".activity.NumberCustomizeActivity"
             android:screenOrientation="portrait" />
 
-        <!-- webview -->
+        <!-- webview   adjustResize|stateHidden  android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"-->
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
-           android:windowSoftInputMode="stateHidden|adjustPan"/>
+           android:windowSoftInputMode="adjustResize|stateHidden"/>
         <!--评论activity-->
         <activity
             android:name=".activity.CounselCommentActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
         <activity
             android:name=".activity.HomeTeamSoundActivity"
             android:screenOrientation="portrait" />

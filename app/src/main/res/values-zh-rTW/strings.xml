@@ -610,7 +610,15 @@
     <!--WebView H5-->
     <string name="webview_check_info">查看比賽詳細數據</string>
     <string name="user_feedback">用戶反饋</string>
-
+    <!--资讯评论-->
+    <string name="user_name">遊客</string>
+    <string name="warn_nullcontent">請先輸入內容</string>
+    <string name="warn_submitfail">發送失敗，請重試</string>
+    <string name="hint_content">沒事寫兩句</string>
+    <string name="comment_send">發送</string>
+    <string name="comment_title">全部留言</string>
+    <string name="comment_contentnull">暫無評論內容</string>
+    <!-- -->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">請輸入留言內容</string>
     <string name="feedback_toast_thx">多謝反饋！</string>

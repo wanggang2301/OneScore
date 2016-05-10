@@ -1,37 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout
 
-    <include layout="@layout/layout_header"/>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<include layout="@layout/layout_header"/>-->
+    <!-- 头-->
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height"
+        android:background="@color/colorPrimary"
+        >
+
+        <ImageView
+            android:id="@+id/public_img_back"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@mipmap/back"/>
+
+        <TextView
+            android:id="@+id/public_txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+        <!--addtjl添加中间日期显示-->
+
+    </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/comment_swiperefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="15dp"
-        android:layout_weight="1"
-        android:background="@drawable/shape_counselcomment_sw_bg"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/scrollview"
+        android:layout_below="@+id/top"
+
         >
 
         <com.hhly.mlottery.view.PullUpRefreshListView
             android:id="@+id/comment_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#00000000"
+            android:divider="@null"
+            android:dividerHeight="0dp"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/nodata"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="暂无评论内容"
+        android:text="@string/comment_contentnull"
         android:visibility="gone"/>
 
-    <include layout="@layout/inputcomment_layout"
-        />
-</LinearLayout>
+    <!--解决adjustresize和透明状态栏的冲突-->
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+        <include layout="@layout/inputcomment_layout"/>
+    </ScrollView>
+</RelativeLayout>
