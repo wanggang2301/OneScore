@@ -133,6 +133,8 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private TextView mGuestScore;
     private TextView mVS;//比分的冒号
     private TextView mMatchState;
+    private TextView mRemainTime;
+
     private TextView mHome1;
     private TextView mHome2;
     private TextView mHome3;
@@ -310,6 +312,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         mGuestScore = (TextView) this.findViewById(R.id.basket_details_guest_all_score);
         mVS = (TextView) this.findViewById(R.id.basket_score_maohao);
         mMatchState = (TextView) this.findViewById(R.id.basket_details_state);
+        mRemainTime= (TextView) this.findViewById(R.id.basket_details_remain_time);
         mHome1 = (TextView) this.findViewById(R.id.basket_details_home_first);
         mHome2 = (TextView) this.findViewById(R.id.basket_details_home_second);
         mHome3 = (TextView) this.findViewById(R.id.basket_details_home_third);
@@ -749,7 +752,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 setScore(score.getGuest2(), mGuest2, score.getHome2(), mHome2);
             case FIRST_QUARTER:
                 setScore(score.getGuest1(), mGuest1, score.getHome1(), mHome1);
-                //不管是第几节都设置总比分
+                //不管是第几节都设置总比分,设置剩余时间
                 setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
                 setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
                 mTitleHome.setText(score.getHomeScore() + "");
@@ -757,19 +760,20 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 mVS.setText(":");
                 mTitleVS.setText(":");
 
+
                 //设置比赛时间及状态
                 if (mMatch.getMatchStatus() == FIRST_QUARTER) {
                     if (mMatch.getSection() == 2) {
-                        mMatchState.setText("1st half  " + score.getRemainTime());
+                        mMatchState.setText("1st half  ");
                     } else {
-                        mMatchState.setText("1st  " + score.getRemainTime());
+                        mMatchState.setText("1st  ");
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == SECOND_QUARTER) {
                     if (mMatch.getSection() == 2) {
-                        mMatchState.setText("1st half  " + score.getRemainTime());
+                        mMatchState.setText("1st half  ");
                     } else {
-                        mMatchState.setText("2nd  " + score.getRemainTime());
+                        mMatchState.setText("2nd  ");
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == HALF_GAME) {
@@ -777,27 +781,32 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     mApos.setVisibility(View.GONE);
                 } else if (mMatch.getMatchStatus() == THIRD_QUARTER) {
                     if (mMatch.getSection() == 2) {
-                        mMatchState.setText("2nd half" + score.getRemainTime());
+                        mMatchState.setText("2nd half");
                     } else {
-                        mMatchState.setText("3rd  " + score.getRemainTime());
+                        mMatchState.setText("3rd  ");
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == FOURTH_QUARTER) {
                     if (mMatch.getSection() == 2) {
-                        mMatchState.setText("2nd half  " + score.getRemainTime());
+                        mMatchState.setText("2nd half  ");
                     } else {
-                        mMatchState.setText("4th  " + score.getRemainTime());
+                        mMatchState.setText("4th  ");
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == OT1) {
-                    mMatchState.setText("OT1  " + score.getRemainTime());
+                    mMatchState.setText("OT1  ");
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == OT2) {
-                    mMatchState.setText("OT2  " + score.getRemainTime());
+                    mMatchState.setText("OT2  ");
                     mApos.setVisibility(View.VISIBLE);
                 } else {
-                    mMatchState.setText("OT3  " + score.getRemainTime());
+                    mMatchState.setText("OT3  ");
                     mApos.setVisibility(View.VISIBLE);
+                }
+
+                mRemainTime.setText(score.getRemainTime());//剩余时间
+                if(score.getRemainTime()==null||score.getRemainTime().equals("")){//没有剩余时间的时候
+                    mApos.setVisibility(View.GONE);
                 }
                 break;
         }
@@ -1092,8 +1101,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
             case FIRST_QUARTER:
                 setScore(score.getGuest1(), mGuest1, score.getHome1(), mHome1);
-                //不管是第几节都设置总比分.推送過來的話比分有变化要价格翻转
-//                setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
+                //不管是第几节都设置总比分.推送過來的話比分有变化要翻转
 
                 L.d("mGuestNum>>>>...>>>" + mGuestNum);
                 L.d("score.getGuestScore()>>>>...>>>" + score.getGuestScore());
@@ -1123,44 +1131,50 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 //设置比赛时间及状态
                 if (score.getMatchStatus() == FIRST_QUARTER) {
                     if (mMatch.getSection() == 2) {
-                        mMatchState.setText("1st half " + score.getRemainTime());
+                        mMatchState.setText("1st half ");
                     } else {
-                        mMatchState.setText("1st  " + score.getRemainTime());
+                        mMatchState.setText("1st  ");
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == SECOND_QUARTER) {
                     if (mMatch.getSection() == 2) {
-                        mMatchState.setText("1st half " + score.getRemainTime());
+                        mMatchState.setText("1st half ");
                     } else {
-                        mMatchState.setText("2nd  " + score.getRemainTime());
+                        mMatchState.setText("2nd  ");
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == HALF_GAME) {
-                    mMatchState.setText(R.string.pause_txt);
+                    mMatchState.setText("half time");
                     mApos.setVisibility(View.GONE);
                 } else if (score.getMatchStatus() == THIRD_QUARTER) {
                     if (mMatch.getSection() == 2) {
-                        mMatchState.setText("2nd half " + score.getRemainTime());
+                        mMatchState.setText("2nd half ");
                     } else {
-                        mMatchState.setText("3rd  " + score.getRemainTime());
+                        mMatchState.setText("3rd  ");
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == FOURTH_QUARTER) {
                     if (mMatch.getSection() == 2) {
-                        mMatchState.setText("2nd half  " + score.getRemainTime());
+                        mMatchState.setText("2nd half  ");
                     } else {
-                        mMatchState.setText("4th  " + score.getRemainTime());
+                        mMatchState.setText("4th  ");
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == OT1) {
-                    mMatchState.setText("OT1  " + score.getRemainTime());
+                    mMatchState.setText("OT1  ");
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == OT2) {
-                    mMatchState.setText("OT2  " + score.getRemainTime());
+                    mMatchState.setText("OT2  ");
                     mApos.setVisibility(View.VISIBLE);
                 } else {
-                    mMatchState.setText("OT3  " + score.getRemainTime());
+                    mMatchState.setText("OT3  ");
                     mApos.setVisibility(View.VISIBLE);
+                }
+
+                //设置剩余时间
+                mRemainTime.setText(score.getRemainTime()==null?"":score.getRemainTime());//为空的话就设置为空字符
+                if(score.getRemainTime()==null||score.getRemainTime().equals("")){
+                    mApos.setVisibility(View.GONE);
                 }
                 break;
         }
