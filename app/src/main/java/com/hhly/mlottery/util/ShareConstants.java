@@ -3,7 +3,7 @@ package com.hhly.mlottery.util;
 /**
  * @author wang gang
  * @date 2016/5/5 12:14
- * @des ${TODO}
+ * @des 社会化分享（微信、QQ、新浪微博）
  */
 public class ShareConstants {
 

@@ -269,7 +269,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
             public void onClick() {
                 ClipboardManager cmb = (ClipboardManager) FootballMatchDetailActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
                 cmb.setText("http://m.13322.com");
-                Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
 
             }
         };
@@ -852,7 +851,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     objectAnimator.setDuration(500);
                     objectAnimator.start();
                 }
-
             }
         });
 

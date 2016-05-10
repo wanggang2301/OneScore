@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -21,17 +22,17 @@ import java.util.Map;
  */
 public class CpiCompanyAdapter extends BaseAdapter {
 
-    private List<Map<String, String>> cpiCompanyList;
-
+//    private List<Map<String, String>> cpiCompanyList;
+    private List<NewOddsInfo.CompanyBean> mCompanyBean;
     private Context context;
     private int defItem;//当前的item的position(用于点击item设置item背景颜色)
     private LayoutInflater mInflater;
     private ListView mListView;
 
-    public CpiCompanyAdapter(Context context, List<Map<String, String>> cpiCompanyList, ListView mListView) {
+    public CpiCompanyAdapter(Context context, List<NewOddsInfo.CompanyBean> mCompanyBean, ListView mListView) {
         super();
         this.context = context;
-        this.cpiCompanyList = cpiCompanyList;
+        this.mCompanyBean = mCompanyBean;
         this.mListView = mListView;
         this.mInflater = LayoutInflater.from(context);
 //        this.mCheckedTextView = mCheckedTextView;
@@ -40,13 +41,13 @@ public class CpiCompanyAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return cpiCompanyList.size();
+        return mCompanyBean.size();
     }
 
     @Override
     public Object getItem(int position) {
         // TODO Auto-generated method stub
-        return cpiCompanyList.get(position);
+        return mCompanyBean.get(position);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class CpiCompanyAdapter extends BaseAdapter {
         } else {
             item = (ListViewItem) convertView.getTag();
         }
-        item.checkedTextView.setText(cpiCompanyList.get(position).get("date"));
+        item.checkedTextView.setText(mCompanyBean.get(position).getComName());
         //默认皇冠和浩博
         if (position == 0) {
             mListView.setItemChecked(position, true);
