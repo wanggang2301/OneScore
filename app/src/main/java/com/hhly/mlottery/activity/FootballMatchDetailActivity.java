@@ -752,7 +752,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     objectAnimator.setDuration(500);
                     objectAnimator.start();
                 }
-
             }
         });
 

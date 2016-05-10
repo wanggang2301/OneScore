@@ -53,11 +53,7 @@
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- 引导页 -->
         <activity
@@ -150,7 +146,11 @@
         <activity
             android:name=".activity.HomePagerActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- 首页用户设置选项 -->
@@ -220,6 +220,10 @@
         <!--消息推送服务-->
         <service
             android:name=".service.umengPushService"/>
+        <!--新版指数详情-->
+        <activity
+            android:name=".activity.CpiDetailsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -136,6 +136,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.basket_odds_details_refreshlayout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(BasketOddsDetailsActivity.this);
+        mRefresh.setRefreshing(true);
 
         solveConflict(mListView1);
         solveConflict(mListView2);
@@ -205,6 +206,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
 //                    mNoData.setText("暂无数据");
 //                    mNoData.setText(getResources().getText(R.string.basket_nodata));
                 }
+                mRefresh.setRefreshing(false);
 //                mListView2.setVisibility(View.VISIBLE);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -215,6 +217,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
                 mNoData.setVisibility(View.GONE);
                 mEerrorll.setVisibility(View.VISIBLE);
 //                mNoData.setText("网络异常");
+                mRefresh.setRefreshing(false);
             }
         }, BasketDetailOddsDetailsBean.class);
     }
@@ -251,7 +254,12 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.basketball_odds_details_error_btn:
-                mHandler.postDelayed(mRun , 0); // 加载数据
+
+                mListView2.setVisibility(View.GONE);
+                mNoData.setVisibility(View.GONE);
+                mEerrorll.setVisibility(View.GONE);
+                mRefresh.setRefreshing(true);
+                mHandler.postDelayed(mRun , 500); // 加载数据
                 break;
             default:
                 break;
