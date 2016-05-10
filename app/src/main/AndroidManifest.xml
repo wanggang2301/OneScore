@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery"
     android:versionCode="12"
-    android:versionName="1.0.9.0506">
+    android:versionName="1.0.9.0510">
 
     <uses-sdk
         android:minSdkVersion="16"
