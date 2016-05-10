@@ -2,6 +2,7 @@ package com.hhly.mlottery.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.sohu.cyan.android.sdk.api.CallBack;
@@ -80,5 +81,22 @@ public class CyUtils {
                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
+    }
+    /**
+     * 获取设备EMEI 信息  手机唯一标识    因为单点登录不能同时有两个相同的用户名，否则评论失败（失败就失败嘛，还假成功，既回调了评论成功的接口，实际上数据没有评论出去）
+     * 所以取设备唯一标识为用户名和id登录
+     * **/
+    public static String getImei(Context context) {
+        try {
+            TelephonyManager tm = (TelephonyManager) context
+                    .getSystemService(Context.TELEPHONY_SERVICE);
+            String id = tm.getDeviceId();
+            if (id != null) {
+                return tm.getDeviceId();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "9527";
     }
 }
