@@ -21,7 +21,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api = WXAPIFactory.createWXAPI(this, ShareConstants.WEB_CHAT_APP_ID, false);
+        api = WXAPIFactory.createWXAPI(this, ShareConstants.WE_CHAT_APP_ID, false);
         api.handleIntent(getIntent(), this);
     }
     @Override
