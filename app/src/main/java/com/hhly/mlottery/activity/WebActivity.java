@@ -63,8 +63,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        //初始化畅言
-        CyUtils.initCy(this);
         sdk = CyanSdk.getInstance(this);
         //单点登录
         CyUtils.loginSso("heheheid", "lzfgege", sdk);
@@ -296,10 +294,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 break;
             case R.id.public_img_back://返回
                 finish();
-                break;
-            case R.id.et_comment://输入评论
-//                mSend.setVisibility(View.VISIBLE);
-//                mCommentCount.setVisibility(View.GONE);
                 break;
             case R.id.iv_send://发送评论
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容

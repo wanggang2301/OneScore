@@ -75,11 +75,11 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         initView();
         initScrollView();
         initListView();
+        //获取评论的一切信息
         if (!TextUtils.isEmpty(url)) {
             loadTopic(url, title);
         }
-
-        pullUpLoad();
+        pullUpLoad();//上拉加载更多
     }
 
     private void initListView() {
@@ -209,9 +209,9 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         sdk.loadTopic("", url, title, null, 10, 10, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
-                topicid = topicLoadResp.topic_id;
-                cmt_sum = topicLoadResp.cmt_sum;
-                mCommentArrayList = topicLoadResp.comments;
+                topicid = topicLoadResp.topic_id;//文章id
+                cmt_sum = topicLoadResp.cmt_sum;//评论总数
+                mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
                 if (mCommentArrayList.size() == 0) {
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mNoData.setVisibility(View.VISIBLE);
@@ -231,10 +231,10 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
             public void onRequestFailed(CyanException e) {
                 L.i("lzftopicid=" + e.toString());
                 L.i("lzfcmt_sum=" + e.toString());
-                if (mCommentArrayList != null && mCommentArrayList.size() != 0) {
+                if (mCommentArrayList != null && mCommentArrayList.size() != 0) {//已经有数据  说明不是第一次操作  既是下拉刷新的操作
 
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                } else {
+                } else {//没有数据  说明是第一次操作
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mNoData.setVisibility(View.VISIBLE);
                 }
