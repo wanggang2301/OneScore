@@ -773,7 +773,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == HALF_GAME) {
-                    mMatchState.setText(R.string.paused_txt);
+                    mMatchState.setText("half time");
                     mApos.setVisibility(View.GONE);
                 } else if (mMatch.getMatchStatus() == THIRD_QUARTER) {
                     if (mMatch.getSection() == 2) {
