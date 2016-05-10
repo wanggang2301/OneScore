@@ -173,12 +173,9 @@ public class WelcomeActivity extends BaseActivity {
                 .resetViewBeforeLoading(true)
                 .build();
 
-       /* File sdCardDir = Environment.getExternalStorageDirectory();// 获取SDCard目录
-        File sdFile = new File(sdCardDir, "/startpic/image");
-        Log.d(TAG,"sdFile====="+sdFile);*/
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
                 .defaultDisplayImageOptions(options)
-                .build();//自定义缓存路径
+                .build();
         universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
         universalImageLoader.init(config);
 /*		 获取经纬度
@@ -409,7 +406,7 @@ public class WelcomeActivity extends BaseActivity {
     private void getStartImageUrl() {
 
         // 1、取得启动也url
-        String  serverUrl=BaseURLs.URL_STARTPIC;
+        String serverUrl = BaseURLs.URL_STARTPIC;
         //String serverUrl = "http://192.168.31.48:8888/mlottery/core/mainPage.findAndroidStartupPic.do";
         // 2、连接服务器
         VolleyContentFast.requestJsonByGet(serverUrl, null, new DefaultRetryPolicy(3000, 1, 1), new VolleyContentFast.ResponseSuccessListener<WelcomeUrl>() {
@@ -422,7 +419,7 @@ public class WelcomeActivity extends BaseActivity {
                         imageHandler.sendEmptyMessage(GET_IMAGE_NODATA);
                         return;
                     } else {
-                        if (PreferenceUtil.getString(MyConstants.START_IMAGE_URL, "").equals(json.getUrl())&& !PreferenceUtil.getString(MyConstants.START_IMAGE_URL, "").isEmpty()) {
+                        if (PreferenceUtil.getString(MyConstants.START_IMAGE_URL, "").equals(json.getUrl()) && !PreferenceUtil.getString(MyConstants.START_IMAGE_URL, "").isEmpty()) {
                             mStartimageUrl = PreferenceUtil.getString(MyConstants.START_IMAGE_URL, "");
                             imageHandler.sendEmptyMessage(GET_IMAGE_SUCCESS);
                             return;
