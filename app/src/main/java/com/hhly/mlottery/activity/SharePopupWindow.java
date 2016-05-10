@@ -56,7 +56,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/5/6 11:02
- * @des ${TODO}
+ * @des 分享
  */
 public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Response {
     //微信好友
