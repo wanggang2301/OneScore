@@ -298,11 +298,17 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 break;
 
             case R.id.public_btn_set: //分享
+
+
+
                 Map<String, String> map = new HashMap<String, String>();
                 map.put(ShareConstants.TITLE, title != null ? title : "");
                 map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
                 map.put(ShareConstants.TARGET_URL, url != null ? url : "");
                 map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
+
+
+
                 sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
                 sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
                 sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);

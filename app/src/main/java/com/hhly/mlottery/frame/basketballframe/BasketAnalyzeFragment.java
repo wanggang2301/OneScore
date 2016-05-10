@@ -376,6 +376,20 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin));
         mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
 
+        if (guestWins == 0) {
+            guestNumWin = 1;
+        }else{
+            guestNumWin = guestWins;
+        }
+        if (homeWins == 0) {
+            homeNumWin = 1;
+        }else{
+            homeNumWin = homeWins;
+        }
+        //设置textview位置（权重）
+        mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin));
+        mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
+
         mProgressBar.setProgress(progressNum);
         mBasketProgressbarGuest.setText(mAnalyzeDatas.get(0).getHistoryWin() + "" + getResources().getText(R.string.basket_analyze_win));
         mBasketProgressbarHome.setText(mAnalyzeDatas.get(1).getHistoryWin() + "" + getResources().getText(R.string.basket_analyze_win));
