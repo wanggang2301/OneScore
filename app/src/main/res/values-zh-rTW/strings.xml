@@ -648,6 +648,7 @@
     <string name="comment_send">發送</string>
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暫無評論內容</string>
+    <string name="toatalvisiable">全部顯示</string>
     <!-- -->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">請輸入留言內容</string>

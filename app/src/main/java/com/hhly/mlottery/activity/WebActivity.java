@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
@@ -75,7 +74,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private static final String INTENT_PARAMS_URL = "url";
     private static final String INTENT_PARAMS_TITLE = "title";
     private static final int JUMP_QUESTCODE = 1;
-    private   int def = 0;
+    private int def = 0;
 
     private ImageView public_btn_set;
 
@@ -96,10 +95,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         //单点登录
         CyUtils.loginSso(CyUtils.getImei(this), CyUtils.getImei(this), sdk);
         initView();
-
         initScrollView();//解决adjustresize和透明状态栏的冲突
-
-
         initData();
         //获取评论信息 无需登录  这里主要拿评论总数和文章id
         loadTopic();
@@ -117,42 +113,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Rect r = new Rect();
-                decview.getWindowVisibleDisplayFrame(r);
-                int screenheight = decview.getRootView().getHeight();
-                int h = screenheight - r.bottom;
-                Log.e("lzfh", h + "");
-                Log.e("lzfr.bottom", r.bottom + "");
-                Log.e("lzfscreenheight", screenheight + "");
-                if (h > 300) {//软键盘显示
-//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
-//                    Log.e("lzf", "软件盘显示");
-                    mSend.setVisibility(View.VISIBLE);
-                    mCommentCount.setVisibility(View.GONE);
-                    mEditText.setHint("");
-
-                } else if (h <300 ) {//软键盘隐藏
-                       if (h!=0){
-                        def=h;//因为有的手机在键盘隐藏时   int h = screenheight - r.bottom;这两个的
-                        // 差值h不是0，有一个差值，所以把这个差值保存起来，重新layou的时候，减去这个差值
-                       }
-//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘隐藏");
-//                    Log.e("lzf", "软件盘隐藏");
-                    if (TextUtils.isEmpty(mEditText.getText())) {
-                        mSend.setVisibility(View.GONE);
-                        mCommentCount.setVisibility(View.VISIBLE);
-                    } else {
-                        mSend.setVisibility(View.VISIBLE);
-                        mCommentCount.setVisibility(View.GONE);
-                    }
-                    mEditText.setHint(R.string.hint_content);
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
-                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
-                    lp.setMargins(0, 0, 0, h-def);
-                    scrollview.requestLayout();
-
-                }
+                reLayout(decview, scrollview);
             }
         });
         //解决mTv_check_info在webview还没加载时显示在顶部的问题
@@ -169,7 +130,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             }
         });
     }
-//
+
+    //
 //    public void getCommentCount() {
 //        //获取某个新闻的评论数
 //        sdk.getCommentCount("", url, 0, new CyanRequestListener<TopicCountResp>() {
@@ -184,6 +146,46 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //            }
 //        });
 //    }
+    //在某个view里重新布局某个view
+    public void reLayout(View decview, View scrollview) {
+        Rect r = new Rect();
+        decview.getWindowVisibleDisplayFrame(r);
+        int screenheight = decview.getRootView().getHeight();
+        int h = screenheight - r.bottom;
+//                Log.e("lzfh", h + "");
+//                Log.e("lzfr.bottom", r.bottom + "");
+//                Log.e("lzfscreenheight", screenheight + "");
+        if (h > 300) {//软键盘显示
+//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
+//                    Log.e("lzf", "软件盘显示");
+            mSend.setVisibility(View.VISIBLE);
+            mCommentCount.setVisibility(View.GONE);
+            mEditText.setHint("");
+
+        } else if (h < 300) {//软键盘隐藏
+            if (h != 0) {
+                def = h;//因为有的手机在键盘隐藏时   int h = screenheight - r.bottom;这两个的
+                // 差值h不是0，有一个差值，所以把这个差值保存起来，重新layou的时候，减去这个差值
+            }
+//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘隐藏");
+//                    Log.e("lzf", "软件盘隐藏");
+            if (TextUtils.isEmpty(mEditText.getText())) {
+                mSend.setVisibility(View.GONE);
+                mCommentCount.setVisibility(View.VISIBLE);
+            } else {
+                mSend.setVisibility(View.VISIBLE);
+                mCommentCount.setVisibility(View.GONE);
+            }
+            mEditText.setHint(R.string.hint_content);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+            lp.setMargins(0, 0, 0, h - def);
+            scrollview.requestLayout();
+
+        }
+
+    }
 
     private void initEvent() {
         mEditText.addTextChangedListener(new TextWatcher() {

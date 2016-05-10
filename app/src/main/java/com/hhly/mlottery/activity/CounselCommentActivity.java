@@ -109,9 +109,9 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
 //                    Log.e("lzf", "软件盘显示");
                     mEditText.setHint("");
 
-                } else if (h<300) {//软键盘隐藏
-                    if (h!=0){
-                        def=h;//因为有的手机在键盘隐藏时   int h = screenheight - r.bottom;这两个的
+                } else if (h < 300) {//软键盘隐藏
+                    if (h != 0) {
+                        def = h;//因为有的手机在键盘隐藏时   int h = screenheight - r.bottom;这两个的
                         // 差值h不是0，有一个差值，所以把这个差值保存起来，重新layou的时候，减去这个差值
                     }
 //                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘隐藏");
@@ -120,7 +120,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果
                     RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
-                    lp.setMargins(0, 0, 0, h-def);
+                    lp.setMargins(0, 0, 0, h - def);
                     scrollview.requestLayout();
 
                 }
@@ -134,6 +134,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mNoData = (TextView) findViewById(R.id.nodata);
         mPublic_txt_title.setText(R.string.comment_title);
         mListView = (PullUpRefreshListView) findViewById(R.id.comment_lv);
+//        mListView.setItemsCanFocus(true);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.comment_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);

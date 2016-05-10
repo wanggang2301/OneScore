@@ -33,11 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/tv_time"
-        android:text="..."
+        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
         android:textColor="#000"
         android:layout_marginLeft="10dp"
-        android:maxLength="100"
-        android:ellipsize="end"
         android:textSize="16sp"/>
     <View
         android:layout_width="match_parent"
