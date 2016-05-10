@@ -93,7 +93,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         try {
             PackageManager manager = this.getPackageManager();
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            version = info.versionName.replace(".", "");
+            String xxx = info.versionName.replace(".", "#");
+            String[] split = xxx.split("#");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 3; i++) {
+                sb = sb.append(split[i]);
+            }
+            version = sb.toString();
+            L.d("xxx","version:" + version);
         } catch (Exception e) {
             L.d(e.getMessage());
         }
