@@ -100,9 +100,7 @@ public class WelcomeActivity extends BaseActivity {
     private TextView tv_currversion;
 
     private static final int GET_INFO_SUCCESS = 10; // 获取版本信息成功
-    private static final int SERVER_ERROR = 11; // 服务器异常
     private static final int IO_ERROR = 13; // IO异常
-    private static final int TIMEOUT_ERROR = 14; // 超时
     private static final int INFO_IS_NULL = 15; // 超时
 
     private boolean interceptFlag = false;
@@ -536,12 +534,10 @@ public class WelcomeActivity extends BaseActivity {
 
                 case IO_ERROR:
                     gotoHomeActivity();
+                    break;
                 case INFO_IS_NULL:
                     gotoHomeActivity();
-                case TIMEOUT_ERROR:
-                    gotoHomeActivity();
-                    //setHideTranslateAnimation();
-                    break;
+                   break;
 
                 case GET_INFO_SUCCESS:
                     int serverVersion = Integer.parseInt(info.getVersion()); // 取得服务器上的版本号
