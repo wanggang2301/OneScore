@@ -7,7 +7,7 @@ package com.hhly.mlottery.util;
  */
 public class ShareConstants {
 
-    public final static String WEB_CHAT_APP_ID = "wx3d57ee80997a2e44";
+    public final static String WE_CHAT_APP_ID = "wx3d57ee80997a2e44";
 
     public final static String QQ_APP_ID = "1104883879";
 
