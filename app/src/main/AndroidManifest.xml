@@ -8,7 +8,7 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="22" />
     <!-- 调用系统下载权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
@@ -29,8 +29,6 @@
 
     <!-- 用于修改电源时间 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!--畅言权限-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".MyApp"
@@ -54,7 +52,7 @@
         <activity
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
+            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,7 +63,7 @@
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" >
 
         </activity>
         <!-- 内地版的key-begin -->
@@ -184,8 +182,41 @@
 
         <activity
             android:name=".activity.FeedbackActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"></activity>
 
+
+
+        <!--微信分享-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"></activity>
+
+        <!--QQ分享-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="1104883879" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--新浪微博-->
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" >
         </activity>
         <!--消息推送服务-->
         <service

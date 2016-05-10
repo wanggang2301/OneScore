@@ -307,7 +307,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     mCPIOddsFragment.InitData(mMapList.get(position).get("date"), mViewPager.getCurrentItem());
                     // 关闭 dialog弹窗
                     mAlertDialog.dismiss();
-                    // 记录点击的 item 位置
+                    // 记录点击的 item_share 位置
                     // mItems = position;
                 }
             });
@@ -336,7 +336,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //                    mMapList.get(position).get("date");
                     // 关闭 dialog弹窗
 //                mAlertDialog.dismiss();
-                    // 记录点击的 item 位置
+                    // 记录点击的 item_share 位置
 //                        mItems = position;
                 }
             });

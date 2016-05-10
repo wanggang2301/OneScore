@@ -140,7 +140,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final String infoTypeName = bodys.get(j).getInfoTypeName();// 赛事类型名
                         switch (labType) {
                             case 1:// 热门赛事
-                                MobclickAgent.onEvent(mContext,"HomePager_Competition_Item");
+                                MobclickAgent.onEvent(mContext, "HomePager_Competition_Item");
                                 scoreViewList.get(j).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -175,7 +175,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 });
                                 break;
                             case 2:// 热门资讯
-                                MobclickAgent.onEvent(mContext,"HomePager_Date_Item");
+                                MobclickAgent.onEvent(mContext, "HomePager_Date_Item");
                                 dataInfoViewList.get(j).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -205,7 +205,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 });
                                 break;
                             case 3:// 彩票开奖
-                                MobclickAgent.onEvent(mContext,"HomePager_Lottery_Item");
+                                MobclickAgent.onEvent(mContext, "HomePager_Lottery_Item");
                                 lotteryViewList.get(j).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -1003,10 +1003,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(mHomePagerEntity.getOtherLists() != null){
-            return mHomePagerEntity.getOtherLists().size() + 1;
+        if (mHomePagerEntity == null || mHomePagerEntity.getOtherLists() == null || mHomePagerEntity.getOtherLists().size() == 0) {
+            return 1;
         }
-       return 1;
+        return mHomePagerEntity.getOtherLists().size() + 1;
     }
 
     @Override

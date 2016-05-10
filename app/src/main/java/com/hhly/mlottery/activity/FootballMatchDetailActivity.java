@@ -1,6 +1,8 @@
 package com.hhly.mlottery.activity;
 
 import android.animation.ObjectAnimator;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,12 +14,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +32,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
+import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
+import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
@@ -39,10 +45,15 @@ import com.hhly.mlottery.frame.footframe.StadiumFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.ToolbarScrollerView;
+import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -179,6 +190,18 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
     private int currentFragmentId = 0;
 
+
+    private String shareHomeIconUrl;
+
+
+    private SharePopupWindow sharePopupWindow;
+
+    private ShareTencentCallBack mShareTencentCallBack;
+
+    private ShareCopyLinkCallBack mShareCopyLinkCallBack;
+
+    private Tencent mTencent;
+
     /**
      * 备份用户本身屏幕的时间
      */
@@ -186,6 +209,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         L.w(TAG, "onCreate");
         setContentView(R.layout.activity_football_match_detail);
         MobclickAgent.openActivityDurationTrack(false);
@@ -230,6 +255,24 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         loadData();
 //        loadImage();
+
+        mShareTencentCallBack = new ShareTencentCallBack() {
+            @Override
+            public void onClick(int flag) {
+                // shareQQ(flag);
+                onClickShare(flag);
+            }
+        };
+
+        mShareCopyLinkCallBack = new ShareCopyLinkCallBack() {
+            @Override
+            public void onClick() {
+                ClipboardManager cmb = (ClipboardManager) FootballMatchDetailActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                cmb.setText("http://m.13322.com");
+                Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
+
+            }
+        };
     }
 
     private final static int VIEW_STATUS_LOADING = 1;
@@ -511,6 +554,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 mGuestLikeCount.setText(matchDetail.getGuestTeamInfo().getGas());
                 mHeaderGuestNameText.setText(matchDetail.getGuestTeamInfo().getName());
 
+                shareHomeIconUrl = matchDetail.getHomeTeamInfo().getUrl();
+
                 loadImage(matchDetail.getHomeTeamInfo().getUrl(), mHomeEmblem);
                 loadImage(matchDetail.getGuestTeamInfo().getUrl(), mGuestEmblem);
                 mTab1.setClickable(true);
@@ -591,6 +636,13 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         findViewById(R.id.football_match_detail_tab3).setOnClickListener(this);
     }
 
+    /**赛场、指数、分析Fragment页面统计*/
+    private boolean isStadiumFragment = true;
+    private boolean isStadium = false;
+    private boolean isOddsFragment = false;
+    private boolean isOdds = false;
+    private boolean isAnalyzeFragment = false;
+    private boolean isAnalyze = false;
 
     private void initViewPager(MatchDetail matchDetail) {
         mViewPager = (ViewPager) findViewById(R.id.football_match_detail_viewpager);
@@ -641,17 +693,71 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
                 switch (position) {
                     case 0:
+                        isStadiumFragment = true;
+                        isOddsFragment = false;
+                        isAnalyzeFragment = false;
                         mTab1.setTextColor(getResources().getColor(R.color.tab_text));
                         mRefreshLayout.setEnabled(true);
                         break;
                     case 1:
+                        isStadiumFragment = false;
+                        isOddsFragment = true;
+                        isAnalyzeFragment = false;
                         mTab2.setTextColor(getResources().getColor(R.color.tab_text));
                         mRefreshLayout.setEnabled(true);
                         break;
                     case 2:
+                        isStadiumFragment = false;
+                        isOddsFragment = false;
+                        isAnalyzeFragment = true;
                         mTab3.setTextColor(getResources().getColor(R.color.tab_text));
                         mRefreshLayout.setEnabled(false);
                         break;
+                }
+                if (isStadiumFragment) {
+                    if (isOdds) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_OddsFragment");
+                        isOdds = false;
+                        L.d("xxx", "isOddsFragment>>>隐藏");
+                    }
+                    if (isAnalyze) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_AnalyzeFragment");
+                        isAnalyze = false;
+                        L.d("xxx", "isAnalyzeFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_MatchDataInfo_StadiumFragment");
+                    isStadium = true;
+                    L.d("xxx", "isStadiumFragment>>>显示");
+                }
+                if (isOddsFragment) {
+                    if (isStadium) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_StadiumFragment");
+                        isStadium = false;
+                        L.d("xxx", "StadiumFragment>>>隐藏");
+                    }
+                    if (isAnalyze) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_AnalyzeFragment");
+                        isAnalyze = false;
+                        L.d("xxx", "isAnalyzeFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_MatchDataInfo_OddsFragment");
+                    isOdds = true;
+                    L.d("xxx", "isOddsFragment>>>显示");
+                }
+                if (isAnalyzeFragment) {
+                    if (isStadium) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_StadiumFragment");
+                        isStadium = false;
+                        L.d("xxx", "StadiumFragment>>>隐藏");
+                    }
+                    if (isOdds) {
+                        MobclickAgent.onPageEnd("Football_MatchDataInfo_OddsFragment");
+                        isOdds = false;
+                        L.d("xxx", "isOddsFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_MatchDataInfo_AnalyzeFragment");
+                    isAnalyze = true;
+                    L.d("xxx", "isOddsFragment>>>显示");
                 }
             }
 
@@ -680,10 +786,50 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         });*/
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isStadiumFragment) {
+            MobclickAgent.onPageStart("Football_MatchDataInfo_StadiumFragment");
+            isStadium = true;
+            L.d("xxx", "isStadiumFragment>>>显示");
+        }
+        if (isOddsFragment) {
+            MobclickAgent.onPageStart("Football_MatchDataInfo_OddsFragment");
+            isOdds = true;
+            L.d("xxx", "isOddsFragment>>>显示");
+        }
+        if (isAnalyzeFragment) {
+            MobclickAgent.onPageStart("Football_MatchDataInfo_AnalyzeFragment");
+            isAnalyze = true;
+            L.d("xxx", "isAnalyzeFragment>>>显示");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isStadium) {
+            MobclickAgent.onPageEnd("Football_MatchDataInfo_StadiumFragment");
+            isStadium = false;
+            L.d("xxx", "isStadiumFragment>>>隐藏");
+        }
+        if (isOdds) {
+            MobclickAgent.onPageEnd("Football_MatchDataInfo_OddsFragment");
+            isOdds = false;
+            L.d("xxx", "isOddsFragment>>>隐藏");
+        }
+        if (isAnalyze) {
+            MobclickAgent.onPageEnd("Football_MatchDataInfo_AnalyzeFragment");
+            isAnalyze = false;
+            L.d("xxx", "isAnalyzeFragment>>>隐藏");
+        }
+    }
 
     private TextView mHeaderHomeNameText;
     private TextView mHeaderGuestNameText;
     private ImageView mFocusImg;
+    private ImageView mShare;
 
 
     private void initToolbar() {
@@ -724,10 +870,12 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mHeaderHomeNameText = (TextView) findViewById(R.id.layout_match_header_hometeam_name);
         mHeaderGuestNameText = (TextView) findViewById(R.id.layout_match_header_guest_name);
         mFocusImg = (ImageView) findViewById(R.id.layout_match_header_focus_img);
+        mShare = (ImageView) findViewById(R.id.iv_share);
 
 
         findViewById(R.id.layout_match_header_back).setOnClickListener(this);
         mFocusImg.setOnClickListener(this);
+        mShare.setOnClickListener(this);
 
         boolean isFocus = FocusFragment.isFocusId(mThirdId);
 
@@ -745,21 +893,26 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
         switch (v.getId()) {
             case R.id.football_match_detail_tab1:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_CourtTab");
                 mViewPager.setCurrentItem(0);
                 break;
             case R.id.football_match_detail_tab2:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_CPITab");
                 mViewPager.setCurrentItem(1);
                 break;
             case R.id.football_match_detail_tab3:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_AnalysisTab");
                 mViewPager.setCurrentItem(2);
                 break;
             case R.id.layout_match_header_back:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
 
                 // setResult(Activity.RESULT_OK);
                 finish();
                 break;
             case R.id.layout_match_header_focus_img:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");
                 if (FocusFragment.isFocusId(mThirdId)) {
                     FocusFragment.deleteFocusId(mThirdId);
                     mFocusImg.setImageResource(R.mipmap.article_like);
@@ -767,8 +920,33 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     FocusFragment.addFocusId(mThirdId);
                     mFocusImg.setImageResource(R.mipmap.article_like_hover);
                 }
+
+                break;
+
+            case R.id.iv_share: //分享
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Share");
+                Map<String, String> data = new HashMap<String, String>();
+                String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
+                String summary = getString(R.string.share_summary);
+                data.put(ShareConstants.TITLE, title);
+                data.put(ShareConstants.SUMMARY, summary);
+                data.put(ShareConstants.TARGET_URL, "http://m.13322.com");
+                data.put(ShareConstants.IMAGE_URL, shareHomeIconUrl != null ? shareHomeIconUrl : "");
+                sharePopupWindow = new SharePopupWindow(this, mShare, data);
+                sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
+                sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);
+                sharePopupWindow.popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        backgroundAlpha(1f);
+                    }
+                });
+
+                backgroundAlpha(0.5f);
+
                 break;
             case R.id.network_exception_reload_btn:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Refresh");
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 loadData();
                 break;
@@ -776,6 +954,49 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 break;
         }
     }
+
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+
+
+    IUiListener qqShareListener = new IUiListener() {
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onComplete(Object response) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onError(UiError e) {
+            // TODO Auto-generated method stub
+        }
+    };
+
+    private void onClickShare(int flag) {
+        mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+
+        String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
+        String appname = getString(R.string.share_to_qq_app_name);
+        String summary = getString(R.string.share_summary);
+
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY, summary);
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://m.13322.com");
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, shareHomeIconUrl);
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
+        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, flag);
+        mTencent.shareToQQ(FootballMatchDetailActivity.this, params, qqShareListener);
+    }
+
 
     public class MatchDetailFragmentAdapter extends FragmentPagerAdapter {
 
@@ -857,13 +1078,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
             mReloadTimer.cancel();
         }
 //        Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_OFF_TIMEOUT, mScreenOffTimeoutTemp);
-    }
-
-    @Override
-    protected void onResume() {
-        L.w(TAG, "onResume");
-        super.onResume();
-
     }
 
     @Override

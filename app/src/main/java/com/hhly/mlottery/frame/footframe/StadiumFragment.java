@@ -269,7 +269,6 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_stadium, container, false);
         mContext = getContext();
-        MobclickAgent.openActivityDurationTrack(false);
         PropertyConfigurator.getConfigurator(mContext).configure();
 
         initView();
@@ -1189,6 +1188,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 switch (radioButtonId) {
 
                     case R.id.rb_live_text:
+                        MobclickAgent.onEvent(mContext, "Football_MatchData_LiveTextBtn");
                         Log.d("1029","rb_live_text");
                         frame_content.setVisibility(View.VISIBLE);
                         frame_content_corner.setVisibility(View.GONE);
@@ -1201,6 +1201,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                         break;
 
                     case R.id.rb_corner_trend:
+                        MobclickAgent.onEvent(mContext, "Football_MatchData_StatisticsBtn");
                         frame_content.setVisibility(View.GONE);
                         frame_content_players.setVisibility(View.GONE);
                         frame_content_corner.setVisibility(View.VISIBLE);
@@ -1214,6 +1215,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
 
                     case R.id.rb_first_players:
+                        MobclickAgent.onEvent(mContext, "Football_MatchData_FirstPlayersBtn");
                         frame_content.setVisibility(View.GONE);
                         frame_content_players.setVisibility(View.VISIBLE);
                         frame_content_corner.setVisibility(View.GONE);
@@ -1226,6 +1228,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                         break;
 
                     case R.id.rb_attack_trend:
+                        MobclickAgent.onEvent(mContext, "Football_MatchData_TrendBtn");
                         frame_content.setVisibility(View.GONE);
                         frame_content_players.setVisibility(View.GONE);
                         frame_content_corner.setVisibility(View.GONE);
@@ -1323,7 +1326,6 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         return time;
 
     }
-
     @Override
     public void onResume() {
          super.onResume();

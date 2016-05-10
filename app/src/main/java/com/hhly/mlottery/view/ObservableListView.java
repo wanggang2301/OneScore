@@ -293,7 +293,7 @@ public class ObservableListView extends ListView implements Scrollable {
                             if (0 < mChildrenHeights.indexOfKey(i)) {
                                 skippedChildrenHeight += mChildrenHeights.get(i);
                             } else {
-                                // Approximate each item's height to the first visible child.
+                                // Approximate each item_share's height to the first visible child.
                                 // It may be incorrect, but without this, scrollY will be broken
                                 // when scrolling from the bottom.
                                 skippedChildrenHeight += firstVisibleChild.getHeight();
@@ -310,7 +310,7 @@ public class ObservableListView extends ListView implements Scrollable {
                             if (0 < mChildrenHeights.indexOfKey(i)) {
                                 skippedChildrenHeight += mChildrenHeights.get(i);
                             } else {
-                                // Approximate each item's height to the first visible child.
+                                // Approximate each item_share's height to the first visible child.
                                 // It may be incorrect, but without this, scrollY will be broken
                                 // when scrolling from the bottom.
                                 skippedChildrenHeight += firstVisibleChild.getHeight();

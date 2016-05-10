@@ -364,6 +364,9 @@ public class HomeGridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if(mHomePagerEntity == null || mHomePagerEntity.getMenus() == null || mHomePagerEntity.getMenus().getContent() == null || mHomePagerEntity.getMenus().getContent().size() == 0){
+            return 0;
+        }
         return mHomePagerEntity.getMenus().getContent().size();
     }
 

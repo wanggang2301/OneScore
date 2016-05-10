@@ -1,5 +1,7 @@
 package com.hhly.mlottery.activity;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -9,6 +11,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -16,11 +20,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
+import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.view.IsBottomScrollView;
 import com.hhly.mlottery.widget.ProgressWebView;
@@ -29,7 +37,14 @@ import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.sohu.cyan.android.sdk.http.CyanRequestListener;
 import com.sohu.cyan.android.sdk.http.response.SubmitResp;
 import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
+import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * WebView显示H5
@@ -58,6 +73,17 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private static final String INTENT_PARAMS_URL = "url";
     private static final String INTENT_PARAMS_TITLE = "title";
     private static final int JUMP_QUESTCODE = 1;
+
+    private ImageView public_btn_set;
+
+    private ShareTencentCallBack mShareTencentCallBack;
+
+    private ShareCopyLinkCallBack mShareCopyLinkCallBack;
+
+
+    private Tencent mTencent;
+
+    private SharePopupWindow sharePopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +234,15 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
 
     private void initView() {
+        ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
+        public_btn_filter.setVisibility(View.GONE);
+        public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
+        public_btn_set.setImageResource(R.mipmap.share);
+        public_btn_set.setVisibility(View.GONE);
+
+        public_btn_set.setOnClickListener(this);
+
+
         mPublic_img_back = (ImageView) findViewById(R.id.public_img_back);
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
         mWebView = (ProgressWebView) findViewById(R.id.baseweb_webview);
@@ -257,6 +292,28 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             });
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
+
+            /**加載成功显示 分享按钮*/
+            public_btn_set.setVisibility(View.VISIBLE);
+
+            mShareTencentCallBack = new ShareTencentCallBack() {
+                @Override
+                public void onClick(int flag) {
+                    shareQQ(flag);
+                }
+            };
+
+            mShareCopyLinkCallBack = new ShareCopyLinkCallBack() {
+                @Override
+                public void onClick() {
+                    ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    cmb.setText(url);
+                    Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
+                }
+            };
+
+
+            L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
         } catch (Exception e) {
             L.d("initData初始化失败:" + e.getMessage());
         }
@@ -286,6 +343,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_commentcount://评论数
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_CommentCount");
                 Intent intent = new Intent(this, CounselCommentActivity.class);
                 intent.putExtra(INTENT_PARAMS_URL, url);
                 intent.putExtra(INTENT_PARAMS_TITLE, title);
@@ -293,9 +351,11 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //                startActivity(intent);
                 break;
             case R.id.public_img_back://返回
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_Exit");
                 finish();
                 break;
             case R.id.iv_send://发送评论
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_Send");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
@@ -309,8 +369,64 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                     mEditText.clearFocus();
                 }
                 break;
+
+            case R.id.public_btn_set: //分享
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
+                Map<String, String> map = new HashMap<String, String>();
+                map.put(ShareConstants.TITLE, title != null ? title : "");
+                map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
+                map.put(ShareConstants.TARGET_URL, url != null ? url : "");
+                map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
+                sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
+                sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
+                sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);
+                sharePopupWindow.popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        backgroundAlpha(1f);
+                    }
+                });
+                backgroundAlpha(0.5f);
+                break;
         }
     }
+
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+
+    private void shareQQ(int falg) {
+        mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
+        final Bundle bundle = new Bundle();
+        //这条分享消息被好友点击后的跳转URL。
+
+        String appname = getString(R.string.share_to_qq_app_name);
+
+        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+        bundle.putString(QQShare.SHARE_TO_QQ_TITLE, title != null ? title : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, subtitle != null ? subtitle : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url != null ? url : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageurl != null ? imageurl : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
+        bundle.putInt(QQShare.SHARE_TO_QQ_EXT_INT, falg);
+        mTencent.shareToQQ(WebActivity.this, bundle, qqShareListener);
+    }
+
+    IUiListener qqShareListener = new IUiListener() {
+        @Override
+        public void onCancel() {
+        }
+
+        @Override
+        public void onComplete(Object response) {
+        }
+
+        @Override
+        public void onError(UiError e) {
+        }
+    };
 
 
     //获取评论的一切消息  无需登录
