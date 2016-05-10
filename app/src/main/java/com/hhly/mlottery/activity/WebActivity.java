@@ -242,7 +242,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 public void onClick() {
                     ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                     cmb.setText(url);
-                    Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
                 }
             };
 
