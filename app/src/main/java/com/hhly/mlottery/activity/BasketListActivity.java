@@ -30,7 +30,7 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
 
     private int mHomeType; //首次进入显示状态值
 
-   // private View view;
+    // private View view;
     FragmentManager fragmentManager;
 //	Fragment fragment;
 
@@ -61,11 +61,10 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frage_basketball);
-        MobclickAgent.openActivityDurationTrack(false);
         /**
          * 获得首次进入时候的状态值
          */
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             mHomeType = getIntent().getExtras().getInt(BASKET_HOME_TYPE);
             L.d("BASKET_HOME_TYPE : ", mHomeType + "");
         }
@@ -96,7 +95,7 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
         mScheduleBtn.setOnClickListener(this);
         mFocusBtn.setOnClickListener(this);
 
-        if (mHomeType == 0){
+        if (mHomeType == 0) {
             mImmediateBtn.setSelected(true);// 默认选中’即时‘
             mImmediateBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
             PreferenceUtil.commitInt(CHECKED_FRAGMENT, 0);//设置选中的fragment;
@@ -106,7 +105,7 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             fragmentManager.beginTransaction().add(R.id.content_fragment0, mImmediateFragment, lastFragmentTag).commit();
             mImmediateBtn.setClickable(false);// 默认让’即时‘不可点
             isfilsttime = ISIMMEDIATE;
-        }else if(mHomeType == 1){
+        } else if (mHomeType == 1) {
             mResultBtn.setSelected(true);// 默认选中’赛果‘
             mResultBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
             PreferenceUtil.commitInt(CHECKED_FRAGMENT, 1);//设置选中的fragment;
@@ -116,7 +115,7 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             fragmentManager.beginTransaction().add(R.id.content_fragment0, mResultFragment, lastFragmentTag).commit();
             mResultBtn.setClickable(false);// 默认让’赛果‘不可点
             isfilsttime = ISRESULT;
-        }else if(mHomeType == 2){
+        } else if (mHomeType == 2) {
             mScheduleBtn.setSelected(true);// 默认选中’赛程‘
             mScheduleBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
             PreferenceUtil.commitInt(CHECKED_FRAGMENT, 2);//设置选中的fragment;
@@ -126,7 +125,7 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             fragmentManager.beginTransaction().add(R.id.content_fragment0, mScheduleFragment, lastFragmentTag).commit();
             mScheduleBtn.setClickable(false);// 默认让’赛程‘不可点
             isfilsttime = ISSCHEDULE;
-        }else if(mHomeType == 3){
+        } else if (mHomeType == 3) {
             mFocusBtn.setSelected(true);// 默认选中’关注‘
             mFocusBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
             PreferenceUtil.commitInt(CHECKED_FRAGMENT, 3);//设置选中的fragment;
@@ -137,8 +136,6 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             mFocusBtn.setClickable(false);// 默认让’关注‘不可点
             isfilsttime = ISFOCUS;
         }
-
-
 
 //        mImmediateBtn.setSelected(true);// 默认选中’即时‘
 //        mImmediateBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
@@ -151,9 +148,14 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
 //        mImmediateBtn.setClickable(false);// 默认让’即时‘不可点
 //        isfilsttime = ISIMMEDIATE;
 
-        mRedPoint = (ImageView)findViewById(R.id.football_footer_focus_redpoint);
+        mRedPoint = (ImageView) findViewById(R.id.football_footer_focus_redpoint);
     }
 
+    /**四个Fragment页面统计*/
+    private boolean isImmediate = false;
+    private boolean isResult = false;
+    private boolean isSchedule = false;
+    private boolean isFocus = false;
     @Override
     public void onClick(View v) {
         mImmediateBtn.setSelected(false);
@@ -179,7 +181,25 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
 
         switch (v.getId()) {
             case R.id.football_footer_immediate_btn:// 即时
-                MobclickAgent.onEvent(mContext,"Basketball_immediate");
+                MobclickAgent.onEvent(mContext, "Basketball_immediate");
+                if (isResult) {
+                    MobclickAgent.onPageEnd("Basketball_ResultFragment");
+                    isResult = false;
+                    L.d("zzz", "Basketball_ResultFragment:隐藏");
+                }
+                if (isSchedule) {
+                    MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
+                    isSchedule = false;
+                    L.d("zzz", "Basketball_ScheduleFragment:隐藏");
+                }
+                if (isFocus) {
+                    MobclickAgent.onPageEnd("Basketball_FocusFragment");
+                    isFocus = false;
+                    L.d("zzz", "Basketball_FocusFragment:隐藏");
+                }
+                MobclickAgent.onPageStart("Basketball_ImmediateFragment");
+                isImmediate = true;
+                L.d("zzz", "Basketball_ImmediateFragment:显示");
                 isfilsttime = ISIMMEDIATE;
 
                 mImmediateBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
@@ -199,13 +219,31 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
                 if (mImmediateFragment == null) {
                     mImmediateFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_IMMEDIATE);
                     fragmentManager.beginTransaction().add(R.id.content_fragment0, mImmediateFragment, lastFragmentTag).commit();
-                }else{
+                } else {
                     fragmentManager.beginTransaction().show(mImmediateFragment).commit();
                 }
 
                 break;
             case R.id.football_footer_result_btn: // 赛果
-                MobclickAgent.onEvent(mContext,"Basketball_Result");
+                MobclickAgent.onEvent(mContext, "Basketball_Result");
+                if (isImmediate) {
+                    MobclickAgent.onPageEnd("Basketball_ImmediateFragment");
+                    isImmediate = false;
+                    L.d("zzz", "Basketball_ImmediateFragment:隐藏");
+                }
+                if (isSchedule) {
+                    MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
+                    isSchedule = false;
+                    L.d("zzz", "Basketball_ScheduleFragment:隐藏");
+                }
+                if (isFocus) {
+                    MobclickAgent.onPageEnd("Basketball_FocusFragment");
+                    isFocus = false;
+                    L.d("zzz", "Basketball_FocusFragment:隐藏");
+                }
+                MobclickAgent.onPageStart("Basketball_ResultFragment");
+                isResult = true;
+                L.d("zzz", "Basketball_ResultFragment:显示");
                 isfilsttime = ISRESULT;
 
                 mImmediateBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_normal));
@@ -225,13 +263,31 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
                 if (mResultFragment == null) {
                     mResultFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_RESULT);
                     fragmentManager.beginTransaction().add(R.id.content_fragment0, mResultFragment, lastFragmentTag).commit();
-                }else{
+                } else {
                     fragmentManager.beginTransaction().show(mResultFragment).commit();
                 }
 
                 break;
             case R.id.football_footer_schedule_btn: // 赛程
-                MobclickAgent.onEvent(mContext,"Basketball_Schedule");
+                MobclickAgent.onEvent(mContext, "Basketball_Schedule");
+                if (isImmediate) {
+                    MobclickAgent.onPageEnd("Basketball_ImmediateFragment");
+                    isImmediate = false;
+                    L.d("zzz", "Basketball_ImmediateFragment:隐藏");
+                }
+                if (isResult) {
+                    MobclickAgent.onPageEnd("Basketball_ResultFragment");
+                    isResult = false;
+                    L.d("zzz", "Basketball_ResultFragment:隐藏");
+                }
+                if (isFocus) {
+                    MobclickAgent.onPageEnd("Basketball_FocusFragment");
+                    isFocus = false;
+                    L.d("zzz", "Basketball_FocusFragment:隐藏");
+                }
+                MobclickAgent.onPageStart("Basketball_ScheduleFragment");
+                isSchedule = true;
+                L.d("zzz", "Basketball_ScheduleFragment:显示");
                 isfilsttime = ISSCHEDULE;
 
                 mImmediateBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_normal));
@@ -252,12 +308,30 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
                 if (mScheduleFragment == null) {
                     mScheduleFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_SCHEDULE);
                     fragmentManager.beginTransaction().add(R.id.content_fragment0, mScheduleFragment, lastFragmentTag).commit();
-                }else{
+                } else {
                     fragmentManager.beginTransaction().show(mScheduleFragment).commit();
                 }
                 break;
             case R.id.football_footer_focus_btn: // 关注
-                MobclickAgent.onEvent(mContext,"Basketball_Focus");
+                MobclickAgent.onEvent(mContext, "Basketball_Focus");
+                if (isImmediate) {
+                    MobclickAgent.onPageEnd("Basketball_ImmediateFragment");
+                    isImmediate = false;
+                    L.d("zzz", "Basketball_ImmediateFragment:隐藏");
+                }
+                if (isResult) {
+                    MobclickAgent.onPageEnd("Basketball_ResultFragment");
+                    isResult = false;
+                    L.d("zzz", "Basketball_ResultFragment:隐藏");
+                }
+                if (isSchedule) {
+                    MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
+                    isSchedule = false;
+                    L.d("zzz", "Basketball_ScheduleFragment:隐藏");
+                }
+                MobclickAgent.onPageStart("Basketball_FocusFragment");
+                isFocus = true;
+                L.d("zzz", "Basketball_FocusFragment:显示");
                 isfilsttime = ISFOCUS;
 
                 mImmediateBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_normal));
@@ -279,6 +353,55 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
         }
 //		fragmentManager.beginTransaction().replace(R.id.content_fragment0, fragment, lastFragmentTag).commit();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mImmediateBtn.isSelected()) {
+            MobclickAgent.onPageStart("Basketball_ImmediateFragment");
+            isImmediate = true;
+            L.d("zzz", "Basketball_ImmediateFragment:显示");
+        }
+        if (mResultBtn.isSelected()) {
+            MobclickAgent.onPageStart("Basketball_ResultFragment");
+            isResult = true;
+            L.d("zzz", "Basketball_ResultFragment:显示");
+        }
+        if (mScheduleBtn.isSelected()) {
+            MobclickAgent.onPageStart("Basketball_ScheduleFragment");
+            isSchedule = true;
+            L.d("zzz", "Basketball_ScheduleFragment:显示");
+        }
+        if (mFocusBtn.isSelected()) {
+            MobclickAgent.onPageStart("Basketball_FocusFragment");
+            isFocus = true;
+            L.d("zzz", "Basketball_FocusFragment:显示");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mImmediateBtn.isSelected()) {
+            MobclickAgent.onPageEnd("Basketball_ImmediateFragment");
+            isImmediate = false;
+            L.d("zzz", "Basketball_ImmediateFragment:隐藏");
+        }
+        if (mResultBtn.isSelected()) {
+            MobclickAgent.onPageEnd("Basketball_ResultFragment");
+            isResult = false;
+            L.d("zzz", "Basketball_ResultFragment:隐藏");
+        }
+        if (mScheduleBtn.isSelected()) {
+            MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
+            isSchedule = false;
+            L.d("zzz", "Basketball_ScheduleFragment:隐藏");
+        }
+        if (mFocusBtn.isSelected()) {
+            MobclickAgent.onPageEnd("Basketball_FocusFragment");
+            isFocus = false;
+            L.d("zzz", "Basketball_FocusFragment:隐藏");
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -288,7 +411,7 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
 
 
         if (requestCode == ImmedBasketballFragment.REQUEST_FILTERCODE || requestCode == ImmedBasketballFragment.REQUEST_SETTINGCODE) {
-            switch (isfilsttime){
+            switch (isfilsttime) {
                 case ISIMMEDIATE:
                     if (mImmediateFragment != null) {
                         mImmediateFragment.onActivityResult(requestCode, resultCode, data);
@@ -318,7 +441,7 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
     public void focusCallback() {
         String focusIds = PreferenceUtil.getString("basket_focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
-        if ("".equals(focusIds)||arrayId.length == 0) {
+        if ("".equals(focusIds) || arrayId.length == 0) {
             mRedPoint.setVisibility(View.GONE);
         } else {
             mRedPoint.setVisibility(View.VISIBLE);

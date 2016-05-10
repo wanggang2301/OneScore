@@ -173,7 +173,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basket_detailsactivity_activity);
-        MobclickAgent.openActivityDurationTrack(false);
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
         }
@@ -181,18 +180,16 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_default)   //默认图片
+              //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
                 .showImageForEmptyUri(R.mipmap.basket_default)
                 .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
                 .build();
         mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.color.black)   //默认图片
+                .showImageOnLoading(R.color.black)
                 .showImageForEmptyUri(R.color.black)
                 .showImageOnFail(R.color.black)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
                 .displayer(new FadeInBitmapDisplayer(2000))
                 .build();
 
@@ -274,6 +271,18 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     }
 
     /**
+     * 分析、欧赔、亚盘、大小Fragment页面统计
+     */
+    private boolean isFragment0 = true;
+    private boolean is0 = false;
+    private boolean isFragment1 = false;
+    private boolean is1 = false;
+    private boolean isFragment2 = false;
+    private boolean is2 = false;
+    private boolean isFragment3 = false;
+    private boolean is3 = false;
+
+    /**
      * 初始化界面
      */
     private void initView() {
@@ -295,6 +304,88 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.basket_text_color));//设置下划线颜色
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mPager);
+        mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:// 分析
+                        isFragment0 = true;
+                        isFragment1 = false;
+                        isFragment2 = false;
+                        isFragment3 = false;
+                        break;
+                    case 1:// 欧赔
+                        isFragment0 = false;
+                        isFragment1 = true;
+                        isFragment2 = false;
+                        isFragment3 = false;
+                        break;
+                    case 2:// 亚盘
+                        isFragment0 = false;
+                        isFragment1 = false;
+                        isFragment2 = true;
+                        isFragment3 = false;
+                        break;
+                    case 3:// 大小
+                        isFragment0 = false;
+                        isFragment1 = false;
+                        isFragment2 = false;
+                        isFragment3 = true;
+                        break;
+                }
+                if(is0){
+                    MobclickAgent.onPageEnd("BasketBall_Info_FX");
+                    is0 = false;
+                    L.d("xxx","分析隐藏");
+                }
+                if(is1){
+                    MobclickAgent.onPageEnd("BasketBall_Info_OP");
+                    is1 = false;
+                    L.d("xxx","欧赔隐藏");
+                }
+                if(is2){
+                    MobclickAgent.onPageEnd("BasketBall_Info_YP");
+                    is2 = false;
+                    L.d("xxx","亚盘隐藏");
+                }
+                if(is3){
+                    MobclickAgent.onPageEnd("BasketBall_Info_DX");
+                    is3 = false;
+                    L.d("xxx","大小隐藏");
+                }
+
+                if (isFragment0) {
+                    MobclickAgent.onPageStart("BasketBall_Info_FX");
+                    is0 = true;
+                    L.d("xxx","分析显示");
+                }
+                if (isFragment1) {
+                    MobclickAgent.onPageStart("BasketBall_Info_OP");
+                    is1 = true;
+                    L.d("xxx","欧赔显示");
+                }
+                if (isFragment2) {
+                    MobclickAgent.onPageStart("BasketBall_Info_YP");
+                    is2 = true;
+                    L.d("xxx","亚盘显示");
+                }
+                if (isFragment3) {
+                    MobclickAgent.onPageStart("BasketBall_Info_DX");
+                    is3 = true;
+                    L.d("xxx","大小显示");
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         // Initialize the first Fragment's state when layout is completed.
         ScrollUtils.addOnGlobalLayoutListener(mSlidingTabLayout, new Runnable() {
@@ -362,6 +453,56 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         mApos = (TextView) this.findViewById(R.id.backetball_details_apos);
         mApos.setVisibility(View.GONE);
 //        setApos();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isFragment0) {
+            MobclickAgent.onPageStart("BasketBall_Info_FX");
+            is0 = true;
+            L.d("xxx","分析显示");
+        }
+        if (isFragment1) {
+            MobclickAgent.onPageStart("BasketBall_Info_OP");
+            is1 = true;
+            L.d("xxx","欧赔显示");
+        }
+        if (isFragment2) {
+            MobclickAgent.onPageStart("BasketBall_Info_YP");
+            is2 = true;
+            L.d("xxx","亚盘显示");
+        }
+        if (isFragment3) {
+            MobclickAgent.onPageStart("BasketBall_Info_DX");
+            is3 = true;
+            L.d("xxx","大小显示");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (is0) {
+            MobclickAgent.onPageEnd("BasketBall_Info_FX");
+            is0 = false;
+            L.d("xxx","分析 隐藏");
+        }
+        if (is1) {
+            MobclickAgent.onPageEnd("BasketBall_Info_OP");
+            is1 = false;
+            L.d("xxx","欧赔 隐藏");
+        }
+        if (is2) {
+            MobclickAgent.onPageEnd("BasketBall_Info_YP");
+            is2 = false;
+            L.d("xxx","亚盘 隐藏");
+        }
+        if (is3) {
+            MobclickAgent.onPageEnd("BasketBall_Info_DX");
+            is3 = false;
+            L.d("xxx","大小 隐藏");
+        }
     }
 
     /**
@@ -587,13 +728,13 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.basket_details_back:
-                MobclickAgent.onEvent(MyApp.getContext(),"BasketDetailsActivity_Exit");
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Exit");
                 setResult(Activity.RESULT_OK);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.basket_details_collect:
-                MobclickAgent.onEvent(MyApp.getContext(),"BasketDetailsActivity_Attention");
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Attention");
                 if (isFocusId(mThirdId)) {
                     deleteFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collect);
@@ -637,9 +778,21 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         mHomeTeam.setText(mMatch.getHomeTeam());
         mGuestTeam.setText(mMatch.getGuestTeam());
+        if(mMatch.getHomeRanking().equals("")){
+            mHomeRanking.setText("");
+        }else{
+            mHomeRanking.setText("[ "+mMatch.getHomeRanking()+" ]");
+        }
+        if(mMatch.getGuestRanking().equals("")){
+            mGuestRanking.setText("");
+        }else {
+            mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
+        }
 
-        mHomeRanking.setText("[ "+mMatch.getHomeRanking()+" ]");
-        mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
+
+
+        mHomeRanking.setText("[ " + mMatch.getHomeRanking() + " ]");
+        mGuestRanking.setText("[ " + mMatch.getGuestRanking() + " ]");
 
         //图标
         mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
@@ -766,7 +919,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("1st half  " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("2st  " + score.getRemainTime());
+                        mMatchState.setText("2nd  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == HALF_GAME) {
@@ -776,14 +929,14 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("2nd half" + score.getRemainTime());
                     } else {
-                        mMatchState.setText("3st  " + score.getRemainTime());
+                        mMatchState.setText("3rd  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == FOURTH_QUARTER) {
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("2nd half  " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("4st  " + score.getRemainTime());
+                        mMatchState.setText("4th  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == OT1) {
@@ -793,7 +946,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     mMatchState.setText("OT2  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 } else {
-                    mMatchState.setText("Ot3  " + score.getRemainTime());
+                    mMatchState.setText("OT3  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -1129,7 +1282,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("1st half " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("2st  " + score.getRemainTime());
+                        mMatchState.setText("2nd  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == HALF_GAME) {
@@ -1139,24 +1292,24 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("2nd half " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("3st  " + score.getRemainTime());
+                        mMatchState.setText("3rd  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == FOURTH_QUARTER) {
                     if (mMatch.getSection() == 2) {
                         mMatchState.setText("2nd half  " + score.getRemainTime());
                     } else {
-                        mMatchState.setText("4st  " + score.getRemainTime());
+                        mMatchState.setText("4th  " + score.getRemainTime());
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == OT1) {
-                    mMatchState.setText("OT1" + score.getRemainTime());
+                    mMatchState.setText("OT1  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == OT2) {
-                    mMatchState.setText("OT2" + score.getRemainTime());
+                    mMatchState.setText("OT2  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 } else {
-                    mMatchState.setText("Ot3" + score.getRemainTime());
+                    mMatchState.setText("OT3  " + score.getRemainTime());
                     mApos.setVisibility(View.VISIBLE);
                 }
                 break;
