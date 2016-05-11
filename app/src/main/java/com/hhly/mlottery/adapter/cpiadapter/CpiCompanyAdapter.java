@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +25,11 @@ import java.util.Map;
  */
 public class CpiCompanyAdapter extends BaseAdapter {
 
-//    private List<Map<String, String>> cpiCompanyList;
+    //    private List<Map<String, String>> cpiCompanyList;
     private List<NewOddsInfo.CompanyBean> mCompanyBean;
     private Context context;
-    private int defItem;//当前的item的position(用于点击item设置item背景颜色)
+    private List<Integer> defItemList = new ArrayList<>();
+    private boolean isTrue = true;
     private LayoutInflater mInflater;
     private ListView mListView;
 
@@ -57,12 +61,14 @@ public class CpiCompanyAdapter extends BaseAdapter {
     }
 
     /**
-     * 根据选中的position更改item背景颜色
+     * 根据选中的position选中
      */
-//    public void setDefSelect( int position) {
-//        this.defItem = position;
-//        notifyDataSetChanged();
-//    }
+    public void setDefSelect(List<Integer> defItemList, boolean isTrue) {
+        this.defItemList = defItemList;
+        this.isTrue = isTrue;
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ListViewItem item;
@@ -74,6 +80,7 @@ public class CpiCompanyAdapter extends BaseAdapter {
             item = (ListViewItem) convertView.getTag();
         }
         item.checkedTextView.setText(mCompanyBean.get(position).getComName());
+
         //默认皇冠和浩博
         if (position == 0) {
             mListView.setItemChecked(position, true);
@@ -82,8 +89,8 @@ public class CpiCompanyAdapter extends BaseAdapter {
         if (position == 1) {
             mListView.setItemChecked(position, true);
             item.checkedTextView.setChecked(true);
-        }
 
+        }
         return convertView;
     }
 

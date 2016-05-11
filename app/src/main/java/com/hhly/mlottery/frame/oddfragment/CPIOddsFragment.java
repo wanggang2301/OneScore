@@ -23,6 +23,7 @@ import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.CPIFragment;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -46,7 +47,7 @@ public class CPIOddsFragment extends Fragment {
     private RecyclerView cpi_odds_recyclerView;
     private CPIRecyclerViewAdapter cpiRecyclerViewAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private List<NewOddsInfo.AllInfoBean> mAllInfoBean = new ArrayList<>();
+    public static List<NewOddsInfo.AllInfoBean> mAllInfoBean = new ArrayList<>();
     private List<NewOddsInfo.AllInfoBean> mAllInfoBeans = new ArrayList<>();
     //选着热门
     List<NewOddsInfo.AllInfoBean> hotsTemp = new ArrayList<>();
@@ -62,6 +63,7 @@ public class CPIOddsFragment extends Fragment {
     private FrameLayout cpi_fl_plate_networkError;// 加载失败
     private FrameLayout cpi_fl_plate_noData;// 暂无数据
     private TextView cpi_plate_reLoading;// 刷新
+    private String type = "";//类型区分，亚盘，大小，欧赔
 
     public static CPIOddsFragment newInstance(String param1, String param2) {
         CPIOddsFragment fragment = new CPIOddsFragment();
@@ -88,7 +90,7 @@ public class CPIOddsFragment extends Fragment {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_cpi_odds, container, false);//item_cpi_odds
         InitView();
-        switchd("", "", false);
+        switchd("");
         return mView;
     }
 
@@ -109,13 +111,19 @@ public class CPIOddsFragment extends Fragment {
         cpi_plate_reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchd("", "", false);
+                switchd("");
             }
         });
 
     }
 
-    public void InitData(String date, final int cpiNumber, final String company, final boolean isHot) {
+    /**
+     * 传日期和各盘口类型
+     *
+     * @param date
+     * @param cpiNumber
+     */
+    public void InitData(String date, final int cpiNumber) {
         mHandler.sendEmptyMessage(STARTLOADING);
         String stUrl = "http://192.168.10.242:8181/mlottery/core/footBallIndexCenter.findAndroidIndexCenter.do?";
         Map<String, String> map = new HashMap<>();
@@ -144,46 +152,23 @@ public class CPIOddsFragment extends Fragment {
                     mFileterTagsBean = json.getFileterTags();
                     mCompanyBean = json.getCompany();
                     if (mAllInfoBean != null && mAllInfoBean.size() > 0) {
-                        String type = "";
                         if (cpiNumber == 0) {
-                            //如果公司不等于空
                             type = "plate";
                         } else if (cpiNumber == 1) {
                             type = "big";
                         } else if (cpiNumber == 2) {
                             type = "op";
                         }
-
-                        if (!"".equals(company)) {
-                            selectCompany(company);
-                            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, type);
-                            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-                        }
-                        //如果选择的是热门
-                        else if (isHot) {
-                            for (int i = 0; i < mAllInfoBean.size(); i++) {
-                                if (mAllInfoBean.get(i).isHot()) {
-                                    hotsTemp.add(mAllInfoBean.get(i));
-                                }
+                        for (int i = 0; i < mAllInfoBean.size(); i++) {
+                            if (mAllInfoBean.get(i).isHot()) {
+                                //筛选热门
+                                hotsTemp.add(mAllInfoBean.get(i));
                             }
-                            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(hotsTemp, mContext, type);
-                            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-
-                        }   //如果不选择热门
-                        else if (!isHot) {
-                            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBean, mContext, type);
-                            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-
-                        } else {
-                            //直接加载热门
-                            for (int i = 0; i < mAllInfoBean.size(); i++) {
-                                if (mAllInfoBean.get(i).isHot()) {
-                                    hotsTemp.add(mAllInfoBean.get(i));
-                                }
-                            }
-                            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(hotsTemp, mContext, "plate");
-                            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
                         }
+                        //筛选公司
+                        selectCompany(hotsTemp);
+                        cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, type);
+                        cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
 
                     }
                     mHandler.sendEmptyMessage(SUCCESS);// 请求成功
@@ -201,108 +186,60 @@ public class CPIOddsFragment extends Fragment {
     }
 
     /**
-     * 时间，公司，类别,是否为热门
+     * 是否为热门
+     */
+    public void selectedHot(boolean isHot) {
+        if (!isHot) {
+            selectCompany(mAllInfoBean);
+            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, type);
+            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+
+        } else {
+            //直接加载热门
+            for (int i = 0; i < mAllInfoBean.size(); i++) {
+                if (mAllInfoBean.get(i).isHot()) {
+                    hotsTemp.add(mAllInfoBean.get(i));
+                }
+            }
+            selectCompany(hotsTemp);
+            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, type);
+            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+        }
+    }
+
+    /**
+     * 时间
      *
      * @param dates
-     * @param companyBeans
      */
-    public void switchd(String dates, String companyBeans, boolean isSelect) {
+    public void switchd(String dates) {
 
         switch (mParam1) {
             case "plate":
-                //时间和公司为空代表第一次
-                if ("".equals(dates) && "".equals(companyBeans) && isSelect == false) {
-                    //亚盘
-                    InitData(UiUtils.getDay(0), 0, "", false);
+                //时间为空
+                if ("".equals(dates)) {
+                    InitData(UiUtils.getDay(0), 0);
 
-                } else if ("".equals(dates) && "".equals(companyBeans) && isSelect == true) {
-                    //亚盘
-                    InitData(UiUtils.getDay(0), 0, "", true);
-                }
-                //如果时间不为空，公司为空，传时间，公司传空
-                else if (!"".equals(dates) && "".equals(companyBeans) && isSelect == false) {
-                    InitData(dates.trim(), 0, "", false);
-
-                } else if (!"".equals(dates) && "".equals(companyBeans) && isSelect == true) {
-                    InitData(dates.trim(), 0, "", true);
-
-                }
-                //如果时间为空，公司不为空，传时间，公司传空
-                else if (!"".equals(dates) && !"".equals(companyBeans) && isSelect == false) {
-                    InitData(dates.trim(), 0, companyBeans, false);
-                } else if (!"".equals(dates) && !"".equals(companyBeans) && isSelect == true) {
-                    InitData(dates.trim(), 0, companyBeans, true);
-                }
-                //如果时间为空，公司不为空，传当前时间，传公司
-                else if ("".equals(dates) && !"".equals(companyBeans) && isSelect == false) {
-                    InitData(UiUtils.getDay(0), 0, companyBeans, false);
-                } else if ("".equals(dates) && !"".equals(companyBeans) && isSelect == true) {
-                    InitData(UiUtils.getDay(0), 0, companyBeans, true);
+                } else {
+                    InitData(dates.trim(), 0);
                 }
                 break;
             case "big":
                 //大小
-                //时间和公司为空代表第一次
-                if ("".equals(dates) && "".equals(companyBeans) && isSelect == false) {
-                    //亚盘
-                    InitData(UiUtils.getDay(0), 1, "", false);
+                if ("".equals(dates)) {
+                    InitData(UiUtils.getDay(0), 1);
 
-                } else if ("".equals(dates) && "".equals(companyBeans) && isSelect == true) {
-                    //亚盘
-                    InitData(UiUtils.getDay(0), 1, "", true);
-                }
-                //如果时间不为空，公司为空，传时间，公司传空
-                else if (!"".equals(dates) && "".equals(companyBeans) && isSelect == false) {
-                    InitData(dates.trim(), 1, "", false);
-
-                } else if (!"".equals(dates) && "".equals(companyBeans) && isSelect == true) {
-                    InitData(dates.trim(), 1, "", true);
-
-                }
-                //如果时间为空，公司不为空，传时间，公司传空
-                else if (!"".equals(dates) && !"".equals(companyBeans) && isSelect == false) {
-                    InitData(dates.trim(), 1, companyBeans, false);
-                } else if (!"".equals(dates) && !"".equals(companyBeans) && isSelect == true) {
-                    InitData(dates.trim(), 1, companyBeans, true);
-                }
-                //如果时间为空，公司不为空，传当前时间，传公司
-                else if ("".equals(dates) && !"".equals(companyBeans) && isSelect == false) {
-                    InitData(UiUtils.getDay(0), 1, companyBeans, false);
-                } else if ("".equals(dates) && !"".equals(companyBeans) && isSelect == true) {
-                    InitData(UiUtils.getDay(0), 1, companyBeans, true);
+                } else {
+                    InitData(dates.trim(), 1);
                 }
                 break;
             case "op":
                 //欧赔
-                //时间和公司为空代表第一次
-                if ("".equals(dates) && "".equals(companyBeans) && isSelect == false) {
-                    //亚盘
-                    InitData(UiUtils.getDay(0), 2, "", false);
+                if ("".equals(dates)) {
+                    InitData(UiUtils.getDay(0), 2);
 
-                } else if ("".equals(dates) && "".equals(companyBeans) && isSelect == true) {
-                    //亚盘
-                    InitData(UiUtils.getDay(0), 2, "", true);
-
-                }
-                //如果时间不为空，公司为空，传时间，公司传空
-                else if (!"".equals(dates) && "".equals(companyBeans) && isSelect == false) {
-                    InitData(dates.trim(), 2, "", false);
-
-                } else if (!"".equals(dates) && "".equals(companyBeans) && isSelect == true) {
-                    InitData(dates.trim(), 2, "", true);
-
-                }
-                //如果时间不为空，公司不为空，传时间，公司传空
-                else if (!"".equals(dates) && !"".equals(companyBeans) && isSelect == false) {
-                    InitData(dates.trim(), 2, companyBeans, false);
-                } else if (!"".equals(dates) && !"".equals(companyBeans) && isSelect == true) {
-                    InitData(dates.trim(), 2, companyBeans, true);
-                }
-                //如果时间为空，公司不为空，传当前时间，传公司
-                else if ("".equals(dates) && !"".equals(companyBeans) && isSelect == false) {
-                    InitData(UiUtils.getDay(0), 2, companyBeans, false);
-                } else if ("".equals(dates) && !"".equals(companyBeans) && isSelect == true) {
-                    InitData(UiUtils.getDay(0), 2, companyBeans, true);
+                } else {
+                    InitData(dates.trim(), 2);
                 }
 
                 break;
@@ -314,29 +251,57 @@ public class CPIOddsFragment extends Fragment {
     }
 
     /**
-     * 选着筛选公司
+     * 筛选公司
      */
-    private void selectCompany(String company) {
+    public void selectCompany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp) {
         mAllInfoBeans.clear();
-        for (int i = 0; i < mAllInfoBean.size(); i++) {
+        for (int k = 0; k < hotsAllInfoTemp.size(); k++) {
             NewOddsInfo.AllInfoBean pAllInfoBean = new NewOddsInfo.AllInfoBean();
             List<NewOddsInfo.AllInfoBean.ComListBean> mComListBeanList = new ArrayList<>();
-            for (int j = 0; j < mAllInfoBean.get(i).getComList().size(); j++) {
-                if (mAllInfoBean.get(i).getComList().get(j).getComName().equals(company)) {
+            for (int j = 0; j < hotsAllInfoTemp.get(k).getComList().size(); j++) {
+                if (hotsAllInfoTemp.get(k).getComList().get(j).getComName().equals("皇冠") || hotsAllInfoTemp.get(k).getComList().get(j).getComName().equals("浩博")) {
                     NewOddsInfo.AllInfoBean.ComListBean mComListBean = new NewOddsInfo.AllInfoBean.ComListBean();
-                    mComListBean = mAllInfoBean.get(i).getComList().get(j);
+                    mComListBean = hotsAllInfoTemp.get(k).getComList().get(j);
                     mComListBeanList.add(mComListBean);
                 }
             }
             pAllInfoBean.setComList(mComListBeanList);
-            pAllInfoBean.setMatchInfo(mAllInfoBean.get(i).getMatchInfo());
-            pAllInfoBean.setHot(mAllInfoBean.get(i).isHot());
-            pAllInfoBean.setLeagueColor(mAllInfoBean.get(i).getLeagueColor());
-            pAllInfoBean.setLeagueId(mAllInfoBean.get(i).getLeagueId());
-            pAllInfoBean.setLeagueName(mAllInfoBean.get(i).getLeagueName());
+            pAllInfoBean.setMatchInfo(hotsAllInfoTemp.get(k).getMatchInfo());
+            pAllInfoBean.setHot(hotsAllInfoTemp.get(k).isHot());
+            pAllInfoBean.setLeagueColor(hotsAllInfoTemp.get(k).getLeagueColor());
+            pAllInfoBean.setLeagueId(hotsAllInfoTemp.get(k).getLeagueId());
+            pAllInfoBean.setLeagueName(hotsAllInfoTemp.get(k).getLeagueName());
             mAllInfoBeans.add(pAllInfoBean);
 
         }
+    }
+    public void selectCompany2(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp,List<String> comNameList) {
+        mAllInfoBeans.clear();
+        for (int k = 0; k < hotsAllInfoTemp.size(); k++) {
+            NewOddsInfo.AllInfoBean pAllInfoBean = new NewOddsInfo.AllInfoBean();
+            List<NewOddsInfo.AllInfoBean.ComListBean> mComListBeanList = new ArrayList<>();
+            for (int j = 0; j < hotsAllInfoTemp.get(k).getComList().size(); j++) {
+
+                for (int h=0;h<comNameList.size();h++){
+
+                if (hotsAllInfoTemp.get(k).getComList().get(j).getComName().equals(comNameList.get(h))) {
+                    NewOddsInfo.AllInfoBean.ComListBean mComListBean = new NewOddsInfo.AllInfoBean.ComListBean();
+                    mComListBean = hotsAllInfoTemp.get(k).getComList().get(j);
+                    mComListBeanList.add(mComListBean);
+                }
+            }
+            }
+            pAllInfoBean.setComList(mComListBeanList);
+            pAllInfoBean.setMatchInfo(hotsAllInfoTemp.get(k).getMatchInfo());
+            pAllInfoBean.setHot(hotsAllInfoTemp.get(k).isHot());
+            pAllInfoBean.setLeagueColor(hotsAllInfoTemp.get(k).getLeagueColor());
+            pAllInfoBean.setLeagueId(hotsAllInfoTemp.get(k).getLeagueId());
+            pAllInfoBean.setLeagueName(hotsAllInfoTemp.get(k).getLeagueName());
+            mAllInfoBeans.add(pAllInfoBean);
+
+        }
+        cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, type);
+        cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
     }
 
     private Handler mHandler = new Handler() {

@@ -32,6 +32,7 @@ import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -61,7 +62,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     private ImageView public_img_hot, public_img_company;
     public static ImageView  public_img_filter;
     //判断是否选中选择热门
-    private boolean isSelectHot;
+    private boolean isSelectHot = false;
     /**
      * 切换Viewpager的标签
      */
@@ -92,6 +93,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     private boolean isDefualFiltrate = true;
     //当前处于那个界面
     private int currentFragmentId = 0;
+    private List<NewOddsInfo.AllInfoBean> hotsTemp1 = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -143,7 +145,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public_img_hot = (ImageView) mView.findViewById(R.id.public_img_hot);
         public_img_hot.setOnClickListener(this);
         public_img_hot.setVisibility(View.VISIBLE);
-        isSelectHot=true;
         public_img_hot.setSelected(true);
 
         public_img_company = (ImageView) mView.findViewById(R.id.public_img_company);
@@ -242,21 +243,20 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 setDialog(0);//代表日期
                 break;
             case R.id.public_img_hot://点击热门
-                //如果当前为选中
+                //如果当前选择了热门
                 if (isSelectHot) {
-                    public_img_hot.setSelected(false);
-                    isSelectHot = true;
-                    for (Fragment fragment : fragments) {
-                        //获取保存时间
-                        ((CPIOddsFragment) fragment).switchd(PreferenceUtil.getString("position", ""), "",false);
-                    }
-                } else {
-                    //否则选中热门
                     public_img_hot.setSelected(true);
                     isSelectHot = false;
                     for (Fragment fragment : fragments) {
-                        //获取保存时间
-                        ((CPIOddsFragment) fragment).switchd(PreferenceUtil.getString("position", ""), "",true);
+                        ((CPIOddsFragment) fragment).selectedHot(true);
+
+                    }
+                } else {
+                    //否则取消热门筛选
+                    public_img_hot.setSelected(false);
+                    isSelectHot = true;
+                    for (Fragment fragment : fragments) {
+                        ((CPIOddsFragment) fragment).selectedHot(false);
                     }
                 }
                 break;
@@ -348,9 +348,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     //设置标题时间
                     public_txt_date.setText(mMapList.get(position).get("date"));
                     for (Fragment fragment : fragments) {
-                        ((CPIOddsFragment) fragment).switchd(mMapList.get(position).get("date"), "",false);
-                        //保存选择的时间
-                        PreferenceUtil.commitString("position", mMapList.get(position).get("date").trim());
+                        ((CPIOddsFragment) fragment).switchd(mMapList.get(position).get("date"));
                     }
                     // 关闭 dialog弹窗
                     mAlertDialog.dismiss();
@@ -379,32 +377,37 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             cpi_btn_ok.setVisibility(View.VISIBLE);
             dialog_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+                public void onItemClick(AdapterView<?> parent, View arg1, final int position, long arg3) {
                     checktv = (CheckedTextView) parent.getChildAt(position).findViewById(R.id.item_checkedTextView);
                     if (checktv.isChecked()) {
                         checktv.setChecked(false);
                     } else {
                         checktv.setChecked(true);
                     }
-//                    mMapList.get(position).get("date");
-                    // 关闭 dialog弹窗
-//                mAlertDialog.dismiss();
-                    // 记录点击的 item 位置
-//                        mItems = position;
                 }
             });
+            for (int j = 0; j < CPIOddsFragment.mAllInfoBean.size(); j++) {
+                if (CPIOddsFragment.mAllInfoBean.get(j).isHot()) {
+                    //筛选热门
+                    hotsTemp1.add(CPIOddsFragment.mAllInfoBean.get(j));
+                }
+            }
             cpi_btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (CPIOddsFragment.mCompanyBean.size() == 0 && CPIOddsFragment.mCompanyBean == null)return;
+                    List<String >comNameList=new ArrayList<>();
                     for (int i = 0; i < CPIOddsFragment.mCompanyBean.size(); i++) {
                         dialog_list.isItemChecked(i);
+
                         if (dialog_list.isItemChecked(i) == true) {
-                            for (Fragment fragment : fragments) {
-                                //获取保存时间
-                                ((CPIOddsFragment) fragment).switchd(PreferenceUtil.getString("position", ""), CPIOddsFragment.mCompanyBean.get(i).getComName(), false);
-                            }
+
+                            comNameList.add(CPIOddsFragment.mCompanyBean.get(i).getComName());
                         }
+
+                    }
+                    for (Fragment fragment : fragments) {
+                        ((CPIOddsFragment) fragment).selectCompany2(hotsTemp1,comNameList);
                     }
                     mAlertDialog.dismiss();
                 }
