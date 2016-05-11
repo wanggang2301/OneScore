@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -134,7 +135,13 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mNoData = (TextView) findViewById(R.id.nodata);
         mPublic_txt_title.setText(R.string.comment_title);
         mListView = (PullUpRefreshListView) findViewById(R.id.comment_lv);
-//        mListView.setItemsCanFocus(true);
+        mListView.setItemsCanFocus(true);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ToastTools.ShowQuickCenter(CounselCommentActivity.this,position+"");
+            }
+        });
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.comment_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);

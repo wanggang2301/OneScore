@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.ToastTools;
 import com.sohu.cyan.android.sdk.entity.Comment;
 
 import java.util.List;
@@ -70,6 +71,12 @@ public class CounselComentLvAdapter extends BaseAdapter {
             holder = new Holder();
             convertView = mActivity.getLayoutInflater().inflate(R.layout.item_counsel_comment, null);
             holder.nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
+            holder.nickname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ToastTools.ShowQuickCenter(mActivity, "nickname");
+                }
+            });
             holder.time = (TextView) convertView.findViewById(R.id.tv_time);
             holder.content = (TextView) convertView.findViewById(R.id.tv_content);
             convertView.setTag(holder);
@@ -98,7 +105,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
     }
 
     // 对textview部分字体加下划线， 颜色和添加点击事件
-    public void SpanText(final TextView textViewcenter, final int position) {
+    public void SpanText(final TextView textView, final int position) {
         SpannableString spString = new SpannableString(total);
 
         spString.setSpan(
@@ -120,7 +127,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View arg0) {
                         // TODO Auto-generated method stub
-                        textViewcenter.setText(mInfosList.get(position).content);
+                        textView.setText(mInfosList.get(position).content);
                     }
 
                 },
@@ -128,10 +135,10 @@ public class CounselComentLvAdapter extends BaseAdapter {
                 total.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        textViewcenter.setHighlightColor(Color.TRANSPARENT);
-        textViewcenter.append(mString);
-        textViewcenter.append(spString);
-        textViewcenter.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setHighlightColor(Color.TRANSPARENT);
+        textView.append(mString);
+        textView.append(spString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
 }

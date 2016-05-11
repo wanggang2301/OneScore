@@ -259,7 +259,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
         public_btn_set.setOnClickListener(this);
 
-
         mPublic_img_back = (ImageView) findViewById(R.id.public_img_back);
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
         mWebView = (ProgressWebView) findViewById(R.id.baseweb_webview);
