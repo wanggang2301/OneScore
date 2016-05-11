@@ -18,6 +18,9 @@
     <string name="share_copy">复制链接成功</string>
     <string name="share_from">来自一比分:</string>
     <string name="share_uninstall_webchat">您还未安装微信客户端</string>
+    <string name="weibosdk_demo_not_support_api_hint">您还未安装新浪微博客户端</string>
+    <string name="share_uninstall_qq">您还未安装QQ客户端</string>
+
 
 
 

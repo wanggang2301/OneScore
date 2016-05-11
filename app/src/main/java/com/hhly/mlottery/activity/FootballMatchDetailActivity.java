@@ -511,6 +511,11 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 //                matchDetail.getGuestTeamInfo().setLineup(playerInfos);
                 mMatchDetail = matchDetail;
 
+                //数据加载成功后显示分享
+                mShare.setVisibility(View.VISIBLE);
+
+
+
 
                 if (!isInitedViewPager) {//如果ViewPager未初始化
                     initViewPager(matchDetail);
@@ -874,6 +879,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         findViewById(R.id.layout_match_header_back).setOnClickListener(this);
         mFocusImg.setOnClickListener(this);
         mShare.setOnClickListener(this);
+        mShare.setVisibility(View.GONE);
 
         boolean isFocus = FocusFragment.isFocusId(mThirdId);
 
