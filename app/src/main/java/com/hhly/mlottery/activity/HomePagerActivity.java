@@ -72,6 +72,10 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private Integer mDataType;// 资讯类型 1、篮球  2、足球
     private String mUrl;// 资讯中转URL
     private String mInfoTypeName;// 资讯标题
+    private String imageUrl;// 资讯分享图片Url
+    private String title;// 资讯分享标题
+    private String subTitle;// 资讯分享摘要
+
     private String version;// 当前版本号
 
     @Override
@@ -133,6 +137,10 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             mThirdId = mBundle.getString("thirdId");
             mUrl = mBundle.getString("dataUrl");
             mInfoTypeName = mBundle.getString("dataTitle");
+            imageUrl = mBundle.getString("imageUrl");
+            title = mBundle.getString("title");
+            subTitle = mBundle.getString("subTitle");
+
             try {
                 mDataType = mBundle.getString("dataType") == null ? 0 : Integer.parseInt(mBundle.getString("dataType"));
             } catch (NumberFormatException e) {
@@ -169,6 +177,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                             basketDataIntent.putExtra("key", mUrl);
                             basketDataIntent.putExtra("type", mDataType);
                             basketDataIntent.putExtra("infoTypeName", mInfoTypeName);
+                            basketDataIntent.putExtra("imageurl",imageUrl );
+                            basketDataIntent.putExtra("title",title );
+                            basketDataIntent.putExtra("subtitle",subTitle );
                             startActivity(basketDataIntent);
                             L.d("xxx", "mUrl: " + mUrl);
                         }

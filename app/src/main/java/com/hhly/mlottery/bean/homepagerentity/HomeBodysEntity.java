@@ -45,6 +45,15 @@ public class HomeBodysEntity implements Serializable {
     private String relateMatch;// 是否有关联赛事
     private int type;// 关联赛事类型 1篮球，2足球
     private String infoTypeName;// 资讯类型
+    private String summary;// 资讯摘要
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
     public String getInfoTypeName() {
         return infoTypeName;

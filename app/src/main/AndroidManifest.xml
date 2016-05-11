@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery"
-    android:versionCode="11"
-    android:versionName="1.0.8.0428">
+    android:versionCode="12"
+    android:versionName="1.0.9">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -53,7 +53,11 @@
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!-- 引导页 -->
         <activity
@@ -146,11 +150,7 @@
         <activity
             android:name=".activity.HomePagerActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!-- 首页用户设置选项 -->
