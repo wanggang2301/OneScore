@@ -1,5 +1,6 @@
 package com.hhly.mlottery.bean.oddsbean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,9 +13,9 @@ public class NewOddsInfo {
     private int code;
     private List<String> focusLeagueIds;
     /**
-     * leagueId : 116
-     * leagueName : 捷克杯
-     * leagueColor : #6A7A86
+     * leagueId : 250
+     * leagueName : 哥伦甲
+     * leagueColor : #993333
      * matchsInLeague : 1
      * hot : false
      */
@@ -26,6 +27,14 @@ public class NewOddsInfo {
      */
 
     private List<CompanyBean> company;
+    /**
+     * leagueName : 巴拉甲
+     * leagueId : 354
+     * leagueColor : #a00800
+     * hot : false
+     * matchInfo : {"matchId":"331747","matchHomeName":"巴拉国民","matchGuestName":"波特诺","matchResult":"1:1","openTime":null,"matchState":"-1"}
+     * comList : [{"comId":"3","comName":"皇冠","currLevel":{"left":"1.02","middle":"-0.25","right":"0.80","leftUp":1,"rightUp":-1},"preLevel":{"left":"0.91","middle":"-0.25","right":"0.91","leftUp":0,"rightUp":0}},{"comId":"45","comName":"浩博","currLevel":{"left":"1.01","middle":"-0.25","right":"0.83","leftUp":1,"rightUp":-1},"preLevel":{"left":"0.86","middle":"-0.25","right":"0.98","leftUp":0,"rightUp":0}},{"comId":"31","comName":"利记","currLevel":{"left":"0.95","middle":"-0.25","right":"0.89","leftUp":1,"rightUp":-1},"preLevel":{"left":"0.90","middle":"-0.25","right":"0.94","leftUp":0,"rightUp":0}},{"comId":"38","comName":"IBC","currLevel":{"left":"1.05","middle":"-0.25","right":"0.79","leftUp":0,"rightUp":0},"preLevel":{"left":"1.05","middle":"-0.25","right":"0.79","leftUp":0,"rightUp":0}},{"comId":"44","comName":"ISN","currLevel":{"left":"1.01","middle":"-0.25","right":"0.83","leftUp":1,"rightUp":-1},"preLevel":{"left":"0.86","middle":"-0.25","right":"0.98","leftUp":0,"rightUp":0}}]
+     */
 
     private List<AllInfoBean> allInfo;
 
@@ -77,7 +86,7 @@ public class NewOddsInfo {
         this.allInfo = allInfo;
     }
 
-    public static class FileterTagsBean {
+    public static class FileterTagsBean implements Serializable{
         private String leagueId;
         private String leagueName;
         private String leagueColor;
@@ -152,20 +161,20 @@ public class NewOddsInfo {
         private String leagueColor;
         private boolean hot;
         /**
-         * matchId : 327810
-         * matchHomeName : 全北现代
-         * matchGuestName : 江苏苏宁
-         * matchResult : 0:0
-         * openTime : 18:00
-         * matchState : 0
+         * matchId : 331747
+         * matchHomeName : 巴拉国民
+         * matchGuestName : 波特诺
+         * matchResult : 1:1
+         * openTime : null
+         * matchState : -1
          */
 
         private MatchInfoBean matchInfo;
         /**
          * comId : 3
          * comName : 皇冠
-         * currLevel : {"dtime":null,"left":"0.88","middle":"0.75","right":"1.00"}
-         * preLevel : {"dtime":null,"left":"0.91","middle":"0.75","right":"0.91"}
+         * currLevel : {"left":"1.02","middle":"-0.25","right":"0.80","leftUp":1,"rightUp":-1}
+         * preLevel : {"left":"0.91","middle":"-0.25","right":"0.91","leftUp":0,"rightUp":0}
          */
 
         private List<ComListBean> comList;
@@ -279,18 +288,20 @@ public class NewOddsInfo {
             private String comId;
             private String comName;
             /**
-             * dtime : null
-             * left : 0.88
-             * middle : 0.75
-             * right : 1.00
+             * left : 1.02
+             * middle : -0.25
+             * right : 0.80
+             * leftUp : 1
+             * rightUp : -1
              */
 
             private CurrLevelBean currLevel;
             /**
-             * dtime : null
              * left : 0.91
-             * middle : 0.75
+             * middle : -0.25
              * right : 0.91
+             * leftUp : 0
+             * rightUp : 0
              */
 
             private PreLevelBean preLevel;
@@ -328,18 +339,11 @@ public class NewOddsInfo {
             }
 
             public static class CurrLevelBean {
-                private Object dtime;
                 private String left;
                 private String middle;
                 private String right;
-
-                public Object getDtime() {
-                    return dtime;
-                }
-
-                public void setDtime(Object dtime) {
-                    this.dtime = dtime;
-                }
+                private int leftUp;
+                private int rightUp;
 
                 public String getLeft() {
                     return left;
@@ -363,22 +367,31 @@ public class NewOddsInfo {
 
                 public void setRight(String right) {
                     this.right = right;
+                }
+
+                public int getLeftUp() {
+                    return leftUp;
+                }
+
+                public void setLeftUp(int leftUp) {
+                    this.leftUp = leftUp;
+                }
+
+                public int getRightUp() {
+                    return rightUp;
+                }
+
+                public void setRightUp(int rightUp) {
+                    this.rightUp = rightUp;
                 }
             }
 
             public static class PreLevelBean {
-                private Object dtime;
                 private String left;
                 private String middle;
                 private String right;
-
-                public Object getDtime() {
-                    return dtime;
-                }
-
-                public void setDtime(Object dtime) {
-                    this.dtime = dtime;
-                }
+                private int leftUp;
+                private int rightUp;
 
                 public String getLeft() {
                     return left;
@@ -402,6 +415,22 @@ public class NewOddsInfo {
 
                 public void setRight(String right) {
                     this.right = right;
+                }
+
+                public int getLeftUp() {
+                    return leftUp;
+                }
+
+                public void setLeftUp(int leftUp) {
+                    this.leftUp = leftUp;
+                }
+
+                public int getRightUp() {
+                    return rightUp;
+                }
+
+                public void setRightUp(int rightUp) {
+                    this.rightUp = rightUp;
                 }
             }
         }

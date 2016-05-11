@@ -178,6 +178,10 @@
         <activity
             android:name=".activity.CpiDetailsActivity"
             android:screenOrientation="portrait" />
+        <!--新版指数筛选-->
+        <activity
+            android:name=".activity.CpiFiltrateActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
