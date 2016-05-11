@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -77,6 +78,11 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private String subTitle;// 资讯分享摘要
 
     private String version;// 当前版本号
+    private TextView public_txt_title;
+
+    private final int MIN_CLICK_DELAY_TIME = 2000;// 控件点击间隔时间
+    private long lastClickTime = 0;
+    private int clickCount = 0;// 点击次数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,6 +219,24 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
             }
         });
+        if(AppConstants.isTestEnv){
+            public_txt_title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
+                        lastClickTime = currentTime;
+                        clickCount = 0;
+                    }else{
+                        clickCount += 1;
+                        if(clickCount == 5){
+                            startActivity(new Intent(mContext,DebugConfigActivity.class));
+                            finish();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -262,6 +286,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setVisibility(View.VISIBLE);
         public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
+
+        public_txt_title = (TextView) findViewById(R.id.public_txt_title);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.home_page_swiperefreshlayout);// 下拉刷新
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
