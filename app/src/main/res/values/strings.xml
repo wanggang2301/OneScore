@@ -668,7 +668,7 @@
     <string name="user_name">游客</string>
     <string name="warn_nullcontent">请先输入内容</string>
     <string name="warn_submitfail">发送失败，请重试</string>
-    <string name="hint_content">没事写两句</string>
+    <string name="hint_content">我来评论</string>
     <string name="comment_send">发送</string>
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暂无评论内容</string>
