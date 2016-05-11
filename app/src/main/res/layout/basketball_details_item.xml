@@ -220,16 +220,17 @@
                 android:text="(100:100)"
                 android:textColor="#0085E1"
                 android:textSize="@dimen/text_size_12"
-                android:layout_below="@+id/basket_score"
+                android:layout_below="@id/basket_score"
                 android:layout_centerHorizontal="true"/>
 
             <LinearLayout
+                android:id="@+id/basket_details_odds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/x6"
-                android:layout_below="@+id/basket_half_score"
+                android:layout_below="@id/basket_half_score"
                 android:layout_centerHorizontal="true">
 
                 <TextView

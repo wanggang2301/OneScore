@@ -57,16 +57,21 @@
     <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
         android:id="@+id/basket_analyze_details_refreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/black_grounding"
+        >
 
         <ScrollView
+            android:id="@+id/basket_analyze_details_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/black_grounding">
+            android:background="@color/black_grounding"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
                 <LinearLayout
                     android:id="@+id/basket_loading_success_ll"
@@ -132,7 +137,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_event"
+                                android:text="@string/basket_analyze_date"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_10" />
 
@@ -141,7 +146,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_date"
+                                android:text="@string/basket_analyze_event"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_10" />
 
@@ -276,7 +281,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_event"
+                                android:text="@string/basket_analyze_date"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_10" />
 
@@ -285,7 +290,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_date"
+                                android:text="@string/basket_analyze_event"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_10" />
 
@@ -394,7 +399,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_event"
+                                android:text="@string/basket_analyze_date"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_10" />
 
@@ -403,7 +408,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_date"
+                                android:text="@string/basket_analyze_event"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_10" />
 
@@ -526,7 +531,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_event"
+                                android:text="@string/basket_analyze_date"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_11" />
 
@@ -535,7 +540,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_date"
+                                android:text="@string/basket_analyze_event"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_11" />
 
@@ -625,7 +630,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_event"
+                                android:text="@string/basket_analyze_date"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_11" />
 
@@ -634,7 +639,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_date"
+                                android:text="@string/basket_analyze_event"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_11" />
 
@@ -747,6 +752,18 @@
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/basket_analyze_details_nodata"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/basket_nodata"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textColor="@color/version"
+                    android:background="@color/black_grounding"
+                    android:paddingTop="@dimen/y500"
+                    android:visibility="gone"
+                    />
             </RelativeLayout>
         </ScrollView>
     </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
