@@ -53,7 +53,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private TextView mTv_check_info;// 关联跳转按钮
     private ImageView mPublic_img_back;// 返回
     private TextView mPublic_txt_title;// 标题
-
     private String url;// 要显示的H5网址
     private String imageurl;// 图片地址
     private String title;// 标题
@@ -74,7 +73,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private ShareTencentCallBack mShareTencentCallBack;
 
     private ShareCopyLinkCallBack mShareCopyLinkCallBack;
-
 
     private Tencent mTencent;
 
@@ -117,12 +115,10 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -132,12 +128,10 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 if (TextUtils.isEmpty(mEditText.getText())) {
                     mSend.setSelected(false);
                     mSend.setEnabled(false);
-
                 } else {
                     mSend.setSelected(true);
                     mSend.setEnabled(true);
                 }
-
             }
         });
         // 跳转关联赛事详情
@@ -298,17 +292,13 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 break;
 
             case R.id.public_btn_set: //分享
-
-
+                //  @style/AppTheme.BlackStatusBar.ColorGreen
 
                 Map<String, String> map = new HashMap<String, String>();
                 map.put(ShareConstants.TITLE, title != null ? title : "");
                 map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
                 map.put(ShareConstants.TARGET_URL, url != null ? url : "");
                 map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
-
-
-
                 sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
                 sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
                 sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);
@@ -319,7 +309,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                     }
                 });
                 backgroundAlpha(0.5f);
-                break;
         }
     }
 
@@ -330,6 +319,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     }
 
     private void shareQQ(int falg) {
+
         mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
         final Bundle bundle = new Bundle();
         //这条分享消息被好友点击后的跳转URL。
@@ -344,6 +334,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
         bundle.putInt(QQShare.SHARE_TO_QQ_EXT_INT, falg);
         mTencent.shareToQQ(WebActivity.this, bundle, qqShareListener);
+
     }
 
     IUiListener qqShareListener = new IUiListener() {
@@ -360,15 +351,16 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         }
     };
 
+
+
+
     /**
      * 隐藏原生键盘
      */
     public void hideKeyBoard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
-                .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         // ToastTools.shortShow(activity, "隐藏键盘");
-
     }
 
     //获取评论的一切消息  无需登录
