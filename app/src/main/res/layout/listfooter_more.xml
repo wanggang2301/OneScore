@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-              android:paddingTop="200dp"
    >
     <TextView
         android:id="@+id/bottomline"
