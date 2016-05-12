@@ -63,7 +63,6 @@ public class HomePagerAdapter extends PagerAdapter {
                 .showImageOnLoading(R.mipmap.home_carousel_default).showImageOnFail(R.mipmap.home_carousel_default)
                 .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
                 .cacheOnDisc(true).considerExifParams(true).build();
-
         setBannersDefPic();
         onDrawPoint();
         setScroller();
@@ -98,7 +97,6 @@ public class HomePagerAdapter extends PagerAdapter {
         mTopHolder.mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -116,7 +114,6 @@ public class HomePagerAdapter extends PagerAdapter {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }

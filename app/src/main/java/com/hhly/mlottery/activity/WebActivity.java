@@ -298,9 +298,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
                 MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
                 Map<String, String> map = new HashMap<String, String>();
-                map.put(ShareConstants.TITLE, title != null ? title : "");
+                map.put(ShareConstants.TITLE, title != null ? title : mContext.getResources().getString(R.string.share_recommend));
                 map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
-                map.put(ShareConstants.TARGET_URL, url != null ? url : "");
+                map.put(ShareConstants.TARGET_URL, url != null ? url : "http://m.13322.com");
                 map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
                 sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
                 sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
