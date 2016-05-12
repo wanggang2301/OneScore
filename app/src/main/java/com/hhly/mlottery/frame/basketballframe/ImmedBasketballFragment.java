@@ -39,6 +39,7 @@ import com.hhly.mlottery.bean.basket.BasketMatchFilter;
 import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
+import com.hhly.mlottery.bean.basket.BasketScoreBean;
 import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
@@ -717,15 +718,18 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             L.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 100) {  //type 为100 ==> 比分推送
                 String ws_json = (String) msg.obj;
-                L.e(TAG, "ws_json = " + ws_json);
+                L.e(TAG, "ws_json =AAAAAAAAAAAA " + ws_json);
                 WebBasketMatch mWebBasketMatch = null;
                 try {
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
+                    L.e(TAG, "ws_json =success " + "11111111");
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     // Log.e(TAG, "ws_json = " + ws_json);
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
+                    L.e(TAG, "ws_json =error " + "222222222");
                 }
+
                 updateListViewItemStatus(mWebBasketMatch);  //比分更新
             } else if (msg.arg1 == 101) {  //type 为101 ==> 赔率推送
                 String ws_json = (String) msg.obj;
@@ -746,6 +750,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
 
     private void updateListViewItemStatus(WebBasketMatch webBasketMatch) {
+        L.d("matchchildern >>>>>>>>>>>>>>>>>", "收到推送");
+//        Toast.makeText(mContext, "bbbbbbbbbbbbbbbbbbb", Toast.LENGTH_SHORT).show();
         Map<String, String> data = webBasketMatch.getData();
         synchronized (childrenDataList) {
             for (List<BasketMatchBean> match : childrenDataList) {
@@ -769,10 +775,70 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                                     matchchildern.setIsHomeAnim(false);
                                 }
                                 updateMatchStatus(matchchildern, data);// 修改Match里面的数据
+
+                                L.d("matchchildern >>>>>>>>>>>>>>>>>", "比分更新");
+                                L.e("ws_json ========", "比分更新");
+//                                Toast.makeText(mContext, "aaaaaaaaaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else{
-                            mLoadHandler.postDelayed(mRun, 0);
+                        }else{
+                            BasketScoreBean score = new BasketScoreBean();
+
+                            if (data.get("guest1") != null) {
+                                score.setGuest1(Integer.parseInt(data.get("guest1")));
+                            }
+                            if (data.get("guest2") != null) {
+                                score.setGuest2(Integer.parseInt(data.get("guest2")));
+                            }
+                            if (data.get("guest3") != null) {
+                                score.setGuest3(Integer.parseInt(data.get("guest3")));
+                            }
+                            if (data.get("guest4") != null) {
+                                score.setGuest4(Integer.parseInt(data.get("guest4")));
+                            }
+                            if (data.get("guestOt1") != null) {
+                                score.setGuestOt1(Integer.parseInt(data.get("guestOt1")));
+                            }
+                            if (data.get("guestOt2") != null) {
+                                score.setGuestOt2(Integer.parseInt(data.get("guestOt2")));
+                            }
+                            if (data.get("guestOt3") != null) {
+                                score.setGuestOt3(Integer.parseInt(data.get("guestOt3")));
+                            }
+                            if (data.get("guestScore") != null) {
+                                score.setGuestScore(Integer.parseInt(data.get("guestScore")));
+                            }
+                            if (data.get("home1") != null) {
+                                score.setHome1(Integer.parseInt(data.get("home1")));
+                            }
+                            if (data.get("home2") != null) {
+                                score.setHome2(Integer.parseInt(data.get("home2")));
+                            }
+                            if (data.get("home3") != null) {
+                                score.setHome3(Integer.parseInt(data.get("home3")));
+                            }
+                            if (data.get("home4") != null) {
+                                score.setHome4(Integer.parseInt(data.get("home4")));
+                            }
+                            if (data.get("homeOt1") != null) {
+                                score.setHomeOt1(Integer.parseInt(data.get("homeOt1")));
+                            }
+                            if (data.get("homeOt2") != null) {
+                                score.setHomeOt2(Integer.parseInt(data.get("homeOt2")));
+                            }
+                            if (data.get("homeOt3") != null) {
+                                score.setHomeOt3(Integer.parseInt(data.get("homeOt3")));
+                            }
+                            if (data.get("homeScore") != null) {
+                                score.setHomeScore(Integer.parseInt(data.get("homeScore")));
+                            }
+                            if (data.get("addTime") != null) {
+                                score.setAddTime(Integer.parseInt(data.get("addTime")));
+                            }
+                            if (data.get("remainTime") != null) {
+                                score.setRemainTime(data.get("remainTime"));
+                            }
+                            matchchildern.setMatchScore(score);
+                            updateMatchStatus(matchchildern, data);
                         }
                         updateAdapter();
                         break;
