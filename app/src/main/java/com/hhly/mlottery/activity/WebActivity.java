@@ -22,7 +22,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
@@ -208,7 +207,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 mCommentCount.setVisibility(View.GONE);
                 if (TextUtils.isEmpty(mEditText.getText())) {
                     mSend.setSelected(false);
-                    mSend.setEnabled(false);
                 } else {
                     mSend.setSelected(true);
                 }
