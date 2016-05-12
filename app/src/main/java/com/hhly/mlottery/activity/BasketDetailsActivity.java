@@ -645,8 +645,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
         }
 
-
-
         //图标
         mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
 
@@ -686,6 +684,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     mMatchState.setText(R.string.basket_postpone);
                 }
                 mApos.setVisibility(View.GONE);
+                mRemainTime.setText("");
                 break;
             case END://完场
                 mGuestScore.setText(score.getGuestScore() + "");
@@ -729,6 +728,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     mHomeOt1.setText(score.getHomeOt1() + "");
                 }
                 mApos.setVisibility(View.GONE);
+                mRemainTime.setText("");
                 break;
             case OT3:
                 mLayoutOt3.setVisibility(View.VISIBLE);
@@ -777,7 +777,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (mMatch.getMatchStatus() == HALF_GAME) {
-                    mMatchState.setText("half time");
+                    mMatchState.setText("half time  ");
                     mApos.setVisibility(View.GONE);
                 } else if (mMatch.getMatchStatus() == THIRD_QUARTER) {
                     if (mMatch.getSection() == 2) {
@@ -805,6 +805,9 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 }
 
                 mRemainTime.setText(score.getRemainTime());//剩余时间
+                if(mMatch.getMatchStatus()==HALF_GAME){
+                    mRemainTime.setText("");//中场时无剩余时间。。后台可能中场也给时间。没办法
+                }
                 if(score.getRemainTime()==null||score.getRemainTime().equals("")){//没有剩余时间的时候
                     mApos.setVisibility(View.GONE);
                 }
@@ -1013,6 +1016,22 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
         WebSocketBasketBallDetails.DataEntity score = basketBallDetails.getData();
         switch (basketBallDetails.getData().getMatchStatus()) {
+            case DETERMINED://待定
+            case GAME_CANCLE: //比赛取消
+            case GAME_CUT: //比赛中断
+            case GAME_DELAY: //比赛推迟
+                if (mMatch.getMatchStatus() == DETERMINED) {
+                    mMatchState.setText(R.string.basket_undetermined);
+                } else if (mMatch.getMatchStatus() == GAME_CANCLE) {
+                    mMatchState.setText(R.string.basket_cancel);
+                } else if (mMatch.getMatchStatus() == GAME_CUT) {
+                    mMatchState.setText(R.string.basket_interrupt);
+                } else {
+                    mMatchState.setText(R.string.basket_postpone);
+                }
+                mApos.setVisibility(View.GONE);
+                mRemainTime.setText("");
+                break;
 
             case END://完场
                 mApos.setVisibility(View.GONE);
@@ -1080,6 +1099,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     mHomeOt1.setText(score.getHomeOt1() + "");
                     mHomeOt1.setTextColor(getResources().getColor(R.color.score_color_white));
                 }
+                mRemainTime.setText("");//完场无剩余时间
                 break;
             case OT3:
                 mLayoutOt3.setVisibility(View.VISIBLE);
@@ -1173,6 +1193,11 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
                 //设置剩余时间
                 mRemainTime.setText(score.getRemainTime()==null?"":score.getRemainTime());//为空的话就设置为空字符
+
+                if(mMatch.getMatchStatus()==HALF_GAME){
+                    mRemainTime.setText("");//中场时无剩余时间。。后台可能中场也给时间。没办法
+                }
+
                 if(score.getRemainTime()==null||score.getRemainTime().equals("")){
                     mApos.setVisibility(View.GONE);
                 }
