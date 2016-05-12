@@ -239,7 +239,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 }
             };
 
-
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
         } catch (Exception e) {
             L.d("initData初始化失败:" + e.getMessage());
@@ -323,7 +322,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     }
 
     private void shareQQ(int falg) {
-
         mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
         final Bundle bundle = new Bundle();
         //这条分享消息被好友点击后的跳转URL。
@@ -338,10 +336,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
         bundle.putInt(QQShare.SHARE_TO_QQ_EXT_INT, falg);
         mTencent.shareToQQ(WebActivity.this, bundle, qqShareListener);
-
     }
-
-
 
     IUiListener qqShareListener = new IUiListener() {
         @Override
@@ -356,9 +351,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         public void onError(UiError e) {
         }
     };
-
-
-
 
     /**
      * 隐藏原生键盘
@@ -391,6 +383,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     @Override
     public void onRequestSucceeded(SubmitResp submitResp) {
         if (!TextUtils.isEmpty(mCommentCount.getText())) {
+
             int count = Integer.parseInt(mCommentCount.getText().toString()) + 1;
             mCommentCount.setText(count + "");
         }

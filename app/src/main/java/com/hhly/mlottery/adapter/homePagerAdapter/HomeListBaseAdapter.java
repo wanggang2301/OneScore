@@ -188,6 +188,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                     break;
                                                 case 1:// 页面
                                                 {
+
                                                     Intent intent = new Intent(mContext, WebActivity.class);
                                                     intent.putExtra("key", jumpAddr);
                                                     intent.putExtra("imageurl",imageurl );
