@@ -536,8 +536,8 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             }
         }
         List<Integer> mRecentHome = mAnalyzeDatas.get(1).getRecentLW();
-        if (mRecentHome != null && mRecentHome.equals("")) {
-            if (mRecentHome.size() != 0 && mRecentHome != null) {
+        if (mRecentHome != null && !mRecentHome.equals("")) {
+            if (mRecentHome.size() != 0) {
                 setRecent(mRecentHomeImg1 , mRecentHome.get(0));
                 setRecent(mRecentHomeImg2 , mRecentHome.get(1));
                 setRecent(mRecentHomeImg3 , mRecentHome.get(2));

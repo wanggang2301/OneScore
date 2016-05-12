@@ -39,6 +39,7 @@ import com.hhly.mlottery.bean.basket.BasketMatchFilter;
 import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
+import com.hhly.mlottery.bean.basket.BasketScoreBean;
 import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
@@ -717,7 +718,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             L.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 100) {  //type 为100 ==> 比分推送
                 String ws_json = (String) msg.obj;
-                L.e(TAG, "ws_json = " + ws_json);
+                L.e(TAG, "ws_json =AAAAAAAAAAAA " + ws_json);
                 WebBasketMatch mWebBasketMatch = null;
                 try {
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
@@ -726,6 +727,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     // Log.e(TAG, "ws_json = " + ws_json);
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
                 }
+
                 updateListViewItemStatus(mWebBasketMatch);  //比分更新
             } else if (msg.arg1 == 101) {  //type 为101 ==> 赔率推送
                 String ws_json = (String) msg.obj;
@@ -770,9 +772,77 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                                 }
                                 updateMatchStatus(matchchildern, data);// 修改Match里面的数据
                             }
-                        }
-                        else{
+                        }else{
+
                             mLoadHandler.postDelayed(mRun, 0);
+                            /**
+                             * 未开始（VS）==>开始时候的处理
+                             */
+                            BasketScoreBean score = new BasketScoreBean();
+
+                            for (Map.Entry<String, String> entry : data.entrySet()) {
+                                switch (entry.getKey()){
+                                    case "guest1":
+                                        score.setGuest1(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guest2":
+                                        score.setGuest2(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guest3":
+                                        score.setGuest3(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guest4":
+                                        score.setGuest4(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guestOt1":
+                                        score.setGuestOt1(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guestOt2":
+                                        score.setGuestOt2(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guestOt3":
+                                        score.setGuestOt3(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guestScore":
+                                        score.setGuestScore(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "home1":
+                                        score.setHome1(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "home2":
+                                        score.setHome2(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "home3":
+                                        score.setHome3(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "home4":
+                                        score.setHome4(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "homeOt1":
+                                        score.setHomeOt1(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "homeOt2":
+                                        score.setHomeOt2(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "homeOt3":
+                                        score.setHomeOt3(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "homeScore":
+                                        score.setHomeScore(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "addTime":
+                                        score.setAddTime(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "remainTime":
+                                        score.setRemainTime(entry.getValue());
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            matchchildern.setMatchScore(score);
+                            updateMatchStatus(matchchildern, data);
                         }
                         updateAdapter();
                         break;
