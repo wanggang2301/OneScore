@@ -198,6 +198,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                         intent.putExtra("type", type);
                                                         intent.putExtra("thirdId", thirdId);
                                                     }
+
+
+
+
                                                     mContext.startActivity(intent);
                                                     break;
                                                 }
