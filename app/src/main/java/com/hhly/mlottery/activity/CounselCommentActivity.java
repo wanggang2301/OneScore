@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -64,6 +66,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     private int cmt_sum;//评论总数
     private int mCurrentPager = 1;
     private boolean isRequestFinish = true;
+    private   int def = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,9 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         title = intent.getStringExtra(INTENT_PARAMS_TITLE);
         sdk = CyanSdk.getInstance(this);
         initView();
-        initScrollView();
+
+        initScrollView();//解决adjustresize和透明状态栏的冲突
+
         initListView();
         //获取评论的一切信息
         if (!TextUtils.isEmpty(url)) {
@@ -99,18 +104,26 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 decview.getWindowVisibleDisplayFrame(r);
                 int screenheight = decview.getRootView().getHeight();
                 int h = screenheight - r.bottom;
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
-                lp.setMargins(0, 0, 0, h);
-                scrollview.requestLayout();
-                if (h > 0) {//软键盘显示
+
+                if (h > 300) {//软键盘显示
 //                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
 //                    Log.e("lzf", "软件盘显示");
                     mEditText.setHint("");
 
-                } else if (h == 0) {//软键盘隐藏
+                } else if (h < 300) {//软键盘隐藏
+                    if (h != 0) {
+                        def = h;//因为有的手机在键盘隐藏时   int h = screenheight - r.bottom;这两个的
+                        // 差值h不是0，有一个差值，所以把这个差值保存起来，重新layou的时候，减去这个差值
+                    }
 //                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘隐藏");
 //                    Log.e("lzf", "软件盘隐藏");
                     mEditText.setHint(R.string.hint_content);
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+                    lp.setMargins(0, 0, 0, h - def);
+                    scrollview.requestLayout();
+
                 }
             }
         });
@@ -122,6 +135,13 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mNoData = (TextView) findViewById(R.id.nodata);
         mPublic_txt_title.setText(R.string.comment_title);
         mListView = (PullUpRefreshListView) findViewById(R.id.comment_lv);
+        mListView.setItemsCanFocus(true);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ToastTools.ShowQuickCenter(CounselCommentActivity.this,position+"");
+            }
+        });
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.comment_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -185,7 +205,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
                         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
-                        CyUtils.loginSso("heheheid", "lzfgege", sdk);
+                        CyUtils.loginSso(CyUtils.getImei(this), CyUtils.getImei(this), sdk);
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();
@@ -228,6 +248,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 mSwipeRefreshLayout.setRefreshing(false);
                 L.i("lzf最新列表=" + mCommentArrayList.size());
                 L.i("lzf最热列表=" + topicLoadResp.hots.size());
+                setResult(2, new Intent().putExtra("cmt_sum", cmt_sum));
             }
 
             @Override
@@ -318,6 +339,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     @Override
     public void onRequestSucceeded(SubmitResp submitResp) {
         mEditText.setText("");
+
         //刷新界面
         loadTopic(url, title);
     }

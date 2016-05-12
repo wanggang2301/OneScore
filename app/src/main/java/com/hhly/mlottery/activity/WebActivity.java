@@ -4,6 +4,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -12,15 +13,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +74,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private static final String INTENT_PARAMS_URL = "url";
     private static final String INTENT_PARAMS_TITLE = "title";
     private static final int JUMP_QUESTCODE = 1;
+    private int def = 0;
 
     private ImageView public_btn_set;
 
@@ -92,7 +93,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         setContentView(R.layout.activity_web);
         sdk = CyanSdk.getInstance(this);
         //单点登录
-        CyUtils.loginSso("heheheid", "lzfgege", sdk);
+        CyUtils.loginSso(CyUtils.getImei(this), CyUtils.getImei(this), sdk);
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
         initData();
@@ -112,33 +113,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Rect r = new Rect();
-                decview.getWindowVisibleDisplayFrame(r);
-                int screenheight = decview.getRootView().getHeight();
-                int h = screenheight - r.bottom;
-//                Log.e("lzfh", h + "");
-                if (h > 0) {//软键盘显示
-//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
-//                    Log.e("lzf", "软件盘显示");
-                    mSend.setVisibility(View.VISIBLE);
-                    mCommentCount.setVisibility(View.GONE);
-                    mEditText.setHint("");
-
-                } else if (h == 0) {//软键盘隐藏
-//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘隐藏");
-//                    Log.e("lzf", "软件盘隐藏");
-                    if (TextUtils.isEmpty(mEditText.getText())) {
-                        mSend.setVisibility(View.GONE);
-                        mCommentCount.setVisibility(View.VISIBLE);
-                    } else {
-                        mSend.setVisibility(View.VISIBLE);
-                        mCommentCount.setVisibility(View.GONE);
-                    }
-                    mEditText.setHint(R.string.hint_content);
-                }
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
-                lp.setMargins(0, 0, 0, h);
-                scrollview.requestLayout();
+                reLayout(decview, scrollview);
             }
         });
         //解决mTv_check_info在webview还没加载时显示在顶部的问题
@@ -155,7 +130,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             }
         });
     }
-//
+
+    //
 //    public void getCommentCount() {
 //        //获取某个新闻的评论数
 //        sdk.getCommentCount("", url, 0, new CyanRequestListener<TopicCountResp>() {
@@ -170,6 +146,46 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //            }
 //        });
 //    }
+    //在某个view里重新布局某个view
+    public void reLayout(View decview, View scrollview) {
+        Rect r = new Rect();
+        decview.getWindowVisibleDisplayFrame(r);
+        int screenheight = decview.getRootView().getHeight();
+        int h = screenheight - r.bottom;
+//                Log.e("lzfh", h + "");
+//                Log.e("lzfr.bottom", r.bottom + "");
+//                Log.e("lzfscreenheight", screenheight + "");
+        if (h > 300) {//软键盘显示
+//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
+//                    Log.e("lzf", "软件盘显示");
+            mSend.setVisibility(View.VISIBLE);
+            mCommentCount.setVisibility(View.GONE);
+            mEditText.setHint("");
+
+        } else if (h < 300) {//软键盘隐藏
+            if (h != 0) {
+                def = h;//因为有的手机在键盘隐藏时   int h = screenheight - r.bottom;这两个的
+                // 差值h不是0，有一个差值，所以把这个差值保存起来，重新layou的时候，减去这个差值
+            }
+//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘隐藏");
+//                    Log.e("lzf", "软件盘隐藏");
+            if (TextUtils.isEmpty(mEditText.getText())) {
+                mSend.setVisibility(View.GONE);
+                mCommentCount.setVisibility(View.VISIBLE);
+            } else {
+                mSend.setVisibility(View.VISIBLE);
+                mCommentCount.setVisibility(View.GONE);
+            }
+            mEditText.setHint(R.string.hint_content);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+            lp.setMargins(0, 0, 0, h - def);
+            scrollview.requestLayout();
+
+        }
+
+    }
 
     private void initEvent() {
         mEditText.addTextChangedListener(new TextWatcher() {
@@ -242,7 +258,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         public_btn_set.setVisibility(View.GONE);
 
         public_btn_set.setOnClickListener(this);
-
 
         mPublic_img_back = (ImageView) findViewById(R.id.public_img_back);
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
@@ -364,7 +379,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
                         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
-                        CyUtils.loginSso("heheheid", "lzfgege", sdk);
+                        CyUtils.loginSso(CyUtils.getImei(this), CyUtils.getImei(this), sdk);
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();

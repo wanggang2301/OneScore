@@ -644,10 +644,11 @@
     <string name="user_name">遊客</string>
     <string name="warn_nullcontent">請先輸入內容</string>
     <string name="warn_submitfail">發送失敗，請重試</string>
-    <string name="hint_content">沒事寫兩句</string>
+    <string name="hint_content">我來評論</string>
     <string name="comment_send">發送</string>
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暫無評論內容</string>
+    <string name="toatalvisiable">全部顯示</string>
     <!-- -->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">請輸入留言內容</string>
