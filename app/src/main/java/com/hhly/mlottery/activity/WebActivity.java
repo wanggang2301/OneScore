@@ -102,8 +102,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         //获取评论信息 无需登录  这里主要拿评论总数和文章id
         loadTopic();
         initEvent();
-         model=DeviceInfo.getModel().replace(" ", "");
-        System.out.println("lzf" +model );
+        model = DeviceInfo.getModel().replace(" ", "");
+//        System.out.println("lzf" +model );
 
 //        getCommentCount();
 
@@ -114,7 +114,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         final ScrollView scrollview = (ScrollView) findViewById(R.id.scrollview);
         final IsBottomScrollView isbottomscrollview = (IsBottomScrollView) findViewById(R.id.isbottomscrollview);
         final View decview = getWindow().getDecorView();
-        decview.getViewTreeObserver().addOnGlobalLayoutListener(   new ViewTreeObserver.OnGlobalLayoutListener() {
+        decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 reLayout(decview, scrollview);
@@ -473,10 +473,11 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     //评论提交成功回调接口
     @Override
     public void onRequestSucceeded(SubmitResp submitResp) {
-        if (!TextUtils.isEmpty(mCommentCount.getText())) {
-            int count = Integer.parseInt(mCommentCount.getText().toString()) + 1;
-            mCommentCount.setText(count + "");
-        }
+//        if (!TextUtils.isEmpty(mCommentCount.getText())) {
+//            int count = Integer.parseInt(mCommentCount.getText().toString()) + 1;
+//            mCommentCount.setText(count + "");
+//        }
+        loadTopic();
         mEditText.setText("");
         mSend.setVisibility(View.GONE);
         mCommentCount.setVisibility(View.VISIBLE);
