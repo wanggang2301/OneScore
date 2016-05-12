@@ -341,6 +341,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
     }
 
+
+
     IUiListener qqShareListener = new IUiListener() {
         @Override
         public void onCancel() {

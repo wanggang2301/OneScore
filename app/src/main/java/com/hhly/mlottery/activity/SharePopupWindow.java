@@ -224,7 +224,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 }
             }
         });
-
     }
 
     private boolean isQQClientAvailable(Context context) {
@@ -292,7 +291,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
 
 
     private TextObject getTextObj() {
-
         String text = mContext.getResources().getString(R.string.share_from) + map.get(ShareConstants.TITLE) + "\n" + map.get(ShareConstants.SUMMARY) + "\n";
         TextObject textObject = new TextObject();
         textObject.text = text;
@@ -314,7 +312,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
 
                 imageObject.setImageObject(response);
                 weiboMessage.imageObject = imageObject;
-
 
                 WebpageObject mediaObject = new WebpageObject();
                 mediaObject.identify = Utility.generateGUID();
