@@ -219,6 +219,7 @@ public class HomePagerAdapter extends PagerAdapter {
                 String jumpAddr = mHomePagerEntity.getBanners().getContent().get(index).getJumpAddr();
                 int jumpType = mHomePagerEntity.getBanners().getContent().get(index).getJumpType();
                 String title = mHomePagerEntity.getBanners().getContent().get(index).getTitle();
+                String picUrl = mHomePagerEntity.getBanners().getContent().get(index).getPicUrl();
                 if (!TextUtils.isEmpty(jumpAddr)) {
                     switch (jumpType) {
                         case 0:// 无
@@ -228,6 +229,9 @@ public class HomePagerAdapter extends PagerAdapter {
                             Intent intent = new Intent(mContext, WebActivity.class);
                             intent.putExtra("key", jumpAddr);
                             intent.putExtra("infoTypeName", title);
+                            intent.putExtra("title", title);
+                            intent.putExtra("imageurl", picUrl);
+                            intent.putExtra("subtitle", "");
                             mContext.startActivity(intent);
                             break;
                         }

@@ -58,7 +58,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private TextView mTv_check_info;// 关联跳转按钮
     private ImageView mPublic_img_back;// 返回
     private TextView mPublic_txt_title;// 标题
-
     private String url;// 要显示的H5网址
     private String imageurl;// 图片地址
     private String title;// 标题
@@ -82,7 +81,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private ShareTencentCallBack mShareTencentCallBack;
 
     private ShareCopyLinkCallBack mShareCopyLinkCallBack;
-
 
     private Tencent mTencent;
 
@@ -198,12 +196,10 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -212,10 +208,10 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 mCommentCount.setVisibility(View.GONE);
                 if (TextUtils.isEmpty(mEditText.getText())) {
                     mSend.setSelected(false);
+                    mSend.setEnabled(false);
                 } else {
                     mSend.setSelected(true);
                 }
-
             }
         });
         mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -331,10 +327,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 public void onClick() {
                     ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                     cmb.setText(url);
-                    Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
                 }
             };
-
 
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
         } catch (Exception e) {
@@ -394,6 +388,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 break;
 
             case R.id.public_btn_set: //分享
+                //  @style/AppTheme.BlackStatusBar.ColorGreen
+
                 MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
                 Map<String, String> map = new HashMap<String, String>();
                 map.put(ShareConstants.TITLE, title != null ? title : "");
@@ -410,7 +406,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                     }
                 });
                 backgroundAlpha(0.5f);
-                break;
         }
     }
 

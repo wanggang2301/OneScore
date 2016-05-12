@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -72,7 +73,16 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private Integer mDataType;// 资讯类型 1、篮球  2、足球
     private String mUrl;// 资讯中转URL
     private String mInfoTypeName;// 资讯标题
+    private String imageUrl;// 资讯分享图片Url
+    private String title;// 资讯分享标题
+    private String subTitle;// 资讯分享摘要
+
     private String version;// 当前版本号
+    private TextView public_txt_title;
+
+    private final int MIN_CLICK_DELAY_TIME = 2000;// 控件点击间隔时间
+    private long lastClickTime = 0;
+    private int clickCount = 0;// 点击次数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +103,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         try {
             PackageManager manager = this.getPackageManager();
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            version = info.versionName.replace(".", "");
+            String xxx = info.versionName.replace(".", "#");
+            String[] split = xxx.split("#");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 3; i++) {
+                sb = sb.append(split[i]);
+            }
+            version = sb.toString();
+            L.d("xxx","version:" + version);
         } catch (Exception e) {
             L.d(e.getMessage());
         }
@@ -126,6 +143,10 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             mThirdId = mBundle.getString("thirdId");
             mUrl = mBundle.getString("dataUrl");
             mInfoTypeName = mBundle.getString("dataTitle");
+            imageUrl = mBundle.getString("imageUrl");
+            title = mBundle.getString("title");
+            subTitle = mBundle.getString("subTitle");
+
             try {
                 mDataType = mBundle.getString("dataType") == null ? 0 : Integer.parseInt(mBundle.getString("dataType"));
             } catch (NumberFormatException e) {
@@ -152,7 +173,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                             footIntent.putExtra("currentFragmentId", -1);
                             footIntent.putExtra("thirdId", mThirdId);
                             startActivity(footIntent);
-                            L.d("xxx","mThirdId: " + mThirdId);
+                            L.d("xxx", "mThirdId: " + mThirdId);
                         }
                         break;
                     case "dataInfo":// 资讯详情页面
@@ -162,8 +183,11 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                             basketDataIntent.putExtra("key", mUrl);
                             basketDataIntent.putExtra("type", mDataType);
                             basketDataIntent.putExtra("infoTypeName", mInfoTypeName);
+                            basketDataIntent.putExtra("imageurl",imageUrl );
+                            basketDataIntent.putExtra("title",title );
+                            basketDataIntent.putExtra("subtitle",subTitle );
                             startActivity(basketDataIntent);
-                            L.d("xxx","mUrl: " + mUrl);
+                            L.d("xxx", "mUrl: " + mUrl);
                         }
                         break;
                     case "basketball":// 篮球列表
@@ -195,6 +219,24 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
             }
         });
+        if(AppConstants.isTestEnv){
+            public_txt_title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
+                        lastClickTime = currentTime;
+                        clickCount = 0;
+                    }else{
+                        clickCount += 1;
+                        if(clickCount == 5){
+                            startActivity(new Intent(mContext,DebugConfigActivity.class));
+                            finish();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -244,6 +286,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setVisibility(View.VISIBLE);
         public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
+
+        public_txt_title = (TextView) findViewById(R.id.public_txt_title);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.home_page_swiperefreshlayout);// 下拉刷新
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
@@ -301,55 +345,63 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         // 过虑彩票菜单
         HomeMenusEntity menusEntity = new HomeMenusEntity();
         List<HomeContentEntity> contentList = new ArrayList<>();
-        for (int i = 0, len = jsonObject.getMenus().getContent().size(); i < len; i++) {
-            HomeContentEntity homeContentEntity = jsonObject.getMenus().getContent().get(i);
-            switch (homeContentEntity.getJumpAddr()){
-                case "30":
-                case "31":
-                case "350":
-                case "32":
-                case "33":
-                case "34":
-                case "35":
-                case "36":
-                case "37":
-                case "38":
-                case "39":
-                case "310":
-                case "311":
-                case "312":
-                case "313":
-                case "314":
-                case "315":
-                case "316":
-                case "317":
-                case "318":
-                case "319":
-                case "320":
-                case "321":
-                case "322":
-                case "323":
-                    // 正在审核中，不显示彩票信息
-                    if(!jsonObject.isAudit()){
+        if (jsonObject.getMenus() == null || jsonObject.getMenus().getContent() == null || jsonObject.getMenus().getContent().size() == 0) {
+            // 不处理
+        } else {
+            for (int i = 0, len = jsonObject.getMenus().getContent().size(); i < len; i++) {
+                HomeContentEntity homeContentEntity = jsonObject.getMenus().getContent().get(i);
+                switch (homeContentEntity.getJumpAddr()) {
+                    case "30":
+                    case "31":
+                    case "350":
+                    case "32":
+                    case "33":
+                    case "34":
+                    case "35":
+                    case "36":
+                    case "37":
+                    case "38":
+                    case "39":
+                    case "310":
+                    case "311":
+                    case "312":
+                    case "313":
+                    case "314":
+                    case "315":
+                    case "316":
+                    case "317":
+                    case "318":
+                    case "319":
+                    case "320":
+                    case "321":
+                    case "322":
+                    case "323":
+                        // 正在审核中，不显示彩票信息
+                        if (!jsonObject.isAudit()) {
+                            contentList.add(homeContentEntity);
+                        }
+                        break;
+                    default:
                         contentList.add(homeContentEntity);
-                    }
-                    break;
-                default:
-                    contentList.add(homeContentEntity);
-                    break;
+                        break;
+                }
             }
+            menusEntity.setContent(contentList);
+            menusEntity.setResult(jsonObject.getMenus().getResult());
         }
-        menusEntity.setContent(contentList);
-        menusEntity.setResult(jsonObject.getMenus().getResult());
         // 过虑彩票条目
         List<HomeOtherListsEntity> otherList = new ArrayList<>();
-        for (int i = 0, len = jsonObject.getOtherLists().size(); i < len; i++) {
-            HomeOtherListsEntity homeOtherListsEntity = jsonObject.getOtherLists().get(i);
-            if (homeOtherListsEntity.getContent().getLabType() == 3 && jsonObject.isAudit()) {
-                // 正在审核中，不显示彩票信息
-            } else {
-                // 审核完成，显示全部内容
-                otherList.add(homeOtherListsEntity);
+        if (jsonObject.getOtherLists() == null || jsonObject.getOtherLists().size() == 0) {
+            // 不处理
+        } else {
+            for (int i = 0, len = jsonObject.getOtherLists().size(); i < len; i++) {
+                HomeOtherListsEntity homeOtherListsEntity = jsonObject.getOtherLists().get(i);
+                if (homeOtherListsEntity.getContent().getLabType() == 3 && jsonObject.isAudit()) {
+                    // 正在审核中，不显示彩票信息
+                } else {
+                    // 审核完成，显示全部内容
+                    otherList.add(homeOtherListsEntity);
+                }
             }
         }
         mHomePagerEntity.setOtherLists(otherList);

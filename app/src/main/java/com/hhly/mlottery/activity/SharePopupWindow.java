@@ -2,6 +2,8 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -56,7 +58,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/5/6 11:02
- * @des ${TODO}
+ * @des 分享
  */
 public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Response {
     //微信好友
@@ -175,6 +177,12 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                         shareweixin(1);
                         break;
                     case QQ:
+                        if (!isQQClientAvailable(mContext)) {
+                            Toast.makeText(mContext, mContext.getResources().getString(R.string.share_uninstall_qq), Toast.LENGTH_SHORT).show();
+                            popupWindow.dismiss();
+                            return;
+                        }
+
                         if (mShareTencentCallBack != null) {
                             mShareTencentCallBack.onClick(0);
                         }
@@ -182,6 +190,13 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                         // Toast.makeText(mContext, "QQ", Toast.LENGTH_SHORT).show();
                         break;
                     case QZONE:
+
+                        if (!isQQClientAvailable(mContext)) {
+                            Toast.makeText(mContext, mContext.getResources().getString(R.string.share_uninstall_qq), Toast.LENGTH_SHORT).show();
+                            popupWindow.dismiss();
+
+                            return;
+                        }
                         if (mShareTencentCallBack != null) {
                             mShareTencentCallBack.onClick(1);
                         }
@@ -192,6 +207,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                     case SINA:
                         mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(mContext, ShareConstants.SINA);
                         mWeiboShareAPI.registerApp();
+
                         shareSina();
                         //注册
                         //   Toast.makeText(mContext, "新浪微博", Toast.LENGTH_SHORT).show();
@@ -208,7 +224,20 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 }
             }
         });
+    }
 
+    private boolean isQQClientAvailable(Context context) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mobileqq")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void shareweixin(final int flag) {
@@ -262,7 +291,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
 
 
     private TextObject getTextObj() {
-        String text = mContext.getResources().getString(R.string.share_from);
+        String text = mContext.getResources().getString(R.string.share_from) + map.get(ShareConstants.TITLE) + "\n" + map.get(ShareConstants.SUMMARY) + "\n";
         TextObject textObject = new TextObject();
         textObject.text = text;
         return textObject;
@@ -275,6 +304,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 // 1. 初始化微博的分享消息
                 WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
                 weiboMessage.textObject = getTextObj();
+
                 ImageObject imageObject = new ImageObject();
                 if (response.getWidth() > 200 || response.getHeight() > 200) {
                     response = ThumbnailUtils.extractThumbnail(response, MAX_IMAGE_SIZE, MAX_IMAGE_SIZE);
@@ -282,6 +312,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
 
                 imageObject.setImageObject(response);
                 weiboMessage.imageObject = imageObject;
+
                 WebpageObject mediaObject = new WebpageObject();
                 mediaObject.identify = Utility.generateGUID();
                 mediaObject.title = map.get(ShareConstants.TITLE);
@@ -303,6 +334,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 if (accessToken != null) {
                     token = accessToken.getToken();
                 }
+
 
                 mWeiboShareAPI.sendRequest((Activity) mContext, request, authInfo, token, new WeiboAuthListener() {
                     @Override
@@ -377,6 +409,7 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
             }
         });
 
+
         popupWindow.dismiss();
     }
 
@@ -386,13 +419,13 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         if (baseResp != null) {
             switch (baseResp.errCode) {
                 case WBConstants.ErrorCode.ERR_OK:
-                 //   Toast.makeText(mContext, "微博成功", Toast.LENGTH_LONG).show();
+                    //   Toast.makeText(mContext, "微博成功", Toast.LENGTH_LONG).show();
                     break;
                 case WBConstants.ErrorCode.ERR_CANCEL:
-                   // Toast.makeText(mContext, "微博取消", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(mContext, "微博取消", Toast.LENGTH_LONG).show();
                     break;
                 case WBConstants.ErrorCode.ERR_FAIL:
-                   // Toast.makeText(mContext, "微博失败" + "Error Message: " + baseResp.errMsg,Toast.LENGTH_LONG).show();
+                    // Toast.makeText(mContext, "微博失败" + "Error Message: " + baseResp.errMsg,Toast.LENGTH_LONG).show();
                     break;
             }
         }

@@ -138,6 +138,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final String isRelateMatch = bodys.get(j).getRelateMatch();// 是否有关联赛事
                         final int type = bodys.get(j).getType();// 关联赛事类型
                         final String infoTypeName = bodys.get(j).getInfoTypeName();// 赛事类型名
+                        final String imageurl = bodys.get(j).getPicUrl();// 分享图片Url
+                        final String title = bodys.get(j).getTitle();// 分享标题
+                        final String summary = bodys.get(j).getSummary();// 分享摘要
                         switch (labType) {
                             case 1:// 热门赛事
                                 MobclickAgent.onEvent(mContext, "HomePager_Competition_Item");
@@ -185,8 +188,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                     break;
                                                 case 1:// 页面
                                                 {
+
                                                     Intent intent = new Intent(mContext, WebActivity.class);
                                                     intent.putExtra("key", jumpAddr);
+                                                    intent.putExtra("imageurl",imageurl );
+                                                    intent.putExtra("title", title);// 分享标题
+                                                    intent.putExtra("subtitle", summary);
                                                     intent.putExtra("infoTypeName", infoTypeName);
                                                     if ("true".equals(isRelateMatch)) {
                                                         intent.putExtra("type", type);

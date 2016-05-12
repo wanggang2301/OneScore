@@ -269,7 +269,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
             public void onClick() {
                 ClipboardManager cmb = (ClipboardManager) FootballMatchDetailActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
                 cmb.setText("http://m.13322.com");
-                Toast.makeText(mContext, "复制链接成功", Toast.LENGTH_SHORT).show();
 
             }
         };
@@ -511,6 +510,11 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 //                matchDetail.getHomeTeamInfo().setLineup(playerInfos);
 //                matchDetail.getGuestTeamInfo().setLineup(playerInfos);
                 mMatchDetail = matchDetail;
+
+                //数据加载成功后显示分享
+                mShare.setVisibility(View.VISIBLE);
+
+
 
 
                 if (!isInitedViewPager) {//如果ViewPager未初始化
@@ -852,7 +856,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     objectAnimator.setDuration(500);
                     objectAnimator.start();
                 }
-
             }
         });
 
@@ -876,6 +879,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         findViewById(R.id.layout_match_header_back).setOnClickListener(this);
         mFocusImg.setOnClickListener(this);
         mShare.setOnClickListener(this);
+        mShare.setVisibility(View.GONE);
 
         boolean isFocus = FocusFragment.isFocusId(mThirdId);
 

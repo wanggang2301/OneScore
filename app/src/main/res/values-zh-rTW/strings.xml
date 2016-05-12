@@ -18,6 +18,8 @@
     <string name="share_copy">複製鏈接成功</string>
     <string name="share_from">来自壹比分:</string>
     <string name="share_uninstall_webchat">您還未安裝微信客戶端</string>
+    <string name="weibosdk_demo_not_support_api_hint">您還未安裝新浪微博客戶端</string>
+    <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
 
 
 
@@ -563,7 +565,7 @@
     <string name="basket_analyze_sides">雙方戰績</string>
     <string name="basket_analyze_history">歷史交鋒</string>
     <string name="basket_analyze_recent">近期戰績</string>
-    <string name="basket_analyze_fruture">未來三場</string>
+    <string name="basket_analyze_fruture">未來比賽</string>
     <string name="basket_analyze_more">更多戰績 >></string>
     <string name="basket_analyze_points_ranking">積分排名</string>
     <string name="basket_analyze_rank_team">排名/球隊</string>

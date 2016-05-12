@@ -789,6 +789,8 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
         }
 
+
+
         //图标
         mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
 
