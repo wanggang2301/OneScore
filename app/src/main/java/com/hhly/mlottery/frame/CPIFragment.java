@@ -1,10 +1,12 @@
 package com.hhly.mlottery.frame;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,19 +25,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
+import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
+import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -54,9 +61,10 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     private LinearLayout public_date_layout;//显示时间的layout
     private TextView public_txt_date;//显示时间的textview
     //热门，公司，筛选
-    private ImageView public_img_hot, public_img_company, public_img_filter;
+    private ImageView public_img_hot, public_img_company;
+    public static ImageView  public_img_filter;
     //判断是否选中选择热门
-    private boolean isSelectHot = true;
+    private boolean isSelectHot = false;
     /**
      * 切换Viewpager的标签
      */
@@ -84,7 +92,10 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //公司
     private CpiCompanyAdapter cpiCompanyAdapter;
 
-
+    private boolean isDefualFiltrate = true;
+    //当前处于那个界面
+    private int currentFragmentId = 0;
+    private List<NewOddsInfo.AllInfoBean> hotsTemp1 = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +110,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
         initView();
         initViewPager();
-        initData();
         return mView;
     }
 
@@ -137,6 +147,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public_img_hot = (ImageView) mView.findViewById(R.id.public_img_hot);
         public_img_hot.setOnClickListener(this);
         public_img_hot.setVisibility(View.VISIBLE);
+        public_img_hot.setSelected(true);
 
         public_img_company = (ImageView) mView.findViewById(R.id.public_img_company);
         public_img_company.setOnClickListener(this);
@@ -144,8 +155,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
         public_img_filter = (ImageView) mView.findViewById(R.id.public_img_filter);
         public_img_filter.setOnClickListener(this);
-        public_img_filter.setVisibility(View.VISIBLE);
-
+        public_img_filter.setVisibility(View.INVISIBLE);
     }
 
     /**指数三个Fragment的页面统计*/
@@ -277,16 +287,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     }
 
-    private void initData() {
-    }
-
-    /*private boolean isPlateFragment = true;
-    private boolean isPlate = false;
-    private boolean isBigFragment = false;
-    private boolean isBig = false;
-    private boolean isOpFragment = false;
-    private boolean isOp = false;*/
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -318,12 +318,17 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 if (isSelectHot) {
                     public_img_hot.setSelected(true);
                     isSelectHot = false;
-                    UiUtils.toast(mContext, "选择热门");
+                    for (Fragment fragment : fragments) {
+                        ((CPIOddsFragment) fragment).selectedHot(true);
+
+                    }
                 } else {
                     //否则取消热门筛选
                     public_img_hot.setSelected(false);
                     isSelectHot = true;
-                    UiUtils.toast(mContext, "取消热门");
+                    for (Fragment fragment : fragments) {
+                        ((CPIOddsFragment) fragment).selectedHot(false);
+                    }
                 }
                 break;
             case R.id.public_img_company://点击公司
@@ -332,10 +337,43 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 break;
             case R.id.public_img_filter://点击筛选
                 MobclickAgent.onEvent(mContext, "Football_CPIFragment_Filter");
-                startActivity(new Intent(mContext, FiltrateMatchConfigActivity.class));
+                if(CPIOddsFragment.mFileterTagsBean.size()==0 &&CPIOddsFragment.mFileterTagsBean==null)return;
+                currentFragmentId=mViewPager.getCurrentItem();
+                Intent intent = new Intent(mContext, CpiFiltrateActivity.class);
+                intent.putExtra("fileterTags", (Serializable) CPIOddsFragment.mFileterTagsBean);
+                intent.putExtra("isDefualFiltrate", isDefualFiltrate);
+                intent.putExtra("currentFragmentId", currentFragmentId + "");
+                intent.putExtra("linkedListChecked", ddList);
+                startActivityForResult(intent, 10086);
                 break;
             default:
                 break;
+        }
+    }
+
+    LinkedList<String> ddList=new LinkedList();
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data==null)return;
+        if(requestCode==10086){
+           switch (resultCode){
+               case 0:
+                   ArrayList<String> checkedIdExtra = (ArrayList<String>) data.getSerializableExtra("key");
+                   ddList.clear();
+                   ddList.addAll(checkedIdExtra);
+                   isDefualFiltrate = data.getBooleanExtra("isDefualFiltrates", false);
+                   break;
+               case 1:
+
+                   break;
+               case 2:
+
+                   break;
+               default:
+                   break;
+           }
         }
     }
 
@@ -381,8 +419,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                     //设置标题时间
                     public_txt_date.setText(mMapList.get(position).get("date"));
-                    for(Fragment fragment:fragments){
-                        ((CPIOddsFragment)fragment).InitData(mMapList.get(position).get("date"), 0,1,2);
+                    for (Fragment fragment : fragments) {
+                        ((CPIOddsFragment) fragment).switchd(mMapList.get(position).get("date"));
                     }
                     // 关闭 dialog弹窗
                     mAlertDialog.dismiss();
@@ -393,9 +431,15 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         } else {
             //否则就是公司
             titleView.setText(R.string.odd_company_txt);
-            cpiCompanyAdapter = new CpiCompanyAdapter(mContext, getDate(), dialog_list);
+//            cpiCompanyAdapter = new CpiCompanyAdapter(mContext, getComPany(mCompanyBean), dialog_list);
 //            SimpleAdapter companyAdapter = new SimpleAdapter(mContext, getDate(), R.layout.item_dialog_company, new String[]{"date"}, new int[]{R.id.item_checkedTextView});
-            dialog_list.setAdapter(cpiCompanyAdapter);
+//            dialog_list.setAdapter(cpiCompanyAdapter);
+//            initData();
+            if (CPIOddsFragment.mCompanyBean != null && CPIOddsFragment.mCompanyBean.size() > 0) {
+                cpiCompanyAdapter = new CpiCompanyAdapter(mContext, CPIOddsFragment.mCompanyBean, dialog_list);
+                dialog_list.setAdapter(cpiCompanyAdapter);
+            }
+
             //设置你的listview的item不能被获取焦点,焦点由listview里的控件获得
             dialog_list.setItemsCanFocus(false);
             //设置多选
@@ -405,31 +449,37 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             cpi_btn_ok.setVisibility(View.VISIBLE);
             dialog_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+                public void onItemClick(AdapterView<?> parent, View arg1, final int position, long arg3) {
                     checktv = (CheckedTextView) parent.getChildAt(position).findViewById(R.id.item_checkedTextView);
                     if (checktv.isChecked()) {
                         checktv.setChecked(false);
                     } else {
                         checktv.setChecked(true);
                     }
-//                    mMapList.get(position).get("date");
-                    // 关闭 dialog弹窗
-//                mAlertDialog.dismiss();
-                    // 记录点击的 item 位置
-//                        mItems = position;
                 }
             });
+            for (int j = 0; j < CPIOddsFragment.mAllInfoBean.size(); j++) {
+                if (CPIOddsFragment.mAllInfoBean.get(j).isHot()) {
+                    //筛选热门
+                    hotsTemp1.add(CPIOddsFragment.mAllInfoBean.get(j));
+                }
+            }
             cpi_btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    for (int i = 0; i < getDate().size(); i++) {
+                    if (CPIOddsFragment.mCompanyBean.size() == 0 && CPIOddsFragment.mCompanyBean == null)return;
+                    List<String >comNameList=new ArrayList<>();
+                    for (int i = 0; i < CPIOddsFragment.mCompanyBean.size(); i++) {
                         dialog_list.isItemChecked(i);
-                        if (dialog_list.isItemChecked(i) == true) {
-                            System.out.println(">>>true++" + mMapList.get(i).get("date"));
-                        } else {
-                            System.out.println(">>>false++");
 
+                        if (dialog_list.isItemChecked(i) == true) {
+
+                            comNameList.add(CPIOddsFragment.mCompanyBean.get(i).getComName());
                         }
+
+                    }
+                    for (Fragment fragment : fragments) {
+                        ((CPIOddsFragment) fragment).selectCompany2(hotsTemp1,comNameList);
                     }
                     mAlertDialog.dismiss();
                 }
@@ -488,7 +538,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         return mMapList;
     }
 
-    public class CPIFragmentAdapter extends FragmentPagerAdapter {
+    private class CPIFragmentAdapter extends FragmentPagerAdapter {
 
 
         private List<Fragment> mFragmentList;
