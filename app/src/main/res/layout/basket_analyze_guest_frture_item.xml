@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_grounding"
+    android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/basket_details_item_height2"
+            android:layout_marginRight="@dimen/basket_details_item_height"
+            >
+            <TextView
+                android:id="@+id/basket_future_guest_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textSize="@dimen/text_size_10"
+                android:paddingLeft="@dimen/basket_details_ball7"
+                android:textColor="@color/black_details_ball_textcolor"
+                android:layout_centerVertical="true" />
+            <ImageView
+                android:id="@+id/basket_future_guest_3"
+                android:layout_width="@dimen/basket_item_height"
+                android:layout_height="@dimen/basket_item_height"
+                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+            <TextView
+                android:id="@+id/basket_future_guest_2"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="--"
+                android:textColor="@color/black_details_ball_textcolor"
+                android:textSize="@dimen/text_size_12"
+                android:paddingRight="@dimen/basket_details_item_height4"
+                android:layout_centerVertical="true"
+                android:gravity="right"
+                android:layout_toLeftOf="@id/basket_future_guest_3"/>
+        </RelativeLayout>
+</LinearLayout>
