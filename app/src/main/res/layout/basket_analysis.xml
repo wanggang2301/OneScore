@@ -78,6 +78,7 @@
                                 android:layout_alignParentLeft="true"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_12"
+                                android:gravity="center"
                                 android:text="--"/>
                             <TextView
                                 android:id="@+id/basket_progressbar_home"
@@ -86,16 +87,10 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black_details_textcolor"
                                 android:textSize="@dimen/text_size_12"
+                                android:gravity="center"
                                 android:text="--"/>
                         </LinearLayout>
 
-                        <!--<ProgressBar-->
-                        <!--android:id="@+id/pgb"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:max="100"-->
-                        <!--android:progress="50"-->
-                        <!--android:secondaryProgress="75"/>-->
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -146,13 +141,6 @@
                                     android:layout_width="@dimen/basket_details_ball"
                                     android:layout_height="@dimen/basket_details_ball"
                                     android:background="@mipmap/basket_none"/>
-                            <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="30dp"-->
-                            <!--android:textSize="30sp"-->
-                            <!--android:paddingBottom="5dp"-->
-                            <!--android:textColor="#ffffff"-->
-                            <!--android:text="|"/>-->
                             <View
                                 android:layout_width="1px"
                                 android:layout_height="@dimen/basket_details_item_height1"
@@ -208,257 +196,290 @@
                             android:textColor="@color/black_details_textcolor"
                             android:gravity="center"
                             />
+
                         <LinearLayout
+                            android:id="@+id/basket_analyze_future"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="@dimen/basket_details_item_height"
-                            android:gravity="center"
+                            android:orientation="horizontal"
                             >
-                            <LinearLayout
+                            <com.hhly.mlottery.widget.NestedListView
+                                android:id="@+id/basket_analyze_frture_listview_guest"
                                 android:layout_width="0dp"
-                                android:layout_weight="5"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                >
+                                android:divider="@null">
+                            </com.hhly.mlottery.widget.NestedListView>
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    >
-                                    <TextView
-                                        android:id="@+id/basket_future_guest_date1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:textSize="@dimen/text_size_10"
-                                        android:paddingLeft="@dimen/basket_details_ball7"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:layout_centerVertical="true" />
-                                    <ImageView
-                                        android:id="@+id/basket_future_guest_image1"
-                                        android:layout_width="@dimen/basket_item_height"
-                                        android:layout_height="@dimen/basket_item_height"
-                                        android:layout_centerVertical="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignParentEnd="true" />
-                                    <TextView
-                                        android:id="@+id/basket_future_guest_name1"
-                                        android:layout_width="@dimen/x200"
-                                        android:layout_height="wrap_content"
-                                        android:singleLine="true"
-                                        android:text="--"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:paddingRight="@dimen/basket_details_item_height4"
-                                        android:layout_centerVertical="true"
-                                        android:gravity="right"
-                                        android:layout_toLeftOf="@id/basket_future_guest_image1"/>
-
-                                </RelativeLayout>
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/basket_details_item_height2"
-                                    >
-                                    <TextView
-                                        android:id="@+id/basket_future_guest_date2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingLeft="@dimen/basket_details_ball7"
-                                        android:layout_centerVertical="true" />
-                                    <ImageView
-                                        android:id="@+id/basket_future_guest_image2"
-                                        android:layout_width="@dimen/basket_item_height"
-                                        android:layout_height="@dimen/basket_item_height"
-                                        android:layout_centerVertical="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignParentEnd="true" />
-                                    <TextView
-                                        android:id="@+id/basket_future_guest_name2"
-                                        android:layout_width="@dimen/x200"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:paddingRight="@dimen/basket_details_item_height4"
-                                        android:layout_centerVertical="true"
-                                        android:gravity="right"
-                                        android:layout_toLeftOf="@id/basket_future_guest_image2"/>
-
-                                </RelativeLayout>
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/basket_details_item_height2"
-                                    >
-                                    <TextView
-                                        android:id="@+id/basket_future_guest_date3"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingLeft="@dimen/basket_details_ball7"
-                                        android:layout_centerVertical="true" />
-                                    <ImageView
-                                        android:id="@+id/basket_future_guest_image3"
-                                        android:layout_width="@dimen/basket_item_height"
-                                        android:layout_height="@dimen/basket_item_height"
-                                        android:layout_centerVertical="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignParentEnd="true" />
-                                    <TextView
-                                        android:id="@+id/basket_future_guest_name3"
-                                        android:layout_width="@dimen/x200"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:paddingRight="@dimen/basket_details_item_height4"
-                                        android:layout_centerVertical="true"
-                                        android:gravity="right"
-                                        android:layout_toLeftOf="@id/basket_future_guest_image3"/>
-
-                                </RelativeLayout>
-                            </LinearLayout>
-
-                            <!--<TextView-->
-                            <!--android:id="@+id/basket_midcourt"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:layout_height="100dp"-->
-                            <!--android:textSize="30sp"-->
-                            <!--android:paddingLeft="10dp"-->
-                            <!--android:paddingRight="10dp"-->
-                            <!--android:gravity="center"-->
-                            <!--android:textColor="#ffffff"-->
-                            <!--android:text="|"/>-->
-                            <View
+                            <TextView
+                                android:id="@+id/basket_analyze_line"
                                 android:layout_width="1px"
-                                android:layout_height="@dimen/basket_details_item_height3"
+                                android:layout_height="@dimen/basket_analyze_line1"
                                 android:background="@color/basket_parting_line"
-                                android:layout_marginLeft="@dimen/basket_details_item_height"
-                                android:layout_marginRight="@dimen/basket_details_item_height"
                                 />
-                            <LinearLayout
+
+                            <com.hhly.mlottery.widget.NestedListView
+                                android:id="@+id/basket_analyze_frture_listview_home"
                                 android:layout_width="0dp"
-                                android:layout_weight="5"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                >
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    >
-                                    <ImageView
-                                        android:id="@+id/basket_future_home_image1"
-                                        android:layout_width="@dimen/basket_item_height"
-                                        android:layout_height="@dimen/basket_item_height"
-                                        android:layout_centerVertical="true"/>
-                                    <TextView
-                                        android:id="@+id/basket_future_home_name1"
-                                        android:layout_width="@dimen/x200"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:layout_centerVertical="true"
-                                        android:layout_toRightOf="@id/basket_future_home_image1"
-                                        android:paddingLeft="@dimen/basket_details_item_height4"/>
-                                    <TextView
-                                        android:id="@+id/basket_future_home_date1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingRight="@dimen/basket_details_ball7"
-                                        android:layout_centerVertical="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignParentEnd="true"/>
-                                </RelativeLayout>
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/basket_details_item_height2"
-                                    >
-                                    <ImageView
-                                        android:id="@+id/basket_future_home_image2"
-                                        android:layout_width="@dimen/basket_item_height"
-                                        android:layout_height="@dimen/basket_item_height"
-                                        android:layout_centerVertical="true"/>
-                                    <TextView
-                                        android:id="@+id/basket_future_home_name2"
-                                        android:layout_width="@dimen/x200"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:layout_centerVertical="true"
-                                        android:layout_toRightOf="@id/basket_future_home_image2"
-                                        android:paddingLeft="@dimen/basket_details_item_height4"/>
-                                    <TextView
-                                        android:id="@+id/basket_future_home_date2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingRight="@dimen/basket_details_ball7"
-                                        android:layout_centerVertical="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignParentEnd="true"/>
-                                </RelativeLayout>
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/basket_details_item_height2"
-                                    >
-                                    <ImageView
-                                        android:id="@+id/basket_future_home_image3"
-                                        android:layout_width="@dimen/basket_item_height"
-                                        android:layout_height="@dimen/basket_item_height"
-                                        android:layout_centerVertical="true"/>
-                                    <TextView
-                                        android:id="@+id/basket_future_home_name3"
-                                        android:layout_width="@dimen/x200"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:singleLine="true"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:textSize="@dimen/text_size_12"
-                                        android:layout_centerVertical="true"
-                                        android:layout_toRightOf="@id/basket_future_home_image3"
-                                        android:paddingLeft="@dimen/basket_details_item_height4"/>
-                                    <TextView
-                                        android:id="@+id/basket_future_home_date3"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="--"
-                                        android:textSize="@dimen/text_size_10"
-                                        android:textColor="@color/black_details_ball_textcolor"
-                                        android:paddingRight="@dimen/basket_details_ball7"
-                                        android:layout_centerVertical="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignParentEnd="true"/>
-                                </RelativeLayout>
-                            </LinearLayout>
-
+                                android:divider="@null">
+                            </com.hhly.mlottery.widget.NestedListView>
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/basket_analyze_nodata1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/basket_analyze_nodata_hight"
+                            android:paddingTop="@dimen/basket_details_item_height"
+                            android:paddingBottom="@dimen/basket_details_item_height"
+                            android:textSize="@dimen/text_size_12"
+                            android:text="@string/basket_nodata"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:gravity="center"
+                            android:background="@color/black_grounding"
+                            android:visibility="gone"
+                            />
+
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:paddingBottom="@dimen/basket_details_item_height"-->
+                            <!--android:gravity="center"-->
+                            <!--android:visibility="gone"-->
+                            <!-->-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="0dp"-->
+                                <!--android:layout_weight="5"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:orientation="vertical"-->
+                                <!-->-->
+
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!-->-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_guest_date1"-->
+                                        <!--android:layout_width="wrap_content"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:textSize="@dimen/text_size_10"-->
+                                        <!--android:paddingLeft="@dimen/basket_details_ball7"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:layout_centerVertical="true" />-->
+                                    <!--<ImageView-->
+                                        <!--android:id="@+id/basket_future_guest_image1"-->
+                                        <!--android:layout_width="@dimen/basket_item_height"-->
+                                        <!--android:layout_height="@dimen/basket_item_height"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_alignParentTop="true"-->
+                                        <!--android:layout_alignParentRight="true"-->
+                                        <!--android:layout_alignParentEnd="true" />-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_guest_name1"-->
+                                        <!--android:layout_width="@dimen/x200"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:singleLine="true"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:textSize="@dimen/text_size_12"-->
+                                        <!--android:paddingRight="@dimen/basket_details_item_height4"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:gravity="right"-->
+                                        <!--android:layout_toLeftOf="@id/basket_future_guest_image1"/>-->
+                                <!--</RelativeLayout>-->
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginTop="@dimen/basket_details_item_height2"-->
+                                    <!-->-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_guest_date2"-->
+                                        <!--android:layout_width="wrap_content"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:textSize="@dimen/text_size_10"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:paddingLeft="@dimen/basket_details_ball7"-->
+                                        <!--android:layout_centerVertical="true" />-->
+                                    <!--<ImageView-->
+                                        <!--android:id="@+id/basket_future_guest_image2"-->
+                                        <!--android:layout_width="@dimen/basket_item_height"-->
+                                        <!--android:layout_height="@dimen/basket_item_height"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_alignParentTop="true"-->
+                                        <!--android:layout_alignParentRight="true"-->
+                                        <!--android:layout_alignParentEnd="true" />-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_guest_name2"-->
+                                        <!--android:layout_width="@dimen/x200"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:singleLine="true"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:textSize="@dimen/text_size_12"-->
+                                        <!--android:paddingRight="@dimen/basket_details_item_height4"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:gravity="right"-->
+                                        <!--android:layout_toLeftOf="@id/basket_future_guest_image2"/>-->
+
+                                <!--</RelativeLayout>-->
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginTop="@dimen/basket_details_item_height2"-->
+                                    <!-->-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_guest_date3"-->
+                                        <!--android:layout_width="wrap_content"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:textSize="@dimen/text_size_10"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:paddingLeft="@dimen/basket_details_ball7"-->
+                                        <!--android:layout_centerVertical="true" />-->
+                                    <!--<ImageView-->
+                                        <!--android:id="@+id/basket_future_guest_image3"-->
+                                        <!--android:layout_width="@dimen/basket_item_height"-->
+                                        <!--android:layout_height="@dimen/basket_item_height"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_alignParentTop="true"-->
+                                        <!--android:layout_alignParentRight="true"-->
+                                        <!--android:layout_alignParentEnd="true" />-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_guest_name3"-->
+                                        <!--android:layout_width="@dimen/x200"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:singleLine="true"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:textSize="@dimen/text_size_12"-->
+                                        <!--android:paddingRight="@dimen/basket_details_item_height4"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:gravity="right"-->
+                                        <!--android:layout_toLeftOf="@id/basket_future_guest_image3"/>-->
+
+                                <!--</RelativeLayout>-->
+                            <!--</LinearLayout>-->
+                            <!--<View-->
+                                <!--android:layout_width="1px"-->
+                                <!--android:layout_height="@dimen/basket_details_item_height3"-->
+                                <!--android:background="@color/basket_parting_line"-->
+                                <!--android:layout_marginLeft="@dimen/basket_details_item_height"-->
+                                <!--android:layout_marginRight="@dimen/basket_details_item_height"-->
+                                <!--/>-->
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="0dp"-->
+                                <!--android:layout_weight="5"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:orientation="vertical"-->
+                                <!-->-->
+
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!-->-->
+                                    <!--<ImageView-->
+                                        <!--android:id="@+id/basket_future_home_image1"-->
+                                        <!--android:layout_width="@dimen/basket_item_height"-->
+                                        <!--android:layout_height="@dimen/basket_item_height"-->
+                                        <!--android:layout_centerVertical="true"/>-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_home_name1"-->
+                                        <!--android:layout_width="@dimen/x200"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:singleLine="true"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:textSize="@dimen/text_size_12"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_toRightOf="@id/basket_future_home_image1"-->
+                                        <!--android:paddingLeft="@dimen/basket_details_item_height4"/>-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_home_date1"-->
+                                        <!--android:layout_width="wrap_content"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:textSize="@dimen/text_size_10"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:paddingRight="@dimen/basket_details_ball7"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_alignParentTop="true"-->
+                                        <!--android:layout_alignParentRight="true"-->
+                                        <!--android:layout_alignParentEnd="true"/>-->
+                                <!--</RelativeLayout>-->
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginTop="@dimen/basket_details_item_height2"-->
+                                    <!-->-->
+                                    <!--<ImageView-->
+                                        <!--android:id="@+id/basket_future_home_image2"-->
+                                        <!--android:layout_width="@dimen/basket_item_height"-->
+                                        <!--android:layout_height="@dimen/basket_item_height"-->
+                                        <!--android:layout_centerVertical="true"/>-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_home_name2"-->
+                                        <!--android:layout_width="@dimen/x200"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:singleLine="true"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:textSize="@dimen/text_size_12"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_toRightOf="@id/basket_future_home_image2"-->
+                                        <!--android:paddingLeft="@dimen/basket_details_item_height4"/>-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_home_date2"-->
+                                        <!--android:layout_width="wrap_content"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:textSize="@dimen/text_size_10"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:paddingRight="@dimen/basket_details_ball7"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_alignParentTop="true"-->
+                                        <!--android:layout_alignParentRight="true"-->
+                                        <!--android:layout_alignParentEnd="true"/>-->
+                                <!--</RelativeLayout>-->
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginTop="@dimen/basket_details_item_height2"-->
+                                    <!-->-->
+                                    <!--<ImageView-->
+                                        <!--android:id="@+id/basket_future_home_image3"-->
+                                        <!--android:layout_width="@dimen/basket_item_height"-->
+                                        <!--android:layout_height="@dimen/basket_item_height"-->
+                                        <!--android:layout_centerVertical="true"/>-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_home_name3"-->
+                                        <!--android:layout_width="@dimen/x200"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:singleLine="true"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:textSize="@dimen/text_size_12"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_toRightOf="@id/basket_future_home_image3"-->
+                                        <!--android:paddingLeft="@dimen/basket_details_item_height4"/>-->
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/basket_future_home_date3"-->
+                                        <!--android:layout_width="wrap_content"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:text="&#45;&#45;"-->
+                                        <!--android:textSize="@dimen/text_size_10"-->
+                                        <!--android:textColor="@color/black_details_ball_textcolor"-->
+                                        <!--android:paddingRight="@dimen/basket_details_ball7"-->
+                                        <!--android:layout_centerVertical="true"-->
+                                        <!--android:layout_alignParentTop="true"-->
+                                        <!--android:layout_alignParentRight="true"-->
+                                        <!--android:layout_alignParentEnd="true"/>-->
+                                <!--</RelativeLayout>-->
+                            <!--</LinearLayout>-->
+                        <!--</LinearLayout>-->
+
                         <TextView
                             android:id="@+id/basket_analyze_more_record"
                             android:layout_width="wrap_content"
@@ -468,10 +489,7 @@
                             android:textSize="@dimen/text_size_12"
                             android:textColor="@color/black_details_textcolor"
                             android:text="@string/basket_analyze_more"/>
-
                     </LinearLayout>
-
-
 
                     <TextView
                         android:layout_width="match_parent"
@@ -481,11 +499,8 @@
                         android:background="@color/black_title"
                         android:gravity="center"
                         android:textSize="@dimen/text_size_12"/>
-                    <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:background="#cc000000">-->
                     <LinearLayout
+                        android:id="@+id/basket_analyze_runking"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/basket_details_item_height2"
@@ -531,27 +546,7 @@
                                 android:textSize="@dimen/text_size_12"
                                 android:textColor="@color/black_details_ball_textcolor"
                                 android:text="@string/basket_analyze_winodds"/>
-                            <!--<TextView-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:gravity="center"-->
-                            <!--android:textSize="@dimen/text_size_12"-->
-                            <!--android:textColor="@color/black_details_ball_textcolor"-->
-                            <!--android:text="胜差"/>-->
-                            <!--<TextView-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_weight="1"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:gravity="end"-->
-                            <!--android:textSize="@dimen/text_size_12"-->
-                            <!--android:textColor="@color/black_details_ball_textcolor"-->
-                            <!--android:text="近况"/>-->
                         </LinearLayout>
-                        <!--<TextView-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="1dp"-->
-                            <!--android:background="#55000000"/>-->
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1px"
@@ -644,8 +639,19 @@
                                 android:text="--"/>
                         </LinearLayout>
                     </LinearLayout>
-                    <!--</LinearLayout>-->
-
+                    <TextView
+                        android:id="@+id/basket_analyze_nodata2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/basket_analyze_nodata_hight"
+                        android:paddingBottom="@dimen/basket_details_item_height"
+                        android:paddingTop="@dimen/basket_details_item_height"
+                        android:textSize="@dimen/text_size_12"
+                        android:text="@string/basket_nodata"
+                        android:textColor="@color/black_details_ball_textcolor"
+                        android:gravity="center"
+                        android:background="@color/black_grounding"
+                        android:visibility="gone"
+                        />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/basket_item_height"
@@ -655,75 +661,99 @@
                         android:text="@string/basket_analyze_recent_performance"
                         android:gravity="center"/>
                     <LinearLayout
+                        android:id="@+id/basket_analyze_scorewin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black_grounding"
-                        android:paddingTop="@dimen/basket_details_item_height2"
-                        android:paddingBottom="@dimen/basket_details_item_height2"
+                        android:orientation="vertical"
                         >
-                        <TextView
-                            android:id="@+id/basket_guest_scorewinix"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_ball_textcolor"
-                            android:text="--"/>
-                        <TextView
-                            android:id="@+id/basket_score_win"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:background="@color/black_grounding"
+                            android:paddingTop="@dimen/basket_details_item_height2"
+                            android:paddingBottom="@dimen/basket_details_item_height2"
+                            >
+                            <TextView
+                                android:id="@+id/basket_guest_scorewinix"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="@dimen/text_size_12"
+                                android:textColor="@color/black_details_ball_textcolor"
+                                android:text="--"/>
+                            <TextView
+                                android:id="@+id/basket_score_win"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_12"
+                                android:textColor="@color/black_details_ball_textcolor"
+                                />
+                            <TextView
+                                android:id="@+id/basket_home_scorewinsix"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_12"
+                                android:textColor="@color/black_details_ball_textcolor"
+                                android:text="--"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_ball_textcolor"
-                            />
-                        <TextView
-                            android:id="@+id/basket_home_scorewinsix"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_ball_textcolor"
-                            android:text="--"/>
+                            android:background="@color/black_grounding"
+                            android:paddingTop="@dimen/basket_details_item_height2"
+                            android:paddingBottom="@dimen/basket_details_item_height2"
+                            >
+                            <TextView
+                                android:id="@+id/basket_guest_scorelosesix"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="@dimen/text_size_12"
+                                android:textColor="@color/black_details_ball_textcolor"
+                                android:text="--"/>
+                            <TextView
+                                android:id="@+id/basket_score_lose"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_12"
+                                android:textColor="@color/black_details_ball_textcolor"
+                                />
+                            <TextView
+                                android:id="@+id/basket_home_scorelosesix"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_12"
+                                android:textColor="@color/black_details_ball_textcolor"
+                                android:text="--"/>
+                        </LinearLayout>
                     </LinearLayout>
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/basket_analyze_nodata3"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/basket_analyze_nodata_hight"
+                        android:paddingBottom="@dimen/basket_details_item_height"
+                        android:paddingTop="@dimen/basket_details_item_height"
+                        android:textSize="@dimen/text_size_12"
+                        android:text="@string/basket_nodata"
+                        android:textColor="@color/black_details_ball_textcolor"
+                        android:gravity="center"
                         android:background="@color/black_grounding"
-                        android:paddingTop="@dimen/basket_details_item_height2"
-                        android:paddingBottom="@dimen/basket_details_item_height2"
-                        >
-                        <TextView
-                            android:id="@+id/basket_guest_scorelosesix"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_ball_textcolor"
-                            android:text="--"/>
-                        <TextView
-                            android:id="@+id/basket_score_lose"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_ball_textcolor"
-                            />
-                        <TextView
-                            android:id="@+id/basket_home_scorelosesix"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black_details_ball_textcolor"
-                            android:text="--"/>
-                    </LinearLayout>
+                        android:visibility="gone"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/basket_analyze_nodata_hight"
+                        android:background="@color/black_grounding" />
                 </LinearLayout>
             </LinearLayout>
         </com.hhly.mlottery.view.ObservableScrollView>

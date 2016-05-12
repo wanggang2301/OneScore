@@ -441,7 +441,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             }
         }, BasketballDetailsBean.class);
     }
-
     /**
      * 判断当前是哪个fragment
      * 设置可以滑动的幅度
@@ -471,7 +470,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             propagateScroll(adjustedScrollY);
         }
     }
-
     /**
      * 滑动tab栏
      *
