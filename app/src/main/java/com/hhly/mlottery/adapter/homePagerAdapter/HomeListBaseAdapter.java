@@ -191,17 +191,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                     Intent intent = new Intent(mContext, WebActivity.class);
                                                     intent.putExtra("key", jumpAddr);
                                                     intent.putExtra("imageurl",imageurl );
-                                                    intent.putExtra("title", title);
+                                                    intent.putExtra("title", title);// 分享标题
                                                     intent.putExtra("subtitle", summary);
                                                     intent.putExtra("infoTypeName", infoTypeName);
                                                     if ("true".equals(isRelateMatch)) {
                                                         intent.putExtra("type", type);
                                                         intent.putExtra("thirdId", thirdId);
                                                     }
-
-
-
-
                                                     mContext.startActivity(intent);
                                                     break;
                                                 }
