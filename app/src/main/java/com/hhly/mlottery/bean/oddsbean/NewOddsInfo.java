@@ -287,6 +287,16 @@ public class NewOddsInfo {
         public static class ComListBean {
             private String comId;
             private String comName;
+            private boolean isShow;
+
+            public boolean isShow() {
+                return isShow;
+            }
+
+            public void setIsShow(boolean isShow) {
+                this.isShow = isShow;
+            }
+
             /**
              * left : 1.02
              * middle : -0.25

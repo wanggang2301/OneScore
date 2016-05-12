@@ -37,7 +37,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     /**
      * 已选择的联赛id
      */
-    private LinkedList<String> mCheckedIds = new LinkedList<>();
+    public static LinkedList<String> mCheckedIds = new LinkedList<>();
     private LinkedList<String> mTempCheckidsReset = new LinkedList<>();
     //所有联赛
     private List<NewOddsInfo.FileterTagsBean> mFileterTagsList = new ArrayList<>();
@@ -66,6 +66,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cpi_filtrate);
+//        mCheckedIds.clear();
         mContext = this;
         mFileterTagsList = (List<NewOddsInfo.FileterTagsBean>) getIntent().getSerializableExtra("fileterTags");
 
@@ -112,20 +113,21 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
 //        mTempCheckidsReset.addAll(mCheckedIds);
 
 //        if (isDefualFiltrate) {
-//            if (mFileterTagsList == null) return;
-//            for (int i = 0; i < mFileterTagsList.size(); i++) {
-//                //所有场次
-//                allSize += mFileterTagsList.get(i).getMatchsInLeague();
-//                if (mFileterTagsList.get(i).isHot()) {
-//                    hotsTemp.add(mFileterTagsList.get(i));
-//                    mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
-//                    checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
-//                } else {
-//                    normalTemp.add(mFileterTagsList.get(i));
-//                }
-//            }
-//        } else {
-        System.out.println(">>>dierci");
+            if (mFileterTagsList == null)return;
+        if(mCheckedIds.size()==0){
+            for (int i = 0; i < mFileterTagsList.size(); i++) {
+                //所有场次
+                allSize += mFileterTagsList.get(i).getMatchsInLeague();
+                if (mFileterTagsList.get(i).isHot()) {
+                    hotsTemp.add(mFileterTagsList.get(i));
+                    mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
+                    checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
+                } else {
+                    normalTemp.add(mFileterTagsList.get(i));
+                }
+            }
+        } else {
+//        System.out.println(">>>dierci");
 
         for (int i = 0; i < mFileterTagsList.size(); i++) {
             //所有场次
@@ -141,7 +143,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
             }
         }
 
-//        }
+        }
 
 
 
@@ -200,16 +202,15 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
             case R.id.cpi_filtrate_match_reset_btn:// 重置
 
                 mTempCheckidsReset.addAll(mCheckedIds);
-                mCheckedIds.clear();
+//                mCheckedIds.clear();
 
 
                 break;
             case R.id.cpi_filtrate_submit_btn:// 确定
-//                isDefualFiltrate = false;
                 Intent intent = new Intent();
                 intent.putExtra("key", mCheckedIds);
-//                intent.putExtra("isDefualFiltrates", isDefualFiltrate);
-                setResult(Integer.parseInt(currentFragmentId), intent);
+                System.out.println("<<mCheckedIds"+mCheckedIds);
+                setResult(0, intent);
 
                 finish();
 

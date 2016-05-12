@@ -19,6 +19,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.widget.CpiListView;
@@ -88,15 +89,15 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
 
     @Override
     public void onBindViewHolder(CPIViewHolder cpiViewHolder, final int position) {
-        if("plate".equals(stType)){
+        if(CPIFragment.TYPE_PLATE.equals(stType)){
             cpiViewHolder.cpi_item_home_txt.setText(R.string.odd_home_txt);
             cpiViewHolder.cpi_item_odds_txt.setText(R.string.odd_dish_txt);
             cpiViewHolder.cpi_item_guest_txt.setText( R.string.odd_guest_txt);
-        }else if("big".equals(stType)){
+        }else if(CPIFragment.TYPE_BIG.equals(stType)){
             cpiViewHolder.cpi_item_home_txt.setText( R.string.odd_home_big_txt);
             cpiViewHolder.cpi_item_odds_txt.setText( R.string.odd_dish_txt);
             cpiViewHolder.cpi_item_guest_txt.setText( R.string.odd_guest_big_txt);
-        }else if("op".equals(stType)){
+        }else if(CPIFragment.TYPE_OP.equals(stType)){
             cpiViewHolder.cpi_item_home_txt.setText( R.string.odd_home_op_txt);
             cpiViewHolder.cpi_item_odds_txt.setText( R.string.odd_dish_op_txt);
             cpiViewHolder.cpi_item_guest_txt.setText( R.string.odd_guest_op_txt);
