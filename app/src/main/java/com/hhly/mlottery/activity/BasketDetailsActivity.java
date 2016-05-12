@@ -1309,7 +1309,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     }
                     mApos.setVisibility(View.VISIBLE);
                 } else if (score.getMatchStatus() == HALF_GAME) {
-                    mMatchState.setText("half time");
+                    mMatchState.setText("half time  ");
                     mApos.setVisibility(View.GONE);
                 } else if (score.getMatchStatus() == THIRD_QUARTER) {
                     if (mMatch.getSection() == 2) {
@@ -1339,7 +1339,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 //设置剩余时间
                 mRemainTime.setText(score.getRemainTime()==null?"":score.getRemainTime());//为空的话就设置为空字符
 
-                if(mMatch.getMatchStatus()==HALF_GAME){
+                if(score.getMatchStatus()==HALF_GAME){
                     mRemainTime.setText("");//中场时无剩余时间。。后台可能中场也给时间。没办法
                 }
 
