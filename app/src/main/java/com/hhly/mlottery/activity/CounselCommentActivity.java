@@ -145,7 +145,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastTools.ShowQuickCenter(CounselCommentActivity.this,position+"");
+//                ToastTools.ShowQuickCenter(CounselCommentActivity.this,position+"");
             }
         });
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.comment_swiperefreshlayout);

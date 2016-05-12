@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.DateUtil;
-import com.hhly.mlottery.util.ToastTools;
 import com.sohu.cyan.android.sdk.entity.Comment;
 
 import java.util.List;
@@ -74,7 +73,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
             holder.nickname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastTools.ShowQuickCenter(mActivity, "nickname");
+//                    ToastTools.ShowQuickCenter(mActivity, "nickname");
                 }
             });
             holder.time = (TextView) convertView.findViewById(R.id.tv_time);
