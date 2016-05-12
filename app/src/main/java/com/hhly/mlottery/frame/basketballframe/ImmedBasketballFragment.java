@@ -722,12 +722,10 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 WebBasketMatch mWebBasketMatch = null;
                 try {
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
-                    L.e(TAG, "ws_json =success " + "11111111");
                 } catch (Exception e) {
                     ws_json = ws_json.substring(0, ws_json.length() - 1);
                     // Log.e(TAG, "ws_json = " + ws_json);
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
-                    L.e(TAG, "ws_json =error " + "222222222");
                 }
 
                 updateListViewItemStatus(mWebBasketMatch);  //比分更新
@@ -750,8 +748,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
 
     private void updateListViewItemStatus(WebBasketMatch webBasketMatch) {
-        L.d("matchchildern >>>>>>>>>>>>>>>>>", "收到推送");
-//        Toast.makeText(mContext, "bbbbbbbbbbbbbbbbbbb", Toast.LENGTH_SHORT).show();
         Map<String, String> data = webBasketMatch.getData();
         synchronized (childrenDataList) {
             for (List<BasketMatchBean> match : childrenDataList) {
@@ -775,10 +771,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                                     matchchildern.setIsHomeAnim(false);
                                 }
                                 updateMatchStatus(matchchildern, data);// 修改Match里面的数据
-
-                                L.d("matchchildern >>>>>>>>>>>>>>>>>", "比分更新");
-                                L.e("ws_json ========", "比分更新");
-//                                Toast.makeText(mContext, "aaaaaaaaaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
                             }
                         }else{
 
