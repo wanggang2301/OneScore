@@ -28,6 +28,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.ToastTools;
@@ -86,6 +87,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private Tencent mTencent;
 
     private SharePopupWindow sharePopupWindow;
+    private String model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +95,15 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         setContentView(R.layout.activity_web);
         sdk = CyanSdk.getInstance(this);
         //单点登录
-        CyUtils.loginSso(CyUtils.getImei(this), CyUtils.getImei(this), sdk);
+        CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
         initData();
         //获取评论信息 无需登录  这里主要拿评论总数和文章id
         loadTopic();
         initEvent();
+         model=DeviceInfo.getModel().replace(" ", "");
+        System.out.println("lzf" +model );
 
 //        getCommentCount();
 
@@ -110,7 +114,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         final ScrollView scrollview = (ScrollView) findViewById(R.id.scrollview);
         final IsBottomScrollView isbottomscrollview = (IsBottomScrollView) findViewById(R.id.isbottomscrollview);
         final View decview = getWindow().getDecorView();
-        decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        decview.getViewTreeObserver().addOnGlobalLayoutListener(   new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 reLayout(decview, scrollview);
@@ -161,6 +165,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             mSend.setVisibility(View.VISIBLE);
             mCommentCount.setVisibility(View.GONE);
             mEditText.setHint("");
+           if (model.equals("m2note")){
+               h-=145;
+           }
 
         } else if (h < 300) {//软键盘隐藏
             if (h != 0) {
@@ -180,11 +187,11 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+//            int x= DisplayUtil.px2dip(WebActivity.this, h - def);
+//            Log.e("lzfh - def", (h - def) + "");
             lp.setMargins(0, 0, 0, h - def);
             scrollview.requestLayout();
-
-        }
-
+         }
     }
 
     private void initEvent() {
@@ -379,7 +386,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
                         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
-                        CyUtils.loginSso(CyUtils.getImei(this), CyUtils.getImei(this), sdk);
+                        CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();

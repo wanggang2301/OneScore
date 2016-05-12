@@ -23,6 +23,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
@@ -60,6 +61,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     private CyanSdk sdk;
     private String url;
     private String title;
+    private String model;
     private static final String INTENT_PARAMS_URL = "url";
     private static final String INTENT_PARAMS_TITLE = "title";
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
@@ -86,6 +88,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
             loadTopic(url, title);
         }
         pullUpLoad();//上拉加载更多
+        model=DeviceInfo.getModel().replace(" ", "");
     }
 
     private void initListView() {
@@ -109,6 +112,9 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
 //                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
 //                    Log.e("lzf", "软件盘显示");
                     mEditText.setHint("");
+                    if (model.equals("m2note")){
+                        h-=145;
+                    }
 
                 } else if (h < 300) {//软键盘隐藏
                     if (h != 0) {
@@ -205,7 +211,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
                         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
-                        CyUtils.loginSso(CyUtils.getImei(this), CyUtils.getImei(this), sdk);
+                        CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();
