@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery"
     android:versionCode="12"
-    android:versionName="1.0.9">
+    android:versionName="1.0.9.0504">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -29,6 +29,8 @@
 
     <!-- 用于修改电源时间 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!--畅言权限-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".MyApp"
@@ -55,7 +57,6 @@
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -95,18 +96,17 @@
             android:name=".activity.NumberCustomizeActivity"
             android:screenOrientation="portrait" />
 
-        <!-- webview -->
+        <!-- webview   adjustResize|stateHidden  android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"-->
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-
+           android:windowSoftInputMode="adjustResize|stateHidden"/>
         <!--评论activity-->
         <activity
             android:name=".activity.CounselCommentActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
         <activity
             android:name=".activity.HomeTeamSoundActivity"
             android:screenOrientation="portrait" />
@@ -187,48 +187,9 @@
             android:screenOrientation="portrait">
 
         </activity>
-
-
-        <!--微信分享-->
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"></activity>
-
-        <!--QQ分享-->
-        <activity
-            android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="1104883879" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.tencent.connect.common.AssistActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!--新浪微博-->
-        <activity
-            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
-            android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"
-            android:screenOrientation="portrait"></activity>
         <!--消息推送服务-->
-        <service android:name=".service.umengPushService" />
-        <!--新版指数详情-->
-        <activity
-            android:name=".activity.CpiDetailsActivity"
-            android:screenOrientation="portrait" />
-
+        <service
+            android:name=".service.umengPushService"/>
     </application>
 
 </manifest>

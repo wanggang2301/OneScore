@@ -3,7 +3,6 @@ package com.hhly.mlottery.adapter;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,7 +26,6 @@ import java.util.List;
  */
 public class CounselFragmentLvAdapter extends BaseAdapter {
     private boolean isleft;
-    private LayoutInflater mLayoutInflater;
     private List<CounselBean.InfoIndexBean.InfosBean> mInfosList;//资讯列表数据集合父fg传来
     private DisplayImageOptions optionsleft,options; //
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;

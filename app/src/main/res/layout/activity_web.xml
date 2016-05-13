@@ -1,46 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/inputmethodlayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <include layout="@layout/layout_header" />
-
+    <!--头-->
     <RelativeLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ffffff">
+        android:layout_height="@dimen/header_height"
+        android:background="@color/colorPrimary"
+        >
 
-        <TextView
-            android:id="@+id/tv_check_info"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/public_img_back"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/y24"
-            android:layout_marginLeft="@dimen/x30"
-            android:layout_marginRight="@dimen/x30"
-            android:layout_marginTop="@dimen/y24"
-            android:background="@drawable/number_custom_button_bg_ok"
-            android:clickable="true"
-            android:gravity="center_horizontal"
-            android:paddingBottom="@dimen/y24"
-            android:paddingTop="@dimen/y24"
-            android:text="@string/webview_check_info"
-            android:textColor="@color/white"
-            android:textSize="@dimen/number_title"
-            android:visibility="gone" />
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@mipmap/back"/>
 
-        <com.hhly.mlottery.widget.ProgressWebView
-            android:id="@+id/baseweb_webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/tv_check_info"
-            android:fadeScrollbars="true"
-            android:scrollbarStyle="insideOverlay" />
+        <TextView
+            android:id="@+id/public_txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+        <!--addtjl添加中间日期显示-->
 
     </RelativeLayout>
+    <!--为了查看详细数据按钮不吸底-->
+    <com.hhly.mlottery.view.IsBottomScrollView
+        android:id="@+id/isbottomscrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/scrollview"
+        android:layout_below="@+id/top"
+        >
 
-    <include layout="@layout/inputcomment_layout" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <com.hhly.mlottery.widget.ProgressWebView
+                android:id="@+id/baseweb_webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fadeScrollbars="true"
+                android:scrollbarStyle="insideOverlay"/>
+
+            <TextView
+                android:id="@+id/tv_check_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/y24"
+                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginRight="@dimen/x30"
+                android:layout_marginTop="@dimen/y24"
+                android:background="@drawable/number_custom_button_bg_ok"
+                android:clickable="true"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/y24"
+                android:paddingTop="@dimen/y24"
+                android:text="@string/webview_check_info"
+                android:textColor="@color/white"
+                android:textSize="@dimen/number_title"
+                />
+        </RelativeLayout>
+
+    </com.hhly.mlottery.view.IsBottomScrollView>
+    <!--解决adjustresize和透明状态栏的冲突-->
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+
+        <include layout="@layout/inputcomment_layout"/>
+    </ScrollView>
+
+</RelativeLayout>

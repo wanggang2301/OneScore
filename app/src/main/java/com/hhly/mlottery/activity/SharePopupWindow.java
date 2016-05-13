@@ -228,6 +228,10 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
 
     private boolean isQQClientAvailable(Context context) {
         final PackageManager packageManager = context.getPackageManager();
+
+        
+
+
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
         if (pinfo != null) {
             for (int i = 0; i < pinfo.size(); i++) {
