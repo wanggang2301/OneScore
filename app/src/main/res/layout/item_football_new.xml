@@ -83,7 +83,6 @@
                     android:paddingLeft="@dimen/x4"
                     android:paddingRight="@dimen/x4"
                     android:text="0.75"
-                    android:textColor="@color/blue"
                     android:textSize="@dimen/item_football_left_odds" />
 
                 <TextView
@@ -106,7 +105,6 @@
                     android:paddingLeft="@dimen/x4"
                     android:paddingRight="@dimen/x4"
                     android:text="1.07"
-                    android:textColor="@color/yellow"
                     android:textSize="@dimen/item_football_right_odds" />
 
 
