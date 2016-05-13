@@ -344,7 +344,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             public synchronized void onResponse(final HomePagerEntity jsonObject) {
                 if (jsonObject != null) {// 请求成功
                     mHomePagerEntity = jsonObject;
-                    L.d("xxx","isAudit:" +jsonObject.isAudit());
+                    L.d("xxx","isAudit:" +jsonObject.getIsAudit());
                     isAuditHandle(jsonObject);
                     if (mHomePagerEntity.getResult() == 200) {
                         switch (num) {
@@ -413,7 +413,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     case "322":
                     case "323":
                         // 正在审核中，不显示彩票信息
-                        if (!jsonObject.isAudit()) {
+                        if ("false".equals(jsonObject.getIsAudit())) {
                             contentList.add(homeContentEntity);
                         }
                         break;
@@ -432,7 +432,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         } else {
             for (int i = 0, len = jsonObject.getOtherLists().size(); i < len; i++) {
                 HomeOtherListsEntity homeOtherListsEntity = jsonObject.getOtherLists().get(i);
-                if (homeOtherListsEntity.getContent().getLabType() == 3 && jsonObject.isAudit()) {
+                if (homeOtherListsEntity.getContent().getLabType() == 3 && "true".equals(jsonObject.getIsAudit())) {
                     // 正在审核中，不显示彩票信息
                 } else {
                     // 审核完成，显示全部内容
