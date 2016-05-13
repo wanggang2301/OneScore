@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+
     <!--头-->
     <RelativeLayout
         android:id="@+id/top"
@@ -12,8 +14,8 @@
         android:layout_height="@dimen/header_height"
         android:background="@color/colorPrimary"
         >
-
-        <ImageView
+        <include layout="@layout/layout_header"/>
+        <!--<ImageView
             android:id="@+id/public_img_back"
             style="@style/RippleBackgroudBorderless"
             android:layout_width="wrap_content"
@@ -41,7 +43,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"/>
 
-        <!--addtjl添加中间日期显示-->
+        &lt;!&ndash;addtjl添加中间日期显示&ndash;&gt;-->
 
     </RelativeLayout>
     <!--为了查看详细数据按钮不吸底-->

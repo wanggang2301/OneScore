@@ -27,6 +27,7 @@
             android:layout_marginLeft="@dimen/x8"
             android:textColor="@color/white"
             android:text=""
+            android:singleLine="true"
             />
 
     </LinearLayout>

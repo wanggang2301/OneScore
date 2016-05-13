@@ -46,4 +46,7 @@ public interface MyConstants {
 	String BASKETBALL_rbSizeBall = "basketball_RBSIZEBALL";// 大小球
 	String BASKETBALL_RBOCOMPENSATE = "basketball_rbOCompensate";// 欧赔
 	String BASKETBALL_RBNOTSHOW = "basketball_rbNotShow";// 不显示
+
+	//启动页url
+	String START_IMAGE_URL="start_image_url";
 }

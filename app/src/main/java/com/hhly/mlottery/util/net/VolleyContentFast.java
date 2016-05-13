@@ -98,7 +98,7 @@ public class VolleyContentFast {
 
         String tempUrl = url;
 
-        L.e(TAG,"┍—————————————————————————————————————————————————————————————————————————————");
+        L.e(TAG, "┍—————————————————————————————————————————————————————————————————————————————");
 
         if (method == Request.Method.GET) {
             tempUrl = appendLanguage(url);
@@ -127,7 +127,7 @@ public class VolleyContentFast {
             @Override
             public void onResponse(String response) {
                 L.d(TAG, "request success.");
-                L.i(TAG, "[ response = " + response+" ]");
+                L.i(TAG, "[ response = " + response + " ]");
 
                 if (response == null) {
                     VolleyException volleyException = new VolleyException();
@@ -153,7 +153,7 @@ public class VolleyContentFast {
                     successlistener.onResponse((T) object);
                 }
 
-                L.e(TAG,"┗—————————————————————————————————————————————————————————————————————————————");
+                L.e(TAG, "┗—————————————————————————————————————————————————————————————————————————————");
 
             }
         }, new Response.ErrorListener() {
@@ -164,7 +164,7 @@ public class VolleyContentFast {
                 volleyException.setErrorCode(ERROR_CODE_VOLLEY_ERROR);
                 volleyException.setVolleyError(volleyError);
                 errorListener.onErrorResponse(volleyException);
-                L.e(TAG,"┗—————————————————————————————————————————————————————————————————————————————");
+                L.e(TAG, "┗—————————————————————————————————————————————————————————————————————————————");
             }
         }) {
             @Override
@@ -180,8 +180,8 @@ public class VolleyContentFast {
 
         if (retryPolicy != null) {
             stringRequest.setRetryPolicy(retryPolicy);
-        }else{
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000,1,1));
+        } else {
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
         }
         mQueue.add(stringRequest);
     }
@@ -211,10 +211,24 @@ public class VolleyContentFast {
     }
 
     /**
+     * 网络请求，GET方式，返回没有转化的JSON（无参），可设置超时参数和重复请求
+     * @param url
+     * @param params
+     * @param retryPolicy
+     * @param successlistener
+     * @param errorListener
+     * @param clazz
+     */
+    public static <T> void requestJsonByGet(String url, Map<String, String> params, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<T> successlistener, final ResponseErrorListener errorListener, final Class clazz) {
+        request(url, params, Request.Method.GET, retryPolicy, successlistener, errorListener, clazz, RESPONSE_TYPE_JSON);
+    }
+
+    /**
      * 网络请求，GET方式，返回没有转化的string
      *
      * @param url             链接
      * @param params          参数
+     * @param retryPolicy
      * @param successlistener 成功回调接口
      * @param errorListener   错误回掉接口
      */

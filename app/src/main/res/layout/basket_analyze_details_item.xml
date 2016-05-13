@@ -17,17 +17,6 @@
         <!--android:paddingTop="@dimen/basket_details_ball6">-->
 
         <TextView
-            android:id="@+id/basket_details_team_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:text="乙蓝甲乙蓝甲"
-            android:singleLine="true"
-            android:textColor="@color/black_details_textcolor"
-            android:textSize="@dimen/text_size_10" />
-
-        <TextView
             android:id="@+id/basket_details_data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -37,6 +26,16 @@
             android:textColor="@color/black_details_textcolor"
             android:textSize="@dimen/text_size_10" />
 
+        <TextView
+            android:id="@+id/basket_details_team_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="乙蓝甲乙蓝甲"
+            android:singleLine="true"
+            android:textColor="@color/black_details_textcolor"
+            android:textSize="@dimen/text_size_10" />
         <TextView
             android:id="@+id/basket_details_guest_name"
             android:layout_width="0dp"
