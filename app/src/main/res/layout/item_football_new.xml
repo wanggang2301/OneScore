@@ -83,6 +83,7 @@
                     android:paddingLeft="@dimen/x4"
                     android:paddingRight="@dimen/x4"
                     android:text="0.75"
+                    android:textColor="@color/version"
                     android:textSize="@dimen/item_football_left_odds" />
 
                 <TextView
@@ -93,6 +94,7 @@
                     android:layout_toRightOf="@id/item_football_left_odds"
                     android:paddingLeft="@dimen/x4"
                     android:paddingRight="@dimen/x4"
+                    android:textColor="@color/msg"
                     android:text="两球半/三"
                     android:textSize="@dimen/item_football_handicap_value" />
 
@@ -104,6 +106,7 @@
                     android:layout_toRightOf="@id/item_football_handicap_value"
                     android:paddingLeft="@dimen/x4"
                     android:paddingRight="@dimen/x4"
+                    android:textColor="@color/version"
                     android:text="1.07"
                     android:textSize="@dimen/item_football_right_odds" />
 
