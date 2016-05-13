@@ -1,6 +1,8 @@
 package com.hhly.mlottery.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
 
 import com.sohu.cyan.android.sdk.api.CallBack;
 import com.sohu.cyan.android.sdk.api.Config;
@@ -10,13 +12,14 @@ import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.sohu.cyan.android.sdk.http.CyanRequestListener;
 
 /**
- * @author
+ * @author lzf
  * @ClassName:
- * @Description:
+ * @Description: 暢言工具類
  * @date
  */
 public class CyUtils {
-    public  static  boolean isLogin=false;
+    public static boolean isLogin = false;
+
     //初始化畅言
     public static void initCy(Context context) {
         Config config = new Config();
@@ -30,8 +33,9 @@ public class CyUtils {
             L.i("lzf初始化畅言失败");
         }
     }
+
     //单点登录
-    public static void loginSso(String id,String nickname,CyanSdk sdk) {
+    public static void loginSso(String id, String nickname, CyanSdk sdk) {
         AccountInfo accountInfo = new AccountInfo();
         accountInfo.isv_refer_id = id;//应用自己的用户id
         accountInfo.nickname = nickname;//应用自己的用户昵称
@@ -42,17 +46,19 @@ public class CyUtils {
                 // token
 //                Set<String> set = CyanSdk.getCookie();
                 L.i("lzf登录成功");
-                isLogin=true;
+                isLogin = true;
             }
+
             @Override
             public void error(CyanException e) {
                 L.i("lzf登录失败");
-                isLogin=false;
+                isLogin = false;
             }
         });
     }
+
     //提交评论 需登录  否则提交失败
-    public static void  submitComment(long topicid,String comment,CyanSdk sdk,CyanRequestListener requestListener) {
+    public static void submitComment(long topicid, String comment, CyanSdk sdk, CyanRequestListener requestListener) {
 
         try {
             sdk.submitComment(topicid, comment, 3, "4", 5, 6.0f, "7", requestListener);
@@ -60,6 +66,18 @@ public class CyUtils {
         } catch (CyanException e) {
             e.printStackTrace();
             L.i("lzfsendfail");
+        }
+
+    }
+
+    /**
+     * 隐藏原生键盘
+     */
+    public static  void hideKeyBoard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (activity.getCurrentFocus() != null) {
+            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
+                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
     }

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery"
     android:versionCode="12"
-    android:versionName="1.0.9">
+    android:versionName="1.0.9.0512">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -95,18 +95,17 @@
             android:name=".activity.NumberCustomizeActivity"
             android:screenOrientation="portrait" />
 
-        <!-- webview -->
+        <!-- webview   adjustResize|stateHidden  android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"-->
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-
+           android:windowSoftInputMode="adjustResize|stateHidden"/>
         <!--评论activity-->
         <activity
             android:name=".activity.CounselCommentActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
         <activity
             android:name=".activity.HomeTeamSoundActivity"
             android:screenOrientation="portrait" />
@@ -184,9 +183,8 @@
 
         <activity
             android:name=".activity.FeedbackActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"></activity>
 
-        </activity>
 
 
         <!--微信分享-->

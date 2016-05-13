@@ -7,12 +7,15 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,38 +28,45 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.UmengInfo;
 import com.hhly.mlottery.bean.UpdateInfo;
+import com.hhly.mlottery.bean.WelcomeUrl;
+import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.FileUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.bitmap.core.BitmapCache;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.HttpHandler;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +80,10 @@ import java.util.TimerTask;
  * @date 2015-11-5 上午11:32:35
  */
 public class WelcomeActivity extends BaseActivity {
+    private static final int GET_SAME_SUCCESS = 1;
+    private static final int GET_IMAGE_SUCCESS = 2;
+    private static final int INIT_IMAGE_ERROR = 3;
+    private static final int GET_IMAGE_NODATA = 4;
     private boolean isToHome = true;
     private ImageView imageAD;// 启动图
 
@@ -86,9 +100,7 @@ public class WelcomeActivity extends BaseActivity {
     private TextView tv_currversion;
 
     private static final int GET_INFO_SUCCESS = 10; // 获取版本信息成功
-    private static final int SERVER_ERROR = 11; // 服务器异常
     private static final int IO_ERROR = 13; // IO异常
-    private static final int TIMEOUT_ERROR = 14; // 超时
     private static final int INFO_IS_NULL = 15; // 超时
 
     private boolean interceptFlag = false;
@@ -116,7 +128,6 @@ public class WelcomeActivity extends BaseActivity {
     private Thread thread;
 
     private boolean IsInitInfo = false;
-
     private Timer timer;
 
     private String REQTYPE = "3";// 终端类型 3手机app
@@ -129,6 +140,11 @@ public class WelcomeActivity extends BaseActivity {
     //	private LocationManager locationManager;
     public PackageManager mPackageManager;
     public static PackageInfo mPackageInfo;
+    private String mStartimageUrl;
+
+    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
+    private DisplayImageOptions options;
+
 
     @SuppressWarnings("unused")
     @Override
@@ -146,7 +162,20 @@ public class WelcomeActivity extends BaseActivity {
             e.printStackTrace();
             // 此异常不会发生
         }
+        ;
 
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .resetViewBeforeLoading(true)
+                .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
+                .defaultDisplayImageOptions(options)
+                .build();
+        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
+        universalImageLoader.init(config);
 /*		 获取经纬度
 //		String serviceName = Context.LOCATION_SERVICE;
 //		locationManager = (LocationManager) getSystemService(serviceName);
@@ -160,23 +189,48 @@ public class WelcomeActivity extends BaseActivity {
 //		location = locationManager.getLastKnownLocation(provider);
 		获取经纬度end */
 
-
         getUmeng();
         msg = Message.obtain();
 
-        thread = new Thread(new CheckVersionTask());
-        thread.start();
+       /* thread = new Thread(new CheckVersionTask());
+        thread.start();*/
+        if (AppConstants.isGOKeyboard) {
+            if (MyApp.isLanguage.equals("rTW")) {
+                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
+            } else {
+                imageAD.setBackgroundResource(R.mipmap.welcome_en);
+            }
+        } else {//如果是国内版
+            if (MyApp.isLanguage.equals("rCN")) {// 如果是中文简体
 
-        final long start = System.currentTimeMillis(); // 记录起始时间
+                imageAD.setBackgroundResource(R.mipmap.welcome);
+            } else if (MyApp.isLanguage.equals("rTW")) {
+                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
+            }
+        }
 
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getStartImageUrl();
+            }
+        }, 1000);
+        //启动页加载图片url
+        // getStartImageUrl();
+        //final long start = System.currentTimeMillis(); // 记录起始时间
+/*
         timer = new Timer();
 
         TimerTask timerTask = new TimerTask() {
 
             @Override
             public void run() {
+                timer.cancel();
+                msg.what = IO_ERROR;
+                handler.sendMessage(msg);
                 // TODO Auto-generated method stub
-                long end = System.currentTimeMillis();
+                *//*long end = System.currentTimeMillis();
                 //Log.i("time2", "" + (end - start));
 
                 if ((end - start) < 3000) {
@@ -190,27 +244,15 @@ public class WelcomeActivity extends BaseActivity {
                 } else {
                     //Log.i("time2", "失败");
                     timer.cancel();
-                    msg.what = TIMEOUT_ERROR;
+                    msg.what = IO_ERROR;
                     handler.sendMessage(msg);
-                }
+                }*//*
             }
         };
 
-        timer.schedule(timerTask, 1000, 1000);
+        timer.schedule(timerTask, 6000, 1000);*/
         //如果是国际版
-        if (AppConstants.isGOKeyboard) {
-            if (MyApp.isLanguage.equals("rTW")) {
-                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-            } else {
-                imageAD.setBackgroundResource(R.mipmap.welcome_en);
-            }
-        } else {//如果是国内版
-            if (MyApp.isLanguage.equals("rCN")) {// 如果是中文简体
-                imageAD.setBackgroundResource(R.mipmap.welcome);
-            } else if (MyApp.isLanguage.equals("rTW")) {
-                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-            }
-        }
+
 
         //纯净版，默认不显示赔率
         if (AppConstants.fullORsimple && !PreferenceUtil.getBoolean(MyConstants.DEFUALT_SETTING, false)) {
@@ -223,9 +265,13 @@ public class WelcomeActivity extends BaseActivity {
 
     }
 
+    /* //设置启动页背景
+    private void  setBackgroundImage(){
+
+
+    }*/
     // 启动动画
     public void setHideTranslateAnimation() {
-
         if (!isToHome) {
             return;
         }
@@ -233,11 +279,12 @@ public class WelcomeActivity extends BaseActivity {
 
         // 防止闪屏
         AlphaAnimation aa = new AlphaAnimation(1.0f, 1.0f);
-        aa.setDuration(1000);
+        aa.setDuration(3000);
         aa.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
-                gotoHomeActivity();// 跳转到选择
+                //判断更新
+                //gotoHomeActivity();
             }
 
             @Override
@@ -246,6 +293,10 @@ public class WelcomeActivity extends BaseActivity {
 
             @Override
             public void onAnimationStart(Animation animation) {
+                Log.v(TAG,"onAnimationStart+++++++++"+mStartimageUrl);
+                thread = new Thread(new CheckVersionTask());
+                thread.start();
+
             }
         });
         imageAD.startAnimation(aa);
@@ -287,8 +338,7 @@ public class WelcomeActivity extends BaseActivity {
         }
         params.addBodyParameter("IMEI", DeviceInfo.getDeviceId(mContext));
         params.addBodyParameter("IMSI", DeviceInfo.getSubscriberId(mContext));
-
-        params.addBodyParameter("DN", DeviceInfo.getManufacturer());// 手机厂商
+         params.addBodyParameter("DN", DeviceInfo.getManufacturer());// 手机厂商
         params.addBodyParameter("DT", DeviceInfo.getModel());// 手机型号
         if (location != null) {// 如果获取到当前位置
             double lat = location.getLatitude();
@@ -344,74 +394,6 @@ public class WelcomeActivity extends BaseActivity {
         }
     }
 
-    /**
-     * volley
-     */
-    // private void getUmeng2() {
-    // String umengURL = BaseURLs.UMENG_CHANNEL_URL; // 取得服务器地址
-    // Map<String, String> params = new HashMap<String, String>();
-    // params.put("REQTYPE", REQTYPE);
-    // if (readOAuth2()==null) {
-    // params.put("TERID", TERID);
-    // }else if(readOAuth2()!=null){
-    // params.put("TERID", readOAuth2());
-    // }
-    // params.put("IMEI", DeviceInfo.getDeviceId(mContext));
-    // params.put("IMSI", DeviceInfo.getSubscriberId(mContext));
-    //
-    // params.put("DN", DeviceInfo.getManufacturer());// 手机厂商
-    // params.put("DT", DeviceInfo.getModel());// 手机型号
-    // if (location != null) {//如果获取到当前位置
-    // double lat = location.getLatitude();
-    // double lng = location.getLongitude();
-    // params.put("LA", ""+lat);// 经度
-    // params.put("LO", ""+lng);// 纬度
-    // }else if(location==null){//如果当前位置没获取到
-    // params.put("LA", "");// 经度
-    // params.put("LO", "");// 纬度
-    // }
-    //
-    //
-    // params.put("OS", "android");// 终端手机操作系统
-    // try {
-    // ApplicationInfo appInfo =
-    // getPackageManager().getApplicationInfo(getPackageName(),
-    // PackageManager.GET_META_DATA);
-    // CHANNEL_ID = appInfo.metaData.getString("UMENG_CHANNEL");
-    // } catch (NameNotFoundException e) {
-    // e.printStackTrace();
-    // }
-    // params.put("CHANNEL", CHANNEL_ID);// umeng渠道号
-    // params.put("APPVER", getVersionName());// 版本号
-    // mRequestQueue=Volley.newRequestQueue(mContext);
-    // StringRequest stringRequest = new StringRequest(Method.POST, umengURL,
-    // new Response.Listener<String>() {
-    //
-    // @Override
-    // public void onResponse(String json) {
-    // // TODO Auto-generated method stub
-    // Gson g=new Gson();
-    // mUmengInfo =g.fromJson(json, UmengInfo.class);
-    //
-    // }
-    // }, new Response.ErrorListener() {
-    //
-    // @Override
-    // public void onErrorResponse(VolleyError arg0) {
-    // // TODO Auto-generated method stub
-    //
-    // }
-    // }){
-    // @Override
-    // protected Map<String, String> getParams() throws AuthFailureError {
-    // // TODO Auto-generated method stub
-    // return super.getParams();
-    // }
-    //
-    // };
-    // mRequestQueue.add(stringRequest);
-    // }
-
     private class CheckVersionTask implements Runnable {
 
         @Override
@@ -423,10 +405,50 @@ public class WelcomeActivity extends BaseActivity {
         }
     }
 
+    private void getStartImageUrl() {
+        // 1、取得启动也url
+        String serverUrl = BaseURLs.URL_STARTPIC;
+        //String serverUrl = "http://192.168.31.48:8888/mlottery/core/mainPage.findAndroidStartupPic.do";
+        // 2、连接服务器
+        VolleyContentFast.requestJsonByGet(serverUrl, null, new DefaultRetryPolicy(3000, 1, 1), new VolleyContentFast.ResponseSuccessListener<WelcomeUrl>() {
+            @Override
+            public synchronized void onResponse(final WelcomeUrl json) {
+                if ("200".equals(json.getResult() + "") && json != null) {
+
+                    if (json.getUrl().isEmpty()) {
+                        //没有图片 不显示
+                        imageHandler.sendEmptyMessage(GET_IMAGE_NODATA);
+                    } else {
+                        if (PreferenceUtil.getString(MyConstants.START_IMAGE_URL, "").equals(json.getUrl())) {
+                            mStartimageUrl = PreferenceUtil.getString(MyConstants.START_IMAGE_URL, "");
+                            imageHandler.sendEmptyMessage(GET_IMAGE_SUCCESS);
+                        } else {
+                            mStartimageUrl = json.getUrl();
+                            //网络请求图片成功
+                            imageHandler.sendEmptyMessage(GET_IMAGE_SUCCESS);
+                        }
+                    }
+                } else {
+                    //如过json为空代表无图片显示
+                    imageHandler.sendEmptyMessage(GET_IMAGE_NODATA);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                //请求失败
+                Log.v(TAG,"图片请求超时了"+mStartimageUrl);
+                imageHandler.sendEmptyMessage(INIT_IMAGE_ERROR);
+
+            }
+        }, WelcomeUrl.class);
+
+//
+    }
+
     private void checkVersionUpdate() {
-
         // 1、取得服务器地址
-
+        Log.v(TAG,"checkVersionUpdate"+mStartimageUrl);
         String serverUrl = BaseURLs.URL_VERSION_UPDATE; // 取得服务器地址
         Map<String, String> map = new HashMap<String, String>();
 
@@ -437,55 +459,65 @@ public class WelcomeActivity extends BaseActivity {
         }
 
         // 2、连接服务器
-        VolleyContentFast.requestJsonByGet(serverUrl, map, new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
+        VolleyContentFast.requestJsonByGet(serverUrl, map, new DefaultRetryPolicy(3000, 1, 1), new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
             @Override
             public synchronized void onResponse(final UpdateInfo json) {
                 if (json != null) {
                     info = json;
-                    msg.what = GET_INFO_SUCCESS;
+                    //  msg.what = GET_INFO_SUCCESS;
                     IsInitInfo = true;
-                    saveFileName = savePath + "com.hhly.mlottery-"+info.getVersion()+"-"+new Date().getTime()+".apk";
+                    handler.sendEmptyMessage(GET_INFO_SUCCESS);
+                    saveFileName = savePath + "com.hhly.mlottery-" + info.getVersion() + "-" + new Date().getTime() + ".apk";
                 } else {
                     msg.what = INFO_IS_NULL;
+                    handler.sendEmptyMessage(INFO_IS_NULL);
                     IsInitInfo = true;
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                msg.what = IO_ERROR;
+                Log.v(TAG, "更新超时了" + mStartimageUrl);
+                handler.sendEmptyMessage(IO_ERROR);
                 IsInitInfo = true;
             }
         }, UpdateInfo.class);
-
-
-//        // 2、连接服务器
-//        VolleyContent.newInstance(mContext).requestJsonByGet(serverUrl, map, new ResponseListener<UpdateInfo>() {
-//            @Override
-//            public void onResponse(UpdateInfo json) {
-//                //Log.i("time2", "===========请求Volleny");
-//                if (json != null) {
-//                    info = json;
-//                    msg.what = GET_INFO_SUCCESS;
-//                    IsInitInfo = true;
-//                } else {
-//                    msg.what = INFO_IS_NULL;
-//                    IsInitInfo = true;
-//                }
-//
-//            }
-//
-//        }, new ResponseErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                msg.what = IO_ERROR;
-//                IsInitInfo = true;
-//            }
-//        }, UpdateInfo.class);
-
     }
 
+    private Handler imageHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case INIT_IMAGE_ERROR://网络请求失败
+                    setHideTranslateAnimation();
+                    break;
+                case GET_IMAGE_SUCCESS://图片获取成功
+                    //判断本地缓存是否存在该图片  是显示 不是替换
+                    universalImageLoader.displayImage(mStartimageUrl, imageAD, options);
+                    PreferenceUtil.commitString(MyConstants.START_IMAGE_URL, mStartimageUrl);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setHideTranslateAnimation();
+                        }
+                    }, 2000);
+
+
+                    break;
+                case GET_IMAGE_NODATA://无图片显示
+                    setHideTranslateAnimation();
+
+                    break;
+
+                default:
+                    break;
+            }
+
+
+        }
+    };
     private Handler handler = new Handler() {
 
         @Override
@@ -495,19 +527,21 @@ public class WelcomeActivity extends BaseActivity {
             switch (msg.what) {
 
                 case IO_ERROR:
-                case INFO_IS_NULL:
-                case TIMEOUT_ERROR:
-                    setHideTranslateAnimation();
+                    gotoHomeActivity();
                     break;
+                case INFO_IS_NULL:
+                    gotoHomeActivity();
+                   break;
 
                 case GET_INFO_SUCCESS:
                     int serverVersion = Integer.parseInt(info.getVersion()); // 取得服务器上的版本号
                     int currentVersion = mPackageInfo.versionCode; // 取得当前应用的版本号
                     if (currentVersion >= serverVersion) { // 判断两个版本号是否相同
                         //Log.i("time2", "==" + "版本相同");
-                        setHideTranslateAnimation();
-
+                        //setHideTranslateAnimation();
+                        gotoHomeActivity();
                     } else {
+
                         //Log.i("time2", "==" + "有更新");
                         checkNewVersion();
                     }
@@ -546,7 +580,6 @@ public class WelcomeActivity extends BaseActivity {
         public void run() {
 
             httpHandler = httpUtils.download(info.getUrl(), saveFileName, true, true, new RequestCallBack<File>() {
-
 
 
                 @Override
@@ -656,7 +689,7 @@ public class WelcomeActivity extends BaseActivity {
                 // TODO Auto-generated method stub
                 mAlertDialog.dismiss();
                 interceptFlag = false;
-                L.d("xxx","点击更新");
+                L.d("xxx", "点击更新");
                 uploadNewVersion();
             }
         });
@@ -669,7 +702,7 @@ public class WelcomeActivity extends BaseActivity {
                 mAlertDialog.dismiss();
                 gotoHomeActivity();
 
-                if(httpHandler!=null){
+                if (httpHandler != null) {
                     httpHandler.cancel();
                 }
 
@@ -682,7 +715,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     private void uploadNewVersion() {
-        L.d("xxx","准备更新");
+        L.d("xxx", "准备更新");
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AlertDialog);
         downLoadlDialog = builder.create();
         LayoutInflater infla = LayoutInflater.from(this);
@@ -753,9 +786,11 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(httpHandler!=null){
+        if (httpHandler != null) {
             httpHandler.cancel();
         }
+        // universalImageLoader.clearDiskCache();
+
     }
 
     /**

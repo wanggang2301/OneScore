@@ -660,8 +660,16 @@
     <!--WebView H5-->
     <string name="webview_check_info">查看比赛详细数据</string>
     <string name="user_feedback">用户反馈</string>
-
-
+    <!--资讯评论-->
+    <string name="user_name">游客</string>
+    <string name="warn_nullcontent">请先输入内容</string>
+    <string name="warn_submitfail">发送失败，请重试</string>
+    <string name="hint_content">我来评论</string>
+    <string name="comment_send">发送</string>
+    <string name="comment_title">全部留言</string>
+    <string name="comment_contentnull">暂无评论内容</string>
+    <string name="toatalvisiable">全部显示</string>
+<!---->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">请输入留言内容</string>
     <string name="feedback_toast_thx">多谢反馈！</string>

@@ -100,7 +100,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         if (getUserVisibleHint() && mInfos.size() == 0) {
             onVisible();
         }
-        return mView;
+      return mView;
     }
 
     private void initView() {
@@ -130,9 +130,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
         } else {//非第一个碎片
             mAdapter = new CounselFragmentLvAdapter(isleft, mInfos, getActivity());
-            //上拉加载更多
-            pullUpLoad();
         }
+        //上拉加载更多
+        pullUpLoad();
         mListView.setAdapter(mAdapter);
     }
 
@@ -257,6 +257,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
+        //下拉刷新后当前页数重新为1，不然先上拉加载到没有数据  再回去下拉刷新  然后再上拉就没有数据了，其实是有的
+        mCurrentPager=1;
+        mLoadMore.setText(R.string.foot_loadmore);
         if (index == 0) {
             //向首页的接口发起请求
             mHandler.sendEmptyMessage(NEWS_SUCESS);
@@ -307,8 +310,13 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                             mLoadMore.setText(R.string.foot_nomoredata);
 
                         } else {
-                            mInfos.addAll(json.getInfoIndex().getInfos());
-                            mAdapter.setInfosList(mInfos);
+                            if (index==0){
+                                mInfosList.addAll(json.getInfoIndex().getInfos());
+                                mAdapter.setInfosList(mInfosList);
+                            }else {
+                                mInfos.addAll(json.getInfoIndex().getInfos());
+                                mAdapter.setInfosList(mInfos);
+                            }
                             mAdapter.notifyDataSetChanged();
                             mLoadMore.setText(R.string.foot_loadmore);
                             mHandler.sendEmptyMessage(NEWS_SUCESS);//加载数据成功
@@ -535,6 +543,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
     public void setInfosList(List<CounselBean.InfoIndexBean.InfosBean> infosList) {
         this.mInfosList = infosList;
+
     }
 
     public void setAdsList(List<CounselBean.InfoIndexBean.AdsBean> adsList) {

@@ -168,7 +168,5 @@ public class BaseActivity extends FragmentActivity {
 		super.onBackPressed();
 		AppManager.getAppManager().finishActivity(this);
 	}
-	
-
 
 }
