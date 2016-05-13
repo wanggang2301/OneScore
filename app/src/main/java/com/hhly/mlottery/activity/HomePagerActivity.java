@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private SwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
     private ListView home_page_list;// 首页列表
     private HomeListBaseAdapter mListBaseAdapter;// ListView数据适配器
+    private TextView public_txt_title;
 
     public HomePagerEntity mHomePagerEntity;// 首页实体对象
     private static final int LOADING_DATA_START = 0;// 加载数据
@@ -77,8 +79,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private String title;// 资讯分享标题
     private String subTitle;// 资讯分享摘要
 
-    private String version;// 当前版本号
-    private TextView public_txt_title;
+    private String version;// 当前版本Name
+    private String versionCode;// 当前版本Code
+    private String channelNumber;// 当前版本渠道号
 
     private final int MIN_CLICK_DELAY_TIME = 2000;// 控件点击间隔时间
     private long lastClickTime = 0;
@@ -88,12 +91,42 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = HomePagerActivity.this;
-        getVersion();
+        channelNumber = getAppMetaData(mContext,"UMENG_CHANNEL");// 获取渠道号
+        getVersion();// 获取版本号
         pushData();
         initView();
         initData();
         initEvent();
         startService(new Intent(mContext, umengPushService.class));
+        L.d("xxx","version:" + version);
+        L.d("xxx","versionCode:" + versionCode);
+        L.d("xxx","channelNumber:" + channelNumber);
+    }
+
+    /**
+     * 获取application中指定的meta-data
+     * @return 如果没有获取成功(没有对应值，或者异常)，则返回值为空
+     */
+    private String getAppMetaData(Context ctx, String key) {
+        if (ctx == null || TextUtils.isEmpty(key)) {
+            return null;
+        }
+        String resultData = null;
+        try {
+            PackageManager packageManager = ctx.getPackageManager();
+            if (packageManager != null) {
+                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+                if (applicationInfo != null) {
+                    if (applicationInfo.metaData != null) {
+                        resultData = applicationInfo.metaData.getString(key);
+                    }
+                }
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            L.d(e.getMessage());
+        }
+        return resultData;
     }
 
     /**
@@ -103,6 +136,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         try {
             PackageManager manager = this.getPackageManager();
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            versionCode = String.valueOf(info.versionCode);
             String xxx = info.versionName.replace(".", "#");
             String[] split = xxx.split("#");
             StringBuilder sb = new StringBuilder();
@@ -110,7 +144,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 sb = sb.append(split[i]);
             }
             version = sb.toString();
-            L.d("xxx","version:" + version);
         } catch (Exception e) {
             L.d(e.getMessage());
         }
@@ -127,8 +160,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         pushMessageSkip();// 页面跳转处理
 
         // 使用友盟统计分析Android 4.6.3 对Fragment统计，开发者需要：来禁止默认的Activity页面统计方式。首先在程序入口处调用
-        /*MobclickAgent.openActivityDurationTrack(false);
-        String device_token = UmengRegistrar.getRegistrationId(mContext);
+//        MobclickAgent.openActivityDurationTrack(false);
+        /*String device_token = UmengRegistrar.getRegistrationId(mContext);
         L.d("xxx","device_token是: " + device_token);
         L.d("xxx"," mPushAgent.isEnabled(): " + mPushAgent.isEnabled());*/
     }
@@ -304,11 +337,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         // 设置参数
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("version", version);
+        myPostParams.put("versionCode", versionCode);
+        myPostParams.put("channelNumber", channelNumber);
         VolleyContentFast.requestJsonByPost(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
             @Override
             public synchronized void onResponse(final HomePagerEntity jsonObject) {
                 if (jsonObject != null) {// 请求成功
                     mHomePagerEntity = jsonObject;
+                    L.d("xxx","isAudit:" +jsonObject.isAudit());
                     isAuditHandle(jsonObject);
                     if (mHomePagerEntity.getResult() == 200) {
                         switch (num) {
