@@ -182,7 +182,8 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.cpi_filtrate_match_reset_btn:// 重置
 
-                mTempCheckidsReset.addAll(mTempCheckidsReset);;
+                mTempCheckidsReset.addAll(mTempCheckidsReset);
+                ;
                 mCheckedIds.clear();
                 for (int i = 0; i < mFileterTagsList.size(); i++) {
                     if (mTempCheckidsReset.contains(mFileterTagsList.get(i).getLeagueId())) {

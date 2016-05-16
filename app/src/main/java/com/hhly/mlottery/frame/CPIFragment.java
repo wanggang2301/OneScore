@@ -352,9 +352,10 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                System.out.println(">>>ddd" + mViewPager.getCurrentItem());
-//                mRefreshLayout.setRefreshing(false);
-//                mCPIOddsFragment.InitData("2016年4月15", 0);
+                mRefreshLayout.setRefreshing(false);
+                for (Fragment fragment : fragments) {
+                    ((CPIOddsFragment) fragment).switchd("");
+                }
             }
         }, 500);
 

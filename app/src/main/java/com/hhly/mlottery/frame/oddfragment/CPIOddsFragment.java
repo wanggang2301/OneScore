@@ -134,7 +134,8 @@ public class CPIOddsFragment extends Fragment {
      */
     public void InitData(String date, final String type) {
         mHandler.sendEmptyMessage(STARTLOADING);
-        String stUrl = "http://192.168.10.242:8181/mlottery/core/footBallIndexCenter.findAndroidIndexCenter.do?";
+//        String stUrl = "http://192.168.10.242:8181/mlottery/core/footBallIndexCenter.findAndroidIndexCenter.do?";
+        String stUrl = "http://m.13322.com/mlottery/core/footBallIndexCenter.findAndroidIndexCenter.do?";
         Map<String, String> map = new HashMap<>();
 
         if (type.equals(CPIFragment.TYPE_PLATE)) {
@@ -294,50 +295,24 @@ public class CPIOddsFragment extends Fragment {
     }
 
 
-    /**
-     * 筛选公司
-     */
-    public void selectCompany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp) {
-        mAllInfoBeans.clear();
-        for (int k = 0; k < hotsAllInfoTemp.size(); k++) {
-            NewOddsInfo.AllInfoBean pAllInfoBean = new NewOddsInfo.AllInfoBean();
-            List<NewOddsInfo.AllInfoBean.ComListBean> mComListBeanList = new ArrayList<>();
-            for (int j = 0; j < hotsAllInfoTemp.get(k).getComList().size(); j++) {
-                if (hotsAllInfoTemp.get(k).getComList().get(j).getComName().equals("皇冠") || hotsAllInfoTemp.get(k).getComList().get(j).getComName().equals("浩博")) {
-                    NewOddsInfo.AllInfoBean.ComListBean mComListBean = new NewOddsInfo.AllInfoBean.ComListBean();
-                    mComListBean = hotsAllInfoTemp.get(k).getComList().get(j);
-                    mComListBeanList.add(mComListBean);
-                }
-            }
-            pAllInfoBean.setComList(mComListBeanList);
-            pAllInfoBean.setMatchInfo(hotsAllInfoTemp.get(k).getMatchInfo());
-            pAllInfoBean.setHot(hotsAllInfoTemp.get(k).isHot());
-            pAllInfoBean.setLeagueColor(hotsAllInfoTemp.get(k).getLeagueColor());
-            pAllInfoBean.setLeagueId(hotsAllInfoTemp.get(k).getLeagueId());
-            pAllInfoBean.setLeagueName(hotsAllInfoTemp.get(k).getLeagueName());
-            mAllInfoBeans.add(pAllInfoBean);
-
-        }
-    }
-
-    public void selectCompany2(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp, List<String> comNameList,List<String>mCheckedIds,String comPany) {
+    public void selectCompany2(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp, List<String> comNameList, List<String> mCheckedIds, String comPany) {
         if ("plate".equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList,mCheckedIds);
+            setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
             cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "plate");
             cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
         } else if ("big".equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList,mCheckedIds);
+            setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
             cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "big");
             cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
         } else if ("op".equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList,mCheckedIds);
+            setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
             cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "op");
             cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
         }
 
     }
 
-    private void setComPany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemps, List<String> comNameLists,List<String>mCheckedIds) {
+    private void setComPany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemps, List<String> comNameLists, List<String> mCheckedIds) {
         mAllInfo.clear();
         for (int k = 0; k < hotsAllInfoTemps.size(); k++) {
             NewOddsInfo.AllInfoBean pAllInfoBean = new NewOddsInfo.AllInfoBean();
@@ -346,29 +321,36 @@ public class CPIOddsFragment extends Fragment {
 
                 for (int h = 0; h < comNameLists.size(); h++) {
 
-                    if (hotsAllInfoTemps.get(k).getComList().get(j).getComName().equals(comNameLists.get(h))) {
 
+                    if (hotsAllInfoTemps.get(k).getComList().get(j).getComName().equals(comNameLists.get(h))) {
                         NewOddsInfo.AllInfoBean.ComListBean mComListBean = new NewOddsInfo.AllInfoBean.ComListBean();
                         mComListBean = hotsAllInfoTemps.get(k).getComList().get(j);
                         mComListBeanList.add(mComListBean);
 
+
                     }
+
                 }
+
             }
-            pAllInfoBean.setComList(mComListBeanList);
-            pAllInfoBean.setMatchInfo(hotsAllInfoTemps.get(k).getMatchInfo());
-            pAllInfoBean.setHot(hotsAllInfoTemps.get(k).isHot());
-            pAllInfoBean.setLeagueColor(hotsAllInfoTemps.get(k).getLeagueColor());
-            pAllInfoBean.setLeagueId(hotsAllInfoTemps.get(k).getLeagueId());
-            pAllInfoBean.setLeagueName(hotsAllInfoTemps.get(k).getLeagueName());
-            for (int i = 0; i <mCheckedIds.size() ; i++) {
-                if (mCheckedIds.get(i).contains(pAllInfoBean.getLeagueId())){
+            for (int i = 0; i < mCheckedIds.size(); i++) {
+                if (hotsAllInfoTemps.get(k).getLeagueId().equals(mCheckedIds.get(i))) {
+
+                    pAllInfoBean.setComList(mComListBeanList);
+                    pAllInfoBean.setMatchInfo(hotsAllInfoTemps.get(k).getMatchInfo());
+                    pAllInfoBean.setHot(hotsAllInfoTemps.get(k).isHot());
+                    pAllInfoBean.setLeagueColor(hotsAllInfoTemps.get(k).getLeagueColor());
+                    pAllInfoBean.setLeagueId(hotsAllInfoTemps.get(k).getLeagueId());
+                    pAllInfoBean.setLeagueName(hotsAllInfoTemps.get(k).getLeagueName());
                     mAllInfo.add(pAllInfoBean);
                 }
+
+
             }
 
-
         }
+
+
     }
 
     private Handler mHandler = new Handler() {
