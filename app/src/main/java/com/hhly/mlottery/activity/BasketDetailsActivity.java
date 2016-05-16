@@ -775,7 +775,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     /**
      * 请求数据之后展示
      */
-    ;
+
 
     private void initData(BasketballDetailsBean bean) {
 
