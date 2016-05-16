@@ -54,7 +54,7 @@ public class CPIOddsFragment extends Fragment {
     private static final int SUCCESS = 0;// 访问成功
     private static final int STARTLOADING = 1;// 数据加载中
     private static final int NODATA = 400;// 暂无数据
-//    private FrameLayout cpi_fl_plate_loading;// 正在加载中
+    //    private FrameLayout cpi_fl_plate_loading;// 正在加载中
     private FrameLayout cpi_fl_plate_networkError;// 加载失败
     private FrameLayout cpi_fl_plate_noData;// 暂无数据
     private TextView cpi_plate_reLoading;// 刷新
