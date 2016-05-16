@@ -447,7 +447,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
     //获取评论的一切消息  无需登录
     public void loadTopic() {
-        sdk.loadTopic("", url, title, null, 0, 0, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+        L.e("lzf"+title);
+        sdk.loadTopic("", url, title, title, 0, 0, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;
