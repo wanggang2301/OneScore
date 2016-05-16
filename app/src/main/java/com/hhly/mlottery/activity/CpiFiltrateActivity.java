@@ -12,13 +12,9 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.CpiFiltrateMatchAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
-import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.GrapeGridview;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,11 +44,6 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     private int allSize = 0;
     private int checkedSize = 0;
 
-
-    //    private boolean isDefualFiltrate;
-    //传过来的是那个界面
-    private String currentFragmentId;
-
     //隐藏的场次，热门，全选，反选，重置，确定
     private TextView
             cpi_filtrate_match_hide_number,
@@ -66,16 +57,16 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cpi_filtrate);
-//        mCheckedIds.clear();
         mContext = this;
         mFileterTagsList = (List<NewOddsInfo.FileterTagsBean>) getIntent().getSerializableExtra("fileterTags");
 
         ArrayList<String> checkedIdExtra = (ArrayList<String>) getIntent().getSerializableExtra("linkedListChecked");
+
+        mTempCheckidsReset.addAll(checkedIdExtra);
+//        mTempCheckidsReset.addAll(mTempCheckidsReset);
+        mCheckedIds.clear();
         mCheckedIds.addAll(checkedIdExtra);
 
-
-//        isDefualFiltrate = getIntent().getBooleanExtra("isDefualFiltrate", true);
-        currentFragmentId = getIntent().getStringExtra("currentFragmentId");
         initView();
         initData();
 
@@ -110,11 +101,8 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
-//        mTempCheckidsReset.addAll(mCheckedIds);
-
-//        if (isDefualFiltrate) {
-            if (mFileterTagsList == null)return;
-        if(mCheckedIds.size()==0){
+        if (mFileterTagsList == null) return;
+        if (mCheckedIds.size() == 0) {
             for (int i = 0; i < mFileterTagsList.size(); i++) {
                 //所有场次
                 allSize += mFileterTagsList.get(i).getMatchsInLeague();
@@ -127,24 +115,22 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 }
             }
         } else {
-//        System.out.println(">>>dierci");
 
-        for (int i = 0; i < mFileterTagsList.size(); i++) {
-            //所有场次
-            allSize += mFileterTagsList.get(i).getMatchsInLeague();
-            if (mFileterTagsList.get(i).isHot()) {
-                hotsTemp.add(mFileterTagsList.get(i));
-            } else {
-                normalTemp.add(mFileterTagsList.get(i));
+            for (int i = 0; i < mFileterTagsList.size(); i++) {
+                //所有场次
+                allSize += mFileterTagsList.get(i).getMatchsInLeague();
+                if (mFileterTagsList.get(i).isHot()) {
+                    hotsTemp.add(mFileterTagsList.get(i));
+                } else {
+                    normalTemp.add(mFileterTagsList.get(i));
+                }
+
+                if (mCheckedIds.contains(mFileterTagsList.get(i).getLeagueId())) {
+                    checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
+                }
             }
 
-            if (mCheckedIds.contains(mFileterTagsList.get(i).getLeagueId())) {
-                checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
-            }
         }
-
-        }
-
 
 
         setHideNumber();
@@ -163,8 +149,6 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
-
-//        checkedSize = 0;
         switch (v.getId()) {
             case R.id.public_img_back:// 关闭
                 finish();
@@ -174,7 +158,6 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 for (int i = 0; i < mFileterTagsList.size(); i++) {
                     if (mFileterTagsList.get(i).isHot()) {
                         mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
-//                        checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
                     }
                 }
                 updateAdapter();
@@ -183,7 +166,6 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 mCheckedIds.clear();
                 for (int i = 0; i < mFileterTagsList.size(); i++) {
                     mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
-//                    checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
                 }
                 updateAdapter();
                 break;
@@ -194,32 +176,31 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 for (int i = 0; i < mFileterTagsList.size(); i++) {
                     if (!tempCheckids.contains(mFileterTagsList.get(i).getLeagueId())) {
                         mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
-//                        checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
                     }
                 }
                 updateAdapter();
                 break;
             case R.id.cpi_filtrate_match_reset_btn:// 重置
 
-                mTempCheckidsReset.addAll(mCheckedIds);
-//                mCheckedIds.clear();
-
-
+                mTempCheckidsReset.addAll(mTempCheckidsReset);;
+                mCheckedIds.clear();
+                for (int i = 0; i < mFileterTagsList.size(); i++) {
+                    if (mTempCheckidsReset.contains(mFileterTagsList.get(i).getLeagueId())) {
+                        mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
+                    }
+                }
+                updateAdapter();
                 break;
             case R.id.cpi_filtrate_submit_btn:// 确定
                 Intent intent = new Intent();
                 intent.putExtra("key", mCheckedIds);
-                System.out.println("<<mCheckedIds"+mCheckedIds);
                 setResult(0, intent);
-
                 finish();
 
                 break;
             default:
                 break;
         }
-//        setHideNumber();
-
 
     }
 

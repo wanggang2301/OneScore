@@ -47,8 +47,8 @@ public class MyApp extends Application {
 		switchLanguage(PreferenceUtil.getString("language", ""));
 		isLanguage=switchLanguage(PreferenceUtil.getString("language", ""));
 		// 捕获异常
-		CrashException crashException = CrashException.getInstance();
-		crashException.init(getApplicationContext());
+//		CrashException crashException = CrashException.getInstance();
+//		crashException.init(getApplicationContext());
 		VolleyContentFast.init(this);
 		super.onCreate();
 	};

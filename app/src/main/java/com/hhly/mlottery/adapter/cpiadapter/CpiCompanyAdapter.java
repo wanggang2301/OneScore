@@ -31,13 +31,11 @@ public class CpiCompanyAdapter extends BaseAdapter {
     private List<NewOddsInfo.CompanyBean> mCompanyBean;
     private Context context;
     private LayoutInflater mInflater;
-    private ListView mListView;
 
-    public CpiCompanyAdapter(Context context, List<NewOddsInfo.CompanyBean> mCompanyBean, ListView mListView) {
+    public CpiCompanyAdapter(Context context, List<NewOddsInfo.CompanyBean> mCompanyBean) {
         super();
         this.context = context;
         this.mCompanyBean = mCompanyBean;
-        this.mListView = mListView;
         this.mInflater = LayoutInflater.from(context);
 //        this.mCheckedTextView = mCheckedTextView;
     }
@@ -79,21 +77,11 @@ public class CpiCompanyAdapter extends BaseAdapter {
             item = (ListViewItem) convertView.getTag();
         }
         item.checkedTextView.setText(mCompanyBean.get(position).getComName());
-        if (CPIFragment.booleanList.size() > 0) {
-            mListView.setItemChecked(position, CPIFragment.booleanList.get(position));
-            item.checkedTextView.setChecked(CPIFragment.booleanList.get(position));
-        } else {
-            //默认皇冠和浩博
-            if (position == 0) {
-                mListView.setItemChecked(position, true);
-                item.checkedTextView.setChecked(true);
-            }
-            if (position == 1) {
-                mListView.setItemChecked(position, true);
-                item.checkedTextView.setChecked(true);
+        item.checkedTextView.setChecked(mCompanyBean.get(position).isChecked());
 
-            }
-        }
+
+//        mListView.setItemChecked(position, CPIFragment.booleanList.get(position));
+//        item.checkedTextView.setChecked(CPIFragment.booleanList.get(position));
 
 
         return convertView;

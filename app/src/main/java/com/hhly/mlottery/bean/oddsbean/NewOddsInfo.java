@@ -137,6 +137,7 @@ public class NewOddsInfo {
     public static class CompanyBean {
         private String comId;
         private String comName;
+        private boolean isChecked;
 
         public String getComId() {
             return comId;
@@ -152,6 +153,14 @@ public class NewOddsInfo {
 
         public void setComName(String comName) {
             this.comName = comName;
+        }
+
+        public boolean isChecked() {
+            return isChecked;
+        }
+
+        public void setIsChecked(boolean isChecked) {
+            this.isChecked = isChecked;
         }
     }
 

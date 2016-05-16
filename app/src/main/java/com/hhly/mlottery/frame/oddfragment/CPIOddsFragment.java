@@ -52,10 +52,11 @@ public class CPIOddsFragment extends Fragment {
     private RecyclerView cpi_odds_recyclerView;
     private CPIRecyclerViewAdapter cpiRecyclerViewAdapter;
     private LinearLayoutManager linearLayoutManager;
-    public static List<NewOddsInfo.AllInfoBean> mAllInfoBean = new ArrayList<>();
     public static List<NewOddsInfo.AllInfoBean> mAllInfoBean1 = new ArrayList<>();
     public static List<NewOddsInfo.AllInfoBean> mAllInfoBean2 = new ArrayList<>();
-    private List<NewOddsInfo.AllInfoBean> mAllInfoBeans = new ArrayList<>();
+    public static List<NewOddsInfo.AllInfoBean> mAllInfoBean3 = new ArrayList<>();
+    public List<NewOddsInfo.AllInfoBean> mAllInfoBeans = new ArrayList<>();
+    public List<NewOddsInfo.AllInfoBean> mAllInfo = new ArrayList<>();
     private List<NewOddsInfo.AllInfoBean> mShowInfoBeans = new ArrayList<>();
     //选着热门
     List<NewOddsInfo.AllInfoBean> hotsTemp = new ArrayList<>();
@@ -155,22 +156,30 @@ public class CPIOddsFragment extends Fragment {
             public synchronized void onResponse(final NewOddsInfo json) {
 
                 if (json != null) {
+
                     if (getParentFragment() != null) {
                         ((CPIFragment) getParentFragment()).currentDate = json.getCurrDate();
                         ((CPIFragment) getParentFragment()).companys = json.getCompany();
+
                     }
                     mAllInfoBeans = json.getAllInfo();
+                    if (type.equals(CPIFragment.TYPE_PLATE)) {
+                        mAllInfoBean1 = json.getAllInfo();
+                    } else if (type.equals(CPIFragment.TYPE_BIG)) {
+                        mAllInfoBean2 = json.getAllInfo();
+                    } else if (type.equals(CPIFragment.TYPE_OP)) {
+                        mAllInfoBean3 = json.getAllInfo();
+                    }
                     List<NewOddsInfo.CompanyBean> defualtCompanyList = new ArrayList<>();
 
                     for (NewOddsInfo.CompanyBean companyBean : json.getCompany()) {
                         if (Arrays.binarySearch(defualtCompanyIds, 0, defualtCompanyIds.length, companyBean.getComId()) >= 0) {
-                            defualtCompanyList.add(companyBean);
+                            companyBean.setIsChecked(true);
+                        } else {
+                            companyBean.setIsChecked(false);
                         }
                     }
-
                     mFileterTagsBean = json.getFileterTags();
-
-
                     CpiFiltrateActivity.mCheckedIds.clear();
                     for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
                         if (fileterTagsBean.isHot()) {
@@ -179,7 +188,7 @@ public class CPIOddsFragment extends Fragment {
                     }
 
 
-                    filtrateData(CPIFragment.isHot, defualtCompanyList, CpiFiltrateActivity.mCheckedIds);
+                    filtrateData(defualtCompanyList, CpiFiltrateActivity.mCheckedIds);
 
 
                     cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, type);
@@ -198,90 +207,6 @@ public class CPIOddsFragment extends Fragment {
                 mHandler.sendEmptyMessage(ERROR);// 加载失败
             }
         }, NewOddsInfo.class);
-    }
-
-    /**
-     * 是否为热门
-     */
-    public void selectedHot(boolean isHot, String comp) {
-        if (!isHot) {
-            if ("plate".equals(comp)) {
-                if (CPIFragment.comNameList.size() == 0) {
-                    System.out.println(">>>22mAllInfoBean" + mAllInfoBean);
-                    selectCompany(mAllInfoBean);
-                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "plate");
-                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-                } else {
-                    System.out.println(">>>mAllInfoBean" + mAllInfoBean + "ggggggggg" + CPIFragment.comNameList);
-                    selectCompany2(mAllInfoBean, CPIFragment.comNameList, "plate");
-                }
-
-            } else if ("big".equals(comp)) {
-                if (CPIFragment.comNameList2.size() == 0) {
-                    selectCompany(mAllInfoBean1);
-                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "big");
-                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-                } else {
-                    selectCompany2(mAllInfoBean1, CPIFragment.comNameList2, "big");
-                }
-            } else if ("op".equals(comp)) {
-                if (CPIFragment.comNameList3.size() == 0) {
-                    selectCompany(mAllInfoBean2);
-                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "op");
-                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-                } else {
-                    selectCompany2(mAllInfoBean2, CPIFragment.comNameList3, "op");
-                }
-            }
-
-
-        } else {
-            //直接加载热门
-            if ("plate".equals(comp)) {
-                if (CPIFragment.comNameList.size() == 0) {
-                    for (int i = 0; i < mAllInfoBean.size(); i++) {
-                        if (mAllInfoBean.get(i).isHot()) {
-                            //筛选热门
-                            hotsTemp.add(mAllInfoBean.get(i));
-                        }
-                    }
-                    selectCompany(hotsTemp);
-                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "plate");
-                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-                } else {
-                    selectCompany2(CPIFragment.hotsTemp1, CPIFragment.comNameList, "plate");
-                }
-            } else if ("big".equals(comp)) {
-                if (CPIFragment.comNameList2.size() == 0) {
-                    for (int i = 0; i < mAllInfoBean1.size(); i++) {
-                        if (mAllInfoBean1.get(i).isHot()) {
-                            //筛选热门
-                            hotsTemp.add(mAllInfoBean1.get(i));
-                        }
-                    }
-                    selectCompany(hotsTemp);
-                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "big");
-                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-                } else {
-                    selectCompany2(CPIFragment.hotsTemp2, CPIFragment.comNameList2, "big");
-                }
-            } else if ("op".equals(comp)) {
-                if (CPIFragment.comNameList3.size() == 0) {
-                    for (int i = 0; i < mAllInfoBean2.size(); i++) {
-                        if (mAllInfoBean2.get(i).isHot()) {
-                            //筛选热门
-                            hotsTemp.add(mAllInfoBean2.get(i));
-                        }
-                    }
-                    selectCompany(hotsTemp);
-                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "op");
-                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-                } else {
-                    selectCompany2(CPIFragment.hotsTemp3, CPIFragment.comNameList3, "op");
-                }
-            }
-
-        }
     }
 
 
@@ -309,19 +234,26 @@ public class CPIOddsFragment extends Fragment {
     }
 
 
-    public void filtrateData(boolean isHot, List<NewOddsInfo.CompanyBean> comNameList, List<String> checkedIdExtra) {
+    public void filtrateData(List<NewOddsInfo.CompanyBean> comNameList, List<String> checkedIdExtra) {
         mShowInfoBeans.clear();
         mShowInfoBeans.addAll(mAllInfoBeans);
-        List<NewOddsInfo.AllInfoBean> hotList = filtrateHot(mShowInfoBeans, isHot);
-        filtrateCompany(hotList, comNameList);
-        filtrateLeague(hotList, checkedIdExtra);
+//        List<NewOddsInfo.AllInfoBean> hotList = filtrateHot(mShowInfoBeans, isHot);
+        filtrateCompany(mShowInfoBeans, comNameList);
+        mShowInfoBeans = filtrateLeague(mShowInfoBeans, checkedIdExtra);
+
+        if (cpiRecyclerViewAdapter != null) {
+            cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
+            cpiRecyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 
-    private List<NewOddsInfo.AllInfoBean> filtrateHot(List<NewOddsInfo.AllInfoBean> allInfoBeans, boolean isHot) {
-        if (!isHot) {
-            return allInfoBeans;
-        }
+    public List<NewOddsInfo.AllInfoBean> filtrateHot(List<NewOddsInfo.AllInfoBean> allInfoBeans, boolean isHot) {
         List<NewOddsInfo.AllInfoBean> hotList = new ArrayList<>();
+        if (!isHot) {
+            hotList.addAll(mAllInfoBeans);
+            return hotList;
+        }
+
         for (NewOddsInfo.AllInfoBean bean : allInfoBeans) {
             if (bean.isHot()) {
                 hotList.add(bean);
@@ -330,23 +262,20 @@ public class CPIOddsFragment extends Fragment {
         return hotList;
     }
 
-    private void filtrateCompany(List<NewOddsInfo.AllInfoBean> allInfoBeans, List<NewOddsInfo.CompanyBean> companyList) {
+    public void filtrateCompany(List<NewOddsInfo.AllInfoBean> allInfoBeans, List<NewOddsInfo.CompanyBean> companyList) {
         for (NewOddsInfo.AllInfoBean bean : allInfoBeans) {
             for (NewOddsInfo.AllInfoBean.ComListBean company : bean.getComList()) {
 
                 boolean isContainCompany = false;
                 for (NewOddsInfo.CompanyBean companyBean : companyList) {
                     if (companyBean.getComId().equals(company.getComId())) {
-                        isContainCompany = true;
+                        isContainCompany = companyBean.isChecked();
                         break;
                     }
                 }
 
-                if (isContainCompany) {
-                    company.setIsShow(true);
-                } else {
-                    company.setIsShow(false);
-                }
+                company.setIsShow(isContainCompany);
+
             }
         }
     }
@@ -391,25 +320,25 @@ public class CPIOddsFragment extends Fragment {
         }
     }
 
-    public void selectCompany2(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp, List<String> comNameList, String comPany) {
+    public void selectCompany2(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp, List<String> comNameList,List<String>mCheckedIds,String comPany) {
         if ("plate".equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList);
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "plate");
+            setComPany(hotsAllInfoTemp, comNameList,mCheckedIds);
+            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "plate");
             cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
         } else if ("big".equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList);
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "big");
+            setComPany(hotsAllInfoTemp, comNameList,mCheckedIds);
+            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "big");
             cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
         } else if ("op".equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList);
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfoBeans, mContext, "op");
+            setComPany(hotsAllInfoTemp, comNameList,mCheckedIds);
+            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "op");
             cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
         }
 
     }
 
-    private void setComPany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemps, List<String> comNameLists) {
-        mAllInfoBeans.clear();
+    private void setComPany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemps, List<String> comNameLists,List<String>mCheckedIds) {
+        mAllInfo.clear();
         for (int k = 0; k < hotsAllInfoTemps.size(); k++) {
             NewOddsInfo.AllInfoBean pAllInfoBean = new NewOddsInfo.AllInfoBean();
             List<NewOddsInfo.AllInfoBean.ComListBean> mComListBeanList = new ArrayList<>();
@@ -418,9 +347,11 @@ public class CPIOddsFragment extends Fragment {
                 for (int h = 0; h < comNameLists.size(); h++) {
 
                     if (hotsAllInfoTemps.get(k).getComList().get(j).getComName().equals(comNameLists.get(h))) {
+
                         NewOddsInfo.AllInfoBean.ComListBean mComListBean = new NewOddsInfo.AllInfoBean.ComListBean();
                         mComListBean = hotsAllInfoTemps.get(k).getComList().get(j);
                         mComListBeanList.add(mComListBean);
+
                     }
                 }
             }
@@ -430,7 +361,12 @@ public class CPIOddsFragment extends Fragment {
             pAllInfoBean.setLeagueColor(hotsAllInfoTemps.get(k).getLeagueColor());
             pAllInfoBean.setLeagueId(hotsAllInfoTemps.get(k).getLeagueId());
             pAllInfoBean.setLeagueName(hotsAllInfoTemps.get(k).getLeagueName());
-            mAllInfoBeans.add(pAllInfoBean);
+            for (int i = 0; i <mCheckedIds.size() ; i++) {
+                if (mCheckedIds.get(i).contains(pAllInfoBean.getLeagueId())){
+                    mAllInfo.add(pAllInfoBean);
+                }
+            }
+
 
         }
     }
