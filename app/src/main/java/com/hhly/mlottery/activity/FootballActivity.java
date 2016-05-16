@@ -141,6 +141,7 @@ public class FootballActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        CpiFiltrateActivity.mCheckedIds.clear();
         if (ImmediateFragment.imEventBus!=null) {
             ImmediateFragment.imEventBus.unregister(ImmediateFragment.class);
         }

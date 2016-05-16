@@ -391,9 +391,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
                 MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
                 Map<String, String> map = new HashMap<String, String>();
-                map.put(ShareConstants.TITLE, title != null ? title : "");
+                map.put(ShareConstants.TITLE, title != null ? title : mContext.getResources().getString(R.string.share_recommend));
                 map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
-                map.put(ShareConstants.TARGET_URL, url != null ? url : "");
+                map.put(ShareConstants.TARGET_URL, url != null ? url : "http://m.13322.com");
                 map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
                 sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
                 sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
@@ -448,7 +448,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
     //获取评论的一切消息  无需登录
     public void loadTopic() {
-        sdk.loadTopic("", url, title, null, 0, 0, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+        L.e("lzf"+title);
+        sdk.loadTopic("", url, title, title, 0, 0, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;

@@ -27,6 +27,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.util.AccessTokenKeeper;
+import com.hhly.mlottery.util.NoDoubleClickUtils;
 import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.sina.weibo.sdk.api.ImageObject;
@@ -205,10 +206,11 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                         // Toast.makeText(mContext, "空间", Toast.LENGTH_SHORT).show();
                         break;
                     case SINA:
-                        mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(mContext, ShareConstants.SINA);
-                        mWeiboShareAPI.registerApp();
-
-                        shareSina();
+                        if (!NoDoubleClickUtils.isDoubleClick()) {
+                            mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(mContext, ShareConstants.SINA);
+                            mWeiboShareAPI.registerApp();
+                            shareSina();
+                        }
                         //注册
                         //   Toast.makeText(mContext, "新浪微博", Toast.LENGTH_SHORT).show();
                         break;
@@ -226,8 +228,16 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         });
     }
 
+
+
+
+
     private boolean isQQClientAvailable(Context context) {
         final PackageManager packageManager = context.getPackageManager();
+
+        
+
+
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
         if (pinfo != null) {
             for (int i = 0; i < pinfo.size(); i++) {

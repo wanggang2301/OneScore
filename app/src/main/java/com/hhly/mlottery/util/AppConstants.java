@@ -18,7 +18,7 @@ public class AppConstants {
 	/**
 	 * 判断是否上传奔溃日志到友盟
 	 */
-	public static final boolean isUploadCrash = true;
+	public static final boolean isUploadCrash = false;
 
 	public static String ACCESS_LINK = "";// API
 	public static String USER_AGENT = "";

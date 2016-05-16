@@ -148,7 +148,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         mErrorLoad.setVisibility(View.GONE);
 
         mSuccessLoad = (LinearLayout)findViewById(R.id.basket_loading_success_ll);
-        mSuccessLoad.setVisibility(View.VISIBLE);
+        mSuccessLoad.setVisibility(View.GONE);
 
         mGuestFruture = (TextView) findViewById(R.id.basket_guest_fruture_tv_list);
         mHomeFruture = (TextView) findViewById(R.id.basket_home_fruture_tv_list);

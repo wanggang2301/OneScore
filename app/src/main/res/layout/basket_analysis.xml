@@ -226,6 +226,12 @@
                                 android:divider="@null">
                             </com.hhly.mlottery.widget.NestedListView>
                         </LinearLayout>
+                                            <!--<TextView-->
+                                                <!--android:id="@+id/basket_analyze_line_zw"-->
+                                                <!--android:layout_width="1px"-->
+                                                <!--android:layout_height="@dimen/basket_analyze_line3"-->
+                                                <!--android:background="@color/basket_parting_line"-->
+                                                <!--/>-->
 
                         <TextView
                             android:id="@+id/basket_analyze_nodata1"
@@ -242,11 +248,11 @@
                             />
 
                         <!--<LinearLayout-->
+                            <!--android:id="@+id/basket_analyze_future"-->
                             <!--android:layout_width="match_parent"-->
                             <!--android:layout_height="wrap_content"-->
                             <!--android:paddingBottom="@dimen/basket_details_item_height"-->
                             <!--android:gravity="center"-->
-                            <!--android:visibility="gone"-->
                             <!-->-->
                             <!--<LinearLayout-->
                                 <!--android:layout_width="0dp"-->
@@ -256,6 +262,7 @@
                                 <!-->-->
 
                                 <!--<RelativeLayout-->
+                                    <!--android:id="@+id/basket_analyze_guest1"-->
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content"-->
                                     <!-->-->
@@ -290,6 +297,7 @@
                                         <!--android:layout_toLeftOf="@id/basket_future_guest_image1"/>-->
                                 <!--</RelativeLayout>-->
                                 <!--<RelativeLayout-->
+                                    <!--android:id="@+id/basket_analyze_guest2"-->
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content"-->
                                     <!--android:layout_marginTop="@dimen/basket_details_item_height2"-->
@@ -323,9 +331,9 @@
                                         <!--android:layout_centerVertical="true"-->
                                         <!--android:gravity="right"-->
                                         <!--android:layout_toLeftOf="@id/basket_future_guest_image2"/>-->
-
                                 <!--</RelativeLayout>-->
                                 <!--<RelativeLayout-->
+                                    <!--android:id="@+id/basket_analyze_guest3"-->
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content"-->
                                     <!--android:layout_marginTop="@dimen/basket_details_item_height2"-->
@@ -377,6 +385,7 @@
                                 <!-->-->
 
                                 <!--<RelativeLayout-->
+                                    <!--android:id="@+id/basket_analyze_home1"-->
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content"-->
                                     <!-->-->
@@ -410,6 +419,7 @@
                                         <!--android:layout_alignParentEnd="true"/>-->
                                 <!--</RelativeLayout>-->
                                 <!--<RelativeLayout-->
+                                    <!--android:id="@+id/basket_analyze_home2"-->
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content"-->
                                     <!--android:layout_marginTop="@dimen/basket_details_item_height2"-->
@@ -444,6 +454,7 @@
                                         <!--android:layout_alignParentEnd="true"/>-->
                                 <!--</RelativeLayout>-->
                                 <!--<RelativeLayout-->
+                                    <!--android:id="@+id/basket_analyze_home3"-->
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content"-->
                                     <!--android:layout_marginTop="@dimen/basket_details_item_height2"-->
