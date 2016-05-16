@@ -1,6 +1,5 @@
 package com.hhly.mlottery.frame.footframe;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +19,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.AnalyzeMatchAdapter;
 import com.hhly.mlottery.adapter.AnalyzeRankAdapter;
-import com.hhly.mlottery.bean.footballsecond.AnalyzeBean;
+import com.hhly.mlottery.bean.footballDetails.AnalyzeBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -457,17 +456,5 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("AnalyzeFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("AnalyzeFragment");
     }
 }

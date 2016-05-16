@@ -3,7 +3,6 @@ package com.hhly.mlottery.adapter;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.CounselBean;
+import com.hhly.mlottery.bean.footballDetails.CounselBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -27,7 +26,6 @@ import java.util.List;
  */
 public class CounselFragmentLvAdapter extends BaseAdapter {
     private boolean isleft;
-    private LayoutInflater mLayoutInflater;
     private List<CounselBean.InfoIndexBean.InfosBean> mInfosList;//资讯列表数据集合父fg传来
     private DisplayImageOptions optionsleft,options; //
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
@@ -71,12 +69,14 @@ public class CounselFragmentLvAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mInfosList.size();
+
+        return mInfosList==null?0:mInfosList.size() ;
     }
 
     @Override
     public Object getItem(int position) {
-        return mInfosList.get(position);
+
+        return mInfosList==null?null:mInfosList.get(position);
     }
 
     @Override

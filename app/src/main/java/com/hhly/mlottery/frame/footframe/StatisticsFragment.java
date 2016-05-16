@@ -9,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -19,18 +17,13 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.bean.footballsecond.CornerTrendBean;
-import com.hhly.mlottery.bean.footballsecond.DataStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.MyLineChart;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -553,12 +546,6 @@ public class StatisticsFragment extends Fragment {
 
         }
         super.onHiddenChanged(hidden);
-
-        if(!hidden){
-            MobclickAgent.onPageStart("StatisticsFragment");
-        }else{
-            MobclickAgent.onPageEnd("StatisticsFragment");
-        }
     }
 
 }

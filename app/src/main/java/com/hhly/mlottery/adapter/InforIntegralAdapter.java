@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.IntegralBean;
+import com.hhly.mlottery.bean.footballDetails.IntegralBean;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

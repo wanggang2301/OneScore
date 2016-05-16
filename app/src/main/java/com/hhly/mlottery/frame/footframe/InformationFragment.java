@@ -22,8 +22,9 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballInformationActivity;
 import com.hhly.mlottery.adapter.InformationDataAdapter;
-import com.hhly.mlottery.bean.footballsecond.InforListData;
+import com.hhly.mlottery.bean.footballDetails.InforListData;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
@@ -260,6 +261,17 @@ public class InformationFragment extends Fragment implements OnClickListener, Sw
         }, 500);
 
     }
+    private boolean isHidden;// 当前Fragment是否显示
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isHidden = hidden;
+        if (hidden) {
+            MobclickAgent.onPageEnd("InformationFragment");
+        } else {
+            MobclickAgent.onPageStart("InformationFragment");
+        }
+    }
 
     @Override
     public void onResume() {
@@ -270,7 +282,9 @@ public class InformationFragment extends Fragment implements OnClickListener, Sw
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("InformationFragment");
+        if(!isHidden){
+            MobclickAgent.onPageEnd("InformationFragment");
+        }
     }
 }
 

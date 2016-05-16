@@ -19,12 +19,12 @@
             android:layout_centerInParent="true"
             android:paddingLeft="@dimen/x24"
             android:paddingRight="@dimen/x24"
-            android:src="@mipmap/basketball_back" />
+            android:src="@mipmap/back" />
         <TextView
             android:id="@+id/basket_odds_details_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="大小球详情"
+            android:text=""
             android:gravity="center"
             android:textColor="#ffffff"
             android:padding="@dimen/x5"

@@ -5,6 +5,8 @@
     android:orientation="horizontal"
     android:paddingBottom="@dimen/basket_details_ball6"
     android:paddingTop="@dimen/basket_details_ball6"
+    android:paddingLeft="@dimen/basket_details_ball5"
+    android:paddingRight="@dimen/basket_details_ball5"
     android:background="@color/black_grounding">
 
     <!--<LinearLayout-->
@@ -15,34 +17,35 @@
         <!--android:paddingTop="@dimen/basket_details_ball6">-->
 
         <TextView
-            android:id="@+id/basket_details_team_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="NBA"
-            android:textColor="@color/black_details_textcolor"
-            android:textSize="@dimen/text_size_11" />
-
-        <TextView
             android:id="@+id/basket_details_data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:gravity="center"
             android:text="16-03-31"
             android:textColor="@color/black_details_textcolor"
-            android:textSize="@dimen/text_size_11" />
+            android:textSize="@dimen/text_size_10" />
 
+        <TextView
+            android:id="@+id/basket_details_team_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="乙蓝甲乙蓝甲"
+            android:singleLine="true"
+            android:textColor="@color/black_details_textcolor"
+            android:textSize="@dimen/text_size_10" />
         <TextView
             android:id="@+id/basket_details_guest_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="老鹰"
+            android:text=""
+            android:singleLine="true"
             android:textColor="@color/black_details_textcolor"
-            android:textSize="@dimen/text_size_11" />
+            android:textSize="@dimen/text_size_10" />
 
         <TextView
             android:id="@+id/basket_details_home_name"
@@ -50,15 +53,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="鹈鹕"
+            android:text=""
+            android:singleLine="true"
             android:textColor="@color/black_details_textcolor"
-            android:textSize="@dimen/text_size_11" />
+            android:textSize="@dimen/text_size_10" />
 
         <TextView
             android:id="@+id/basket_details_score"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.1"
+            android:layout_weight="1.2"
             android:gravity="center"
             android:text="107:107"
             android:textColor="@color/black_details_textcolor"
@@ -68,11 +72,11 @@
             android:id="@+id/basket_details_big_small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:gravity="center"
-            android:text="大小"
+            android:text="小"
             android:textColor="@color/black_details_textcolor"
-            android:textSize="@dimen/text_size_11" />
+            android:textSize="@dimen/text_size_10" />
         <TextView
             android:id="@+id/basket_details_concede"
             android:layout_width="0dp"
@@ -81,6 +85,6 @@
             android:gravity="center"
             android:text="让分"
             android:textColor="@color/black_details_textcolor"
-            android:textSize="@dimen/text_size_11" />
+            android:textSize="@dimen/text_size_10" />
     <!--</LinearLayout>-->
 </LinearLayout>

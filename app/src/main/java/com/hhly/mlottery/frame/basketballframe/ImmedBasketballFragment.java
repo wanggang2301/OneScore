@@ -19,13 +19,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivity;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketListActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
@@ -36,6 +39,7 @@ import com.hhly.mlottery.bean.basket.BasketMatchFilter;
 import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
+import com.hhly.mlottery.bean.basket.BasketScoreBean;
 import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
@@ -47,7 +51,6 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -76,7 +79,7 @@ import java.util.TimerTask;
 /**
  * Created by A on 2015/12/30.
  */
-public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener {
+public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
 
     private static final String TAG = "ImmedBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
@@ -280,7 +283,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         explistview = (PinnedHeaderExpandableListView) mView.findViewById(R.id.explistview);
         explistview.setChildDivider(getContext().getResources().getDrawable(R.color.linecolor)); //设置分割线 适配魅族
 
-//        explistview.setOnChildClickListener(this);
+        explistview.setOnChildClickListener(this);
 
         //设置悬浮头部VIEW
         explistview.setHeaderView(getActivity().getLayoutInflater().inflate(R.layout.basketball_riqi_head, explistview, false));//悬浮头
@@ -372,7 +375,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
                 if (mBasketballType != TYPE_FOCUS) { //非关注页面
                     mAllFilter = json.getMatchFilter();
-                   // mChickedFilter = json.getMatchFilter();//默认选中全部 -->mChickedFilter不赋值 默认全不选
+                    // mChickedFilter = json.getMatchFilter();//默认选中全部 -->mChickedFilter不赋值 默认全不选
                 }
                 mSize = json.getMatchData().size();
 
@@ -388,14 +391,14 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     /**
                      * 子view数据
                      */
-                  //  childrenDataList.add(mMatchdata.get(i).getMatch());
+                    //  childrenDataList.add(mMatchdata.get(i).getMatch());
                     mAllMatchdata.add(mMatchdata.get(i).getMatch());//显示的
                     /**
                      * 外层 view数据
                      */
-                   // groupDataList.add(mMatchdata.get(i).getDate() + "," + week);
-                   // isToday.add(mMatchdata.get(i).getDiffDays());// 获得日期状态码（昨天 今天 明天）
-                    mAllGroupdata.add(mMatchdata.get(i).getDate() + "," + week + "," + mMatchdata.get(i).getDiffDays()+"");
+                    // groupDataList.add(mMatchdata.get(i).getDate() + "," + week);
+                    // isToday.add(mMatchdata.get(i).getDiffDays());// 获得日期状态码（昨天 今天 明天）
+                    mAllGroupdata.add(mMatchdata.get(i).getDate() + "," + week + "," + mMatchdata.get(i).getDiffDays() + "");
                 }
 
                 /**
@@ -423,14 +426,14 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                             }
                         }
                     }
-                }else{ //未筛选
-                    for (List<BasketMatchBean> lists : mAllMatchdata){
+                } else { //未筛选
+                    for (List<BasketMatchBean> lists : mAllMatchdata) {
                         childrenDataList.add(lists);
                     }
                     for (String groupdata : mAllGroupdata) {
                         groupDataList.add(groupdata);
                     }
-                      mChickedFilter = mAllFilter;//默认选中全部
+                    mChickedFilter = mAllFilter;//默认选中全部
                 }
 
                 if (adapter == null || mBasketballType == TYPE_IMMEDIATE || mBasketballType == TYPE_FOCUS) {
@@ -453,8 +456,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     /**
                      * 设置group的默认打开状态，解决默认全部打开后点击group第一次无效问题（点击两次才收起）
                      */
-                    if(adapter != null){
-                        adapter.setGroupClickStatus(i,1);//收起 ： 0  展开 ：1
+                    if (adapter != null) {
+                        adapter.setGroupClickStatus(i, 1);//收起 ： 0  展开 ：1
                     }
                 }
                 isLoadData = true;
@@ -565,18 +568,19 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             mLoadHandler.postDelayed(mRun, 0);
     }
 
-//    /**
-//     * list点击事件
-//     */
-//    @Override
-//    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//        Intent intent = new Intent(getActivity(), BasketDetailsActivity.class);
-//        intent.putExtra(BasketDetailsActivity.BASKET_THIRD_ID, childrenDataList.get(groupPosition).get(childPosition).getThirdId());//跳转到详情
-//        //用getActivity().startActivityForResult();不走onActivityResult ;
-//        startActivityForResult(intent, REQUEST_DETAILSCODE);
-//        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-//        return false;
-//    }
+    /**
+     * list点击事件
+     */
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        Intent intent = new Intent(getActivity(), BasketDetailsActivity.class);
+        intent.putExtra(BasketDetailsActivity.BASKET_THIRD_ID, childrenDataList.get(groupPosition).get(childPosition).getThirdId());//跳转到详情
+        //用getActivity().startActivityForResult();不走onActivityResult ;
+        startActivityForResult(intent, REQUEST_DETAILSCODE);
+        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+        MobclickAgent.onEvent(mContext,"Basketball_ListItem");
+        return false;
+    }
 
     // 定义关注监听
     public interface BasketFocusClickListener {
@@ -588,7 +592,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
         switch (v.getId()) {
             case R.id.public_btn_set:  //设置
-                MobclickAgent.onEvent(mContext,"Basketball_Setting");
+                MobclickAgent.onEvent(mContext, "Basketball_Setting");
 //                String s = getAppVersionCode(mContext);
                 mIntent = new Intent(getActivity(), BasketballSettingActivity.class);
 //                getParentFragment().startActivityForResult(mIntent, REQUEST_SETTINGCODE);
@@ -597,7 +601,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 break;
 
             case R.id.public_btn_filter: //筛选
-                MobclickAgent.onEvent(mContext,"Basketball_Filter");
+                MobclickAgent.onEvent(mContext, "Basketball_Filter");
                 Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
                 intent.putExtra("MatchAllFilterDatas", (Serializable) mAllFilter);//Serializable 序列化传值（所有联赛数据）
                 intent.putExtra("MatchChickedFilterDatas", (Serializable) mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
@@ -606,16 +610,16 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 break;
             case R.id.public_img_back:  //返回
-                MobclickAgent.onEvent(mContext,"Basketball_Exit");
+                MobclickAgent.onEvent(mContext, "Basketball_Exit");
 //                ((MainActivity) getActivity()).openLeftLayout();
                 getActivity().finish();
                 break;
 
             case R.id.basketball_immediate_error_btn:
-                MobclickAgent.onEvent(mContext,"Basketball_Refresh");
-                mLoadingLayout.setVisibility(View.GONE);
+                MobclickAgent.onEvent(mContext, "Basketball_Refresh");
+                mLoadingLayout.setVisibility(View.VISIBLE);
                 mSwipeRefreshLayout.setRefreshing(true);
-                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                mSwipeRefreshLayout.setVisibility(View.GONE);
                 mLoadHandler.postDelayed(mRun, 0);
                 break;
             default:
@@ -714,7 +718,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             L.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 100) {  //type 为100 ==> 比分推送
                 String ws_json = (String) msg.obj;
-                L.e(TAG, "ws_json = " + ws_json);
+                L.e(TAG, "ws_json =AAAAAAAAAAAA " + ws_json);
                 WebBasketMatch mWebBasketMatch = null;
                 try {
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
@@ -723,6 +727,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     // Log.e(TAG, "ws_json = " + ws_json);
                     mWebBasketMatch = JSON.parseObject(ws_json, WebBasketMatch.class);
                 }
+
                 updateListViewItemStatus(mWebBasketMatch);  //比分更新
             } else if (msg.arg1 == 101) {  //type 为101 ==> 赔率推送
                 String ws_json = (String) msg.obj;
@@ -767,9 +772,77 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                                 }
                                 updateMatchStatus(matchchildern, data);// 修改Match里面的数据
                             }
-                        }
-                        else{
+                        }else{
+
                             mLoadHandler.postDelayed(mRun, 0);
+                            /**
+                             * 未开始（VS）==>开始时候的处理
+                             */
+                            BasketScoreBean score = new BasketScoreBean();
+
+                            for (Map.Entry<String, String> entry : data.entrySet()) {
+                                switch (entry.getKey()){
+                                    case "guest1":
+                                        score.setGuest1(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guest2":
+                                        score.setGuest2(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guest3":
+                                        score.setGuest3(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guest4":
+                                        score.setGuest4(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guestOt1":
+                                        score.setGuestOt1(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guestOt2":
+                                        score.setGuestOt2(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guestOt3":
+                                        score.setGuestOt3(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "guestScore":
+                                        score.setGuestScore(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "home1":
+                                        score.setHome1(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "home2":
+                                        score.setHome2(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "home3":
+                                        score.setHome3(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "home4":
+                                        score.setHome4(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "homeOt1":
+                                        score.setHomeOt1(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "homeOt2":
+                                        score.setHomeOt2(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "homeOt3":
+                                        score.setHomeOt3(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "homeScore":
+                                        score.setHomeScore(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "addTime":
+                                        score.setAddTime(Integer.parseInt(entry.getValue()));
+                                        break;
+                                    case "remainTime":
+                                        score.setRemainTime(entry.getValue());
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            matchchildern.setMatchScore(score);
+                            updateMatchStatus(matchchildern, data);
                         }
                         updateAdapter();
                         break;
@@ -1174,12 +1247,13 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 mbasket_unfiltrate.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+                updateAdapter();
+                // 设置打开全部日期内容
+                for (int i = 0; i < groupDataList.size(); i++) {
+                    explistview.expandGroup(i);
+                }
             }
-            updateAdapter();
-           // 设置打开全部日期内容
-        for (int i = 0; i < groupDataList.size(); i++) {
-            explistview.expandGroup(i);
-        }
         }
     }
 }

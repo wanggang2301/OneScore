@@ -3,23 +3,33 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.text.TextUtilsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
+import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
+import com.hhly.mlottery.bean.homepagerentity.HomeMenusEntity;
+import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.service.umengPushService;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -34,6 +44,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -47,6 +61,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private SwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
     private ListView home_page_list;// 首页列表
     private HomeListBaseAdapter mListBaseAdapter;// ListView数据适配器
+    private TextView public_txt_title;
 
     public HomePagerEntity mHomePagerEntity;// 首页实体对象
     private static final int LOADING_DATA_START = 0;// 加载数据
@@ -54,17 +69,84 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private static final int LOADING_DATA_ERROR = 2;// 加载失败
     private static final int REFRES_DATA_SUCCESS = 3;// 下拉刷新
     private long mExitTime;// 退出程序...时间
-    private String mValue;
-    private String mKey;
+
+    private String mPushType;// 推送类型
+    private String mThirdId;// id
+    private Integer mDataType;// 资讯类型 1、篮球  2、足球
+    private String mUrl;// 资讯中转URL
+    private String mInfoTypeName;// 资讯标题
+    private String imageUrl;// 资讯分享图片Url
+    private String title;// 资讯分享标题
+    private String subTitle;// 资讯分享摘要
+
+    private String version;// 当前版本Name
+    private String versionCode;// 当前版本Code
+    private String channelNumber;// 当前版本渠道号
+
+    private final int MIN_CLICK_DELAY_TIME = 2000;// 控件点击间隔时间
+    private long lastClickTime = 0;
+    private int clickCount = 0;// 点击次数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = HomePagerActivity.this;
+        channelNumber = getAppMetaData(mContext,"UMENG_CHANNEL");// 获取渠道号
+        getVersion();// 获取版本号
         pushData();
         initView();
         initData();
         initEvent();
+        startService(new Intent(mContext, umengPushService.class));
+        L.d("xxx","version:" + version);
+        L.d("xxx","versionCode:" + versionCode);
+        L.d("xxx","channelNumber:" + channelNumber);
+    }
+
+    /**
+     * 获取application中指定的meta-data
+     * @return 如果没有获取成功(没有对应值，或者异常)，则返回值为空
+     */
+    private String getAppMetaData(Context ctx, String key) {
+        if (ctx == null || TextUtils.isEmpty(key)) {
+            return null;
+        }
+        String resultData = null;
+        try {
+            PackageManager packageManager = ctx.getPackageManager();
+            if (packageManager != null) {
+                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+                if (applicationInfo != null) {
+                    if (applicationInfo.metaData != null) {
+                        resultData = applicationInfo.metaData.getString(key);
+                    }
+                }
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            L.d(e.getMessage());
+        }
+        return resultData;
+    }
+
+    /**
+     * 获取版本号
+     */
+    private void getVersion() {
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            versionCode = String.valueOf(info.versionCode);
+            String xxx = info.versionName.replace(".", "#");
+            String[] split = xxx.split("#");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 3; i++) {
+                sb = sb.append(split[i]);
+            }
+            version = sb.toString();
+        } catch (Exception e) {
+            L.d(e.getMessage());
+        }
     }
 
     /**
@@ -75,19 +157,11 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         PushAgent mPushAgent = PushAgent.getInstance(mContext);
         mPushAgent.enable();// 开启推送
         mPushAgent.onAppStart();// 统计应用启动
+        pushMessageSkip();// 页面跳转处理
 
-        Bundle mBundle = getIntent().getExtras();// 获取推送key value
-        if (mBundle != null) {
-            Set<String> keySet = mBundle.keySet();
-            for (String key : keySet) {
-                mValue = mBundle.getString(key);
-                mKey = key;
-            }
-        }
-        pushMessageSkip();
-/*// 使用友盟统计分析Android 4.6.3 对Fragment统计，开发者需要：来禁止默认的Activity页面统计方式。首先在程序入口处调用
-        MobclickAgent.openActivityDurationTrack(false);
-        String device_token = UmengRegistrar.getRegistrationId(mContext);
+        // 使用友盟统计分析Android 4.6.3 对Fragment统计，开发者需要：来禁止默认的Activity页面统计方式。首先在程序入口处调用
+//        MobclickAgent.openActivityDurationTrack(false);
+        /*String device_token = UmengRegistrar.getRegistrationId(mContext);
         L.d("xxx","device_token是: " + device_token);
         L.d("xxx"," mPushAgent.isEnabled(): " + mPushAgent.isEnabled());*/
     }
@@ -96,32 +170,73 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      * 处理推送消息和跳转处理
      */
     private void pushMessageSkip() {
+        Bundle mBundle = getIntent().getExtras();// 获取推送key value
+        if (mBundle != null) {
+            mPushType = mBundle.getString("pushType");
+            mThirdId = mBundle.getString("thirdId");
+            mUrl = mBundle.getString("dataUrl");
+            mInfoTypeName = mBundle.getString("dataTitle");
+            imageUrl = mBundle.getString("imageUrl");
+            title = mBundle.getString("title");
+            subTitle = mBundle.getString("subTitle");
 
-        if ("mlottery".equals(mValue)) {// 彩票类
-
-            if (isTaskRoot()) {//判断当前界面是否启动，如果当前界面没启动就直接跳转（没启动isTaskRoot()=true）
-
-                startActivity(new Intent(mContext, NumbersActivity.class));
-
-            }else if (!isTaskRoot()) {//如果当前界面启动了在跳转后把当前界面关掉，避免返回两次，启动了isTaskRoot（）=false
-
-                startActivity(new Intent(mContext, NumbersActivity.class));
-                this.finish();
-
+            try {
+                mDataType = mBundle.getString("dataType") == null ? 0 : Integer.parseInt(mBundle.getString("dataType"));
+            } catch (NumberFormatException e) {
+                L.d(e.getMessage());
             }
-        } else if ("football".equals(mValue)) {// 足球类
-            if (isTaskRoot()) {
-                startActivity(new Intent(mContext, FootballActivity.class));
-            } else if (!isTaskRoot()) {
-                startActivity(new Intent(mContext, FootballActivity.class));
-                this.finish();
-            }
-        } else if ("basketball".equals(mValue)) {// 篮球类
-            if (isTaskRoot()) {
-                startActivity(new Intent(mContext, BasketListActivity.class));
-            } else if (!isTaskRoot()) {
-                startActivity(new Intent(mContext, BasketListActivity.class));
-                this.finish();
+            if (!TextUtils.isEmpty(mPushType)) {
+                switch (mPushType) {
+                    case "lottery":// 彩票列表
+                        startActivity(new Intent(mContext, NumbersActivity.class));
+                        break;
+                    case "lotteryInfo":// 彩票详情页面
+                        if (!TextUtils.isEmpty(mThirdId)) {
+                            Intent lotteryIntent = new Intent(mContext, NumbersInfoBaseActivity.class);
+                            lotteryIntent.putExtra("numberName", mThirdId);
+                            startActivity(lotteryIntent);
+                        }
+                        break;
+                    case "football":// 足球列表
+                        startActivity(new Intent(mContext, FootballActivity.class));
+                        break;
+                    case "footballInfo":// 足球详情页面
+                        if (!TextUtils.isEmpty(mThirdId)) {
+                            Intent footIntent = new Intent(mContext, FootballMatchDetailActivity.class);
+                            footIntent.putExtra("currentFragmentId", -1);
+                            footIntent.putExtra("thirdId", mThirdId);
+                            startActivity(footIntent);
+                            L.d("xxx", "mThirdId: " + mThirdId);
+                        }
+                        break;
+                    case "dataInfo":// 资讯详情页面
+                        if (!TextUtils.isEmpty(mUrl)) {
+                            Intent basketDataIntent = new Intent(mContext, WebActivity.class);
+                            basketDataIntent.putExtra("thirdId", mThirdId);
+                            basketDataIntent.putExtra("key", mUrl);
+                            basketDataIntent.putExtra("type", mDataType);
+                            basketDataIntent.putExtra("infoTypeName", mInfoTypeName);
+                            basketDataIntent.putExtra("imageurl",imageUrl );
+                            basketDataIntent.putExtra("title",title );
+                            basketDataIntent.putExtra("subtitle",subTitle );
+                            startActivity(basketDataIntent);
+                            L.d("xxx", "mUrl: " + mUrl);
+                        }
+                        break;
+                    case "basketball":// 篮球列表
+                        startActivity(new Intent(mContext, BasketListActivity.class));
+                        break;
+                    case "basketballInfo":// 篮球详情页面
+                        if (!TextUtils.isEmpty(mThirdId)) {
+                            Intent basketIntent = new Intent(mContext, BasketDetailsActivity.class);
+                            basketIntent.putExtra("thirdId", mThirdId);
+                            startActivity(basketIntent);
+                        }
+                        break;
+                }
+                if (!isTaskRoot()) {// 如果当前界面启动了在跳转后把当前界面关掉，避免返回两次，启动了isTaskRoot（）=false
+                    this.finish();
+                }
             }
         }
     }
@@ -137,13 +252,28 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
             }
         });
+        if(AppConstants.isTestEnv){
+            public_txt_title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
+                        lastClickTime = currentTime;
+                        clickCount = 0;
+                    }else{
+                        clickCount += 1;
+                        if(clickCount == 5){
+                            startActivity(new Intent(mContext,DebugConfigActivity.class));
+                            finish();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
     protected void onResume() {
-        if (AppConstants.isUploadCrash) {
-            MobclickAgent.onResume(this);
-        }
         if (mListBaseAdapter != null) {
             mListBaseAdapter.start();// 启动轮播图
         }
@@ -155,9 +285,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
 
     @Override
     public void onPause() {
-        if (AppConstants.isUploadCrash) {
-            MobclickAgent.onPause(this);
-        }
         if (mListBaseAdapter != null) {
             mListBaseAdapter.end();// 结束轮播图
         }
@@ -193,6 +320,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         public_btn_set.setVisibility(View.VISIBLE);
         public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
 
+        public_txt_title = (TextView) findViewById(R.id.public_txt_title);
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.home_page_swiperefreshlayout);// 下拉刷新
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -205,11 +334,18 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      */
     public synchronized void getRequestData(final int num) {
         mHandler.sendEmptyMessage(LOADING_DATA_START);// 开始加载数据
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_HOME_PAGER_INFO, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
+        // 设置参数
+        Map<String, String> myPostParams = new HashMap<>();
+        myPostParams.put("version", version);
+        myPostParams.put("versionCode", versionCode);
+        myPostParams.put("channelNumber", channelNumber);
+        VolleyContentFast.requestJsonByPost(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
             @Override
             public synchronized void onResponse(final HomePagerEntity jsonObject) {
                 if (jsonObject != null) {// 请求成功
                     mHomePagerEntity = jsonObject;
+                    L.d("xxx","isAudit:" +jsonObject.getIsAudit());
+                    isAuditHandle(jsonObject);
                     if (mHomePagerEntity.getResult() == 200) {
                         switch (num) {
                             case 0:// 首次加载
@@ -234,6 +370,78 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
             }
         }, HomePagerEntity.class);
+    }
+
+    /**
+     * 审核数据处理
+     *
+     * @审核中需要隐藏彩票相关内容
+     */
+    private void isAuditHandle(HomePagerEntity jsonObject) {
+        // 过虑彩票菜单
+        HomeMenusEntity menusEntity = new HomeMenusEntity();
+        List<HomeContentEntity> contentList = new ArrayList<>();
+        if (jsonObject.getMenus() == null || jsonObject.getMenus().getContent() == null || jsonObject.getMenus().getContent().size() == 0) {
+            // 不处理
+        } else {
+            for (int i = 0, len = jsonObject.getMenus().getContent().size(); i < len; i++) {
+                HomeContentEntity homeContentEntity = jsonObject.getMenus().getContent().get(i);
+                switch (homeContentEntity.getJumpAddr()) {
+                    case "30":
+                    case "31":
+                    case "350":
+                    case "32":
+                    case "33":
+                    case "34":
+                    case "35":
+                    case "36":
+                    case "37":
+                    case "38":
+                    case "39":
+                    case "310":
+                    case "311":
+                    case "312":
+                    case "313":
+                    case "314":
+                    case "315":
+                    case "316":
+                    case "317":
+                    case "318":
+                    case "319":
+                    case "320":
+                    case "321":
+                    case "322":
+                    case "323":
+                        // 正在审核中，不显示彩票信息
+                        if ("false".equals(jsonObject.getIsAudit())) {
+                            contentList.add(homeContentEntity);
+                        }
+                        break;
+                    default:
+                        contentList.add(homeContentEntity);
+                        break;
+                }
+            }
+            menusEntity.setContent(contentList);
+            menusEntity.setResult(jsonObject.getMenus().getResult());
+        }
+        // 过虑彩票条目
+        List<HomeOtherListsEntity> otherList = new ArrayList<>();
+        if (jsonObject.getOtherLists() == null || jsonObject.getOtherLists().size() == 0) {
+            // 不处理
+        } else {
+            for (int i = 0, len = jsonObject.getOtherLists().size(); i < len; i++) {
+                HomeOtherListsEntity homeOtherListsEntity = jsonObject.getOtherLists().get(i);
+                if (homeOtherListsEntity.getContent().getLabType() == 3 && "true".equals(jsonObject.getIsAudit())) {
+                    // 正在审核中，不显示彩票信息
+                } else {
+                    // 审核完成，显示全部内容
+                    otherList.add(homeOtherListsEntity);
+                }
+            }
+        }
+        mHomePagerEntity.setOtherLists(otherList);
+        mHomePagerEntity.setMenus(menusEntity);
     }
 
     /**

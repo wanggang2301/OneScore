@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.CounselFragmentAdapter;
-import com.hhly.mlottery.bean.footballsecond.CounselBean;
+import com.hhly.mlottery.bean.footballDetails.CounselBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -51,7 +51,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private CounselFragmentAdapter mCounselFragmentAdapter;
     private List<Boolean> isImageLeft = new ArrayList<>();//是否图片左边布局
     private ImageView public_img_back, public_btn_filter, public_btn_set;
-    private TextView public_txt_title,  public_txt_left_title;//标题，暂无数据
+    private TextView public_txt_title, public_txt_left_title;//标题，暂无数据
     private List<CounselBean.InfoIndexBean.HeadTitlesBean> mHeadList;//头数据集合
     private List<CounselBean.InfoIndexBean.AdsBean> mAdsList;//轮播数据集合
     private List<CounselBean.InfoIndexBean.InfosBean> mInfosList;//资讯列表数据集合
@@ -115,7 +115,6 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mContext = getActivity();
-        MobclickAgent.openActivityDurationTrack(true);
         mView = inflater.inflate(R.layout.fragment_counsel, null);
         initView();
         //请求头数据
@@ -245,9 +244,11 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.public_img_back:
+                MobclickAgent.onEvent(mContext, "CounselChildFragment_Exit");
                 ((FootballActivity) mContext).finish();
                 break;
             case R.id.network_exception_reload_btn:
+                MobclickAgent.onEvent(mContext, "CounselChildFragment_NotNet");
                 loadHeadData(BaseURLs.URL_FOOTBALL_INFOINDEX);
                 break;
             default:
@@ -260,4 +261,29 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
 
     }
 
+    private boolean isHidden;// 当前Fragment是否显示
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isHidden = hidden;
+        if (hidden) {
+            MobclickAgent.onPageEnd("CounselChildFragment");
+        } else {
+            MobclickAgent.onPageStart("CounselChildFragment");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("CounselChildFragment");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(!isHidden){
+            MobclickAgent.onPageEnd("CounselChildFragment");
+        }
+    }
 }

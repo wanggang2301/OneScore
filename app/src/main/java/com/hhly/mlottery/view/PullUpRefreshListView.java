@@ -40,7 +40,7 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
         // 为ListView设置滑动监听
         setOnScrollListener(this);
         // 去掉底部分割线
-        setFooterDividersEnabled(true);
+//        setFooterDividersEnabled(true);
     }
 
     /**

@@ -1,13 +1,14 @@
 package com.hhly.mlottery.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 /**
- * 
- * @ClassName: Match 
+ *
+ * @ClassName: Match
  * @Description: 对应immediateMatch字段
  * @author chenml
  * @date 2015-10-13 下午6:51:47
@@ -19,13 +20,17 @@ public class Match implements Parcelable,Cloneable{
 	private String raceColor;
 	private String date;
 	private String time;
+	private String homeId;
 	private String hometeam;
+
+	private String guestId;
+
 	private String guestteam;
 	private String homerank;
 	private String guestrank;
-	
+
 	private String statusOrigin;
-	
+
 	private String status;
 	private String keepTime;
 	private String halfScore;
@@ -34,22 +39,22 @@ public class Match implements Parcelable,Cloneable{
 	private String home_yc;
 	private String guest_rc;
 	private String guest_yc;
-	
+
 	private String homeScore;
 	private String guestScore;
-	
+
 	private String homeHalfScore;
 	private String guestHalfScore;
 
 	private Map<String,MatchOdd> matchOdds;
-	
+
 	private int leftOddTextColorId;
 	private int rightOddTextColorId;
 	private int midOddTextColorId;
-	
+
 	private int homeTeamTextColorId;
 	private int guestTeamTextColorId;
-	
+
 	private int itemBackGroundColorId;//用于进球背景变化
 
 
@@ -74,7 +79,7 @@ public class Match implements Parcelable,Cloneable{
 	public int getGuestTeamTextColorId() {
 		return guestTeamTextColorId;
 	}
-	
+
 	public void setGuestTeamTextColorId(int guestTeamTextColorId) {
 		this.guestTeamTextColorId = guestTeamTextColorId;
 	}
@@ -84,8 +89,8 @@ public class Match implements Parcelable,Cloneable{
 	public void setItemBackGroundColorId(int itemBackGroundColorId) {
 		this.itemBackGroundColorId = itemBackGroundColorId;
 	}
-	
-	
+
+
 
 	public int getLeftOddTextColorId() {
 		return leftOddTextColorId;
@@ -223,9 +228,9 @@ public class Match implements Parcelable,Cloneable{
 	public void setMatchOdds(Map<String, MatchOdd> matchOdds) {
 		this.matchOdds = matchOdds;
 	}
-	
-	
-	
+
+
+
 	public String getHomeScore() {
 		return homeScore;
 	}
@@ -244,9 +249,24 @@ public class Match implements Parcelable,Cloneable{
 	public void setStatusOrigin(String statusOrigin) {
 		this.statusOrigin = statusOrigin;
 	}
-	
-	
-	
+	public String getGuestId() {
+		return guestId;
+	}
+
+	public void setGuestId(String guestId) {
+		this.guestId = guestId;
+	}
+
+	public String getHomeId() {
+		return homeId;
+	}
+
+	public void setHomeId(String homeId) {
+		this.homeId = homeId;
+	}
+
+
+
 	public String getHomeHalfScore() {
 		return homeHalfScore;
 	}
@@ -271,7 +291,9 @@ public class Match implements Parcelable,Cloneable{
 		dest.writeString(raceColor);
 		dest.writeString(date);
 		dest.writeString(time);
+		dest.writeString(homeId);
 		dest.writeString(hometeam);
+		dest.writeString(guestId);
 		dest.writeString(guestteam);
 		dest.writeString(homerank);
 		dest.writeString(guestrank);
@@ -285,15 +307,15 @@ public class Match implements Parcelable,Cloneable{
 		dest.writeString(guest_rc);
 		dest.writeString(guest_yc);
 		dest.writeMap(matchOdds);
-		
-	}
-	
 
-	
-	public Match(){
-		
 	}
-	
+
+
+
+	public Match(){
+
+	}
+
 	public Match(Parcel in){
 		thirdId = in.readString();
 		racename = in.readString();
@@ -301,7 +323,9 @@ public class Match implements Parcelable,Cloneable{
 		raceColor = in.readString();
 		date = in.readString();
 		time = in.readString();
+		homeId=in.readString();
 		hometeam = in.readString();
+		guestId=in.readString();
 		guestteam = in.readString();
 		homerank = in.readString();
 		guestrank = in.readString();
@@ -316,12 +340,12 @@ public class Match implements Parcelable,Cloneable{
 		statusOrigin = in.readString();
 		matchOdds = in.readHashMap(HashMap.class.getClassLoader());
 	}
-	
+
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
-	
-	
+
+
 
 }

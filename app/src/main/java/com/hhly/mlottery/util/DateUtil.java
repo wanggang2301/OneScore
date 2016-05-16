@@ -1,13 +1,13 @@
 package com.hhly.mlottery.util;
 
+import com.hhly.mlottery.MyApp;
+import com.hhly.mlottery.R;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import com.hhly.mlottery.MyApp;
-import com.hhly.mlottery.R;
 
 /**
  * 功能描述：完成与日期相关的各种操作
@@ -79,7 +79,27 @@ public class DateUtil {
         }
         return result;
     }
+    /**
 
+     * 把毫秒转化成日期
+
+     * @param dateFormat(日期格式 例如  MM-dd hh:mm)
+
+     * @param millSec(毫秒数)
+
+     * @return
+
+     */
+
+    public static String transferLongToDate(Long millSec){
+        String dateFormat="MM-dd hh:mm";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+
+        Date date= new Date(millSec);
+
+        return sdf.format(date);
+
+    }
     /**
      * 功能描述：返回字符型日期
      *
