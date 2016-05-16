@@ -202,6 +202,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 break;
             case R.id.iv_send://发送评论
                 MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");
+                L.e("lzfsend");
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
@@ -209,9 +210,11 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 } else {//有输入内容
                     if (CyUtils.isLogin) {//已登录
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
+                        L.e("lzfsendyidenglu");
                     } else {//未登录
                         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
                         CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
+                        L.e("lzfsend,meiyoudenglu");
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();

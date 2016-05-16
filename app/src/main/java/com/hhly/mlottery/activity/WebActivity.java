@@ -375,6 +375,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
                     if (CyUtils.isLogin) {//已登录
+                        L.i("lzf提交topicid=" + topicid);
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
                         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
@@ -453,6 +454,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 topicid = topicLoadResp.topic_id;
                 cmt_sum = topicLoadResp.cmt_sum;
                 mCommentCount.setText(cmt_sum + "");
+                L.i("lzftopicid第一次=" + topicid);
             }
 
             @Override
@@ -474,6 +476,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         mEditText.setText("");
         mSend.setVisibility(View.GONE);
         mCommentCount.setVisibility(View.VISIBLE);
+        L.e("lzf返回topicid=" + submitResp.id);
     }
 
     //评论提交失败回调接口
