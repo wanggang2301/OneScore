@@ -78,7 +78,8 @@
                 android:button="@null"
                 android:text="@string/football_cpi"
                 android:textSize="11dp"
-                android:textColor="@drawable/frag__base_selector_color" />
+                android:textColor="@drawable/frag__base_selector_color"
+                android:visibility="gone"/>
         </RadioGroup>
     </LinearLayout>
     <FrameLayout
