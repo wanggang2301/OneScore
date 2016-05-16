@@ -155,8 +155,13 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         }
         scrollView.setScrollViewCallbacks(this);
 
-        initView();
-        mHandler.postDelayed(mRun , 500); // 加载数据
+
+        try {
+            initView();
+            mHandler.postDelayed(mRun , 500); // 加载数据
+        } catch (Exception e) {
+            L.e(e.getMessage());
+        }
 
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
@@ -296,9 +301,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         map.put("thirdId", mThirdId);
 //        map.put("thirdId", "228110");
         VolleyContentFast.requestJsonByGet(url, map, new VolleyContentFast.ResponseSuccessListener<BasketAnalyzeBean>() {
-
-
-
             @Override
             public void onResponse(BasketAnalyzeBean json) {
 

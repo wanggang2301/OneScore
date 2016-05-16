@@ -208,9 +208,13 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             e.printStackTrace();
         }
 
-        initView();
-        setListener();
-        loadData();
+        try {
+            initView();
+            setListener();
+            loadData();
+        } catch (Exception e) {
+            L.e(e.getMessage());
+        }
     }
 
     /**
