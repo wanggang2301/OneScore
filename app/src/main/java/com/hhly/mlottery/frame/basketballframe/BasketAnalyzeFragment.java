@@ -507,10 +507,12 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         /**
          * 过滤主客队历史交锋1-0 或 0-1 时 X胜显示位置会居中问题
          */
-        if(guestWins == 1 && homeWins == 0){
-            mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin*10));
-            mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
-        }else if (guestWins == 0 && homeWins == 1){
+        if(guestWins != 0 && homeWins == 0){
+//            mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin*10));
+//            mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
+            mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 15));
+            mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0));
+        }else if (guestWins == 0 && homeWins != 0){
             mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin));
             mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin*10));
         }else{
