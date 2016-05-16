@@ -152,7 +152,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                     if(listView.getFooterViewsCount()==1){ //从网络异常到加载成功。footerview的高度需要重新计算。所以先remove掉。再加。
                         listView.removeFooterView(paddingviewButtom);
                     }
-                    if(listView.getFooterViewsCount()==0){//防止刷新的时候不停的加
+                    if(listView.getFooterViewsCount()==0&&getActivity()!=null){//防止刷新的时候不停的加  防止getActivity() 为null
                         paddingviewButtom=new View(getActivity());
                         AbsListView.LayoutParams lp1 = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,mFooterHeight);
 
@@ -167,7 +167,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                     mProgressBarLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.GONE);
 
-                    if(mOddsCompanyList.size()!=0){//有数据则显示分割线
+                    if(mOddsCompanyList.size()!=0&&getActivity()!=null){//有数据则显示分割线
                         listView.setDivider(getActivity().getResources().getDrawable(R.color.basket_odds_divider));
                         listView.setDividerHeight(1);
                     }
@@ -176,7 +176,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                     if(listView.getFooterViewsCount()==1){   // 从有数据到网络异常   footerview的高度需要重新计算。所以先remove掉。再加。
                         listView.removeFooterView(paddingviewButtom);
                     }
-                    if(listView.getFooterViewsCount()==0){//防止刷新的时候不停的加
+                    if(listView.getFooterViewsCount()==0&&getActivity()!=null){//防止刷新的时候不停的加
 
                         paddingviewButtom=new View(getActivity());
 
@@ -195,8 +195,10 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                           mOddsCompanyList.clear();
                         mOddsAdapter.notifyDataSetChanged();
                     }
-                    listView.setDivider(getActivity().getResources().getDrawable(R.color.black_title));//设置灰色分割线
-                    listView.setDividerHeight(1);
+                    if(getActivity()!=null){
+                        listView.setDivider(getActivity().getResources().getDrawable(R.color.black_title));//设置灰色分割线
+                        listView.setDividerHeight(1);
+                    }
                     break;
             }
         }

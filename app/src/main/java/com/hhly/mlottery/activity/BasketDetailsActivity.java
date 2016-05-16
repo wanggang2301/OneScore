@@ -161,14 +161,16 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private TextView mTitleHome;//主队比分/队名
     private TextView mTitleGuest;//客队比分/队名
     private TextView mTitleVS;//冒号  VS
+
+    LinearLayout headLayout;// 小头部
     //显示加时比分的三个布局
     private LinearLayout mLayoutOt1;
     private LinearLayout mLayoutOt2;
     private LinearLayout mLayoutOt3;
     BasketballDetailsBean.MatchEntity mMatch;
     private TextView mApos;
-    private int mGuestNum;
-    private int mHomeNum;
+    private int mGuestNum=0;
+    private int mHomeNum=0;
 
 
     @Override
@@ -206,9 +208,13 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             e.printStackTrace();
         }
 
-        initView();
-        setListener();
-        loadData();
+        try {
+            initView();
+            setListener();
+            loadData();
+        } catch (Exception e) {
+            L.e(e.getMessage());
+        }
     }
 
     /**
@@ -575,7 +581,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     setApos();
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         startWebsocket();
-                        computeWebSocket();
+                      //  computeWebSocket();
                     }
                 }
             }
@@ -627,7 +633,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         View imageView = findViewById(R.id.image_background);
         View overlayView = findViewById(R.id.overlay);
-        LinearLayout headLayout = (LinearLayout) findViewById(R.id.basket_details_header_layout);
+        headLayout = (LinearLayout) findViewById(R.id.basket_details_header_layout);
         RelativeLayout mRl = (RelativeLayout) findViewById(R.id.basket_title_rl);
 
         // Translate overlay and image
@@ -765,6 +771,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
     private void initData(BasketballDetailsBean bean) {
 
+
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
         mMatch = bean.getMatch();
 
@@ -811,8 +818,11 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             case GAME_CUT: //比赛中断
             case GAME_DELAY: //比赛推迟
                 //赛前显示 客队 VS  主队
-                mGuestScore.setVisibility(View.GONE);
-                mHomeScore.setVisibility(View.GONE);
+                mGuestScore.setText("");
+                mHomeScore.setText("");
+//                mGuestScore.setVisibility(View.GONE);
+//                mHomeScore.setVisibility(View.GONE);
+
                 mVS.setText("VS");
                 mTitleGuest.setText(bean.getMatch().getGuestTeam());
                 mTitleHome.setText(bean.getMatch().getHomeTeam());
@@ -1049,41 +1059,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
     }
 
-    private boolean enableRefresh;
 
-    public void scoreAnimation(final TextView changeText, final int changeScore, final TextView noChangeText, final int noChangeScore) {
-        enableRefresh = true;
-        MyRotateAnimation rotateAnim = null;
-        float cX = changeText.getWidth() / 2.0f;
-        float cY = changeText.getHeight() / 2.0f;
-
-        rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
-        if (rotateAnim != null) {
-            rotateAnim.setInterpolatedTimeListener(new MyRotateAnimation.InterpolatedTimeListener() {
-                @Override
-                public void interpolatedTime(float interpolatedTime) {
-                    // 监听到翻转进度过半时，更新显示内容。
-                    if (enableRefresh && interpolatedTime > 0.5f) {
-                        changeText.setText(changeScore + "");
-
-                        enableRefresh = false;
-                    }
-                }
-            });
-            rotateAnim.setFillAfter(true);
-            changeText.startAnimation(rotateAnim);
-        }
-        if (changeScore > noChangeScore) {//得分少的用灰色
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
-        } else if (changeScore < noChangeScore) {
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-        } else {
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-        }
-    }
 
     @Override
     public void onClose(String message) {
@@ -1268,30 +1244,39 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 setScore(score.getGuest1(), mGuest1, score.getHome1(), mHome1);
                 //不管是第几节都设置总比分.推送過來的話比分有变化要翻转
 
-                L.d("mGuestNum>>>>...>>>" + mGuestNum);
-                L.d("score.getGuestScore()>>>>...>>>" + score.getGuestScore());
+                mVS.setText(":");
+                mTitleVS.setText(":");
 
-                L.d("mHomeNum>>>>...>>>" + mHomeNum);
-                if (mGuestNum == score.getGuestScore()) {
+                if (mGuestNum == score.getGuestScore()&&mHomeNum==score.getHomeScore()) {//两个分数都相同
                     setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-                } else {
+                } else if(mGuestNum != score.getGuestScore()&&mHomeNum==score.getHomeScore()){ //客队不同，主队相同
                     scoreAnimation(mGuestScore, score.getGuestScore(), mHomeScore, score.getHomeScore());
                     mGuestNum = score.getGuestScore();
-                }
+                }else if(mGuestNum == score.getGuestScore()&&mHomeNum!=score.getHomeScore()){ //客队相同。主队不同
+                    int homeScore=score.getHomeScore();
+                    int guestScore=score.getGuestScore();
+                    scoreAnimation(mHomeScore,homeScore, mGuestScore, guestScore);
+                    mHomeNum = score.getHomeScore();
+                }else { //客队主队都不相同
+                    scoreAnimation(mGuestScore, score.getGuestScore(), mHomeScore, score.getHomeScore());
+                    mGuestNum = score.getGuestScore();
 
-                if (mHomeNum == score.getHomeScore()) {
-                    setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-                } else {
                     scoreAnimation(mHomeScore, score.getHomeScore(), mGuestScore, score.getGuestScore());
                     mHomeNum = score.getHomeScore();
                 }
+
+//                if (mHomeNum == score.getHomeScore()) {
+//                    setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
+//                } else {
+//                    scoreAnimation(mHomeScore, score.getHomeScore(), mGuestScore, score.getGuestScore());
+//                    mHomeNum = score.getHomeScore();
+//                }
                 L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());
                 setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
 
                 mTitleHome.setText(score.getHomeScore() + "");
                 mTitleGuest.setText(score.getGuestScore() + "");
-                mVS.setText(":");
-                mTitleVS.setText(":");
+
 
                 //设置比赛时间及状态
                 if (score.getMatchStatus() == FIRST_QUARTER) {
@@ -1350,6 +1335,49 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }
     }
 
+    private boolean enableRefresh;
+
+    /**
+     * 设置比分变化时的的翻转动画
+     * @param changeText
+     * @param changeScore
+     * @param noChangeText
+     * @param noChangeScore
+     */
+    public void scoreAnimation(final TextView changeText, final int changeScore, final TextView noChangeText, final int noChangeScore) {
+        enableRefresh = true;
+        MyRotateAnimation rotateAnim = null;
+        float cX = changeText.getWidth() / 2.0f;
+        float cY = changeText.getHeight() / 2.0f;
+
+        rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
+        if (rotateAnim != null) {
+            rotateAnim.setInterpolatedTimeListener(new MyRotateAnimation.InterpolatedTimeListener() {
+                @Override
+                public void interpolatedTime(float interpolatedTime) {
+                    // 监听到翻转进度过半时，更新显示内容。
+                    if (enableRefresh && interpolatedTime > 0.5f) {
+                        changeText.setText(changeScore + "");
+
+                        enableRefresh = false;
+                    }
+                }
+            });
+            rotateAnim.setFillAfter(true);
+            changeText.startAnimation(rotateAnim);
+            noChangeText.setText(noChangeScore+"");//不变的比分
+        }
+        if (changeScore > noChangeScore) {//得分少的用灰色
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
+        } else if (changeScore < noChangeScore) {
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+        } else {
+            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
+        }
+    }
     /**
      * This adapter provides three types of fragments as an example.
      * {@linkplain #createItem(int)} should be modified if you use this example for your app.
