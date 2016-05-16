@@ -61,9 +61,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         mFileterTagsList = (List<NewOddsInfo.FileterTagsBean>) getIntent().getSerializableExtra("fileterTags");
 
         ArrayList<String> checkedIdExtra = (ArrayList<String>) getIntent().getSerializableExtra("linkedListChecked");
-
         mTempCheckidsReset.addAll(checkedIdExtra);
-//        mTempCheckidsReset.addAll(mTempCheckidsReset);
         mCheckedIds.clear();
         mCheckedIds.addAll(checkedIdExtra);
 

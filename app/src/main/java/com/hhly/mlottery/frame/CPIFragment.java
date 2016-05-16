@@ -1,12 +1,10 @@
 package com.hhly.mlottery.frame;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,16 +26,11 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.activity.FootballActivity;
-import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
-import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
@@ -65,7 +58,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     private ImageView public_img_back, public_btn_filter, public_btn_set;
     private TextView public_txt_title, public_txt_left_title;//标题
     private CPIFragmentAdapter mCPIViewPagerAdapter;
-    private ExactSwipeRefrashLayout mRefreshLayout;
+    public static ExactSwipeRefrashLayout mRefreshLayout;
     private LinearLayout public_date_layout;//显示时间的layout
     private TextView public_txt_date;//显示时间的textview
     //热门，公司，筛选
@@ -104,7 +97,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //    public static boolean isHot = true;
     public List<NewOddsInfo.CompanyBean> companys = new ArrayList<>();
     public List<String> companysName = new ArrayList<>();
-    List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp=new ArrayList<>();
+    List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp = new ArrayList<>();
 
 
     public List<NewOddsInfo.CompanyBean> comNameList = new ArrayList<>();
@@ -334,12 +327,18 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     ArrayList<String> checkedIdExtra = (ArrayList<String>) data.getSerializableExtra("key");
                     ddList.clear();
                     ddList.addAll(checkedIdExtra);
-//                    for (int i = 0; i < ddList.size(); i++) {
-//                        leagueIdList.add(ddList.get(i));
-//                    }
-                    mCPIOddsFragment.filtrateData(companys, ddList);
-                    mCPIOddsFragment2.filtrateData(companys, ddList);
-                    mCPIOddsFragment3.filtrateData(companys, ddList);
+//                    mCPIOddsFragment.filtrateData(companys, ddList);
+//                    mCPIOddsFragment2.filtrateData(companys, ddList);
+//                    mCPIOddsFragment3.filtrateData(companys, ddList);
+                    companysName.clear();
+                    for (int k = 0; k < companys.size(); k++) {
+                        if (companys.get(k).isChecked()) {
+                            companysName.add(companys.get(k).getComName());
+                        }
+                    }
+                    mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName, ddList, "plate");
+                    mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName, ddList, "big");
+                    mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName, ddList, "op");
                     break;
                 default:
                     break;
@@ -352,7 +351,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRefreshLayout.setRefreshing(false);
                 for (Fragment fragment : fragments) {
                     ((CPIOddsFragment) fragment).switchd("");
                 }
@@ -456,15 +454,15 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     companysName.clear();
                     for (int k = 0; k < companys.size(); k++) {
                         if (companys.get(k).isChecked()) {
-                             companysName.add(companys.get(k).getComName());
+                            companysName.add(companys.get(k).getComName());
                         }
                     }
 //                    mCPIOddsFragment.filtrateData(companys, CpiFiltrateActivity.mCheckedIds);
 //                    mCPIOddsFragment2.filtrateData(companys, CpiFiltrateActivity.mCheckedIds);
 //                    mCPIOddsFragment3.filtrateData(companys, CpiFiltrateActivity.mCheckedIds);
-                    mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName,CpiFiltrateActivity.mCheckedIds,"plate");
-                    mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName,CpiFiltrateActivity.mCheckedIds,"big");
-                    mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName,CpiFiltrateActivity.mCheckedIds,"op");
+                    mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName, CpiFiltrateActivity.mCheckedIds, "plate");
+                    mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName, CpiFiltrateActivity.mCheckedIds, "big");
+                    mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName, CpiFiltrateActivity.mCheckedIds, "op");
 
                     mAlertDialog.dismiss();
                 }

@@ -10,27 +10,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
-import com.hhly.mlottery.adapter.OddDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
-import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPIFragment;
-import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +34,7 @@ import java.util.Map;
 public class CPIOddsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private String[] defualtCompanyIds = {"3", "45"};
-
     private String mParam1;
     private String mParam2;
     private View mView;
@@ -58,21 +48,16 @@ public class CPIOddsFragment extends Fragment {
     public List<NewOddsInfo.AllInfoBean> mAllInfoBeans = new ArrayList<>();
     public List<NewOddsInfo.AllInfoBean> mAllInfo = new ArrayList<>();
     private List<NewOddsInfo.AllInfoBean> mShowInfoBeans = new ArrayList<>();
-    //选着热门
-    List<NewOddsInfo.AllInfoBean> hotsTemp = new ArrayList<>();
     //热门联赛筛选
     public static List<NewOddsInfo.FileterTagsBean> mFileterTagsBean = new ArrayList<>();
-    //全部公司
-    public static List<NewOddsInfo.CompanyBean> mCompanyBean = new ArrayList<>();
     private static final int ERROR = -1;//访问失败
     private static final int SUCCESS = 0;// 访问成功
     private static final int STARTLOADING = 1;// 数据加载中
     private static final int NODATA = 400;// 暂无数据
-    private FrameLayout cpi_fl_plate_loading;// 正在加载中
+//    private FrameLayout cpi_fl_plate_loading;// 正在加载中
     private FrameLayout cpi_fl_plate_networkError;// 加载失败
     private FrameLayout cpi_fl_plate_noData;// 暂无数据
     private TextView cpi_plate_reLoading;// 刷新
-//    private String type = "";//类型区分，亚盘，大小，欧赔
 
     public static CPIOddsFragment newInstance(String param1, String param2) {
         CPIOddsFragment fragment = new CPIOddsFragment();
@@ -110,7 +95,7 @@ public class CPIOddsFragment extends Fragment {
         cpi_odds_recyclerView.setLayoutManager(linearLayoutManager);
 
         //正在加载中
-        cpi_fl_plate_loading = (FrameLayout) mView.findViewById(R.id.cpi_fl_plate_loading);
+//        cpi_fl_plate_loading = (FrameLayout) mView.findViewById(R.id.cpi_fl_plate_loading);
         //加载失败
         cpi_fl_plate_networkError = (FrameLayout) mView.findViewById(R.id.cpi_fl_plate_networkError);
         //暂无数据
@@ -134,8 +119,6 @@ public class CPIOddsFragment extends Fragment {
      */
     public void InitData(String date, final String type) {
         mHandler.sendEmptyMessage(STARTLOADING);
-//        String stUrl = "http://192.168.10.242:8181/mlottery/core/footBallIndexCenter.findAndroidIndexCenter.do?";
-        String stUrl = "http://m.13322.com/mlottery/core/footBallIndexCenter.findAndroidIndexCenter.do?";
         Map<String, String> map = new HashMap<>();
 
         if (type.equals(CPIFragment.TYPE_PLATE)) {
@@ -145,14 +128,12 @@ public class CPIOddsFragment extends Fragment {
         } else if (type.equals(CPIFragment.TYPE_OP)) {
             map.put("type", "3");
         }
-
-
         if (!"".equals(date)) {
             map.put("date", date);
         }
 
         // 2、连接服务器
-        VolleyContentFast.requestJsonByPost(stUrl, map, new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.URL_NEW_ODDS, map, new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
             @Override
             public synchronized void onResponse(final NewOddsInfo json) {
 
@@ -188,14 +169,11 @@ public class CPIOddsFragment extends Fragment {
                         }
                     }
 
-
                     filtrateData(defualtCompanyList, CpiFiltrateActivity.mCheckedIds);
-
 
                     cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, type);
                     cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
 
-//                    }
                     mHandler.sendEmptyMessage(SUCCESS);// 请求成功
                 } else {
                     mHandler.sendEmptyMessage(NODATA);// 暂无数据
@@ -321,12 +299,10 @@ public class CPIOddsFragment extends Fragment {
 
                 for (int h = 0; h < comNameLists.size(); h++) {
 
-
                     if (hotsAllInfoTemps.get(k).getComList().get(j).getComName().equals(comNameLists.get(h))) {
                         NewOddsInfo.AllInfoBean.ComListBean mComListBean = new NewOddsInfo.AllInfoBean.ComListBean();
                         mComListBean = hotsAllInfoTemps.get(k).getComList().get(j);
                         mComListBeanList.add(mComListBean);
-
 
                     }
 
@@ -358,7 +334,8 @@ public class CPIOddsFragment extends Fragment {
             switch (msg.what) {
                 case SUCCESS:// 访问成功
                     CPIFragment.public_img_filter.setVisibility(View.VISIBLE);
-                    cpi_fl_plate_loading.setVisibility(View.GONE);
+                    CPIFragment.mRefreshLayout.setRefreshing(false);
+//                    cpi_fl_plate_loading.setVisibility(View.GONE);
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
                     cpi_fl_plate_noData.setVisibility(View.GONE);
                     cpi_odds_recyclerView.setVisibility(View.VISIBLE);
@@ -367,17 +344,20 @@ public class CPIOddsFragment extends Fragment {
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
                     cpi_fl_plate_noData.setVisibility(View.GONE);
                     cpi_odds_recyclerView.setVisibility(View.GONE);
-                    cpi_fl_plate_loading.setVisibility(View.VISIBLE);
+//                    cpi_fl_plate_loading.setVisibility(View.VISIBLE);
+                    CPIFragment.mRefreshLayout.setRefreshing(true);
                     break;
                 case ERROR://访问失败
                     cpi_fl_plate_noData.setVisibility(View.GONE);
                     cpi_odds_recyclerView.setVisibility(View.GONE);
-                    cpi_fl_plate_loading.setVisibility(View.GONE);
+//                    cpi_fl_plate_loading.setVisibility(View.GONE);
+                    CPIFragment.mRefreshLayout.setRefreshing(false);
                     cpi_fl_plate_networkError.setVisibility(View.VISIBLE);
                     break;
                 case NODATA://没有数据
                     cpi_odds_recyclerView.setVisibility(View.GONE);
-                    cpi_fl_plate_loading.setVisibility(View.GONE);
+//                    cpi_fl_plate_loading.setVisibility(View.GONE);
+                    CPIFragment.mRefreshLayout.setRefreshing(false);
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
                     cpi_fl_plate_noData.setVisibility(View.VISIBLE);
                     break;
