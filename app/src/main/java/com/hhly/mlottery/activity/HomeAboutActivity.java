@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -187,16 +188,19 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                 UiUtils.toast(mContext, getResources().getString(R.string.about_copy_success) + '"' + string + '"');
                 break;*/
                case R.id.tv7://服务号
+
                    String number = mTv7.getText().toString();
-                   //用intent启动拨打电话
-                   Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+number));
+                   Uri uri = Uri.parse("tel:"+number);
+                   Intent intent = new Intent(Intent.ACTION_DIAL, uri);
                    startActivity(intent);
+                   // showCallDialog();
                    break;
             default:
                 break;
         }
 
     }
+
 
     private class CheckVersionTask implements Runnable {
 

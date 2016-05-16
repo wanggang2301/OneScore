@@ -45,11 +45,11 @@ import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,7 +150,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
      * 是否已被加载过一次，第二次就不再去请求数据了
      */
     private boolean mHasLoadedOnce;
-   private   LinearLayoutManager layoutManager;
+   private LinearLayoutManager layoutManager;
+
+    private String teamLogoPre;
+
+    private String teamLogoSuff;
 
 
     public static ResultFragment newInstance(String param1, String param2) {
@@ -395,7 +399,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         historyInitData(position);
                         // 关闭 dialog弹窗
                         mAlertDialog.dismiss();
-                        // 记录点击的 item 位置
+                        // 记录点击的 item_share 位置
                         mItems = position;
                     }
                 });
@@ -430,7 +434,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         historyInitData(position);
                         // 关闭 dialog弹窗
                         mAlertDialog.dismiss();
-                        // 记录点击的 item 位置
+                        // 记录点击的 item_share 位置
                         mItems = position;
                         // System.out.println("position=========="+position);
                     }
@@ -494,6 +498,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                 //当前日期
                 mCurrentDate = json.getCurrent().getDate();
+
+
+                teamLogoPre = json.getTeamLogoPre();
+                teamLogoSuff = json.getTeamLogoSuff();
 
 
                 /**
@@ -584,7 +592,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 // }
 
 
-                mAdapter = new ResultMultiAdapter(mContext, mMatchs);
+                mAdapter = new ResultMultiAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                 //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                 //  mAdapter.setSchfocusClickListener(mSchfocusClickListener);
 
@@ -599,11 +607,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         String thirdId = data;
                         Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                         intent.putExtra("thirdId", thirdId);
-                        intent.putExtra("currentFragmentId",1);
+                        intent.putExtra("currentFragmentId", 1);
                         getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                     }
                 });
-
 
 
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
@@ -820,11 +827,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         updateAdapter();
-        if(hidden){
-            MobclickAgent.onPageEnd("ResultFragment");
-        }else{
-            MobclickAgent.onPageStart("ResultFragment");
-        }
     }
 
     @Override

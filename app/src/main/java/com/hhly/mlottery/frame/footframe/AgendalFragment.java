@@ -9,26 +9,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballInformationActivity;
 import com.hhly.mlottery.adapter.FTRacePinnedHeaderExpandableAdapter;
-import com.hhly.mlottery.bean.footballsecond.LeagueRoundInfo;
+import com.hhly.mlottery.bean.footballDetails.LeagueRoundInfo;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.ChoiceWheelUtil;
-import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
 import com.umeng.analytics.MobclickAgent;
@@ -37,8 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * * @ClassName: OneScore

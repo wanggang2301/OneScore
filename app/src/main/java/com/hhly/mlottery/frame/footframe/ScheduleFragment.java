@@ -44,10 +44,10 @@ import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -152,7 +152,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     private ArrayList<ScheduleMatchDto> mAllMatchs;// 所有的
     private ArrayList<ScheduleMatchDto> mMatchs;// 显示的
 
+    private String teamLogoPre;
 
+    private String teamLogoSuff;
 
 
     public static ScheduleFragment newInstance(String param1, String param2) {
@@ -380,6 +382,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 mCurrentDate = json.getCurrent().getDate();
                 mAllCup = json.getCeaselessFilter();
 
+                teamLogoPre = json.getTeamLogoPre();
+
+                teamLogoSuff = json.getTeamLogoSuff();
 
                 if (current != null) {
                     ScheduleMatchDto scheduleMatchDto = new ScheduleMatchDto();
@@ -423,9 +428,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     }
 
                     if (mAdapter == null) {
-                        mAdapter = new ScheduleAdapter(mContext, mMatchs);
+                        mAdapter = new ScheduleAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                         //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                         //
+
+                        mAdapter = new ScheduleAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+
                         recyclerView.setAdapter(mAdapter);
                         mAdapter.setmFocusMatchClickListener(mFocusMatchClickListener);
                         mAdapter.setDateOnClickListener(mDateOnClickListener);
@@ -436,7 +444,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                                 String thirdId = data;
                                 Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                                 intent.putExtra("thirdId", thirdId);
-                                intent.putExtra("currentFragmentId",2);
+                                intent.putExtra("currentFragmentId", 2);
                                 getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                             }
                         });
@@ -673,6 +681,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            L.d("xxx","Schedule>>>>isVisibleToUser...显示了");
+        }else {
+            L.d("xxx","Schedule>>>>isVisibleToUser...隐藏了");
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         //为什么要这样，不懂。
@@ -683,11 +702,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         updateAdapter();
-        if(hidden){
-            MobclickAgent.onPageEnd("ScheduleFragment");
-        }else{
-            MobclickAgent.onPageStart("ScheduleFragment");
-        }
     }
 
     @Override

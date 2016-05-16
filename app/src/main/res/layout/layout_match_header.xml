@@ -13,6 +13,7 @@
         android:paddingRight="@dimen/x20"
         android:scaleType="centerInside"
         android:src="@mipmap/back" />
+
     <RelativeLayout
         android:id="@+id/layout_match_header_team_layout"
         android:layout_width="match_parent"
@@ -63,15 +64,24 @@
 
     </RelativeLayout>
 
-
-    <ImageView
-        android:id="@+id/layout_match_header_focus_img"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:paddingLeft="@dimen/x24"
-        android:paddingRight="@dimen/x24"
-        android:scaleType="centerInside"
-        android:src="@mipmap/article_like"
-        />
+        android:layout_gravity="right">
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@mipmap/share" />
+
+        <ImageView
+            android:id="@+id/layout_match_header_focus_img"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:scaleType="centerInside"
+            android:src="@mipmap/article_like" />
+    </LinearLayout>
 </FrameLayout>

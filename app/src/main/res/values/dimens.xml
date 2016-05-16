@@ -10,24 +10,33 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="item_football_card">11.5sp</dimen>
+    <dimen name="item_football_card">10sp</dimen>
 
 
     <dimen name="home_top_btn_width">24dp</dimen>
     <dimen name="home_top_btn_height">24dp</dimen>
 
     <dimen name="item_football_racename">13sp</dimen>
+    <dimen name="keep_time">13sp</dimen>
+
     <dimen name="item_football_time">13sp</dimen>
     <dimen name="item_football_hometeam">13sp</dimen>
     <dimen name="item_football_guestteam">13sp</dimen>
-    <dimen name="item_football_half_score">13sp</dimen>
     <dimen name="item_football_frequency">13sp</dimen>
-    <dimen name="item_football_full_score">15sp</dimen>
+    <dimen name="item_football_full_score">24sp</dimen>
+    <dimen name="item_football_half_score">12sp</dimen>
+
     <dimen name="item_football_left_odds">13sp</dimen>
     <dimen name="item_football_handicap_value">13sp</dimen>
     <dimen name="item_football_right_odds">13sp</dimen>
     <dimen name="item_football_right_mid_score">13sp</dimen>
     <dimen name="item_football_international_card">10sp</dimen>
+
+    <dimen name="football_icon_x">100px</dimen>
+    <dimen name="football_icon_y">100px</dimen>
+    <dimen name="football_offset">20dp</dimen>
+    <dimen name="football_icon_padding">32dp</dimen>
+    <dimen name="football_cardview_margin">2.5dp</dimen>
 
 
     <!-- 篮球详情页-->

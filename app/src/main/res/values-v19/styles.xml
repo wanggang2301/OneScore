@@ -13,7 +13,7 @@
     </style>
 
     <!--<style name="MainTheme" parent="@android:style/Theme.Holo.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
+        <item_share name="android:windowTranslucentStatus">true</item_share>
     </style>-->
 
 </resources>

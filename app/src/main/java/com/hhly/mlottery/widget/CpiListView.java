@@ -10,6 +10,7 @@ import android.widget.ListView;
 /**
  * Created by 103TJL on 2016/4/13.
  * 指数公司联赛列表
+ * 自动计算item高度
  */
 public class CpiListView extends ListView {
 

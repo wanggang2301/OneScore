@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--分享-->
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+    <string name="webchat">微信</string>
+    <string name="friends">朋友圈</string>
+    <string name="qq">QQ</string>
+    <string name="qzone">空间</string>
+    <string name="sina">新浪</string>
+    <string name="copy">复制链接</string>
+    <string name="share_cancel">取消</string>
+    <string name="share_summary">一比分,更新了比赛情报</string>
+    <string name="share_to_qq_app_name">一比分</string>
+    <string name="share_copy">复制链接成功</string>
+    <string name="share_from">来自一比分:</string>
+    <string name="share_uninstall_webchat">您还未安装微信客户端</string>
+    <string name="weibosdk_demo_not_support_api_hint">您还未安装新浪微博客户端</string>
+    <string name="share_uninstall_qq">您还未安装QQ客户端</string>
+
+
+
+
     <!--指数-->
     <string name="odd_plate_rb_txt">亚盘</string>
     <string name="odd_op_rb_txt">欧赔</string>
@@ -635,8 +659,16 @@
     <!--WebView H5-->
     <string name="webview_check_info">查看比赛详细数据</string>
     <string name="user_feedback">用户反馈</string>
-
-
+    <!--资讯评论-->
+    <string name="user_name">游客</string>
+    <string name="warn_nullcontent">请先输入内容</string>
+    <string name="warn_submitfail">发送失败，请重试</string>
+    <string name="hint_content">我来评论</string>
+    <string name="comment_send">发送</string>
+    <string name="comment_title">全部留言</string>
+    <string name="comment_contentnull">暂无评论内容</string>
+    <string name="toatalvisiable">全部显示</string>
+<!---->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">请输入留言内容</string>
     <string name="feedback_toast_thx">多谢反馈！</string>
