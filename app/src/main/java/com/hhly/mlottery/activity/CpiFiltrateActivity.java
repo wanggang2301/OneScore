@@ -61,7 +61,9 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         mFileterTagsList = (List<NewOddsInfo.FileterTagsBean>) getIntent().getSerializableExtra("fileterTags");
 
         ArrayList<String> checkedIdExtra = (ArrayList<String>) getIntent().getSerializableExtra("linkedListChecked");
+
         mTempCheckidsReset.addAll(checkedIdExtra);
+//        mTempCheckidsReset.addAll(mTempCheckidsReset);
         mCheckedIds.clear();
         mCheckedIds.addAll(checkedIdExtra);
 
@@ -180,8 +182,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.cpi_filtrate_match_reset_btn:// 重置
 
-                mTempCheckidsReset.addAll(mTempCheckidsReset);
-                ;
+                mTempCheckidsReset.addAll(mTempCheckidsReset);;
                 mCheckedIds.clear();
                 for (int i = 0; i < mFileterTagsList.size(); i++) {
                     if (mTempCheckidsReset.contains(mFileterTagsList.get(i).getLeagueId())) {
