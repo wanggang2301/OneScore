@@ -644,6 +644,8 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfo.do";
 
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
+    /**新版指数*/
+    public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";

@@ -12,7 +12,12 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.frame.CPIFragment;
+import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,18 +27,15 @@ import java.util.Map;
  */
 public class CpiCompanyAdapter extends BaseAdapter {
 
-//    private List<Map<String, String>> cpiCompanyList;
+    //    private List<Map<String, String>> cpiCompanyList;
     private List<NewOddsInfo.CompanyBean> mCompanyBean;
     private Context context;
-    private int defItem;//当前的item的position(用于点击item设置item背景颜色)
     private LayoutInflater mInflater;
-    private ListView mListView;
 
-    public CpiCompanyAdapter(Context context, List<NewOddsInfo.CompanyBean> mCompanyBean, ListView mListView) {
+    public CpiCompanyAdapter(Context context, List<NewOddsInfo.CompanyBean> mCompanyBean) {
         super();
         this.context = context;
         this.mCompanyBean = mCompanyBean;
-        this.mListView = mListView;
         this.mInflater = LayoutInflater.from(context);
 //        this.mCheckedTextView = mCheckedTextView;
     }
@@ -57,10 +59,11 @@ public class CpiCompanyAdapter extends BaseAdapter {
     }
 
     /**
-     * 根据选中的position更改item背景颜色
+     * 根据选中的position选中
      */
-//    public void setDefSelect( int position) {
-//        this.defItem = position;
+//    public void setDefSelect(List<Integer> defItemList, boolean isTrue) {
+//        this.defItemList = defItemList;
+//        this.isTrue = isTrue;
 //        notifyDataSetChanged();
 //    }
     @Override
@@ -74,15 +77,12 @@ public class CpiCompanyAdapter extends BaseAdapter {
             item = (ListViewItem) convertView.getTag();
         }
         item.checkedTextView.setText(mCompanyBean.get(position).getComName());
-        //默认皇冠和浩博
-        if (position == 0) {
-            mListView.setItemChecked(position, true);
-            item.checkedTextView.setChecked(true);
-        }
-        if (position == 1) {
-            mListView.setItemChecked(position, true);
-            item.checkedTextView.setChecked(true);
-        }
+        item.checkedTextView.setChecked(mCompanyBean.get(position).isChecked());
+
+
+//        mListView.setItemChecked(position, CPIFragment.booleanList.get(position));
+//        item.checkedTextView.setChecked(CPIFragment.booleanList.get(position));
+
 
         return convertView;
     }
