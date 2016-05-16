@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +61,7 @@ import java.util.Map;
 
 public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableScrollView> implements SwipeRefreshLayout.OnRefreshListener {
 
-//    public static final int REQUEST_MORERECORD = 0x80;
+    //    public static final int REQUEST_MORERECORD = 0x80;
     private View mView;
     private ProgressBar mProgressBar;//历史交锋进度条
     private TextView mBasketProgressbarGuest;
@@ -77,24 +78,24 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private ImageView mRecentHomeImg4;
     private ImageView mRecentHomeImg5;
     private ImageView mRecentHomeImg6;
-//    private TextView mFutureGuestDate1;
-//    private TextView mFutureGuestDate2;
-//    private TextView mFutureGuestDate3;
-//    private TextView mFutureGuestName1;
-//    private TextView mFutureGuestName2;
-//    private TextView mFutureGuestName3;
-//    private ImageView mFutureGuestImg1;
-//    private ImageView mFutureGuestImg2;
-//    private ImageView mFutureGuestImg3;
-//    private TextView mFutureHomeDate1;
-//    private TextView mFutureHomeDate2;
-//    private TextView mFutureHomeDate3;
-//    private TextView mFutureHomeName1;
-//    private TextView mFutureHomeName2;
-//    private TextView mFutureHomeName3;
-//    private ImageView mFutureHomeImg1;
-//    private ImageView mFutureHomeImg2;
-//    private ImageView mFutureHomeImg3;
+    private TextView mFutureGuestDate1;
+    private TextView mFutureGuestDate2;
+    private TextView mFutureGuestDate3;
+    private TextView mFutureGuestName1;
+    private TextView mFutureGuestName2;
+    private TextView mFutureGuestName3;
+    private ImageView mFutureGuestImg1;
+    private ImageView mFutureGuestImg2;
+    private ImageView mFutureGuestImg3;
+    private TextView mFutureHomeDate1;
+    private TextView mFutureHomeDate2;
+    private TextView mFutureHomeDate3;
+    private TextView mFutureHomeName1;
+    private TextView mFutureHomeName2;
+    private TextView mFutureHomeName3;
+    private ImageView mFutureHomeImg1;
+    private ImageView mFutureHomeImg2;
+    private ImageView mFutureHomeImg3;
     private TextView mRankingGuestName;
     private TextView mRankingHomeName;
     private TextView mRankingGuestOverGame;
@@ -118,15 +119,23 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private TextView mScoreWin;
     private TextView mScoreLose;
     private ExactSwipeRefrashLayout mRefresh;//下拉刷新
-    private NestedListView mListView1;
-    private NestedListView mListView2;
+
+//    private NestedListView mListView1;
+//    private NestedListView mListView2;
     private TextView mTextLine;
+
     private LinearLayout mFutureLinearLayout;
     private TextView mFutureNodata;
     private LinearLayout mRunkingLinearLayout;
     private TextView mRunkingNodata;
     private LinearLayout mRecentLinearLayout;
     private TextView mRecentNodata;
+    private RelativeLayout mGuest1;
+    private RelativeLayout mGuest2;
+    private RelativeLayout mGuest3;
+    private RelativeLayout mHome1;
+    private RelativeLayout mHome2;
+    private RelativeLayout mHome3;
 
 
     @Override
@@ -158,7 +167,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
         try {
             initView();
-            mHandler.postDelayed(mRun , 500); // 加载数据
+            mHandler.postDelayed(mRun, 500); // 加载数据
         } catch (Exception e) {
             L.e(e.getMessage());
         }
@@ -190,75 +199,75 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         }
     };
 
-    private void initView(){
+    private void initView() {
 
-        mProgressBar = (ProgressBar)mView.findViewById(R.id.basket_progressbar);
-        mBasketProgressbarGuest = (TextView)mView.findViewById(R.id.basket_progressbar_guest);
-        mBasketProgressbarHome = (TextView)mView.findViewById(R.id.basket_progressbar_home);
-        mRecentGuestImg1 = (ImageView)mView.findViewById(R.id.basket_img_recent_guest1);
-        mRecentGuestImg2 = (ImageView)mView.findViewById(R.id.basket_img_recent_guest2);
-        mRecentGuestImg3 = (ImageView)mView.findViewById(R.id.basket_img_recent_guest3);
-        mRecentGuestImg4 = (ImageView)mView.findViewById(R.id.basket_img_recent_guest4);
-        mRecentGuestImg5 = (ImageView)mView.findViewById(R.id.basket_img_recent_guest5);
-        mRecentGuestImg6 = (ImageView)mView.findViewById(R.id.basket_img_recent_guest6);
+        mProgressBar = (ProgressBar) mView.findViewById(R.id.basket_progressbar);
+        mBasketProgressbarGuest = (TextView) mView.findViewById(R.id.basket_progressbar_guest);
+        mBasketProgressbarHome = (TextView) mView.findViewById(R.id.basket_progressbar_home);
+        mRecentGuestImg1 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest1);
+        mRecentGuestImg2 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest2);
+        mRecentGuestImg3 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest3);
+        mRecentGuestImg4 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest4);
+        mRecentGuestImg5 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest5);
+        mRecentGuestImg6 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest6);
 
-        mRecentHomeImg1 = (ImageView)mView.findViewById(R.id.basket_img_recent_home1);
-        mRecentHomeImg2 = (ImageView)mView.findViewById(R.id.basket_img_recent_home2);
-        mRecentHomeImg3 = (ImageView)mView.findViewById(R.id.basket_img_recent_home3);
-        mRecentHomeImg4 = (ImageView)mView.findViewById(R.id.basket_img_recent_home4);
-        mRecentHomeImg5 = (ImageView)mView.findViewById(R.id.basket_img_recent_home5);
-        mRecentHomeImg6 = (ImageView)mView.findViewById(R.id.basket_img_recent_home6);
+        mRecentHomeImg1 = (ImageView) mView.findViewById(R.id.basket_img_recent_home1);
+        mRecentHomeImg2 = (ImageView) mView.findViewById(R.id.basket_img_recent_home2);
+        mRecentHomeImg3 = (ImageView) mView.findViewById(R.id.basket_img_recent_home3);
+        mRecentHomeImg4 = (ImageView) mView.findViewById(R.id.basket_img_recent_home4);
+        mRecentHomeImg5 = (ImageView) mView.findViewById(R.id.basket_img_recent_home5);
+        mRecentHomeImg6 = (ImageView) mView.findViewById(R.id.basket_img_recent_home6);
 
-//        mFutureGuestDate1 = (TextView)mView.findViewById(R.id.basket_future_guest_date1);
-//        mFutureGuestDate2 = (TextView)mView.findViewById(R.id.basket_future_guest_date2);
-//        mFutureGuestDate3 = (TextView)mView.findViewById(R.id.basket_future_guest_date3);
-//
-//        mFutureGuestName1 = (TextView)mView.findViewById(R.id.basket_future_guest_name1);
-//        mFutureGuestName2 = (TextView)mView.findViewById(R.id.basket_future_guest_name2);
-//        mFutureGuestName3 = (TextView)mView.findViewById(R.id.basket_future_guest_name3);
-//
-//        mFutureGuestImg1 = (ImageView)mView.findViewById(R.id.basket_future_guest_image1);
-//        mFutureGuestImg2 = (ImageView)mView.findViewById(R.id.basket_future_guest_image2);
-//        mFutureGuestImg3 = (ImageView)mView.findViewById(R.id.basket_future_guest_image3);
-//
-//        mFutureHomeDate1 = (TextView)mView.findViewById(R.id.basket_future_home_date1);
-//        mFutureHomeDate2 = (TextView)mView.findViewById(R.id.basket_future_home_date2);
-//        mFutureHomeDate3 = (TextView)mView.findViewById(R.id.basket_future_home_date3);
-//
-//        mFutureHomeName1 = (TextView)mView.findViewById(R.id.basket_future_home_name1);
-//        mFutureHomeName2 = (TextView)mView.findViewById(R.id.basket_future_home_name2);
-//        mFutureHomeName3 = (TextView)mView.findViewById(R.id.basket_future_home_name3);
-//
-//        mFutureHomeImg1 = (ImageView)mView.findViewById(R.id.basket_future_home_image1);
-//        mFutureHomeImg2 = (ImageView)mView.findViewById(R.id.basket_future_home_image2);
-//        mFutureHomeImg3 = (ImageView)mView.findViewById(R.id.basket_future_home_image3);
+        mFutureGuestDate1 = (TextView) mView.findViewById(R.id.basket_future_guest_date1);
+        mFutureGuestDate2 = (TextView) mView.findViewById(R.id.basket_future_guest_date2);
+        mFutureGuestDate3 = (TextView) mView.findViewById(R.id.basket_future_guest_date3);
 
-        mRankingGuestName = (TextView)mView.findViewById(R.id.basket_ranking_guest_name);
-        mRankingHomeName = (TextView)mView.findViewById(R.id.basket_ranking_home_name);
+        mFutureGuestName1 = (TextView) mView.findViewById(R.id.basket_future_guest_name1);
+        mFutureGuestName2 = (TextView) mView.findViewById(R.id.basket_future_guest_name2);
+        mFutureGuestName3 = (TextView) mView.findViewById(R.id.basket_future_guest_name3);
 
-        mRankingGuestOverGame = (TextView)mView.findViewById(R.id.basket_ranking_guest_overgame);
-        mRankingHomeOverGame = (TextView)mView.findViewById(R.id.basket_ranking_home_overgame);
+        mFutureGuestImg1 = (ImageView) mView.findViewById(R.id.basket_future_guest_image1);
+        mFutureGuestImg2 = (ImageView) mView.findViewById(R.id.basket_future_guest_image2);
+        mFutureGuestImg3 = (ImageView) mView.findViewById(R.id.basket_future_guest_image3);
 
-        mRankingGuestResult = (TextView)mView.findViewById(R.id.basket_ranking_guest_result);
-        mRankingHomeResult = (TextView)mView.findViewById(R.id.basket_ranking_home_result);
+        mFutureHomeDate1 = (TextView) mView.findViewById(R.id.basket_future_home_date1);
+        mFutureHomeDate2 = (TextView) mView.findViewById(R.id.basket_future_home_date2);
+        mFutureHomeDate3 = (TextView) mView.findViewById(R.id.basket_future_home_date3);
 
-        mRankingGuestWinRate = (TextView)mView.findViewById(R.id.basket_ranking_guest_winrate);
-        mRankingHomeWinRate = (TextView)mView.findViewById(R.id.basket_ranking_home_winrate);
+        mFutureHomeName1 = (TextView) mView.findViewById(R.id.basket_future_home_name1);
+        mFutureHomeName2 = (TextView) mView.findViewById(R.id.basket_future_home_name2);
+        mFutureHomeName3 = (TextView) mView.findViewById(R.id.basket_future_home_name3);
 
-        mGuestScoreWinSix = (TextView)mView.findViewById(R.id.basket_guest_scorewinix);
-        mGuestScoreLoseSix = (TextView)mView.findViewById(R.id.basket_guest_scorelosesix);
+        mFutureHomeImg1 = (ImageView) mView.findViewById(R.id.basket_future_home_image1);
+        mFutureHomeImg2 = (ImageView) mView.findViewById(R.id.basket_future_home_image2);
+        mFutureHomeImg3 = (ImageView) mView.findViewById(R.id.basket_future_home_image3);
 
-        mHomeScoreWinSix = (TextView)mView.findViewById(R.id.basket_home_scorewinsix);
-        mHomeScoreLoseSix = (TextView)mView.findViewById(R.id.basket_home_scorelosesix);
+        mRankingGuestName = (TextView) mView.findViewById(R.id.basket_ranking_guest_name);
+        mRankingHomeName = (TextView) mView.findViewById(R.id.basket_ranking_home_name);
 
-        mScoreWin = (TextView)mView.findViewById(R.id.basket_score_win);
-        mScoreLose = (TextView)mView.findViewById(R.id.basket_score_lose);
+        mRankingGuestOverGame = (TextView) mView.findViewById(R.id.basket_ranking_guest_overgame);
+        mRankingHomeOverGame = (TextView) mView.findViewById(R.id.basket_ranking_home_overgame);
+
+        mRankingGuestResult = (TextView) mView.findViewById(R.id.basket_ranking_guest_result);
+        mRankingHomeResult = (TextView) mView.findViewById(R.id.basket_ranking_home_result);
+
+        mRankingGuestWinRate = (TextView) mView.findViewById(R.id.basket_ranking_guest_winrate);
+        mRankingHomeWinRate = (TextView) mView.findViewById(R.id.basket_ranking_home_winrate);
+
+        mGuestScoreWinSix = (TextView) mView.findViewById(R.id.basket_guest_scorewinix);
+        mGuestScoreLoseSix = (TextView) mView.findViewById(R.id.basket_guest_scorelosesix);
+
+        mHomeScoreWinSix = (TextView) mView.findViewById(R.id.basket_home_scorewinsix);
+        mHomeScoreLoseSix = (TextView) mView.findViewById(R.id.basket_home_scorelosesix);
+
+        mScoreWin = (TextView) mView.findViewById(R.id.basket_score_win);
+        mScoreLose = (TextView) mView.findViewById(R.id.basket_score_lose);
 
         mBasketAnalyzeMoreRecord = (TextView) mView.findViewById(R.id.basket_analyze_more_record);
         mBasketAnalyzeMoreRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MobclickAgent.onEvent(MyApp.getContext(),"BasketAnalyzeMoreRecordActivity");
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketAnalyzeMoreRecordActivity");
                 Intent intent = new Intent(getActivity(), BasketAnalyzeMoreRecordActivity.class);
                 intent.putExtra(BasketAnalyzeMoreRecordActivity.BASKET_ANALYZE_THIRD_ID, mThirdId);//跳转到详情
                 startActivity(intent);
@@ -266,14 +275,15 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             }
         });
 
-        mRefresh = (ExactSwipeRefrashLayout)mView.findViewById(R.id.basket_analyze_refresh);
+        mRefresh = (ExactSwipeRefrashLayout) mView.findViewById(R.id.basket_analyze_refresh);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(this);
 
-        mListView1 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_guest);
-        mListView2 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_home);
+//        mListView1 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_guest);
+//        mListView2 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_home);
         //分割线
         mTextLine = (TextView) mView.findViewById(R.id.basket_analyze_line);
+
 
         //未来比赛 TODO+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         mFutureLinearLayout = (LinearLayout) mView.findViewById(R.id.basket_analyze_future);
@@ -287,17 +297,24 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         mRecentLinearLayout = (LinearLayout) mView.findViewById(R.id.basket_analyze_scorewin);
         mRecentNodata = (TextView) mView.findViewById(R.id.basket_analyze_nodata3);
 
+        mGuest1 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_guest1);
+        mGuest2 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_guest2);
+        mGuest3 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_guest3);
+        mHome1 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_home1);
+        mHome2 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_home2);
+        mHome3 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_home3);
+
     }
 
     private FutureAdapter mAdapter1;
     private FutureAdapter mAdapter2;
 
     @Override
-    public void initData(){
+    public void initData() {
 
 //        String url = "http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysis.do";
         String url = BaseURLs.URL_BASKET_ANALYZE;
-        Map<String , String> map = new Hashtable<>();
+        Map<String, String> map = new Hashtable<>();
         map.put("thirdId", mThirdId);
 //        map.put("thirdId", "228110");
         VolleyContentFast.requestJsonByGet(url, map, new VolleyContentFast.ResponseSuccessListener<BasketAnalyzeBean>() {
@@ -322,7 +339,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                     mRecentNodata.setVisibility(View.GONE);
 
                     setDatas(mAnalyzeDatas);
-                }else{
+                } else {
                     //未来比赛
                     mFutureLinearLayout.setVisibility(View.GONE);
                     mFutureNodata.setVisibility(View.VISIBLE);
@@ -342,13 +359,13 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                 if (json.getGuestData() != null) {
                     guestFuture = json.getGuestData().getFutureMatch();
                     guestNum = guestFuture.size();
-                }else{
+                } else {
                     guestNum = 0;
                 }
                 if (json.getHomeData() != null) {
                     homeFuture = json.getHomeData().getFutureMatch();
                     homeNum = homeFuture.size();
-                }else{
+                } else {
                     homeNum = 0;
                 }
 
@@ -356,20 +373,139 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                     //未来比赛
                     mFutureLinearLayout.setVisibility(View.GONE);
                     mFutureNodata.setVisibility(View.VISIBLE);
-                }else{
-                    if (guestNum >= homeNum) {
-                        setLineHeight(guestNum);
-                    }else{
-                        setLineHeight(homeNum);
-                    }
-                    mAdapter1 = new FutureAdapter(getContext() , guestFuture , R.layout.basket_analyze_guest_frture_item);
-                    mListView1.setAdapter(mAdapter1);
-                    mAdapter2 = new FutureAdapter(getContext() , homeFuture , R.layout.basket_analyze_home_frture_item);
-                    mListView2.setAdapter(mAdapter2);
+                } else {
+//                    if (guestNum >= homeNum) {
+//                        setLineHeight(guestNum);
+//                    }else{
+//                        setLineHeight(homeNum);
+//                    }
+//                    mAdapter1 = new FutureAdapter(getContext() , guestFuture , R.layout.basket_analyze_guest_frture_item);
+//                    mListView1.setAdapter(mAdapter1);
+//                    mAdapter2 = new FutureAdapter(getContext() , homeFuture , R.layout.basket_analyze_home_frture_item);
+//                    mListView2.setAdapter(mAdapter2);
 
                     //未来比赛
                     mFutureLinearLayout.setVisibility(View.VISIBLE);
                     mFutureNodata.setVisibility(View.GONE);
+
+                    switch (guestNum){
+                        case 0:
+                            if (homeNum >= 1) {
+                                if (homeNum == 1) {
+                                    mGuest1.setVisibility(View.INVISIBLE);
+                                    mGuest2.setVisibility(View.GONE);
+                                    mGuest3.setVisibility(View.GONE);
+                                }else if(homeNum == 2){
+                                    mGuest1.setVisibility(View.INVISIBLE);
+                                    mGuest2.setVisibility(View.INVISIBLE);
+                                    mGuest3.setVisibility(View.GONE);
+                                }else{
+                                    mGuest1.setVisibility(View.INVISIBLE);
+                                    mGuest2.setVisibility(View.INVISIBLE);
+                                    mGuest3.setVisibility(View.INVISIBLE);
+                                }
+                            }else{
+                                mGuest1.setVisibility(View.GONE);
+                                mGuest2.setVisibility(View.GONE);
+                                mGuest3.setVisibility(View.GONE);
+                            }
+                            break;
+                        case 1:
+                            if (homeNum >= 2) {
+                                if (homeNum == 2) {
+                                    mGuest1.setVisibility(View.VISIBLE);
+                                    mGuest2.setVisibility(View.INVISIBLE);
+                                    mGuest3.setVisibility(View.GONE);
+                                }else{
+                                    mGuest1.setVisibility(View.VISIBLE);
+                                    mGuest2.setVisibility(View.INVISIBLE);
+                                    mGuest3.setVisibility(View.INVISIBLE);
+                                }
+                            }else{
+                                mGuest1.setVisibility(View.VISIBLE);
+                                mGuest2.setVisibility(View.GONE);
+                                mGuest3.setVisibility(View.GONE);
+                            }
+                            break;
+                        case 2:
+                            if (homeNum == 3) {
+                                mGuest1.setVisibility(View.VISIBLE);
+                                mGuest2.setVisibility(View.VISIBLE);
+                                mGuest3.setVisibility(View.INVISIBLE);
+                            }else{
+                                mGuest1.setVisibility(View.VISIBLE);
+                                mGuest2.setVisibility(View.VISIBLE);
+                                mGuest3.setVisibility(View.GONE);
+                            }
+                            break;
+                        case 3:
+                            mGuest1.setVisibility(View.VISIBLE);
+                            mGuest2.setVisibility(View.VISIBLE);
+                            mGuest3.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                    switch (homeNum){
+                        case 0:
+                            if (guestNum >= 1) {
+                                if (guestNum == 1) {
+                                    mHome1.setVisibility(View.INVISIBLE);
+                                    mHome2.setVisibility(View.GONE);
+                                    mHome3.setVisibility(View.GONE);
+                                }else if(guestNum == 2){
+                                    mHome1.setVisibility(View.INVISIBLE);
+                                    mHome2.setVisibility(View.INVISIBLE);
+                                    mHome3.setVisibility(View.GONE);
+                                }else{
+                                    mHome1.setVisibility(View.INVISIBLE);
+                                    mHome2.setVisibility(View.INVISIBLE);
+                                    mHome3.setVisibility(View.INVISIBLE);
+                                }
+                            }else{
+                                mHome1.setVisibility(View.GONE);
+                                mHome2.setVisibility(View.GONE);
+                                mHome3.setVisibility(View.GONE);
+                            }
+                            break;
+                        case 1:
+                            if (guestNum >= 2) {
+                                if (guestNum == 2) {
+                                    mHome1.setVisibility(View.VISIBLE);
+                                    mHome2.setVisibility(View.INVISIBLE);
+                                    mHome3.setVisibility(View.GONE);
+                                }else{
+                                    mHome1.setVisibility(View.VISIBLE);
+                                    mHome2.setVisibility(View.INVISIBLE);
+                                    mHome3.setVisibility(View.INVISIBLE);
+                                }
+                            }else{
+                                mHome1.setVisibility(View.VISIBLE);
+                                mHome2.setVisibility(View.GONE);
+                                mHome3.setVisibility(View.GONE);
+                            }
+                            break;
+                        case 2:
+                            if (guestNum == 3) {
+                                mHome1.setVisibility(View.VISIBLE);
+                                mHome2.setVisibility(View.VISIBLE);
+                                mHome3.setVisibility(View.INVISIBLE);
+                            }else{
+                                mHome1.setVisibility(View.VISIBLE);
+                                mHome2.setVisibility(View.VISIBLE);
+                                mHome3.setVisibility(View.GONE);
+                            }
+                            break;
+                        case 3:
+                            mHome1.setVisibility(View.VISIBLE);
+                            mHome2.setVisibility(View.VISIBLE);
+                            mHome3.setVisibility(View.VISIBLE);
+                            break;
+                    }
+
+                    if (guestNum >= homeNum) {
+                        setLineHeight(guestNum);
+                    } else {
+                        setLineHeight(homeNum);
+                    }
                 }
 
             }
@@ -378,7 +514,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 setErrorDatas();
             }
-        },BasketAnalyzeBean.class);
+        }, BasketAnalyzeBean.class);
     }
 
     /**
@@ -405,7 +541,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     /**
      * 请求数据失败设置
      */
-    private void setErrorDatas(){
+    private void setErrorDatas() {
 
         mProgressBar.setProgress(50);
         mBasketProgressbarGuest.setText("--");
@@ -422,12 +558,12 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         setRecent(mRecentGuestImg5, -1);
         setRecent(mRecentGuestImg6, -1);
 
-        setRecent(mRecentHomeImg1 , -1);
-        setRecent(mRecentHomeImg2 , -1);
-        setRecent(mRecentHomeImg3 , -1);
-        setRecent(mRecentHomeImg4 , -1);
-        setRecent(mRecentHomeImg5 , -1);
-        setRecent(mRecentHomeImg6 , -1);
+        setRecent(mRecentHomeImg1, -1);
+        setRecent(mRecentHomeImg2, -1);
+        setRecent(mRecentHomeImg3, -1);
+        setRecent(mRecentHomeImg4, -1);
+        setRecent(mRecentHomeImg5, -1);
+        setRecent(mRecentHomeImg6, -1);
 
         //未来比赛
         mFutureLinearLayout.setVisibility(View.GONE);
@@ -469,9 +605,10 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
     /**
      * 数据设置
+     *
      * @param mAnalyzeDatas
      */
-    private void setDatas(List<BasketAnalyzeContentBean> mAnalyzeDatas){
+    private void setDatas(List<BasketAnalyzeContentBean> mAnalyzeDatas) {
 
         if (mAnalyzeDatas == null) {
             return;
@@ -487,35 +624,35 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         int guestNumWin;
         int homeNumWin;
 
-        if (guestWins == 0 && homeWins == 0){
+        if (guestWins == 0 && homeWins == 0) {
             progressNum = 50;
-        }else{
+        } else {
             progressNum = guestWins * 100 / (homeWins + guestWins);
         }
 
         if (guestWins == 0) {
             guestNumWin = 1;
-        }else{
+        } else {
             guestNumWin = guestWins;
         }
         if (homeWins == 0) {
             homeNumWin = 1;
-        }else{
+        } else {
             homeNumWin = homeWins;
         }
 
         /**
          * 过滤主客队历史交锋1-0 或 0-1 时 X胜显示位置会居中问题
          */
-        if(guestWins != 0 && homeWins == 0){
+        if (guestWins != 0 && homeWins == 0) {
 //            mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin*10));
 //            mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
             mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 15));
             mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0));
-        }else if (guestWins == 0 && homeWins != 0){
-            mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin));
-            mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin*10));
-        }else{
+        } else if (guestWins == 0 && homeWins != 0) {
+            mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0));
+            mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 15));
+        } else {
             //设置textview位置（权重）
             mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin));
             mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
@@ -531,138 +668,138 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         List<Integer> mRecentGuest = mAnalyzeDatas.get(0).getRecentLW();
         if (mRecentGuest != null && !mRecentGuest.equals("")) {
             if (mRecentGuest.size() != 0) {
-                setRecent(mRecentGuestImg1 , mRecentGuest.get(0));
-                setRecent(mRecentGuestImg2 , mRecentGuest.get(1));
-                setRecent(mRecentGuestImg3 , mRecentGuest.get(2));
-                setRecent(mRecentGuestImg4 , mRecentGuest.get(3));
-                setRecent(mRecentGuestImg5 , mRecentGuest.get(4));
-                setRecent(mRecentGuestImg6 , mRecentGuest.get(5));
+                setRecent(mRecentGuestImg1, mRecentGuest.get(0));
+                setRecent(mRecentGuestImg2, mRecentGuest.get(1));
+                setRecent(mRecentGuestImg3, mRecentGuest.get(2));
+                setRecent(mRecentGuestImg4, mRecentGuest.get(3));
+                setRecent(mRecentGuestImg5, mRecentGuest.get(4));
+                setRecent(mRecentGuestImg6, mRecentGuest.get(5));
             }
         }
         List<Integer> mRecentHome = mAnalyzeDatas.get(1).getRecentLW();
         if (mRecentHome != null && !mRecentHome.equals("")) {
             if (mRecentHome.size() != 0) {
-                setRecent(mRecentHomeImg1 , mRecentHome.get(0));
-                setRecent(mRecentHomeImg2 , mRecentHome.get(1));
-                setRecent(mRecentHomeImg3 , mRecentHome.get(2));
-                setRecent(mRecentHomeImg4 , mRecentHome.get(3));
-                setRecent(mRecentHomeImg5 , mRecentHome.get(4));
-                setRecent(mRecentHomeImg6 , mRecentHome.get(5));
+                setRecent(mRecentHomeImg1, mRecentHome.get(0));
+                setRecent(mRecentHomeImg2, mRecentHome.get(1));
+                setRecent(mRecentHomeImg3, mRecentHome.get(2));
+                setRecent(mRecentHomeImg4, mRecentHome.get(3));
+                setRecent(mRecentHomeImg5, mRecentHome.get(4));
+                setRecent(mRecentHomeImg6, mRecentHome.get(5));
             }
         }
         /**
          * 未来三场（未来比赛）
          */
-//        List<BasketAnalyzeFutureMatchBean> mFutureMatchGuest = mAnalyzeDatas.get(0).getFutureMatch();
-//        if (mFutureMatchGuest.size() != 0) {
-//            if (mFutureMatchGuest.size() == 1) {
-//                setFutureMatch(mFutureGuestDate1 , mFutureGuestName1 , mFutureGuestImg1 , mFutureMatchGuest.get(0) , true);
-//                setFutureMatch(mFutureGuestDate2 , mFutureGuestName2 , mFutureGuestImg2 , null , false);
-//                setFutureMatch(mFutureGuestDate3 , mFutureGuestName3 , mFutureGuestImg3 , null , false);
-//            }else if(mFutureMatchGuest.size() == 2){
-//                setFutureMatch(mFutureGuestDate1 , mFutureGuestName1 , mFutureGuestImg1 , mFutureMatchGuest.get(0) , true);
-//                setFutureMatch(mFutureGuestDate2 , mFutureGuestName2 , mFutureGuestImg2 , mFutureMatchGuest.get(1) , true);
-//                setFutureMatch(mFutureGuestDate3 , mFutureGuestName3 , mFutureGuestImg3 , null , false);
-//            }else if(mFutureMatchGuest.size() == 3){
-//                setFutureMatch(mFutureGuestDate1 , mFutureGuestName1 , mFutureGuestImg1 , mFutureMatchGuest.get(0) , true);
-//                setFutureMatch(mFutureGuestDate2 , mFutureGuestName2 , mFutureGuestImg2 , mFutureMatchGuest.get(1) , true);
-//                setFutureMatch(mFutureGuestDate3 , mFutureGuestName3 , mFutureGuestImg3 , mFutureMatchGuest.get(2) , true);
-//            }
-//        }
-//
-//        List<BasketAnalyzeFutureMatchBean> mFutureMatchHome = mAnalyzeDatas.get(1).getFutureMatch();
-//        if (mFutureMatchHome.size() != 0) {
-//            if (mFutureMatchHome.size() == 1) {
-//                setFutureMatch(mFutureHomeDate1 , mFutureHomeName1 , mFutureHomeImg1 , mFutureMatchHome.get(0) , true);
-//                setFutureMatch(mFutureHomeDate2 , mFutureHomeName2 , mFutureHomeImg2 , null , false);
-//                setFutureMatch(mFutureHomeDate3 , mFutureHomeName3 , mFutureHomeImg3 , null , false);
-//            }else if(mFutureMatchHome.size() == 2){
-//                setFutureMatch(mFutureHomeDate1 , mFutureHomeName1 , mFutureHomeImg1 , mFutureMatchHome.get(0) , true);
-//                setFutureMatch(mFutureHomeDate2 , mFutureHomeName2 , mFutureHomeImg2 , mFutureMatchHome.get(1) , true);
-//                setFutureMatch(mFutureHomeDate3 , mFutureHomeName3 , mFutureHomeImg3 , null , false);
-//            }else if(mFutureMatchHome.size() == 3){
-//                setFutureMatch(mFutureHomeDate1 , mFutureHomeName1 , mFutureHomeImg1 , mFutureMatchHome.get(0) , true);
-//                setFutureMatch(mFutureHomeDate2 , mFutureHomeName2 , mFutureHomeImg2 , mFutureMatchHome.get(1) , true);
-//                setFutureMatch(mFutureHomeDate3 , mFutureHomeName3 , mFutureHomeImg3 , mFutureMatchHome.get(2) , true);
-//            }
-//        }
+        List<BasketAnalyzeFutureMatchBean> mFutureMatchGuest = mAnalyzeDatas.get(0).getFutureMatch();
+        if (mFutureMatchGuest.size() != 0) {
+            if (mFutureMatchGuest.size() == 1) {
+                setFutureMatch(mFutureGuestDate1, mFutureGuestName1, mFutureGuestImg1, mFutureMatchGuest.get(0), true);
+                setFutureMatch(mFutureGuestDate2, mFutureGuestName2, mFutureGuestImg2, null, false);
+                setFutureMatch(mFutureGuestDate3, mFutureGuestName3, mFutureGuestImg3, null, false);
+            } else if (mFutureMatchGuest.size() == 2) {
+                setFutureMatch(mFutureGuestDate1, mFutureGuestName1, mFutureGuestImg1, mFutureMatchGuest.get(0), true);
+                setFutureMatch(mFutureGuestDate2, mFutureGuestName2, mFutureGuestImg2, mFutureMatchGuest.get(1), true);
+                setFutureMatch(mFutureGuestDate3, mFutureGuestName3, mFutureGuestImg3, null, false);
+            } else if (mFutureMatchGuest.size() == 3) {
+                setFutureMatch(mFutureGuestDate1, mFutureGuestName1, mFutureGuestImg1, mFutureMatchGuest.get(0), true);
+                setFutureMatch(mFutureGuestDate2, mFutureGuestName2, mFutureGuestImg2, mFutureMatchGuest.get(1), true);
+                setFutureMatch(mFutureGuestDate3, mFutureGuestName3, mFutureGuestImg3, mFutureMatchGuest.get(2), true);
+            }
+        }
+
+        List<BasketAnalyzeFutureMatchBean> mFutureMatchHome = mAnalyzeDatas.get(1).getFutureMatch();
+        if (mFutureMatchHome.size() != 0) {
+            if (mFutureMatchHome.size() == 1) {
+                setFutureMatch(mFutureHomeDate1, mFutureHomeName1, mFutureHomeImg1, mFutureMatchHome.get(0), true);
+                setFutureMatch(mFutureHomeDate2, mFutureHomeName2, mFutureHomeImg2, null, false);
+                setFutureMatch(mFutureHomeDate3, mFutureHomeName3, mFutureHomeImg3, null, false);
+            } else if (mFutureMatchHome.size() == 2) {
+                setFutureMatch(mFutureHomeDate1, mFutureHomeName1, mFutureHomeImg1, mFutureMatchHome.get(0), true);
+                setFutureMatch(mFutureHomeDate2, mFutureHomeName2, mFutureHomeImg2, mFutureMatchHome.get(1), true);
+                setFutureMatch(mFutureHomeDate3, mFutureHomeName3, mFutureHomeImg3, null, false);
+            } else if (mFutureMatchHome.size() == 3) {
+                setFutureMatch(mFutureHomeDate1, mFutureHomeName1, mFutureHomeImg1, mFutureMatchHome.get(0), true);
+                setFutureMatch(mFutureHomeDate2, mFutureHomeName2, mFutureHomeImg2, mFutureMatchHome.get(1), true);
+                setFutureMatch(mFutureHomeDate3, mFutureHomeName3, mFutureHomeImg3, mFutureMatchHome.get(2), true);
+            }
+        }
         /**
          * 积分排行
          */
-        String mGuestRanking ;//排名
+        String mGuestRanking;//排名
         String mGuestTeam;//球队
-        String mGuestMatchAll ;//已赛
-        String mGuestWins ;//胜
+        String mGuestMatchAll;//已赛
+        String mGuestWins;//胜
         String mGuestLose;//负
-        String mGuestWinRate ;//胜率
+        String mGuestWinRate;//胜率
 
-        String mHomeRanking ;//排名
+        String mHomeRanking;//排名
         String mHomeTeam;//球队
-        String mHomeMatchAll ;//已赛
-        String mHomeWins ;//胜
+        String mHomeMatchAll;//已赛
+        String mHomeWins;//胜
         String mHomeLose;//负
-        String mHomeWinRate ;//胜率
+        String mHomeWinRate;//胜率
 
 
         if (mAnalyzeDatas.get(0).getRanking() == null || mAnalyzeDatas.get(0).getRanking().equals("")) {
             mGuestRanking = "--";
-        }else{
+        } else {
             mGuestRanking = mAnalyzeDatas.get(0).getRanking();
         }
         if (mAnalyzeDatas.get(0).getTeam() == null || mAnalyzeDatas.get(0).getTeam().equals("")) {
             mGuestTeam = "--";
-        }else{
+        } else {
             mGuestTeam = mAnalyzeDatas.get(0).getTeam();
         }
         if (mAnalyzeDatas.get(0).getMatchAll() == null || mAnalyzeDatas.get(0).getMatchAll().equals("")) {
             mGuestMatchAll = "--";
-        }else{
+        } else {
             mGuestMatchAll = mAnalyzeDatas.get(0).getMatchAll();
         }
         if (mAnalyzeDatas.get(0).getMatchWin() == null || mAnalyzeDatas.get(0).getMatchWin().equals("")) {
             mGuestWins = "--";
-        }else{
+        } else {
             mGuestWins = mAnalyzeDatas.get(0).getMatchWin();
         }
         if (mAnalyzeDatas.get(0).getMatchLose() == null || mAnalyzeDatas.get(0).getMatchLose().equals("")) {
             mGuestLose = "--";
-        }else{
+        } else {
             mGuestLose = mAnalyzeDatas.get(0).getMatchLose();
         }
         if (mAnalyzeDatas.get(0).getMatchWinRate() == null || mAnalyzeDatas.get(0).getMatchWinRate().equals("")) {
             mGuestWinRate = "--";
-        }else{
+        } else {
             mGuestWinRate = mAnalyzeDatas.get(0).getMatchWinRate();
         }
 
         if (mAnalyzeDatas.get(1).getRanking() == null || mAnalyzeDatas.get(1).getRanking().equals("")) {
             mHomeRanking = "--";
-        }else{
+        } else {
             mHomeRanking = mAnalyzeDatas.get(1).getRanking();
         }
         if (mAnalyzeDatas.get(1).getTeam() == null || mAnalyzeDatas.get(1).getTeam().equals("")) {
             mHomeTeam = "--";
-        }else{
+        } else {
             mHomeTeam = mAnalyzeDatas.get(1).getTeam();
         }
         if (mAnalyzeDatas.get(1).getMatchAll() == null || mAnalyzeDatas.get(1).getMatchAll().equals("")) {
             mHomeMatchAll = "--";
-        }else{
+        } else {
             mHomeMatchAll = mAnalyzeDatas.get(1).getMatchAll();
         }
         if (mAnalyzeDatas.get(1).getMatchWin() == null || mAnalyzeDatas.get(1).getMatchWin().equals("")) {
             mHomeWins = "--";
-        }else{
+        } else {
             mHomeWins = mAnalyzeDatas.get(1).getMatchWin();
         }
         if (mAnalyzeDatas.get(1).getMatchLose() == null || mAnalyzeDatas.get(1).getMatchLose().equals("")) {
             mHomeLose = "--";
-        }else{
+        } else {
             mHomeLose = mAnalyzeDatas.get(1).getMatchLose();
         }
         if (mAnalyzeDatas.get(1).getMatchWinRate() == null || mAnalyzeDatas.get(1).getMatchWinRate().equals("")) {
             mHomeWinRate = "--";
-        }else{
+        } else {
             mHomeWinRate = mAnalyzeDatas.get(1).getMatchWinRate();
         }
         /**
@@ -673,21 +810,21 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             //积分排名
             mRunkingLinearLayout.setVisibility(View.GONE);
             mRunkingNodata.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             //积分排名
             mRunkingLinearLayout.setVisibility(View.VISIBLE);
             mRunkingNodata.setVisibility(View.GONE);
             //排名/球队
-            mRankingGuestName.setText(mGuestRanking + "  " +mGuestTeam);
+            mRankingGuestName.setText(mGuestRanking + "  " + mGuestTeam);
             mRankingHomeName.setText(mHomeRanking + "  " + mHomeTeam);
             if (mGuestRanking.equals("--") || mGuestTeam.equals("--")) {
                 mRankingGuestName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-            }else{
+            } else {
                 mRankingGuestName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             }
             if (mHomeRanking.equals("--") || mHomeTeam.equals("--")) {
                 mRankingHomeName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-            }else{
+            } else {
                 mRankingHomeName.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             }
             //已赛
@@ -702,12 +839,12 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             mRankingHomeWinRate.setText(mHomeWinRate);
             if (mGuestWinRate.equals("--")) {
                 mRankingGuestWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-            }else{
+            } else {
                 mRankingGuestWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             }
             if (mHomeWinRate.equals("--")) {
                 mRankingHomeWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-            }else{
+            } else {
                 mRankingHomeWinRate.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             }
         }
@@ -716,7 +853,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
          * 最近表现
          */
 
-        String mGuestScoreWin ;
+        String mGuestScoreWin;
         String mGuestScoreLose;
         String mHomeScoreWin;
         String mHomeScoreLose;
@@ -728,72 +865,72 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
         if (mAnalyzeDatas.get(0).getScoreWinSix() == null || mAnalyzeDatas.get(0).getScoreWinSix().equals("")) {
             mGuestScoreWin = "--";
-        }else{
+        } else {
             mGuestScoreWin = mAnalyzeDatas.get(0).getScoreWinSix();
         }
         if (mAnalyzeDatas.get(0).getScoreLoseSix() == null || mAnalyzeDatas.get(0).getScoreLoseSix().equals("")) {
             mGuestScoreLose = "--";
-        }else{
+        } else {
             mGuestScoreLose = mAnalyzeDatas.get(0).getScoreLoseSix();
         }
         if (mAnalyzeDatas.get(1).getScoreWinSix() == null || mAnalyzeDatas.get(1).getScoreWinSix().equals("")) {
             mHomeScoreWin = "--";
-        }else{
+        } else {
             mHomeScoreWin = mAnalyzeDatas.get(1).getScoreWinSix();
         }
         if (mAnalyzeDatas.get(1).getScoreLoseSix() == null || mAnalyzeDatas.get(1).getScoreLoseSix().equals("")) {
             mHomeScoreLose = "--";
-        }else{
+        } else {
             mHomeScoreLose = mAnalyzeDatas.get(1).getScoreLoseSix();
         }
 
-            mGuestScoreWinSix.setText(mGuestScoreWin);
-            mHomeScoreWinSix.setText(mHomeScoreWin);
-            mGuestScoreLoseSix.setText(mGuestScoreLose);
-            mHomeScoreLoseSix.setText(mHomeScoreLose);
+        mGuestScoreWinSix.setText(mGuestScoreWin);
+        mHomeScoreWinSix.setText(mHomeScoreWin);
+        mGuestScoreLoseSix.setText(mGuestScoreLose);
+        mHomeScoreLoseSix.setText(mHomeScoreLose);
 
         /**
          * 设置最近表现平均分颜色
          */
         if (!mGuestScoreWin.equals("--")) {
             guestWin = Double.parseDouble(mGuestScoreWin);
-        }else{
+        } else {
             guestWin = 0d;
         }
         if (!mHomeScoreWin.equals("--")) {
             homeWin = Double.parseDouble(mHomeScoreWin);
-        }else{
+        } else {
             homeWin = 0d;
         }
         if (!mGuestScoreLose.equals("--")) {
             guestLose = Double.parseDouble(mGuestScoreLose);
-        }else{
+        } else {
             guestLose = 0d;
         }
         if (!mHomeScoreLose.equals("--")) {
             homeLose = Double.parseDouble(mHomeScoreLose);
-        }else{
+        } else {
             homeLose = 0d;
         }
 
-        if(guestWin > homeWin){
+        if (guestWin > homeWin) {
             mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-        }else if (guestWin < homeWin) {
+        } else if (guestWin < homeWin) {
             mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-        }else{
+        } else {
             mHomeScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
             mGuestScoreWinSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
         }
 
-        if(guestLose > homeLose){
+        if (guestLose > homeLose) {
             mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-        }else if (guestWin < homeWin) {
+        } else if (guestWin < homeWin) {
             mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-        }else{
+        } else {
             mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
             mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
         }
@@ -805,29 +942,29 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             //最近表现
             mRecentLinearLayout.setVisibility(View.GONE);
             mRecentNodata.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mRecentLinearLayout.setVisibility(View.VISIBLE);
             mRecentNodata.setVisibility(View.GONE);
         }
     }
 
-    private void setRecent(ImageView mImage , int recent){
+    private void setRecent(ImageView mImage, int recent) {
         if (recent == 0) {
             mImage.setBackground(getResources().getDrawable(R.mipmap.basket_lose));
-        }else if(recent == 1){
+        } else if (recent == 1) {
             mImage.setBackground(getResources().getDrawable(R.mipmap.basket_win));
-        }else{
+        } else {
             mImage.setBackground(getResources().getDrawable(R.mipmap.basket_none));
         }
     }
 
-    private void setFutureMatch(TextView mTextData , TextView mTextName , ImageView mLogo , BasketAnalyzeFutureMatchBean mFutureMatch , boolean isValue){
+    private void setFutureMatch(TextView mTextData, TextView mTextName, ImageView mLogo, BasketAnalyzeFutureMatchBean mFutureMatch, boolean isValue) {
 
-        if(isValue){
+        if (isValue) {
             mTextData.setText(mFutureMatch.getDiffdays() + getResources().getText(R.string.basket_analyze_day));
             mTextName.setText(mFutureMatch.getTeam());
-            universalImageLoader.displayImage(mFutureMatch.getLogourl(), mLogo,options);
-        }else{
+            universalImageLoader.displayImage(mFutureMatch.getLogourl(), mLogo, options);
+        } else {
             mTextData.setText("--");
             mTextName.setText("--");
             mLogo.setBackground(getResources().getDrawable(R.mipmap.basket_default));
@@ -864,12 +1001,13 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             public void run() {
                 mRefresh.setRefreshing(false);
                 initData();
-                BasketDetailsActivity parentActivity = (BasketDetailsActivity ) getActivity();
+                BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
                 parentActivity.refreshData();
             }
-        },500);
+        }, 500);
 
     }
+
     class FutureAdapter extends CommonAdapter<BasketAnalyzeFutureMatchBean> {
 
         public FutureAdapter(Context context, List<BasketAnalyzeFutureMatchBean> datas, int layoutId) {
@@ -884,7 +1022,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                 ImageView image = (ImageView) holder.getConvertView().findViewById(R.id.basket_future_guest_3);
                 holder.setText(R.id.basket_future_guest_1, data.getDiffdays() + getResources().getText(R.string.basket_analyze_day));
                 holder.setText(R.id.basket_future_guest_2, data.getTeam());
-                universalImageLoader.displayImage(data.getLogourl(),image, options);
+                universalImageLoader.displayImage(data.getLogourl(), image, options);
             }
         }
     }
