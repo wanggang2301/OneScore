@@ -55,7 +55,10 @@ import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.io.File;
@@ -173,6 +176,7 @@ public class WelcomeActivity extends BaseActivity {
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
                 .defaultDisplayImageOptions(options)
+                .imageDownloader(new BaseImageDownloader(mContext,2*1000,2*1000))
                 .build();
         universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
         universalImageLoader.init(config);
@@ -293,7 +297,7 @@ public class WelcomeActivity extends BaseActivity {
 
             @Override
             public void onAnimationStart(Animation animation) {
-                Log.v(TAG,"onAnimationStart+++++++++"+mStartimageUrl);
+                //动画加载完  判断是否更新
                 thread = new Thread(new CheckVersionTask());
                 thread.start();
 
@@ -410,7 +414,7 @@ public class WelcomeActivity extends BaseActivity {
         String serverUrl = BaseURLs.URL_STARTPIC;
         //String serverUrl = "http://192.168.31.48:8888/mlottery/core/mainPage.findAndroidStartupPic.do";
         // 2、连接服务器
-        VolleyContentFast.requestJsonByGet(serverUrl, null, new DefaultRetryPolicy(3000, 1, 1), new VolleyContentFast.ResponseSuccessListener<WelcomeUrl>() {
+        VolleyContentFast.requestJsonByGet(serverUrl, null, new DefaultRetryPolicy(2000, 1, 1), new VolleyContentFast.ResponseSuccessListener<WelcomeUrl>() {
             @Override
             public synchronized void onResponse(final WelcomeUrl json) {
                 if ("200".equals(json.getResult() + "") && json != null) {
@@ -437,7 +441,6 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 //请求失败
-                Log.v(TAG,"图片请求超时了"+mStartimageUrl);
                 imageHandler.sendEmptyMessage(INIT_IMAGE_ERROR);
 
             }
@@ -459,7 +462,7 @@ public class WelcomeActivity extends BaseActivity {
         }
 
         // 2、连接服务器
-        VolleyContentFast.requestJsonByGet(serverUrl, map, new DefaultRetryPolicy(3000, 1, 1), new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
+        VolleyContentFast.requestJsonByGet(serverUrl, map, new DefaultRetryPolicy(2000, 1, 1), new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
             @Override
             public synchronized void onResponse(final UpdateInfo json) {
                 if (json != null) {
@@ -495,14 +498,43 @@ public class WelcomeActivity extends BaseActivity {
                     break;
                 case GET_IMAGE_SUCCESS://图片获取成功
                     //判断本地缓存是否存在该图片  是显示 不是替换
-                    universalImageLoader.displayImage(mStartimageUrl, imageAD, options);
+                    universalImageLoader.displayImage(mStartimageUrl, imageAD, options, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
+                           //加载开始
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
+                              //加载失败
+                            setHideTranslateAnimation();
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            //加载成功执行
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setHideTranslateAnimation();
+                                }
+                            }, 2000);
+
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+                         //加载取消
+
+                        }
+                    });
                     PreferenceUtil.commitString(MyConstants.START_IMAGE_URL, mStartimageUrl);
-                    new Handler().postDelayed(new Runnable() {
+                 /*   new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             setHideTranslateAnimation();
                         }
-                    }, 2000);
+                    }, 2000);*/
 
 
                     break;
