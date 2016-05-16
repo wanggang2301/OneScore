@@ -23,6 +23,8 @@ public class CyUtils {
     //初始化畅言
     public static void initCy(Context context) {
         Config config = new Config();
+//        Config.CommentSettings comment = config.comment;
+//        comment.useFace=true;
         try {
             CyanSdk.register(context, "cyslrkBTR", "021bf43427836304a81c1ff382f326e3",
                     "http://10.2.58.251:8081/login-success.html", config);
@@ -58,10 +60,10 @@ public class CyUtils {
     }
 
     //提交评论 需登录  否则提交失败
-    public static void submitComment(long topicid, String comment, CyanSdk sdk, CyanRequestListener requestListener) {
+    public static void submitComment(long topicid, String comment, CyanSdk sdk,  CyanRequestListener requestListener) {
 
         try {
-            sdk.submitComment(topicid, comment, 3, "4", 5, 6.0f, "7", requestListener);
+            sdk.submitComment(topicid, comment, 0, "", 43, 6.0f, "7", requestListener);
 
         } catch (CyanException e) {
             e.printStackTrace();
