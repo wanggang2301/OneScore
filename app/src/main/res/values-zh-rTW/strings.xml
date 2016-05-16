@@ -20,6 +20,7 @@
     <string name="share_uninstall_webchat">您還未安裝微信客戶端</string>
     <string name="weibosdk_demo_not_support_api_hint">您還未安裝新浪微博客戶端</string>
     <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
+    <string name="share_recommend">推薦</string>
 
 
 
