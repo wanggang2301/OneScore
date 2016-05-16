@@ -461,6 +461,10 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         mApos = (TextView) this.findViewById(R.id.backetball_details_apos);
         mApos.setVisibility(View.GONE);
+
+
+
+
 //        setApos();
     }
 
@@ -749,6 +753,10 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     addFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
+
+                mHomeScore.setText("70");
+                mGuestScore.setText("80");
+                mVS.setText(":");
                 break;
         }
     }
@@ -1136,6 +1144,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
      */
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
         WebSocketBasketBallDetails.DataEntity score = basketBallDetails.getData();
+
         switch (basketBallDetails.getData().getMatchStatus()) {
             case DETERMINED://待定
             case GAME_CANCLE: //比赛取消
