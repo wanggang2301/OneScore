@@ -25,7 +25,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 
-public class HomeTeamSoundActivity extends BaseActivity implements OnClickListener {
+public class FootballTypeSettingDetailsActivity extends BaseActivity implements OnClickListener {
 
 	private final static int HOMETEAMGOAL = 0x10;
 	private final static int GUESTTEAMGOAL = 0x20;

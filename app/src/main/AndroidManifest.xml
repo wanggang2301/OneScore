@@ -107,7 +107,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden"
             />
         <activity
-            android:name=".activity.HomeTeamSoundActivity"
+            android:name=".activity.FootballTypeSettingDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FootballMatchDetailActivity"
