@@ -13,7 +13,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 /**
  * @author wang gang
  * @date 2016/5/4 17:25
- * @des ${TODO}
+ * @des 微信返回结果(必须存在)
  */
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
