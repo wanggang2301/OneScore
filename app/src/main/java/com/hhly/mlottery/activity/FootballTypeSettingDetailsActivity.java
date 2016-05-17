@@ -25,6 +25,12 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 
+
+/**
+ * @author wang gang
+ * @des 足球比分设置内页(进球声、赔率显示)
+ */
+
 public class FootballTypeSettingDetailsActivity extends BaseActivity implements OnClickListener {
 
 	private final static int HOMETEAMGOAL = 0x10;
