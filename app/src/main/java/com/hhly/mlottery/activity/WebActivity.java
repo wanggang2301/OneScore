@@ -162,9 +162,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             mSend.setVisibility(View.VISIBLE);
             mCommentCount.setVisibility(View.GONE);
             mEditText.setHint("");
-           if (model.equals("m2note")){
-               h-=145;
-           }
+            if (model.equals("m2note")) {
+                h -= 145;
+            }
 
         } else if (h < 300) {//软键盘隐藏
             if (h != 0) {
@@ -188,7 +188,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //            Log.e("lzfh - def", (h - def) + "");
             lp.setMargins(0, 0, 0, h - def);
             scrollview.requestLayout();
-         }
+        }
     }
 
     private void initEvent() {
@@ -387,11 +387,17 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
             case R.id.public_btn_set: //分享
                 //  @style/AppTheme.BlackStatusBar.ColorGreen
+                String summary = "";
+                if (subtitle == null || "".equals(subtitle)) {
+                    summary = getString(R.string.share_summary_default);
+                } else {
+                    summary = subtitle;
+                }
 
                 MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
                 Map<String, String> map = new HashMap<String, String>();
                 map.put(ShareConstants.TITLE, title != null ? title : mContext.getResources().getString(R.string.share_recommend));
-                map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
+                map.put(ShareConstants.SUMMARY, summary);
                 map.put(ShareConstants.TARGET_URL, url != null ? url : "http://m.13322.com");
                 map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
                 sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
@@ -420,9 +426,16 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
         String appname = getString(R.string.share_to_qq_app_name);
 
+        String summary = "";
+        if (subtitle == null || "".equals(subtitle)) {
+            summary = getString(R.string.share_summary_default);
+        } else {
+            summary = subtitle;
+        }
+
         bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
         bundle.putString(QQShare.SHARE_TO_QQ_TITLE, title != null ? title : "");
-        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, subtitle != null ? subtitle : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, summary);
         bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url != null ? url : "");
         bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageurl != null ? imageurl : "");
         bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
@@ -447,7 +460,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
     //获取评论的一切消息  无需登录
     public void loadTopic() {
-        L.e("lzf"+title);
+        L.e("lzf" + title);
         sdk.loadTopic("", url, title, title, 0, 0, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
 
             @Override
