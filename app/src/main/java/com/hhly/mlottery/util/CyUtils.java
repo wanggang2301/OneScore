@@ -59,11 +59,20 @@ public class CyUtils {
         });
     }
 
+    /*
+    topicId	畅言分配的文章ID，通过loadTopic接口获取
+    content	评论内容
+    replyId	回复的评论，默认为0
+    attachUrl	附件图片地址，通过attachUpload接口上传后获取
+    score	打分
+    appType	平台类型，40:ipone,41:ipad,43:android
+    listener	实现CyanRequestListener接口类的实例
+     */
     //提交评论 需登录  否则提交失败
-    public static void submitComment(long topicid, String comment, CyanSdk sdk,  CyanRequestListener requestListener) {
+    public static void submitComment(long topicid, String comment, CyanSdk sdk, CyanRequestListener requestListener) {
 
         try {
-            sdk.submitComment(topicid, comment, 0, "", 43, 6.0f, "7", requestListener);
+            sdk.submitComment(topicid, comment, 0, "", 43, 5.0f, "7", requestListener);
 
         } catch (CyanException e) {
             e.printStackTrace();
@@ -75,7 +84,7 @@ public class CyUtils {
     /**
      * 隐藏原生键盘
      */
-    public static  void hideKeyBoard(Activity activity) {
+    public static void hideKeyBoard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (activity.getCurrentFocus() != null) {
             inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
