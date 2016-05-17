@@ -64,6 +64,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     private String model;
     private static final String INTENT_PARAMS_URL = "url";
     private static final String INTENT_PARAMS_TITLE = "title";
+    private static final int SINGLE_PAGE_COMMENT = 30;
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
     private int cmt_sum;//评论总数
     private int mCurrentPager = 1;
@@ -235,7 +236,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     public void loadTopic(String url, String title) {
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-        sdk.loadTopic("", url, title, null, 10, 10, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+        sdk.loadTopic("", url, title, null, SINGLE_PAGE_COMMENT, SINGLE_PAGE_COMMENT, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;//文章id
@@ -313,7 +314,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mProgressBar.setVisibility(View.VISIBLE);
         isRequestFinish = false;
         mLoadMore.setText(R.string.foot_loadingmore);
-        sdk.getTopicComments(topicid, 10, page, null, "", 1, 5, new CyanRequestListener<TopicCommentsResp>() {
+        sdk.getTopicComments(topicid, SINGLE_PAGE_COMMENT, page, null, "", 1, 5, new CyanRequestListener<TopicCommentsResp>() {
             @Override
             public void onRequestSucceeded(TopicCommentsResp topicCommentsResp) {
                 isRequestFinish = true;
