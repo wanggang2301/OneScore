@@ -69,7 +69,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
     private final static int QZONE = 3;  //QQ空间
     private final static int SINA = 4;    //新浪微博
     private final static int COPY = 5;    //复制链接
-
     private final static int MAX_IMAGE_SIZE = 200;
 
     private int[] icon = {R.mipmap.webchat, R.mipmap.friends, R.mipmap.qq, R.mipmap.qzone, R.mipmap.sina, R.mipmap.copy};
