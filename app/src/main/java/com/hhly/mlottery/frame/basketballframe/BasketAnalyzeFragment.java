@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Soichiro Kashima
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.hhly.mlottery.frame.basketballframe;
 
 import android.content.Context;
@@ -30,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
@@ -48,7 +31,6 @@ import com.hhly.mlottery.view.ObservableScrollView;
 import com.hhly.mlottery.view.ScrollUtils;
 import com.hhly.mlottery.view.Scrollable;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.hhly.mlottery.widget.NestedListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -927,7 +909,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         if (guestLose > homeLose) {
             mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
-        } else if (guestWin < homeWin) {
+        } else if (guestLose < homeLose) {
             mHomeScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor2));
             mGuestScoreLoseSix.setTextColor(getResources().getColor(R.color.black_details_ball_textcolor));
         } else {
@@ -950,11 +932,11 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
     private void setRecent(ImageView mImage, int recent) {
         if (recent == 0) {
-            mImage.setBackground(getResources().getDrawable(R.mipmap.basket_lose));
+            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_lose));
         } else if (recent == 1) {
-            mImage.setBackground(getResources().getDrawable(R.mipmap.basket_win));
+            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_win));
         } else {
-            mImage.setBackground(getResources().getDrawable(R.mipmap.basket_none));
+            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_none));
         }
     }
 
