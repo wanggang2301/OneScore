@@ -41,6 +41,10 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @Description: 篮球分析的 fragment
+ * @author yixq
+ */
 public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableScrollView> implements SwipeRefreshLayout.OnRefreshListener {
 
     //    public static final int REQUEST_MORERECORD = 0x80;

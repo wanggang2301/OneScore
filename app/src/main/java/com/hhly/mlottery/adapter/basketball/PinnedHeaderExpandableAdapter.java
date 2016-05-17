@@ -34,6 +34,10 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 篮球列表的Adapter
+ * Created by yixq on 2015/12/30.
+ */
 public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements HeaderAdapter {
 
     private List<String> groupDataList;//父类view 数据
@@ -1350,7 +1354,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         float cY = scoreView.getHeight() / 2.0f;
 
         rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
-        if (rotateAnim != null) {
             rotateAnim.setInterpolatedTimeListener(new MyRotateAnimation.InterpolatedTimeListener() {
                 @Override
                 public void interpolatedTime(float interpolatedTime) {
@@ -1363,8 +1366,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             });
             rotateAnim.setFillAfter(true);
             scoreView.startAnimation(rotateAnim);
-        }
-
 
 //        //创建动画 （位移动画--translate）
 //        final Animation out = AnimationUtils.loadAnimation(mContext, R.anim.basket_out_to_up);//飞出

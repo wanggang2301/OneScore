@@ -19,6 +19,8 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
+ * @Description: 篮球比分列表页面的 Activity
+ * @author yixq
  * Created by A on 2016/4/7.
  */
 public class BasketListActivity extends FragmentActivity implements View.OnClickListener {
@@ -72,17 +74,6 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
         initView();
         focusCallback();// 加载关注数
     }
-
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        // TODO Auto-generated method stub
-//        mContext = getActivity();
-//        view = View.inflate(mContext, R.layout.frage_basketball, null);
-//        initView();
-//
-//        focusCallback();// 加载关注数
-//        return view;
-//    }
 
     private void initView() {
         mImmediateBtn = (Button) findViewById(R.id.football_footer_immediate_btn);
