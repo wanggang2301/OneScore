@@ -178,7 +178,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                         if (!isQQClientAvailable(mContext)) {
                             Toast.makeText(mContext, mContext.getResources().getString(R.string.share_uninstall_qq), Toast.LENGTH_SHORT).show();
                             popupWindow.dismiss();
-
                             return;
                         }
                         if (mShareTencentCallBack != null) {
@@ -274,7 +273,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 boolean flg = api.sendReq(req);
             }
         });
-
         popupWindow.dismiss();
     }
 
