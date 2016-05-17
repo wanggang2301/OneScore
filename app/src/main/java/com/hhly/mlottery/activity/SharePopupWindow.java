@@ -62,54 +62,41 @@ import java.util.Map;
  * @des 分享
  */
 public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Response {
-    //微信好友
-    private final static int WE_CHAT = 0;
-    //微信朋友圈
-    private final static int WE_FRIENDS = 1;
-    //QQ
-    private final static int QQ = 2;
-    //QQ空间
-    private final static int QZONE = 3;
-    //新浪微博
-    private final static int SINA = 4;
-    //复制链接
-    private final static int COPY = 5;
+
+    private final static int WE_CHAT = 0; //微信好友
+    private final static int WE_FRIENDS = 1;    //微信朋友圈
+    private final static int QQ = 2;    //QQ
+    private final static int QZONE = 3;  //QQ空间
+    private final static int SINA = 4;    //新浪微博
+    private final static int COPY = 5;    //复制链接
 
     private final static int MAX_IMAGE_SIZE = 200;
 
-    private Context mContext;
-    public PopupWindow popupWindow;
-    private GridView gview;
-    private ImageView share;
-    private SimpleAdapter sim_adapter;
-    // 图片封装为一个数组
     private int[] icon = {R.mipmap.webchat, R.mipmap.friends, R.mipmap.qq, R.mipmap.qzone, R.mipmap.sina, R.mipmap.copy};
     private int[] iconName = {R.string.webchat, R.string.friends, R.string.qq, R.string.qzone, R.string.sina, R.string.copy};
 
-    //微信Api
-    private IWXAPI api;
-
-    //新浪微博Api
-    private IWeiboShareAPI mWeiboShareAPI;
-
     private Map<String, String> map = new HashMap<>();
     private List<Map<String, Object>> data_list;
+    private Context mContext;
+    private GridView gview;
+    private ImageView share;
+    private SimpleAdapter sim_adapter;
+    public PopupWindow popupWindow;
+
+    private IWXAPI api;    //微信Api
+    private IWeiboShareAPI mWeiboShareAPI;    //新浪微博Api
+
+    public ShareTencentCallBack mShareTencentCallBack;
+    public ShareCopyLinkCallBack mShareCopyLinkCallBack;
 
     public void setmShareTencentCallBack(ShareTencentCallBack mShareTencentCallBack) {
         this.mShareTencentCallBack = mShareTencentCallBack;
     }
-
-    public ShareTencentCallBack mShareTencentCallBack;
-
     public void setmShareCopyLinkCallBack(ShareCopyLinkCallBack mShareCopyLinkCallBack) {
         this.mShareCopyLinkCallBack = mShareCopyLinkCallBack;
     }
 
-    public ShareCopyLinkCallBack mShareCopyLinkCallBack;
-
     public SharePopupWindow(Activity mContext, ImageView btn_share, Map<String, String> data) {
-
-
         this.mContext = mContext;
         this.share = btn_share;
         this.map = data;
@@ -117,13 +104,11 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         getData();
         String[] from = {"image", "text"};
         int[] to = {R.id.image, R.id.text};
-        sim_adapter = new SimpleAdapter(mContext, data_list, R.layout.item_share, from, to);
+        this.sim_adapter = new SimpleAdapter(mContext, data_list, R.layout.item_share, from, to);
         showPopupWindow();
-
     }
 
     private List<Map<String, Object>> getData() {
-        //cion和iconName的长度是相同的，这里任选其一都可以
         for (int i = 0; i < icon.length; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("image", icon[i]);
@@ -134,10 +119,11 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
     }
 
 
+    /**
+     * 分享弹窗
+     * */
     private void showPopupWindow() {
-
         View view = LayoutInflater.from(mContext).inflate(R.layout.share_popmenu, null);
-
         gview = (GridView) view.findViewById(R.id.gview);
         gview.setAdapter(sim_adapter);
         TextView bt_clear = (TextView) view.findViewById(R.id.bt_clear);
@@ -151,12 +137,10 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         if (popupWindow == null) {
             popupWindow = new PopupWindow(mContext);
             popupWindow.setBackgroundDrawable(new BitmapDrawable());
-
             popupWindow.setFocusable(true); // 设置PopupWindow可获得焦点
             popupWindow.setTouchable(true); // 设置PopupWindow可触摸
             popupWindow.setOutsideTouchable(true); // 设置非PopupWindow区域可触摸
             popupWindow.setContentView(view);
-
             popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
             popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
             popupWindow.setAnimationStyle(R.style.popuStyle);    //设置 popupWindow 动画样式
@@ -229,15 +213,11 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
     }
 
 
-
-
-
+    /**
+     * 判断是否安装QQ客户端
+     * */
     private boolean isQQClientAvailable(Context context) {
         final PackageManager packageManager = context.getPackageManager();
-
-        
-
-
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
         if (pinfo != null) {
             for (int i = 0; i < pinfo.size(); i++) {
@@ -250,6 +230,9 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         return false;
     }
 
+    /**
+     * 微信好友、微信朋友圈分享
+     */
     private void shareweixin(final int flag) {
         api = WXAPIFactory.createWXAPI(mContext, ShareConstants.WE_CHAT_APP_ID, false);
         if (!api.isWXAppInstalled()) {
@@ -278,9 +261,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                // Volley请求出错的图片
-
                 WXWebpageObject webpage = new WXWebpageObject();
                 webpage.webpageUrl = map.get(ShareConstants.TARGET_URL);
                 final WXMediaMessage wxmsg = new WXMediaMessage(webpage);
@@ -307,6 +287,9 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
         return textObject;
     }
 
+    /**
+     * 新浪微博分享
+     * */
     private void shareSina() {
         VolleyContentFast.requestImage(map.get(ShareConstants.IMAGE_URL), new Response.Listener<Bitmap>() {
             @Override
@@ -314,7 +297,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 // 1. 初始化微博的分享消息
                 WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
                 weiboMessage.textObject = getTextObj();
-
                 ImageObject imageObject = new ImageObject();
                 if (response.getWidth() > 200 || response.getHeight() > 200) {
                     response = ThumbnailUtils.extractThumbnail(response, MAX_IMAGE_SIZE, MAX_IMAGE_SIZE);
@@ -322,7 +304,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
 
                 imageObject.setImageObject(response);
                 weiboMessage.imageObject = imageObject;
-
                 WebpageObject mediaObject = new WebpageObject();
                 mediaObject.identify = Utility.generateGUID();
                 mediaObject.title = map.get(ShareConstants.TITLE);
@@ -344,8 +325,6 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 if (accessToken != null) {
                     token = accessToken.getToken();
                 }
-
-
                 mWeiboShareAPI.sendRequest((Activity) mContext, request, authInfo, token, new WeiboAuthListener() {
                     @Override
                     public void onWeiboException(WeiboException arg0) {
@@ -418,12 +397,13 @@ public class SharePopupWindow extends PopupWindow implements IWeiboHandler.Respo
                 });
             }
         });
-
-
         popupWindow.dismiss();
     }
 
 
+    /**
+     * 新浪微博分享反馈
+     * */
     @Override
     public void onResponse(BaseResponse baseResp) {
         if (baseResp != null) {
