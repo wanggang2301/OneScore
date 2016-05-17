@@ -865,7 +865,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                 mRefresh.setRefreshing(false);
                 initData();
                 BasketDetailsActivity parentActivity = (BasketDetailsActivity ) getActivity();
-                parentActivity.refreshData();
+                parentActivity.analyzeRefreshData();
             }
         },500);
 
