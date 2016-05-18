@@ -271,7 +271,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         mTextLine = (TextView) mView.findViewById(R.id.basket_analyze_line);
 
 
-        //未来比赛 TODO+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //未来比赛
         mFutureLinearLayout = (LinearLayout) mView.findViewById(R.id.basket_analyze_future);
         mFutureNodata = (TextView) mView.findViewById(R.id.basket_analyze_nodata1);
 

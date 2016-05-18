@@ -90,7 +90,6 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             mImmediateBtn.setSelected(true);// 默认选中’即时‘
             mImmediateBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
             PreferenceUtil.commitInt(CHECKED_FRAGMENT, 0);//设置选中的fragment;
-//            mImmediateFragment = new ImmedBasketballFragment(); //篮球即时
             mImmediateFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_IMMEDIATE);
             fragmentManager = getSupportFragmentManager();// getChildFragmentManager();
             fragmentManager.beginTransaction().add(R.id.content_fragment0, mImmediateFragment, lastFragmentTag).commit();
@@ -100,7 +99,6 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             mResultBtn.setSelected(true);// 默认选中’赛果‘
             mResultBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
             PreferenceUtil.commitInt(CHECKED_FRAGMENT, 1);//设置选中的fragment;
-//            mResultFragment = new ImmedBasketballFragment(); //篮球赛果
             mResultFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_RESULT);
             fragmentManager = getSupportFragmentManager();// getChildFragmentManager();
             fragmentManager.beginTransaction().add(R.id.content_fragment0, mResultFragment, lastFragmentTag).commit();
@@ -110,7 +108,6 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             mScheduleBtn.setSelected(true);// 默认选中’赛程‘
             mScheduleBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
             PreferenceUtil.commitInt(CHECKED_FRAGMENT, 2);//设置选中的fragment;
-//            mScheduleFragment = new ImmedBasketballFragment(); //篮球赛程
             mScheduleFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_SCHEDULE);
             fragmentManager = getSupportFragmentManager();// getChildFragmentManager();
             fragmentManager.beginTransaction().add(R.id.content_fragment0, mScheduleFragment, lastFragmentTag).commit();
@@ -120,25 +117,12 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             mFocusBtn.setSelected(true);// 默认选中’关注‘
             mFocusBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
             PreferenceUtil.commitInt(CHECKED_FRAGMENT, 3);//设置选中的fragment;
-//            mFocusFragment = new ImmedBasketballFragment(); //篮球关注
             mFocusFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_FOCUS);
             fragmentManager = getSupportFragmentManager();// getChildFragmentManager();
             fragmentManager.beginTransaction().add(R.id.content_fragment0, mFocusFragment, lastFragmentTag).commit();
             mFocusBtn.setClickable(false);// 默认让’关注‘不可点
             isfilsttime = ISFOCUS;
         }
-
-//        mImmediateBtn.setSelected(true);// 默认选中’即时‘
-//        mImmediateBtn.setTextColor(getResources().getColor(R.color.textcolor_football_footer_selected));
-////		fragment = new ImmediateFragment();// 默认选中’即时‘
-//        PreferenceUtil.commitInt(CHECKED_FRAGMENT, 0);//设置选中的fragment;
-//
-//        mImmediateFragment = new ImmedBasketballFragment(); //篮球即时
-//        fragmentManager = getSupportFragmentManager();// getChildFragmentManager();
-//        fragmentManager.beginTransaction().add(R.id.content_fragment0, mImmediateFragment, lastFragmentTag).commit();
-//        mImmediateBtn.setClickable(false);// 默认让’即时‘不可点
-//        isfilsttime = ISIMMEDIATE;
-
         mRedPoint = (ImageView) findViewById(R.id.football_footer_focus_redpoint);
     }
 
@@ -203,10 +187,6 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
                 mScheduleBtn.setClickable(true);
                 mFocusBtn.setClickable(true);
 
-//			fragment = new ImmediateFragment();
-//			SpTools.putInt(mContext,CHECKED_FRAGMENT,);//设置选中的fragment;
-//			fragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_IMMEDIATE);
-
                 if (mImmediateFragment == null) {
                     mImmediateFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_IMMEDIATE);
                     fragmentManager.beginTransaction().add(R.id.content_fragment0, mImmediateFragment, lastFragmentTag).commit();
@@ -248,9 +228,6 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
                 mScheduleBtn.setClickable(true);
                 mFocusBtn.setClickable(true);
 
-//			fragment = new ResultFragment();
-//			fragment = new ResultBasketballFragment();
-//			SpTools.putInt(mContext,CHECKED_FRAGMENT,1);//设置选中的fragment;
                 if (mResultFragment == null) {
                     mResultFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_RESULT);
                     fragmentManager.beginTransaction().add(R.id.content_fragment0, mResultFragment, lastFragmentTag).commit();
@@ -290,11 +267,6 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
                 mResultBtn.setClickable(true);
                 mScheduleBtn.setClickable(false);
                 mFocusBtn.setClickable(true);
-//			fragment = new ScheduleFragment();
-//			fragment = new ScheduleBasketballFragment();
-
-//			SpTools.putInt(mContext,CHECKED_FRAGMENT,2);//设置选中的fragment;
-//			fragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_SCHEDULE);
 
                 if (mScheduleFragment == null) {
                     mScheduleFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_SCHEDULE);
@@ -335,14 +307,12 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
                 mScheduleBtn.setClickable(true);
                 mFocusBtn.setClickable(false);
 
-//			fragment = new FocusFragment();
                 mFocusFragment = ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_FOCUS);
                 fragmentManager.beginTransaction().add(R.id.content_fragment0, mFocusFragment, lastFragmentTag).commit();
                 break;
             default:
                 break;
         }
-//		fragmentManager.beginTransaction().replace(R.id.content_fragment0, fragment, lastFragmentTag).commit();
     }
     @Override
     protected void onResume() {
@@ -427,6 +397,16 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
                     break;
             }
         }
+    }
+
+    /**
+     * 改Activity容易被销毁时（如异常退出）执行，用户主动销毁时（back键返回）不执行
+     * 重写onSaveInstanceState ,不执行super方法（异常退出时不让系统保留原有fragment）
+     * @param outState
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
     }
 
     public void focusCallback() {
