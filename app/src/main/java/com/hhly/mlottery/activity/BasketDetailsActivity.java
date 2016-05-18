@@ -1278,30 +1278,17 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 mVS.setText(":");
                 mTitleVS.setText(":");
 
-                if (mGuestNum == score.getGuestScore()&&mHomeNum==score.getHomeScore()) {//两个分数都相同
-                    setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-                } else if(mGuestNum != score.getGuestScore()&&mHomeNum==score.getHomeScore()){ //客队不同，主队相同
-                    scoreAnimation(mGuestScore, score.getGuestScore(), mHomeScore, score.getHomeScore());
-                    mGuestNum = score.getGuestScore();
-                }else if(mGuestNum == score.getGuestScore()&&mHomeNum!=score.getHomeScore()){ //客队相同。主队不同
-                    int homeScore=score.getHomeScore();
-                    int guestScore=score.getGuestScore();
-                    scoreAnimation(mHomeScore,homeScore, mGuestScore, guestScore);
-                    mHomeNum = score.getHomeScore();
-                }else { //客队主队都不相同
-                    scoreAnimation(mGuestScore, score.getGuestScore(), mHomeScore, score.getHomeScore());
-                    mGuestNum = score.getGuestScore();
-
-                    scoreAnimation(mHomeScore, score.getHomeScore(), mGuestScore, score.getGuestScore());
-                    mHomeNum = score.getHomeScore();
+                if(mGuestNum!=score.getGuestScore()){
+                    scoreAnimation(mGuestScore);
+                    mGuestNum=score.getGuestScore();
                 }
+                if(mHomeNum!=score.getHomeScore()){
+                    scoreAnimation(mHomeScore);
+                    mHomeNum=score.getHomeScore();
+                }
+
                 setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
-//                if (mHomeNum == score.getHomeScore()) {
-//                    setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-//                } else {
-//                    scoreAnimation(mHomeScore, score.getHomeScore(), mGuestScore, score.getGuestScore());
-//                    mHomeNum = score.getHomeScore();
-//                }
+
                 L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());
                 setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
 
@@ -1366,48 +1353,20 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }
     }
 
-    private boolean enableRefresh;
 
     /**
      * 设置比分变化时的的翻转动画
-     * @param changeText
-     * @param changeScore
-     * @param noChangeText
-     * @param noChangeScore
      */
-    public void scoreAnimation(final TextView changeText, final int changeScore, final TextView noChangeText, final int noChangeScore) {
-        enableRefresh = true;
-        MyRotateAnimation rotateAnim = null;
+    public void scoreAnimation(final TextView changeText) {
         float cX = changeText.getWidth() / 2.0f;
         float cY = changeText.getHeight() / 2.0f;
 
-        rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
-        if (rotateAnim != null) {
-            rotateAnim.setInterpolatedTimeListener(new MyRotateAnimation.InterpolatedTimeListener() {
-                @Override
-                public void interpolatedTime(float interpolatedTime) {
-                    // 监听到翻转进度过半时，更新显示内容。
-                    if (enableRefresh && interpolatedTime > 0.5f) {
-                        changeText.setText(changeScore + "");
+        MyRotateAnimation rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
 
-                        enableRefresh = false;
-                    }
-                }
-            });
-            rotateAnim.setFillAfter(true);
-            changeText.startAnimation(rotateAnim);
-            noChangeText.setText(noChangeScore+"");//不变的比分
-        }
-        if (changeScore > noChangeScore) {//得分少的用灰色
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
-        } else if (changeScore < noChangeScore) {
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-        } else {
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-        }
+        rotateAnim.setFillAfter(true);
+
+        changeText.startAnimation(rotateAnim);
+
     }
 
 
