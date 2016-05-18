@@ -23,7 +23,10 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.view.ObservableScrollViewCallbacks;
 import com.hhly.mlottery.view.ScrollState;
 import com.hhly.mlottery.view.Scrollable;
-
+/**
+ * @Description: 篮球详情页面的base fragment
+ * @author yixq
+ */
 public abstract class BasketDetailsBaseFragment<L extends Scrollable> extends BaksketBaseFragment
         implements ObservableScrollViewCallbacks {
 

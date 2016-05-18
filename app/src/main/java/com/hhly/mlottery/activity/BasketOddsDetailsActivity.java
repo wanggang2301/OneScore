@@ -33,6 +33,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * /**
+ * @Description: 篮球赔率详情的Activity
+ * @author yixq
  * Created by A on 2016/4/1.
  */
 public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {

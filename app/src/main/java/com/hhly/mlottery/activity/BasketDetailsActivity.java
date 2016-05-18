@@ -61,8 +61,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by Andy on 2016/3/21.
- * 篮球详情页
+ * @Description: 篮球详情的 Activity
+ * @author yixq
+ * Created by A on 2016/3/21.
  */
 public class BasketDetailsActivity extends BasketBaseActivity implements View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";

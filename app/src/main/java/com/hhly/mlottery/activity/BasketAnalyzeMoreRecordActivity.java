@@ -37,7 +37,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by A on 2016/4/1.
+ * @ClassName: BasketAnalyzeMoreRecordActivity
+ * @Description: 篮球分析详情Activity
+ * @author yixq
  */
 public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
