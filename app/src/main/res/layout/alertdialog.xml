@@ -10,7 +10,7 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:background="@drawable/date_first"
+        android:background="@drawable/share_date_top_bg"
         android:gravity="center"
         android:text="@string/tip"
         android:textColor="@color/white"
@@ -19,14 +19,14 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/date_last"
+        android:background="@drawable/share_date_botton_bg"
         android:orientation="vertical">
 
         <ListView
             android:id="@+id/listdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider ="@color/linecolor"
+            android:divider="@color/linecolor"
             android:dividerHeight="0.5px"
             android:gravity="center" />
 
@@ -46,6 +46,8 @@
             android:text="@string/about_confirm"
             android:textSize="16sp"
             android:visibility="gone" />
+
+
     </LinearLayout>
 
 </LinearLayout>

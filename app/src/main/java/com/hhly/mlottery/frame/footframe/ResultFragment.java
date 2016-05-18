@@ -45,7 +45,6 @@ import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -141,6 +140,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     public static EventBus resultEventBus;
     private static final String FRAGMENT_INDEX = "fragment_index";
 
+    private static int currentDatePosition = 0;
+
     private int mCurIndex = -1;
     /**
      * 标志位，标志已经初始化完成
@@ -150,7 +151,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
      * 是否已被加载过一次，第二次就不再去请求数据了
      */
     private boolean mHasLoadedOnce;
-   private LinearLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
 
     private String teamLogoPre;
 
@@ -311,7 +312,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         mRecyclerView.setLayoutManager(layoutManager);
 
 
-
         // 实现 监听 （实例化） 关注监听
         mFocusMatchClickListener = new FocusMatchClickListener() {// 关注按钮事件
             @Override
@@ -349,7 +349,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                     view.setTag(false);
                 }
-               ((ScoresFragment) getParentFragment()).focusCallback();
+                ((ScoresFragment) getParentFragment()).focusCallback();
             }
         };
 
@@ -385,7 +385,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 TextView titleView = (TextView) view.findViewById(R.id.titleView);
                 titleView.setText(R.string.tip);
                 ListView listview = (ListView) view.findViewById(R.id.listdate);
-                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate);
+
+                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate,currentDatePosition);
+
                 listview.setAdapter(dateAdapter);
                 final AlertDialog mAlertDialog = mBuilder.create();
                 listview.setOnItemClickListener(new OnItemClickListener() {
@@ -420,7 +422,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 TextView titleView = (TextView) view.findViewById(R.id.titleView);
                 titleView.setText(R.string.tip);
                 ListView listview = (ListView) view.findViewById(R.id.listdate);
-                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate);
+                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate,currentDatePosition);
                 listview.setAdapter(dateAdapter);
                 final AlertDialog mAlertDialog = mBuilder.create();
                 listview.setOnItemClickListener(new OnItemClickListener() {
@@ -498,6 +500,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                 //当前日期
                 mCurrentDate = json.getCurrent().getDate();
+                currentDatePosition = 0;    //当前日期
 
 
                 teamLogoPre = json.getTeamLogoPre();
@@ -730,7 +733,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
      *
      * @param position ：传入所选日期的 Item
      */
-    public void historyInitData(int position) {
+    public void historyInitData(final int position) {
 
         // 获得 倒叙日期
         final String mDatas[] = new String[7];
@@ -805,6 +808,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 }
                 updateAdapter();
+
+                currentDatePosition = position;
                 // mListView.setSelection(0);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -814,7 +819,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             }
         }, ResultMatch.class);
     }
-
 
 
     @Override
