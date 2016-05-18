@@ -310,8 +310,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 if(isFirst) {
                     intent.putExtra("fileterTags", (Serializable) CPIOddsFragment.mFileterTagsBean);
                     ddList.clear();
-                    LinkedList<String> linkedList = new LinkedList();
-                    intent.putExtra("linkedListChecked", linkedList);
+                    intent.putExtra("linkedListChecked", ddList);
                     isFirst=false;
                 }
                 //否者要传选中的id
