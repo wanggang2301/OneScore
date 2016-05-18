@@ -21,6 +21,7 @@ import java.util.List;
  * @Description:所有activity的基类
  * @author Tenney
  * @date 2015-10-16 下午4:18:43
+ *
  */
 public class BaseActivity extends FragmentActivity {
 	public ProgressDialog pd;
