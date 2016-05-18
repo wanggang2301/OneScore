@@ -34,6 +34,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
      * 已选择的联赛id
      */
     public static LinkedList<String> mCheckedIds = new LinkedList<>();
+    //选中的备份
     private LinkedList<String> mTempCheckidsReset = new LinkedList<>();
     //所有联赛
     private List<NewOddsInfo.FileterTagsBean> mFileterTagsList = new ArrayList<>();
@@ -52,6 +53,8 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
             cpi_filtrate_match_inverse_btn,
             cpi_filtrate_match_reset_btn;
     private Button cpi_filtrate_submit_btn;
+    //备份第一次进来所选择的id
+    private List<String> tempCheckids1 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +63,10 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         mContext = this;
         //全部的
         mFileterTagsList = (List<NewOddsInfo.FileterTagsBean>) getIntent().getSerializableExtra("fileterTags");
-
+        //选中的
         ArrayList<String> checkedIdExtra = (ArrayList<String>) getIntent().getSerializableExtra("linkedListChecked");
+        //选中的备份
         mTempCheckidsReset.addAll(checkedIdExtra);
-//        mTempCheckidsReset.addAll(mTempCheckidsReset);
         mCheckedIds.clear();
         mCheckedIds.addAll(checkedIdExtra);
 
@@ -103,6 +106,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     private void initData() {
         if (mFileterTagsList == null) return;
         if (mCheckedIds.size() == 0) {
+            //如果没选中的
             for (int i = 0; i < mFileterTagsList.size(); i++) {
                 //所有场次
                 allSize += mFileterTagsList.get(i).getMatchsInLeague();
@@ -114,8 +118,9 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                     normalTemp.add(mFileterTagsList.get(i));
                 }
             }
+            tempCheckids1.addAll(mCheckedIds);
         } else {
-
+             //如果有选中的
             for (int i = 0; i < mFileterTagsList.size(); i++) {
                 //所有场次
                 allSize += mFileterTagsList.get(i).getMatchsInLeague();
@@ -129,7 +134,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                     checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
                 }
             }
-
+            tempCheckids1.addAll(mCheckedIds);
         }
 
 
@@ -176,17 +181,29 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                 for (int i = 0; i < mFileterTagsList.size(); i++) {
                     if (!tempCheckids.contains(mFileterTagsList.get(i).getLeagueId())) {
                         mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
+                        //选中的大小
+                        checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
                     }
                 }
                 updateAdapter();
                 break;
             case R.id.cpi_filtrate_match_reset_btn:// 重置
-
-                mTempCheckidsReset.addAll(mTempCheckidsReset);;
-                mCheckedIds.clear();
-                for (int i = 0; i < mFileterTagsList.size(); i++) {
-                    if (mTempCheckidsReset.contains(mFileterTagsList.get(i).getLeagueId())) {
-                        mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
+                //如果选中的不为空
+                if (mTempCheckidsReset.size() != 0) {
+                    mTempCheckidsReset.addAll(mTempCheckidsReset);
+                    mCheckedIds.clear();
+                    for (int i = 0; i < mFileterTagsList.size(); i++) {
+                        if (mTempCheckidsReset.contains(mFileterTagsList.get(i).getLeagueId())) {
+                            mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
+                        }
+                    }
+                }else{
+                    //如果为空重置的时候直接筛选第一次进来的数据
+                    mCheckedIds.clear();
+                    for (int i = 0; i < mFileterTagsList.size(); i++) {
+                        if (tempCheckids1.contains(mFileterTagsList.get(i).getLeagueId())) {
+                            mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
+                        }
                     }
                 }
                 updateAdapter();
