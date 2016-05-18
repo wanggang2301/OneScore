@@ -27,7 +27,6 @@ import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,7 +39,7 @@ import java.util.Set;
  * 首页Activity
  * Created by hhly107 on 2016/3/29.com.hhly.mlottery.activity.HomePagerActivity
  */
-public class HomePagerActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
+public class HomePagerActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private Context mContext;// 上下文
     private ImageView public_btn_set;// 登录图标
@@ -189,6 +188,10 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
         public_btn_filter.setVisibility(View.GONE);
 
+        View iv_account = findViewById(R.id.iv_account);
+        iv_account.setVisibility(View.VISIBLE);
+        iv_account.setOnClickListener(this);
+
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setVisibility(View.VISIBLE);
         public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
@@ -335,5 +338,20 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_account:
+                goToLoginActivity();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void goToLoginActivity() {
+        startActivity(new Intent(this , LoginActivity.class));
     }
 }

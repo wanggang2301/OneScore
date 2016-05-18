@@ -33,7 +33,7 @@
     <!-- 篮球详情页-->
     <dimen name="flexible_space_image_height">240dp</dimen>
     <dimen name="flexible_space_show_fab_offset">120dp</dimen>
-	<dimen name="mheight">172dp</dimen>
+    <dimen name="mheight">172dp</dimen>
     <dimen name="paddingtop">68dp</dimen>
     <dimen name="list_paddintop">100dp</dimen>
     <dimen name="margin_standard">16dp</dimen>
@@ -57,8 +57,6 @@
     <dimen name="basket_details_ball6">12dp</dimen>
 
     <dimen name="basket_analyze">40dp</dimen>
-
-
 
 
     <dimen name="text_size_1">1sp</dimen>
