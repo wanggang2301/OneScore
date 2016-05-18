@@ -14,11 +14,13 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.RecyclerHeaderAdapter;
 import com.hhly.mlottery.adapter.basketball.RecyclerItemAdapter;
 
-import java.util.ArrayList;
-
-/**
+import java.util.ArrayList;/**
+ * @Description: 篮球详情的base Activity
+ * @author yixq
  * Created by A on 2016/3/21.
  */
+
+
 public class BasketBaseActivity extends AppCompatActivity {
     private static final int NUM_OF_ITEMS = 100;
     private static final int NUM_OF_ITEMS_FEW = 3;

@@ -61,7 +61,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by Andy on 2016/3/21.
+ * @Description: 篮球详情的 Activity
+ * @author yixq
+ * Created by A on 2016/3/21.
  */
 public class BasketDetailsActivity extends BasketBaseActivity implements View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
@@ -266,7 +268,10 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 long pushEndTime = System.currentTimeMillis();
                 if ((pushEndTime - pushStartTime) >= 30000) {
                     L.i(TAG, "重新启动socket");
-                    startWebsocket();
+                    if(mSocketClient.isClosed()){
+                        startWebsocket();
+                    }
+
                 }
             }
         };
@@ -518,6 +523,16 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }
     }
 
+    @Override
+    protected void onDestroy() { //关闭socket
+        super.onDestroy();
+        if (mSocketClient != null) {
+            if (!mSocketClient.isClosed()) {
+                mSocketClient.close();
+            }
+        }
+        computeWebSocketConnTimer.cancel();
+    }
     /**
      * 秒闪烁
      */
@@ -585,7 +600,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     setApos();
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         startWebsocket();
-                      //  computeWebSocket();
+                        computeWebSocket();
                     }
                 }
             }
@@ -716,7 +731,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         loadData();
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
             // Skip current item
-            if (i == mPager.getCurrentItem()) {
+            if (i == mPager.getCurrentItem()) { //当前界面已经在自己的Fragment中调用了刷新方法。所以
                 continue;
             }
 
@@ -733,6 +748,14 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             }
             f.initData();
         }
+    }
+
+    /**
+     * 本来是可以跟另外三个一起刷新的。但是Observable ListView会展开头部，Observable ScrollView 不会
+     * 在修复大小头部的bug时，无法同样处理。所以。方法分开了。
+     */
+    public void analyzeRefreshData() {
+        loadData();
     }
 
     @Override
@@ -775,7 +798,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     /**
      * 请求数据之后展示
      */
-    ;
+
 
     private void initData(BasketballDetailsBean bean) {
 
@@ -1256,30 +1279,17 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 mVS.setText(":");
                 mTitleVS.setText(":");
 
-                if (mGuestNum == score.getGuestScore()&&mHomeNum==score.getHomeScore()) {//两个分数都相同
-                    setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-                } else if(mGuestNum != score.getGuestScore()&&mHomeNum==score.getHomeScore()){ //客队不同，主队相同
-                    scoreAnimation(mGuestScore, score.getGuestScore(), mHomeScore, score.getHomeScore());
-                    mGuestNum = score.getGuestScore();
-                }else if(mGuestNum == score.getGuestScore()&&mHomeNum!=score.getHomeScore()){ //客队相同。主队不同
-                    int homeScore=score.getHomeScore();
-                    int guestScore=score.getGuestScore();
-                    scoreAnimation(mHomeScore,homeScore, mGuestScore, guestScore);
-                    mHomeNum = score.getHomeScore();
-                }else { //客队主队都不相同
-                    scoreAnimation(mGuestScore, score.getGuestScore(), mHomeScore, score.getHomeScore());
-                    mGuestNum = score.getGuestScore();
-
-                    scoreAnimation(mHomeScore, score.getHomeScore(), mGuestScore, score.getGuestScore());
-                    mHomeNum = score.getHomeScore();
+                if(mGuestNum!=score.getGuestScore()){
+                    scoreAnimation(mGuestScore);
+                    mGuestNum=score.getGuestScore();
+                }
+                if(mHomeNum!=score.getHomeScore()){
+                    scoreAnimation(mHomeScore);
+                    mHomeNum=score.getHomeScore();
                 }
 
-//                if (mHomeNum == score.getHomeScore()) {
-//                    setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-//                } else {
-//                    scoreAnimation(mHomeScore, score.getHomeScore(), mGuestScore, score.getGuestScore());
-//                    mHomeNum = score.getHomeScore();
-//                }
+                setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
+
                 L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());
                 setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
 
@@ -1344,49 +1354,23 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }
     }
 
-    private boolean enableRefresh;
 
     /**
      * 设置比分变化时的的翻转动画
-     * @param changeText
-     * @param changeScore
-     * @param noChangeText
-     * @param noChangeScore
      */
-    public void scoreAnimation(final TextView changeText, final int changeScore, final TextView noChangeText, final int noChangeScore) {
-        enableRefresh = true;
-        MyRotateAnimation rotateAnim = null;
+    public void scoreAnimation(final TextView changeText) {
         float cX = changeText.getWidth() / 2.0f;
         float cY = changeText.getHeight() / 2.0f;
 
-        rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
-        if (rotateAnim != null) {
-            rotateAnim.setInterpolatedTimeListener(new MyRotateAnimation.InterpolatedTimeListener() {
-                @Override
-                public void interpolatedTime(float interpolatedTime) {
-                    // 监听到翻转进度过半时，更新显示内容。
-                    if (enableRefresh && interpolatedTime > 0.5f) {
-                        changeText.setText(changeScore + "");
+        MyRotateAnimation rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
 
-                        enableRefresh = false;
-                    }
-                }
-            });
-            rotateAnim.setFillAfter(true);
-            changeText.startAnimation(rotateAnim);
-            noChangeText.setText(noChangeScore+"");//不变的比分
-        }
-        if (changeScore > noChangeScore) {//得分少的用灰色
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
-        } else if (changeScore < noChangeScore) {
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_gray));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-        } else {
-            changeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-            noChangeText.setTextColor(getResources().getColor(R.color.basket_score_white));
-        }
+        rotateAnim.setFillAfter(true);
+
+        changeText.startAnimation(rotateAnim);
+
     }
+
+
     /**
      * This adapter provides three types of fragments as an example.
      * {@linkplain #createItem(int)} should be modified if you use this example for your app.
@@ -1446,4 +1430,5 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             return TITLES[position];
         }
     }
+
 }

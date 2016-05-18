@@ -538,7 +538,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_event"
                                 android:textColor="@color/black_details_textcolor"
@@ -547,7 +547,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_guest"
                                 android:textColor="@color/black_details_textcolor"
@@ -556,7 +556,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_home"
                                 android:textColor="@color/black_details_textcolor"
@@ -637,7 +637,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_event"
                                 android:textColor="@color/black_details_textcolor"
@@ -646,7 +646,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_guest"
                                 android:textColor="@color/black_details_textcolor"
@@ -655,7 +655,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_home"
                                 android:textColor="@color/black_details_textcolor"
