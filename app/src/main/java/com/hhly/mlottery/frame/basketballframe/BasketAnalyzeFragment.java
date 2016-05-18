@@ -162,10 +162,10 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_default)
+//                .showImageOnLoading(R.mipmap.basket_default)
                 .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
                 .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
+//                .resetViewBeforeLoading(true)
                 .build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext()).build();
@@ -537,19 +537,19 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
         mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
 
-        setRecent(mRecentGuestImg1, -1);
-        setRecent(mRecentGuestImg2, -1);
-        setRecent(mRecentGuestImg3, -1);
-        setRecent(mRecentGuestImg4, -1);
-        setRecent(mRecentGuestImg5, -1);
-        setRecent(mRecentGuestImg6, -1);
-
-        setRecent(mRecentHomeImg1, -1);
-        setRecent(mRecentHomeImg2, -1);
-        setRecent(mRecentHomeImg3, -1);
-        setRecent(mRecentHomeImg4, -1);
-        setRecent(mRecentHomeImg5, -1);
-        setRecent(mRecentHomeImg6, -1);
+//        setRecent(mRecentGuestImg1, -1);
+//        setRecent(mRecentGuestImg2, -1);
+//        setRecent(mRecentGuestImg3, -1);
+//        setRecent(mRecentGuestImg4, -1);
+//        setRecent(mRecentGuestImg5, -1);
+//        setRecent(mRecentGuestImg6, -1);
+//
+//        setRecent(mRecentHomeImg1, -1);
+//        setRecent(mRecentHomeImg2, -1);
+//        setRecent(mRecentHomeImg3, -1);
+//        setRecent(mRecentHomeImg4, -1);
+//        setRecent(mRecentHomeImg5, -1);
+//        setRecent(mRecentHomeImg6, -1);
 
         //未来比赛
         mFutureLinearLayout.setVisibility(View.GONE);
@@ -939,9 +939,10 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_lose));
         } else if (recent == 1) {
             mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_win));
-        } else {
-            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_none));
         }
+//        else {
+//            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_none));
+//        }
     }
 
     private void setFutureMatch(TextView mTextData, TextView mTextName, ImageView mLogo, BasketAnalyzeFutureMatchBean mFutureMatch, boolean isValue) {
@@ -988,7 +989,9 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                 mRefresh.setRefreshing(false);
                 initData();
                 BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
-                parentActivity.analyzeRefreshData();
+                if (parentActivity != null) {
+                    parentActivity.analyzeRefreshData();
+                }
             }
         }, 500);
 
