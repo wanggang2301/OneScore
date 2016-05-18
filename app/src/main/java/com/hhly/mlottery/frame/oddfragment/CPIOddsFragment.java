@@ -19,6 +19,7 @@ import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPIFragment;
+import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class CPIOddsFragment extends Fragment {
     public static List<NewOddsInfo.AllInfoBean> mAllInfoBean3 = new ArrayList<>();
     public List<NewOddsInfo.AllInfoBean> mAllInfoBeans = new ArrayList<>();
     public List<NewOddsInfo.AllInfoBean> mAllInfo = new ArrayList<>();
-    private List<NewOddsInfo.AllInfoBean> mShowInfoBeans = new ArrayList<>();
+    public List<NewOddsInfo.AllInfoBean> mShowInfoBeans = new ArrayList<>();
     //热门联赛筛选
     public static List<NewOddsInfo.FileterTagsBean> mFileterTagsBean = new ArrayList<>();
     private static final int ERROR = -1;//访问失败
@@ -58,6 +59,7 @@ public class CPIOddsFragment extends Fragment {
     private FrameLayout cpi_fl_plate_networkError;// 加载失败
     private FrameLayout cpi_fl_plate_noData;// 暂无数据
     private TextView cpi_plate_reLoading;// 刷新
+    public List<String> companysName = new ArrayList<>();
 
     public static CPIOddsFragment newInstance(String param1, String param2) {
         CPIOddsFragment fragment = new CPIOddsFragment();
@@ -142,7 +144,6 @@ public class CPIOddsFragment extends Fragment {
                     if (getParentFragment() != null) {
                         ((CPIFragment) getParentFragment()).currentDate = json.getCurrDate();
                         ((CPIFragment) getParentFragment()).companys = json.getCompany();
-
                     }
                     mAllInfoBeans = json.getAllInfo();
                     if (type.equals(CPIFragment.TYPE_PLATE)) {
@@ -170,9 +171,16 @@ public class CPIOddsFragment extends Fragment {
                     }
 
                     filtrateData(defualtCompanyList, CpiFiltrateActivity.mCheckedIds);
-
-                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, type);
-                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+                    companysName.clear();
+                    for (int k = 0; k < ((CPIFragment) getParentFragment()).companys.size(); k++) {
+                        if (((CPIFragment) getParentFragment()).companys.get(k).isChecked()) {
+                            companysName.add(((CPIFragment) getParentFragment()).companys.get(k).getComName());
+                        }
+                    }
+                    System.out.println(">>>CpiFiltrateActivity.mCheckedIds"+CpiFiltrateActivity.mCheckedIds);
+                    selectCompany2(mShowInfoBeans, companysName, CpiFiltrateActivity.mCheckedIds, type);
+//                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, type);
+//                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
 
                     mHandler.sendEmptyMessage(SUCCESS);// 请求成功
                 } else {
@@ -188,20 +196,6 @@ public class CPIOddsFragment extends Fragment {
         }, NewOddsInfo.class);
     }
 
-
-    public void setLeagueIdChecked(List<NewOddsInfo.AllInfoBean> LeagueIdChecked, String comPany) {
-        if ("plate".equals(comPany)) {
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(LeagueIdChecked, mContext, "plate");
-            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-        } else if ("big".equals(comPany)) {
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(LeagueIdChecked, mContext, "big");
-            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-        } else if ("op".equals(comPany)) {
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(LeagueIdChecked, mContext, "op");
-            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-        }
-
-    }
 
     /**
      * 时间
@@ -276,16 +270,33 @@ public class CPIOddsFragment extends Fragment {
     public void selectCompany2(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp, List<String> comNameList, List<String> mCheckedIds, String comPany) {
         if ("plate".equals(comPany)) {
             setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "plate");
-            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+            if (cpiRecyclerViewAdapter != null) {
+                cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
+                cpiRecyclerViewAdapter.notifyDataSetChanged();
+            } else {
+                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "plate");
+                cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+            }
+
         } else if ("big".equals(comPany)) {
             setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "big");
-            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+            if (cpiRecyclerViewAdapter != null) {
+                cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
+                cpiRecyclerViewAdapter.notifyDataSetChanged();
+            } else {
+                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "big");
+                cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+            }
+
         } else if ("op".equals(comPany)) {
             setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
-            cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "op");
-            cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+            if (cpiRecyclerViewAdapter != null) {
+                cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
+                cpiRecyclerViewAdapter.notifyDataSetChanged();
+            } else {
+                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "op");
+                cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+            }
         }
 
     }

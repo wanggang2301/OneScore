@@ -1,8 +1,14 @@
 package com.hhly.mlottery.util;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 import android.app.AlarmManager;
@@ -14,7 +20,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.ClipboardManager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -355,22 +363,48 @@ public class UiUtils {
 
     }
 
+
     /**
-     * 获取服务器日期
-     * @param daNumber
+     * 获取网络时间
+     *
+     * @param daNumber 代表哪一天
      * @return
      */
-
-    public static String getDate(int daNumber) {
-        Date date = new Date();
-        String da = "";
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    public static String getWebsiteDatetime(int daNumber, long ld) {
+        Date date = new Date(ld);// 转换为标准时间对象
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);// 输出北京时间
         Calendar canlandar = Calendar.getInstance();
         canlandar.setTime(date);
         canlandar.add(canlandar.DATE, daNumber);
-        canlandar.add(canlandar.MONTH, 1);
-        da = df.format(canlandar.getTime());
-        return da;
+        canlandar.add(canlandar.MONTH, 0);
+        return sdf.format(canlandar.getTime());
+    }
+
+    public static String requestByGetDay(int day) {
+        String dateTime = "";
+        try {
+            URL url = new URL("http://www.beijing-time.org");
+            HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+            // 设置连接超时时间
+            urlConn.setConnectTimeout(5 * 1000);
+            urlConn.connect();
+            // 判断请求是否成功
+            if (urlConn.getResponseCode() == 200) {
+                // 获取返回的数据
+                long ld = urlConn.getDate();// 读取网站日期时间
+                dateTime = getWebsiteDatetime(day, ld);
+            } else {
+                //失败关闭连接
+                urlConn.disconnect();
+            }
+            // 关闭连接
+            urlConn.disconnect();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dateTime;
     }
 
     /**
