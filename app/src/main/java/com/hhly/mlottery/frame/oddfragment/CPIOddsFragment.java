@@ -57,7 +57,7 @@ public class CPIOddsFragment extends Fragment {
     private static final int NODATA = 400;// 暂无数据
     private static final int NODATA_CHILD = 500;// 里面内容暂无数据
     private FrameLayout cpi_fl_plate_loading;// 正在加载中
-    private FrameLayout cpi_fl_plate_networkError;// 加载失败
+    public  FrameLayout cpi_fl_plate_networkError;// 加载失败
     private FrameLayout cpi_fl_plate_noData;// 暂无数据
     private TextView cpi_plate_reLoading;// 刷新
     public List<String> companysName = new ArrayList<>();
@@ -111,10 +111,9 @@ public class CPIOddsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 switchd("");
-                if("".equals(mCpiframen.public_txt_date.getText())){
-                    new Thread() {  @Override  public void run() { mCpiframen.public_txt_date.setText(UiUtils.requestByGetDay(0));  }  }.start();
-                }
+                mCpiframen.public_txt_date.setText(UiUtils.requestByGetDay(0));
                 mCpiframen.mMapDayList = mCpiframen.getDate();
+                mCpiframen.selectPosition=3;
             }
         });
 
@@ -198,8 +197,8 @@ public class CPIOddsFragment extends Fragment {
               } else {
                     mHandler.sendEmptyMessage(NODATA);// 暂无数据
               }
-
             }
+
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {

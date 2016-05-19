@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -105,11 +106,17 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //判断是否是日期选择
     private boolean isFirst = false;
     //默认选择当天，当点击item后改变选中的position
-    private int selectPosition=3;
+    public int selectPosition=3;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads().detectDiskWrites().detectNetwork()
+                    .penaltyLog().build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
+                    .build());
         mContext = getActivity();
     }
 
@@ -148,7 +155,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public_img_back.setOnClickListener(this);
         //显示时间的布局
         public_date_layout = (LinearLayout) mView.findViewById(R.id.public_date_layout);
-//        public_date_layout.setVisibility(View.VISIBLE);
         //显示时间的textview
         public_txt_date = (TextView) mView.findViewById(R.id.public_txt_date);
         new Thread(){ @Override  public void run() {public_txt_date.setText(UiUtils.requestByGetDay(0));} }.start();
@@ -361,18 +367,25 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                for (Fragment fragment : fragments) {
-//                    ((CPIOddsFragment) fragment).switchd("");
-//                }
-                companysName.clear();
+                if (mCPIOddsFragment.cpi_fl_plate_networkError.getVisibility() == View.VISIBLE) {
+                    mMapDayList = getDate();
+                    public_txt_date.setText(UiUtils.requestByGetDay(0));
+                    selectPosition=3;
+                    for (Fragment fragment : fragments) {
+                        ((CPIOddsFragment) fragment).switchd("");
+                    }
+                }
+                else{
+                    companysName.clear();
                 for (int k = 0; k < companys.size(); k++) {
                     if (companys.get(k).isChecked()) {
                         companysName.add(companys.get(k).getComName());
                     }
-                }
+                  }
                 mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
                 mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
                 mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
+             }
                 mRefreshLayout.setRefreshing(false);
             }
         }, 500);
