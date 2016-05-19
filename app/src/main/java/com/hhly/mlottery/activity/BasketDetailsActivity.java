@@ -275,7 +275,12 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 }
             }
         };
-        computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+        try {
+            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+        }catch (Exception e){
+
+        }
+
     }
 
 
