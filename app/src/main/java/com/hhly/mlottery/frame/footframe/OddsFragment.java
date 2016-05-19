@@ -15,6 +15,7 @@ import com.umeng.analytics.MobclickAgent;
 
 /**
  * 指数fragment
+ * tjl
  */
 public class OddsFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";

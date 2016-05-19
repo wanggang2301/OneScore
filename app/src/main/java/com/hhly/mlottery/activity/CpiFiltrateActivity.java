@@ -120,7 +120,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
             }
             tempCheckids1.addAll(mCheckedIds);
         } else {
-             //如果有选中的
+            //如果有选中的
             for (int i = 0; i < mFileterTagsList.size(); i++) {
                 //所有场次
                 allSize += mFileterTagsList.get(i).getMatchsInLeague();
@@ -197,7 +197,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                             mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
                         }
                     }
-                }else{
+                } else {
                     //如果为空重置的时候直接筛选第一次进来的数据
                     mCheckedIds.clear();
                     for (int i = 0; i < mFileterTagsList.size(); i++) {

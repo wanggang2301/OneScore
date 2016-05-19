@@ -7,19 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
-import com.hhly.mlottery.frame.CPIFragment;
-import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 103TJL on 2016/4/11.
@@ -78,20 +70,23 @@ public class CpiCompanyAdapter extends BaseAdapter {
         }
         item.checkedTextView.setText(mCompanyBean.get(position).getComName());
         item.checkedTextView.setChecked(mCompanyBean.get(position).isChecked());
-
-
-//        mListView.setItemChecked(position, CPIFragment.booleanList.get(position));
-//        item.checkedTextView.setChecked(CPIFragment.booleanList.get(position));
-
-
+        //如果checkedTextView有选中的就给设置选中的背景
+        if (item.checkedTextView.isChecked()) {
+            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select_true));
+        } else {
+            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select));
+        }
         return convertView;
     }
 
     private static class ListViewItem {
         public CheckedTextView checkedTextView;
+        //是否选中的图片
+        private ImageView cpi_img_checked;
 
         public ListViewItem(View v) {
             checkedTextView = (CheckedTextView) v.findViewById(R.id.item_checkedTextView);
+            cpi_img_checked = (ImageView) v.findViewById(R.id.item_img_checked);
         }
     }
 }
