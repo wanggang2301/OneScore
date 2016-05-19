@@ -206,9 +206,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                     break;
                 case VIEW_STATUS_NET_ERROR:
-
                     if (isLoadedData) {
-                        Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        if (mContext != null) {
+                            Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         mLoadingLayout.setVisibility(View.GONE);
                         //mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -386,7 +387,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 titleView.setText(R.string.tip);
                 ListView listview = (ListView) view.findViewById(R.id.listdate);
 
-                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate,currentDatePosition);
+                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate, currentDatePosition);
 
                 listview.setAdapter(dateAdapter);
                 final AlertDialog mAlertDialog = mBuilder.create();
@@ -422,7 +423,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 TextView titleView = (TextView) view.findViewById(R.id.titleView);
                 titleView.setText(R.string.tip);
                 ListView listview = (ListView) view.findViewById(R.id.listdate);
-                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate,currentDatePosition);
+                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate, currentDatePosition);
                 listview.setAdapter(dateAdapter);
                 final AlertDialog mAlertDialog = mBuilder.create();
                 listview.setOnItemClickListener(new OnItemClickListener() {

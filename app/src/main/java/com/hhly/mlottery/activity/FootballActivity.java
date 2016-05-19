@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -100,28 +101,28 @@ public class FootballActivity extends BaseActivity {
 
                 switch (radioButtonId) {
                     case R.id.rb_football:
-                        MobclickAgent.onEvent(mContext,"Football_Score");
-                        currentPosition=SCORES_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_Score");
+                        currentPosition = SCORES_FRAGMENT;
                         switchFragment(SCORES_FRAGMENT);
                         break;
                     case R.id.rb_news:
-                        MobclickAgent.onEvent(mContext,"Football_News");
-                        currentPosition=NEWS_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_News");
+                        currentPosition = NEWS_FRAGMENT;
                         switchFragment(NEWS_FRAGMENT);
                         break;
                     case R.id.rb_data:
-                        MobclickAgent.onEvent(mContext,"Football_Data");
-                        currentPosition=DATA_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_Data");
+                        currentPosition = DATA_FRAGMENT;
                         switchFragment(DATA_FRAGMENT);
                         break;
                     case R.id.rb_video:
-                        MobclickAgent.onEvent(mContext,"Football_Video");
-                        currentPosition=VIDEO_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_Video");
+                        currentPosition = VIDEO_FRAGMENT;
                         switchFragment(VIDEO_FRAGMENT);
                         break;
                     case R.id.rb_cpi:
-                        MobclickAgent.onEvent(mContext,"Football_CPI");
-                        currentPosition=CPI_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_CPI");
+                        currentPosition = CPI_FRAGMENT;
                         switchFragment(CPI_FRAGMENT);
                         break;
                     default:
@@ -153,5 +154,14 @@ public class FootballActivity extends BaseActivity {
         if (FocusFragment.focusEventBus!=null) {
             FocusFragment.focusEventBus.unregister(FocusFragment.class);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
