@@ -24,13 +24,14 @@ public class BaseURLs {
     private static String getHost() {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
-
+            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "m.1332255.com";
             } else if (url_config == DebugConfigActivity.URL_242) {
 //                return "192.168.31.65:8181";
-                return "192.168.10.242:8181";
+//                return "192.168.10.242:8181";
 //                return "192.168.12.242:8181";//余勇俊测试
+                return "192.168.31.48:8888";//钟晓宇测试
             } else {
                 return "m.13322.com";
             }
@@ -624,6 +625,15 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfo.do";
 
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
+
+    /**发送验证码*/
+    public final static String URL_SENDSMSCODE = URL_API_HOST + "userCenter.sendSmsCode.do";
+    /**注册*/
+    public final static String URL_REGISTER = URL_API_HOST + "userCenter.register.do";
+    /**登录*/
+    public final static String URL_LOGIN = URL_API_HOST + "userCenter.login.do";
+    /**登出*/
+    public final static String URL_LOGOUT = URL_API_HOST + "userCenter.logout.do";
 
 
 

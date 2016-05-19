@@ -21,6 +21,7 @@ import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
@@ -41,6 +42,7 @@ import java.util.Set;
  */
 public class HomePagerActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
+    private static final java.lang.String TAG = "HomePagerActivity";
     private Context mContext;// 上下文
     private ImageView public_btn_set;// 登录图标
     private SwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
@@ -55,6 +57,11 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private long mExitTime;// 退出程序...时间
     private String mValue;
     private String mKey;
+
+    /**跳转其他Activity 的requestcode */
+    public static final int REQUESTCODE_LOGIN = 100;
+    public static final int REQUESTCODE_LOGOUT = 110;
+    private ImageView iv_account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +195,12 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
         public_btn_filter.setVisibility(View.GONE);
 
-        View iv_account = findViewById(R.id.iv_account);
+        iv_account = (ImageView) findViewById(R.id.iv_account);
+        if (CommonUtils.isLogin()){
+            iv_account.setImageResource(R.mipmap.login);
+        }else{
+            iv_account.setImageResource(R.mipmap.logout);
+        }
         iv_account.setVisibility(View.VISIBLE);
         iv_account.setOnClickListener(this);
 
@@ -344,7 +356,11 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_account:
-                goToLoginActivity();
+                if (CommonUtils.isLogin()){
+                    goToAccountActivity();
+                }else{
+                    goToLoginActivity();
+                }
                 break;
             default:
                 break;
@@ -352,6 +368,27 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     }
 
     private void goToLoginActivity() {
-        startActivity(new Intent(this , LoginActivity.class));
+        startActivityForResult(new Intent(this , LoginActivity.class) , REQUESTCODE_LOGIN);
+    }
+
+    private void goToAccountActivity() {
+        startActivityForResult(new Intent(this , AccountActivity.class) , REQUESTCODE_LOGOUT );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            if (requestCode == REQUESTCODE_LOGIN){
+                // 登录成功返回
+                L.d(TAG,"登录成功");
+                iv_account.setImageResource(R.mipmap.login);
+            }else if (requestCode == REQUESTCODE_LOGOUT){
+                L.d(TAG,"注销成功");
+                iv_account.setImageResource(R.mipmap.logout);
+            }
+        }
+
     }
 }

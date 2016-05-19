@@ -31,11 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/x24"
-            android:paddingRight="@dimen/x24"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/login_account"
+            android:src="@mipmap/logout"
             android:visibility="gone"/>
 
 
@@ -201,7 +200,7 @@
 
 
         <TextView
-            android:id="@+id/tv_register"
+            android:id="@+id/tv_right"
             style="@style/RippleBackgroudBorderless"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

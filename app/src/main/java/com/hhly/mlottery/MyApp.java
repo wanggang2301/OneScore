@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -50,8 +51,18 @@ public class MyApp extends Application {
 		CrashException crashException = CrashException.getInstance();
 		crashException.init(getApplicationContext());
 		VolleyContentFast.init(this);
+
+
+		initUserInfo();
+
 		super.onCreate();
-	};
+	}
+
+	private void initUserInfo() {
+		CommonUtils.initRegisterInfo();
+	}
+
+	;
 
 
 	@Override

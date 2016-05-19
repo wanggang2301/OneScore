@@ -2,6 +2,7 @@ package com.hhly.mlottery.util;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 
 public class AppConstants {
@@ -194,4 +195,23 @@ public class AppConstants {
 	public static final int BASKETBALL_COMPETITION_VALUE = 2;// 篮球赛程跳转value
 	public static final int BASKETBALL_ATTENTION_VALUE = 3;// 篮球关注跳转value
 	public static final String LOTTERY_KEY = "numberName";// 彩票界面跳转Key
+
+
+
+	// ============= account begin ==============
+	/**保存userId的key*/
+	public static final String SPKEY_USERID = "userId";
+	/**保存token的key*/
+	public static final String SPKEY_TOKEN = "token";
+	/**保存nickName的key*/
+	public static final String SPKEY_NICKNAME = "nickName";
+	/**应用启动的时候初始化*/
+	public static String deviceToken ="";
+	/**应用启动的时候初始化*/
+	public static Register register = null;
+	// ============= account end ==============
+
+
+
+
 }
