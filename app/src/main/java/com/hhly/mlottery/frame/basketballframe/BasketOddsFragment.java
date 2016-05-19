@@ -383,8 +383,10 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
             public void run() {
                 mRefreshLayout.setRefreshing(false);
                 initData();
-                BasketDetailsActivity basketDetailsActivity= (BasketDetailsActivity) getActivity();
-                basketDetailsActivity.refreshData();
+                if (getActivity() != null) {
+                    BasketDetailsActivity basketDetailsActivity= (BasketDetailsActivity) getActivity();
+                    basketDetailsActivity.refreshData();
+                }
             }
         }, 1000);
     }
