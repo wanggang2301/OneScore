@@ -58,6 +58,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private ImageView mPublic_img_back;// 返回
     private TextView mPublic_txt_title;// 标题
     private String url;// 要显示的H5网址
+    private String isComment;// 是否隐藏评论和分享
+    private String token;// 登录参数
     private String imageurl;// 图片地址
     private String title;// 标题
     private String subtitle;// 副标题
@@ -82,7 +84,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private ShareCopyLinkCallBack mShareCopyLinkCallBack;
 
     private Tencent mTencent;
-
+    private ScrollView scrollview;
     private SharePopupWindow sharePopupWindow;
     private String model;
 
@@ -91,7 +93,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         sdk = CyanSdk.getInstance(this);
-        //单点登录
+        //单点登录   nickname可以相同  用户id不能相同
         CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
@@ -103,12 +105,12 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //        System.out.println("lzf" +model );
 
 //        getCommentCount();
-
+        CyUtils.getUserInfo(sdk);
     }
 
     private void initScrollView() {
         //解决adjustresize和透明状态栏的冲突
-        final ScrollView scrollview = (ScrollView) findViewById(R.id.scrollview);
+        scrollview = (ScrollView) findViewById(R.id.scrollview);
         final IsBottomScrollView isbottomscrollview = (IsBottomScrollView) findViewById(R.id.isbottomscrollview);
         final View decview = getWindow().getDecorView();
         decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -285,20 +287,33 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         webSettings.setDatabaseEnabled(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        String us = webSettings.getUserAgentString();
+//        System.out.println("lzfus="+us);
+        webSettings.setUserAgentString(us.replace("Android", "yibifen Android"));//给useagent加个标识yibifen
+//        System.out.println("lzfus1=" + webSettings.getUserAgentString());
+
     }
 
     protected void initData() {
         try {
-            url = getIntent().getStringExtra("key");
-            imageurl = getIntent().getStringExtra("imageurl");
-            title = getIntent().getStringExtra(INTENT_PARAMS_TITLE);
-            subtitle = getIntent().getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
-            mType = getIntent().getIntExtra("type", 0);
-            mThird = getIntent().getStringExtra("thirdId");
-            infoTypeName = getIntent().getStringExtra("infoTypeName");
+            Intent intent = getIntent();
+            url = intent.getStringExtra("key");
+            imageurl = intent.getStringExtra("imageurl");
+            title = intent.getStringExtra(INTENT_PARAMS_TITLE);
+            subtitle = intent.getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
+            mType = intent.getIntExtra("type", 0);
+            mThird = intent.getStringExtra("thirdId");
+            infoTypeName = intent.getStringExtra("infoTypeName");
+            token = intent.getStringExtra("token");
+            isComment = intent.getStringExtra("isComment");
             mPublic_txt_title.setText(infoTypeName);
-
+            if (TextUtils.isEmpty(isComment)) {//不是新闻资讯时候隐藏分享和评论
+                public_btn_set.setVisibility(View.VISIBLE);
+                scrollview.setVisibility(View.VISIBLE);
+            } else {
+                public_btn_set.setVisibility(View.GONE);
+                scrollview.setVisibility(View.GONE);
+            }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -307,11 +322,12 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 }
 
             });
+//            mWebView.postUrl(url, EncodingUtils.getBytes("", "BASE64"));
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
 
-            /**加載成功显示 分享按钮*/
-            public_btn_set.setVisibility(View.VISIBLE);
+//            /**加載成功显示 分享按钮*/
+//            public_btn_set.setVisibility(View.VISIBLE);
 
             mShareTencentCallBack = new ShareTencentCallBack() {
                 @Override
