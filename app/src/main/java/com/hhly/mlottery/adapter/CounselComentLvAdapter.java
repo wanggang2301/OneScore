@@ -116,8 +116,8 @@ public class CounselComentLvAdapter extends BaseAdapter {
                         super.updateDrawState(ds);
 
                         ds.setColor(mActivity.getResources().getColor(R.color.colorPrimary));
-                        ds.setFakeBoldText(true);
-
+                        ds.setFakeBoldText(false);
+//                        ds.setTextSize(28);
                         // ds.setLinearText(true);
                         ds.setUnderlineText(false);
                         ds.setAntiAlias(true);
