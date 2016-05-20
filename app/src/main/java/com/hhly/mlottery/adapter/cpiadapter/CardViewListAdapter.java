@@ -71,17 +71,19 @@ public class CardViewListAdapter extends BaseAdapter {
         //公司名称
         item.cpi_item_list_company_txt.setText(mComList.get(position).getComName());
         //即赔小于初赔
+        //主队
         if (!"".equals(mCurrLevelBean.getLeft()) && !"".equals(mPreLevelBean.getLeft())) {
-            if (Double.valueOf(mCurrLevelBean.getLeft()) < Double.valueOf(mPreLevelBean.getLeft())) {
+            if (mCurrLevelBean.getLeftUp()==-1) {
                 item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
             }
             //即赔大于初赔
-            else if (Double.valueOf(mCurrLevelBean.getLeft()) > Double.valueOf(mPreLevelBean.getLeft())) {
+            else if (mCurrLevelBean.getLeftUp()==1) {
                 item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
             } else {
                 item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.black));
             }
         }
+        //盘口
         if (!"".equals(mCurrLevelBean.getMiddle()) && !"".equals(mPreLevelBean.getMiddle())) {
             if (Double.valueOf(mCurrLevelBean.getMiddle()) < Double.valueOf(mPreLevelBean.getMiddle())) {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
@@ -91,10 +93,11 @@ public class CardViewListAdapter extends BaseAdapter {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.black));
             }
         }
+        //客队
         if (!"".equals(mCurrLevelBean.getRight()) && !"".equals(mPreLevelBean.getRight())) {
-            if (Double.valueOf(mCurrLevelBean.getRight()) < Double.valueOf(mPreLevelBean.getRight())) {
+            if (mPreLevelBean.getRightUp()==-1) {
                 item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
-            } else if (Double.valueOf(mCurrLevelBean.getRight()) > Double.valueOf(mPreLevelBean.getRight())) {
+            } else if (mPreLevelBean.getRightUp()==1) {
                 item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
             } else {
                 item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.black));

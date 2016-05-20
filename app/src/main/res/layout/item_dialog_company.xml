@@ -3,17 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <CheckedTextView
         android:id="@+id/item_checkedTextView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:checked="false"
         android:gravity="center"
         android:text="New CheckedTextView"
         android:textSize="16sp"
         android:textColor="@color/blue"
-        android:padding="12dp"/>
+        android:padding="12dp"
+        android:layout_weight="5"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0.5">
+        <ImageView
+            android:id="@+id/item_img_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/cpi_img_select"/>
+    </LinearLayout>
+
 </LinearLayout>

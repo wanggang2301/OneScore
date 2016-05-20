@@ -21,6 +21,7 @@
     <string name="weibosdk_demo_not_support_api_hint">您还未安装新浪微博客户端</string>
     <string name="share_uninstall_qq">您还未安装QQ客户端</string>
     <string name="share_recommend">推荐</string>
+    <string name="share_summary_default">一比分,专业的足球比分直播平台</string>
 
 
 
@@ -676,7 +677,7 @@
     <string name="comment_send">发送</string>
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暂无评论内容</string>
-    <string name="toatalvisiable">全部显示</string>
+    <string name="toatalvisiable">显示全部</string>
 
 
 

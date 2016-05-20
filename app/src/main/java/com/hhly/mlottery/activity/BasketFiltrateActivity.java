@@ -25,7 +25,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by A on 2016/1/12.
+ * @Description: 篮球筛选页面Activity
+ * @author yixq
  */
 public class BasketFiltrateActivity extends BaseActivity implements View.OnClickListener,FiltrateMatchFragment.CheckedCupsCallback {
 

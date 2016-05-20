@@ -24,7 +24,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<RecyclerItemAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(android.R.layout.simple_list_item_1, parent, false));
+        return new ViewHolder(mInflater.inflate(android.R.layout.simple_list_item_1, parent , false));
     }
 
     @Override

@@ -77,7 +77,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by A on 2015/12/30.
+ * 篮球比分fragment
+ * Created by yixq on 2015/12/30.
  */
 public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
 
@@ -773,8 +774,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                                 updateMatchStatus(matchchildern, data);// 修改Match里面的数据
                             }
                         }else{
-
-                            mLoadHandler.postDelayed(mRun, 0);
                             /**
                              * 未开始（VS）==>开始时候的处理
                              */

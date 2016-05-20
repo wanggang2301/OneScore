@@ -4,12 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 
+import com.alibaba.fastjson.JSON;
 import com.sohu.cyan.android.sdk.api.CallBack;
 import com.sohu.cyan.android.sdk.api.Config;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.AccountInfo;
 import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.sohu.cyan.android.sdk.http.CyanRequestListener;
+import com.sohu.cyan.android.sdk.http.response.AttachementResp;
+import com.sohu.cyan.android.sdk.http.response.CommentActionResp;
+import com.sohu.cyan.android.sdk.http.response.UserCommentResp;
+import com.sohu.cyan.android.sdk.http.response.UserInfoResp;
+
+import java.io.File;
 
 /**
  * @author lzf
@@ -59,11 +66,20 @@ public class CyUtils {
         });
     }
 
+    /*
+    topicId	畅言分配的文章ID，通过loadTopic接口获取
+    content	评论内容
+    replyId	回复的评论，默认为0
+    attachUrl	附件图片地址，通过attachUpload接口上传后获取
+    score	打分
+    appType	平台类型，40:ipone,41:ipad,43:android
+    listener	实现CyanRequestListener接口类的实例
+     */
     //提交评论 需登录  否则提交失败
-    public static void submitComment(long topicid, String comment, CyanSdk sdk,  CyanRequestListener requestListener) {
+    public static void submitComment(long topicid, String comment, CyanSdk sdk, CyanRequestListener requestListener) {
 
         try {
-            sdk.submitComment(topicid, comment, 0, "", 43, 6.0f, "7", requestListener);
+            sdk.submitComment(topicid, comment, 0, "", 43, 5.0f, "7", requestListener);
 
         } catch (CyanException e) {
             e.printStackTrace();
@@ -75,12 +91,102 @@ public class CyUtils {
     /**
      * 隐藏原生键盘
      */
-    public static  void hideKeyBoard(Activity activity) {
+    public static void hideKeyBoard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (activity.getCurrentFocus() != null) {
             inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public static void getUserInfo(CyanSdk sdk) {
+        try {
+            sdk.getUserInfo(new CyanRequestListener<UserInfoResp>() {
+                @Override
+                public void onRequestSucceeded(UserInfoResp userInfoResp) {
+                    System.out.println("lzf" + JSON.toJSONString(userInfoResp));
+                    System.out.println(userInfoResp.user_id);
+
+                }
+
+                @Override
+                public void onRequestFailed(CyanException e) {
+
+                }
+            });
+        } catch (CyanException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 上传图片
+     */
+    public static void attachUpload(CyanSdk sdk, File file) {
+        try {
+            sdk.attachUpload(file, new CyanRequestListener<AttachementResp>() {
+                @Override
+                public void onRequestSucceeded(AttachementResp attachementResp) {
+                    L.i(attachementResp.url);
+
+                }
+
+                @Override
+                public void onRequestFailed(CyanException e) {
+
+                }
+            });
+        } catch (CyanException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取用户做出的评论
+     */
+    public static void getUserComments(CyanSdk sdk, int page, int pagesize) {
+        try {
+            sdk.getUserComments(page, pagesize, new CyanRequestListener<UserCommentResp>() {
+                @Override
+                public void onRequestSucceeded(UserCommentResp userCommentResp) {
+
+                }
+
+                @Override
+                public void onRequestFailed(CyanException e) {
+
+                }
+            });
+        } catch (CyanException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    /**
+     * 评论顶踩
+     */
+    public static void commentAction(CyanSdk sdk, long topicid, long commentid, CyanSdk.CommentActionType type) {
+//        commentAction(sdk,1,2,CyanSdk.CommentActionType.CAI);
+        try {
+            sdk.commentAction(topicid, commentid, type, new CyanRequestListener<CommentActionResp>() {
+                @Override
+                public void onRequestSucceeded(CommentActionResp commentActionResp) {
+
+                }
+
+                @Override
+                public void onRequestFailed(CyanException e) {
+
+                }
+            });
+        } catch (CyanException e) {
+            e.printStackTrace();
+        }
     }
 }
