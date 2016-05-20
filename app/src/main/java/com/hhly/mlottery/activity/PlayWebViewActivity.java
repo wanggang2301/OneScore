@@ -20,6 +20,7 @@ import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by 103TJL on 2016/1/13.
+ * 播放视频的webview
  */
 public class PlayWebViewActivity extends BaseActivity implements View.OnClickListener {
     private ImageView public_img_back, public_btn_filter, public_btn_set;

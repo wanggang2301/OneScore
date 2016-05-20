@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y90"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/y5"
-    android:paddingTop="@dimen/y5">
+    android:paddingBottom="@dimen/y10"
+    android:paddingTop="@dimen/y10">
 
     <TextView
         android:id="@+id/cpi_item_list_company_txt"
@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/cpi_item_list_home_txt"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center|right"
             android:text="1.46"
@@ -35,7 +35,7 @@
         <TextView
             android:id="@+id/cpi_item_list_home2_txt"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center|right"
             android:text="1.23"
