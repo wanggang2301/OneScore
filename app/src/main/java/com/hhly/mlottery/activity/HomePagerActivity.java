@@ -33,6 +33,7 @@ import com.hhly.mlottery.service.umengPushService;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
@@ -91,20 +92,21 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = HomePagerActivity.this;
-        channelNumber = getAppMetaData(mContext,"UMENG_CHANNEL");// 获取渠道号
+        channelNumber = getAppMetaData(mContext, "UMENG_CHANNEL");// 获取渠道号
         getVersion();// 获取版本号
         pushData();
         initView();
         initData();
         initEvent();
         startService(new Intent(mContext, umengPushService.class));
-        L.d("xxx","version:" + version);
-        L.d("xxx","versionCode:" + versionCode);
-        L.d("xxx","channelNumber:" + channelNumber);
+        L.d("xxx", "version:" + version);
+        L.d("xxx", "versionCode:" + versionCode);
+        L.d("xxx", "channelNumber:" + channelNumber);
     }
 
     /**
      * 获取application中指定的meta-data
+     *
      * @return 如果没有获取成功(没有对应值，或者异常)，则返回值为空
      */
     private String getAppMetaData(Context ctx, String key) {
@@ -216,9 +218,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                             basketDataIntent.putExtra("key", mUrl);
                             basketDataIntent.putExtra("type", mDataType);
                             basketDataIntent.putExtra("infoTypeName", mInfoTypeName);
-                            basketDataIntent.putExtra("imageurl",imageUrl );
-                            basketDataIntent.putExtra("title",title );
-                            basketDataIntent.putExtra("subtitle",subTitle );
+                            basketDataIntent.putExtra("imageurl", imageUrl);
+                            basketDataIntent.putExtra("title", title);
+                            basketDataIntent.putExtra("subtitle", subTitle);
                             startActivity(basketDataIntent);
                             L.d("xxx", "mUrl: " + mUrl);
                         }
@@ -252,7 +254,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
             }
         });
-        if(AppConstants.isTestEnv){
+        if (AppConstants.isTestEnv) {
             public_txt_title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -260,10 +262,10 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
                         lastClickTime = currentTime;
                         clickCount = 0;
-                    }else{
+                    } else {
                         clickCount += 1;
-                        if(clickCount == 5){
-                            startActivity(new Intent(mContext,DebugConfigActivity.class));
+                        if (clickCount == 5) {
+                            startActivity(new Intent(mContext, DebugConfigActivity.class));
                             finish();
                         }
                     }
@@ -344,7 +346,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             public synchronized void onResponse(final HomePagerEntity jsonObject) {
                 if (jsonObject != null) {// 请求成功
                     mHomePagerEntity = jsonObject;
-                    L.d("xxx","isAudit:" +jsonObject.getIsAudit());
+                    L.d("xxx", "isAudit:" + jsonObject.getIsAudit());
                     isAuditHandle(jsonObject);
                     if (mHomePagerEntity.getResult() == 200) {
                         switch (num) {
@@ -464,6 +466,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
                         home_page_list.setAdapter(mListBaseAdapter);
+                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, VolleyContentFast.jsonData);// 保存首页缓存数据
+                        L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
                     }
                     break;
                 case LOADING_DATA_ERROR:
@@ -475,6 +479,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
                         home_page_list.setAdapter(mListBaseAdapter);
+                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, VolleyContentFast.jsonData);// 保存首页缓存数据
+                        L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
                     }
                     break;
             }
@@ -485,17 +491,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      * 获取本地数据
      */
     public void readObjectFromFile() {
-        File sdCardDir = Environment.getExternalStorageDirectory();//获取SDCard目录
-        File sdFile = new File(sdCardDir, "OneScoreData.dat");
-        try {
-            FileInputStream fis = new FileInputStream(sdFile);   //获得输入流
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            mHomePagerEntity = (HomePagerEntity) ois.readObject();
-            ois.close();
-        } catch (Exception e) {
-            L.d("获取本地数据失败：" + e.getMessage());
-        }
-        if (mHomePagerEntity != null) {
+        String jsondata = PreferenceUtil.getString(AppConstants.HOME_PAGER_DATA_KEY, null);
+        if (jsondata != null) {
+            mHomePagerEntity = JSON.parseObject(jsondata, HomePagerEntity.class);
             mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
             home_page_list.setAdapter(mListBaseAdapter);
         } else {
@@ -509,7 +507,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      */
     private void showDefData() {
         try {
-            String defDataJson = "{\"result\":200,\"menus\":{\"content\":[{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球比分\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球视频\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球指数\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球数据\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球资讯\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"篮球比分\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"香港开奖\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"彩票开奖\",\"picUrl\":\"xxx\"}],\"result\":200},\"otherLists\":[{\"content\":{\"labType\":1,\"bodys\":[{\"jumpType\":2,\"jumpAddr\":null,\"thirdId\":\"307689\",\"racename\":\"\",\"raceId\":\"1\",\"raceColor\":\"#9933FF\",\"date\":\"\",\"time\":\"\",\"homeId\":180,\"hometeam\":\"\",\"guestId\":177,\"guestteam\":\"\",\"statusOrigin\":\"0\",\"homeScore\":0,\"guestScore\":0,\"homeHalfScore\":0,\"guestHalfScore\":0,\"homeLogoUrl\":\"xxx\",\"guestLogoUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"thirdId\":\"312127\",\"racename\":\"\",\"raceId\":\"511\",\"raceColor\":\"#000080\",\"date\":\"\",\"time\":\"\",\"homeId\":6162,\"hometeam\":\"\",\"guestId\":6164,\"guestteam\":\"\",\"statusOrigin\":\"0\",\"homeScore\":0,\"guestScore\":0,\"homeHalfScore\":0,\"guestHalfScore\":0,\"homeLogoUrl\":\"xxx\",\"guestLogoUrl\":\"xxx\"}]},\"result\":200},{\"content\":{\"labType\":2,\"bodys\":[{\"jumpType\":1,\"jumpAddr\":null,\"picUrl\":null,\"title\":\"\",\"date\":\"\",\"time\":\"\"},{\"jumpType\":1,\"jumpAddr\":null,\"picUrl\":\"xxx\",\"title\":\"\",\"date\":\"\",\"time\":\"\"}]},\"result\":200},{\"content\":{\"labType\":3,\"bodys\":[{\"jumpType\":2,\"jumpAddr\":null,\"name\":\"1\",\"issue\":\"-\",\"numbers\":null,\"picUrl\":\"xxx\",\"zodiac\":null},{\"jumpType\":2,\"jumpAddr\":null,\"name\":\"15\",\"issue\":\"-\",\"numbers\":null,\"picUrl\":\"xxx\"}]},\"result\":200}],\"banners\":{\"content\":[{\"jumpType\":0,\"jumpAddr\":null,\"picUrl\":\"xxx\"}],\"result\":200}}";
+            String defDataJson = "{\"banners\": {\"content\": [{\"jumpType\": 0,\"picUrl\": \"xxx\"}],\"result\": 200},\"menus\": {\"content\": [{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球比分\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球视频\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球指数\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球数据\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球资讯\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"篮球比分\"}],\"result\": 200},\"otherLists\": [{\"content\": {\"bodys\": [{\"date\": \"\",\"guestHalfScore\": 0,\"guestId\": 177,\"guestLogoUrl\": \"xxx\",\"guestScore\": 0,\"guestteam\": \"\",\"homeHalfScore\": 0,\"homeId\": 180,\"homeLogoUrl\": \"xxx\",\"homeScore\": 0,\"hometeam\": \"\",\"jumpType\": 2,\"raceColor\": \"#9933FF\",\"raceId\": \"1\",\"racename\": \"\",\"statusOrigin\": \"0\",\"thirdId\": \"307689\",\"time\": \"\"},{\"date\": \"\",\"guestHalfScore\": 0,\"guestId\": 6164,\"guestLogoUrl\": \"xxx\",\"guestScore\": 0,\"guestteam\": \"\",\"homeHalfScore\": 0,\"homeId\": 6162,\"homeLogoUrl\": \"xxx\",\"homeScore\": 0,\"hometeam\": \"\",\"jumpType\": 2,\"raceColor\": \"#000080\",\"raceId\": \"511\",\"racename\": \"\",\"statusOrigin\": \"0\",\"thirdId\": \"312127\",\"time\": \"\"}],\"labType\": 1},\"result\": 200},{\"content\": {\"bodys\": [{\"date\": \"\",\"jumpType\": 1,\"time\": \"\",\"title\": \"\"},{\"date\": \"\", \"jumpType\": 1,\"picUrl\": \"xxx\",\"time\": \"\",\"title\": \"\"}],\"labType\": 2},\"result\": 200}], \"result\": 200}";
             mHomePagerEntity = JSON.parseObject(defDataJson, HomePagerEntity.class);
 
             mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
@@ -526,19 +524,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 UiUtils.toast(this, getResources().getString(R.string.main_exit_text), 1000);
                 mExitTime = System.currentTimeMillis();
             } else {
-                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    File sdCardDir = Environment.getExternalStorageDirectory();//获取SDCard目录
-                    File sdFile = new File(sdCardDir, "OneScoreData.dat");
-                    try {
-                        FileOutputStream fos = new FileOutputStream(sdFile);
-                        ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(mHomePagerEntity);// 写入
-                        fos.close(); // 关闭输出流
-                    } catch (Exception e) {
-                        L.d("保存数据到本地失败：" + e.getMessage());
-                    }
-                }
-                System.exit(0);
+                System.exit(0);// 退出APP
             }
             return true;
         }
