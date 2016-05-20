@@ -37,7 +37,6 @@ public class VolleyContentFast {
     private static RequestQueue mQueue;
     public static String jsonData;// json数据
 
-
     /**
      * 初始化，在Application上初始化，只初始化一次赛
      *

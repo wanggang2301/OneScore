@@ -678,4 +678,13 @@
     <!--日期-->
     <string name="data_date_txt">2015-2016</string>
     <string name="data_date_txt1">2016-2017</string>
+
+
+    <!-- 登录注册 -->
+    <string name="register">注册</string>
+
+
+
+
+
 </resources>
