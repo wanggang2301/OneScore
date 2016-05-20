@@ -636,7 +636,9 @@
     <!-- 登录注册 begin-->
     <string name="my">我的</string>
     <string name="register">注册</string>
+    <string name="registering">正在注册...</string>
     <string name="login">登录</string>
+    <string name="logining">正在登录...</string>
     <string name="login_succ">登录成功</string>
     <string name="login_fail">登录失败</string>
     <string name="pwd_format">密码格式为6-16位字母数字下划线</string>
@@ -647,6 +649,7 @@
     <string name="verify_code">请输入验证码</string>
     <string name="verify_code_send">发送验证码</string>
     <string name="logout">退出登录</string>
+    <string name="logouting">正在注销...</string>
     <string name="logout_fail">注销失败</string>
     <string name="logout_succ">注销成功</string>
     <string name="resend">重发</string>

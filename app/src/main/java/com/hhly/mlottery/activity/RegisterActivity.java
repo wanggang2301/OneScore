@@ -1,7 +1,7 @@
 package com.hhly.mlottery.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
@@ -13,11 +13,9 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.account.SendSmsCode;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -41,8 +39,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private CountDown countDown;
     private static final int TIMEOUT = 59699;
     private static final int TIMEOUT_INTERVEL = 1000;
-    private SwipeRefreshLayout swiperefreshlayout;
-
+    private ProgressDialog progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +52,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void initView() {
 
-        swiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
-        swiperefreshlayout.setColorSchemeResources(R.color.bg_header);
-        swiperefreshlayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
-        swiperefreshlayout.setEnabled(false);
+        progressBar = new ProgressDialog(this);
+        progressBar.setMessage(getResources().getString(R.string.registering));
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
@@ -155,7 +150,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void register(String userName, String verifyCode, String passWord) {
 
         tv_register.setClickable(false);
-        swiperefreshlayout.setRefreshing(true);
+        progressBar.show();
 
         String url = BaseURLs.URL_REGISTER;
         Map<String, String> param = new HashMap<>();
@@ -170,7 +165,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onResponse(Register register) {
 
                 tv_register.setClickable(true);
-                swiperefreshlayout.setRefreshing(false);
+                progressBar.dismiss();
 
                 if (register != null&& register.getResult() == AccountResultCode.SUCC){
                     CommonUtils.saveRegisterInfo(register);
@@ -186,7 +181,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                swiperefreshlayout.setRefreshing(false);
+                progressBar.dismiss();
                 tv_register.setClickable(true);
                 L.e(TAG,"注册失败");
                 UiUtils.toast(RegisterActivity.this , R.string.register_fail);
