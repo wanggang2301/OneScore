@@ -9,26 +9,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballInformationActivity;
 import com.hhly.mlottery.adapter.FTRacePinnedHeaderExpandableAdapter;
-import com.hhly.mlottery.bean.footballsecond.LeagueRoundInfo;
+import com.hhly.mlottery.bean.footballDetails.LeagueRoundInfo;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.ChoiceWheelUtil;
-import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
 import com.umeng.analytics.MobclickAgent;
@@ -37,8 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * * @ClassName: OneScore
@@ -125,7 +115,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                     break;
                 case ROUND_NODATA:
                     //轮数暂没数据
-                    bottom_lay_round.setVisibility(View.VISIBLE);
+                    bottom_lay_round.setVisibility(View.GONE);
                    // bottom_lay_round.setVisibility(View.GONE);
                     wheeldata_fail.setVisibility(View.GONE);
 //                    mtv_agendafg_wheelcount.setText("暂无数据");
@@ -142,7 +132,9 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                     break;
                 case ROUND_SUCESS:
                     //轮数下载成功
-                    bottom_lay_round.setVisibility(View.VISIBLE);
+                    if(LeagueRoundBean_list!=null){
+                        bottom_lay_round.setVisibility(View.VISIBLE);
+                    }
                     wheeldata_fail.setVisibility(View.GONE);
                     if ("2".equals(leagueType)) {
                         mtv_agendafg_wheelcount.setText(LeagueRoundBean_list.get(mCurrentIndex).getRound());
@@ -234,7 +226,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     private TextView mBack_up;
     private TextView mGo_down;
 
-    private boolean isLoadDataed;
+    private boolean isLoadDataed=true;
     private LinearLayout mAgenda_left;
     private LinearLayout mAgenda_right;
     private TextView mReload_btn;
@@ -262,6 +254,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.agendafragment, null);
+
         //注册广播监听轮数对话框返回来的消息
         IntentFilter intentFilter = new IntentFilter("wheelcount");
         getActivity().registerReceiver(mBroadcastReceiver, intentFilter);
@@ -277,16 +270,15 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     //从网络获取轮数数据
     public void getLeagueRoundDataFromNet(String leagueId, String leagueType, String leagueDate) {
 
-  /*      if (isLoadDataed) {
+        if (!isLoadDataed) {
             return;
         }
 
-*/
         this.leagueId = leagueId;
         this.leagueType = leagueType;
         this.datas = leagueDate;
 
-        handle.sendEmptyMessage(ROUND_LOADING);//正在加载数据
+       // handle.sendEmptyMessage(ROUND_LOADING);//正在加载数据
 
         String url = BaseURLs.URL_FOOTBALL_LEAGUEROUND;
 
@@ -303,7 +295,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
 
                 //请求成功
                 if ("200".equals(json.getCode() + "")) {
-                    // isLoadDataed = true;
+                    isLoadDataed = false;
                     //没有数据
                     if (json == null) {
                         handle.sendEmptyMessage(ROUND_NODATA);//暂时没有数据
@@ -526,7 +518,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
             case R.id.agenda_right:
                 //无论item上是什么数据格式都可以实现
                 mCurrentIndex++;
-                if (mCurrentIndex <= LeagueRoundBean_list.size() - 1) {
+                if (LeagueRoundBean_list!=null &&mCurrentIndex <= LeagueRoundBean_list.size() - 1 ) {
                     mBack_up.setBackgroundResource(R.mipmap.inforgo);
                     //这里需要传入的轮次即为x+1 联赛id，赛季
                     if ("2".equals(leagueType)) {
@@ -539,14 +531,14 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
 
                     }
 
-                    if (mCurrentIndex == LeagueRoundBean_list.size() - 1) {
-                        mGo_down.setBackgroundResource(R.mipmap.back_up);
+                            if (mCurrentIndex == LeagueRoundBean_list.size() - 1) {
+                                mGo_down.setBackgroundResource(R.mipmap.back_up);
 
-                    } else {
+                            } else {
 
-                        mGo_down.setBackgroundResource(R.mipmap.inforback);
+                                mGo_down.setBackgroundResource(R.mipmap.inforback);
 
-                    }
+                            }
 
                     // getLeagueRaceDataFromNet(LeagueRoundBean_list.get(mCurrentIndex).getRound(), leagueId, datas, BaseURLs.URL_FOOTBALL_LEAGUERACE);
                 } else {

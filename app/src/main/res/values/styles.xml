@@ -13,24 +13,22 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.TranslucentNavigation">
-    </style>
+    <style name="AppTheme.NoActionBar.TranslucentNavigation"></style>
 
     <style name="AppTheme.BlackStatusBar">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.BlackStatusBar.ColorGreen">
-    </style>
+    <style name="AppTheme.BlackStatusBar.ColorGreen"></style>
 
-    <style name="Widget"/>
+    <style name="Widget" />
 
-    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse"/>
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse" />
 
-    <style name="Widget.Light"/>
+    <style name="Widget.Light" />
 
-    <style name="Widget.Light.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid"/>
+    <style name="Widget.Light.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid" />
 
     <style name="Widget.ActionBar.Transparent">
         <item name="android:background">@android:color/transparent</item>
@@ -39,8 +37,6 @@
     <style name="Widget.Light.ActionBar.Transparent">
         <item name="android:background">@android:color/transparent</item>
     </style>
-
-
 
 
     <!-- 侧滑栏布局图片样式 -->
@@ -425,7 +421,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
-        <!--<item name="android:windowIsFloating">true</item> 这个设置了后大分辨率手机不会铺满屏幕-->
+        <!--<item_share name="android:windowIsFloating">true</item_share> 这个设置了后大分辨率手机不会铺满屏幕-->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@style/AnimBottom</item>
@@ -448,10 +444,9 @@
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.AppBarOverlay"
-           parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
     <!--足球比分-->
@@ -468,6 +463,13 @@
 
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
+    </style>
+
+
+    <!--分享-->
+    <style name="popuStyle">
+        <item name="android:windowEnterAnimation">@anim/popup_anim_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_anim_out</item>
     </style>
 
 

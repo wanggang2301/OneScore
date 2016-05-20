@@ -2,13 +2,12 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.InforListData;
+import com.hhly.mlottery.bean.footballDetails.InforListData;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -31,19 +30,19 @@ public class InformationDataAdapter extends CommonAdapter<InforListData.LeagueLi
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
     private final DisplayImageOptions options;
     private ImageView mTeam_icon;
-
+    private int layoutId;
     public InformationDataAdapter(Context context, List<InforListData.LeagueListBean> datas, int layoutId) {
         super(context, datas, layoutId);
         mContext = context;
         this.mDatas=datas;
-
+        this.layoutId=layoutId;
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.football_default)   //默认图片
-                .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .showImageOnLoading(R.mipmap.live_default)   //默认图片
+                .showImageForEmptyUri(R.mipmap.live_default)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.live_default)// 加载失败显示的图片
                 .resetViewBeforeLoading(true)
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
@@ -59,9 +58,8 @@ public class InformationDataAdapter extends CommonAdapter<InforListData.LeagueLi
         this.mDatas = datas;
     }
 
+
     //获取子布局控件
-
-
     @Override
     public void convert(ViewHolder holder, InforListData.LeagueListBean listDatas) {
 

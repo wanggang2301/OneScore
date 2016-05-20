@@ -13,17 +13,6 @@
         <!--android:orientation="horizontal"-->
         <!--android:paddingBottom="@dimen/basket_details_ball6"-->
         <!--android:paddingTop="@dimen/basket_details_ball6">-->
-
-        <TextView
-            android:id="@+id/basket_team_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="NBA"
-            android:textColor="@color/black_details_textcolor"
-            android:textSize="@dimen/text_size_11" />
-
         <TextView
             android:id="@+id/basket_data"
             android:layout_width="0dp"
@@ -35,12 +24,24 @@
             android:textSize="@dimen/text_size_11" />
 
         <TextView
+            android:id="@+id/basket_team_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="NBA"
+            android:textColor="@color/black_details_textcolor"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_11" />
+
+        <TextView
             android:id="@+id/basket_guest_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:gravity="center"
             android:text="老鹰"
+            android:singleLine="true"
             android:textColor="@color/black_details_textcolor"
             android:textSize="@dimen/text_size_11" />
 
@@ -48,10 +49,11 @@
             android:id="@+id/basket_home_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:gravity="center"
             android:text="鹈鹕"
             android:textColor="@color/black_details_textcolor"
+            android:singleLine="true"
             android:textSize="@dimen/text_size_11" />
 
         <TextView

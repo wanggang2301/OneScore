@@ -9,13 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballsecond.MatchTextLiveBean;
+import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.util.StadiumUtils;
 
 import java.util.List;
 
 /**
- * Created by asus1 on 1215/12/25.
+ * @author wang gang
+ * @date 2015/12/25 11:02
+ * @des 文字直播Adapter
  */
 public class LiveTextAdapter extends BaseAdapter {
 

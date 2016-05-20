@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="@dimen/y254"
               android:orientation="vertical"
               tools:context="com.example.new_2demo.MainActivity">
 
@@ -178,7 +178,8 @@
             android:layout_width="@dimen/x280"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
                 <TextView
                     android:id="@+id/basket_score"
                     android:layout_width="wrap_content"
@@ -219,16 +220,17 @@
                 android:text="(100:100)"
                 android:textColor="#0085E1"
                 android:textSize="@dimen/text_size_12"
-                android:layout_below="@+id/basket_score"
+                android:layout_below="@id/basket_score"
                 android:layout_centerHorizontal="true"/>
 
             <LinearLayout
+                android:id="@+id/basket_details_odds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/x6"
-                android:layout_below="@+id/basket_half_score"
+                android:layout_below="@id/basket_half_score"
                 android:layout_centerHorizontal="true">
 
                 <TextView

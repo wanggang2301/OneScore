@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 103TJL on 2016/4/11.
@@ -21,18 +19,15 @@ import java.util.Map;
  */
 public class CpiCompanyAdapter extends BaseAdapter {
 
-    private List<Map<String, String>> cpiCompanyList;
-
+    //    private List<Map<String, String>> cpiCompanyList;
+    private List<NewOddsInfo.CompanyBean> mCompanyBean;
     private Context context;
-    private int defItem;//当前的item的position(用于点击item设置item背景颜色)
     private LayoutInflater mInflater;
-    private ListView mListView;
 
-    public CpiCompanyAdapter(Context context, List<Map<String, String>> cpiCompanyList, ListView mListView) {
+    public CpiCompanyAdapter(Context context, List<NewOddsInfo.CompanyBean> mCompanyBean) {
         super();
         this.context = context;
-        this.cpiCompanyList = cpiCompanyList;
-        this.mListView = mListView;
+        this.mCompanyBean = mCompanyBean;
         this.mInflater = LayoutInflater.from(context);
 //        this.mCheckedTextView = mCheckedTextView;
     }
@@ -40,13 +35,13 @@ public class CpiCompanyAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return cpiCompanyList.size();
+        return mCompanyBean.size();
     }
 
     @Override
     public Object getItem(int position) {
         // TODO Auto-generated method stub
-        return cpiCompanyList.get(position);
+        return mCompanyBean.get(position);
     }
 
     @Override
@@ -56,10 +51,11 @@ public class CpiCompanyAdapter extends BaseAdapter {
     }
 
     /**
-     * 根据选中的position更改item背景颜色
+     * 根据选中的position选中
      */
-//    public void setDefSelect( int position) {
-//        this.defItem = position;
+//    public void setDefSelect(List<Integer> defItemList, boolean isTrue) {
+//        this.defItemList = defItemList;
+//        this.isTrue = isTrue;
 //        notifyDataSetChanged();
 //    }
     @Override
@@ -72,25 +68,25 @@ public class CpiCompanyAdapter extends BaseAdapter {
         } else {
             item = (ListViewItem) convertView.getTag();
         }
-        item.checkedTextView.setText(cpiCompanyList.get(position).get("date"));
-        //默认皇冠和浩博
-        if (position == 0) {
-            mListView.setItemChecked(position, true);
-            item.checkedTextView.setChecked(true);
+        item.checkedTextView.setText(mCompanyBean.get(position).getComName());
+        item.checkedTextView.setChecked(mCompanyBean.get(position).isChecked());
+        //如果checkedTextView有选中的就给设置选中的背景
+        if (item.checkedTextView.isChecked()) {
+            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select_true));
+        } else {
+            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select));
         }
-        if (position == 1) {
-            mListView.setItemChecked(position, true);
-            item.checkedTextView.setChecked(true);
-        }
-
         return convertView;
     }
 
     private static class ListViewItem {
         public CheckedTextView checkedTextView;
+        //是否选中的图片
+        private ImageView cpi_img_checked;
 
         public ListViewItem(View v) {
             checkedTextView = (CheckedTextView) v.findViewById(R.id.item_checkedTextView);
+            cpi_img_checked = (ImageView) v.findViewById(R.id.item_img_checked);
         }
     }
 }

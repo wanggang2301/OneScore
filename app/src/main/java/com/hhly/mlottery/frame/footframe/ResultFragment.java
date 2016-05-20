@@ -49,7 +49,6 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -141,6 +140,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     public static EventBus resultEventBus;
     private static final String FRAGMENT_INDEX = "fragment_index";
 
+    private static int currentDatePosition = 0;
+
     private int mCurIndex = -1;
     /**
      * 标志位，标志已经初始化完成
@@ -150,7 +151,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
      * 是否已被加载过一次，第二次就不再去请求数据了
      */
     private boolean mHasLoadedOnce;
-   private   LinearLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
+
+    private String teamLogoPre;
+
+    private String teamLogoSuff;
 
 
     public static ResultFragment newInstance(String param1, String param2) {
@@ -201,9 +206,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                     break;
                 case VIEW_STATUS_NET_ERROR:
-
                     if (isLoadedData) {
-                        Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        if (mContext != null) {
+                            Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         mLoadingLayout.setVisibility(View.GONE);
                         //mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -307,7 +313,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         mRecyclerView.setLayoutManager(layoutManager);
 
 
-
         // 实现 监听 （实例化） 关注监听
         mFocusMatchClickListener = new FocusMatchClickListener() {// 关注按钮事件
             @Override
@@ -345,7 +350,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                     view.setTag(false);
                 }
-               ((ScoresFragment) getParentFragment()).focusCallback();
+                ((ScoresFragment) getParentFragment()).focusCallback();
             }
         };
 
@@ -381,7 +386,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 TextView titleView = (TextView) view.findViewById(R.id.titleView);
                 titleView.setText(R.string.tip);
                 ListView listview = (ListView) view.findViewById(R.id.listdate);
-                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate);
+
+                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate, currentDatePosition);
+
                 listview.setAdapter(dateAdapter);
                 final AlertDialog mAlertDialog = mBuilder.create();
                 listview.setOnItemClickListener(new OnItemClickListener() {
@@ -395,7 +402,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         historyInitData(position);
                         // 关闭 dialog弹窗
                         mAlertDialog.dismiss();
-                        // 记录点击的 item 位置
+                        // 记录点击的 item_share 位置
                         mItems = position;
                     }
                 });
@@ -416,7 +423,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 TextView titleView = (TextView) view.findViewById(R.id.titleView);
                 titleView.setText(R.string.tip);
                 ListView listview = (ListView) view.findViewById(R.id.listdate);
-                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate);
+                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate, currentDatePosition);
                 listview.setAdapter(dateAdapter);
                 final AlertDialog mAlertDialog = mBuilder.create();
                 listview.setOnItemClickListener(new OnItemClickListener() {
@@ -430,7 +437,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         historyInitData(position);
                         // 关闭 dialog弹窗
                         mAlertDialog.dismiss();
-                        // 记录点击的 item 位置
+                        // 记录点击的 item_share 位置
                         mItems = position;
                         // System.out.println("position=========="+position);
                     }
@@ -494,6 +501,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                 //当前日期
                 mCurrentDate = json.getCurrent().getDate();
+                currentDatePosition = 0;    //当前日期
+
+
+                teamLogoPre = json.getTeamLogoPre();
+                teamLogoSuff = json.getTeamLogoSuff();
 
 
                 /**
@@ -584,7 +596,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 // }
 
 
-                mAdapter = new ResultMultiAdapter(mContext, mMatchs);
+                mAdapter = new ResultMultiAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                 //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                 //  mAdapter.setSchfocusClickListener(mSchfocusClickListener);
 
@@ -599,11 +611,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         String thirdId = data;
                         Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                         intent.putExtra("thirdId", thirdId);
-                        intent.putExtra("currentFragmentId",1);
+                        intent.putExtra("currentFragmentId", 1);
                         getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                     }
                 });
-
 
 
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
@@ -723,7 +734,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
      *
      * @param position ：传入所选日期的 Item
      */
-    public void historyInitData(int position) {
+    public void historyInitData(final int position) {
 
         // 获得 倒叙日期
         final String mDatas[] = new String[7];
@@ -798,6 +809,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 }
                 updateAdapter();
+
+                currentDatePosition = position;
                 // mListView.setSelection(0);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -807,7 +820,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             }
         }, ResultMatch.class);
     }
-
 
 
     @Override
@@ -820,11 +832,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         updateAdapter();
-        if(hidden){
-            MobclickAgent.onPageEnd("ResultFragment");
-        }else{
-            MobclickAgent.onPageStart("ResultFragment");
-        }
     }
 
     @Override

@@ -90,7 +90,7 @@ public abstract class CacheFragmentStatePagerAdapter extends FragmentStatePagerA
      * <p/>
      * {@inheritDoc}
      *
-     * @param position Position of the item in the adapter.
+     * @param position Position of the item_share in the adapter.
      * @return Fragment instance.
      */
     @Override
@@ -110,9 +110,9 @@ public abstract class CacheFragmentStatePagerAdapter extends FragmentStatePagerA
     }
 
     /**
-     * Get the item at the specified position in the adapter.
+     * Get the item_share at the specified position in the adapter.
      *
-     * @param position Position of the item in the adapter.
+     * @param position Position of the item_share in the adapter.
      * @return Fragment instance.
      */
     public Fragment getItemAt(int position) {
@@ -123,7 +123,7 @@ public abstract class CacheFragmentStatePagerAdapter extends FragmentStatePagerA
      * Create a new Fragment instance.
      * This is called inside {@link #getItem(int)}.
      *
-     * @param position Position of the item in the adapter.
+     * @param position Position of the item_share in the adapter.
      * @return Fragment instance.
      */
     protected abstract Fragment createItem(int position);
@@ -131,7 +131,7 @@ public abstract class CacheFragmentStatePagerAdapter extends FragmentStatePagerA
     /**
      * Create an index string for caching Fragment pages.
      *
-     * @param index Index of the item in the adapter.
+     * @param index Index of the item_share in the adapter.
      * @return Key string for caching Fragment pages.
      */
     protected String createCacheIndex(int index) {
@@ -141,7 +141,7 @@ public abstract class CacheFragmentStatePagerAdapter extends FragmentStatePagerA
     /**
      * Create a key string for caching Fragment pages.
      *
-     * @param position Position of the item in the adapter.
+     * @param position Position of the item_share in the adapter.
      * @return Key string for caching Fragment pages.
      */
     protected String createCacheKey(int position) {

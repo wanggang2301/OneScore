@@ -10,9 +10,18 @@ import java.util.List;
 public class HomePagerEntity implements Serializable {
 
     private int result;
+    private String isAudit;// 版本开关控制
     private HomeMenusEntity menus;
     private HomeBannersEntity banners;
     private List<HomeOtherListsEntity> otherLists;
+
+    public String getIsAudit() {
+        return isAudit;
+    }
+
+    public void setIsAudit(String isAudit) {
+        this.isAudit = isAudit;
+    }
 
     public int getResult() {
         return result;

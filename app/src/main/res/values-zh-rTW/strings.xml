@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--分享-->
+    <string name="errcode_success">發送成功</string>
+    <string name="errcode_cancel">發送取消</string>
+    <string name="errcode_deny">發送被拒絕</string>
+    <string name="errcode_unknown">發送返回</string>
+    <string name="webchat">微信</string>
+    <string name="friends">朋友圈</string>
+    <string name="qq">QQ</string>
+    <string name="qzone">空間</string>
+    <string name="sina">新浪</string>
+    <string name="copy">複製鏈接</string>
+    <string name="share_cancel">取消</string>
+    <string name="share_summary">壹比分,更新了比賽情報</string>
+    <string name="share_to_qq_app_name">壹比分</string>
+    <string name="share_copy">複製鏈接成功</string>
+    <string name="share_from">来自壹比分:</string>
+    <string name="share_uninstall_webchat">您還未安裝微信客戶端</string>
+    <string name="weibosdk_demo_not_support_api_hint">您還未安裝新浪微博客戶端</string>
+    <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
+    <string name="share_recommend">推薦</string>
+    <string name="share_summary_default">壹比分,專業的足球比分直播平台</string>
+
+
     <!--指数-->
     <string name="odd_plate_rb_txt">亞盤</string>
     <string name="odd_op_rb_txt">歐賠</string>
@@ -63,7 +87,7 @@
     <string name="game_time">(时间)</string>
     <!--首发阵容 End-->
     <!--2期end-->
-    <string name="app_name">一比分</string>
+    <string name="app_name">壹比分</string>
     <string name="menu_name">菜單</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open drawer</string>
@@ -125,16 +149,16 @@
     <string name="pull_to_refresh_pull_label">向下拉動可以刷新</string>
     <string name="pull_to_refresh_release_label">鬆開可以刷新</string>
     <string name="pull_to_refresh_refreshing_label">加載中&#8230;</string>
-    
-       <!-- 异常处理 -->
-     <string name="exp_net_status_txt">您當前的網絡不給力</string>
-     <string name="exp__check_txt">請檢查后</string>
-     <string name="exp_refresh_txt">刷新</string>
-    
-    
+
+    <!-- 异常处理 -->
+    <string name="exp_net_status_txt">您當前的網絡不給力</string>
+    <string name="exp__check_txt">請檢查后</string>
+    <string name="exp_refresh_txt">刷新</string>
+
+
     <string name="no_data_txt">沒有數據！</string>
     <string name="data_parsing_exp_txt">數據解析異常！</string>
-  
+
     <string name="reload_txt">重新加載</string>
 
     <!-- 即时 -->
@@ -144,7 +168,7 @@
     <string name="immediate_status_point">點</string>
     <string name="immediate_status_midfield">中場</string>
     <string name="immediate_status_entertained">封</string>
-    
+
     <string name="immediate_status_cancel">取消</string>
     <string name="immediate_status_hold">待定</string>
     <string name="immediate_status_cut">腰斬</string>
@@ -154,7 +178,7 @@
 
     <string name="favourite">關注</string>
     <string name="cancel_favourite">取消關注</string>
-    
+
     <!-- 足球筛选 -->
     <string name="filtrate_match_top">足球篩選</string>
     <string name="filtrate_match_focal">焦點</string>
@@ -186,8 +210,8 @@
     <string name="about_service_txt">服務號：win13322</string>
     <string name="about_cus_service_txt">客    服</string>
     <string name="about_cus_number_txt"> 400-6776-550</string>
-    
-    
+
+
     <string name="about_io_exp">IO異常</string>
     <string name="about_service_exp">服務器異常</string>
     <string name="about_notice">提示</string>
@@ -332,7 +356,7 @@
     <string name="number_code_desc_ah_ks">每天80期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_js_ks">每天82期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_gx_ks">每天78期，10分鐘一期，9:30-22:30</string>
-    
+
     <string name="number_7">週日</string>
     <string name="number_1">週一</string>
     <string name="number_2">週二</string>
@@ -340,16 +364,16 @@
     <string name="number_4">週四</string>
     <string name="number_5">週五</string>
     <string name="number_6">週六</string>
-        <!-- 代码中的添加 string -->
+    <!-- 代码中的添加 string -->
     <string name="number_code_di">第</string>
     <string name="number_code_qi">期</string>
-      <!-- 异常处理 -->
-     <string name="number_exp_net_status_txt">您當前的網絡不給力</string>
-     <string name="number_exp__check_txt">請檢查后</string>
-     <string name="number_exp_refresh_txt">刷新</string>
-     
+    <!-- 异常处理 -->
+    <string name="number_exp_net_status_txt">您當前的網絡不給力</string>
+    <string name="number_exp__check_txt">請檢查后</string>
+    <string name="number_exp_refresh_txt">刷新</string>
+
     <!-- 彩票End -->
-    
+
     <string name="number_xq7">週日</string>
     <string name="number_xq1">週一</string>
     <string name="number_xq2">週二</string>
@@ -366,8 +390,6 @@
     <string name="number_xinqi6">週六</string>
 
 
-   
-   
     <!-- 设置 -->
     <string name="set_sound_txt">聲音</string>
     <string name="set_sound1_txt">聲音1</string>
@@ -409,7 +431,7 @@
     <string name="fragme_home_jiaqiu_text">加時</string>
     <string name="fragme_home_dianqiu_text">點球</string>
     <string name="fragme_home_fengpan_text">封</string>
-   <!-- 退出程序 -->
+    <!-- 退出程序 -->
     <string name="main_exit_text">再按一次退出程序</string>
     <!-- 提示复制成功 -->
     <string name="about_copy_success">文本已複制</string>
@@ -492,7 +514,6 @@
     <string name="basket_postpone">推遲</string>
 
 
-
     <string name="basket_yesterday">昨日</string>
     <string name="basket_today">今日</string>
     <string name="basket_monday">明日</string>
@@ -537,7 +558,7 @@
     <string name="basket_analyze_sides">雙方戰績</string>
     <string name="basket_analyze_history">歷史交鋒</string>
     <string name="basket_analyze_recent">近期戰績</string>
-    <string name="basket_analyze_fruture">未來三場</string>
+    <string name="basket_analyze_fruture">未來比賽</string>
     <string name="basket_analyze_more">更多戰績 >></string>
     <string name="basket_analyze_points_ranking">積分排名</string>
     <string name="basket_analyze_rank_team">排名/球隊</string>
@@ -566,9 +587,28 @@
     <string name="basket_analyze_defult_text">--</string>
     <string name="basket_analyze_win">勝</string>
     <string name="basket_analyze_lost">負</string>
-    <string name="basket_analyze_recently">最近6場，</string>
+    <string name="basket_analyze_recently">最近</string>
+    <string name="basket_analyze_recently2">場，</string>
     <string name="basket_analyze_home_field">,主場</string>
     <string name="basket_company">公司</string>
+    <string name="basket_analyze_day">天</string>
+    <string name="basket_nodata">暫無數據</string>
+    <string name="basket_six_average_win_score">6場平均得分</string>
+    <string name="basket_six_average_lost_score">6場平均失分</string>
+
+    <string name="basket_handicap_big">大</string>
+    <string name="basket_handicap_small">小</string>
+    <string name="basket_handicap_zou">走</string>
+
+    <string name="basket_analyze_dialog_site">場地</string>
+    <string name="basket_analyze_dialog_num">場數</string>
+    <string name="basket_analyze_dialog_allgame">全部</string>
+    <string name="basket_analyze_dialog_samegame">相同主客場</string>
+    <string name="basket_analyze_dialog_six">6場</string>
+    <string name="basket_analyze_dialog_ten">10場</string>
+    <string name="basket_analyze_dialog_fifteen">15場</string>
+    <string name="basket_analyze_dialog_cancle">取消</string>
+    <string name="basket_analyze_dialog_ok">確定</string>
 
     <string name="basket_odds_euro_details">歐賠詳情</string>
     <string name="basket_odds_asiaLet_details">亞盤詳情</string>
@@ -595,7 +635,16 @@
     <!--WebView H5-->
     <string name="webview_check_info">查看比賽詳細數據</string>
     <string name="user_feedback">用戶反饋</string>
-
+    <!--资讯评论-->
+    <string name="user_name">遊客</string>
+    <string name="warn_nullcontent">請先輸入內容</string>
+    <string name="warn_submitfail">發送失敗，請重試</string>
+    <string name="hint_content">我來評論</string>
+    <string name="comment_send">發送</string>
+    <string name="comment_title">全部留言</string>
+    <string name="comment_contentnull">暫無評論內容</string>
+    <string name="toatalvisiable">顯示全部</string>
+    <!-- -->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">請輸入留言內容</string>
     <string name="feedback_toast_thx">多謝反饋！</string>

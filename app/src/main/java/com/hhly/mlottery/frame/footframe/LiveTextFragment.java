@@ -19,9 +19,10 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.LiveTextAdapter;
-import com.hhly.mlottery.bean.footballsecond.MatchTextLiveBean;
-import com.hhly.mlottery.bean.footballsecond.PreLiveText;
+import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
+import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -220,24 +221,24 @@ public class LiveTextFragment extends Fragment implements AbsListView.OnScrollLi
                     // 后台没请求到数据
                     mHandler.sendEmptyMessage(NODATA);
                 }
-                isSucessedLoad=true;
+                isSucessedLoad = true;
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mHandler.sendEmptyMessage(ERROR);// 访问失败
-                isSucessedLoad=true;
+                isSucessedLoad = true;
             }
         }, PreLiveText.class);
     }
 
     public LiveTextAdapter getTimeAdapter() {
 
-        if (list.size() > 20) {
+      /*  if (list.size() > 20) {
             moreView.setVisibility(View.VISIBLE);
         } else {
             moreView.setVisibility(View.GONE);
-        }
+        }*/
 
         return timeAdp;
     }
@@ -255,17 +256,5 @@ public class LiveTextFragment extends Fragment implements AbsListView.OnScrollLi
         }
 
         return list;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("LiveTextFragment");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("LiveTextFragment");
     }
 }

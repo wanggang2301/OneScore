@@ -21,7 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.CounselFragmentLvAdapter;
 import com.hhly.mlottery.adapter.CounselPageAdapter;
-import com.hhly.mlottery.bean.footballsecond.CounselBean;
+import com.hhly.mlottery.bean.footballDetails.CounselBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -30,7 +30,6 @@ import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PullUpRefreshListView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,7 +100,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         if (getUserVisibleHint() && mInfos.size() == 0) {
             onVisible();
         }
-        return mView;
+      return mView;
     }
 
     private void initView() {
@@ -131,9 +130,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
         } else {//非第一个碎片
             mAdapter = new CounselFragmentLvAdapter(isleft, mInfos, getActivity());
-            //上拉加载更多
-            pullUpLoad();
         }
+        //上拉加载更多
+        pullUpLoad();
         mListView.setAdapter(mAdapter);
     }
 
@@ -258,6 +257,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
+        //下拉刷新后当前页数重新为1，不然先上拉加载到没有数据  再回去下拉刷新  然后再上拉就没有数据了，其实是有的
+        mCurrentPager=1;
+        mLoadMore.setText(R.string.foot_loadmore);
         if (index == 0) {
             //向首页的接口发起请求
             mHandler.sendEmptyMessage(NEWS_SUCESS);
@@ -308,8 +310,13 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                             mLoadMore.setText(R.string.foot_nomoredata);
 
                         } else {
-                            mInfos.addAll(json.getInfoIndex().getInfos());
-                            mAdapter.setInfosList(mInfos);
+                            if (index==0){
+                                mInfosList.addAll(json.getInfoIndex().getInfos());
+                                mAdapter.setInfosList(mInfosList);
+                            }else {
+                                mInfos.addAll(json.getInfoIndex().getInfos());
+                                mAdapter.setInfosList(mInfos);
+                            }
                             mAdapter.notifyDataSetChanged();
                             mLoadMore.setText(R.string.foot_loadmore);
                             mHandler.sendEmptyMessage(NEWS_SUCESS);//加载数据成功
@@ -357,6 +364,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(mContext, WebActivity.class);
         String jumpurl;//跳转url
+        String title;//标题
+        String subtitle;//副标题
+        String imageurl;//图片url
         boolean isRelateMatch;//是否关联比赛
         String ThirdId;//联赛id
         int type;//联赛id类型  1篮球 2足球
@@ -364,11 +374,19 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
             if (mAdsList!=null&&mAdsList.size()!=0) {//有轮播图
                 //因为头部下标是0，item下标变成从1开始，所以要减去1
                 jumpurl = mInfosList.get(position - 1).getInfoUrl();
+                title = mInfosList.get(position - 1).getTitle();
+                subtitle = mInfosList.get(position - 1).getSubTitle();
+                imageurl = mInfosList.get(position - 1).getPicUrl();
+
                 ThirdId = mInfosList.get(position - 1).getThirdId();
                 isRelateMatch = mInfosList.get(position - 1).isRelateMatch();
                 type = mInfosList.get(position - 1).getType();
             }else {//没有轮播图
                 jumpurl = mInfosList.get(position ).getInfoUrl();
+                title = mInfosList.get(position ).getTitle();
+                subtitle = mInfosList.get(position ).getSubTitle();
+                imageurl = mInfosList.get(position ).getPicUrl();
+
                 ThirdId = mInfosList.get(position ).getThirdId();
                 isRelateMatch = mInfosList.get(position ).isRelateMatch();
                 type = mInfosList.get(position ).getType();
@@ -377,6 +395,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
         } else {
             jumpurl = mInfos.get(position).getInfoUrl();
+            title = mInfos.get(position).getTitle();
+            subtitle = mInfos.get(position).getSubTitle();
+            imageurl = mInfos.get(position).getPicUrl();
             ThirdId = mInfos.get(position).getThirdId();
             isRelateMatch = mInfos.get(position).isRelateMatch();
             type = mInfos.get(position).getType();
@@ -387,6 +408,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         }
         intent.putExtra(INTENT_PARAM_TITLE, mHeadName);//头部名称
         intent.putExtra(INTENT_PARAM_JUMPURL, jumpurl);
+        intent.putExtra("title", title);
+        intent.putExtra("subtitle", subtitle);
+        intent.putExtra("imageurl", imageurl);
         mContext.startActivity(intent);
     }
 
@@ -484,13 +508,6 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         if (!isCreated) {
             return;
         }
-
-        if (isVisibleToUser) {
-            MobclickAgent.onPageStart("CounselChildFragment" + index);
-        }else {
-            MobclickAgent.onPageEnd("CounselChildFragment" + index);
-        }
-
     }
 
     /**
@@ -526,6 +543,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
     public void setInfosList(List<CounselBean.InfoIndexBean.InfosBean> infosList) {
         this.mInfosList = infosList;
+
     }
 
     public void setAdsList(List<CounselBean.InfoIndexBean.AdsBean> adsList) {

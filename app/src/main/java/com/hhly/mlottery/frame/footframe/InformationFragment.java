@@ -22,8 +22,9 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballInformationActivity;
 import com.hhly.mlottery.adapter.InformationDataAdapter;
-import com.hhly.mlottery.bean.footballsecond.InforListData;
+import com.hhly.mlottery.bean.footballDetails.InforListData;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
@@ -122,6 +123,7 @@ public class InformationFragment extends Fragment implements OnClickListener, Sw
             }
         }
     };
+    private LinearLayout mList_header;
 
 
     @Override
@@ -144,15 +146,15 @@ public class InformationFragment extends Fragment implements OnClickListener, Sw
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                 position=position-1;  //这里是因为listview添加headerView   so...postion算上headerView的!
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
                     lastClickTime = currentTime;
-
                     Intent intent = new Intent(getActivity(), FootballInformationActivity.class);
                     intent.putExtra("lid", mAllLeagu.get(position).getLid() + "");//传递联赛ID
                     intent.putExtra("leagueType", mAllLeagu.get(position).getType() + "");
                     startActivity(intent);
-                    MobclickAgent.onEvent(mContext,"Football_InformationFragment");
+                    MobclickAgent.onEvent(mContext, "Football_InformationFragment");
                 }
             }
         });
@@ -187,7 +189,11 @@ public class InformationFragment extends Fragment implements OnClickListener, Sw
 
                     //设置适配器
                     mInforDataAdapter = new InformationDataAdapter(mContext, mAllLeagu, R.layout.football_infor_distribution);
+                    if (!isLoadedData) {
+                        mListview.addHeaderView(mList_header,null,false);
+                    }
                     mListview.setAdapter(mInforDataAdapter);
+
                 }
                 isLoadedData = true;
                 //网络请求成功
@@ -206,9 +212,12 @@ public class InformationFragment extends Fragment implements OnClickListener, Sw
     }
 
     private void initView() {
+
         //
+
         //获取listview控件
         mListview = (ListView) view.findViewById(R.id.infor_listview);
+        mList_header = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.football_infor_listheader,mListview,false);
         //获取返回控件
         mImg_back = (ImageView) view.findViewById(R.id.infor_img_back);
         mImg_back.setOnClickListener(this);
@@ -260,6 +269,17 @@ public class InformationFragment extends Fragment implements OnClickListener, Sw
         }, 500);
 
     }
+    private boolean isHidden;// 当前Fragment是否显示
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isHidden = hidden;
+        if (hidden) {
+            MobclickAgent.onPageEnd("InformationFragment");
+        } else {
+            MobclickAgent.onPageStart("InformationFragment");
+        }
+    }
 
     @Override
     public void onResume() {
@@ -270,7 +290,9 @@ public class InformationFragment extends Fragment implements OnClickListener, Sw
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("InformationFragment");
+        if(!isHidden){
+            MobclickAgent.onPageEnd("InformationFragment");
+        }
     }
 }
 

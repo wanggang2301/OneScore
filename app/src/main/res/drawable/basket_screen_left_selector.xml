@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
 
-    <!--<item android:drawable="@color/tabtitle" android:state_checked="true" />-->
-    <!--<item android:drawable="@color/score_color_white"/>-->
+    <!--<item_share android:drawable="@color/tabtitle" android:state_checked="true" />-->
+    <!--<item_share android:drawable="@color/score_color_white"/>-->
 
 <!--</selector>-->
 

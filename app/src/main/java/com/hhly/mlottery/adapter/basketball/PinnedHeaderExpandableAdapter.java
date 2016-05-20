@@ -3,6 +3,7 @@ package com.hhly.mlottery.adapter.basketball;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,10 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -31,6 +34,10 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 篮球列表的Adapter
+ * Created by yixq on 2015/12/30.
+ */
 public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements HeaderAdapter {
 
     private List<String> groupDataList;//父类view 数据
@@ -75,7 +82,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_default)   //默认图片
+                .showImageOnLoading(R.mipmap.basket_default)
                 .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
                 .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
                 .resetViewBeforeLoading(true)
@@ -163,6 +170,16 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.basket_home_all_score = (TextView) convertView.findViewById(R.id.basket_home_all_score);
 
             holder.basket_half_score = (TextView) convertView.findViewById(R.id.basket_half_score);
+
+            /**
+             * 适配4.1系统
+             */
+            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+            if (currentapiVersion == 16) {
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0,20,0,20);
+                holder.basket_half_score.setLayoutParams(params);
+            }
             holder.basket_leftOdds = (TextView) convertView.findViewById(R.id.basket_leftOdds);
             holder.basket_rightOdds = (TextView) convertView.findViewById(R.id.basket_rightOdds);
             holder.basket_handicap = (TextView) convertView.findViewById(R.id.basket_handicap);
@@ -1337,7 +1354,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         float cY = scoreView.getHeight() / 2.0f;
 
         rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
-        if (rotateAnim != null) {
             rotateAnim.setInterpolatedTimeListener(new MyRotateAnimation.InterpolatedTimeListener() {
                 @Override
                 public void interpolatedTime(float interpolatedTime) {
@@ -1350,8 +1366,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             });
             rotateAnim.setFillAfter(true);
             scoreView.startAnimation(rotateAnim);
-        }
-
 
 //        //创建动画 （位移动画--translate）
 //        final Animation out = AnimationUtils.loadAnimation(mContext, R.anim.basket_out_to_up);//飞出

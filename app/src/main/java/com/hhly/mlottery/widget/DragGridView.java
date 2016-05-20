@@ -99,7 +99,7 @@ public class DragGridView extends GridView{
 	private static final int speed = 80;
 	
 	/**
-	 * item�����仯�ص��Ľӿ�
+	 * item_share�����仯�ص��Ľӿ�
 	 */
 	private OnChanageListener onChanageListener;
 	
@@ -133,7 +133,7 @@ public class DragGridView extends GridView{
 				isDrag = true; //���ÿ�����ק
 				mVibrator.vibrate(50); //��һ��
 				
-				mStartDragItemView.setVisibility(View.INVISIBLE);//���ظ�item
+				mStartDragItemView.setVisibility(View.INVISIBLE);//���ظ�item_share
 			
 				//�������ǰ��µĵ���ʾitem����
 				createDragImage(mDragBitmap, mDownX, mDownY);
@@ -328,7 +328,7 @@ public class DragGridView extends GridView{
 			}
 			
 			//�����ǵ���ָ����GridView���ϻ������¹�����ƫ������ʱ�򣬿���������ָû���ƶ�������DragGridView���Զ��Ĺ���
-			//�������������������onSwapItem()����������item
+			//�������������������onSwapItem()����������item_share
 			onSwapItem(moveX, moveY);
 			
 			View view = getChildAt(mDragPosition - getFirstVisiblePosition());

@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:paddingTop="@dimen/y150"
+    android:paddingTop="@dimen/y180"
     >
 
     <ImageView
