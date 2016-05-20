@@ -1,4 +1,4 @@
-package com.hhly.mlottery.util.net;
+package com.hhly.mlottery.util.net.account;
 
 /**
  * Created by lyx on 2016/5/19.

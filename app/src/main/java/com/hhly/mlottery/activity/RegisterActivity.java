@@ -13,13 +13,15 @@ import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.account.SendSmsCode;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
-import com.hhly.mlottery.util.net.AccountType;
-import com.hhly.mlottery.util.net.OperateType;
+import com.hhly.mlottery.util.cipher.MD5Util;
+import com.hhly.mlottery.util.net.account.AccountType;
+import com.hhly.mlottery.util.net.account.OperateType;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.HashMap;
@@ -35,7 +37,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private ImageView iv_eye;
 
     private CountDown countDown;
-    private static final int TIMEOUT = 30499;
+    private static final int TIMEOUT = 59699;
     private static final int TIMEOUT_INTERVEL = 1000;
     private SwipeRefreshLayout swiperefreshlayout;
 
@@ -54,6 +56,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         swiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swiperefreshlayout.setColorSchemeResources(R.color.bg_header);
         swiperefreshlayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
+        swiperefreshlayout.setEnabled(false);
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
@@ -77,8 +80,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         countDown = new CountDown(TIMEOUT, TIMEOUT_INTERVEL, new CountDown.CountDownCallback() {
             @Override
             public void onFinish() {
-                tv_verycode.setText(R.string.resend);
-                tv_verycode.setClickable(true);
+                enableVeryCode();
             }
 
             @Override
@@ -92,7 +94,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-    boolean refresh = false;
+    private void enableVeryCode() {
+        tv_verycode.setText(R.string.resend);
+        tv_verycode.setClickable(true);
+    }
 
     @Override
     public void onClick(View v) {
@@ -101,8 +106,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.tv_register: // 注册
-
-                swiperefreshlayout.setRefreshing(!refresh);
 
                 String userName = et_username.getText().toString();
                 String passWord = et_password.getText().toString();
@@ -149,22 +152,24 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private void register(String userName, String verifyCode, String passWord) {
 
-//        swiperefreshlayout.setRefreshing(true);
         tv_register.setClickable(false);
+        swiperefreshlayout.setRefreshing(true);
 
         String url = BaseURLs.URL_REGISTER;
         Map<String, String> param = new HashMap<>();
         param.put("account" , userName);
-        param.put("password" , passWord);
+        param.put("password" , MD5Util.getMD5(passWord));
         param.put("accountType" , AccountType.TYPE_PHONE);
+        param.put("deviceToken" , AppConstants.deviceToken);
         param.put("smsCode" , verifyCode);
 
         VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
 
-//                swiperefreshlayout.setRefreshing(false);
                 tv_register.setClickable(true);
+                swiperefreshlayout.setRefreshing(false);
+
                 if (register != null&& register.getResult() == VolleyContentFast.ACCOUNT_SUCC){
                     CommonUtils.saveRegisterInfo(register);
                     L.d(TAG,"注册成功");
@@ -178,7 +183,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                swiperefreshlayout.setRefreshing(false);
+                swiperefreshlayout.setRefreshing(false);
                 tv_register.setClickable(true);
                 L.e(TAG,"注册失败");
                 UiUtils.toast(RegisterActivity.this , R.string.register_fail);
@@ -207,6 +212,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 @Override
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                     L.e(TAG,"发送验证码失败");
+                    countDown.cancel();
+                    enableVeryCode();
                 }
             } , SendSmsCode.class);
 

@@ -1,4 +1,4 @@
-package com.hhly.mlottery.util.net;
+package com.hhly.mlottery.util.net.account;
 
 /**
  * Created by lyx on 2016/5/19.
@@ -69,5 +69,8 @@ public interface AccountResultCode {
 
     /**获取微博用户信息失败*/
     int GET_WEIBO_INFO_FAIL =21;
+
+    /**后台报错*/
+    int SERVER_ERROR =500;
 
 }

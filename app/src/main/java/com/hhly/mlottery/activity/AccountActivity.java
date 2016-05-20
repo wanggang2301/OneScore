@@ -54,6 +54,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         String url = BaseURLs.URL_LOGOUT;
         Map<String, String> param = new HashMap<>();
         param.put("token" , AppConstants.register.getData().getToken());
+        param.put("deviceToken" , AppConstants.deviceToken);
         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {

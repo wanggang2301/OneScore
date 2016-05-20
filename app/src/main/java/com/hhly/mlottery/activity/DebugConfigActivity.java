@@ -17,6 +17,9 @@ public class DebugConfigActivity extends BaseActivity {
 	
 	public final static int URL_13322 = 1;
 	public final static int URL_1332255 = 2;
+	/**
+	 * 开发
+	 */
 	public final static int URL_242 = 5;
 
 	public final static int WS_13322 = 3;

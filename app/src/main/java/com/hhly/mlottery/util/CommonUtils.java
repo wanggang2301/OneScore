@@ -7,7 +7,9 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.hhly.mlottery.MyApp;
+import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.util.net.account.AccountResultCode;
 
 import java.util.UUID;
 
@@ -56,6 +58,8 @@ public class CommonUtils {
 
         AppConstants.register = new Register(dataBean);
         L.d(TAG ,"init regsterinfo = "+ AppConstants.register.toString());
+
+        AppConstants.deviceToken = CommonUtils.getDeviceToken();
     }
 
 
@@ -93,6 +97,72 @@ public class CommonUtils {
             uuid = UUID.randomUUID().toString();
         }
         return uuid;
+    }
+
+
+    public static void handlerRequestResult(int rescode){
+        L.d(TAG , "handlerRequestResult rescode =  "+ rescode);
+        switch (rescode){
+            case AccountResultCode.SUCC:
+                L.d(TAG , "handlerRequestResult succ ");
+                break;
+            case AccountResultCode.SYSTEM_ERROR:
+            case AccountResultCode.PARAM_ERROR:
+            case AccountResultCode.NO_AGGREEMENT:
+            case AccountResultCode.INTERVEL_LESS:
+            case AccountResultCode.PLATFORM_NOT_EXIST:
+            case AccountResultCode.OPERATOR_TYPE_NOT_EXIST:
+            case AccountResultCode.SERVER_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.system_error);
+                break;
+            case AccountResultCode.MAIL_FORMAT_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.mail_format_error);
+                break;
+            case AccountResultCode.MAIL_ALREADY_REGISTER:
+                UiUtils.toast(MyApp.getInstance() , R.string.mail_already_register);
+                break;
+            case AccountResultCode.VERIFY_CODE_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.verify_code_error);
+                break;
+            case AccountResultCode.USER_EXIST:
+                UiUtils.toast(MyApp.getInstance() , R.string.user_exist);
+                break;
+            case AccountResultCode.VERIFY_CODE_INVALIDATE:
+                UiUtils.toast(MyApp.getInstance() , R.string.verify_code_invalidate);
+                break;
+            case AccountResultCode.PHONE_ALREADY_EXIST:
+                UiUtils.toast(MyApp.getInstance() , R.string.phone_already_exist);
+                break;
+            case AccountResultCode.USERNAME_PASS_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
+                break;
+            case AccountResultCode.PHONE_FORMAT_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.PHONE_FORMAT_ERROR);
+                break;
+            case AccountResultCode.USER_NOT_EXIST:
+                UiUtils.toast(MyApp.getInstance() , R.string.user_not_exist);
+                break;
+            case AccountResultCode.MESSAGE_SEND_FAIL:
+                UiUtils.toast(MyApp.getInstance() , R.string.message_send_fail);
+                break;
+            case AccountResultCode.NICKNAME_EXIST:
+                UiUtils.toast(MyApp.getInstance() , R.string.nickname_exist);
+                break;
+            case AccountResultCode.USERNAME_EXIST:
+                UiUtils.toast(MyApp.getInstance() , R.string.username_exist);
+                break;
+            case AccountResultCode.USERNAME_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.username_error);
+                break;
+            case AccountResultCode.GET_QQ_INFO_FAIL:
+                UiUtils.toast(MyApp.getInstance() , R.string.get_qq_info_fail);
+                break;
+            case AccountResultCode.GET_WEIBO_INFO_FAIL:
+                UiUtils.toast(MyApp.getInstance() , R.string.GET_WEIBO_INFO_FAIL);
+                break;
+        }
+
+
     }
 
 }

@@ -8,67 +8,83 @@
 
     <!--头部条目标题-->
     <include layout="@layout/layout_header" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/login_item_bg"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/login_item_image_left"
+                    android:src="@mipmap/person"/>
+
+                <EditText
+                    android:id="@+id/et_username"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    style="@style/login_edittext_common"
+                    android:hint="@string/phone_empty"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/iv_delete"
+                    style="@style/login_item_image_right"
+                    android:src="@mipmap/delete"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/login_item_bg"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/login_item_image_left"
+                    android:src="@mipmap/lock"/>
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="0dp"
+                    style="@style/login_edittext_password"
+                    android:layout_height="match_parent"
+                    android:hint="@string/pwd_empty"
+                    android:layout_weight="1"/>
+
+
+                <ImageView
+                    android:id="@+id/iv_eye"
+                    style="@style/login_item_image_right"
+                    android:src="@mipmap/close_eye"/>
+
+            </LinearLayout>
+
+
+
+            <TextView
+                style="@style/login_edittext_loginbtn"
+                android:id="@+id/tv_login"
+                android:layout_marginTop="30dp"
+                android:text="@string/login"
+                />
+
+
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
     
-    <LinearLayout
-        style="@style/login_item_bg"
-        android:layout_marginTop="25dp"
-        android:orientation="horizontal">
 
-        <ImageView
-            style="@style/login_item_image_left"
-            android:src="@mipmap/person"/>
-
-        <EditText
-            android:id="@+id/et_username"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:inputType="number"
-            style="@style/login_edittext_common"
-            android:hint="@string/phone_empty"
-            />
-
-
-        <ImageView
-            android:id="@+id/iv_delete"
-            style="@style/login_item_image_right"
-            android:src="@mipmap/delete"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/login_item_bg"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            style="@style/login_item_image_left"
-            android:src="@mipmap/lock"/>
-
-        <EditText
-            android:id="@+id/et_password"
-            android:layout_width="0dp"
-            style="@style/login_edittext_password"
-            android:layout_height="match_parent"
-            android:hint="@string/pwd_empty"
-            android:layout_weight="1"/>
-
-
-        <ImageView
-            android:id="@+id/iv_eye"
-            style="@style/login_item_image_right"
-            android:src="@mipmap/close_eye"/>
-
-    </LinearLayout>
-
-
-
-    <TextView
-        style="@style/login_edittext_loginbtn"
-        android:id="@+id/tv_login"
-        android:layout_marginTop="30dp"
-        android:text="@string/login"
-        />
 
 </LinearLayout>

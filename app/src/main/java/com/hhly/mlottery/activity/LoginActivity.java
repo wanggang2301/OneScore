@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
@@ -11,9 +12,13 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.HashMap;
@@ -28,6 +33,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private EditText et_username , et_password;
     private ImageView iv_eye;
+    private SwipeRefreshLayout swiperefreshlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initView() {
+
+        swiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        swiperefreshlayout.setColorSchemeResources(R.color.bg_header);
+        swiperefreshlayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
+        swiperefreshlayout.setEnabled(false);
+
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.login);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
@@ -97,16 +109,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (UiUtils.isMobileNO(this ,userName)){
             if (UiUtils.checkPassword(this , passWord)){
                 // 登录
-
+                swiperefreshlayout.setRefreshing(true);
                 String url = BaseURLs.URL_LOGIN;
                 Map<String, String> param = new HashMap<>();
                 param.put("account" , userName);
-                param.put("password" , passWord);
-                param.put("deviceToken" , CommonUtils.getDeviceToken());
+                param.put("password" , MD5Util.getMD5(passWord));
+                param.put("deviceToken" , AppConstants.deviceToken);
 
                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                     @Override
                     public void onResponse(Register register) {
+                        swiperefreshlayout.setRefreshing(false);
                         if (register.getResult() == VolleyContentFast.ACCOUNT_SUCC){
                             CommonUtils.saveRegisterInfo(register);
                             setResult(RESULT_OK);
@@ -118,6 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                        swiperefreshlayout.setRefreshing(false);
                         L.e(TAG , " 登录失败");
                         UiUtils.toast(LoginActivity.this , R.string.login_fail);
                     }
