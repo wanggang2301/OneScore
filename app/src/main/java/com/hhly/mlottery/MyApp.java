@@ -61,13 +61,11 @@ public class MyApp extends Application {
 
 		super.onCreate();
 	}
-	}
 
 	private void initUserInfo() {
 		CommonUtils.initRegisterInfo();
 	}
 
-	;
 
 
 	@Override
