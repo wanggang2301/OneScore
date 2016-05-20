@@ -2,6 +2,8 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
@@ -28,12 +30,12 @@ public class InformationDataAdapter extends CommonAdapter<InforListData.LeagueLi
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
     private final DisplayImageOptions options;
     private ImageView mTeam_icon;
-
+    private int layoutId;
     public InformationDataAdapter(Context context, List<InforListData.LeagueListBean> datas, int layoutId) {
         super(context, datas, layoutId);
         mContext = context;
         this.mDatas=datas;
-
+        this.layoutId=layoutId;
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -56,9 +58,8 @@ public class InformationDataAdapter extends CommonAdapter<InforListData.LeagueLi
         this.mDatas = datas;
     }
 
+
     //获取子布局控件
-
-
     @Override
     public void convert(ViewHolder holder, InforListData.LeagueListBean listDatas) {
 

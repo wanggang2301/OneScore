@@ -226,7 +226,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     private TextView mBack_up;
     private TextView mGo_down;
 
-    private boolean isLoadDataed;
+    private boolean isLoadDataed=true;
     private LinearLayout mAgenda_left;
     private LinearLayout mAgenda_right;
     private TextView mReload_btn;
@@ -254,6 +254,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.agendafragment, null);
+
         //注册广播监听轮数对话框返回来的消息
         IntentFilter intentFilter = new IntentFilter("wheelcount");
         getActivity().registerReceiver(mBroadcastReceiver, intentFilter);
@@ -269,11 +270,10 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     //从网络获取轮数数据
     public void getLeagueRoundDataFromNet(String leagueId, String leagueType, String leagueDate) {
 
-  /*      if (isLoadDataed) {
+        if (!isLoadDataed) {
             return;
         }
 
-*/
         this.leagueId = leagueId;
         this.leagueType = leagueType;
         this.datas = leagueDate;
@@ -295,7 +295,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
 
                 //请求成功
                 if ("200".equals(json.getCode() + "")) {
-                    // isLoadDataed = true;
+                    isLoadDataed = false;
                     //没有数据
                     if (json == null) {
                         handle.sendEmptyMessage(ROUND_NODATA);//暂时没有数据
