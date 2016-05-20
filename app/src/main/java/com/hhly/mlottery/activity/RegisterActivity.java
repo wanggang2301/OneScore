@@ -204,6 +204,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
                 @Override
                 public void onResponse(SendSmsCode jsonObject) {
+                    if (jsonObject.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
+                            || jsonObject.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
+                            || jsonObject.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
+                            ){
+                        countDown.cancel();
+                        enableVeryCode();
+                    }
+
                     CommonUtils.handlerRequestResult(jsonObject.getResult());
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
