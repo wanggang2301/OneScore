@@ -298,9 +298,9 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onAnimationStart(Animation animation) {
                 //动画加载完  判断是否更新
-                thread = new Thread(new CheckVersionTask());
-                thread.start();
-
+//                thread = new Thread(new CheckVersionTask());
+//                thread.start();
+                gotoHomeActivity();
             }
         });
         imageAD.startAnimation(aa);

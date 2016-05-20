@@ -1,18 +1,23 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.text.TextUtilsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,8 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
+import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeMenusEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
@@ -46,6 +53,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,10 +73,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private TextView public_txt_title;
 
     public HomePagerEntity mHomePagerEntity;// 首页实体对象
+    private UpdateInfo mUpdateInfo;// 版本更新对象
     private static final int LOADING_DATA_START = 0;// 加载数据
     private static final int LOADING_DATA_SUCCESS = 1;// 加载成功
     private static final int LOADING_DATA_ERROR = 2;// 加载失败
     private static final int REFRES_DATA_SUCCESS = 3;// 下拉刷新
+    private static final int VERSION_UPDATA_SUCCESS = 4;// 版本更新请求成功
+    private static final String COMP_VER = "1"; // 完整版
+    private static final String PURE_VER = "2"; // 纯净版
     private long mExitTime;// 退出程序...时间
 
     private String mPushType;// 推送类型
@@ -301,10 +313,37 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private void initData() {
         try {
             readObjectFromFile();// 获取本地数据
+            versionUpdate();// 版本更新
             getRequestData(0);// 获取网络数据
         } catch (Exception e) {
             L.d("获取数据异常：" + e.getMessage());
         }
+    }
+
+    /**
+     * 检查版本更新
+     */
+    private void versionUpdate(){
+        Map<String, String> map = new HashMap<String, String>();
+        if (AppConstants.fullORsimple) {
+            map.put("versionType", PURE_VER);
+        } else {
+            map.put("versionType", COMP_VER);
+        }
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_VERSION_UPDATE, map, new DefaultRetryPolicy(2000, 1, 1), new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
+            @Override
+            public synchronized void onResponse(final UpdateInfo json) {
+                if (json != null) {
+                    mUpdateInfo = json;
+                    mHandler.sendEmptyMessage(VERSION_UPDATA_SUCCESS);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        }, UpdateInfo.class);
     }
 
     /**
@@ -483,10 +522,69 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                         L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
                     }
                     break;
+                case VERSION_UPDATA_SUCCESS:// 检查版本更新
+                    int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
+                    int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
+                    if (currentVersion < serverVersion) {// 有更新
+                        promptVersionUp();
+                    }
+                    break;
             }
         }
     };
 
+    /**
+     * 新版本更新提示
+     */
+    private void promptVersionUp(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);//  android.R.style.Theme_Material_Light_Dialog
+        builder.setCancelable(false);// 设置对话框以外不可点击
+        builder.setTitle("有新版本哦~~");// 提示标题
+        builder.setMessage(mUpdateInfo.getDescription());// 提示内容
+        builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
+                DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(mUpdateInfo.getUrl());
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                //指定在WIFI状态下，执行下载操作。
+                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+                //是否允许漫游状态下，执行下载操作
+                request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
+                //是否允许“计量式的网络连接”执行下载操作
+                request.setAllowedOverMetered(false);// 默认是允许的。
+                request.setTitle("一比分新版本下载");
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setMimeType("application/vnd.android.package-archive");
+                L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), "ybf.apk");
+                // 设置为可被媒体扫描器找到
+                request.allowScanningByMediaScanner();
+                // 设置为可见和可管理
+                request.setVisibleInDownloadsUi(true);
+                long id = downloadManager.enqueue(request);
+                L.d("xxx", "id = " + id);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+               // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNeutralButton("忽略此版本", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+               // Toast.makeText(mContext, "忽略此版本", Toast.LENGTH_SHORT).show();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
     /**
      * 获取本地数据
      */
