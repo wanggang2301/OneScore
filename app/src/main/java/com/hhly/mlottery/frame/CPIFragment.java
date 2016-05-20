@@ -157,7 +157,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public_date_layout = (LinearLayout) mView.findViewById(R.id.public_date_layout);
         //显示时间的textview
         public_txt_date = (TextView) mView.findViewById(R.id.public_txt_date);
-        new Thread(){ @Override  public void run() {public_txt_date.setText(UiUtils.requestByGetDay(0));} }.start();
+        public_txt_date.setText(UiUtils.requestByGetDay(0));
         public_txt_date.setOnClickListener(this);
         //热门，公司，筛选
         public_img_hot = (ImageView) mView.findViewById(R.id.public_img_hot);
@@ -226,14 +226,20 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     case 0:
                         mTab1.setTextColor(getResources().getColor(R.color.white));
                         mRefreshLayout.setEnabled(true);
+                        mTab2.setTextColor(getResources().getColor(R.color.line_football_footer));
+                        mTab3.setTextColor(getResources().getColor(R.color.line_football_footer));
                         break;
                     case 1:
                         mTab2.setTextColor(getResources().getColor(R.color.white));
                         mRefreshLayout.setEnabled(true);
+                        mTab1.setTextColor(getResources().getColor(R.color.line_football_footer));
+                        mTab3.setTextColor(getResources().getColor(R.color.line_football_footer));
                         break;
                     case 2:
                         mTab3.setTextColor(getResources().getColor(R.color.white));
                         mRefreshLayout.setEnabled(true);
+                        mTab2.setTextColor(getResources().getColor(R.color.line_football_footer));
+                        mTab1.setTextColor(getResources().getColor(R.color.line_football_footer));
                         break;
                 }
             }

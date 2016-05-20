@@ -113,7 +113,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                     cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
                             "\t" + "<font color=#ff0000>" + matchInfoBean.getMatchResult() + "</font>" + "\t" + matchInfoBean.getMatchGuestName()));
                 }
-                cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList());
+                cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(),stType);
                 cpiViewHolder.item_cpi_odds_listview.setAdapter(cardViewListAdapter);
                 new CpiListView(context).setListViewHeightBasedOnChildren(cpiViewHolder.item_cpi_odds_listview);
 

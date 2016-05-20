@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.frame.CPIFragment;
+import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -30,11 +32,13 @@ public class CardViewListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private NewOddsInfo.AllInfoBean.ComListBean.CurrLevelBean mCurrLevelBean;
     private NewOddsInfo.AllInfoBean.ComListBean.PreLevelBean mPreLevelBean;
+    private String oddType;
 
-    public CardViewListAdapter(Context context, List<NewOddsInfo.AllInfoBean.ComListBean> mComList) {
+    public CardViewListAdapter(Context context, List<NewOddsInfo.AllInfoBean.ComListBean> mComList,String oddType) {
         super();
         this.context = context;
         this.mComList = mComList;
+        this.oddType = oddType;
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -71,8 +75,7 @@ public class CardViewListAdapter extends BaseAdapter {
         //公司名称
         item.cpi_item_list_company_txt.setText(mComList.get(position).getComName());
         //即赔小于初赔
-        //主队
-        if (!"".equals(mCurrLevelBean.getLeft()) && !"".equals(mPreLevelBean.getLeft())) {
+           //主队
             if (mCurrLevelBean.getLeftUp()==-1) {
                 item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
             }
@@ -82,34 +85,40 @@ public class CardViewListAdapter extends BaseAdapter {
             } else {
                 item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.black));
             }
-        }
-        //盘口
-        if (!"".equals(mCurrLevelBean.getMiddle()) && !"".equals(mPreLevelBean.getMiddle())) {
-            if (Double.valueOf(mCurrLevelBean.getMiddle()) < Double.valueOf(mPreLevelBean.getMiddle())) {
+
+           //盘口
+            if (mCurrLevelBean.getMiddleUp()==-1) {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
-            } else if (Double.valueOf(mCurrLevelBean.getMiddle()) > Double.valueOf(mPreLevelBean.getMiddle())) {
+            } else if (mCurrLevelBean.getMiddleUp()==1) {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
             } else {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.black));
             }
-        }
         //客队
-        if (!"".equals(mCurrLevelBean.getRight()) && !"".equals(mPreLevelBean.getRight())) {
-            if (mPreLevelBean.getRightUp()==-1) {
+            if (mCurrLevelBean.getRightUp()==-1) {
                 item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
-            } else if (mPreLevelBean.getRightUp()==1) {
+            } else if (mCurrLevelBean.getRightUp()==1) {
                 item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
             } else {
                 item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.black));
             }
+        if (CPIFragment.TYPE_PLATE.equals(oddType)) {//亚盘
+            //转换盘口
+            item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
+            item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
+        } else if (CPIFragment.TYPE_BIG.equals(oddType)) {//大小
+            item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
+            item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
+        } else if (CPIFragment.TYPE_OP.equals(oddType)) {//欧赔
+            //不用转换盘口
+            item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
+            item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
         }
         //即赔
         item.cpi_item_list_home_txt.setText(mCurrLevelBean.getLeft());
-        item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
         item.cpi_item_list_guest_txt.setText(mCurrLevelBean.getRight());
         //初赔
         item.cpi_item_list_home2_txt.setText(mPreLevelBean.getLeft());
-        item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
         item.cpi_item_list_guest2_txt.setText(mPreLevelBean.getRight());
 
         return convertView;

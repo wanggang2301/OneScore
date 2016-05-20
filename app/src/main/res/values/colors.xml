@@ -109,6 +109,7 @@
     <color name="homwe_pk10_blue">#2597ff</color>
     <color name="homwe_pk10_sblue">#40d5d7</color>
     <color name="homwe_pk10_grey">#bdbdbd</color>
+    <color name="homwe_grey">#FFD7D4D4</color>
     <color name="homwe_pk10_red">#ff2700</color>
     <color name="homwe_pk10_green">#0d9e13</color>
     <color name="homwe_pk10_bgrey">#5c5c5c</color>
@@ -561,5 +562,6 @@
     <color name="team_name_color">#333333</color>
 
     <color name="football_keeptime">#1CDA4A</color>
+    <color name="cpi_grid_selected">#DEDEDE</color>
 
 </resources>

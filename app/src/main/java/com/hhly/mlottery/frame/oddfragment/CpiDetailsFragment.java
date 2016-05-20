@@ -35,9 +35,8 @@ public class CpiDetailsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_COMID = "mParamComId";
     private static final String ARG_POSITIONNUNBER = "mParamPositionNunber";
-    private static final String ARG_TYPE = "mParamType";
 
-    private String mParam1, mParamComId, mParamPositionNunber, mParamType;
+    private String mParam1, mParamComId, mParamPositionNunber;
     private List<Map<String, String>> mParam2List;
     private View mView;
     private Context mContext;
@@ -61,7 +60,7 @@ public class CpiDetailsFragment extends Fragment {
         args.putSerializable(ARG_PARAM2, (Serializable) listParam2);
         args.putString(ARG_COMID, mParamComId);
         args.putString(ARG_POSITIONNUNBER, mParamPositionNunber);
-        args.putString(ARG_TYPE, mParamType);
+//        args.putString(ARG_TYPE, mParamType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +73,6 @@ public class CpiDetailsFragment extends Fragment {
             mParam2List = (ArrayList) getArguments().getSerializable(ARG_PARAM2);
             mParamComId = getArguments().getString(ARG_COMID);
             mParamPositionNunber = getArguments().getString(ARG_POSITIONNUNBER);
-            mParamType = getArguments().getString(ARG_TYPE);
 
         }
     }
@@ -84,6 +82,9 @@ public class CpiDetailsFragment extends Fragment {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_cpi_details_odds, container, false);//item_cpi_odds
         InitView();
+        //获得赛事id
+        mThirdId = mParam2List.get(0).get("thirdid");
+        System.out.println(">>"+mThirdId);
         DetailsLeftData();
         return mView;
     }
@@ -118,8 +119,6 @@ public class CpiDetailsFragment extends Fragment {
         cpi_tails_left_listview.setAdapter(oddDetailsLeftAdapter);
         //根据传过去的postion更改选中的item选中背景
         oddDetailsLeftAdapter.setDefSelect(Integer.parseInt(mParamPositionNunber));
-        //获得赛事id
-        mThirdId = mParam2List.get(0).get("thirdid");
         // 指数详情右边数据
         RightData(mParamComId);
 
@@ -150,28 +149,24 @@ public class CpiDetailsFragment extends Fragment {
 
     //新版详情右边的数据
     public void RightData(String idComId) {
-        String url = "http://m.13322.com/mlottery/core/footBallMatch.matchOddDetail.do";
         Map<String, String> myPostParams = new HashMap<>();
         if ("1".equals(mParam1)) {
             //亚盘
             myPostParams.put("companyId", idComId);
             myPostParams.put("oddType", mParam1);
-            myPostParams.put("thirdId", "326042");
         } else if ("3".equals(mParam1)) {
             //大小
             myPostParams.put("companyId", idComId);
             myPostParams.put("oddType", mParam1);
-            myPostParams.put("thirdId", "326042");
         } else if ("2".equals(mParam1)) {
             //欧赔
             myPostParams.put("companyId", idComId);
             myPostParams.put("oddType", mParam1);
-            myPostParams.put("thirdId", "326042");
         }
-
+        myPostParams.put("thirdId", mThirdId);
 
         // 2、连接服务器
-        VolleyContentFast.requestJsonByGet(url,myPostParams, new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_MATCHODD_DETAILS,myPostParams, new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
             @Override
             public synchronized void onResponse(final OddsDetailsDataInfo json) {
                 if (json != null) {

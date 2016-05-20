@@ -363,6 +363,15 @@ public class NewOddsInfo {
                 private String right;
                 private int leftUp;
                 private int rightUp;
+                private int middleUp;
+
+                public int getMiddleUp() {
+                    return middleUp;
+                }
+
+                public void setMiddleUp(int middleUp) {
+                    this.middleUp = middleUp;
+                }
 
                 public String getLeft() {
                     return left;
@@ -411,6 +420,15 @@ public class NewOddsInfo {
                 private String right;
                 private int leftUp;
                 private int rightUp;
+                private int middleUp;
+
+                public int getMiddleUp() {
+                    return middleUp;
+                }
+
+                public void setMiddleUp(int middleUp) {
+                    this.middleUp = middleUp;
+                }
 
                 public String getLeft() {
                     return left;
