@@ -38,7 +38,10 @@ public class CommonUtils {
         }else {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID , register.getData().getUser().getUserId());
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME , register.getData().getUser().getNickName());
-            PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN , register.getData().getToken());
+
+            String token = register.getData().getLoginToken();
+            L.d(TAG , " saveRegisterInfo   token = "+ token);
+            PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN , token);
 
 
             AppConstants.register = register;
@@ -53,7 +56,10 @@ public class CommonUtils {
         userBean.setNickName(PreferenceUtil.getString(AppConstants.SPKEY_NICKNAME , ""));
 
         Register.DataBean dataBean = new Register.DataBean();
-        dataBean.setToken(PreferenceUtil.getString(AppConstants.SPKEY_TOKEN , ""));
+
+        String token = PreferenceUtil.getString(AppConstants.SPKEY_TOKEN , "");
+        L.e(TAG , " initRegisterInfo   token = "+ token);
+        dataBean.setLoginToken(token);
         dataBean.setUser(userBean);
 
         AppConstants.register = new Register(dataBean);
@@ -69,7 +75,7 @@ public class CommonUtils {
      */
     public static boolean isLogin(){
         boolean isLogin = false;
-        if (!(TextUtils.isEmpty(AppConstants.register.getData().getToken()))
+        if (!(TextUtils.isEmpty(AppConstants.register.getData().getLoginToken()))
                 && !(TextUtils.isEmpty(AppConstants.register.getData().getUser().getUserId()))){
             isLogin = true;
         }

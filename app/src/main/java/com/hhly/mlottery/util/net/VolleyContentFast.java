@@ -30,11 +30,7 @@ public class VolleyContentFast {
     public final static int ERROR_CODE_JSON_PARSE = 1002;
     public final static int ERROR_CODE_VOLLEY_ERROR = 1003;
 
-    /**获取账户信息成功*/
-    public final static int ACCOUNT_SUCC = 200;
-
     private static RequestQueue mQueue;
-
 
     /**
      * 初始化，在Application上初始化，只初始化一次赛

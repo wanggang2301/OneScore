@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.account.SendSmsCode;
@@ -20,9 +21,10 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
-import com.hhly.mlottery.util.net.account.AccountType;
-import com.hhly.mlottery.util.net.account.OperateType;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.hhly.mlottery.util.net.account.OperateType;
+import com.hhly.mlottery.util.net.account.RegisterType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -159,9 +161,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         Map<String, String> param = new HashMap<>();
         param.put("account" , userName);
         param.put("password" , MD5Util.getMD5(passWord));
-        param.put("accountType" , AccountType.TYPE_PHONE);
-        param.put("deviceToken" , AppConstants.deviceToken);
+        param.put("registerType" , RegisterType.PHONE);
         param.put("smsCode" , verifyCode);
+        param.put("deviceToken" , AppConstants.deviceToken);
 
         VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
@@ -170,14 +172,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 tv_register.setClickable(true);
                 swiperefreshlayout.setRefreshing(false);
 
-                if (register != null&& register.getResult() == VolleyContentFast.ACCOUNT_SUCC){
+                if (register != null&& register.getResult() == AccountResultCode.SUCC){
                     CommonUtils.saveRegisterInfo(register);
+                    UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
                     L.d(TAG,"注册成功");
                     setResult(RESULT_OK);
                     finish();
                 }else{
                     L.e(TAG,"成功请求，注册失败");
-                    UiUtils.toast(RegisterActivity.this , R.string.register_fail);
+                    CommonUtils.handlerRequestResult(register.getResult());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -206,7 +209,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
                 @Override
                 public void onResponse(SendSmsCode jsonObject) {
-                    L.d(TAG,"发送验证码成功");
+                    CommonUtils.handlerRequestResult(jsonObject.getResult());
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
                 @Override
@@ -214,6 +217,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     L.e(TAG,"发送验证码失败");
                     countDown.cancel();
                     enableVeryCode();
+                    UiUtils.toast(MyApp.getInstance() , R.string.message_send_fail);
                 }
             } , SendSmsCode.class);
 

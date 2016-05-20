@@ -503,6 +503,8 @@
 
     <style name="login_edittext_password" parent="login_edittext_common">
         <item name="android:inputType">textPassword</item>
+        <item name="android:digits">@string/password_digits</item>
+        <item name="android:hint">@string/pwd_empty</item>
     </style>
 
 

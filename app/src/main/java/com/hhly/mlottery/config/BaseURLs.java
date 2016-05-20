@@ -627,13 +627,13 @@ public class BaseURLs {
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
 
     /**发送验证码*/
-    public final static String URL_SENDSMSCODE = URL_API_HOST + "userCenter.sendSmsCode.do";
+    public final static String URL_SENDSMSCODE = URL_API_HOST + "androidUserCenter.sendSmsCode.do";
     /**注册*/
-    public final static String URL_REGISTER = URL_API_HOST + "userCenter.register.do";
+    public final static String URL_REGISTER = URL_API_HOST + "androidUserCenter.register.do";
     /**登录*/
-    public final static String URL_LOGIN = URL_API_HOST + "userCenter.login.do";
+    public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
     /**登出*/
-    public final static String URL_LOGOUT = URL_API_HOST + "userCenter.logout.do";
+    public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
 
 
 

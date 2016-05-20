@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
@@ -20,6 +21,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.account.AccountResultCode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,8 +54,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         swiperefreshlayout.setEnabled(false);
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.login);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
+        ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.login);
         findViewById(R.id.iv_delete).setOnClickListener(this);
 
         iv_eye = (ImageView) findViewById(R.id.iv_eye);
@@ -120,12 +122,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onResponse(Register register) {
                         swiperefreshlayout.setRefreshing(false);
-                        if (register.getResult() == VolleyContentFast.ACCOUNT_SUCC){
+                        if (register.getResult() == AccountResultCode.SUCC){
+                            UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                             CommonUtils.saveRegisterInfo(register);
                             setResult(RESULT_OK);
                             finish();
                         }else{
-                            UiUtils.toast(LoginActivity.this ,register.getMsg());
+                            CommonUtils.handlerRequestResult(register.getResult());
                         }
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {

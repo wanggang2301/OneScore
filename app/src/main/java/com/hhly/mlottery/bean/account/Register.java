@@ -7,28 +7,28 @@ public class Register {
 
 
     /**
-     * result : 200
-     * msg : LOGIN_SUCCESS
-     * data : {"token":"ae983fb2cccf4dc094b6048ed4391dbd","user":{"nickName":"hhly90220","userId":"hhly90220"}}
+     * result : 0
+     * msg : 成功
+     * data : {"loginToken":"92a47bc9b7364481ab5fb622e5bbc996","user":{"nickName":"hhly90203","userId":"hhly90203"}}
      */
 
     private int result;
     private String msg;
     /**
-     * token : ae983fb2cccf4dc094b6048ed4391dbd
-     * user : {"nickName":"hhly90220","userId":"hhly90220"}
+     * loginToken : 92a47bc9b7364481ab5fb622e5bbc996
+     * user : {"nickName":"hhly90203","userId":"hhly90203"}
      */
 
     private DataBean data;
 
 
-    public Register() {
+    public Register(){
         data = new DataBean();
     }
-
-    public Register(DataBean dataBean) {
-        data = dataBean;
+    public Register(DataBean data){
+        this.data = data;
     }
+
 
     public int getResult() {
         return result;
@@ -55,24 +55,23 @@ public class Register {
     }
 
     public static class DataBean {
-        private String token;
+        private String loginToken;
         /**
-         * nickName : hhly90220
-         * userId : hhly90220
+         * nickName : hhly90203
+         * userId : hhly90203
          */
 
         private UserBean user;
 
         public DataBean(){
-            user = new UserBean();
         }
 
-        public String getToken() {
-            return token;
+        public String getLoginToken() {
+            return loginToken;
         }
 
-        public void setToken(String token) {
-            this.token = token;
+        public void setLoginToken(String loginToken) {
+            this.loginToken = loginToken;
         }
 
         public UserBean getUser() {
@@ -115,7 +114,7 @@ public class Register {
         @Override
         public String toString() {
             return "DataBean{" +
-                    "token='" + token + '\'' +
+                    "loginToken='" + loginToken + '\'' +
                     ", user=" + user +
                     '}';
         }
