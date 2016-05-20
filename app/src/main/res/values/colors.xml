@@ -2,6 +2,8 @@
 <resources>
 
 
+
+    <color name="selected_bg">#eeeeee</color>
     <!--足球二期颜色-->
     <color name="foot_integal_se">#ff5400</color>
     <color name="score">#ed0000</color>
