@@ -59,11 +59,11 @@ public class CpiDateAdapter extends BaseAdapter {
         convertView = _LayoutInflater.inflate(R.layout.item_dialog_layout, null);
         if (convertView != null) {
             ((TextView) convertView.findViewById(R.id.dialog_txt_cancel_list)).setText(cpiDateList.get(position).get("date"));
+            ((TextView) convertView.findViewById(R.id.dialog_txt_cancel_list)).setTextColor(context.getResources().getColor(R.color.msg));
         }
         if (defItem == position) {//如果点击listview的当前的position相等
             //设置背景颜色
-            convertView.setBackgroundResource(R.color.shadow);
-            ((TextView) convertView.findViewById(R.id.dialog_txt_cancel_list)).setTextColor(context.getResources().getColor(R.color.msg));
+            convertView.setBackgroundResource(R.color.timeLineColor);
         } else {
             convertView.setBackgroundResource(R.color.transparent);
         }

@@ -278,33 +278,33 @@ public class CPIOddsFragment extends Fragment {
 
 
     public void selectCompany2(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp, List<String> comNameList, List<String> mCheckedIds, String comPany) {
-        if ("plate".equals(comPany)) {
+        if (CPIFragment.TYPE_PLATE.equals(comPany)) {
             setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
             if (cpiRecyclerViewAdapter != null) {
                 cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
                 cpiRecyclerViewAdapter.notifyDataSetChanged();
             } else {
-                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "plate");
+                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, CPIFragment.TYPE_PLATE);
                 cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
             }
 
-        } else if ("big".equals(comPany)) {
+        } else if (CPIFragment.TYPE_BIG.equals(comPany)) {
             setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
             if (cpiRecyclerViewAdapter != null) {
                 cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
                 cpiRecyclerViewAdapter.notifyDataSetChanged();
             } else {
-                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "big");
+                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, CPIFragment.TYPE_BIG);
                 cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
             }
 
-        } else if ("op".equals(comPany)) {
+        } else if (CPIFragment.TYPE_OP.equals(comPany)) {
             setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
             if (cpiRecyclerViewAdapter != null) {
                 cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
                 cpiRecyclerViewAdapter.notifyDataSetChanged();
             } else {
-                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, "op");
+                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, CPIFragment.TYPE_OP);
                 cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
             }
         }

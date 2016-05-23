@@ -292,7 +292,9 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //请求下一页数据
-                    getTopicComments(mCurrentPager);
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))){//没有更多数据的时候，上拉不再发起请求
+                        getTopicComments(mCurrentPager);
+                    }
                 }
             }
         });
@@ -307,7 +309,10 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //请求下一页数据
-                    getTopicComments(mCurrentPager);
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))){//没有更多数据的时候，上拉不再发起请求
+                        getTopicComments(mCurrentPager);
+                    }
+
                 }
             }
         });

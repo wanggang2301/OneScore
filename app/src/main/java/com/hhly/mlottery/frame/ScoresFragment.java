@@ -496,29 +496,29 @@ public class ScoresFragment extends Fragment {
             if (isImmediate) {
                 MobclickAgent.onPageEnd("Football_ImmediateFragment");
                 isImmediate = false;
-                L.d("xxx", "ImmediateFragment>>>隐藏");
+//                L.d("xxx", "ImmediateFragment>>>隐藏");
             }
             if (isResult) {
                 MobclickAgent.onPageEnd("Football_ResultFragment");
                 isResult = false;
-                L.d("xxx", "ResultFragment>>>隐藏");
+//                L.d("xxx", "ResultFragment>>>隐藏");
             }
             if (isSchedule) {
                 MobclickAgent.onPageEnd("Football_ScheduleFragment");
                 isSchedule = false;
-                L.d("xxx", "ScheduleFragment>>>隐藏");
+//                L.d("xxx", "ScheduleFragment>>>隐藏");
             }
             if (isFocus) {
                 MobclickAgent.onPageEnd("Football_FocusFragment");
                 isFocus = false;
-                L.d("xxx", "FocusFragment>>>隐藏");
+//                L.d("xxx", "FocusFragment>>>隐藏");
             }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        L.d(TAG, "football Fragment destroy..");
+//        L.d(TAG, "football Fragment destroy..");
     }
 
 
@@ -533,6 +533,8 @@ public class ScoresFragment extends Fragment {
         super.onDetach();
         L.d(TAG, "football Fragment detach..");
     }
+
+
 
 
 /*
