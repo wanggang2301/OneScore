@@ -71,7 +71,6 @@ public class BasketOddsAdapter  extends BaseAdapter{
             holder.home_immediate_win= (TextView) convertView.findViewById(R.id.item_basket_odds_home_win_immediate);
             holder.home_history_win= (TextView) convertView.findViewById(R.id.item_basket_odds_home_win_history);
             holder.handicap_layout= (LinearLayout) convertView.findViewById(R.id.item_basket_odds_layout_handicap);
-            holder.image_handicap= (ImageView) convertView.findViewById(R.id.item_basket_odds_image);
             holder.image_more= (ImageView) convertView.findViewById(R.id.item_image_basket_odds_more);
 
             convertView.setTag(holder);
@@ -79,7 +78,7 @@ public class BasketOddsAdapter  extends BaseAdapter{
         else{
             holder= (ViewHolder) convertView.getTag();
         }
-        if(mType.equals(EURO)){
+        if(mType.equals(EURO)){ //欧赔没有中间那一列盘口
             holder.handicap_layout.setVisibility(View.GONE);
         }
         if(mType.equals(EURO)&&mOddsList.get(position).getCompany().equals("平均")){
@@ -100,19 +99,6 @@ public class BasketOddsAdapter  extends BaseAdapter{
                 holder.immediate_handicap.setText(oddsData.get(0).getHandicapValue());
                 holder.history_handicap.setText(oddsData.get(1).getHandicapValue());
 
-                if(oddsData.get(0).getHandicapValueTrend()==1){//上升
-                    holder.image_handicap.setImageResource(R.mipmap.red);
-                    holder.immediate_handicap.setTextColor(context.getResources().getColor(R.color.odds_up));
-                }
-                else if(oddsData.get(0).getHandicapValueTrend()==-1){
-                    holder.image_handicap.setImageResource(R.mipmap.green);
-                    holder.immediate_handicap.setTextColor(context.getResources().getColor(R.color.odds_down));
-                }
-                else {
-                    holder.image_handicap.setVisibility(View.INVISIBLE);
-                    holder.immediate_handicap.setTextColor(context.getResources().getColor(R.color.white));
-                }
-
             }
            else if(oddsData.size()==1){//只有初赔
                 holder.guest_history_win.setText(oddsData.get(0).getLeftOdds());
@@ -121,19 +107,37 @@ public class BasketOddsAdapter  extends BaseAdapter{
                 holder.home_immediate_win.setText("--");
                 holder.history_handicap.setText(oddsData.get(0).getHandicapValue());
                 holder.immediate_handicap.setText("--");
+            }
 
-                if(oddsData.get(0).getHandicapValueTrend()==1){//上升
-                    holder.image_handicap.setImageResource(R.mipmap.red);
-                    holder.immediate_handicap.setTextColor(context.getResources().getColor(R.color.odds_up));
-                }
-                else if(oddsData.get(0).getHandicapValueTrend()==-1){
-                    holder.image_handicap.setImageResource(R.mipmap.green);
-                    holder.immediate_handicap.setTextColor(context.getResources().getColor(R.color.odds_down));
-                }
-                else {
-                    holder.image_handicap.setVisibility(View.INVISIBLE);
-                    holder.immediate_handicap.setTextColor(context.getResources().getColor(R.color.white));
-                }
+            if(oddsData.get(0).getHandicapValueTrend()==1){//  盘口上升
+                holder.immediate_handicap.setBackgroundColor(context.getResources().getColor(R.color.odds_up));
+            }
+            else if(oddsData.get(0).getHandicapValueTrend()==-1){
+                holder.immediate_handicap.setBackgroundColor(context.getResources().getColor(R.color.odds_down));
+            }
+            else {
+                holder.immediate_handicap.setTextColor(context.getResources().getColor(R.color.white));
+            }
+            //左侧的颜色变化
+
+            if(oddsData.get(0).getLeftOddsTrend()==1){ //上升
+                holder.guest_immediate_win.setTextColor(context.getResources().getColor(R.color.odds_up));
+            }
+            else if(oddsData.get(0).getLeftOddsTrend()==-1){
+                holder.guest_immediate_win.setTextColor(context.getResources().getColor(R.color.odds_down));
+            }
+            else{
+                holder.guest_immediate_win.setTextColor(context.getResources().getColor(R.color.white));
+            }
+            //右侧数据的颜色变化
+            if(oddsData.get(0).getRightOddsTrend()==1){
+                holder.home_immediate_win.setTextColor(context.getResources().getColor(R.color.odds_up));
+            }
+            else if(oddsData.get(0).getRightOddsTrend()==-1){
+                holder.home_immediate_win.setTextColor(context.getResources().getColor(R.color.odds_down));
+            }
+            else {
+                holder.home_immediate_win.setTextColor(context.getResources().getColor(R.color.white));
             }
 
             convertView.setOnClickListener(new ConvertViewClickListener(position));
@@ -181,7 +185,6 @@ public class BasketOddsAdapter  extends BaseAdapter{
         private TextView home_immediate_win;
         private TextView home_history_win;
         private LinearLayout handicap_layout;
-        private ImageView image_handicap;
         private ImageView image_more;
 
     }

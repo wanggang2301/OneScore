@@ -487,6 +487,8 @@
     <string name="basket_setting_tittle">籃球設置</string>
     <string name="basket_filtrate_tittle">籃球篩選</string>
 
+    <string name="basket_loading_txt">正在加載中...</string>
+
     <string name="basket_total">總:</string>
     <string name="basket_differ">差:</string>
     <string name="basket_tv"> | </string>
