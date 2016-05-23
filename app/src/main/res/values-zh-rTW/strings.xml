@@ -654,7 +654,44 @@
     <string name="data_date_txt1">2016-2017</string>
 
 
-    <!-- 登录注册 -->
+    <!-- 登录注册 begin-->
+    <string name="my">我的</string>
     <string name="register">注冊</string>
+    <string name="registering">正在注冊...</string>
+    <string name="login">登錄</string>
+    <string name="logining">正在登錄...</string>
+    <string name="login_succ">登錄成功</string>
+    <string name="login_fail">登錄失敗</string>
+    <string name="pwd_format">密碼格式爲6-16位字母數字下劃線</string>
+    <string name="pwd_format_hint">6-16位字符,區分大小寫</string>
+    <string name="pwd_empty">請輸入密碼</string>
+    <string name="phone_empty">請輸入手機號碼</string>
+    <string name="phone_error">請輸入正確手機號碼</string>
+    <string name="verify_code">請輸入驗證碼</string>
+    <string name="verify_code_send">發送驗證碼</string>
+    <string name="logout">退出登錄</string>
+    <string name="logouting">正在注銷...</string>
+    <string name="logout_fail">注銷失敗</string>
+    <string name="logout_succ">注銷成功</string>
+    <string name="resend">重發</string>
+    <string name="register_fail">注冊失敗</string>
+    <string name="register_succ">注冊成功</string>
+    <string name="mail_format_error">郵箱格式錯誤</string>
+    <string name="mail_already_register">該郵箱已注冊</string>
+    <string name="verify_code_error">驗證碼錯誤</string>
+    <string name="user_exist">該用戶已激活</string>
+    <string name="verify_code_invalidate">驗證碼已失效</string>
+    <string name="phone_already_exist">該手機號已注冊</string>
+    <string name="username_pass_error">登錄名或者密碼錯誤</string>
+    <string name="PHONE_FORMAT_ERROR">手機號碼不合法</string>
+    <string name="user_not_exist">用戶不存在</string>
+    <string name="message_send_fail">發送驗證碼失敗</string>
+    <string name="nickname_exist">該昵稱已存在</string>
+    <string name="username_exist">用戶名已存在</string>
+    <string name="username_error">登錄賬號錯誤</string>
+    <string name="get_qq_info_fail">獲取qq用戶信息失敗</string>
+    <string name="GET_WEIBO_INFO_FAIL">獲取微博用戶信息失敗</string>
+    <string name="system_error">系統錯誤</string>
+    <!-- 登录注册 end-->
 
 </resources>

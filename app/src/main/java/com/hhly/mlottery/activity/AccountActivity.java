@@ -68,6 +68,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         Map<String, String> param = new HashMap<>();
         param.put("loginToken" , AppConstants.register.getData().getLoginToken());
         param.put("deviceToken" , AppConstants.deviceToken);
+        param.put("userId" , AppConstants.register.getData().getUser().getUserId());
         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
