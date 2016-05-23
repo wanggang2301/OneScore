@@ -720,7 +720,7 @@
     <string name="user_exist">该用户已激活</string>
     <string name="verify_code_invalidate">验证码已失效</string>
     <string name="phone_already_exist">该手机号已注册</string>
-    <string name="username_pass_error">登录名或者密码错误</string>
+    <string name="user_not_login">用户未登录</string>
     <string name="PHONE_FORMAT_ERROR">手机号码不合法</string>
     <string name="user_not_exist">用户不存在</string>
     <string name="message_send_fail">发送验证码失败</string>
@@ -731,5 +731,9 @@
     <string name="GET_WEIBO_INFO_FAIL">获取微博用户信息失败</string>
     <string name="system_error">系统错误</string>
     <string name="password_digits">_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
+    <string name="realname_error">真实姓名错误</string>
+    <string name="id_card_format_error">身份证格式错误</string>
+    <string name="password_error">密码错误</string>
+    <string name="username_pass_error">登录名或者密码错误</string>
     <!-- 登录注册 end-->
 </resources>
