@@ -76,13 +76,30 @@ public class HomeGridAdapter extends BaseAdapter {
                         HomeContentEntity homeContentEntity = mHomePagerEntity.getMenus().getContent().get(position);
                         int jumpType = homeContentEntity.getJumpType();// 跳转类型
                         String jumpAddr = homeContentEntity.getJumpAddr();// 跳转地址
+                        String reqMethod = homeContentEntity.getReqMethod();// 跳转方式
                         if (!TextUtils.isEmpty(jumpAddr)) {
                             switch (jumpType) {
                                 case 0:// 无
                                     break;
                                 case 1:// 页面
                                 {
-                                    if ("41".equals(jumpAddr)) {// 游戏竞猜
+                                    if(jumpAddr.contains("?token")){// 请求需要带参
+                                        if (CommonUtils.isLogin()) {// 判断用户是否登录
+                                            Intent intent = new Intent(mContext, WebActivity.class);
+                                            intent.putExtra("key", jumpAddr.substring(0,jumpAddr.indexOf("?")));// 跳转地址
+                                            intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
+                                            intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
+                                            mContext.startActivity(intent);
+                                        } else {// 跳转到登录界面
+                                            mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                                        }
+                                    }else {// 其它
+                                        Intent intent = new Intent(mContext, WebActivity.class);
+                                        intent.putExtra("key", jumpAddr);
+                                        intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
+                                        mContext.startActivity(intent);
+                                    }
+                                    /*if ("41".equals(jumpAddr)) {// 游戏竞猜
                                         if (CommonUtils.isLogin()) {// 判断用户是否登录
                                             Intent intent = new Intent(mContext, WebActivity.class);
                                             intent.putExtra("key", homeContentEntity.getOutUrl());// 跳转地址
@@ -96,7 +113,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                         Intent intent = new Intent(mContext, WebActivity.class);
                                         intent.putExtra("key", jumpAddr);
                                         mContext.startActivity(intent);
-                                    }
+                                    }*/
                                     break;
                                 }
                                 case 2:// 跳内页

@@ -657,4 +657,5 @@
     <!-- 登录注册 -->
     <string name="register">注冊</string>
 
+    <string name="home_pager_version_update">忽略此版本</string>
 </resources>

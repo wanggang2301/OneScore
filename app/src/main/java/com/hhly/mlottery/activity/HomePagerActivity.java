@@ -538,10 +538,38 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     }
                     break;
                 case VERSION_UPDATA_SUCCESS:// 检查版本更新
-                    int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
-                    int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
-                    if (currentVersion < serverVersion) {// 有更新
-                        promptVersionUp();
+                    try {
+                        boolean isNewVersion = true;
+                        int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
+                        int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
+                        L.d("xxx","serverVersion:" + serverVersion);
+                        L.d("xxx","currentVersion:" + currentVersion);
+                        if (currentVersion < serverVersion) {// 有更新
+                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null);// 获取本地忽略版本
+                            L.d("xxx","versionIgnore:" + versionIgnore);
+                            if(versionIgnore != null){
+                                if(versionIgnore.contains("#")){
+                                    String[] split = versionIgnore.split("#");
+                                    for (int i = 0,len = split.length; i < len; i++) {
+                                        if(serverVersion == Integer.parseInt(split[i])){
+                                            isNewVersion = false;
+                                            break;
+                                        }
+                                    }
+                                    if(isNewVersion){
+                                        promptVersionUp();
+                                    }
+                                }else{
+                                    if(serverVersion != Integer.parseInt(versionIgnore)){
+                                        promptVersionUp();
+                                    }
+                                }
+                            }else{
+                                promptVersionUp();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     break;
             }
@@ -554,9 +582,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private void promptVersionUp(){
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);//  android.R.style.Theme_Material_Light_Dialog
         builder.setCancelable(false);// 设置对话框以外不可点击
-        builder.setTitle("有新版本哦~~");// 提示标题
+        builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
         builder.setMessage(mUpdateInfo.getDescription());// 提示内容
-        builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -570,7 +598,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
                 //是否允许“计量式的网络连接”执行下载操作
                 request.setAllowedOverMetered(false);// 默认是允许的。
-                request.setTitle("一比分新版本下载");
+                //request.setTitle("一比分新版本下载");
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setMimeType("application/vnd.android.package-archive");
                 L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
@@ -583,18 +611,25 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 L.d("xxx", "id = " + id);
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
                // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setNeutralButton("忽略此版本", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null);
+                if(versionIgnore != null){
+                    versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
+                }else{
+                    versionIgnore = String.valueOf(mUpdateInfo.getVersion());
+                }
+                PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,versionIgnore);
+                L.d("xxx","PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null));
                 dialog.cancel();
-               // Toast.makeText(mContext, "忽略此版本", Toast.LENGTH_SHORT).show();
             }
         });
         AlertDialog alertDialog = builder.create();

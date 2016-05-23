@@ -732,4 +732,6 @@
     <string name="system_error">系统错误</string>
     <string name="password_digits">_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
     <!-- 登录注册 end-->
+
+    <string name="home_pager_version_update">忽略此版本</string>
 </resources>
