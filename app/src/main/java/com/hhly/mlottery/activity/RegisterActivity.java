@@ -1,9 +1,11 @@
 package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,8 @@ import com.hhly.mlottery.util.net.account.RegisterType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 注册界面
@@ -48,6 +52,24 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         
         initView();
         initData();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        et_username.setFocusable(true);
+        et_username.setFocusableInTouchMode(true);
+        et_username.requestFocus();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() { //让软键盘延时弹出，以更好的加载Activity
+            public void run() {
+                InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(et_username, 0);
+            }
+
+        }, 300);
     }
 
     private void initView() {
