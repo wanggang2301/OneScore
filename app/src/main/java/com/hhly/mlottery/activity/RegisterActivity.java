@@ -82,18 +82,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onTick(long millisUntilFinished) {
-                if (tv_verycode.isClickable())
-                    tv_verycode.setClickable(false);
+                if (tv_verycode != null){
+                    if (tv_verycode.isClickable())
+                        tv_verycode.setClickable(false);
 
-                L.d(TAG,millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
-                tv_verycode.setText(millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
+                    L.d(TAG,millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
+                    tv_verycode.setText(millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
+                }
             }
         });
     }
 
     private void enableVeryCode() {
-        tv_verycode.setText(R.string.resend);
-        tv_verycode.setClickable(true);
+        if (tv_verycode != null){
+            tv_verycode.setText(R.string.resend);
+            tv_verycode.setClickable(true);
+        }
     }
 
     @Override
@@ -224,6 +228,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             } , SendSmsCode.class);
 
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDown != null){
+            countDown.cancel();
         }
     }
 }
