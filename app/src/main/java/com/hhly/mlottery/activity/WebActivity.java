@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
@@ -58,8 +60,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private ImageView mPublic_img_back;// 返回
     private TextView mPublic_txt_title;// 标题
     private String url;// 要显示的H5网址
-    private String isComment;// 是否隐藏评论和分享
     private String token;// 登录参数
+    private String reqMethod;// 是否传参数
     private String imageurl;// 图片地址
     private String title;// 标题
     private String subtitle;// 副标题
@@ -305,12 +307,12 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
             token = intent.getStringExtra("token");
-            isComment = intent.getStringExtra("isComment");
+            reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
-            if (TextUtils.isEmpty(isComment)) {//不是新闻资讯时候隐藏分享和评论
+            if (TextUtils.isEmpty(token)) {//token为空，说明是资讯，显示分享和评论
                 public_btn_set.setVisibility(View.VISIBLE);
                 scrollview.setVisibility(View.VISIBLE);
-            } else {
+            } else {//不是新闻资讯的时候隐藏分享和评论
                 public_btn_set.setVisibility(View.GONE);
                 scrollview.setVisibility(View.GONE);
             }
@@ -320,10 +322,24 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                     view.loadUrl(url);
                     return true;
                 }
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                    Toast.makeText(getApplicationContext(),
+                            url,
+                            Toast.LENGTH_SHORT).show();
+                    //这儿可以截获网页的URL，可以都URL进行分析。
 
+                    super.onPageStarted(view, url, favicon);
+                }
             });
-//            mWebView.postUrl(url, EncodingUtils.getBytes("", "BASE64"));
-            mWebView.loadUrl(url);
+            //其他页传过来的reqMethod为post时，提交token  否则不提交
+            if (reqMethod!=null&&token!=null&&reqMethod.equals("post")){
+                mWebView.postUrl(url, token.getBytes("utf-8"));
+            }else {
+                mWebView.loadUrl(url);
+            }
+
+//
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
 
 //            /**加載成功显示 分享按钮*/
