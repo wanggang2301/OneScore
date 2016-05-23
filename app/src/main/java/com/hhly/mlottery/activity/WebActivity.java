@@ -3,7 +3,6 @@ package com.hhly.mlottery.activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
@@ -322,20 +320,14 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                     view.loadUrl(url);
                     return true;
                 }
-                @Override
-                public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                    Toast.makeText(getApplicationContext(),
-                            url,
-                            Toast.LENGTH_SHORT).show();
-                    //这儿可以截获网页的URL，可以都URL进行分析。
-
-                    super.onPageStarted(view, url, favicon);
-                }
             });
             //其他页传过来的reqMethod为post时，提交token  否则不提交
-            if (reqMethod!=null&&token!=null&&reqMethod.equals("post")){
+            if (reqMethod != null && token != null && reqMethod.equals("post")) {
+
                 mWebView.postUrl(url, token.getBytes("utf-8"));
-            }else {
+
+
+            } else {
                 mWebView.loadUrl(url);
             }
 
