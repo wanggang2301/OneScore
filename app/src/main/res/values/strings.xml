@@ -61,7 +61,7 @@
     <string name="trend_txt">走势</string>
     <string name="data_statistics_txt">数据统计</string>
     <string name="nodata_txt">没有更多数据!</string>
-    <string name="loading_data_txt">数据加载中...</string>
+    <string name="loading_data_txt">正在加载中...</string>
 
     <string name="not_start_txt">未开</string>
     <string name="pause_txt">中场</string>
