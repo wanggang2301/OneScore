@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery"
     android:versionCode="13"
-    android:versionName="1.1.0.0516">
+    android:versionName="1.1.0.0520">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -55,6 +55,7 @@
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
@@ -103,7 +104,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden"
             />
         <activity
-            android:name=".activity.HomeTeamSoundActivity"
+            android:name=".activity.FootballTypeSettingDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FootballMatchDetailActivity"

@@ -4,10 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
     <include layout="@layout/football_listview_header"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/whitesmoke"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

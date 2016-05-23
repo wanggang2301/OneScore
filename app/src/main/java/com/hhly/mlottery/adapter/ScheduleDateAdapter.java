@@ -14,47 +14,50 @@ import java.util.List;
 
 public class ScheduleDateAdapter extends BaseAdapter {
 
-	private List<ScheduleDate> dList;
+    private List<ScheduleDate> dList;
 
-	private Context context;
+    private Context context;
 
-	public ScheduleDateAdapter(List<ScheduleDate> dList, Context context) {
-		super();
-		this.dList = dList;
-		this.context = context;
-	}
+    private int currentDatePosition = 0;
 
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return dList.size();
-	}
+    public ScheduleDateAdapter(List<ScheduleDate> dList, Context context, int position) {
+        super();
+        this.dList = dList;
+        this.context = context;
+        this.currentDatePosition = position;
+    }
 
-	@Override
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return position;
-	}
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return dList.size();
+    }
 
-	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return position;
-	}
+    @Override
+    public Object getItem(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		LayoutInflater _LayoutInflater = LayoutInflater.from(context);
-		convertView = _LayoutInflater.inflate(R.layout.my_spinner_item, null);
-		if (convertView != null) {
-			((TextView) convertView.findViewById(R.id.tv_riqi)).setText(dList.get(position).getDate());
-			((TextView) convertView.findViewById(R.id.tv_xingqi)).setText(dList.get(position).getWeek());
-		/*	if (position == 0) {
-				convertView.setBackgroundColor(context.getResources().getColor(R.color.spinner));
-			}*/
-		}
-		return convertView;
-	}
+    @Override
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // TODO Auto-generated method stub
+        LayoutInflater _LayoutInflater = LayoutInflater.from(context);
+        convertView = _LayoutInflater.inflate(R.layout.my_spinner_item, null);
+        if (convertView != null) {
+            ((TextView) convertView.findViewById(R.id.tv_riqi)).setText(dList.get(position).getDate());
+            ((TextView) convertView.findViewById(R.id.tv_xingqi)).setText(dList.get(position).getWeek());
+            if (position == currentDatePosition) {
+                convertView.setBackgroundColor(context.getResources().getColor(R.color.bot));
+            }
+        }
+        return convertView;
+    }
 
 }

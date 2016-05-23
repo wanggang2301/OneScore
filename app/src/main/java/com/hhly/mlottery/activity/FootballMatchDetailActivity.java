@@ -515,8 +515,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 mShare.setVisibility(View.VISIBLE);
 
 
-
-
                 if (!isInitedViewPager) {//如果ViewPager未初始化
                     initViewPager(matchDetail);
                     mPreStatus = matchDetail.getLiveStatus();
@@ -640,7 +638,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         findViewById(R.id.football_match_detail_tab3).setOnClickListener(this);
     }
 
-    /**赛场、指数、分析Fragment页面统计*/
+    /**
+     * 赛场、指数、分析Fragment页面统计
+     */
     private boolean isStadiumFragment = true;
     private boolean isStadium = false;
     private boolean isOddsFragment = false;
@@ -928,6 +928,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 break;
 
             case R.id.iv_share: //分享
+
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Share");
                 Map<String, String> data = new HashMap<String, String>();
                 String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();

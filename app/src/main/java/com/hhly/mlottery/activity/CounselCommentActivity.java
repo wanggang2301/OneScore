@@ -64,10 +64,12 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     private String model;
     private static final String INTENT_PARAMS_URL = "url";
     private static final String INTENT_PARAMS_TITLE = "title";
+    private static final int SINGLE_PAGE_COMMENT = 30;
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
     private int cmt_sum;//评论总数
     private int mCurrentPager = 1;
     private boolean isRequestFinish = true;
+    private boolean issubmitFinish = true;
     private   int def = 0;
 
     @Override
@@ -112,8 +114,8 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
 //                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
 //                    Log.e("lzf", "软件盘显示");
                     mEditText.setHint("");
-                    if (model.equals("m2note")){
-                        h-=145;
+                    if (model.equals("m2note")) {
+                        h -= 145;
                     }
 
                 } else if (h < 300) {//软键盘隐藏
@@ -202,19 +204,20 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 break;
             case R.id.iv_send://发送评论
                 MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");
-                L.e("lzfsend");
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
                     if (CyUtils.isLogin) {//已登录
-                        CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                        L.e("lzfsendyidenglu");
+                        if (issubmitFinish){//是否提交完成，若提交未完成，则不再重复提交
+                            issubmitFinish=false;
+                            CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
+                        }
+
                     } else {//未登录
                         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
                         CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
-                        L.e("lzfsend,meiyoudenglu");
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();
@@ -238,7 +241,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     public void loadTopic(String url, String title) {
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-        sdk.loadTopic("", url, title, null, 10, 10, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+        sdk.loadTopic("", url, title, null, SINGLE_PAGE_COMMENT, SINGLE_PAGE_COMMENT, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;//文章id
@@ -316,7 +319,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mProgressBar.setVisibility(View.VISIBLE);
         isRequestFinish = false;
         mLoadMore.setText(R.string.foot_loadingmore);
-        sdk.getTopicComments(topicid, 10, page, null, "", 1, 5, new CyanRequestListener<TopicCommentsResp>() {
+        sdk.getTopicComments(topicid, SINGLE_PAGE_COMMENT, page, null, "", 1, 5, new CyanRequestListener<TopicCommentsResp>() {
             @Override
             public void onRequestSucceeded(TopicCommentsResp topicCommentsResp) {
                 isRequestFinish = true;
@@ -347,8 +350,8 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     //评论提交成功回调接口
     @Override
     public void onRequestSucceeded(SubmitResp submitResp) {
+        issubmitFinish=true;
         mEditText.setText("");
-
         //刷新界面
         loadTopic(url, title);
     }
@@ -356,6 +359,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     //评论提交失败回调接口
     @Override
     public void onRequestFailed(CyanException e) {
+        issubmitFinish=true;
         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
     }
 

@@ -21,12 +21,7 @@
     <string name="weibosdk_demo_not_support_api_hint">您還未安裝新浪微博客戶端</string>
     <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
     <string name="share_recommend">推薦</string>
-
-
-
-
-
-
+    <string name="share_summary_default">壹比分,專業的足球比分直播平台</string>
 
 
     <!--指数-->
@@ -154,16 +149,16 @@
     <string name="pull_to_refresh_pull_label">向下拉動可以刷新</string>
     <string name="pull_to_refresh_release_label">鬆開可以刷新</string>
     <string name="pull_to_refresh_refreshing_label">加載中&#8230;</string>
-    
-       <!-- 异常处理 -->
-     <string name="exp_net_status_txt">您當前的網絡不給力</string>
-     <string name="exp__check_txt">請檢查后</string>
-     <string name="exp_refresh_txt">刷新</string>
-    
-    
+
+    <!-- 异常处理 -->
+    <string name="exp_net_status_txt">您當前的網絡不給力</string>
+    <string name="exp__check_txt">請檢查后</string>
+    <string name="exp_refresh_txt">刷新</string>
+
+
     <string name="no_data_txt">沒有數據！</string>
     <string name="data_parsing_exp_txt">數據解析異常！</string>
-  
+
     <string name="reload_txt">重新加載</string>
 
     <!-- 即时 -->
@@ -173,7 +168,7 @@
     <string name="immediate_status_point">點</string>
     <string name="immediate_status_midfield">中場</string>
     <string name="immediate_status_entertained">封</string>
-    
+
     <string name="immediate_status_cancel">取消</string>
     <string name="immediate_status_hold">待定</string>
     <string name="immediate_status_cut">腰斬</string>
@@ -183,7 +178,7 @@
 
     <string name="favourite">關注</string>
     <string name="cancel_favourite">取消關注</string>
-    
+
     <!-- 足球筛选 -->
     <string name="filtrate_match_top">足球篩選</string>
     <string name="filtrate_match_focal">焦點</string>
@@ -215,8 +210,8 @@
     <string name="about_service_txt">服務號：win13322</string>
     <string name="about_cus_service_txt">客    服</string>
     <string name="about_cus_number_txt"> 400-6776-550</string>
-    
-    
+
+
     <string name="about_io_exp">IO異常</string>
     <string name="about_service_exp">服務器異常</string>
     <string name="about_notice">提示</string>
@@ -361,7 +356,7 @@
     <string name="number_code_desc_ah_ks">每天80期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_js_ks">每天82期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_gx_ks">每天78期，10分鐘一期，9:30-22:30</string>
-    
+
     <string name="number_7">週日</string>
     <string name="number_1">週一</string>
     <string name="number_2">週二</string>
@@ -369,16 +364,16 @@
     <string name="number_4">週四</string>
     <string name="number_5">週五</string>
     <string name="number_6">週六</string>
-        <!-- 代码中的添加 string -->
+    <!-- 代码中的添加 string -->
     <string name="number_code_di">第</string>
     <string name="number_code_qi">期</string>
-      <!-- 异常处理 -->
-     <string name="number_exp_net_status_txt">您當前的網絡不給力</string>
-     <string name="number_exp__check_txt">請檢查后</string>
-     <string name="number_exp_refresh_txt">刷新</string>
-     
+    <!-- 异常处理 -->
+    <string name="number_exp_net_status_txt">您當前的網絡不給力</string>
+    <string name="number_exp__check_txt">請檢查后</string>
+    <string name="number_exp_refresh_txt">刷新</string>
+
     <!-- 彩票End -->
-    
+
     <string name="number_xq7">週日</string>
     <string name="number_xq1">週一</string>
     <string name="number_xq2">週二</string>
@@ -395,8 +390,6 @@
     <string name="number_xinqi6">週六</string>
 
 
-   
-   
     <!-- 设置 -->
     <string name="set_sound_txt">聲音</string>
     <string name="set_sound1_txt">聲音1</string>
@@ -438,7 +431,7 @@
     <string name="fragme_home_jiaqiu_text">加時</string>
     <string name="fragme_home_dianqiu_text">點球</string>
     <string name="fragme_home_fengpan_text">封</string>
-   <!-- 退出程序 -->
+    <!-- 退出程序 -->
     <string name="main_exit_text">再按一次退出程序</string>
     <!-- 提示复制成功 -->
     <string name="about_copy_success">文本已複制</string>
@@ -521,7 +514,6 @@
     <string name="basket_interrupt">中斷</string>
     <string name="basket_cancel">取消</string>
     <string name="basket_postpone">推遲</string>
-
 
 
     <string name="basket_yesterday">昨日</string>
@@ -653,7 +645,7 @@
     <string name="comment_send">發送</string>
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暫無評論內容</string>
-    <string name="toatalvisiable">全部顯示</string>
+    <string name="toatalvisiable">顯示全部</string>
     <!-- -->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">請輸入留言內容</string>

@@ -290,7 +290,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
         try {
             hSocketUri = new URI(BaseURLs.WS_SERVICE);
-            System.out.println(">>>>>"+hSocketUri);
+            System.out.println(">>>>>" + hSocketUri);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -352,14 +352,14 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
 
     @Override
-    public  void onMessage(String message) {
+    public void onMessage(String message) {
         L.i("1029", "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivity) getActivity()).mThirdId);
         pushStartTime = System.currentTimeMillis(); // 记录起始时间
         L.i("1029", "心跳时间" + pushStartTime);
         if (message.startsWith("CONNECTED")) {
             String id = "android" + DeviceInfo.getDeviceId(getActivity());
             id = MD5Util.getMD5(id);
-            if(getActivity()==null){
+            if (getActivity() == null) {
                 return;
             }
             hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.liveEvent." + ((FootballMatchDetailActivity) getActivity()).mThirdId + "." + appendLanguage() + "\n\n");
@@ -424,7 +424,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
                 }
 
-              //  L.i("1029",ws_json);
+                //  L.i("1029",ws_json);
                 L.i("1029", "===直播事件===" + "msgId=" + webSocketStadiumLiveTextEvent.getData().get("msgId") + ",,,時間" + StadiumUtils.convertStringToInt(webSocketStadiumLiveTextEvent.getData().get("time")) + ",,,msgText=" + webSocketStadiumLiveTextEvent.getData().get("msgText"));
 
                 if (AppConstants.isTestEnv) {
@@ -438,7 +438,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 if (currMatchTextLiveBean != null) {
                     isLostMsgId(currMatchTextLiveBean.getMsgId());
                 }
-                allMatchLiveMsgId.add(0,Integer.parseInt(currMatchTextLiveBean.getMsgId()));
+                allMatchLiveMsgId.add(0, Integer.parseInt(currMatchTextLiveBean.getMsgId()));
 
                 if (currMatchTextLiveBean != null) {
                     updatePushData(currMatchTextLiveBean);
@@ -449,9 +449,12 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
 
     private void isLostMsgId(String currMsgId) {
-         synchronized (allMatchLiveMsgId) {
+        if (allMatchLiveMsgId == null) {
+            return;
+        }
+        synchronized (allMatchLiveMsgId) {
             if (allMatchLiveMsgId != null && allMatchLiveMsgId.size() > 0) {
-                Collections.sort(allMatchLiveMsgId,Collections.reverseOrder());
+                Collections.sort(allMatchLiveMsgId, Collections.reverseOrder());
 
                 if ((Integer.parseInt(currMsgId) - allMatchLiveMsgId.get(0) >= 2)) {
                     L.i("1028", "------" + currMsgId + "---" + allMatchLiveMsgId.get(0));
@@ -459,7 +462,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 } else {
                     for (int i = 0; i < allMatchLiveMsgId.size() - 1; i++) {
                         boolean flag = false;
-                        if ((allMatchLiveMsgId.get(i) - allMatchLiveMsgId.get(i+1)) >= 2) {
+                        if ((allMatchLiveMsgId.get(i) - allMatchLiveMsgId.get(i + 1)) >= 2) {
                             L.i("1028", allMatchLiveMsgId.get(i) + "---" + allMatchLiveMsgId.get(i + 1));
                             isRequestMsgIdRepeat(String.valueOf(allMatchLiveMsgId.get(i + 1)), String.valueOf(allMatchLiveMsgId.get(i)));
                             flag = true;
@@ -480,7 +483,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
     private void isRequestMsgIdRepeat(String preMsgId, String msgId) {
 
         Map<String, String> msgIdParams = new HashMap<>();
-        if(getActivity()==null){
+        if (getActivity() == null) {
             return;
         }
         msgIdParams.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
@@ -1063,15 +1066,13 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         matchLive = mMatchDetail.getMatchInfo().getMatchLive();
 
 
-
-
         if (matchLive == null) {
             return;
         }
 
 
-        allMatchLiveMsgId=new ArrayList<>();
-        for (MatchTextLiveBean ml:matchLive ){
+        allMatchLiveMsgId = new ArrayList<>();
+        for (MatchTextLiveBean ml : matchLive) {
             allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
         }
 
@@ -1189,7 +1190,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
                     case R.id.rb_live_text:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_LiveTextBtn");
-                        Log.d("1029","rb_live_text");
+                        Log.d("1029", "rb_live_text");
                         frame_content.setVisibility(View.VISIBLE);
                         frame_content_corner.setVisibility(View.GONE);
                         frame_content_players.setVisibility(View.GONE);
@@ -1264,8 +1265,8 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
             if (time > 90) {
                 time = 90;
             }
-            if(timeLiveBean.getState().equals(HALFTIME)){
-                time=46;
+            if (timeLiveBean.getState().equals(HALFTIME)) {
+                time = 46;
             }
             timeLiveBean.setTime(time + "");
         }
@@ -1320,15 +1321,16 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         if (time > 90) {
             time = 90;
         }
-        if(bean.getState().equals(HALFTIME)){
-            time=46;
+        if (bean.getState().equals(HALFTIME)) {
+            time = 46;
         }
         return time;
 
     }
+
     @Override
     public void onResume() {
-         super.onResume();
+        super.onResume();
         if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
             startWebsocket();
             computeWebSocket();
@@ -1399,15 +1401,15 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         if (isMatchStart) {
 
             if (liveTextTime >= matchKeepTime) {
-                   keepTime.setText(liveTextTime + "");
+                keepTime.setText(liveTextTime + "");
             } else {
-                if (FIRSTHALF.equals(state) && matchKeepTime<=45){
+                if (FIRSTHALF.equals(state) && matchKeepTime <= 45) {
                     keepTime.setText(matchKeepTime + "");
-                }else if (FIRSTHALF.equals(state) && matchKeepTime>45){
+                } else if (FIRSTHALF.equals(state) && matchKeepTime > 45) {
                     keepTime.setText("45+");
-                }else if (SECONDHALF.equals(state) && matchKeepTime<=90){
+                } else if (SECONDHALF.equals(state) && matchKeepTime <= 90) {
                     keepTime.setText(matchKeepTime + "");
-                }else if (SECONDHALF.equals(state) && matchKeepTime>90){
+                } else if (SECONDHALF.equals(state) && matchKeepTime > 90) {
                     keepTime.setText("90+");
                 }
             }
@@ -1459,9 +1461,9 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
             if (liveTextTime >= matchKeepTime) {
                 keepTime.setText(liveTextTime + "");
             } else {
-               if (matchKeepTime>45){
+                if (matchKeepTime > 45) {
                     keepTime.setText("45+");
-                }else {
+                } else {
                     keepTime.setText(matchKeepTime + "");
                 }
             }
@@ -1482,9 +1484,9 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
             if (liveTextTime >= matchKeepTime) {
                 keepTime.setText(liveTextTime + "");
             } else {
-                if (matchKeepTime>90){
+                if (matchKeepTime > 90) {
                     keepTime.setText("90+");
-                }else {
+                } else {
                     keepTime.setText(matchKeepTime + "");
                 }
             }
