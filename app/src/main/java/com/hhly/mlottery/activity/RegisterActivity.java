@@ -1,9 +1,11 @@
 package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,8 @@ import com.hhly.mlottery.util.net.account.RegisterType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 注册界面
@@ -48,6 +52,24 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         
         initView();
         initData();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        et_username.setFocusable(true);
+        et_username.setFocusableInTouchMode(true);
+        et_username.requestFocus();
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() { //让软键盘延时弹出，以更好的加载Activity
+            public void run() {
+                InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(et_username, 0);
+            }
+
+        }, 300);
     }
 
     private void initView() {
@@ -82,18 +104,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onTick(long millisUntilFinished) {
-                if (tv_verycode.isClickable())
-                    tv_verycode.setClickable(false);
+                if (tv_verycode != null){
+                    if (tv_verycode.isClickable())
+                        tv_verycode.setClickable(false);
 
-                L.d(TAG,millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
-                tv_verycode.setText(millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
+                    L.d(TAG,millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
+                    tv_verycode.setText(millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
+                }
             }
         });
     }
 
     private void enableVeryCode() {
-        tv_verycode.setText(R.string.resend);
-        tv_verycode.setClickable(true);
+        if (tv_verycode != null){
+            tv_verycode.setText(R.string.resend);
+            tv_verycode.setClickable(true);
+        }
     }
 
     @Override
@@ -204,6 +230,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
                 @Override
                 public void onResponse(SendSmsCode jsonObject) {
+                    if (jsonObject.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
+                            || jsonObject.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
+                            || jsonObject.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
+                            ){
+                        countDown.cancel();
+                        enableVeryCode();
+                    }
+
                     CommonUtils.handlerRequestResult(jsonObject.getResult());
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
@@ -216,6 +250,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             } , SendSmsCode.class);
 
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDown != null){
+            countDown.cancel();
         }
     }
 }

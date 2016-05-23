@@ -139,8 +139,8 @@ public class CommonUtils {
             case AccountResultCode.PHONE_ALREADY_EXIST:
                 UiUtils.toast(MyApp.getInstance() , R.string.phone_already_exist);
                 break;
-            case AccountResultCode.USERNAME_PASS_ERROR:
-                UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
+            case AccountResultCode.USER_NOT_LOGIN:
+                UiUtils.toast(MyApp.getInstance() , R.string.user_not_login);
                 break;
             case AccountResultCode.PHONE_FORMAT_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.PHONE_FORMAT_ERROR);
@@ -165,6 +165,18 @@ public class CommonUtils {
                 break;
             case AccountResultCode.GET_WEIBO_INFO_FAIL:
                 UiUtils.toast(MyApp.getInstance() , R.string.GET_WEIBO_INFO_FAIL);
+                break;
+            case AccountResultCode.REALNAMW_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.realname_error);
+                break;
+            case AccountResultCode.ID_CARD_FORMAT_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.id_card_format_error);
+                break;
+            case AccountResultCode.PASSWORD_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.password_error);
+                break;
+            case AccountResultCode.USERNAME_PASS_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
                 break;
         }
 
