@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
@@ -54,8 +55,17 @@ public class MyApp extends Application {
 		VolleyContentFast.init(this);
 		//初始化畅言
 		CyUtils.initCy(this);
+
+
+		initUserInfo();
+
 		super.onCreate();
 	}
+
+	private void initUserInfo() {
+		CommonUtils.initRegisterInfo();
+	}
+
 
 
 	@Override

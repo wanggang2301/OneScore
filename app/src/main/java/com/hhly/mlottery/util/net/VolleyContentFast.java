@@ -36,7 +36,6 @@ public class VolleyContentFast {
 
     private static RequestQueue mQueue;
 
-
     /**
      * 初始化，在Application上初始化，只初始化一次赛
      *

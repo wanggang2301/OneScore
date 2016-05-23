@@ -31,13 +31,13 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.service.umengPushService;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,8 +54,9 @@ import java.util.Set;
  * 首页Activity
  * Created by hhly107 on 2016/3/29.com.hhly.mlottery.activity.HomePagerActivity
  */
-public class HomePagerActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
+public class HomePagerActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
+    private static final java.lang.String TAG = "HomePagerActivity";
     private Context mContext;// 上下文
     private ImageView public_btn_set;// 登录图标
     private SwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
@@ -86,6 +87,11 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private final int MIN_CLICK_DELAY_TIME = 2000;// 控件点击间隔时间
     private long lastClickTime = 0;
     private int clickCount = 0;// 点击次数
+
+    /**跳转其他Activity 的requestcode */
+    public static final int REQUESTCODE_LOGIN = 100;
+    public static final int REQUESTCODE_LOGOUT = 110;
+    private ImageView iv_account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -316,6 +322,15 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
         public_btn_filter.setVisibility(View.GONE);
 
+        iv_account = (ImageView) findViewById(R.id.iv_account);
+        if (CommonUtils.isLogin()){
+            iv_account.setImageResource(R.mipmap.login);
+        }else{
+            iv_account.setImageResource(R.mipmap.logout);
+        }
+        iv_account.setVisibility(View.VISIBLE);
+        iv_account.setOnClickListener(this);
+
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setVisibility(View.VISIBLE);
         public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
@@ -543,5 +558,45 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_account:
+                if (CommonUtils.isLogin()){
+                    goToAccountActivity();
+                }else{
+                    goToLoginActivity();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void goToLoginActivity() {
+        startActivityForResult(new Intent(this , LoginActivity.class) , REQUESTCODE_LOGIN);
+    }
+
+    private void goToAccountActivity() {
+        startActivityForResult(new Intent(this , AccountActivity.class) , REQUESTCODE_LOGOUT );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            if (requestCode == REQUESTCODE_LOGIN){
+                // 登录成功返回
+                L.d(TAG,"登录成功");
+                iv_account.setImageResource(R.mipmap.login);
+            }else if (requestCode == REQUESTCODE_LOGOUT){
+                L.d(TAG,"注销成功");
+                iv_account.setImageResource(R.mipmap.logout);
+            }
+        }
+
     }
 }
