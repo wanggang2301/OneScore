@@ -34,7 +34,7 @@ public class CardViewListAdapter extends BaseAdapter {
     private NewOddsInfo.AllInfoBean.ComListBean.PreLevelBean mPreLevelBean;
     private String oddType;
 
-    public CardViewListAdapter(Context context, List<NewOddsInfo.AllInfoBean.ComListBean> mComList,String oddType) {
+    public CardViewListAdapter(Context context, List<NewOddsInfo.AllInfoBean.ComListBean> mComList, String oddType) {
         super();
         this.context = context;
         this.mComList = mComList;
@@ -75,33 +75,45 @@ public class CardViewListAdapter extends BaseAdapter {
         //公司名称
         item.cpi_item_list_company_txt.setText(mComList.get(position).getComName());
         //即赔小于初赔
-           //主队
-            if (mCurrLevelBean.getLeftUp()==-1) {
-                item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
-            }
-            //即赔大于初赔
-            else if (mCurrLevelBean.getLeftUp()==1) {
-                item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
-            } else {
-                item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.black));
-            }
+        //主队
+        if (mCurrLevelBean.getLeftUp() == -1) {
+            item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
+        }
+        //即赔大于初赔
+        else if (mCurrLevelBean.getLeftUp() == 1) {
+            item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
+        } else {
+            item.cpi_item_list_home_txt.setTextColor(context.getResources().getColor(R.color.black));
+        }
 
            //盘口
-            if (mCurrLevelBean.getMiddleUp()==-1) {
+            if ("green".equals(mCurrLevelBean.getCurrTextBgColor())){
+                item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.white));
+                item.cpi_item_list_odds_txt.setBackgroundResource(R.color.tabhost);
+            } else if ("red".equals(mCurrLevelBean.getCurrTextBgColor())) {
+                item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.white));
+                item.cpi_item_list_odds_txt.setBackgroundResource(R.color.red);
+            } else if("black".equals(mCurrLevelBean.getCurrTextBgColor())){
+                item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.black));
+                item.cpi_item_list_odds_txt.setBackgroundResource(R.color.transparency);
+            }else {
+                //欧赔
+            if (mCurrLevelBean.getMiddleUp() == -1) {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
-            } else if (mCurrLevelBean.getMiddleUp()==1) {
+            } else if (mCurrLevelBean.getMiddleUp() == 1) {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
             } else {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.black));
             }
-        //客队
-            if (mCurrLevelBean.getRightUp()==-1) {
-                item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
-            } else if (mCurrLevelBean.getRightUp()==1) {
-                item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
-            } else {
-                item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.black));
             }
+        //客队
+        if (mCurrLevelBean.getRightUp() == -1) {
+            item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.tabhost));
+        } else if (mCurrLevelBean.getRightUp() == 1) {
+            item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.homwe_lhc_red));
+        } else {
+            item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.black));
+        }
         if (CPIFragment.TYPE_PLATE.equals(oddType)) {//亚盘
             //转换盘口
             item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
@@ -114,6 +126,7 @@ public class CardViewListAdapter extends BaseAdapter {
             item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
             item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
         }
+
         //即赔
         item.cpi_item_list_home_txt.setText(mCurrLevelBean.getLeft());
         item.cpi_item_list_guest_txt.setText(mCurrLevelBean.getRight());

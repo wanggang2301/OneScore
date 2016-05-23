@@ -78,9 +78,8 @@
                 android:id="@+id/cpi_item_home_txt"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/y10"
                 android:layout_weight="1"
-                android:gravity="center|right"
+                android:gravity="center"
                 android:text="主队"
                 android:textSize="13sp" />
 
@@ -88,9 +87,8 @@
                 android:id="@+id/cpi_item_odds_txt"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/y10"
                 android:layout_weight="1"
-                android:gravity="center|right"
+                android:gravity="center"
                 android:text="盘口"
                 android:textSize="13sp" />
 
@@ -98,9 +96,8 @@
                 android:id="@+id/cpi_item_guest_txt"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:gravity="center|right"
+                android:gravity="center"
                 android:text="客队"
                 android:textSize="13sp" />
 
@@ -114,7 +111,7 @@
         <com.hhly.mlottery.widget.CpiListView
             android:id="@+id/item_cpi_odds_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

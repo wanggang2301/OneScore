@@ -15,6 +15,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -59,13 +60,15 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     private ImageView public_img_back, public_btn_filter, public_btn_set;
     private TextView public_txt_title, public_txt_left_title;//标题
     private CPIFragmentAdapter mCPIViewPagerAdapter;
-    public  ExactSwipeRefrashLayout mRefreshLayout;
+    public ExactSwipeRefrashLayout mRefreshLayout;
     public LinearLayout public_date_layout;//显示时间的layout
     public TextView public_txt_date;//显示时间的textview
     //热门，公司，筛选
     public ImageView public_img_hot, public_img_company;
-    /**筛选联赛*/
-    public  ImageView public_img_filter;
+    /**
+     * 筛选联赛
+     */
+    public ImageView public_img_filter;
 
     /**
      * 切换Viewpager的标签
@@ -106,17 +109,17 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //判断是否是日期选择
     private boolean isFirst = false;
     //默认选择当天，当点击item后改变选中的position
-    public int selectPosition=3;
+    public int selectPosition = 6;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads().detectDiskWrites().detectNetwork()
-                    .penaltyLog().build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
-                    .build());
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads().detectDiskWrites().detectNetwork()
+                .penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
+                .build());
         mContext = getActivity();
     }
 
@@ -376,22 +379,21 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 if (mCPIOddsFragment.cpi_fl_plate_networkError.getVisibility() == View.VISIBLE) {
                     mMapDayList = getDate();
                     public_txt_date.setText(UiUtils.requestByGetDay(0));
-                    selectPosition=3;
+                    selectPosition = 3;
                     for (Fragment fragment : fragments) {
                         ((CPIOddsFragment) fragment).switchd("");
                     }
-                }
-                else{
+                } else {
                     companysName.clear();
-                for (int k = 0; k < companys.size(); k++) {
-                    if (companys.get(k).isChecked()) {
-                        companysName.add(companys.get(k).getComName());
+                    for (int k = 0; k < companys.size(); k++) {
+                        if (companys.get(k).isChecked()) {
+                            companysName.add(companys.get(k).getComName());
+                        }
                     }
-                  }
-                mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
-                mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
-                mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
-             }
+                    mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
+                    mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
+                    mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
+                }
                 mRefreshLayout.setRefreshing(false);
             }
         }, 500);
@@ -416,6 +418,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         mAlertDialog.setCanceledOnTouchOutside(true);
         //如果选择的是日期
         if (dateAndcompanyNumber == 0) {
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 1000);
+            dialog_list.setLayoutParams(params);
             titleView.setText(R.string.tip);
             //这个是显示日期的适配器
             cpiDateAdapter = new CpiDateAdapter(mContext, mMapDayList);
@@ -427,7 +432,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                     companys.clear();
                     // 记录点击的 item 位置
-                    selectPosition=position;
+                    selectPosition = position;
                     //设置标题时间
                     public_txt_date.setText(mMapList.get(position).get("date"));
                     for (Fragment fragment : fragments) {
@@ -485,8 +490,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                         }
                     }
 
-                    if (count < 2) {
-                        UiUtils.toast(mContext, "公司不能少于两家", Toast.LENGTH_SHORT);
+                    if (count < 1) {
+                        UiUtils.toast(mContext, "请选择公司", Toast.LENGTH_SHORT);
                         return;
                     }
 
@@ -532,7 +537,21 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
      */
     public List<Map<String, String>> getDate() {
         mMapList = new ArrayList<>();
-        new Thread() { @Override  public void run() {
+        new Thread() {
+            @Override
+            public void run() {
+                mMap = new HashMap<>();
+                mMap.put("date", UiUtils.requestByGetDay(-6));
+                mMapList.add(mMap);
+
+                mMap = new HashMap<>();
+                mMap.put("date", UiUtils.requestByGetDay(-5));
+                mMapList.add(mMap);
+
+                mMap = new HashMap<>();
+                mMap.put("date", UiUtils.requestByGetDay(-4));
+                mMapList.add(mMap);
+
                 mMap = new HashMap<>();
                 mMap.put("date", UiUtils.requestByGetDay(-3));
                 mMapList.add(mMap);
@@ -559,7 +578,25 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
                 mMap = new HashMap<>();
                 mMap.put("date", UiUtils.requestByGetDay(3));
-                mMapList.add(mMap);} }.start();
+                mMapList.add(mMap);
+
+                mMap = new HashMap<>();
+                mMap.put("date", UiUtils.requestByGetDay(4));
+                mMapList.add(mMap);
+
+                mMap = new HashMap<>();
+                mMap.put("date", UiUtils.requestByGetDay(5));
+                mMapList.add(mMap);
+
+                mMap = new HashMap<>();
+                mMap.put("date", UiUtils.requestByGetDay(6));
+                mMapList.add(mMap);
+
+                mMap = new HashMap<>();
+                mMap.put("date", UiUtils.requestByGetDay(7));
+                mMapList.add(mMap);
+            }
+        }.start();
         return mMapList;
     }
 

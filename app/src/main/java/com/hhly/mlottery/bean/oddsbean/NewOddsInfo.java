@@ -364,6 +364,15 @@ public class NewOddsInfo {
                 private int leftUp;
                 private int rightUp;
                 private int middleUp;
+                private String currTextBgColor;
+
+                public String getCurrTextBgColor() {
+                    return currTextBgColor;
+                }
+
+                public void setCurrTextBgColor(String currTextBgColor) {
+                    this.currTextBgColor = currTextBgColor;
+                }
 
                 public int getMiddleUp() {
                     return middleUp;

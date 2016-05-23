@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.cpiadapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -113,7 +114,42 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                     cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
                             "\t" + "<font color=#ff0000>" + matchInfoBean.getMatchResult() + "</font>" + "\t" + matchInfoBean.getMatchGuestName()));
                 }
-                cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(),stType);
+        //亚盘
+        if(stType.equals(CPIFragment.TYPE_PLATE)){
+            for (int i = 0; i <mAllInfoBean.get(position).getComList().size() ; i++) {
+                //亚盘如果降
+                if(mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp()==-1){
+                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
+                }
+                //亚盘如果升
+                else if(mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp()==1){
+                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
+                }else{
+                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
+                }
+            }
+            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(),stType);
+        }
+        else if (stType.equals(CPIFragment.TYPE_BIG)){
+            for (int i = 0; i <mAllInfoBean.get(position).getComList().size() ; i++) {
+                //大小球如果降
+                if(mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp()==-1){
+                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
+                }
+                //大小球如果升
+                else if(mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp()==1){
+                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
+                }else{
+                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
+                }
+            }
+            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(),stType);
+        }else{
+            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(),stType);
+        }
+
+                cpiViewHolder.item_cpi_odds_listview.setDivider(context.getResources().getDrawable(R.color.homwe_grey));
+                cpiViewHolder.item_cpi_odds_listview.setDividerHeight(2);
                 cpiViewHolder.item_cpi_odds_listview.setAdapter(cardViewListAdapter);
                 new CpiListView(context).setListViewHeightBasedOnChildren(cpiViewHolder.item_cpi_odds_listview);
 
