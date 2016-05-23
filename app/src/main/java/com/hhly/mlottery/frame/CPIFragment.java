@@ -259,26 +259,27 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.public_img_back:
-                if (getActivity() == null) return;
-                ((FootballActivity) getActivity()).finish();
-                break;
-            case R.id.cpi_match_detail_tab1:
-                mViewPager.setCurrentItem(0);
-                break;
-            case R.id.cpi_match_detail_tab2:
-                mViewPager.setCurrentItem(1);
-                break;
-            case R.id.cpi_match_detail_tab3:
-                mViewPager.setCurrentItem(2);
+        if (UiUtils.onDoubClick()) {
+            switch (view.getId()) {
+                case R.id.public_img_back:
+                    if (getActivity() == null) return;
+                    ((FootballActivity) getActivity()).finish();
+                    break;
+                case R.id.cpi_match_detail_tab1:
+                    mViewPager.setCurrentItem(0);
+                    break;
+                case R.id.cpi_match_detail_tab2:
+                    mViewPager.setCurrentItem(1);
+                    break;
+                case R.id.cpi_match_detail_tab3:
+                    mViewPager.setCurrentItem(2);
 
-                break;
-            case R.id.public_txt_date://点击日期的textview
-                setDialog(0);//代表日期
-                break;
-            case R.id.public_img_hot://点击热门
-                //如果当前选择了热门
+                    break;
+                case R.id.public_txt_date://点击日期的textview
+                    setDialog(0);//代表日期
+                    break;
+                case R.id.public_img_hot://点击热门
+                    //如果当前选择了热门
 //                if (isHot) {
 //                    public_img_hot.setSelected(true);
 //                    isHot = false;
@@ -312,31 +313,32 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
 
 //                }
-                break;
-            case R.id.public_img_company://点击公司
-                setDialog(1);//代表公司
-                break;
-            case R.id.public_img_filter://点击筛选
+                    break;
+                case R.id.public_img_company://点击公司
+                    setDialog(1);//代表公司
+                    break;
+                case R.id.public_img_filter://点击筛选
 //                if (CPIOddsFragment.mFileterTagsBean.size() == 0 && CPIOddsFragment.mFileterTagsBean == null)
 //                    return;
-                Intent intent = new Intent(mContext, CpiFiltrateActivity.class);
-                //如果选择的是日期不传选中的
-                if (isFirst) {
-                    intent.putExtra("fileterTags", (Serializable) CPIOddsFragment.mFileterTagsBean);
-                    ddList.clear();
-                    intent.putExtra("linkedListChecked", ddList);
-                    isFirst = false;
-                }
-                //否者要传选中的id
-                else {
-                    intent.putExtra("fileterTags", (Serializable) CPIOddsFragment.mFileterTagsBean);
-                    intent.putExtra("linkedListChecked", ddList);
-                }
-                startActivityForResult(intent, 10086);
+                    Intent intent = new Intent(mContext, CpiFiltrateActivity.class);
+                    //如果选择的是日期不传选中的
+                    if (isFirst) {
+                        intent.putExtra("fileterTags", (Serializable) CPIOddsFragment.mFileterTagsBean);
+                        ddList.clear();
+                        intent.putExtra("linkedListChecked", ddList);
+                        isFirst = false;
+                    }
+                    //否者要传选中的id
+                    else {
+                        intent.putExtra("fileterTags", (Serializable) CPIOddsFragment.mFileterTagsBean);
+                        intent.putExtra("linkedListChecked", ddList);
+                    }
+                    startActivityForResult(intent, 10086);
 
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
