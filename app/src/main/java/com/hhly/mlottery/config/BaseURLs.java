@@ -650,6 +650,15 @@ public class BaseURLs {
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
     public final static String URL_STARTPIC = URL_API_HOST + STARTPIC;
+    /**发送验证码*/
+    public final static String URL_SENDSMSCODE = URL_API_HOST + "androidUserCenter.sendSmsCode.do";
+    /**注册*/
+    public final static String URL_REGISTER = URL_API_HOST + "androidUserCenter.register.do";
+    /**登录*/
+    public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
+    /**登出*/
+    public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
+
 
 
 }

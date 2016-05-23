@@ -22,6 +22,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.ClipboardManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -32,6 +33,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Tenney
@@ -416,10 +423,63 @@ public class UiUtils {
         boolean flag = false;
         long time = System.currentTimeMillis() - lastTime;
 
-        if (time > 500) {
-            flag = true;
-        }
-        lastTime = System.currentTimeMillis();
-        return flag;
-    }
+		if (time > 500) {
+			flag = true;
+		}
+		lastTime = System.currentTimeMillis();
+		return flag;
+	}
+
+	/**
+	 * 检查手机号码是否符合格式
+	 *
+	 * @param mobiles
+	 * @return
+
+	 */
+	public static boolean isMobileNO(Context ctx ,String mobiles) {
+
+		if (TextUtils.isEmpty(mobiles)){
+			toast(ctx, R.string.phone_empty);
+			return false;
+		}
+
+		Pattern p = Pattern
+				.compile("^((14[0-9])|(17[0-9])|(13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$");
+		Matcher m = p.matcher(mobiles);
+		boolean match =  m.matches();
+		if (!match){
+			toast(ctx, R.string.phone_error);
+		}
+		return match;
+	}
+
+
+	public static boolean checkVerifyCode(Context ctx, String verifycode) {
+
+		if (TextUtils.isEmpty(verifycode)){
+			toast(ctx, R.string.verify_code);
+			return false;
+		}
+		return true;
+	}
+
+
+	public static boolean checkPassword(Context ctx, String pwd) {
+
+		if (TextUtils.isEmpty(pwd)){
+			toast(ctx, R.string.pwd_empty);
+			return false;
+		}
+
+		Pattern p = Pattern.compile("^[0-9a-zA-Z_]{6,16}$");
+		Matcher matcher = p.matcher(pwd);
+		boolean match =  matcher.matches();
+		if (!match){
+			toast(ctx, R.string.pwd_format);
+		}
+		return match;
+	}
+
+
 }
