@@ -426,6 +426,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                         backgroundAlpha(1f);
                     }
                 });
+
                 backgroundAlpha(0.5f);
         }
     }
@@ -434,6 +435,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
     }
 
     private void shareQQ(int falg) {

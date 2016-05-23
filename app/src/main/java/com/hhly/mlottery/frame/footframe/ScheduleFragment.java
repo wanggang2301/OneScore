@@ -311,7 +311,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 //                    mListView.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (isLoadData) {
-                        Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        if (mContext!=null) {
+                            Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         mLine.setVisibility(View.GONE);
                         mLoadingLayout.setVisibility(View.GONE);
@@ -479,6 +481,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         }, ScheduleMatchs.class);
 
         initFocusClickListener();
+
         choiceDateList();
     }
 

@@ -964,6 +964,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
     }
 
 
