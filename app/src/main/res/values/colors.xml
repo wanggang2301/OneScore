@@ -555,6 +555,7 @@
     <color name="odds_down">#21b11e</color>
     <color name="basket_odds_divider">#2e2d32</color>
 
+    <color name="basket_default_color">#FFFFFF</color>
 
     <!--分析界面部分顏色-->
     <color name="win_color">#ff0000</color>
