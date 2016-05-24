@@ -1,6 +1,8 @@
 package com.hhly.mlottery.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -59,11 +61,29 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.tv_logout: // 返回
                 MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
-                logout();
+                showDialog();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showDialog(){
+        AlertDialog dialog = new AlertDialog.Builder(AccountActivity.this)
+                .setMessage(getResources().getString(R.string.logout_check))
+                .setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        logout();
+                    }
+                })
+                .setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .create();
+        dialog.show();
     }
 
     /**
