@@ -31,7 +31,7 @@ import java.util.TimerTask;
 
 
 /**
- *
+ * 登录界面
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -56,6 +56,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("LoginActivity");
         super.onResume();
+
+        // 自动弹出软键盘
         et_username.setFocusable(true);
         et_username.setFocusableInTouchMode(true);
         et_username.requestFocus();
@@ -138,6 +140,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
+    /**
+     * 登录
+     */
     private void login() {
         String userName = et_username.getText().toString();
         String passWord = et_password.getText().toString();

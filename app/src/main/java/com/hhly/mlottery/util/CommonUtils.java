@@ -50,6 +50,9 @@ public class CommonUtils {
     }
 
 
+    /**
+     * 初始化注册信息（与登录信息一样）
+     */
     public static void initRegisterInfo(){
         Register.DataBean.UserBean userBean = new Register.DataBean.UserBean();
         userBean.setUserId(PreferenceUtil.getString(AppConstants.SPKEY_USERID , ""));
@@ -106,6 +109,10 @@ public class CommonUtils {
     }
 
 
+    /**
+     * 请求账户信息返回统一处理
+     * @param rescode
+     */
     public static void handlerRequestResult(int rescode){
         L.d(TAG , "handlerRequestResult rescode =  "+ rescode);
         switch (rescode){
