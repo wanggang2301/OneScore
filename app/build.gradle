@@ -55,4 +55,7 @@ android {
         compile files('libs/sina/weibosdkcore_release.jar')
     }
 
-}
+}/**/
+;[
+
+]

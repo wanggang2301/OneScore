@@ -141,11 +141,11 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         setHideNumber();
 
         //热门赛事
-        mCpiAdapterHot = new CpiFiltrateMatchAdapter(mContext, hotsTemp, mCheckedIds, R.layout.item_filtrate_match);
+        mCpiAdapterHot = new CpiFiltrateMatchAdapter(mContext, hotsTemp, mCheckedIds, R.layout.item_cpi_filtrate);
         mCpiAdapterHot.setOnItemCheckedChangedListener(this);
         cpiGridviewHot.setAdapter(mCpiAdapterHot);
         //其他赛事
-        mCpiAdapterOther = new CpiFiltrateMatchAdapter(mContext, normalTemp, mCheckedIds, R.layout.item_filtrate_match);
+        mCpiAdapterOther = new CpiFiltrateMatchAdapter(mContext, normalTemp, mCheckedIds, R.layout.item_cpi_filtrate);
         mCpiAdapterOther.setOnItemCheckedChangedListener(this);
         cpiGridviewOther.setAdapter(mCpiAdapterOther);
 
@@ -249,6 +249,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
             }
         }
         cpi_filtrate_match_hide_number.setText("" + (allSize - checkedSize));
+
 
     }
 }

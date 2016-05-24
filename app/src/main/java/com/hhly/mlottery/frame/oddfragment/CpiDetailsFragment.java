@@ -2,11 +2,14 @@ package com.hhly.mlottery.frame.oddfragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,9 +38,8 @@ public class CpiDetailsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_COMID = "mParamComId";
     private static final String ARG_POSITIONNUNBER = "mParamPositionNunber";
-    private static final String ARG_TYPE = "mParamType";
 
-    private String mParam1, mParamComId, mParamPositionNunber, mParamType;
+    private String mParam1, mParamComId, mParamPositionNunber;
     private List<Map<String, String>> mParam2List;
     private View mView;
     private Context mContext;
@@ -52,7 +54,12 @@ public class CpiDetailsFragment extends Fragment {
     private PinnedHeaderExpandableListView  cpi_odds_tetails_right_listview;
     //新版指数详情右边数据
     private CpiDetailsAdatper mCpiDetailsAdatper;
-
+    private FrameLayout cpi_right_fl_plate_noData,cpi_right_fl_plate_networkError,cpi_right_fl_plate_loading;
+    private TextView cpi_txt_reLoading;
+    private static final int ERROR = -1;//访问失败
+    private static final int SUCCESS = 0;// 访问成功
+    private static final int STARTLOADING = 1;// 数据加载中
+    private static final int NODATA = 400;// 暂无数据
 
     public static CpiDetailsFragment newInstance(String param1, List listParam2, String mParamComId, String mParamPositionNunber, String mParamType) {
         CpiDetailsFragment fragment = new CpiDetailsFragment();
@@ -61,7 +68,7 @@ public class CpiDetailsFragment extends Fragment {
         args.putSerializable(ARG_PARAM2, (Serializable) listParam2);
         args.putString(ARG_COMID, mParamComId);
         args.putString(ARG_POSITIONNUNBER, mParamPositionNunber);
-        args.putString(ARG_TYPE, mParamType);
+//        args.putString(ARG_TYPE, mParamType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +81,6 @@ public class CpiDetailsFragment extends Fragment {
             mParam2List = (ArrayList) getArguments().getSerializable(ARG_PARAM2);
             mParamComId = getArguments().getString(ARG_COMID);
             mParamPositionNunber = getArguments().getString(ARG_POSITIONNUNBER);
-            mParamType = getArguments().getString(ARG_TYPE);
 
         }
     }
@@ -84,11 +90,17 @@ public class CpiDetailsFragment extends Fragment {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_cpi_details_odds, container, false);//item_cpi_odds
         InitView();
+        //获得赛事id
+        mThirdId = mParam2List.get(0).get("thirdid");
         DetailsLeftData();
         return mView;
     }
 
     private void InitView() {
+        cpi_right_fl_plate_noData = (FrameLayout) mView.findViewById(R.id.cpi_right_fl_plate_noData);
+        cpi_right_fl_plate_networkError = (FrameLayout) mView.findViewById(R.id.cpi_right_fl_plate_networkError);
+        cpi_right_fl_plate_loading = (FrameLayout) mView.findViewById(R.id.cpi_right_fl_plate_loading);
+        cpi_txt_reLoading = (TextView) mView.findViewById(R.id.cpi_txt_reLoading);
         //详情
         cpi_home_details_txt_id = (TextView) mView.findViewById(R.id.cpi_home_details_txt_id);
         cpi_dish_details_txt_id = (TextView) mView.findViewById(R.id.cpi_dish_details_txt_id);
@@ -107,6 +119,14 @@ public class CpiDetailsFragment extends Fragment {
             cpi_dish_details_txt_id.setText(R.string.odd_dish_op_txt);
             cpi_guest_details_txt_id.setText(R.string.odd_guest_op_txt);
         }
+        // 访问失败，点击刷新
+        cpi_txt_reLoading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 请求数据
+                RightData(stCompanId);
+            }
+        });
     }
 
 
@@ -118,8 +138,6 @@ public class CpiDetailsFragment extends Fragment {
         cpi_tails_left_listview.setAdapter(oddDetailsLeftAdapter);
         //根据传过去的postion更改选中的item选中背景
         oddDetailsLeftAdapter.setDefSelect(Integer.parseInt(mParamPositionNunber));
-        //获得赛事id
-        mThirdId = mParam2List.get(0).get("thirdid");
         // 指数详情右边数据
         RightData(mParamComId);
 
@@ -150,28 +168,25 @@ public class CpiDetailsFragment extends Fragment {
 
     //新版详情右边的数据
     public void RightData(String idComId) {
-        String url = "http://m.13322.com/mlottery/core/footBallMatch.matchOddDetail.do";
+        mHandler.sendEmptyMessage(STARTLOADING);
         Map<String, String> myPostParams = new HashMap<>();
         if ("1".equals(mParam1)) {
             //亚盘
             myPostParams.put("companyId", idComId);
             myPostParams.put("oddType", mParam1);
-            myPostParams.put("thirdId", "326042");
         } else if ("3".equals(mParam1)) {
             //大小
             myPostParams.put("companyId", idComId);
             myPostParams.put("oddType", mParam1);
-            myPostParams.put("thirdId", "326042");
         } else if ("2".equals(mParam1)) {
             //欧赔
             myPostParams.put("companyId", idComId);
             myPostParams.put("oddType", mParam1);
-            myPostParams.put("thirdId", "326042");
         }
-
+        myPostParams.put("thirdId", mThirdId);
 
         // 2、连接服务器
-        VolleyContentFast.requestJsonByGet(url,myPostParams, new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_MATCHODD_DETAILS,myPostParams, new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
             @Override
             public synchronized void onResponse(final OddsDetailsDataInfo json) {
                 if (json != null) {
@@ -237,11 +252,15 @@ public class CpiDetailsFragment extends Fragment {
                             cpi_odds_tetails_right_listview.expandGroup(i);
                         }
                     }
+                    mHandler.sendEmptyMessage(SUCCESS);
+                }else{
+                    mHandler.sendEmptyMessage(NODATA);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mHandler.sendEmptyMessage(ERROR);
             }
         }, OddsDetailsDataInfo.class);
     }
@@ -265,4 +284,37 @@ public class CpiDetailsFragment extends Fragment {
             currentDetailsEntity.setDishColor(color);
         }
     }
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SUCCESS:// 访问成功
+                    cpi_right_fl_plate_noData.setVisibility(View.GONE);
+                    cpi_right_fl_plate_networkError.setVisibility(View.GONE);
+                    cpi_right_fl_plate_loading.setVisibility(View.GONE);
+                    cpi_odds_tetails_right_listview.setVisibility(View.VISIBLE);
+                    break;
+                case STARTLOADING://正在加载的时候
+                    cpi_right_fl_plate_noData.setVisibility(View.GONE);
+                    cpi_right_fl_plate_networkError.setVisibility(View.GONE);
+                    cpi_right_fl_plate_loading.setVisibility(View.VISIBLE);
+                    cpi_odds_tetails_right_listview.setVisibility(View.GONE);
+                    break;
+                case ERROR://访问失败
+                    cpi_right_fl_plate_noData.setVisibility(View.GONE);
+                    cpi_right_fl_plate_networkError.setVisibility(View.VISIBLE);
+                    cpi_right_fl_plate_loading.setVisibility(View.GONE);
+                    cpi_odds_tetails_right_listview.setVisibility(View.GONE);
+                    break;
+                case NODATA://没有数据
+                    cpi_right_fl_plate_noData.setVisibility(View.VISIBLE);
+                    cpi_right_fl_plate_networkError.setVisibility(View.GONE);
+                    cpi_right_fl_plate_loading.setVisibility(View.GONE);
+                    cpi_odds_tetails_right_listview.setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }

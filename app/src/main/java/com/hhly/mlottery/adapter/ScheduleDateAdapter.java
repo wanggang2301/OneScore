@@ -54,7 +54,7 @@ public class ScheduleDateAdapter extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.tv_riqi)).setText(dList.get(position).getDate());
             ((TextView) convertView.findViewById(R.id.tv_xingqi)).setText(dList.get(position).getWeek());
             if (position == currentDatePosition) {
-                convertView.setBackgroundColor(context.getResources().getColor(R.color.bot));
+                convertView.setBackgroundColor(context.getResources().getColor(R.color.selected_bg));
             }
         }
         return convertView;
