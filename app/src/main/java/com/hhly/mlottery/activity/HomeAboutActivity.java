@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -176,14 +177,16 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
      * 新版本更新提示
      */
     private void promptVersionUp() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);//  android.R.style.Theme_Material_Light_Dialog
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
         builder.setCancelable(false);// 设置对话框以外不可点击
         builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
-        String mMessage = mUpdateInfo.getDescription();// 获取提示内容
-        if(mMessage.contains("#")){
-            mMessage = mMessage.replace("#","\n");// 换行处理
+        if (mUpdateInfo != null) {
+            String mMessage = mUpdateInfo.getDescription();// 获取提示内容
+            if (mMessage.contains("#")) {
+                mMessage = mMessage.replace("#", "\n");// 换行处理
+            }
+            builder.setMessage(mMessage);// 提示内容
         }
-        builder.setMessage(mMessage);// 提示内容
         builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -220,6 +223,9 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
         });
         android.support.v7.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
+        /*WindowManager.LayoutParams  lp= alertDialog.getWindow().getAttributes();
+        lp.height= 100;
+        alertDialog.getWindow().setAttributes(lp);*/
     }
 
     /**
