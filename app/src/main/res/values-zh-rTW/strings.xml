@@ -655,7 +655,7 @@
 
 
     <!-- 登录注册 begin-->
-    <string name="my">我的</string>
+    <string name="my">個人中心</string>
     <string name="register">注冊</string>
     <string name="registering">正在注冊...</string>
     <string name="login">登錄</string>

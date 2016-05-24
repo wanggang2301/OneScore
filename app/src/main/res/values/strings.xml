@@ -693,7 +693,7 @@
 
 
     <!-- 登录注册 begin-->
-    <string name="my">我的</string>
+    <string name="my">个人中心</string>
     <string name="register">注册</string>
     <string name="registering">正在注册...</string>
     <string name="login">登录</string>
