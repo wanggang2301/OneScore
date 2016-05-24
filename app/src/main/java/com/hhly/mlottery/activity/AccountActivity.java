@@ -97,7 +97,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 progressBar.dismiss();
                 L.e(TAG , " 注销失败");
-                UiUtils.toast(MyApp.getInstance() , R.string.logout_fail);
+                UiUtils.toast(MyApp.getInstance() , R.string.immediate_unconection);
             }
         } , Register.class);
     }

@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -33,12 +36,13 @@ import java.util.TimerTask;
 /**
  * 登录界面
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
 
     private EditText et_username , et_password;
     private ImageView iv_eye;
     private ProgressDialog progressBar;
+    private ImageView iv_delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +91,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.login);
-        findViewById(R.id.iv_delete).setOnClickListener(this);
+        iv_delete = (ImageView) findViewById(R.id.iv_delete);
+        iv_delete.setOnClickListener(this);
 
         iv_eye = (ImageView) findViewById(R.id.iv_eye);
         iv_eye.setOnClickListener(this);
@@ -96,6 +101,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
         et_username = (EditText) findViewById(R.id.et_username);
+
+        et_username.addTextChangedListener(this);
+
         et_password = (EditText) findViewById(R.id.et_password);
 
 
@@ -179,7 +187,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         progressBar.dismiss();
 
                         L.e(TAG , " 登录失败");
-                        UiUtils.toast(LoginActivity.this , R.string.login_fail);
+                        UiUtils.toast(LoginActivity.this , R.string.immediate_unconection);
                     }
                 } , Register.class);
             }
@@ -198,6 +206,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         }
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (TextUtils.isEmpty(s)){
+            iv_delete.setVisibility(View.GONE);
+        }else{
+            iv_delete.setVisibility(View.VISIBLE);
+        }
     }
 }
 

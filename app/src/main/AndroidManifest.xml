@@ -188,7 +188,8 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.AccountActivity"/>
+        <activity android:name=".activity.AccountActivity"
+                  android:screenOrientation="portrait"/>
         <!-- 畅言的配置项 -->
         <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity"></activity>
 
