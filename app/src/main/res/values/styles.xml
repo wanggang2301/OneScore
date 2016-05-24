@@ -536,9 +536,8 @@
     </style>
 
     <!--AppDialog_Theme-->
-    <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Light.Dialog.FixedSize">
+    <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Dialog.Alert">
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowFixedHeightMajor">40%</item>
     </style>
 
 </resources>

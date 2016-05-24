@@ -223,9 +223,6 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
         });
         android.support.v7.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
-        /*WindowManager.LayoutParams  lp= alertDialog.getWindow().getAttributes();
-        lp.height= 100;
-        alertDialog.getWindow().setAttributes(lp);*/
     }
 
     /**
