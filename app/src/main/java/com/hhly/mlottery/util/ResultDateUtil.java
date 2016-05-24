@@ -1,16 +1,16 @@
 package com.hhly.mlottery.util;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import android.content.Context;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleDate;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class ResultDateUtil {
 	
@@ -76,11 +76,11 @@ public class ResultDateUtil {
 	 * 
 	 * @param s
 	 */
-	public static ScheduleDateAdapter initListDateAndWeek(Context context,List<ScheduleDate> datelist, String s) {
+	public static ScheduleDateAdapter initListDateAndWeek(Context context,List<ScheduleDate> datelist, String s,int position) {
 		datelist = new ArrayList<ScheduleDate>();
 		for (int i = 0; i < 7; i++) {
 			datelist.add(new ScheduleDate(getDate(i, s), DateUtil.getWeekOfXinQi(DateUtil.parseDate(getDate(i, s)))));
 		}
-		return new ScheduleDateAdapter(datelist, context);
+		return new ScheduleDateAdapter(datelist, context,position);
 	}
 }

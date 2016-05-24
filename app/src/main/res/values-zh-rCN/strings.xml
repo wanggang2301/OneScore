@@ -21,6 +21,7 @@
     <string name="weibosdk_demo_not_support_api_hint">您还未安装新浪微博客户端</string>
     <string name="share_uninstall_qq">您还未安装QQ客户端</string>
     <string name="share_recommend">推荐</string>
+    <string name="share_summary_default">一比分,专业的足球比分直播平台</string>
 
 
 
@@ -58,7 +59,7 @@
     <string name="trend_txt">走势</string>
     <string name="data_statistics_txt">数据统计</string>
     <string name="nodata_txt">没有更多数据!</string>
-    <string name="loading_data_txt">数据加载中...</string>
+    <string name="loading_data_txt">正在加载中...</string>
     <string name="not_start_txt">未开</string>
     <string name="pause_txt">中场</string>
     <string name="finish_txt">完场</string>
@@ -513,6 +514,8 @@
     <string name="basket_setting_tittle">篮球设置</string>
     <string name="basket_filtrate_tittle">篮球筛选</string>
 
+    <string name="basket_loading_txt">正在加载中...</string>
+
     <string name="basket_total">总:</string>
     <string name="basket_differ">差:</string>
     <string name="basket_tv"> | </string>
@@ -668,7 +671,7 @@
     <string name="comment_send">发送</string>
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暂无评论内容</string>
-    <string name="toatalvisiable">全部显示</string>
+    <string name="toatalvisiable">显示全部</string>
 <!---->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">请输入留言内容</string>
@@ -677,4 +680,55 @@
     <!--日期-->
     <string name="data_date_txt">2015-2016</string>
     <string name="data_date_txt1">2016-2017</string>
+
+
+    <!-- 登录注册 begin-->
+    <string name="my">我的</string>
+    <string name="register">注册</string>
+    <string name="registering">正在注册...</string>
+    <string name="login">登录</string>
+    <string name="logining">正在登录...</string>
+    <string name="login_succ">登录成功</string>
+    <string name="login_fail">登录失败</string>
+    <string name="pwd_format">密码格式为6-16位字母数字下划线</string>
+    <string name="pwd_format_hint">6-16位字符,区分大小写</string>
+    <string name="pwd_empty">请输入密码</string>
+    <string name="phone_empty">请输入手机号码</string>
+    <string name="phone_error">请输入正确手机号码</string>
+    <string name="verify_code">请输入验证码</string>
+    <string name="verify_code_send">发送验证码</string>
+    <string name="logout">退出登录</string>
+    <string name="logouting">正在注销...</string>
+    <string name="logout_fail">注销失败</string>
+    <string name="logout_succ">注销成功</string>
+    <string name="resend">重发</string>
+    <string name="register_fail">注册失败</string>
+    <string name="register_succ">注册成功</string>
+    <string name="mail_format_error">邮箱格式错误</string>
+    <string name="mail_already_register">该邮箱已注册</string>
+    <string name="verify_code_error">验证码错误</string>
+    <string name="user_exist">该用户已激活</string>
+    <string name="verify_code_invalidate">验证码已失效</string>
+    <string name="phone_already_exist">该手机号已注册</string>
+    <string name="user_not_login">用户未登录</string>
+    <string name="PHONE_FORMAT_ERROR">手机号码不合法</string>
+    <string name="user_not_exist">用户不存在</string>
+    <string name="message_send_fail">发送验证码失败</string>
+    <string name="nickname_exist">该昵称已存在</string>
+    <string name="username_exist">用户名已存在</string>
+    <string name="username_error">登录账号错误</string>
+    <string name="get_qq_info_fail">获取qq用户信息失败</string>
+    <string name="GET_WEIBO_INFO_FAIL">获取微博用户信息失败</string>
+    <string name="system_error">系统错误</string>
+    <string name="password_digits">_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
+    <string name="realname_error">真实姓名错误</string>
+    <string name="id_card_format_error">身份证格式错误</string>
+    <string name="password_error">密码错误</string>
+    <string name="username_pass_error">登录名或者密码错误</string>
+    <!-- 登录注册 end-->
+
+
+
+    <string name="home_pager_version_update">忽略此版本</string>
+
 </resources>

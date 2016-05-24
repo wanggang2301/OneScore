@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -24,17 +25,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /****
- *author wangg
- *name:FootballActivity
- *describe:足球（比分、资讯、数据、视频、指数）
+ * @author wangg
+ * @name:FootballActivity
+ * @describe:足球（比分、资讯、数据、视频、指数）
  */
 public class FootballActivity extends BaseActivity {
 
-    private final static int SCORES_FRAGMENT=0; //比分
-    private final static int NEWS_FRAGMENT=1;   //资讯
-    private final static int DATA_FRAGMENT=2;   //数据
-    private final static int VIDEO_FRAGMENT=3;  //视频
-    private final static int CPI_FRAGMENT=4;    //指数
+    private final static int SCORES_FRAGMENT = 0; //比分
+    private final static int NEWS_FRAGMENT = 1;   //资讯
+    private final static int DATA_FRAGMENT = 2;   //数据
+    private final static int VIDEO_FRAGMENT = 3;  //视频
+    private final static int CPI_FRAGMENT = 4;    //指数
     private Context mContext;
 
     private RadioGroup mRadioGroup;
@@ -49,7 +50,7 @@ public class FootballActivity extends BaseActivity {
         setContentView(R.layout.frag_basefootball);
         this.mContext = this;
         MobclickAgent.openActivityDurationTrack(true);
-        currentPosition=getIntent().getIntExtra("football",0);
+        currentPosition = getIntent().getIntExtra("football", 0);
         initView();
         initData();
     }
@@ -58,8 +59,8 @@ public class FootballActivity extends BaseActivity {
      * 初始化界面View
      */
     private void initView() {
-        mRadioGroup = (RadioGroup)findViewById(R.id.mRadioGroup);
-        scoresFragment=new ScoresFragment();
+        mRadioGroup = (RadioGroup) findViewById(R.id.mRadioGroup);
+        scoresFragment = new ScoresFragment();
         fragments.add(scoresFragment);
         fragments.add(new CounselFragment());
         fragments.add(new InformationFragment());
@@ -68,26 +69,26 @@ public class FootballActivity extends BaseActivity {
     }
 
     private void initData() {
-        switch (currentPosition){
+        switch (currentPosition) {
             case SCORES_FRAGMENT:
                 switchFragment(SCORES_FRAGMENT);
-                ((RadioButton)findViewById(R.id.rb_football)).setChecked(true);
+                ((RadioButton) findViewById(R.id.rb_football)).setChecked(true);
                 break;
             case NEWS_FRAGMENT:
                 switchFragment(NEWS_FRAGMENT);
-                ((RadioButton)findViewById(R.id.rb_news)).setChecked(true);
+                ((RadioButton) findViewById(R.id.rb_news)).setChecked(true);
                 break;
             case DATA_FRAGMENT:
                 switchFragment(DATA_FRAGMENT);
-                ((RadioButton)findViewById(R.id.rb_data)).setChecked(true);
+                ((RadioButton) findViewById(R.id.rb_data)).setChecked(true);
                 break;
             case VIDEO_FRAGMENT:
                 switchFragment(VIDEO_FRAGMENT);
-                ((RadioButton)findViewById(R.id.rb_video)).setChecked(true);
+                ((RadioButton) findViewById(R.id.rb_video)).setChecked(true);
                 break;
             case CPI_FRAGMENT:
                 switchFragment(CPI_FRAGMENT);
-                ((RadioButton)findViewById(R.id.rb_cpi)).setChecked(true);
+                ((RadioButton) findViewById(R.id.rb_cpi)).setChecked(true);
                 break;
             default:
                 break;
@@ -97,31 +98,30 @@ public class FootballActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
-
                 switch (radioButtonId) {
                     case R.id.rb_football:
-                        MobclickAgent.onEvent(mContext,"Football_Score");
-                        currentPosition=SCORES_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_Score");
+                        currentPosition = SCORES_FRAGMENT;
                         switchFragment(SCORES_FRAGMENT);
                         break;
                     case R.id.rb_news:
-                        MobclickAgent.onEvent(mContext,"Football_News");
-                        currentPosition=NEWS_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_News");
+                        currentPosition = NEWS_FRAGMENT;
                         switchFragment(NEWS_FRAGMENT);
                         break;
                     case R.id.rb_data:
-                        MobclickAgent.onEvent(mContext,"Football_Data");
-                        currentPosition=DATA_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_Data");
+                        currentPosition = DATA_FRAGMENT;
                         switchFragment(DATA_FRAGMENT);
                         break;
                     case R.id.rb_video:
-                        MobclickAgent.onEvent(mContext,"Football_Video");
-                        currentPosition=VIDEO_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_Video");
+                        currentPosition = VIDEO_FRAGMENT;
                         switchFragment(VIDEO_FRAGMENT);
                         break;
                     case R.id.rb_cpi:
-                        MobclickAgent.onEvent(mContext,"Football_CPI");
-                        currentPosition=CPI_FRAGMENT;
+                        MobclickAgent.onEvent(mContext, "Football_CPI");
+                        currentPosition = CPI_FRAGMENT;
                         switchFragment(CPI_FRAGMENT);
                         break;
                     default:
@@ -142,17 +142,26 @@ public class FootballActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         CpiFiltrateActivity.mCheckedIds.clear();
-        if (ImmediateFragment.imEventBus!=null) {
+        if (ImmediateFragment.imEventBus != null) {
             ImmediateFragment.imEventBus.unregister(ImmediateFragment.class);
         }
-        if (ResultFragment.resultEventBus!=null) {
+        if (ResultFragment.resultEventBus != null) {
             ResultFragment.resultEventBus.unregister(ResultFragment.class);
         }
-        if (ScheduleFragment.schEventBus!=null){
+        if (ScheduleFragment.schEventBus != null) {
             ScheduleFragment.schEventBus.unregister(ScheduleFragment.class);
         }
-        if (FocusFragment.focusEventBus!=null) {
+        if (FocusFragment.focusEventBus != null) {
             FocusFragment.focusEventBus.unregister(FocusFragment.class);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

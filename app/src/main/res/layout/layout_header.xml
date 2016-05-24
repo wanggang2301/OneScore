@@ -25,6 +25,20 @@
             android:scaleType="centerInside"
             android:src="@mipmap/back" />
 
+        <ImageView
+            android:id="@+id/iv_account"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/logout"
+            android:visibility="gone"/>
+
+
         <TextView
             android:id="@+id/public_txt_left_title"
             android:layout_width="wrap_content"
@@ -184,6 +198,24 @@
             android:text="@string/public_btn_save"
             android:textSize="17sp"
             android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_right"
+            style="@style/RippleBackgroudBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:text="@string/register"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:visibility="gone"
+            />
+
     </RelativeLayout>
 
 </LinearLayout>

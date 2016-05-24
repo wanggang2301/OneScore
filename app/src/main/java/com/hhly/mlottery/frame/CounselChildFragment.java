@@ -474,7 +474,9 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                 if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //向列表接口发起请求
-                    pullUpLoadMore(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))){//没有更多数据的时候，上拉不再发起请求
+                        pullUpLoadMore(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
+                    }
                 }
             }
         });
@@ -489,7 +491,10 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                 if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //向列表接口发起请求
-                    pullUpLoadMore(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))){//没有更多数据的时候，上拉不再发起请求
+                        pullUpLoadMore(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
+                    }
+
                 }
             }
         });

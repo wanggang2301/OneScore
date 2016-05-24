@@ -98,7 +98,6 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
      * 主listviewAdapter
      */
     private BasketOddsAdapter mOddsAdapter;
-    private BasketOddsDetailsAdapter mRightAdapter;
     /**
      * 主list数据
      */
@@ -148,6 +147,17 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
 
                     break;
                 case VIEW_STATUS_SUCCESS:
+
+                    mProgressBarLayout.setVisibility(View.GONE);
+                    mExceptionLayout.setVisibility(View.GONE);
+
+                    BasketDetailsActivity parentActivity =
+                            (BasketDetailsActivity) getActivity();
+                    if (parentActivity != null) {
+                        parentActivity.onScrollChanged(0, (ObservableListView) mView.findViewById(R.id.scroll)); //加上这句是防止刷新完数据后跳下来小头部没有隐藏
+                        //所以调用一下这个方法
+                    }
+
                   //footer view's height is  the screen's  height - title's height(2*53)-item's count*53
                     if(listView.getFooterViewsCount()==1){ //从网络异常到加载成功。footerview的高度需要重新计算。所以先remove掉。再加。
                         listView.removeFooterView(paddingviewButtom);
@@ -164,15 +174,18 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                     listView.setAdapter(mOddsAdapter);
                     mOddsAdapter.notifyDataSetChanged();
 
-                    mProgressBarLayout.setVisibility(View.GONE);
-                    mExceptionLayout.setVisibility(View.GONE);
-
                     if(mOddsCompanyList.size()!=0&&getActivity()!=null){//有数据则显示分割线
                         listView.setDivider(getActivity().getResources().getDrawable(R.color.basket_odds_divider));
                         listView.setDividerHeight(1);
                     }
+
                     break;
                 case VIEW_STATUS_NET_ERROR:
+
+                    mProgressBarLayout.setVisibility(View.GONE);
+                    mNodataLayout.setVisibility(View.GONE);
+                    mExceptionLayout.setVisibility(View.VISIBLE);
+
                     if(listView.getFooterViewsCount()==1){   // 从有数据到网络异常   footerview的高度需要重新计算。所以先remove掉。再加。
                         listView.removeFooterView(paddingviewButtom);
                     }
@@ -188,9 +201,6 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                     }
                     listView.setAdapter(mOddsAdapter);
 
-                    mProgressBarLayout.setVisibility(View.GONE);
-                    mNodataLayout.setVisibility(View.GONE);
-                    mExceptionLayout.setVisibility(View.VISIBLE);
                     if(!mOddsCompanyList.isEmpty()){
                           mOddsCompanyList.clear();
                         mOddsAdapter.notifyDataSetChanged();
@@ -373,8 +383,10 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
             public void run() {
                 mRefreshLayout.setRefreshing(false);
                 initData();
-                BasketDetailsActivity basketDetailsActivity= (BasketDetailsActivity) getActivity();
-                basketDetailsActivity.refreshData();
+                if (getActivity() != null) {
+                    BasketDetailsActivity basketDetailsActivity= (BasketDetailsActivity) getActivity();
+                    basketDetailsActivity.refreshData();
+                }
             }
         }, 1000);
     }
