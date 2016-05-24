@@ -176,7 +176,7 @@ public class CPIOddsFragment extends Fragment {
                             CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
                         }
                     }
-                if(mAllInfoBeans.size()>0){
+
                     filtrateData(defualtCompanyList, CpiFiltrateActivity.mCheckedIds);
                     companysName.clear();
                     for (int k = 0; k < mCpiframen.companys.size(); k++) {
@@ -184,7 +184,7 @@ public class CPIOddsFragment extends Fragment {
                             companysName.add(mCpiframen.companys.get(k).getComName());
                         }
                     }
-
+                    if(mAllInfoBeans.size()>0 && mShowInfoBeans.size()>0){
                     selectCompany2(mShowInfoBeans, companysName, CpiFiltrateActivity.mCheckedIds, type);
 //                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, type);
 //                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
@@ -362,7 +362,7 @@ public class CPIOddsFragment extends Fragment {
                     cpi_odds_recyclerView.setVisibility(View.VISIBLE);
                     mCpiframen.public_date_layout.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_company.setVisibility(View.VISIBLE);
-//                    System.out.println(">>>>>>>>访问成功");
+                    System.out.println(">>>>>>>>访问成功");
                     break;
                 case STARTLOADING://正在加载的时候
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
@@ -373,6 +373,7 @@ public class CPIOddsFragment extends Fragment {
                     mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
+                    System.out.println(">>>>>>>>访问成功1");
                     break;
                 case ERROR://访问失败
                     cpi_fl_plate_noData.setVisibility(View.GONE);
@@ -383,6 +384,7 @@ public class CPIOddsFragment extends Fragment {
                     mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
+                    System.out.println(">>>>>>>>访问成功2");
                     break;
                 case NODATA://没有数据
                     cpi_odds_recyclerView.setVisibility(View.GONE);
@@ -393,6 +395,7 @@ public class CPIOddsFragment extends Fragment {
                     mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
+                    System.out.println(">>>>>>>>访问成功3");
                     break;
                 case NODATA_CHILD://内容没有数据
                     cpi_odds_recyclerView.setVisibility(View.GONE);
@@ -403,6 +406,7 @@ public class CPIOddsFragment extends Fragment {
                     mCpiframen.public_date_layout.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_company.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_filter.setVisibility(View.INVISIBLE);
+                    System.out.println(">>>>>>>>访问成功4");
                     break;
                 default:
                     break;
