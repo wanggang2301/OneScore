@@ -40,6 +40,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private TextView tv_register , tv_verycode;
     private ImageView iv_eye;
 
+    /**
+     * 倒计时 默认60s , 间隔1s
+     */
     private CountDown countDown;
     private static final int TIMEOUT = 59699;
     private static final int TIMEOUT_INTERVEL = 1000;
@@ -115,6 +118,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
+    /**
+     * 重新获取验证码
+     */
     private void enableVeryCode() {
         if (tv_verycode != null){
             tv_verycode.setText(R.string.resend);
