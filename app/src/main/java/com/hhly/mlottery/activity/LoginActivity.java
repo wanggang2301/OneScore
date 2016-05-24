@@ -22,6 +22,7 @@ import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +52,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onResume() {
+        /**友盟页面统计*/
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("LoginActivity");
         super.onResume();
         et_username.setFocusable(true);
         et_username.setFocusableInTouchMode(true);
@@ -64,6 +68,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
 
         }, 300);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        /**友盟页面统计*/
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("LoginActivity");
     }
 
     private void initView() {
@@ -94,15 +106,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.public_img_back: // 返回
+                MobclickAgent.onEvent(mContext, "LoginActivity_Exit");
                 finish();
                 break;
             case R.id.tv_right: // 注册
+                MobclickAgent.onEvent(mContext, "RegisterActivity_Start");
                 startActivityForResult(new Intent(this , RegisterActivity.class) , HomePagerActivity.REQUESTCODE_LOGIN);
                 break;
             case R.id.iv_delete: // EditText 删除
+                MobclickAgent.onEvent(mContext, "LoginActivity_UserName_Delete");
                 et_username.setText("");
                 break;
             case R.id.iv_eye:  // 显示密码
+                MobclickAgent.onEvent(mContext, "LoginActivity_PassWord_isHide");
                 int inputType = et_password.getInputType();
                 if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD){
                     et_password.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -113,6 +129,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
                 break;
             case R.id.tv_login: // 登录
+                MobclickAgent.onEvent(mContext, "LoginActivity_LoginOk");
                 login();
                 break;
             default:

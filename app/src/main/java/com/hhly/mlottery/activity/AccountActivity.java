@@ -15,6 +15,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,9 +51,11 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.public_img_back: // 返回
+                MobclickAgent.onEvent(mContext, "AccountActivity_Exit");
                 finish();
                 break;
             case R.id.tv_logout: // 返回
+                MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
                 logout();
                 break;
             default:
@@ -91,5 +94,21 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 UiUtils.toast(MyApp.getInstance() , R.string.logout_fail);
             }
         } , Register.class);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /**友盟页面统计*/
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("AccountActivity");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        /**友盟页面统计*/
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("AccountActivity");
     }
 }
