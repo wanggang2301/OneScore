@@ -416,6 +416,26 @@
     </style>
 
 
+    <!--滚球样式-->
+    <style name="rollFootballTableBg">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/item_football_frequency</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginRight">0.2dp</item>
+        <item name="android:layout_marginBottom">0.2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="rollFootballTableBg2">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/item_football_frequency</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginRight">0.2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <!-- 自定义dialogActivity的样式 -->
     <style name="MyDialogStyle">
         <item name="android:windowBackground">@android:color/transparent</item>
