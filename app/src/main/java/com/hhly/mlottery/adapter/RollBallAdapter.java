@@ -43,15 +43,14 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-    //自定义ViewHolder类
-    static class RollViewHolder extends RecyclerView.ViewHolder {
+    static class RollViewHolder extends RecyclerView.ViewHolder{
+
+
         CardView cardView;
 
-        public RollViewHolder(final View itemView) {
+        public RollViewHolder(View itemView) {
             super(itemView);
-            //cardView = itemView.findViewById(R.id.roll_card_view);
+            cardView=(CardView)itemView.findViewById(R.id.roll_card_view);
         }
-
-
     }
 }
