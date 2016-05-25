@@ -97,11 +97,10 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-         String  nickname=AppConstants.register.getData().getUser().getNickName();
         sdk = CyanSdk.getInstance(this);
         //单点登录   nickname可以相同  用户id不能相同
         if (CommonUtils.isLogin()){
-            CyUtils.loginSso(nickname, nickname,sdk);
+            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(),sdk);
         }
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
@@ -423,8 +422,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
                         if (CommonUtils.isLogin()){
-                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getUserId(),sdk);
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
+                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                         }else {
                             //跳转登录界面
                             Intent intent1=new Intent(WebActivity.this,LoginActivity.class);
@@ -574,7 +573,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         //接收登录华海成功返回
         if (requestCode==3){
             if (resultCode==RESULT_OK){
-                CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getUserId(),sdk);
+                CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
             }
         }
     }
