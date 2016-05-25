@@ -730,5 +730,6 @@
 
 
     <string name="home_pager_version_update">忽略此版本</string>
-
+    <string name="frame_cpi_chupan_txt">初盘</string>
+    <string name="cpi_select_company">请选择公司</string>
 </resources>

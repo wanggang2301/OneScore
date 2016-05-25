@@ -55,12 +55,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- 引导页 -->
         <activity
@@ -158,7 +152,12 @@
         <!-- 足球比分 -->
         <activity
             android:name=".activity.FootballActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- 语言切换 -->
         <activity

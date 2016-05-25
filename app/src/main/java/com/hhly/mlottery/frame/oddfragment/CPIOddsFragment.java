@@ -58,7 +58,7 @@ public class CPIOddsFragment extends Fragment {
     private static final int NODATA_CHILD = 500;// 里面内容暂无数据
     private FrameLayout cpi_fl_plate_loading;// 正在加载中
     public  FrameLayout cpi_fl_plate_networkError;// 加载失败
-    private FrameLayout cpi_fl_plate_noData;// 暂无数据
+    public FrameLayout cpi_fl_plate_noData;// 暂无数据
     private TextView cpi_plate_reLoading;// 刷新
     public List<String> companysName = new ArrayList<>();
     private CPIFragment mCpiframen;
@@ -113,7 +113,7 @@ public class CPIOddsFragment extends Fragment {
                 switchd("");
                 mCpiframen.public_txt_date.setText(UiUtils.requestByGetDay(0));
                 mCpiframen.mMapDayList = mCpiframen.getDate();
-                mCpiframen.selectPosition=3;
+                mCpiframen.selectPosition = 3;
             }
         });
 
@@ -132,9 +132,9 @@ public class CPIOddsFragment extends Fragment {
         if (type.equals(CPIFragment.TYPE_PLATE)) {
             map.put("type", "1");
         } else if (type.equals(CPIFragment.TYPE_BIG)) {
-            map.put("type", "2");
-        } else if (type.equals(CPIFragment.TYPE_OP)) {
             map.put("type", "3");
+        } else if (type.equals(CPIFragment.TYPE_OP)) {
+            map.put("type", "2");
         }
         if (!"".equals(date)) {
             map.put("date", date);
@@ -145,7 +145,7 @@ public class CPIOddsFragment extends Fragment {
             @Override
             public synchronized void onResponse(final NewOddsInfo json) {
 
-                if (json != null) {
+                if (json != null && json.getCode()!=500) {
 
                     if (getParentFragment() != null) {
                         mCpiframen.currentDate = json.getCurrDate();
@@ -362,7 +362,6 @@ public class CPIOddsFragment extends Fragment {
                     cpi_odds_recyclerView.setVisibility(View.VISIBLE);
                     mCpiframen.public_date_layout.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_company.setVisibility(View.VISIBLE);
-                    System.out.println(">>>>>>>>访问成功");
                     break;
                 case STARTLOADING://正在加载的时候
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
@@ -373,7 +372,6 @@ public class CPIOddsFragment extends Fragment {
                     mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
-                    System.out.println(">>>>>>>>访问成功1");
                     break;
                 case ERROR://访问失败
                     cpi_fl_plate_noData.setVisibility(View.GONE);
@@ -384,7 +382,6 @@ public class CPIOddsFragment extends Fragment {
                     mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
-                    System.out.println(">>>>>>>>访问成功2");
                     break;
                 case NODATA://没有数据
                     cpi_odds_recyclerView.setVisibility(View.GONE);
@@ -395,7 +392,6 @@ public class CPIOddsFragment extends Fragment {
                     mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
-                    System.out.println(">>>>>>>>访问成功3");
                     break;
                 case NODATA_CHILD://内容没有数据
                     cpi_odds_recyclerView.setVisibility(View.GONE);
@@ -405,8 +401,8 @@ public class CPIOddsFragment extends Fragment {
                     cpi_fl_plate_noData.setVisibility(View.VISIBLE);
                     mCpiframen.public_date_layout.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_company.setVisibility(View.VISIBLE);
-                    mCpiframen.public_img_filter.setVisibility(View.INVISIBLE);
-                    System.out.println(">>>>>>>>访问成功4");
+                    mCpiframen.public_img_filter.setVisibility(View.VISIBLE);
+//                    System.out.println(">>>>>>>>访问成功4");
                     break;
                 default:
                     break;
