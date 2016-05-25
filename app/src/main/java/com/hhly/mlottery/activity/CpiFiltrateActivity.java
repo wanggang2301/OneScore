@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +21,7 @@ import java.util.List;
  * Created by 103TJL on 2016/5/9.
  * 新版指数筛选
  */
-public class CpiFiltrateActivity extends BaseActivity implements View.OnClickListener, CpiFiltrateMatchAdapter.OnItemCheckedChangedListener {
+public class CpiFiltrateActivity extends BaseActivity implements View.OnClickListener, CpiFiltrateMatchAdapter.OnItemClickListenerListener {
 
     private CpiFiltrateMatchAdapter mCpiAdapterHot;
     private CpiFiltrateMatchAdapter mCpiAdapterOther;
@@ -30,6 +29,9 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     private Context mContext;
     private GrapeGridview cpiGridviewHot;
     private GrapeGridview cpiGridviewOther;
+
+    private static boolean isDefualHot = true;
+
     /**
      * 已选择的联赛id
      */
@@ -54,7 +56,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
             cpi_filtrate_match_reset_btn;
     private Button cpi_filtrate_submit_btn;
     //备份第一次进来所选择的id
-    private List<String> tempCheckids1 = new ArrayList<>();
+//    private List<String> tempCheckids1 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         //选中的
         ArrayList<String> checkedIdExtra = (ArrayList<String>) getIntent().getSerializableExtra("linkedListChecked");
         //选中的备份
-        mTempCheckidsReset.addAll(checkedIdExtra);
+
         mCheckedIds.clear();
         mCheckedIds.addAll(checkedIdExtra);
 
@@ -105,7 +107,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
 
     private void initData() {
         if (mFileterTagsList == null) return;
-        if (mCheckedIds.size() == 0) {
+        if (isDefualHot) {
             //如果没选中的
             for (int i = 0; i < mFileterTagsList.size(); i++) {
                 //所有场次
@@ -118,7 +120,8 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                     normalTemp.add(mFileterTagsList.get(i));
                 }
             }
-            tempCheckids1.addAll(mCheckedIds);
+            mTempCheckidsReset.addAll(mCheckedIds);
+//            tempCheckids1.addAll(mCheckedIds);
         } else {
             //如果有选中的
             for (int i = 0; i < mFileterTagsList.size(); i++) {
@@ -134,9 +137,9 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                     checkedSize += mFileterTagsList.get(i).getMatchsInLeague();
                 }
             }
-            tempCheckids1.addAll(mCheckedIds);
+            mTempCheckidsReset.addAll(mCheckedIds);
+//            tempCheckids1.addAll(mCheckedIds);
         }
-
 
         setHideNumber();
 
@@ -148,6 +151,20 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         mCpiAdapterOther = new CpiFiltrateMatchAdapter(mContext, normalTemp, mCheckedIds, R.layout.item_cpi_filtrate);
         mCpiAdapterOther.setOnItemCheckedChangedListener(this);
         cpiGridviewOther.setAdapter(mCpiAdapterOther);
+
+//        cpiGridviewHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.d(TAG,"cpiGridviewHot --- onItemClick position = "+position);
+//            }
+//        });
+//
+//        cpiGridviewOther.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.d(TAG,"cpiGridviewOther --- onItemClick position = "+position);
+//            }
+//        });
 
     }
 
@@ -166,6 +183,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                     }
                 }
                 updateAdapter();
+                setHideNumber();
                 break;
             case R.id.cpi_filtrate_match_all_btn:// 全选
                 mCheckedIds.clear();
@@ -173,6 +191,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                     mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
                 }
                 updateAdapter();
+                setHideNumber();
                 break;
             case R.id.cpi_filtrate_match_inverse_btn:// 反选
                 List<String> tempCheckids = new ArrayList<>();
@@ -186,34 +205,36 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
                     }
                 }
                 updateAdapter();
+                setHideNumber();
                 break;
             case R.id.cpi_filtrate_match_reset_btn:// 重置
                 //如果选中的不为空
-                if (mTempCheckidsReset.size() != 0) {
-                    mTempCheckidsReset.addAll(mTempCheckidsReset);
-                    mCheckedIds.clear();
-                    for (int i = 0; i < mFileterTagsList.size(); i++) {
-                        if (mTempCheckidsReset.contains(mFileterTagsList.get(i).getLeagueId())) {
-                            mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
-                        }
-                    }
-                } else {
-                    //如果为空重置的时候直接筛选第一次进来的数据
-                    mCheckedIds.clear();
-                    for (int i = 0; i < mFileterTagsList.size(); i++) {
-                        if (tempCheckids1.contains(mFileterTagsList.get(i).getLeagueId())) {
-                            mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
-                        }
+//                if (mTempCheckidsReset.size() != 0) {
+//                    mTempCheckidsReset.addAll(mTempCheckidsReset);
+                mCheckedIds.clear();
+                for (int i = 0; i < mFileterTagsList.size(); i++) {
+                    if (mTempCheckidsReset.contains(mFileterTagsList.get(i).getLeagueId())) {
+                        mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
                     }
                 }
+//                } else {
+//                    //如果为空重置的时候直接筛选第一次进来的数据
+//                    mCheckedIds.clear();
+//                    for (int i = 0; i < mFileterTagsList.size(); i++) {
+//                        if (tempCheckids1.contains(mFileterTagsList.get(i).getLeagueId())) {
+//                            mCheckedIds.add(mFileterTagsList.get(i).getLeagueId());
+//                        }
+//                    }
+//                }
                 updateAdapter();
+                setHideNumber();
                 break;
             case R.id.cpi_filtrate_submit_btn:// 确定
                 Intent intent = new Intent();
                 intent.putExtra("key", mCheckedIds);
                 setResult(0, intent);
                 finish();
-
+                isDefualHot = false;
                 break;
             default:
                 break;
@@ -229,15 +250,6 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         mCpiAdapterOther.notifyDataSetChanged();
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked, NewOddsInfo.FileterTagsBean fileterTagsBean) {
-        if (isChecked) {
-            mCheckedIds.add(fileterTagsBean.getLeagueId());
-        } else {
-            mCheckedIds.remove(fileterTagsBean.getLeagueId());
-        }
-        setHideNumber();
-    }
 
     private void setHideNumber() {
         checkedSize = 0;
@@ -251,5 +263,15 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         cpi_filtrate_match_hide_number.setText("" + (allSize - checkedSize));
 
 
+    }
+
+    @Override
+    public void onClick(View buttonView, boolean isChecked, NewOddsInfo.FileterTagsBean fileterTagsBean) {
+        if (isChecked) {
+            mCheckedIds.add(fileterTagsBean.getLeagueId());
+        } else {
+            mCheckedIds.remove(fileterTagsBean.getLeagueId());
+        }
+        setHideNumber();
     }
 }
