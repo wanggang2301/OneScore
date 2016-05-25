@@ -436,6 +436,14 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="rollFootballTableBg3">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/item_football_frequency</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <!-- 自定义dialogActivity的样式 -->
     <style name="MyDialogStyle">
         <item name="android:windowBackground">@android:color/transparent</item>

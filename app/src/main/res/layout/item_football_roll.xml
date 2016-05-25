@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="50dp"
+    android:layout_marginTop="5dp"
     android:clickable="true"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="5dp"
@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_weight="10"
+            android:layout_weight="8"
+            android:layout_marginLeft="5dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -30,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="兵联杯"
                 android:textColor="@color/orange"
                 android:textSize="11sp" />
@@ -39,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="01:30"
                 android:textColor="@color/black"
                 android:textSize="11sp" />
@@ -55,7 +56,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:layout_weight="1">
 
             <TableLayout
@@ -67,13 +68,13 @@
                 <TableRow
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginLeft="0.2dp"
                     android:layout_weight="1">
 
                     <TextView
                         style="@style/rollFootballTableBg2"
                         android:layout_weight="1"
                         android:text="0"
+                        android:gravity="center"
                         android:textColor="@color/blue" />
 
                     <LinearLayout
@@ -81,6 +82,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="0.2dp"
                         android:layout_marginRight="0.2dp"
+                        android:layout_marginLeft="0.2dp"
+
                         android:layout_weight="3"
                         android:background="@color/white"
                         android:gravity="center_vertical">
@@ -122,22 +125,24 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        style="@style/rollFootballTableBg"
+                        style="@style/rollFootballTableBg3"
                         android:layout_weight="2"
                         android:text="1.12"
+                        android:layout_marginBottom="0.2dp"
+
                         android:textColor="@color/green" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginLeft="0.2dp"
                     android:layout_weight="1">
 
                     <TextView
                         style="@style/rollFootballTableBg2"
                         android:layout_weight="1"
                         android:text="68'"
+                        android:gravity="center"
                         android:textColor="@color/blue" />
 
                     <LinearLayout
@@ -145,6 +150,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="0.2dp"
                         android:layout_marginRight="0.2dp"
+                        android:layout_marginLeft="0.2dp"
+
                         android:layout_weight="3"
                         android:background="@color/white"
                         android:gravity="center_vertical">
@@ -193,28 +200,31 @@
                         android:textColor="@color/green" />
 
                     <TextView
-                        style="@style/rollFootballTableBg"
+                        style="@style/rollFootballTableBg3"
                         android:layout_weight="2"
                         android:text="3.27"
-                        android:textColor="@color/green" />
+                   android:layout_marginBottom="0.2dp"
+
+                    android:textColor="@color/green" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginLeft="0.2dp"
                     android:layout_weight="1">
 
                     <TextView
                         style="@style/rollFootballTableBg2"
                         android:layout_weight="1"
                         android:text="1"
+                        android:gravity="center"
                         android:textColor="@color/blue" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginRight="0.2dp"
+                        android:layout_marginLeft="0.2dp"
                         android:layout_weight="3"
                         android:background="@color/white"
                         android:gravity="center_vertical">
@@ -256,7 +266,7 @@
                         android:textColor="@color/black" />
 
                     <TextView
-                        style="@style/rollFootballTableBg2"
+                        style="@style/rollFootballTableBg3"
                         android:layout_weight="2"
                         android:text="1.25"
                         android:textColor="@color/black" />
