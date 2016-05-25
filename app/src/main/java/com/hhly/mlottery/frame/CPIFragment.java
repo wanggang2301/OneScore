@@ -365,9 +365,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                             companysName.add(companys.get(k).getComName());
                         }
                     }
-                    mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName, ddList, TYPE_PLATE);
-                    mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName, ddList, TYPE_BIG);
-                    mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName, ddList, TYPE_OP);
+                    mCPIOddsFragment.selectCompany(CPIOddsFragment.mAllInfoBean1, companysName, ddList, TYPE_PLATE);
+                    mCPIOddsFragment2.selectCompany(CPIOddsFragment.mAllInfoBean2, companysName, ddList, TYPE_BIG);
+                    mCPIOddsFragment3.selectCompany(CPIOddsFragment.mAllInfoBean3, companysName, ddList, TYPE_OP);
                     break;
                 default:
                     break;
@@ -383,9 +383,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 if (mCPIOddsFragment.cpi_fl_plate_networkError.getVisibility() == View.VISIBLE) {
                     mMapDayList = getDate();
                     public_txt_date.setText(UiUtils.requestByGetDay(0));
-                    selectPosition = 3;
+                    selectPosition = 6;
                     for (Fragment fragment : fragments) {
-                        ((CPIOddsFragment) fragment).switchd("");
+                        ((CPIOddsFragment) fragment).switchd("",false);
                     }
                 } else {
                     companysName.clear();
@@ -394,9 +394,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                             companysName.add(companys.get(k).getComName());
                         }
                     }
-                    mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
-                    mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
-                    mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
+                    mCPIOddsFragment.selectCompany(CPIOddsFragment.mAllInfoBean1, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
+                    mCPIOddsFragment2.selectCompany(CPIOddsFragment.mAllInfoBean2, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
+                    mCPIOddsFragment3.selectCompany(CPIOddsFragment.mAllInfoBean3, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
                 }
                 mRefreshLayout.setRefreshing(false);
             }
@@ -440,7 +440,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     //设置标题时间
                     public_txt_date.setText(mMapList.get(position).get("date"));
                     for (Fragment fragment : fragments) {
-                        ((CPIOddsFragment) fragment).switchd(mMapList.get(position).get("date"));
+                        //代表日期
+                        ((CPIOddsFragment) fragment).switchd(mMapList.get(position).get("date"),true);
                     }
                     isFirst = true;
                     // 关闭 dialog弹窗
@@ -511,9 +512,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //                    mCPIOddsFragment.filtrateData(companys, CpiFiltrateActivity.mCheckedIds);
 //                    mCPIOddsFragment2.filtrateData(companys, CpiFiltrateActivity.mCheckedIds);
 //                    mCPIOddsFragment3.filtrateData(companys, CpiFiltrateActivity.mCheckedIds);
-                    mCPIOddsFragment.selectCompany2(CPIOddsFragment.mAllInfoBean1, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
-                    mCPIOddsFragment2.selectCompany2(CPIOddsFragment.mAllInfoBean2, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
-                    mCPIOddsFragment3.selectCompany2(CPIOddsFragment.mAllInfoBean3, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
+                    mCPIOddsFragment.selectCompany(CPIOddsFragment.mAllInfoBean1, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
+                    mCPIOddsFragment2.selectCompany(CPIOddsFragment.mAllInfoBean2, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
+                    mCPIOddsFragment3.selectCompany(CPIOddsFragment.mAllInfoBean3, companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
 
                     mAlertDialog.dismiss();
                 }
