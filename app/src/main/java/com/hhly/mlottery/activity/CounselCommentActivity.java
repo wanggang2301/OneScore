@@ -232,7 +232,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
 
                     } else {//未登录畅言
                         if (CommonUtils.isLogin()){//已登录华海
-                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getUserId(),sdk);
+                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
                         }else {//未登录华海
                             //跳转登录界面
@@ -407,7 +407,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         //接收登录华海成功返回
         if (requestCode==3){
             if (resultCode==RESULT_OK){
-                CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getUserId(),sdk);
+                CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
             }
         }
     }
