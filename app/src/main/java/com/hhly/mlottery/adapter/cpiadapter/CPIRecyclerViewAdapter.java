@@ -108,8 +108,8 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 //比赛的主客队名称和比分
                 if ("0".equals(matchInfoBean.getMatchState())) {
                     //未开赛
-                    cpiViewHolder.cpi_scoreAndName_txt.setText(matchInfoBean.getMatchHomeName() +
-                            "\t" + "VS" + "\t" + matchInfoBean.getMatchGuestName());
+                    cpiViewHolder.cpi_scoreAndName_txt.setText(matchInfoBean.getMatchHomeName()+
+                            Html.fromHtml("&nbsp;"+"VS"+"&nbsp;") + matchInfoBean.getMatchGuestName());
                 } else { //开赛
                     cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
                             "\t" + "<font color=#ff0000>" + matchInfoBean.getMatchResult() + "</font>" + "\t" + matchInfoBean.getMatchGuestName()));
