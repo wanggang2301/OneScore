@@ -318,8 +318,10 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     setDialog(1);//代表公司
                     break;
                 case R.id.public_img_filter://点击筛选
-//                if (CPIOddsFragment.mFileterTagsBean.size() == 0 && CPIOddsFragment.mFileterTagsBean == null)
-//                    return;
+                if (mCPIOddsFragment.cpi_fl_plate_noData.getVisibility()==View.VISIBLE) {
+                    UiUtils.toast(mContext,R.string.nodata);
+                    return;
+                }
                     Intent intent = new Intent(mContext, CpiFiltrateActivity.class);
                     //如果选择的是日期不传选中的
                     if (isFirst) {
@@ -493,7 +495,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     }
 
                     if (count < 1) {
-                        UiUtils.toast(mContext, "请选择公司", Toast.LENGTH_SHORT);
+                        UiUtils.toast(mContext, R.string.cpi_select_company, Toast.LENGTH_SHORT);
                         return;
                     }
 

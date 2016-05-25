@@ -83,7 +83,7 @@ public class DateUtil {
 
      * 把毫秒转化成日期
 
-     * @param dateFormat(日期格式 例如  MM-dd hh:mm)
+     * @param dateFormat(日期格式 例如  MM-dd HH:mm)  24小时制
 
      * @param millSec(毫秒数)
 
@@ -92,7 +92,7 @@ public class DateUtil {
      */
 
     public static String transferLongToDate(Long millSec){
-        String dateFormat="MM-dd hh:mm";
+        String dateFormat="MM-dd HH:mm:ss";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
         Date date= new Date(millSec);

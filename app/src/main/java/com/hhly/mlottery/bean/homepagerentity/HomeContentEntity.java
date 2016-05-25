@@ -11,10 +11,20 @@ public class HomeContentEntity implements Serializable {
 
     private int jumpType;//跳转类型	0无 1页面 2跳内页
     private String jumpAddr;//跳转标识
+//    private String outUrl;// 游戏竞猜跳转标识
     private String title;//标题
     private String picUrl;//图标URL
     private int labType;// 标签标识	1、	热门赛事 2、	热点资讯 3、	彩票开奖
+    private String reqMethod;// 请求方式
     private List<HomeBodysEntity> bodys;
+
+    public String getReqMethod() {
+        return reqMethod;
+    }
+
+    public void setReqMethod(String reqMethod) {
+        this.reqMethod = reqMethod;
+    }
 
     public int getLabType() {
         return labType;

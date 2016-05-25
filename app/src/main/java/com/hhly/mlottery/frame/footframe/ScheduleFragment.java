@@ -156,6 +156,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     private String teamLogoSuff;
 
+    private static int currentDatePosition = 0;
+
 
     public static ScheduleFragment newInstance(String param1, String param2) {
         ScheduleFragment fragment = new ScheduleFragment();
@@ -178,7 +180,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     private Runnable mLoadingDataThread = new Runnable() {
         @Override
         public void run() {
-            initData();
+            initData(currentDatePosition);
         }
     };
 
@@ -193,7 +195,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.football_schedule, container, false);
-        mContext = getActivity();
+        this.mContext = getActivity();
         initView();
         return view;
     }
@@ -309,7 +311,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 //                    mListView.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (isLoadData) {
-                        Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        if (mContext!=null) {
+                            Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         mLine.setVisibility(View.GONE);
                         mLoadingLayout.setVisibility(View.GONE);
@@ -347,13 +351,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         }
     };
 
-    private void initData() {
+    private void initData(final int position) {
 
         String url = BaseURLs.URL_CeaselessMatchs;
         Map<String, String> params = new HashMap<String, String>();
 
         if (mCurrentDate != null) {
-            params.put("date", mCurrentDate);
+            List mDatelist = new ArrayList<String>();
+            for (int i = 0; i < DATETOTAL; i++) {
+                mDatelist.add(DateUtil.getDate(i, mCurrentDate));
+            }
+            params.put("date", mDatelist.get(position).toString());
         }
 
 
@@ -379,7 +387,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 }
 
 
-                mCurrentDate = json.getCurrent().getDate();
                 mAllCup = json.getCeaselessFilter();
 
                 teamLogoPre = json.getTeamLogoPre();
@@ -388,7 +395,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
                 if (current != null) {
                     ScheduleMatchDto scheduleMatchDto = new ScheduleMatchDto();
-                    scheduleMatchDto.setDate(mCurrentDate);
+                    scheduleMatchDto.setDate(json.getCurrent().getDate());
                     scheduleMatchDto.setType(VIEW_DATE_INDEX);
 
                     mAllMatchs.add(scheduleMatchDto);
@@ -400,7 +407,10 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         mAllMatchs.add(dtoMatch);
                     }
                     if (isFirstLoadDate) {
-                        initListDateAndWeek(mCurrentDate);
+
+                        mCurrentDate = json.getCurrent().getDate();
+
+                        initListDateAndWeek(mCurrentDate, currentDatePosition);
                         isFirstLoadDate = false;
                     }
                     if (!isCheckedDefualt) {
@@ -460,6 +470,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
                 }
 
+                currentDatePosition = position;
+
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -469,6 +481,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         }, ScheduleMatchs.class);
 
         initFocusClickListener();
+
         choiceDateList();
     }
 
@@ -518,7 +531,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void choiceDateList() {
-        mDateOnClickListener=new DateOnClickListener() {
+        mDateOnClickListener = new DateOnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialog);
@@ -526,16 +539,13 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 LayoutInflater infla = LayoutInflater.from(getActivity());
                 View alertDialogView = infla.inflate(R.layout.alertdialog, null);
                 mDateListView = (ListView) alertDialogView.findViewById(R.id.listdate);
+                initListDateAndWeek(mCurrentDate, currentDatePosition);
                 mDateListView.setAdapter(mDateAdapter);
                 mDateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int arg2, long arg3) {
-                        String dateString = ((TextView) view.findViewById(R.id.tv_riqi)).getText().toString().trim();
-                        Map<String, String> m = new HashMap<String, String>();
-                        m.put("date", dateString);
-                        mCurrentDate = dateString;
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                        initData();
+                        initData(position);
                         isCheckedDefualt = true;
                         alertDialog.dismiss();
                     }
@@ -545,8 +555,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 alertDialog.setCanceledOnTouchOutside(true);
             }
         };
-
-
 
 
     }
@@ -578,12 +586,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
      *
      * @param s
      */
-    private void initListDateAndWeek(String s) {
+    private void initListDateAndWeek(String s, int position) {
         mDatelist = new ArrayList<ScheduleDate>();
         for (int i = 0; i < DATETOTAL; i++) {
             mDatelist.add(new ScheduleDate(DateUtil.getDate(i, s), DateUtil.getWeekOfXinQi(DateUtil.parseDate(DateUtil.getDate(i, s)))));
         }
-        mDateAdapter = new ScheduleDateAdapter(mDatelist, mContext);
+        mDateAdapter = new ScheduleDateAdapter(mDatelist, mContext, position);
     }
 
     @Override
@@ -591,14 +599,13 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.network_exception_reload_btn:
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                initData();
+                initData(currentDatePosition);
                 break;
             default:
                 break;
         }
 
     }
-
 
 
     public interface SchFocusClickListener {
@@ -685,9 +692,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser) {
-            L.d("xxx","Schedule>>>>isVisibleToUser...显示了");
-        }else {
-            L.d("xxx","Schedule>>>>isVisibleToUser...隐藏了");
+            L.d("xxx", "Schedule>>>>isVisibleToUser...显示了");
+        } else {
+            L.d("xxx", "Schedule>>>>isVisibleToUser...隐藏了");
         }
     }
 
@@ -710,7 +717,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                initData();
+                initData(currentDatePosition);
             }
         }, 1000);
     }

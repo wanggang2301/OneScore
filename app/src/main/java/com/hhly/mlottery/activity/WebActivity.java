@@ -58,6 +58,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private ImageView mPublic_img_back;// 返回
     private TextView mPublic_txt_title;// 标题
     private String url;// 要显示的H5网址
+    private String token;// 登录参数
+    private String reqMethod;// 是否传参数
     private String imageurl;// 图片地址
     private String title;// 标题
     private String subtitle;// 副标题
@@ -82,7 +84,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private ShareCopyLinkCallBack mShareCopyLinkCallBack;
 
     private Tencent mTencent;
-
+    private ScrollView scrollview;
     private SharePopupWindow sharePopupWindow;
     private String model;
 
@@ -91,7 +93,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         sdk = CyanSdk.getInstance(this);
-        //单点登录
+        //单点登录   nickname可以相同  用户id不能相同
         CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
@@ -103,12 +105,12 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //        System.out.println("lzf" +model );
 
 //        getCommentCount();
-
+        CyUtils.getUserInfo(sdk);
     }
 
     private void initScrollView() {
         //解决adjustresize和透明状态栏的冲突
-        final ScrollView scrollview = (ScrollView) findViewById(R.id.scrollview);
+        scrollview = (ScrollView) findViewById(R.id.scrollview);
         final IsBottomScrollView isbottomscrollview = (IsBottomScrollView) findViewById(R.id.isbottomscrollview);
         final View decview = getWindow().getDecorView();
         decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -162,9 +164,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             mSend.setVisibility(View.VISIBLE);
             mCommentCount.setVisibility(View.GONE);
             mEditText.setHint("");
-           if (model.equals("m2note")){
-               h-=145;
-           }
+            if (model.equals("m2note")) {
+                h -= 145;
+            }
 
         } else if (h < 300) {//软键盘隐藏
             if (h != 0) {
@@ -188,7 +190,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //            Log.e("lzfh - def", (h - def) + "");
             lp.setMargins(0, 0, 0, h - def);
             scrollview.requestLayout();
-         }
+        }
     }
 
     private void initEvent() {
@@ -285,33 +287,55 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         webSettings.setDatabaseEnabled(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        String us = webSettings.getUserAgentString();
+//        System.out.println("lzfus="+us);
+        webSettings.setUserAgentString(us.replace("Android", "yibifen Android"));//给useagent加个标识yibifen
+//        System.out.println("lzfus1=" + webSettings.getUserAgentString());
+
     }
 
     protected void initData() {
         try {
-            url = getIntent().getStringExtra("key");
-            imageurl = getIntent().getStringExtra("imageurl");
-            title = getIntent().getStringExtra(INTENT_PARAMS_TITLE);
-            subtitle = getIntent().getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
-            mType = getIntent().getIntExtra("type", 0);
-            mThird = getIntent().getStringExtra("thirdId");
-            infoTypeName = getIntent().getStringExtra("infoTypeName");
+            Intent intent = getIntent();
+            url = intent.getStringExtra("key");
+            imageurl = intent.getStringExtra("imageurl");
+            title = intent.getStringExtra(INTENT_PARAMS_TITLE);
+            subtitle = intent.getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
+            mType = intent.getIntExtra("type", 0);
+            mThird = intent.getStringExtra("thirdId");
+            infoTypeName = intent.getStringExtra("infoTypeName");
+            token = intent.getStringExtra("token");
+            reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
-
+            if (TextUtils.isEmpty(token)) {//token为空，说明是资讯，显示分享和评论
+                public_btn_set.setVisibility(View.VISIBLE);
+                scrollview.setVisibility(View.VISIBLE);
+            } else {//不是新闻资讯的时候隐藏分享和评论
+                public_btn_set.setVisibility(View.GONE);
+                scrollview.setVisibility(View.GONE);
+            }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
                     return true;
                 }
-
             });
-            mWebView.loadUrl(url);
+            //其他页传过来的reqMethod为post时，提交token  否则不提交
+            if (reqMethod != null && token != null && reqMethod.equals("post")) {
+
+                mWebView.postUrl(url, token.getBytes("utf-8"));
+
+
+            } else {
+                mWebView.loadUrl(url);
+            }
+
+//
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
 
-            /**加載成功显示 分享按钮*/
-            public_btn_set.setVisibility(View.VISIBLE);
+//            /**加載成功显示 分享按钮*/
+//            public_btn_set.setVisibility(View.VISIBLE);
 
             mShareTencentCallBack = new ShareTencentCallBack() {
                 @Override
@@ -388,11 +412,17 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
             case R.id.public_btn_set: //分享
                 //  @style/AppTheme.BlackStatusBar.ColorGreen
+                String summary = "";
+                if (subtitle == null || "".equals(subtitle)) {
+                    summary = getString(R.string.share_summary_default);
+                } else {
+                    summary = subtitle;
+                }
 
                 MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
                 Map<String, String> map = new HashMap<String, String>();
                 map.put(ShareConstants.TITLE, title != null ? title : mContext.getResources().getString(R.string.share_recommend));
-                map.put(ShareConstants.SUMMARY, subtitle != null ? subtitle : "");
+                map.put(ShareConstants.SUMMARY, summary);
                 map.put(ShareConstants.TARGET_URL, url != null ? url : "http://m.13322.com");
                 map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
                 sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
@@ -404,6 +434,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                         backgroundAlpha(1f);
                     }
                 });
+
                 backgroundAlpha(0.5f);
         }
     }
@@ -412,6 +443,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
     }
 
     private void shareQQ(int falg) {
@@ -421,9 +454,16 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
         String appname = getString(R.string.share_to_qq_app_name);
 
+        String summary = "";
+        if (subtitle == null || "".equals(subtitle)) {
+            summary = getString(R.string.share_summary_default);
+        } else {
+            summary = subtitle;
+        }
+
         bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
         bundle.putString(QQShare.SHARE_TO_QQ_TITLE, title != null ? title : "");
-        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, subtitle != null ? subtitle : "");
+        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, summary);
         bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url != null ? url : "");
         bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageurl != null ? imageurl : "");
         bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
@@ -448,7 +488,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
     //获取评论的一切消息  无需登录
     public void loadTopic() {
-        L.e("lzf"+title);
+        L.e("lzf" + title);
         sdk.loadTopic("", url, title, title, 0, 0, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
 
             @Override

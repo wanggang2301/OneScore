@@ -191,14 +191,14 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
 
             case R.id.rl_hometeam_goal:
                 MobclickAgent.onEvent(mContext,"Football_Setting_HomeTeam_Goal");
-                intent = new Intent(FootballTypeSettingActivity.this, HomeTeamSoundActivity.class);
+                intent = new Intent(FootballTypeSettingActivity.this, FootballTypeSettingDetailsActivity.class);
                 intent.putExtra("type", "home");
                 startActivityForResult(intent, HOMETEAMGOAL);
 
                 break;
             case R.id.rl_guestteam_goal:
                 MobclickAgent.onEvent(mContext,"Football_Setting_GuestTeam_Goal");
-                intent = new Intent(FootballTypeSettingActivity.this, HomeTeamSoundActivity.class);
+                intent = new Intent(FootballTypeSettingActivity.this, FootballTypeSettingDetailsActivity.class);
                 intent.putExtra("type", "guest");
                 startActivityForResult(intent, GUESTTEAMGOAL);
 
@@ -206,7 +206,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
 
             case R.id.rl_odd:
                 MobclickAgent.onEvent(mContext,"Football_Setting_Rl_Odd");
-                intent = new Intent(FootballTypeSettingActivity.this, HomeTeamSoundActivity.class);
+                intent = new Intent(FootballTypeSettingActivity.this, FootballTypeSettingDetailsActivity.class);
                 intent.putExtra("type", "odd");
                 Bundle bundle=new Bundle();
                 bundle.putInt("currentFragmentId",currentFragmentId);

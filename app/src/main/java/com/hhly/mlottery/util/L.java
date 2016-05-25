@@ -1,7 +1,5 @@
 package com.hhly.mlottery.util;
 
-import com.hhly.mlottery.BuildConfig;
-
 import android.util.Log;
 
 /**

@@ -7,7 +7,7 @@ import android.view.animation.Transformation;
 
 /**
  * 自定义比分动画类（沿X轴旋转）
- * Created by A on 2016/1/29.
+ * Created by yixq on 2016/1/29.
  */
 public class MyRotateAnimation extends Animation {
 

@@ -86,7 +86,7 @@ public class OddsDetailsAdapter extends BaseExpandableListAdapter implements Pin
             holder.odds_details_dish_child_txt = (TextView) convertView.findViewById(R.id.odds_details_dish_txt);
             //客队分数
             holder.odds_details_guest_child_txt = (TextView) convertView.findViewById(R.id.odds_details_guest_txt);
-
+            holder.odds_details_dish_layout = (LinearLayout) convertView.findViewById(R.id.odds_details_dish_layout);
             if ("one".equals(stKey)) {//亚盘
                 //无需改变
             } else if ("two".equals(stKey)) {//欧赔
@@ -94,7 +94,7 @@ public class OddsDetailsAdapter extends BaseExpandableListAdapter implements Pin
                 params.weight = 3;
                 params.rightMargin=1;
 
-                holder.odds_details_dish_child_txt.setLayoutParams(params);
+                holder.odds_details_dish_layout.setLayoutParams(params);
             } else if ("three".equals(stKey)) {//大小球
                 //无需改变
             }
@@ -179,7 +179,7 @@ public class OddsDetailsAdapter extends BaseExpandableListAdapter implements Pin
         TextView odds_details_home_child_txt; //主队分数
         TextView odds_details_dish_child_txt; //盘口
         TextView odds_details_guest_child_txt; //客队分数
-
+        LinearLayout odds_details_dish_layout;
 
     }
 

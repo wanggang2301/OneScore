@@ -77,7 +77,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by A on 2015/12/30.
+ * 篮球比分fragment
+ * Created by yixq on 2015/12/30.
  */
 public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
 
@@ -154,6 +155,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
     private boolean isFilter = false;  //是否赛选过
     private String url;
+    private int isLoad = -1;
 
     /**
      * 切换后更新显示的fragment
@@ -326,6 +328,11 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+//        mFilterImgBtn.setClickable(false); // 默认设置不可点击，防止网络差时在数据请求过程中无数据时点击筛选出现空白显示情况
+//        /**
+//         * 数据访问成功时打开赛选开关
+//         */
+//        mFilterImgBtn.setClickable(true);
     }
 
     private int mSize; //记录共有几天的数据
@@ -359,6 +366,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                     return;
                 }
 
+                isLoad = 1;
                 if (json == null || json.getMatchData() == null || json.getMatchData().size() == 0) {
                     if (mBasketballType == TYPE_FOCUS) {
                         PreferenceUtil.commitString(BASKET_FOCUS_IDS, "");
@@ -478,6 +486,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 L.e(TAG, "exception.getErrorCode() = " + exception.getErrorCode());
 
+                isLoad = 0;
+
                 isLoadData = false;
                 mSwipeRefreshLayout.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -565,6 +575,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      */
     @Override
     public void onRefresh() {
+            isLoad = -1;
             mLoadHandler.postDelayed(mRun, 0);
     }
 
@@ -601,13 +612,19 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 break;
 
             case R.id.public_btn_filter: //筛选
-                MobclickAgent.onEvent(mContext, "Basketball_Filter");
-                Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
-                intent.putExtra("MatchAllFilterDatas", (Serializable) mAllFilter);//Serializable 序列化传值（所有联赛数据）
-                intent.putExtra("MatchChickedFilterDatas", (Serializable) mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
+                if (isLoad == 1) {
+                    MobclickAgent.onEvent(mContext, "Basketball_Filter");
+                    Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
+                    intent.putExtra("MatchAllFilterDatas", (Serializable) mAllFilter);//Serializable 序列化传值（所有联赛数据）
+                    intent.putExtra("MatchChickedFilterDatas", (Serializable) mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
 //                getParentFragment().startActivityForResult(intent, REQUEST_FILTERCODE);
-                getActivity().startActivityForResult(intent, REQUEST_FILTERCODE);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                    getActivity().startActivityForResult(intent, REQUEST_FILTERCODE);
+                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                }else if(isLoad == 0){
+                    Toast.makeText(mContext, getResources().getText(R.string.immediate_unconection), Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.public_img_back:  //返回
                 MobclickAgent.onEvent(mContext, "Basketball_Exit");
@@ -616,6 +633,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 break;
 
             case R.id.basketball_immediate_error_btn:
+
+                isLoad = -1;
                 MobclickAgent.onEvent(mContext, "Basketball_Refresh");
                 mLoadingLayout.setVisibility(View.VISIBLE);
                 mSwipeRefreshLayout.setRefreshing(true);
@@ -773,8 +792,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                                 updateMatchStatus(matchchildern, data);// 修改Match里面的数据
                             }
                         }else{
-
-                            mLoadHandler.postDelayed(mRun, 0);
                             /**
                              * 未开始（VS）==>开始时候的处理
                              */
