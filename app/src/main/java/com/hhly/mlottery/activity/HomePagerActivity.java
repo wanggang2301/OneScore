@@ -1,18 +1,23 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.text.TextUtilsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,8 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
+import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeMenusEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
@@ -34,6 +41,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
@@ -45,6 +53,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,10 +74,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private TextView public_txt_title;
 
     public HomePagerEntity mHomePagerEntity;// 首页实体对象
+    private UpdateInfo mUpdateInfo;// 版本更新对象
     private static final int LOADING_DATA_START = 0;// 加载数据
     private static final int LOADING_DATA_SUCCESS = 1;// 加载成功
     private static final int LOADING_DATA_ERROR = 2;// 加载失败
     private static final int REFRES_DATA_SUCCESS = 3;// 下拉刷新
+    private static final int VERSION_UPDATA_SUCCESS = 4;// 版本更新请求成功
+    private static final String COMP_VER = "1"; // 完整版
+    private static final String PURE_VER = "2"; // 纯净版
     private long mExitTime;// 退出程序...时间
 
     private String mPushType;// 推送类型
@@ -97,20 +110,21 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = HomePagerActivity.this;
-        channelNumber = getAppMetaData(mContext,"UMENG_CHANNEL");// 获取渠道号
+        channelNumber = getAppMetaData(mContext, "UMENG_CHANNEL");// 获取渠道号
         getVersion();// 获取版本号
         pushData();
         initView();
         initData();
         initEvent();
         startService(new Intent(mContext, umengPushService.class));
-        L.d("xxx","version:" + version);
-        L.d("xxx","versionCode:" + versionCode);
-        L.d("xxx","channelNumber:" + channelNumber);
+        L.d("xxx", "version:" + version);
+        L.d("xxx", "versionCode:" + versionCode);
+        L.d("xxx", "channelNumber:" + channelNumber);
     }
 
     /**
      * 获取application中指定的meta-data
+     *
      * @return 如果没有获取成功(没有对应值，或者异常)，则返回值为空
      */
     private String getAppMetaData(Context ctx, String key) {
@@ -222,9 +236,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                             basketDataIntent.putExtra("key", mUrl);
                             basketDataIntent.putExtra("type", mDataType);
                             basketDataIntent.putExtra("infoTypeName", mInfoTypeName);
-                            basketDataIntent.putExtra("imageurl",imageUrl );
-                            basketDataIntent.putExtra("title",title );
-                            basketDataIntent.putExtra("subtitle",subTitle );
+                            basketDataIntent.putExtra("imageurl", imageUrl);
+                            basketDataIntent.putExtra("title", title);
+                            basketDataIntent.putExtra("subtitle", subTitle);
                             startActivity(basketDataIntent);
                             L.d("xxx", "mUrl: " + mUrl);
                         }
@@ -258,7 +272,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
             }
         });
-        if(AppConstants.isTestEnv){
+        if (AppConstants.isTestEnv) {
             public_txt_title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -266,10 +280,10 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
                         lastClickTime = currentTime;
                         clickCount = 0;
-                    }else{
+                    } else {
                         clickCount += 1;
-                        if(clickCount == 5){
-                            startActivity(new Intent(mContext,DebugConfigActivity.class));
+                        if (clickCount == 5) {
+                            startActivity(new Intent(mContext, DebugConfigActivity.class));
                             finish();
                         }
                     }
@@ -305,10 +319,37 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private void initData() {
         try {
             readObjectFromFile();// 获取本地数据
+            versionUpdate();// 版本更新
             getRequestData(0);// 获取网络数据
         } catch (Exception e) {
             L.d("获取数据异常：" + e.getMessage());
         }
+    }
+
+    /**
+     * 检查版本更新
+     */
+    private void versionUpdate(){
+        Map<String, String> map = new HashMap<String, String>();
+        if (AppConstants.fullORsimple) {
+            map.put("versionType", PURE_VER);
+        } else {
+            map.put("versionType", COMP_VER);
+        }
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_VERSION_UPDATE, map, new DefaultRetryPolicy(2000, 1, 1), new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
+            @Override
+            public synchronized void onResponse(final UpdateInfo json) {
+                if (json != null) {
+                    mUpdateInfo = json;
+                    mHandler.sendEmptyMessage(VERSION_UPDATA_SUCCESS);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        }, UpdateInfo.class);
     }
 
     /**
@@ -359,7 +400,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             public synchronized void onResponse(final HomePagerEntity jsonObject) {
                 if (jsonObject != null) {// 请求成功
                     mHomePagerEntity = jsonObject;
-                    L.d("xxx","isAudit:" +jsonObject.getIsAudit());
+                    L.d("xxx", "isAudit:" + jsonObject.getIsAudit());
                     isAuditHandle(jsonObject);
                     if (mHomePagerEntity.getResult() == 200) {
                         switch (num) {
@@ -479,6 +520,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
                         home_page_list.setAdapter(mListBaseAdapter);
+                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, VolleyContentFast.jsonData);// 保存首页缓存数据
+                        L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
                     }
                     break;
                 case LOADING_DATA_ERROR:
@@ -490,6 +533,43 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
                         home_page_list.setAdapter(mListBaseAdapter);
+                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, VolleyContentFast.jsonData);// 保存首页缓存数据
+                        L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
+                    }
+                    break;
+                case VERSION_UPDATA_SUCCESS:// 检查版本更新
+                    try {
+                        boolean isNewVersion = true;
+                        int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
+                        int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
+                        L.d("xxx","serverVersion:" + serverVersion);
+                        L.d("xxx","currentVersion:" + currentVersion);
+                        if (currentVersion < serverVersion) {// 有更新
+                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null);// 获取本地忽略版本
+                            L.d("xxx","versionIgnore:" + versionIgnore);
+                            if(versionIgnore != null){
+                                if(versionIgnore.contains("#")){
+                                    String[] split = versionIgnore.split("#");
+                                    for (int i = 0,len = split.length; i < len; i++) {
+                                        if(serverVersion == Integer.parseInt(split[i])){
+                                            isNewVersion = false;
+                                            break;
+                                        }
+                                    }
+                                    if(isNewVersion){
+                                        promptVersionUp();
+                                    }
+                                }else{
+                                    if(serverVersion != Integer.parseInt(versionIgnore)){
+                                        promptVersionUp();
+                                    }
+                                }
+                            }else{
+                                promptVersionUp();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     break;
             }
@@ -497,20 +577,71 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     };
 
     /**
+     * 新版本更新提示
+     */
+    private void promptVersionUp(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);//  android.R.style.Theme_Material_Light_Dialog
+        builder.setCancelable(false);// 设置对话框以外不可点击
+        builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
+        builder.setMessage(mUpdateInfo.getDescription());// 提示内容
+        builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
+                DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri uri = Uri.parse(mUpdateInfo.getUrl());
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                //指定在WIFI状态下，执行下载操作。
+                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+                //是否允许漫游状态下，执行下载操作
+                request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
+                //是否允许“计量式的网络连接”执行下载操作
+                request.setAllowedOverMetered(false);// 默认是允许的。
+                //request.setTitle("一比分新版本下载");
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setMimeType("application/vnd.android.package-archive");
+                L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), "ybf.apk");
+                // 设置为可被媒体扫描器找到
+                request.allowScanningByMediaScanner();
+                // 设置为可见和可管理
+                request.setVisibleInDownloadsUi(true);
+                long id = downloadManager.enqueue(request);
+                L.d("xxx", "id = " + id);
+            }
+        });
+        builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+               // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null);
+                if(versionIgnore != null){
+                    versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
+                }else{
+                    versionIgnore = String.valueOf(mUpdateInfo.getVersion());
+                }
+                PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,versionIgnore);
+                L.d("xxx","PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null));
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    /**
      * 获取本地数据
      */
     public void readObjectFromFile() {
-        File sdCardDir = Environment.getExternalStorageDirectory();//获取SDCard目录
-        File sdFile = new File(sdCardDir, "OneScoreData.dat");
-        try {
-            FileInputStream fis = new FileInputStream(sdFile);   //获得输入流
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            mHomePagerEntity = (HomePagerEntity) ois.readObject();
-            ois.close();
-        } catch (Exception e) {
-            L.d("获取本地数据失败：" + e.getMessage());
-        }
-        if (mHomePagerEntity != null) {
+        String jsondata = PreferenceUtil.getString(AppConstants.HOME_PAGER_DATA_KEY, null);
+        if (jsondata != null) {
+            mHomePagerEntity = JSON.parseObject(jsondata, HomePagerEntity.class);
             mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
             home_page_list.setAdapter(mListBaseAdapter);
         } else {
@@ -524,7 +655,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      */
     private void showDefData() {
         try {
-            String defDataJson = "{\"result\":200,\"menus\":{\"content\":[{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球比分\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球视频\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球指数\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球数据\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"足球资讯\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"篮球比分\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"香港开奖\",\"picUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"title\":\"彩票开奖\",\"picUrl\":\"xxx\"}],\"result\":200},\"otherLists\":[{\"content\":{\"labType\":1,\"bodys\":[{\"jumpType\":2,\"jumpAddr\":null,\"thirdId\":\"307689\",\"racename\":\"\",\"raceId\":\"1\",\"raceColor\":\"#9933FF\",\"date\":\"\",\"time\":\"\",\"homeId\":180,\"hometeam\":\"\",\"guestId\":177,\"guestteam\":\"\",\"statusOrigin\":\"0\",\"homeScore\":0,\"guestScore\":0,\"homeHalfScore\":0,\"guestHalfScore\":0,\"homeLogoUrl\":\"xxx\",\"guestLogoUrl\":\"xxx\"},{\"jumpType\":2,\"jumpAddr\":null,\"thirdId\":\"312127\",\"racename\":\"\",\"raceId\":\"511\",\"raceColor\":\"#000080\",\"date\":\"\",\"time\":\"\",\"homeId\":6162,\"hometeam\":\"\",\"guestId\":6164,\"guestteam\":\"\",\"statusOrigin\":\"0\",\"homeScore\":0,\"guestScore\":0,\"homeHalfScore\":0,\"guestHalfScore\":0,\"homeLogoUrl\":\"xxx\",\"guestLogoUrl\":\"xxx\"}]},\"result\":200},{\"content\":{\"labType\":2,\"bodys\":[{\"jumpType\":1,\"jumpAddr\":null,\"picUrl\":null,\"title\":\"\",\"date\":\"\",\"time\":\"\"},{\"jumpType\":1,\"jumpAddr\":null,\"picUrl\":\"xxx\",\"title\":\"\",\"date\":\"\",\"time\":\"\"}]},\"result\":200},{\"content\":{\"labType\":3,\"bodys\":[{\"jumpType\":2,\"jumpAddr\":null,\"name\":\"1\",\"issue\":\"-\",\"numbers\":null,\"picUrl\":\"xxx\",\"zodiac\":null},{\"jumpType\":2,\"jumpAddr\":null,\"name\":\"15\",\"issue\":\"-\",\"numbers\":null,\"picUrl\":\"xxx\"}]},\"result\":200}],\"banners\":{\"content\":[{\"jumpType\":0,\"jumpAddr\":null,\"picUrl\":\"xxx\"}],\"result\":200}}";
+            String defDataJson = "{\"banners\": {\"content\": [{\"jumpType\": 0,\"picUrl\": \"xxx\"}],\"result\": 200},\"menus\": {\"content\": [{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球比分\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球视频\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球指数\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球数据\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球资讯\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"篮球比分\"}],\"result\": 200},\"otherLists\": [{\"content\": {\"bodys\": [{\"date\": \"\",\"guestHalfScore\": 0,\"guestId\": 177,\"guestLogoUrl\": \"xxx\",\"guestScore\": 0,\"guestteam\": \"\",\"homeHalfScore\": 0,\"homeId\": 180,\"homeLogoUrl\": \"xxx\",\"homeScore\": 0,\"hometeam\": \"\",\"jumpType\": 2,\"raceColor\": \"#9933FF\",\"raceId\": \"1\",\"racename\": \"\",\"statusOrigin\": \"0\",\"thirdId\": \"307689\",\"time\": \"\"},{\"date\": \"\",\"guestHalfScore\": 0,\"guestId\": 6164,\"guestLogoUrl\": \"xxx\",\"guestScore\": 0,\"guestteam\": \"\",\"homeHalfScore\": 0,\"homeId\": 6162,\"homeLogoUrl\": \"xxx\",\"homeScore\": 0,\"hometeam\": \"\",\"jumpType\": 2,\"raceColor\": \"#000080\",\"raceId\": \"511\",\"racename\": \"\",\"statusOrigin\": \"0\",\"thirdId\": \"312127\",\"time\": \"\"}],\"labType\": 1},\"result\": 200},{\"content\": {\"bodys\": [{\"date\": \"\",\"jumpType\": 1,\"time\": \"\",\"title\": \"\"},{\"date\": \"\", \"jumpType\": 1,\"picUrl\": \"xxx\",\"time\": \"\",\"title\": \"\"}],\"labType\": 2},\"result\": 200}], \"result\": 200}";
             mHomePagerEntity = JSON.parseObject(defDataJson, HomePagerEntity.class);
 
             mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
@@ -541,19 +672,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 UiUtils.toast(this, getResources().getString(R.string.main_exit_text), 1000);
                 mExitTime = System.currentTimeMillis();
             } else {
-                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    File sdCardDir = Environment.getExternalStorageDirectory();//获取SDCard目录
-                    File sdFile = new File(sdCardDir, "OneScoreData.dat");
-                    try {
-                        FileOutputStream fos = new FileOutputStream(sdFile);
-                        ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(mHomePagerEntity);// 写入
-                        fos.close(); // 关闭输出流
-                    } catch (Exception e) {
-                        L.d("保存数据到本地失败：" + e.getMessage());
-                    }
-                }
-                System.exit(0);
+                System.exit(0);// 退出APP
             }
             return true;
         }

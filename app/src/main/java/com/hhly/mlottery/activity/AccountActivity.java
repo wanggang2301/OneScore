@@ -19,6 +19,9 @@ import com.hhly.mlottery.util.net.account.AccountResultCode;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 我的账户界面
+ */
 public class AccountActivity extends BaseActivity implements View.OnClickListener {
 
     private static final java.lang.String TAG = "AccountActivity";
@@ -60,6 +63,9 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    /**
+     * 注销
+     */
     private void logout() {
 
         progressBar.show();

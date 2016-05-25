@@ -2,6 +2,7 @@ package com.hhly.mlottery.util.net.account;
 
 /**
  * Created by lyx on 2016/5/19.
+ * 账户模块请求返回码 ， 比如 login、register 等
  */
 public interface AccountResultCode {
     /**成功*/
@@ -72,5 +73,17 @@ public interface AccountResultCode {
 
     /**后台报错*/
     int SERVER_ERROR =500;
+
+    /**用户未登陆*/
+    int USER_NOT_LOGIN =22;
+
+    /**真实姓名错误*/
+    int REALNAMW_ERROR =41;
+
+    /**身份证格式错误*/
+    int ID_CARD_FORMAT_ERROR =42;
+
+    /**密码错误*/
+    int PASSWORD_ERROR =43;
 
 }

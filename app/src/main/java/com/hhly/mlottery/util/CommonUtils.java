@@ -50,6 +50,9 @@ public class CommonUtils {
     }
 
 
+    /**
+     * 初始化注册信息（与登录信息一样）
+     */
     public static void initRegisterInfo(){
         Register.DataBean.UserBean userBean = new Register.DataBean.UserBean();
         userBean.setUserId(PreferenceUtil.getString(AppConstants.SPKEY_USERID , ""));
@@ -106,6 +109,10 @@ public class CommonUtils {
     }
 
 
+    /**
+     * 请求账户信息返回统一处理
+     * @param rescode
+     */
     public static void handlerRequestResult(int rescode){
         L.d(TAG , "handlerRequestResult rescode =  "+ rescode);
         switch (rescode){
@@ -139,8 +146,8 @@ public class CommonUtils {
             case AccountResultCode.PHONE_ALREADY_EXIST:
                 UiUtils.toast(MyApp.getInstance() , R.string.phone_already_exist);
                 break;
-            case AccountResultCode.USERNAME_PASS_ERROR:
-                UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
+            case AccountResultCode.USER_NOT_LOGIN:
+                UiUtils.toast(MyApp.getInstance() , R.string.user_not_login);
                 break;
             case AccountResultCode.PHONE_FORMAT_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.PHONE_FORMAT_ERROR);
@@ -165,6 +172,18 @@ public class CommonUtils {
                 break;
             case AccountResultCode.GET_WEIBO_INFO_FAIL:
                 UiUtils.toast(MyApp.getInstance() , R.string.GET_WEIBO_INFO_FAIL);
+                break;
+            case AccountResultCode.REALNAMW_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.realname_error);
+                break;
+            case AccountResultCode.ID_CARD_FORMAT_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.id_card_format_error);
+                break;
+            case AccountResultCode.PASSWORD_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.password_error);
+                break;
+            case AccountResultCode.USERNAME_PASS_ERROR:
+                UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
                 break;
         }
 

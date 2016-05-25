@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery"
     android:versionCode="13"
-    android:versionName="1.1.0.0520">
+    android:versionName="1.1.0.0523">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -235,6 +235,13 @@
             android:screenOrientation="portrait"></activity>
         <!--消息推送服务-->
         <service android:name=".service.umengPushService" />
+        <!--版本更新广播-->
+        <receiver android:name=".receiver.CompleteReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

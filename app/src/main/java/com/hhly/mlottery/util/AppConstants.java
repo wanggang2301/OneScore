@@ -195,6 +195,8 @@ public class AppConstants {
 	public static final int BASKETBALL_COMPETITION_VALUE = 2;// 篮球赛程跳转value
 	public static final int BASKETBALL_ATTENTION_VALUE = 3;// 篮球关注跳转value
 	public static final String LOTTERY_KEY = "numberName";// 彩票界面跳转Key
+	public static final String HOME_PAGER_DATA_KEY = "homePagerDataKey";// 首页缓存数据key
+	public static final String HOME_PAGER_VERSION_UPDATE_KEY = "homePagerVersionUpdate";// 首页忽略此版本
 
 
 
