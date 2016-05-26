@@ -45,7 +45,7 @@ import java.util.Map;
 
 /**
  * Created by Tenney on 2016/4/6.
- * 指数
+ * 新版指数
  */
 public class CPIFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -391,14 +391,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     CpiFiltrateActivity.isDefualHot = true;
                     // 记录点击的 item 位置
                     selectPosition = position;
-//                    companysId.clear();
-//                    for (int k = 0; k < companys.size(); k++) {
-//                        if (companys.get(k).isChecked()) {
-//                            companysId.add(companys.get(k).getComId());
-//                            companys.get(k).setIsChecked(true);
-//                        }
-//                    }
-//                    filtrateDate();
                     //设置标题时间
                     public_txt_date.setText(mMapList.get(position).get("date"));
                     for (Fragment fragment : fragments) {
