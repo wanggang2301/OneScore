@@ -30,7 +30,7 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     private GrapeGridview cpiGridviewHot;
     private GrapeGridview cpiGridviewOther;
 
-    private static boolean isDefualHot = true;
+    public static boolean isDefualHot = true;
 
     /**
      * 已选择的联赛id
