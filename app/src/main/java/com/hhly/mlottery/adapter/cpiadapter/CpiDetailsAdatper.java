@@ -21,6 +21,7 @@ import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,20 +31,22 @@ import java.util.List;
 public class CpiDetailsAdatper extends BaseExpandableListAdapter implements PinnedHeaderExpandableListView.HeaderAdapter {
 
     private List<String> mGroupDataList;//父类view 数据
-    List<List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity>> mChildrenDataList;//子view数据
+    List<List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity>> mChildrenDataList=new ArrayList<>();//子view数据
     private Context mContext;
     private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
     private String stKey;
     private TableRow.LayoutParams params;
+    private List<OddsDetailsDataInfo.DetailsEntity> groupListDetailsEntity=new ArrayList<>();
 
     public CpiDetailsAdatper(List<List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity>> childrenDataList, List<String> groupDataList
-            , Context mContext, PinnedHeaderExpandableListView listView,String stKey) {
+            , Context mContext, PinnedHeaderExpandableListView listView,String stKey,List<OddsDetailsDataInfo.DetailsEntity> groupListDetailsEntity) {
         this.mGroupDataList = groupDataList;
         this.mChildrenDataList = childrenDataList;
         this.mContext = mContext;
         this.listView = listView;
         this.stKey = stKey;
+        this.groupListDetailsEntity = groupListDetailsEntity;
         inflater = LayoutInflater.from(this.mContext);
     }
 
@@ -90,26 +93,38 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
             holder.odds_details_dish_child_txt = (TextView) convertView.findViewById(R.id.odds_details_dish_txt);
             //客队分数
             holder.odds_details_guest_child_txt = (TextView) convertView.findViewById(R.id.odds_details_guest_txt);
+            holder.odds_details_dish_layout = (LinearLayout) convertView.findViewById(R.id.odds_details_dish_layout);
 
             //手动设置宽高
             params = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
             params.weight = 4;
             params.rightMargin=1;
             holder.odds_details_timeAndscore_child_txt.setLayoutParams(params);
+
+
             TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
             params1.weight = 3;
             params1.rightMargin=1;
-            holder.odds_details_dish_child_txt.setLayoutParams(params1);
+            holder.odds_details_dish_layout.setLayoutParams(params1);
             convertView.setTag(holder);
 
         } else {
             holder = (Holder) convertView.getTag();
         }
+
         final OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity model = mChildrenDataList.get(groupPosition).get(childPosition);
-        String str=mGroupDataList.get(groupPosition);
-        //截取年月日的后五位数
-        str = str.substring(str.length()-5,str.length());
-        holder.odds_details_timeAndscore_child_txt.setText (str+"\t"+model.getTime());
+
+        if("tag".equals(model.getSelectTag())){
+            //如果拿到的标识是tag给第一条设置初盘字样
+            holder.odds_details_timeAndscore_child_txt.setText(R.string.frame_cpi_chupan_txt);
+        }else {
+            //否则直接获取服务器数据
+            String str = mGroupDataList.get(groupPosition);
+            //截取年月日的后五位数
+            str = str.substring(str.length() - 5, str.length());
+            holder.odds_details_timeAndscore_child_txt.setText(str + "\t" + model.getTime());
+        }
+
         //判断是主队的数据
 
         holder.odds_details_home_child_txt.setText(String.format("%.2f",model.getHomeOdd()));
@@ -134,21 +149,25 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
 //        holder.odds_details_dish_child_txt.setText(model.getHand() + "");
         if ("one".equals(stKey)) {//亚盘
             //转换盘口
-            holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicap(String.format("%.2f",model.getHand()) ));
+            holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicap(String.format("%.2f", model.getHand())));
+//            holder.odds_details_dish_child_txt.setWidth(160);
+            selectColor(model,holder);
         } else if ("three".equals(stKey)) {//欧赔
+            if ("green".equals(model.getDishColor())) {
+            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.tabhost));
+            } else if ("red".equals(model.getDishColor())) {
+            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.homwe_lhc_red));
+            } else if ("black".equals(model.getDishColor())) {
+            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.content_txt_dark_grad));
+            }
             //不用变
             holder.odds_details_dish_child_txt.setText(String.format("%.2f",model.getHand()));
+
         } else if ("two".equals(stKey)) {//大小球
             //转为大小球
-            holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(model.getHand()+""));
-        }
-
-        if ("green".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.tabhost));
-        } else if ("red".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.homwe_lhc_red));
-        } else if ("black".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.content_txt_dark_grad));
+            holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(model.getHand() + ""));
+//            holder.odds_details_dish_child_txt.setWidth(120);
+            selectColor(model,holder);
         }
 
         return convertView;
@@ -162,6 +181,7 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
         TextView odds_details_home_child_txt; //主队分数
         TextView odds_details_dish_child_txt; //盘口
         TextView odds_details_guest_child_txt; //客队分数
+        LinearLayout odds_details_dish_layout;
 
 
     }
@@ -309,5 +329,17 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
         mGroupDataList.clear();
         mChildrenDataList.clear();
         notifyDataSetChanged();
+    }
+    private void selectColor(OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity model,Holder holder){
+        if ("green".equals(model.getDishColor())) {
+            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.odds_details_dish_child_txt.setBackgroundResource(R.color.tabhost);
+        } else if ("red".equals(model.getDishColor())) {
+            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.odds_details_dish_child_txt.setBackgroundResource(R.color.homwe_lhc_red);
+        } else if ("black".equals(model.getDishColor())) {
+            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.content_txt_dark_grad));
+            holder.odds_details_dish_child_txt.setBackgroundResource(R.color.white);
+        }
     }
 }
