@@ -87,7 +87,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         }
 
         initView();
-        mHandler.postDelayed(mRun , 0); // 加载数据
+        mHandler.postDelayed(mRun , 500); // 加载数据
 
         if (mAdapter2 == null) {
             mAdapter2 = new CompanyAdapter(BasketOddsDetailsActivity.this , mOddsCompanyList , R.layout.basket_odds_company_item);
@@ -283,7 +283,13 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
             mOddsId = mOddsCompanyList.get(position).getOddsId();
 //            initData(mOddsId);
 //            initData(mOddsId , mOddsType);
-            mHandler.postDelayed(mRun , 0); // 加载数据
+
+            mListView2.setVisibility(View.GONE);
+            mNoData.setVisibility(View.GONE);
+            mEerrorll.setVisibility(View.GONE);
+            mRefresh.setRefreshing(true);
+
+            mHandler.postDelayed(mRun , 500); // 加载数据
 
         }
     }
