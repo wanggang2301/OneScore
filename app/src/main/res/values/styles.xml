@@ -568,6 +568,9 @@
         <item name="android:layout_marginLeft">18dp</item>
     </style>
 
-
+    <!--AppDialog_Theme-->
+    <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 </resources>

@@ -101,7 +101,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private long lastClickTime = 0;
     private int clickCount = 0;// 点击次数
 
-    /**跳转其他Activity 的requestcode */
+    /**
+     * 跳转其他Activity 的requestcode
+     */
     public static final int REQUESTCODE_LOGIN = 100;
     public static final int REQUESTCODE_LOGOUT = 110;
     private ImageView iv_account;
@@ -329,7 +331,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     /**
      * 检查版本更新
      */
-    private void versionUpdate(){
+    private void versionUpdate() {
         Map<String, String> map = new HashMap<String, String>();
         if (AppConstants.fullORsimple) {
             map.put("versionType", PURE_VER);
@@ -364,9 +366,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         public_btn_filter.setVisibility(View.GONE);
 
         iv_account = (ImageView) findViewById(R.id.iv_account);
-        if (CommonUtils.isLogin()){
+        if (CommonUtils.isLogin()) {
             iv_account.setImageResource(R.mipmap.login);
-        }else{
+        } else {
             iv_account.setImageResource(R.mipmap.logout);
         }
         iv_account.setVisibility(View.VISIBLE);
@@ -542,29 +544,29 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                         boolean isNewVersion = true;
                         int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
                         int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
-                        L.d("xxx","serverVersion:" + serverVersion);
-                        L.d("xxx","currentVersion:" + currentVersion);
+                        L.d("xxx", "serverVersion:" + serverVersion);
+                        L.d("xxx", "currentVersion:" + currentVersion);
                         if (currentVersion < serverVersion) {// 有更新
-                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null);// 获取本地忽略版本
-                            L.d("xxx","versionIgnore:" + versionIgnore);
-                            if(versionIgnore != null){
-                                if(versionIgnore.contains("#")){
+                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);// 获取本地忽略版本
+                            L.d("xxx", "versionIgnore:" + versionIgnore);
+                            if (versionIgnore != null) {
+                                if (versionIgnore.contains("#")) {
                                     String[] split = versionIgnore.split("#");
-                                    for (int i = 0,len = split.length; i < len; i++) {
-                                        if(serverVersion == Integer.parseInt(split[i])){
+                                    for (int i = 0, len = split.length; i < len; i++) {
+                                        if (serverVersion == Integer.parseInt(split[i])) {
                                             isNewVersion = false;
                                             break;
                                         }
                                     }
-                                    if(isNewVersion){
+                                    if (isNewVersion) {
                                         promptVersionUp();
                                     }
-                                }else{
-                                    if(serverVersion != Integer.parseInt(versionIgnore)){
+                                } else {
+                                    if (serverVersion != Integer.parseInt(versionIgnore)) {
                                         promptVersionUp();
                                     }
                                 }
-                            }else{
+                            } else {
                                 promptVersionUp();
                             }
                         }
@@ -579,11 +581,17 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     /**
      * 新版本更新提示
      */
-    private void promptVersionUp(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);//  android.R.style.Theme_Material_Light_Dialog
+    private void promptVersionUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
         builder.setCancelable(false);// 设置对话框以外不可点击
         builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
-        builder.setMessage(mUpdateInfo.getDescription());// 提示内容
+        String mMessage = mUpdateInfo.getDescription();// 获取提示内容
+        if (mUpdateInfo != null) {
+            if (mMessage.contains("#")) {
+                mMessage = mMessage.replace("#", "\n");// 换行处理
+            }
+            builder.setMessage(mMessage);// 提示内容
+        }
         builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -615,26 +623,27 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-               // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null);
-                if(versionIgnore != null){
+                String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);
+                if (versionIgnore != null) {
                     versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
-                }else{
+                } else {
                     versionIgnore = String.valueOf(mUpdateInfo.getVersion());
                 }
-                PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,versionIgnore);
-                L.d("xxx","PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null));
+                PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
+                L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
                 dialog.cancel();
             }
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
     /**
      * 获取本地数据
      */
@@ -681,12 +690,12 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_account:
                 MobclickAgent.onEvent(mContext, "LoginActivity_Start");
                 if (CommonUtils.isLogin()){
                     goToAccountActivity();
-                }else{
+                } else {
                     goToLoginActivity();
                 }
                 break;
@@ -696,24 +705,24 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     }
 
     private void goToLoginActivity() {
-        startActivityForResult(new Intent(this , LoginActivity.class) , REQUESTCODE_LOGIN);
+        startActivityForResult(new Intent(this, LoginActivity.class), REQUESTCODE_LOGIN);
     }
 
     private void goToAccountActivity() {
-        startActivityForResult(new Intent(this , AccountActivity.class) , REQUESTCODE_LOGOUT );
+        startActivityForResult(new Intent(this, AccountActivity.class), REQUESTCODE_LOGOUT);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK){
-            if (requestCode == REQUESTCODE_LOGIN){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回
-                L.d(TAG,"登录成功");
+                L.d(TAG, "登录成功");
                 iv_account.setImageResource(R.mipmap.login);
-            }else if (requestCode == REQUESTCODE_LOGOUT){
-                L.d(TAG,"注销成功");
+            } else if (requestCode == REQUESTCODE_LOGOUT) {
+                L.d(TAG, "注销成功");
                 iv_account.setImageResource(R.mipmap.logout);
             }
         }
