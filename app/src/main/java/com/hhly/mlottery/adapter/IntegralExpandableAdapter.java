@@ -328,15 +328,15 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
     public void configureHeader(View header, int groupPosition,
                                 int childPosition, int alpha) {
 
-            String groupData = this.mGroupDataList.get(groupPosition).toString();
+        String groupData = this.mGroupDataList.get(groupPosition).toString();
 
-        if(groupData.equals("empty")){
+        if (groupData.equals("empty")) {
             header.findViewById(R.id.integral_grouping).setVisibility(View.GONE);
 
-        }else {
+        } else {
             ((TextView) header.findViewById(R.id.integral_grouping)).setText(groupData);
         }
-        }
+    }
 
     private SparseIntArray groupStatusMap = new SparseIntArray();
 
