@@ -683,6 +683,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_account:
+                MobclickAgent.onEvent(mContext, "LoginActivity_Start");
                 if (CommonUtils.isLogin()){
                     goToAccountActivity();
                 }else{

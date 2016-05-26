@@ -657,7 +657,7 @@
 
 
     <!-- 登录注册 begin-->
-    <string name="my">我的</string>
+    <string name="my">個人中心</string>
     <string name="register">注冊</string>
     <string name="registering">正在注冊...</string>
     <string name="login">登錄</string>
@@ -698,6 +698,7 @@
     <string name="id_card_format_error">身份證格式錯誤</string>
     <string name="password_error">密碼錯誤</string>
     <string name="username_pass_error">登錄名或者密碼錯誤</string>
+    <string name="logout_check">確認退出登錄?</string>
     <!-- 登录注册 end-->
 
     <string name="home_pager_version_update">忽略此版本</string>
