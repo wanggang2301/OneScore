@@ -158,7 +158,8 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
 
         //获取ListView
         explistview_live = (PinnedHeaderExpandableListView) view.findViewById(R.id.football_integral_lv);
-       // explistview_live.setHeaderView(getLayoutInflater(null).inflate(R.layout.integral_items_group, explistview_live, false));
+        explistview_live.setHeaderView(getLayoutInflater(null).inflate(R.layout.integral_items_group, explistview_live, false));
+        explistview_live.setChildDivider(getResources().getDrawable(R.color.line_football_footer));
         //设置悬浮头部VIEW
         // explistview_live.setHeaderView(getActivity().getLayoutInflater().inflate(R.layout.integral_items_group, explistview_live, false));
 
