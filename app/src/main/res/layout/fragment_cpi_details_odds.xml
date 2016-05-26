@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/basket_analyze_update"
                 android:textSize="13sp"
@@ -45,7 +45,7 @@
                 android:id="@+id/cpi_dish_details_txt_id"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:gravity="center"
                 android:text="@string/odd_dish_txt"
                 android:textSize="13sp"

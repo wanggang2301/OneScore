@@ -97,13 +97,13 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
 
             //手动设置宽高
             params = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
-            params.weight = 4;
+            params.weight = 3;
             params.rightMargin=1;
             holder.odds_details_timeAndscore_child_txt.setLayoutParams(params);
 
 
             TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
-            params1.weight = 3;
+            params1.weight = 4;
             params1.rightMargin=1;
             holder.odds_details_dish_layout.setLayoutParams(params1);
             convertView.setTag(holder);
@@ -166,7 +166,6 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
         } else if ("two".equals(stKey)) {//大小球
             //转为大小球
             holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(model.getHand() + ""));
-//            holder.odds_details_dish_child_txt.setWidth(120);
             selectColor(model,holder);
         }
 
