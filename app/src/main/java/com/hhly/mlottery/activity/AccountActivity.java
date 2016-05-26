@@ -103,7 +103,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             public void onResponse(Register register) {
 
                 progressBar.dismiss();
-                if (register.getResult() == AccountResultCode.SUCC){
+                if (register.getResult() == AccountResultCode.SUCC || register.getResult() == AccountResultCode.USER_NOT_LOGIN){
                     CommonUtils.saveRegisterInfo(null);
                     UiUtils.toast(MyApp.getInstance(), R.string.logout_succ);
                     setResult(RESULT_OK);
