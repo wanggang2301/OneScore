@@ -76,6 +76,7 @@ public class HomeGridAdapter extends BaseAdapter {
                         HomeContentEntity homeContentEntity = mHomePagerEntity.getMenus().getContent().get(position);
                         int jumpType = homeContentEntity.getJumpType();// 跳转类型
                         String jumpAddr = homeContentEntity.getJumpAddr();// 跳转地址
+                        String title = homeContentEntity.getTitle();// 跳转标题
                         String reqMethod = homeContentEntity.getReqMethod();// 跳转方式
                         if (!TextUtils.isEmpty(jumpAddr)) {
                             switch (jumpType) {
@@ -87,6 +88,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                         if (CommonUtils.isLogin()) {// 判断用户是否登录
                                             Intent intent = new Intent(mContext, WebActivity.class);
                                             intent.putExtra("key", jumpAddr.substring(0,jumpAddr.indexOf("?")));// 跳转地址
+                                            intent.putExtra("infoTypeName", title);
                                             intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
                                             intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
                                             mContext.startActivity(intent);
@@ -96,6 +98,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                     }else {// 其它
                                         Intent intent = new Intent(mContext, WebActivity.class);
                                         intent.putExtra("key", jumpAddr);
+                                        intent.putExtra("infoTypeName", title);
                                         intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
                                         mContext.startActivity(intent);
                                     }

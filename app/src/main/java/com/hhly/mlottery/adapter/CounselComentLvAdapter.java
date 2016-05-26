@@ -86,7 +86,8 @@ public class CounselComentLvAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
         //暂时写死游客
-        holder.nickname.setText(R.string.user_name);
+//        holder.nickname.setText(R.string.user_name);
+        holder.nickname.setText( mInfosList.get(position).passport.nickname);
         String time = DateUtil.transferLongToDate(mInfosList.get(position).create_time);
         holder.time.setText(time);
 

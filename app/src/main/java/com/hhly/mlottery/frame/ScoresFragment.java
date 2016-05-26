@@ -46,6 +46,8 @@ public class ScoresFragment extends Fragment {
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
+    private final int ROLL_FRAGMENT=4;
+
     private final static String TAG = "ScoresFragment";
     public static List<String> titles;
 
@@ -143,11 +145,15 @@ public class ScoresFragment extends Fragment {
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
         titles.add(getString(R.string.foot_guanzhu_txt));
+       // titles.add("滚球");
+
         fragments = new ArrayList<>();
         fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
+       // fragments.add(RollBallFragment.newInstance());
+
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

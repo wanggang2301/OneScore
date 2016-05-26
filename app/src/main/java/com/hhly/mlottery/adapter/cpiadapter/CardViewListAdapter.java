@@ -117,18 +117,35 @@ public class CardViewListAdapter extends BaseAdapter {
             item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.black));
         }
         if (CPIFragment.TYPE_PLATE.equals(oddType)) {//亚盘
-            //转换盘口
-            item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
-            item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
+            if(!"".equals(mCurrLevelBean.getMiddle())) {
+                //转换盘口
+                item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
+            }
+            if(!"".equals(mCurrLevelBean.getMiddle())) {
+                item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
+            }
             item.cpi_item_list_odds_txt.setWidth(200);
         } else if (CPIFragment.TYPE_BIG.equals(oddType)) {//大小
-            item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
-            item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
+            if(!"".equals(mCurrLevelBean.getMiddle())) {
+                item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
+            }
+            if(!"".equals(mPreLevelBean.getMiddle())) {
+                item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
+            }
             item.cpi_item_list_odds_txt.setWidth(120);
-        } else if (CPIFragment.TYPE_OP.equals(oddType)) {//欧赔
+
+        } else {//欧赔
             //不用转换盘口
-            item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
-            item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
+            if(!"".equals(mCurrLevelBean.getMiddle())) {
+                item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
+            }else{
+                item.cpi_item_list_odds_txt.setText("--");
+            }
+            if(!"".equals(mPreLevelBean.getMiddle())) {
+                item.cpi_item_list_odds_txt.setText(mPreLevelBean.getMiddle());
+            }else{
+                item.cpi_item_list_odds_txt.setText("--");
+            }
         }
 
         //即赔
