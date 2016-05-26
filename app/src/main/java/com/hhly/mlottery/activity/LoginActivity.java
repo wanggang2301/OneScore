@@ -137,6 +137,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     iv_eye.setImageResource(R.mipmap.open_eye);
                 }
+
+                // 光标移动到结尾
+                String pwd = et_password.getText().toString();
+                if(!TextUtils.isEmpty(pwd)){
+                    et_password.setSelection(pwd.length());
+                }
+
+
                 break;
             case R.id.tv_login: // 登录
                 MobclickAgent.onEvent(mContext, "LoginActivity_LoginOk");
