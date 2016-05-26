@@ -26,6 +26,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
+import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -75,6 +77,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private static final String INTENT_PARAMS_URL = "url";
     private static final String INTENT_PARAMS_TITLE = "title";
     private static final int JUMP_QUESTCODE = 1;
+    private static final int JUMP_COMMENT_QUESTCODE = 3;
     private int def = 0;
 
     private ImageView public_btn_set;
@@ -88,13 +91,17 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private SharePopupWindow sharePopupWindow;
     private String model;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         sdk = CyanSdk.getInstance(this);
         //单点登录   nickname可以相同  用户id不能相同
-        CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
+        if (CommonUtils.isLogin()){
+            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(),sdk);
+        }
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
         initData();
@@ -197,6 +204,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
@@ -211,6 +219,16 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                     mSend.setSelected(false);
                 } else {
                     mSend.setSelected(true);
+                }
+            }
+        });
+        mEditText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!CommonUtils.isLogin()){
+                    //跳转登录界面
+                    Intent intent1=new Intent(WebActivity.this,LoginActivity.class);
+                    startActivityForResult(intent1,JUMP_COMMENT_QUESTCODE);
                 }
             }
         });
@@ -325,6 +343,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             if (reqMethod != null && token != null && reqMethod.equals("post")) {
 
                 mWebView.postUrl(url, token.getBytes("utf-8"));
+                System.out.println("lzfwebview"+url);
 
 
             } else {
@@ -402,8 +421,15 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                         L.i("lzf提交topicid=" + topicid);
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
-                        ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
-                        CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
+                        if (CommonUtils.isLogin()){
+                            ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
+                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                        }else {
+                            //跳转登录界面
+                            Intent intent1=new Intent(WebActivity.this,LoginActivity.class);
+                            startActivityForResult(intent1,JUMP_COMMENT_QUESTCODE);
+                        }
+
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();
@@ -530,9 +556,10 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 
     }
 
-    //接收全部评论页面返回的评论总数
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //接收全部评论页面返回的评论总数
+
         if (requestCode == JUMP_QUESTCODE) {
             if (resultCode == 2) {
                 int defaultnum = 0;
@@ -541,6 +568,12 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 }
                 String commentcount = data.getIntExtra("cmt_sum", defaultnum) + "";
                 mCommentCount.setText(commentcount);
+            }
+        }
+        //接收登录华海成功返回
+        if (requestCode==3){
+            if (resultCode==RESULT_OK){
+                CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
             }
         }
     }

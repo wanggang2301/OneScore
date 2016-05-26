@@ -3,7 +3,10 @@ package com.hhly.mlottery.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.OperateType;
 import com.hhly.mlottery.util.net.account.RegisterType;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,16 +38,20 @@ import java.util.TimerTask;
 /**
  * 注册界面
  */
-public class RegisterActivity extends BaseActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
     private EditText et_username , et_password ,et_verifycode;
     private TextView tv_register , tv_verycode;
-    private ImageView iv_eye;
+    private ImageView iv_eye , iv_delete;
 
+    /**
+     * 倒计时 默认60s , 间隔1s
+     */
     private CountDown countDown;
     private static final int TIMEOUT = 59699;
     private static final int TIMEOUT_INTERVEL = 1000;
     private ProgressDialog progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void onResume() {
+        /**友盟页面统计*/
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("RegisterActivity");
         super.onResume();
         et_username.setFocusable(true);
         et_username.setFocusableInTouchMode(true);
@@ -72,6 +83,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }, 300);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        /**友盟页面统计*/
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("RegisterActivity");
+    }
+
     private void initView() {
 
         progressBar = new ProgressDialog(this);
@@ -80,7 +99,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.register);
-        findViewById(R.id.iv_delete).setOnClickListener(this);
+        iv_delete = (ImageView) findViewById(R.id.iv_delete);
+        iv_delete.setOnClickListener(this);
+
         tv_register = (TextView) findViewById(R.id.tv_register);
         tv_register.setOnClickListener(this);
         findViewById(R.id.public_img_back).setOnClickListener(this);
@@ -88,6 +109,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         iv_eye.setOnClickListener(this);
 
         et_username = (EditText) findViewById(R.id.et_username);
+        et_username.addTextChangedListener(this);
+
         et_password = (EditText) findViewById(R.id.et_password);
         et_verifycode = (EditText) findViewById(R.id.et_verifycode);
         tv_verycode = (TextView) findViewById(R.id.tv_verycode);
@@ -115,6 +138,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
+    /**
+     * 重新获取验证码
+     */
     private void enableVeryCode() {
         if (tv_verycode != null){
             tv_verycode.setText(R.string.resend);
@@ -126,10 +152,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.public_img_back: // 返回
+                MobclickAgent.onEvent(mContext, "RegisterActivity_Exit");
                 finish();
                 break;
             case R.id.tv_register: // 注册
-
+                MobclickAgent.onEvent(mContext, "RegisterActivity_RegisterOK");
                 String userName = et_username.getText().toString();
                 String passWord = et_password.getText().toString();
                 String verifyCode = et_verifycode.getText().toString();
@@ -146,9 +173,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 // TODO
                 break;
             case R.id.iv_delete: // EditText 删除
+                MobclickAgent.onEvent(mContext, "RegisterActivity_UserName_Delete");
                 et_username.setText("");
                 break;
             case R.id.iv_eye:  // 显示密码
+                MobclickAgent.onEvent(mContext, "RegisterActivity_PassWord_isHide");
                 int inputType = et_password.getInputType();
                 if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD){
                     et_password.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -159,6 +188,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.tv_verycode:
+                MobclickAgent.onEvent(mContext, "RegisterActivity_VeryCode");
                 getVerifyCode();
                 break;
             default:
@@ -210,7 +240,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 progressBar.dismiss();
                 tv_register.setClickable(true);
                 L.e(TAG,"注册失败");
-                UiUtils.toast(RegisterActivity.this , R.string.register_fail);
+                UiUtils.toast(RegisterActivity.this , R.string.immediate_unconection);
             }
         } , Register.class);
     }
@@ -246,7 +276,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     L.e(TAG,"发送验证码失败");
                     countDown.cancel();
                     enableVeryCode();
-                    UiUtils.toast(MyApp.getInstance() , R.string.message_send_fail);
+                    UiUtils.toast(MyApp.getInstance() , R.string.immediate_unconection);
                 }
             } , SendSmsCode.class);
 
@@ -258,6 +288,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         super.onDestroy();
         if (countDown != null){
             countDown.cancel();
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (TextUtils.isEmpty(s)){
+            iv_delete.setVisibility(View.GONE);
+        }else{
+            iv_delete.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -479,7 +479,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                     return;
                 }
 
+
                 mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有赛程
+
                 mMatchs = new ArrayList<Match>();//
                 // mMatchs.addAll(mAllMatchs);//用这种方式是把all的引用赋给它了，操作起来比较麻烦
 
@@ -537,12 +539,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                             if (mMatchs.size() == 0) {// 一个赛事都没有，显示“暂无赛事”
                                 //  mRecyclerView.setLayoutManager(layoutManager);
 
-                                if (AppConstants.isGOKeyboard) {
-                                    /*mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
+                               /* if (AppConstants.isGOKeyboard) {
+                                    *//*mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
                                     mInternationalAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                                     mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                                    mListView.setAdapter(mInternationalAdapter);*/
-                                } else {
+                                    mListView.setAdapter(mInternationalAdapter);*//*
+                                } else {*/
                                     mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                                     //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                                     mAdapter.setmFocusMatchClickListener(mFocusClickListener);
@@ -560,7 +562,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                             getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                                         }
                                     });
-                                }
+                               // }
 
                                 isLoadedData = true;
                                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
@@ -596,12 +598,12 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                         //mRecyclerView.setLayoutManager(layoutManager);
 
 
-                        if (AppConstants.isGOKeyboard) {
-                           /* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
+                     /*   if (AppConstants.isGOKeyboard) {
+                           *//* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
                             mInternationalAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                             mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                            mListView.setAdapter(mInternationalAdapter);*/
-                        } else {
+                            mListView.setAdapter(mInternationalAdapter);*//*
+                        } else {*/
                             mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                             //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                             mAdapter.setmFocusMatchClickListener(mFocusClickListener);
@@ -617,7 +619,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                     getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                                 }
                             });
-                        }
+                      //  }
 
                         isLoadedData = true;
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
@@ -1405,7 +1407,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
         if (!isLoadedData && mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
             mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+
             mLoadHandler.postDelayed(mLoadingDataThread, 0);
+
         } else {
 
         }
