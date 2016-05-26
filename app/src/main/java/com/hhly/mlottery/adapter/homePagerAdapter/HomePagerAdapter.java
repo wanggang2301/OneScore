@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketListActivity;
 import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
@@ -27,6 +28,7 @@ import com.hhly.mlottery.bean.homepagerentity.HomeBannersEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -223,13 +225,38 @@ public class HomePagerAdapter extends PagerAdapter {
                             break;
                         case 1:// 页面
                         {
-                            Intent intent = new Intent(mContext, WebActivity.class);
+                            /*Intent intent = new Intent(mContext, WebActivity.class);
                             intent.putExtra("key", jumpAddr);
                             intent.putExtra("infoTypeName", title);
                             intent.putExtra("title", title);
                             intent.putExtra("imageurl", picUrl);
                             intent.putExtra("subtitle", "");
-                            mContext.startActivity(intent);
+                            mContext.startActivity(intent);*/
+
+                            if(jumpAddr.contains("?token")){// 请求需要带参
+                                if (CommonUtils.isLogin()) {// 判断用户是否登录
+                                    Intent intent = new Intent(mContext, WebActivity.class);
+                                    intent.putExtra("key", jumpAddr.substring(0,jumpAddr.indexOf("?")));// 跳转地址
+                                    intent.putExtra("infoTypeName", title);
+                                    intent.putExtra("imageurl", picUrl);
+                                    intent.putExtra("title", title);
+                                    intent.putExtra("subtitle", "");
+                                    intent.putExtra("reqMethod", "post");// 跳转方式 get or post
+                                    intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
+                                    mContext.startActivity(intent);
+                                } else {// 跳转到登录界面
+                                    mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                                }
+                            }else {// 其它
+                                Intent intent = new Intent(mContext, WebActivity.class);
+                                intent.putExtra("key", jumpAddr);
+                                intent.putExtra("infoTypeName", title);
+                                intent.putExtra("reqMethod", "get");// 跳转方式 get or post
+                                intent.putExtra("imageurl", picUrl);
+                                intent.putExtra("title", title);
+                                intent.putExtra("subtitle", "");
+                                mContext.startActivity(intent);
+                            }
                             break;
                         }
                         case 2:// 内页
