@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
@@ -92,15 +93,14 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private String model;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         sdk = CyanSdk.getInstance(this);
         //单点登录   nickname可以相同  用户id不能相同
-        if (CommonUtils.isLogin()){
-            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(),sdk);
+        if (CommonUtils.isLogin()) {
+            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
@@ -225,10 +225,10 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         mEditText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!CommonUtils.isLogin()){
+                if (!CommonUtils.isLogin()) {
                     //跳转登录界面
-                    Intent intent1=new Intent(WebActivity.this,LoginActivity.class);
-                    startActivityForResult(intent1,JUMP_COMMENT_QUESTCODE);
+                    Intent intent1 = new Intent(WebActivity.this, LoginActivity.class);
+                    startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
                 }
             }
         });
@@ -297,6 +297,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         mSend.setVisibility(View.GONE);
         mCommentCount.setVisibility(View.VISIBLE);
         WebSettings webSettings = mWebView.getSettings();
+        // 优先使用缓存
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setJavaScriptEnabled(true);
@@ -343,7 +346,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             if (reqMethod != null && token != null && reqMethod.equals("post")) {
 
                 mWebView.postUrl(url, token.getBytes("utf-8"));
-                System.out.println("lzfwebview"+url);
+                System.out.println("lzfwebview" + url);
 
 
             } else {
@@ -409,8 +412,15 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //                startActivity(intent);
                 break;
             case R.id.public_img_back://返回
-                MobclickAgent.onEvent(mContext, "Football_DataInfo_Exit");
-                finish();
+
+                if (mWebView.canGoBack()) {
+                    mWebView.goBack();// 返回上一页面
+
+                } else {
+                    MobclickAgent.onEvent(mContext, "Football_DataInfo_Exit");
+                    finish();
+                }
+
                 break;
             case R.id.iv_send://发送评论
                 MobclickAgent.onEvent(mContext, "Football_DataInfo_Send");
@@ -421,13 +431,13 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                         L.i("lzf提交topicid=" + topicid);
                         CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                     } else {//未登录
-                        if (CommonUtils.isLogin()){
+                        if (CommonUtils.isLogin()) {
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
                             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
-                        }else {
+                        } else {
                             //跳转登录界面
-                            Intent intent1=new Intent(WebActivity.this,LoginActivity.class);
-                            startActivityForResult(intent1,JUMP_COMMENT_QUESTCODE);
+                            Intent intent1 = new Intent(WebActivity.this, LoginActivity.class);
+                            startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
                         }
 
                     }
@@ -571,11 +581,22 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             }
         }
         //接收登录华海成功返回
-        if (requestCode==3){
-            if (resultCode==RESULT_OK){
+        if (requestCode == 3) {
+            if (resultCode == RESULT_OK) {
                 CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
             }
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();// 返回上一页面
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
