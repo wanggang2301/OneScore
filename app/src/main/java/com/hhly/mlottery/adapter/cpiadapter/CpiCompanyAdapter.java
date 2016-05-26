@@ -31,7 +31,9 @@ public class CpiCompanyAdapter extends BaseAdapter {
         this.mInflater = LayoutInflater.from(context);
 //        this.mCheckedTextView = mCheckedTextView;
     }
-
+    public void setCompanyBean(List<NewOddsInfo.CompanyBean> companyBean) {
+        this.mCompanyBean = companyBean;
+    }
     @Override
     public int getCount() {
         // TODO Auto-generated method stub

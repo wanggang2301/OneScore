@@ -2,6 +2,7 @@ package com.hhly.mlottery.util.net.account;
 
 /**
  * Created by lyx on 2016/5/19.
+ * 账户模块请求返回码 ， 比如 login、register 等
  */
 public interface AccountResultCode {
     /**成功*/

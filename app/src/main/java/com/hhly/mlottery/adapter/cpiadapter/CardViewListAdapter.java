@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -118,9 +120,11 @@ public class CardViewListAdapter extends BaseAdapter {
             //转换盘口
             item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
             item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
+            item.cpi_item_list_odds_txt.setWidth(160);
         } else if (CPIFragment.TYPE_BIG.equals(oddType)) {//大小
             item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
             item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
+            item.cpi_item_list_odds_txt.setWidth(120);
         } else if (CPIFragment.TYPE_OP.equals(oddType)) {//欧赔
             //不用转换盘口
             item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
