@@ -160,14 +160,14 @@ public class CPIOddsFragment extends Fragment {
                         mAllInfoBean3.clear();
                         mAllInfoBean3 = json.getAllInfo();
                     }
+                    CpiFiltrateActivity.mCheckedIds.clear();
+                    for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
+                        if (fileterTagsBean.isHot()) {
+                            CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
+                        }
+                    }
                     //如果是日期传过来的
                     if (isDate) {
-                        CpiFiltrateActivity.mCheckedIds.clear();
-                        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
-                            if (fileterTagsBean.isHot()) {
-                                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
-                            }
-                        }
                         for (int h = 0; h < mCpiframen.companys.size(); h++) {
                             if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
                                 mCpiframen.companys.get(h).setIsChecked(true);
@@ -185,12 +185,6 @@ public class CPIOddsFragment extends Fragment {
                                 companyBean.setIsChecked(true);
                             } else {
                                 companyBean.setIsChecked(false);
-                            }
-                        }
-                        CpiFiltrateActivity.mCheckedIds.clear();
-                        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
-                            if (fileterTagsBean.isHot()) {
-                                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
                             }
                         }
                         mCpiframen.filtrateDate();
