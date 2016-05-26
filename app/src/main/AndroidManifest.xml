@@ -54,16 +54,14 @@
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <!-- 引导页 -->
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
+
         </activity>
         <!-- 内地版的key-begin -->
         <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />

@@ -101,57 +101,56 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         }
 
         NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = mAllInfoBean.get(position).getMatchInfo();
-                //获得联赛名称
-                cpiViewHolder.cpi_item_leagueName_txt.setText(mAllInfoBean.get(position).getLeagueName());
-                //比赛时间
-                cpiViewHolder.cpi_item_time_txt.setText(matchInfoBean.getOpenTime());
-                //比赛的主客队名称和比分
-                if ("0".equals(matchInfoBean.getMatchState())) {
-                    //未开赛
-                    cpiViewHolder.cpi_scoreAndName_txt.setText(matchInfoBean.getMatchHomeName()+
-                            Html.fromHtml("&nbsp;"+"VS"+"&nbsp;") + matchInfoBean.getMatchGuestName());
-                } else { //开赛
-                    cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
-                            "\t" + "<font color=#ff0000>" + matchInfoBean.getMatchResult() + "</font>" + "\t" + matchInfoBean.getMatchGuestName()));
-                }
+        //获得联赛名称
+        cpiViewHolder.cpi_item_leagueName_txt.setText(mAllInfoBean.get(position).getLeagueName());
+        //比赛时间
+        cpiViewHolder.cpi_item_time_txt.setText(matchInfoBean.getOpenTime());
+        //比赛的主客队名称和比分
+        if ("0".equals(matchInfoBean.getMatchState())) {
+            //未开赛
+            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
+                    "&nbsp;"+"VS" + "&nbsp;" + matchInfoBean.getMatchGuestName()));
+        } else { //开赛
+            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
+                    "<font color=#ff0000>&nbsp;" + matchInfoBean.getMatchResult() + "</font>&nbsp;" + matchInfoBean.getMatchGuestName()));
+        }
         //亚盘
-        if(stType.equals(CPIFragment.TYPE_PLATE)){
-            for (int i = 0; i <mAllInfoBean.get(position).getComList().size() ; i++) {
+        if (stType.equals(CPIFragment.TYPE_PLATE)) {
+            for (int i = 0; i < mAllInfoBean.get(position).getComList().size(); i++) {
                 //亚盘如果降
-                if(mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp()==-1){
+                if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
                     mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
                 }
                 //亚盘如果升
-                else if(mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp()==1){
+                else if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
                     mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
-                }else{
+                } else {
                     mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
                 }
             }
-            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(),stType);
-        }
-        else if (stType.equals(CPIFragment.TYPE_BIG)){
-            for (int i = 0; i <mAllInfoBean.get(position).getComList().size() ; i++) {
+            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
+        } else if (stType.equals(CPIFragment.TYPE_BIG)) {
+            for (int i = 0; i < mAllInfoBean.get(position).getComList().size(); i++) {
                 //大小球如果降
-                if(mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp()==-1){
+                if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
                     mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
                 }
                 //大小球如果升
-                else if(mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp()==1){
+                else if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
                     mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
-                }else{
+                } else {
                     mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
                 }
             }
-            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(),stType);
-        }else{
-            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(),stType);
+            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
+        } else {
+            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
         }
 
-                cpiViewHolder.item_cpi_odds_listview.setDivider(context.getResources().getDrawable(R.color.homwe_grey));
-                cpiViewHolder.item_cpi_odds_listview.setDividerHeight(1);
-                cpiViewHolder.item_cpi_odds_listview.setAdapter(cardViewListAdapter);
-                new CpiListView(context).setListViewHeightBasedOnChildren(cpiViewHolder.item_cpi_odds_listview);
+        cpiViewHolder.item_cpi_odds_listview.setDivider(context.getResources().getDrawable(R.color.homwe_grey));
+        cpiViewHolder.item_cpi_odds_listview.setDividerHeight(2);
+        cpiViewHolder.item_cpi_odds_listview.setAdapter(cardViewListAdapter);
+        new CpiListView(context).setListViewHeightBasedOnChildren(cpiViewHolder.item_cpi_odds_listview);
 
         cpiViewHolder.item_cpi_odds_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
