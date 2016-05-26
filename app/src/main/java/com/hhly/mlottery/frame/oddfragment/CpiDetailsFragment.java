@@ -185,7 +185,7 @@ public class CpiDetailsFragment extends Fragment {
             myPostParams.put("oddType", mParam1);
         }
         myPostParams.put("thirdId", mThirdId);
-//        myPostParams.put("thirdId", "333517");
+//        myPostParams.put("thirdId", "333541");
 
         // 2、连接服务器
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_MATCHODD_DETAILS, myPostParams, new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
@@ -201,24 +201,15 @@ public class CpiDetailsFragment extends Fragment {
                             groupDataList.add(groupListDetailsEntity.get(i).getDate());
                             //添加子view数据(拿子类的DetailsEntity)
                             childDetailsList.add(groupListDetailsEntity.get(i).getDetails());
-                            //循环每一条拿到最后一条
-                            for (int k = 0; k < groupListDetailsEntity.get(i).getDetails().size(); k++) {
-                                if (k == 0) {
-                                    //给第一条设置一个标识
-                                    groupListDetailsEntity.get(i).getDetails().get(k).setSelectTag("tag");
-                                } else {
-                                    groupListDetailsEntity.get(i).getDetails().get(k).setSelectTag("");
-                                }
+                            //i=0的时候拿到第一条设置一个标识”初盘“
+                            if(i==0){
+                                groupListDetailsEntity.get(i).getDetails().get(i).setSelectTag("tag");
                             }
+
                             // //倒序，排列子view的数据
                             Collections.reverse(groupListDetailsEntity.get(i).getDetails());
                         }
 
-//                        for (int i = 0; i <childDetailsList.size() ; i++) {
-//                            if(i==childDetailsList.get(i).size()-1){
-//                                currentDetailsEntityd.setSelect("1");
-//                            }
-//                        }
                         //倒序，排列父view
                         Collections.reverse(groupDataList);
 //                            //倒序，排列子view
