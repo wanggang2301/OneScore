@@ -60,7 +60,6 @@ public class CPIOddsFragment extends Fragment {
     public FrameLayout cpi_fl_plate_networkError;// 加载失败
     public FrameLayout cpi_fl_plate_noData;// 暂无数据
     private TextView cpi_plate_reLoading;// 刷新
-    //    public List<String> companysName = new ArrayList<>();
     private CPIFragment mCpiframen;
     List<NewOddsInfo.AllInfoBean> mAll = new ArrayList<>();
 
