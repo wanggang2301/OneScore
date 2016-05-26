@@ -120,7 +120,7 @@ public class CardViewListAdapter extends BaseAdapter {
             //转换盘口
             item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
             item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
-            item.cpi_item_list_odds_txt.setWidth(160);
+            item.cpi_item_list_odds_txt.setWidth(200);
         } else if (CPIFragment.TYPE_BIG.equals(oddType)) {//大小
             item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
             item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
