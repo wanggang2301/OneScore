@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery"
     android:versionCode="13"
-    android:versionName="1.1.0.0523">
+    android:versionName="1.1.0.0526">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -54,14 +54,16 @@
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!-- 引导页 -->
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
-
         </activity>
         <!-- 内地版的key-begin -->
         <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
@@ -153,10 +155,6 @@
         <activity
             android:name=".activity.FootballActivity"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!-- 语言切换 -->
