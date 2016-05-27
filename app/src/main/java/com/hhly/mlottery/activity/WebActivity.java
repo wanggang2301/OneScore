@@ -319,15 +319,18 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         try {
             Intent intent = getIntent();
             url = intent.getStringExtra("key");
+//            url = "http://192.168.37.6:8080/gameweb/h5/index";
             imageurl = intent.getStringExtra("imageurl");
             title = intent.getStringExtra(INTENT_PARAMS_TITLE);
             subtitle = intent.getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
-//            token = intent.getStringExtra("token");
-            token = AppConstants.register.getData().getLoginToken();
-            System.out.println("CommonUtilslzf"+token);
+            token = intent.getStringExtra("token");
+//            token ="fe95688ec6074e1cb4486c0bd3a60c34";
+//            String token =AppConstants.register.getData().getLoginToken();
+            String deviceId = AppConstants.deviceToken;
+//            url="http://game1.1332255.com:8082/h5/index?loginToken="+token+"&deviceToken="+deviceId;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
             if (TextUtils.isEmpty(token)) {//token为空，说明是资讯，显示分享和评论
@@ -347,15 +350,13 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             //其他页传过来的reqMethod为post时，提交token  否则不提交
             if (reqMethod != null && token != null && reqMethod.equals("post")) {
 
-                mWebView.postUrl(url, token.getBytes("utf-8"));
+//                mWebView.postUrl(url, token.getBytes("utf-8"));
+                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
                 System.out.println("CommonUtilslzfwebview" + url);
 
 
-            } else {
-                mWebView.loadUrl(url);
             }
-
-//
+            mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
 
 //            /**加載成功显示 分享按钮*/
