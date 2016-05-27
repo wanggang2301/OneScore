@@ -35,7 +35,6 @@ public class VolleyContentFast {
     private final static int RESPONSE_TYPE_JSON = 2;
 
     private static RequestQueue mQueue;
-    public static String jsonData;// json数据
 
     /**
      * 初始化，在Application上初始化，只初始化一次赛
@@ -129,7 +128,6 @@ public class VolleyContentFast {
                 L.d(TAG, "request success.");
                 L.i(TAG, "[ response = " + response + " ]");
 
-                jsonData = response;
                 if (response == null) {
                     VolleyException volleyException = new VolleyException();
                     volleyException.setErrorCode(ERROR_CODE_RESPONSE_NULL);
@@ -325,7 +323,7 @@ public class VolleyContentFast {
             url = url + "?" + BaseURLs.LANGUAGE_PARAM + "=" + BaseURLs.LANGUAGE_SWITCHING_TH;
         } else if (MyApp.isLanguage.equals("rVI")) {
             // 如果是越南语
-            url = url + BaseURLs.LANGUAGE_PARAM + "=" + BaseURLs.LANGUAGE_SWITCHING_VI;
+            url = url + "?" + BaseURLs.LANGUAGE_PARAM + "=" + BaseURLs.LANGUAGE_SWITCHING_VI;
         }
 
         return url;
