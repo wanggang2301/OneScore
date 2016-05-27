@@ -128,11 +128,6 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
 
     public void initData(List<String> groupDataList, List<List<LangueScoreBean.ListBean>> childDataList, String leagueType) {
 
-        if (getActivity() == null) {
-
-            return;
-        }
-
         this.mGroupDataList = groupDataList;
         this.mChildrenDataList = childDataList;
         this.mLeagueType = leagueType;
