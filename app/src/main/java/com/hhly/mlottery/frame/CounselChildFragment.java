@@ -394,13 +394,24 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
 
         } else {
-            jumpurl = mInfos.get(position).getInfoUrl();
-            title = mInfos.get(position).getTitle();
-            subtitle = mInfos.get(position).getSubTitle();
-            imageurl = mInfos.get(position).getPicUrl();
-            ThirdId = mInfos.get(position).getThirdId();
-            isRelateMatch = mInfos.get(position).isRelateMatch();
-            type = mInfos.get(position).getType();
+            if (mInfos.size()!=0){
+                jumpurl = mInfos.get(position).getInfoUrl();
+                title = mInfos.get(position).getTitle();
+                subtitle = mInfos.get(position).getSubTitle();
+                imageurl = mInfos.get(position).getPicUrl();
+                ThirdId = mInfos.get(position).getThirdId();
+                isRelateMatch = mInfos.get(position).isRelateMatch();
+                type = mInfos.get(position).getType();
+            }else {
+                jumpurl = "";
+                title = "";
+                subtitle = "";
+                imageurl = "";
+                ThirdId = "";
+                isRelateMatch =false;
+                type = 1;
+            }
+
         }
         if (isRelateMatch) {
             intent.putExtra(INTENT_PARAM_THIRDID, ThirdId);
