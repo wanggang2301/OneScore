@@ -168,7 +168,7 @@ public class CPIOddsFragment extends Fragment {
                     }
                     //如果是日期传过来的
                     if (isDate) {
-                        if (!mCpiframen.companysName.isEmpty()) {
+                        if (!mCpiframen.companysName.isEmpty()&&!CpiFiltrateActivity.mCheckedIds.isEmpty()) {
                             for (int h = 0; h < mCpiframen.companys.size(); h++) {
                                 if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
                                     mCpiframen.companys.get(h).setIsChecked(true);
@@ -190,7 +190,7 @@ public class CPIOddsFragment extends Fragment {
                             }
                         }
                         mCpiframen.filtrateDate();
-                        if (!mCpiframen.companysName.isEmpty()) {
+                        if (!mCpiframen.companysName.isEmpty()&& !CpiFiltrateActivity.mCheckedIds.isEmpty()) {
                             selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
                         }
 
