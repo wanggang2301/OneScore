@@ -325,8 +325,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
-            token = intent.getStringExtra("token");
-//            token = AppConstants.register.getData().getLoginToken();
+//            token = intent.getStringExtra("token");
+            token = AppConstants.register.getData().getLoginToken();
             System.out.println("CommonUtilslzf"+token);
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
@@ -348,7 +348,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             if (reqMethod != null && token != null && reqMethod.equals("post")) {
 
                 mWebView.postUrl(url, token.getBytes("utf-8"));
-                System.out.println("lzfwebview" + url);
+                System.out.println("CommonUtilslzfwebview" + url);
 
 
             } else {
