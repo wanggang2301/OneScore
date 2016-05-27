@@ -210,7 +210,7 @@ public class HomePagerAdapter extends PagerAdapter {
      * @param index 当前对象下标
      */
     private void jumpInstruction(int index) {
-        MobclickAgent.onEvent(mContext,"HomePager_Banner");
+        MobclickAgent.onEvent(mContext, "HomePager_Banner");
         try {
             long currentTime = System.currentTimeMillis();
             if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
@@ -225,38 +225,17 @@ public class HomePagerAdapter extends PagerAdapter {
                             break;
                         case 1:// 页面
                         {
-                            /*Intent intent = new Intent(mContext, WebActivity.class);
-                            intent.putExtra("key", jumpAddr);
+                            Intent intent = new Intent(mContext, WebActivity.class);
+                            intent.putExtra("key", jumpAddr.substring(0, jumpAddr.indexOf("?")));// 跳转地址
                             intent.putExtra("infoTypeName", title);
-                            intent.putExtra("title", title);
                             intent.putExtra("imageurl", picUrl);
+                            intent.putExtra("title", title);
                             intent.putExtra("subtitle", "");
-                            mContext.startActivity(intent);*/
-
-                            if(jumpAddr.contains("?token")){// 请求需要带参
-                                if (CommonUtils.isLogin()) {// 判断用户是否登录
-                                    Intent intent = new Intent(mContext, WebActivity.class);
-                                    intent.putExtra("key", jumpAddr.substring(0,jumpAddr.indexOf("?")));// 跳转地址
-                                    intent.putExtra("infoTypeName", title);
-                                    intent.putExtra("imageurl", picUrl);
-                                    intent.putExtra("title", title);
-                                    intent.putExtra("subtitle", "");
-                                    intent.putExtra("reqMethod", "post");// 跳转方式 get or post
-                                    intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
-                                    mContext.startActivity(intent);
-                                } else {// 跳转到登录界面
-                                    mContext.startActivity(new Intent(mContext, LoginActivity.class));
-                                }
-                            }else {// 其它
-                                Intent intent = new Intent(mContext, WebActivity.class);
-                                intent.putExtra("key", jumpAddr);
-                                intent.putExtra("infoTypeName", title);
-                                intent.putExtra("reqMethod", "get");// 跳转方式 get or post
-                                intent.putExtra("imageurl", picUrl);
-                                intent.putExtra("title", title);
-                                intent.putExtra("subtitle", "");
-                                mContext.startActivity(intent);
+                            intent.putExtra("reqMethod", "get");
+                            if (jumpAddr.contains("?token")) {
+                                intent.putExtra("token", "token");
                             }
+                            mContext.startActivity(intent);
                             break;
                         }
                         case 2:// 内页
