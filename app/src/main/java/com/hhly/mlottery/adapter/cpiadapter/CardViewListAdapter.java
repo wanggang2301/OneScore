@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.CPIFragment;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
@@ -122,17 +123,17 @@ public class CardViewListAdapter extends BaseAdapter {
                 //转换盘口
                 item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
                 item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
-            item.cpi_item_list_odds_txt.setWidth(200);
+               item.cpi_item_list_odds_txt.setWidth(200);
         } else if (CPIFragment.TYPE_BIG.equals(oddType)) {//大小
 
                 item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
                 item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
-            item.cpi_item_list_odds_txt.setWidth(120);
+               item.cpi_item_list_odds_txt.setWidth(120);
 
-        } else {//欧赔
+        } else if (CPIFragment.TYPE_OP.equals(oddType)){//欧赔
             //不用转换盘口
                 item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
-                item.cpi_item_list_odds_txt.setText(mPreLevelBean.getMiddle());
+                item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
         }
 
         //即赔
