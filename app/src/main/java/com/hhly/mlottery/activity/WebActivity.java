@@ -326,6 +326,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
             token = intent.getStringExtra("token");
+//            token = AppConstants.register.getData().getLoginToken();
+            System.out.println("CommonUtilslzf"+token);
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
             if (TextUtils.isEmpty(token)) {//token为空，说明是资讯，显示分享和评论
