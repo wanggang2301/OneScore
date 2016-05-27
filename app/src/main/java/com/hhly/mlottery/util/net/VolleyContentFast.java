@@ -126,7 +126,10 @@ public class VolleyContentFast {
             @Override
             public void onResponse(String response) {
                 L.d(TAG, "request success.");
-                L.i(TAG, "[ response = " + response + " ]");
+                if (L.isDebug){//会导致内存泄漏
+                    L.i(TAG, "[ response = " + response + " ]");
+                }
+
 
                 if (response == null) {
                     VolleyException volleyException = new VolleyException();
