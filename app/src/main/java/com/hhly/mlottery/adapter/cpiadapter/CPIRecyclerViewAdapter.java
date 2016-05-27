@@ -148,7 +148,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         }
 
         cpiViewHolder.item_cpi_odds_listview.setDivider(context.getResources().getDrawable(R.color.homwe_grey));
-        cpiViewHolder.item_cpi_odds_listview.setDividerHeight(2);
+        cpiViewHolder.item_cpi_odds_listview.setDividerHeight(1);
         cpiViewHolder.item_cpi_odds_listview.setAdapter(cardViewListAdapter);
         new CpiListView(context).setListViewHeightBasedOnChildren(cpiViewHolder.item_cpi_odds_listview);
 
