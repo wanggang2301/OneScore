@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
@@ -21,6 +20,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -168,15 +168,17 @@ public class CPIOddsFragment extends Fragment {
                     }
                     //如果是日期传过来的
                     if (isDate) {
-                        for (int h = 0; h < mCpiframen.companys.size(); h++) {
-                            if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
-                                mCpiframen.companys.get(h).setIsChecked(true);
-                            } else {
-                                mCpiframen.companys.get(h).setIsChecked(false);
-                            }
+                        if (!mCpiframen.companysName.isEmpty()) {
+                            for (int h = 0; h < mCpiframen.companys.size(); h++) {
+                                if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
+                                    mCpiframen.companys.get(h).setIsChecked(true);
+                                } else {
+                                    mCpiframen.companys.get(h).setIsChecked(false);
+                                }
 
+                            }
+                            selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
                         }
-                        selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
                     }
                     //否则直接加载判断
                     else {
@@ -188,7 +190,9 @@ public class CPIOddsFragment extends Fragment {
                             }
                         }
                         mCpiframen.filtrateDate();
-                        selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        if (!mCpiframen.companysName.isEmpty()) {
+                            selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        }
 
                     }
 
@@ -208,6 +212,7 @@ public class CPIOddsFragment extends Fragment {
 
     /**
      * 时间
+     *
      * @param dates
      */
     public void switchd(String dates, boolean isDate) {
@@ -216,13 +221,12 @@ public class CPIOddsFragment extends Fragment {
 
     /**
      * 传选中公司的集合
-     * @param comNameList
-     * 所选中联赛id的集合
-     * @param mCheckedIds
-     * 公司类型
+     *
+     * @param comNameList 所选中联赛id的集合
+     * @param mCheckedIds 公司类型
      * @param comPanyType
      */
-    public void selectCompany( List<String> comNameList, List<String> mCheckedIds, String comPanyType) {
+    public void selectCompany(List<String> comNameList, List<String> mCheckedIds, String comPanyType) {
         if (CPIFragment.TYPE_PLATE.equals(comPanyType)) {
 
             setComPany(mAllInfoBean1, comNameList, mCheckedIds, comPanyType);
@@ -238,12 +242,10 @@ public class CPIOddsFragment extends Fragment {
 
     /**
      * 每个不同赔率的全部数据
-     * @param hotsAllInfoTemps
-     * 选中公司的集合
-     * @param comNameLists
-     * 所选中联赛id的集合
-     * @param mCheckedIds
-     * 传选中公司的集合
+     *
+     * @param hotsAllInfoTemps 选中公司的集合
+     * @param comNameLists     所选中联赛id的集合
+     * @param mCheckedIds      传选中公司的集合
      * @param comPanyType
      */
     private void setComPany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemps, List<String> comNameLists, List<String> mCheckedIds, String comPanyType) {
@@ -290,19 +292,19 @@ public class CPIOddsFragment extends Fragment {
                 mShowInfoBeans.add(pAllInfo);
             }
         }
-       if(!mShowInfoBeans.isEmpty()) {
-           if (cpiRecyclerViewAdapter != null) {
-               cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
-               cpiRecyclerViewAdapter.notifyDataSetChanged();
-           } else {
-               cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, comPanyType);
-               cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+        if (!mShowInfoBeans.isEmpty()) {
+            if (cpiRecyclerViewAdapter != null) {
+                cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
+                cpiRecyclerViewAdapter.notifyDataSetChanged();
+            } else {
+                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, comPanyType);
+                cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
 
-           }
-           mHandler.sendEmptyMessage(SUCCESS);// 请求成功
-       }else{
-           mHandler.sendEmptyMessage(NODATA_CHILD);// 内容无数据
-       }
+            }
+            mHandler.sendEmptyMessage(SUCCESS);// 请求成功
+        } else {
+            mHandler.sendEmptyMessage(NODATA_CHILD);// 内容无数据
+        }
 
     }
 
