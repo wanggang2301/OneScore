@@ -1154,16 +1154,19 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         }
 
         //文字直播
-        liveTextFragment = new LiveTextFragment(getActivity(), matchLive, mMatchDetail.getLiveStatus());
-
 
         fragmentManager = getChildFragmentManager();
         if (fragmentManager == null) {
             return;
         }
-        if (!liveTextFragment.isAdded()) {
+        if (liveTextFragment == null || !liveTextFragment.isAdded()) {
+            liveTextFragment = new LiveTextFragment(getActivity(), matchLive, mMatchDetail.getLiveStatus());
             fragmentManager.beginTransaction().add(R.id.frame_content, liveTextFragment).commit();
+        } else {
+            //下拉刷新
+            liveTextFragment.updateAdapter(matchLive, mMatchDetail.getLiveStatus());
         }
+
 
         if (flag) {
 
