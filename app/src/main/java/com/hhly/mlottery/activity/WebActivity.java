@@ -352,11 +352,11 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             if (reqMethod != null && token != null && reqMethod.equals("post")) {
 
 //                mWebView.postUrl(url, token.getBytes("utf-8"));
-                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
+//                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
 
 
-//                url=url.replace("{loginToken}", token);
-//                url=url.replace("{deviceToken}", deviceId);
+                url=url.replace("{loginToken}", token);
+                url=url.replace("{deviceToken}", deviceId);
             }
             mWebView.loadUrl(url);
             System.out.println("CommonUtilslzfwebview" + url);
