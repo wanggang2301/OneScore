@@ -250,6 +250,8 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         holder.item_football_racename.setTextColor(Color.parseColor(match.getRaceColor()));
         holder.item_football_time.setText(match.getTime());
 
+
+
         if ("0".equals(match.getStatusOrigin())) {// 未开
             holder.item_football_full_score.setText("VS");
 
