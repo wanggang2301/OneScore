@@ -259,7 +259,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     @Override
     public void onClick(View view) {
-        if (UiUtils.onDoubClick()) {
+
             switch (view.getId()) {
                 case R.id.public_img_back:
                     if (getActivity() == null) return;
@@ -276,7 +276,12 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
                     break;
                 case R.id.public_txt_date://点击日期的textview
-                    setDialog(0);//代表日期
+                    if(mMapDayList.size()==14){
+                        setDialog(0);//代表日期
+                    }else{
+                        UiUtils.toast(mContext,R.string.loading_txt);
+                    }
+
                     break;
                 case R.id.public_img_hot://点击热门
                     break;
@@ -284,10 +289,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     setDialog(1);//代表公司
                     break;
                 case R.id.public_img_filter://点击筛选
-//                    if (mCPIOddsFragment.cpi_fl_plate_noData.getVisibility() == View.VISIBLE) {
-//                        UiUtils.toast(mContext, R.string.nodata);
-//                        return;
-//                    }
+                    if (UiUtils.onDoubClick()) {
                     Intent intent = new Intent(mContext, CpiFiltrateActivity.class);
                     //如果选择的是日期不传选中的
                     if (isFirst) {
@@ -302,11 +304,11 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                         intent.putExtra("linkedListChecked", ddList);
                     }
                     startActivityForResult(intent, 10086);
-
+                    }
                     break;
                 default:
                     break;
-            }
+
         }
     }
 

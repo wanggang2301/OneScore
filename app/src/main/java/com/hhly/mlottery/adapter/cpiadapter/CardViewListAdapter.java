@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.CPIFragment;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
@@ -72,8 +73,10 @@ public class CardViewListAdapter extends BaseAdapter {
         } else {
             item = (ListViewItem) convertView.getTag();
         }
+
         mCurrLevelBean = mComList.get(position).getCurrLevel();
         mPreLevelBean = mComList.get(position).getPreLevel();
+        if(mCurrLevelBean!=null && mPreLevelBean!=null){
         //公司名称
         item.cpi_item_list_company_txt.setText(mComList.get(position).getComName());
         //即赔小于初赔
@@ -117,18 +120,20 @@ public class CardViewListAdapter extends BaseAdapter {
             item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.black));
         }
         if (CPIFragment.TYPE_PLATE.equals(oddType)) {//亚盘
-            //转换盘口
-            item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
-            item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
-            item.cpi_item_list_odds_txt.setWidth(200);
+                //转换盘口
+                item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
+                item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
+               item.cpi_item_list_odds_txt.setWidth(200);
         } else if (CPIFragment.TYPE_BIG.equals(oddType)) {//大小
-            item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
-            item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
-            item.cpi_item_list_odds_txt.setWidth(120);
-        } else if (CPIFragment.TYPE_OP.equals(oddType)) {//欧赔
+
+                item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
+                item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
+               item.cpi_item_list_odds_txt.setWidth(120);
+
+        } else if (CPIFragment.TYPE_OP.equals(oddType)){//欧赔
             //不用转换盘口
-            item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
-            item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
+                item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
+                item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
         }
 
         //即赔
@@ -137,7 +142,7 @@ public class CardViewListAdapter extends BaseAdapter {
         //初赔
         item.cpi_item_list_home2_txt.setText(mPreLevelBean.getLeft());
         item.cpi_item_list_guest2_txt.setText(mPreLevelBean.getRight());
-
+        }
         return convertView;
     }
 
