@@ -319,6 +319,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         try {
             Intent intent = getIntent();
             url = intent.getStringExtra("key");
+//            url = "http://192.168.33.14:8080/gameweb/h5/index";
 //            url = "http://192.168.37.6:8080/gameweb/h5/index";
             imageurl = intent.getStringExtra("imageurl");
             title = intent.getStringExtra(INTENT_PARAMS_TITLE);
@@ -333,12 +334,12 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
 //            url="http://game1.1332255.com:8082/h5/index?loginToken="+token+"&deviceToken="+deviceId;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
-            if (TextUtils.isEmpty(token)) {//token为空，说明是资讯，显示分享和评论
-                public_btn_set.setVisibility(View.VISIBLE);
-                scrollview.setVisibility(View.VISIBLE);
-            } else {//不是新闻资讯的时候隐藏分享和评论
+            if (!TextUtils.isEmpty(token)&&reqMethod != null&& reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
                 public_btn_set.setVisibility(View.GONE);
                 scrollview.setVisibility(View.GONE);
+            } else {//token为空，说明是资讯，显示分享和评论
+                public_btn_set.setVisibility(View.VISIBLE);
+                scrollview.setVisibility(View.VISIBLE);
             }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -351,13 +352,16 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             if (reqMethod != null && token != null && reqMethod.equals("post")) {
 
 //                mWebView.postUrl(url, token.getBytes("utf-8"));
-                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
-                System.out.println("CommonUtilslzfwebview" + url);
+//                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
 
 
+                url=url.replace("{loginToken}", token);
+                url=url.replace("{deviceToken}", deviceId);
             }
             mWebView.loadUrl(url);
+            System.out.println("CommonUtilslzfwebview" + url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
+            L.d("CommonUtils:" + "token=" + token + "reqMethod" + reqMethod);
 
 //            /**加載成功显示 分享按钮*/
 //            public_btn_set.setVisibility(View.VISIBLE);

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -101,7 +102,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private long lastClickTime = 0;
     private int clickCount = 0;// 点击次数
 
-    /**跳转其他Activity 的requestcode */
+    /**
+     * 跳转其他Activity 的requestcode
+     */
     public static final int REQUESTCODE_LOGIN = 100;
     public static final int REQUESTCODE_LOGOUT = 110;
     private ImageView iv_account;
@@ -329,7 +332,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     /**
      * 检查版本更新
      */
-    private void versionUpdate(){
+    private void versionUpdate() {
         Map<String, String> map = new HashMap<String, String>();
         if (AppConstants.fullORsimple) {
             map.put("versionType", PURE_VER);
@@ -364,9 +367,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         public_btn_filter.setVisibility(View.GONE);
 
         iv_account = (ImageView) findViewById(R.id.iv_account);
-        if (CommonUtils.isLogin()){
+        if (CommonUtils.isLogin()) {
             iv_account.setImageResource(R.mipmap.login);
-        }else{
+        } else {
             iv_account.setImageResource(R.mipmap.logout);
         }
         iv_account.setVisibility(View.VISIBLE);
@@ -395,7 +398,43 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         myPostParams.put("version", version);
         myPostParams.put("versionCode", versionCode);
         myPostParams.put("channelNumber", channelNumber);
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
+        VolleyContentFast.requestStringByGet(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, null, new VolleyContentFast.ResponseSuccessListener<String>() {
+            @Override
+            public void onResponse(String jsonObject) {
+                if (jsonObject != null) {// 请求成功
+                    try {
+                        mHomePagerEntity = JSON.parseObject(jsonObject, HomePagerEntity.class);
+                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, jsonObject);// 保存首页缓存数据
+                        L.d("xxx", "保存数据到本地！jsonObject:" + jsonObject);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    isAuditHandle(mHomePagerEntity);
+                    if (mHomePagerEntity.getResult() == 200) {
+                        switch (num) {
+                            case 0:// 首次加载
+                                mHandler.sendEmptyMessage(LOADING_DATA_SUCCESS);
+                                break;
+                            case 1:// 下拉刷新
+                                mHandler.sendEmptyMessage(REFRES_DATA_SUCCESS);
+                                break;
+                        }
+                    } else {
+                        mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
+                    }
+                } else {
+                    mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                // 请求失败
+                L.d("xxx", "请求失败");
+                mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
+            }
+        });
+        /*VolleyContentFast.requestJsonByPost(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
             @Override
             public synchronized void onResponse(final HomePagerEntity jsonObject) {
                 if (jsonObject != null) {// 请求成功
@@ -425,7 +464,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 L.d("xxx", "请求失败");
                 mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
             }
-        }, HomePagerEntity.class);
+        }, HomePagerEntity.class);*/
     }
 
     /**
@@ -520,8 +559,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
                         home_page_list.setAdapter(mListBaseAdapter);
-                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, VolleyContentFast.jsonData);// 保存首页缓存数据
-                        L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
                     }
                     break;
                 case LOADING_DATA_ERROR:
@@ -533,8 +570,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
                         home_page_list.setAdapter(mListBaseAdapter);
-                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, VolleyContentFast.jsonData);// 保存首页缓存数据
-                        L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
                     }
                     break;
                 case VERSION_UPDATA_SUCCESS:// 检查版本更新
@@ -542,29 +577,29 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                         boolean isNewVersion = true;
                         int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
                         int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
-                        L.d("xxx","serverVersion:" + serverVersion);
-                        L.d("xxx","currentVersion:" + currentVersion);
+                        L.d("xxx", "serverVersion:" + serverVersion);
+                        L.d("xxx", "currentVersion:" + currentVersion);
                         if (currentVersion < serverVersion) {// 有更新
-                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null);// 获取本地忽略版本
-                            L.d("xxx","versionIgnore:" + versionIgnore);
-                            if(versionIgnore != null){
-                                if(versionIgnore.contains("#")){
+                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);// 获取本地忽略版本
+                            L.d("xxx", "versionIgnore:" + versionIgnore);
+                            if (versionIgnore != null) {
+                                if (versionIgnore.contains("#")) {
                                     String[] split = versionIgnore.split("#");
-                                    for (int i = 0,len = split.length; i < len; i++) {
-                                        if(serverVersion == Integer.parseInt(split[i])){
+                                    for (int i = 0, len = split.length; i < len; i++) {
+                                        if (serverVersion == Integer.parseInt(split[i])) {
                                             isNewVersion = false;
                                             break;
                                         }
                                     }
-                                    if(isNewVersion){
+                                    if (isNewVersion) {
                                         promptVersionUp();
                                     }
-                                }else{
-                                    if(serverVersion != Integer.parseInt(versionIgnore)){
+                                } else {
+                                    if (serverVersion != Integer.parseInt(versionIgnore)) {
                                         promptVersionUp();
                                     }
                                 }
-                            }else{
+                            } else {
                                 promptVersionUp();
                             }
                         }
@@ -579,66 +614,78 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     /**
      * 新版本更新提示
      */
-    private void promptVersionUp(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);//  android.R.style.Theme_Material_Light_Dialog
-        builder.setCancelable(false);// 设置对话框以外不可点击
-        builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
-        builder.setMessage(mUpdateInfo.getDescription());// 提示内容
-        builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
-                DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-                Uri uri = Uri.parse(mUpdateInfo.getUrl());
-                DownloadManager.Request request = new DownloadManager.Request(uri);
-                //指定在WIFI状态下，执行下载操作。
-                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-                //是否允许漫游状态下，执行下载操作
-                request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
-                //是否允许“计量式的网络连接”执行下载操作
-                request.setAllowedOverMetered(false);// 默认是允许的。
-                //request.setTitle("一比分新版本下载");
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setMimeType("application/vnd.android.package-archive");
-                L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), "ybf.apk");
-                // 设置为可被媒体扫描器找到
-                request.allowScanningByMediaScanner();
-                // 设置为可见和可管理
-                request.setVisibleInDownloadsUi(true);
-                long id = downloadManager.enqueue(request);
-                L.d("xxx", "id = " + id);
-            }
-        });
-        builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-               // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null);
-                if(versionIgnore != null){
-                    versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
-                }else{
-                    versionIgnore = String.valueOf(mUpdateInfo.getVersion());
+    private void promptVersionUp() {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+            builder.setCancelable(false);// 设置对话框以外不可点击
+            builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
+            String mMessage = mUpdateInfo.getDescription();// 获取提示内容
+            if (mUpdateInfo != null) {
+                if (mMessage.contains("#")) {
+                    mMessage = mMessage.replace("#", "\n");// 换行处理
                 }
-                PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,versionIgnore);
-                L.d("xxx","PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY,null));
-                dialog.cancel();
+                builder.setMessage(mMessage);// 提示内容
             }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+            builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
+                    DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse(mUpdateInfo.getUrl());
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    //指定在WIFI状态下，执行下载操作。
+                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+                    //是否允许漫游状态下，执行下载操作
+                    request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
+                    //是否允许“计量式的网络连接”执行下载操作
+                    request.setAllowedOverMetered(false);// 默认是允许的。
+                    //request.setTitle("一比分新版本下载");
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setMimeType("application/vnd.android.package-archive");
+                    L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                    request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), "ybf.apk");
+                    // 设置为可被媒体扫描器找到
+                    request.allowScanningByMediaScanner();
+                    // 设置为可见和可管理
+                    request.setVisibleInDownloadsUi(true);
+                    long id = downloadManager.enqueue(request);
+                    L.d("xxx", "id = " + id);
+                }
+            });
+            builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);
+                    if (versionIgnore != null) {
+                        versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
+                    } else {
+                        versionIgnore = String.valueOf(mUpdateInfo.getVersion());
+                    }
+                    PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
+                    L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
     }
+
     /**
      * 获取本地数据
      */
     public void readObjectFromFile() {
+        L.d("xxx","获取本地数据.");
         String jsondata = PreferenceUtil.getString(AppConstants.HOME_PAGER_DATA_KEY, null);
         if (jsondata != null) {
             mHomePagerEntity = JSON.parseObject(jsondata, HomePagerEntity.class);
@@ -681,11 +728,12 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_account:
+                MobclickAgent.onEvent(mContext, "LoginActivity_Start");
                 if (CommonUtils.isLogin()){
                     goToAccountActivity();
-                }else{
+                } else {
                     goToLoginActivity();
                 }
                 break;
@@ -695,24 +743,24 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     }
 
     private void goToLoginActivity() {
-        startActivityForResult(new Intent(this , LoginActivity.class) , REQUESTCODE_LOGIN);
+        startActivityForResult(new Intent(this, LoginActivity.class), REQUESTCODE_LOGIN);
     }
 
     private void goToAccountActivity() {
-        startActivityForResult(new Intent(this , AccountActivity.class) , REQUESTCODE_LOGOUT );
+        startActivityForResult(new Intent(this, AccountActivity.class), REQUESTCODE_LOGOUT);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK){
-            if (requestCode == REQUESTCODE_LOGIN){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回
-                L.d(TAG,"登录成功");
+                L.d(TAG, "登录成功");
                 iv_account.setImageResource(R.mipmap.login);
-            }else if (requestCode == REQUESTCODE_LOGOUT){
-                L.d(TAG,"注销成功");
+            } else if (requestCode == REQUESTCODE_LOGOUT) {
+                L.d(TAG, "注销成功");
                 iv_account.setImageResource(R.mipmap.logout);
             }
         }

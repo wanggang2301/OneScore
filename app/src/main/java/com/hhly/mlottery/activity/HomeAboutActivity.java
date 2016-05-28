@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -176,46 +178,56 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
      * 新版本更新提示
      */
     private void promptVersionUp() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);//  android.R.style.Theme_Material_Light_Dialog
-        builder.setCancelable(false);// 设置对话框以外不可点击
-        builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
-        builder.setMessage(mUpdateInfo.getDescription());// 提示内容
-        builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                MobclickAgent.onEvent(mContext, "AboutWe_UpdateVersion_Click");
-                //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
-                DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-                Uri uri = Uri.parse(mUpdateInfo.getUrl());
-                DownloadManager.Request request = new DownloadManager.Request(uri);
-                //指定在WIFI状态下，执行下载操作。
-                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-                //是否允许漫游状态下，执行下载操作
-                request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
-                //是否允许“计量式的网络连接”执行下载操作
-                request.setAllowedOverMetered(false);// 默认是允许的。
-                //request.setTitle("一比分新版本下载");
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setMimeType("application/vnd.android.package-archive");
-                L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), "ybf.apk");
-                // 设置为可被媒体扫描器找到
-                request.allowScanningByMediaScanner();
-                // 设置为可见和可管理
-                request.setVisibleInDownloadsUi(true);
-                long id = downloadManager.enqueue(request);
-                L.d("xxx", "id = " + id);
+        try {
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+            builder.setCancelable(false);// 设置对话框以外不可点击
+            builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
+            if (mUpdateInfo != null) {
+                String mMessage = mUpdateInfo.getDescription();// 获取提示内容
+                if (mMessage.contains("#")) {
+                    mMessage = mMessage.replace("#", "\n");// 换行处理
+                }
+                builder.setMessage(mMessage);// 提示内容
             }
-        });
-        builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        android.support.v7.app.AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+            builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    MobclickAgent.onEvent(mContext, "AboutWe_UpdateVersion_Click");
+                    //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
+                    DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse(mUpdateInfo.getUrl());
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    //指定在WIFI状态下，执行下载操作。
+                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+                    //是否允许漫游状态下，执行下载操作
+                    request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
+                    //是否允许“计量式的网络连接”执行下载操作
+                    request.setAllowedOverMetered(false);// 默认是允许的。
+                    //request.setTitle("一比分新版本下载");
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setMimeType("application/vnd.android.package-archive");
+                    L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                    request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), "ybf.apk");
+                    // 设置为可被媒体扫描器找到
+                    request.allowScanningByMediaScanner();
+                    // 设置为可见和可管理
+                    request.setVisibleInDownloadsUi(true);
+                    long id = downloadManager.enqueue(request);
+                    L.d("xxx", "id = " + id);
+                }
+            });
+            builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            android.support.v7.app.AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -253,24 +265,28 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
      * 无法更新提示
      */
     private void versionUpError(boolean isRn) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AlertDialog);
-        final AlertDialog mAlertDialog = builder.create();
-        view = View.inflate(mContext, R.layout.about_no_new_version, null);
-        TextView dialog_message = (TextView) view.findViewById(R.id.dialog_message);
-        if (isRn) {
-            dialog_message.setText(mContext.getResources().getString(R.string.about_notice_msg));
-        } else {
-            dialog_message.setText(mContext.getResources().getString(R.string.about_net_failed));
-        }
-        view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                mAlertDialog.dismiss();
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AlertDialog);
+            final AlertDialog mAlertDialog = builder.create();
+            view = View.inflate(mContext, R.layout.about_no_new_version, null);
+            TextView dialog_message = (TextView) view.findViewById(R.id.dialog_message);
+            if (isRn) {
+                dialog_message.setText(mContext.getResources().getString(R.string.about_notice_msg));
+            } else {
+                dialog_message.setText(mContext.getResources().getString(R.string.about_net_failed));
             }
-        });
-        mAlertDialog.setCancelable(false);
-        mAlertDialog.show();
-        mAlertDialog.getWindow().setContentView(view);
+            view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    mAlertDialog.dismiss();
+                }
+            });
+            mAlertDialog.setCancelable(false);
+            mAlertDialog.show();
+            mAlertDialog.getWindow().setContentView(view);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.hhly.mlottery.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,14 +56,34 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.public_img_back: // 返回
+                MobclickAgent.onEvent(mContext, "AccountActivity_Exit");
                 finish();
                 break;
             case R.id.tv_logout: // 返回
-                logout();
+                MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
+                showDialog();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showDialog(){
+        AlertDialog dialog = new AlertDialog.Builder(AccountActivity.this)
+                .setMessage(getResources().getString(R.string.logout_check))
+                .setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        logout();
+                    }
+                })
+                .setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .create();
+        dialog.show();
     }
 
     /**
@@ -80,7 +103,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             public void onResponse(Register register) {
 
                 progressBar.dismiss();
-                if (register.getResult() == AccountResultCode.SUCC){
+                if (register.getResult() == AccountResultCode.SUCC || register.getResult() == AccountResultCode.USER_NOT_LOGIN){
                     CommonUtils.saveRegisterInfo(null);
                     UiUtils.toast(MyApp.getInstance(), R.string.logout_succ);
                     setResult(RESULT_OK);
@@ -94,8 +117,24 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 progressBar.dismiss();
                 L.e(TAG , " 注销失败");
-                UiUtils.toast(MyApp.getInstance() , R.string.logout_fail);
+                UiUtils.toast(MyApp.getInstance() , R.string.immediate_unconection);
             }
         } , Register.class);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /**友盟页面统计*/
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("AccountActivity");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        /**友盟页面统计*/
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("AccountActivity");
     }
 }
