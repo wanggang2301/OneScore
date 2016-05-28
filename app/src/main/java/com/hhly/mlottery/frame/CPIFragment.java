@@ -111,9 +111,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //默认选择当天，当点击item后改变选中的position
     public int selectPosition = 6;
     //判断是否需要一分钟刷新一次
-    private boolean isTrue;
+//    private boolean isTrue;
     //定时刷新线程
-    private MyThread myThread;
+//    private MyThread myThread;
     private String mDate;
 
     @Override
@@ -128,20 +128,20 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         mContext = getActivity();
         //初始化的时候给date赋值
         mDate=UiUtils.requestByGetDay(0);
+        mMapDayList = getDate();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.frag_cpi, container, false);
-        mMapDayList = getDate();
         initView();
         initViewPager();
-        if(myThread==null){
-            isTrue=true;
-            myThread=new MyThread();
-            myThread.start();
-        }
+//        if(myThread==null){
+//            isTrue=true;
+//            myThread=new MyThread();
+//            myThread.start();
+//        }
         return mView;
     }
 
@@ -580,31 +580,32 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 60秒请求一次数据
      */
-    class MyThread extends Thread{
-        @Override
-        public void run() {
-            while (isTrue){
-                try {
-                    Thread.sleep(60000);//休眠一分钟
-                } catch (InterruptedException e) {
-                    return;
-                }
-                CpiFiltrateActivity.isDefualHot = true;
-                mCPIOddsFragment.InitData(mDate,TYPE_PLATE,true);
-                mCPIOddsFragment2.InitData(mDate,TYPE_BIG,true);
-                mCPIOddsFragment3.InitData(mDate,TYPE_OP,true);
-            }
-        }
+//  class MyThread extends Thread{
+//      @Override
+//      public void run() {
+//          while (isTrue){
+//                  try {
+//                      Thread.sleep(60000);//休眠一分钟
+//                  } catch (InterruptedException e) {
+//                      return;
+//                  }
+//                 CpiFiltrateActivity.isDefualHot = true;
+//                  mCPIOddsFragment.InitData(mDate,TYPE_PLATE,true);
+//                  mCPIOddsFragment2.InitData(mDate,TYPE_BIG,true);
+//                  mCPIOddsFragment3.InitData(mDate,TYPE_OP,true);
+//
+//          }
+//      }
+//
+//  }
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        isTrue=false;
-        myThread.interrupt();
-        myThread=null;
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        isTrue=false;
+//        myThread.interrupt();
+//        myThread=null;
+//    }
 
     private class CPIFragmentAdapter extends FragmentPagerAdapter {
 
