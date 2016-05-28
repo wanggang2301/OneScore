@@ -584,15 +584,15 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         @Override
         public void run() {
             while (isTrue){
-                CpiFiltrateActivity.isDefualHot = true;
-                mCPIOddsFragment.InitData(mDate,TYPE_PLATE,true);
-                mCPIOddsFragment2.InitData(mDate,TYPE_BIG,true);
-                mCPIOddsFragment3.InitData(mDate,TYPE_OP,true);
                 try {
                     Thread.sleep(60000);//休眠一分钟
                 } catch (InterruptedException e) {
                     return;
                 }
+                CpiFiltrateActivity.isDefualHot = true;
+                mCPIOddsFragment.InitData(mDate,TYPE_PLATE,true);
+                mCPIOddsFragment2.InitData(mDate,TYPE_BIG,true);
+                mCPIOddsFragment3.InitData(mDate,TYPE_OP,true);
             }
         }
 
