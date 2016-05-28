@@ -33,7 +33,6 @@ public class OddsDetailsDataInfo {
          * hand : 2.5
          * guestOdd : 1.5
          */
-
         private List<DataDetailsEntity> details;
 
         public void setDate(String date) {
@@ -43,6 +42,9 @@ public class OddsDetailsDataInfo {
         public void setDetails(List<DataDetailsEntity> details) {
             this.details = details;
         }
+
+
+
 
         public String getDate() {
             return date;
@@ -61,7 +63,16 @@ public class OddsDetailsDataInfo {
             private String homeColor = "black";
             private String guestColor = "black";
             private String dishColor = "black";
+            private String selectTag;
             private boolean scoreVisible=false;
+
+            public String getSelectTag() {
+                return selectTag;
+            }
+
+            public void setSelectTag(String selectTag) {
+                this.selectTag = selectTag;
+            }
 
             public boolean isScoreVisible() {
                 return scoreVisible;

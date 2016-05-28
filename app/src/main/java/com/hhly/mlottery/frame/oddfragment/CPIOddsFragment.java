@@ -46,7 +46,6 @@ public class CPIOddsFragment extends Fragment {
     public static List<NewOddsInfo.AllInfoBean> mAllInfoBean1 = new ArrayList<>();
     public static List<NewOddsInfo.AllInfoBean> mAllInfoBean2 = new ArrayList<>();
     public static List<NewOddsInfo.AllInfoBean> mAllInfoBean3 = new ArrayList<>();
-    public List<NewOddsInfo.AllInfoBean> mAllInfoBeans = new ArrayList<>();
     public List<NewOddsInfo.AllInfoBean> mAllInfo = new ArrayList<>();
     public List<NewOddsInfo.AllInfoBean> mShowInfoBeans = new ArrayList<>();
     //热门联赛筛选
@@ -57,10 +56,9 @@ public class CPIOddsFragment extends Fragment {
     private static final int NODATA = 400;// 暂无数据
     private static final int NODATA_CHILD = 500;// 里面内容暂无数据
     private FrameLayout cpi_fl_plate_loading;// 正在加载中
-    public  FrameLayout cpi_fl_plate_networkError;// 加载失败
-    private FrameLayout cpi_fl_plate_noData;// 暂无数据
+    public FrameLayout cpi_fl_plate_networkError;// 加载失败
+    public FrameLayout cpi_fl_plate_noData;// 暂无数据
     private TextView cpi_plate_reLoading;// 刷新
-    public List<String> companysName = new ArrayList<>();
     private CPIFragment mCpiframen;
 
     public static CPIOddsFragment newInstance(String param1, String param2) {
@@ -88,7 +86,7 @@ public class CPIOddsFragment extends Fragment {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_cpi_odds, container, false);//item_cpi_odds
         InitView();
-        switchd("");
+        switchd("", false);
         return mView;
     }
 
@@ -110,10 +108,10 @@ public class CPIOddsFragment extends Fragment {
         cpi_plate_reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchd("");
+                switchd("", false);
                 mCpiframen.public_txt_date.setText(UiUtils.requestByGetDay(0));
                 mCpiframen.mMapDayList = mCpiframen.getDate();
-                mCpiframen.selectPosition=3;
+                mCpiframen.selectPosition = 6;
             }
         });
 
@@ -125,16 +123,16 @@ public class CPIOddsFragment extends Fragment {
      * @param date
      * @param type
      */
-    public void InitData(String date, final String type) {
+    public void InitData(String date, final String type, final boolean isDate) {
         mHandler.sendEmptyMessage(STARTLOADING);
         Map<String, String> map = new HashMap<>();
 
         if (type.equals(CPIFragment.TYPE_PLATE)) {
             map.put("type", "1");
         } else if (type.equals(CPIFragment.TYPE_BIG)) {
-            map.put("type", "2");
-        } else if (type.equals(CPIFragment.TYPE_OP)) {
             map.put("type", "3");
+        } else if (type.equals(CPIFragment.TYPE_OP)) {
+            map.put("type", "2");
         }
         if (!"".equals(date)) {
             map.put("date", date);
@@ -145,58 +143,64 @@ public class CPIOddsFragment extends Fragment {
             @Override
             public synchronized void onResponse(final NewOddsInfo json) {
 
-                if (json != null) {
+                if (json != null && json.getCode() != 500) {
 
                     if (getParentFragment() != null) {
                         mCpiframen.currentDate = json.getCurrDate();
                         mCpiframen.companys = json.getCompany();
                     }
-                    mAllInfoBeans = json.getAllInfo();
-
+                    mFileterTagsBean = json.getFileterTags();
                     if (type.equals(CPIFragment.TYPE_PLATE)) {
+                        mAllInfoBean1.clear();
                         mAllInfoBean1 = json.getAllInfo();
                     } else if (type.equals(CPIFragment.TYPE_BIG)) {
+                        mAllInfoBean2.clear();
                         mAllInfoBean2 = json.getAllInfo();
                     } else if (type.equals(CPIFragment.TYPE_OP)) {
+                        mAllInfoBean3.clear();
                         mAllInfoBean3 = json.getAllInfo();
                     }
-                    List<NewOddsInfo.CompanyBean> defualtCompanyList = new ArrayList<>();
-
-                    for (NewOddsInfo.CompanyBean companyBean : json.getCompany()) {
-                        if (Arrays.binarySearch(defualtCompanyIds, 0, defualtCompanyIds.length, companyBean.getComId()) >= 0) {
-                            companyBean.setIsChecked(true);
-                        } else {
-                            companyBean.setIsChecked(false);
+                    //如果是日期传过来的
+                    if (isDate) {
+                        CpiFiltrateActivity.mCheckedIds.clear();
+                        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
+                            if (fileterTagsBean.isHot()) {
+                                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
+                            }
                         }
-                    }
-                    mFileterTagsBean = json.getFileterTags();
-                    CpiFiltrateActivity.mCheckedIds.clear();
-                    for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
-                        if (fileterTagsBean.isHot()) {
-                            CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
+                        for (int h = 0; h < mCpiframen.companys.size(); h++) {
+                            if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
+                                mCpiframen.companys.get(h).setIsChecked(true);
+                            } else {
+                                mCpiframen.companys.get(h).setIsChecked(false);
+                            }
+
                         }
+                        selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
                     }
-                if(mAllInfoBeans.size()>0){
-                    filtrateData(defualtCompanyList, CpiFiltrateActivity.mCheckedIds);
-                    companysName.clear();
-                    for (int k = 0; k < mCpiframen.companys.size(); k++) {
-                        if (mCpiframen.companys.get(k).isChecked()) {
-                            companysName.add(mCpiframen.companys.get(k).getComName());
+                    //否则直接加载判断
+                    else {
+                        for (NewOddsInfo.CompanyBean companyBean : json.getCompany()) {
+                            if (Arrays.binarySearch(defualtCompanyIds, 0, defualtCompanyIds.length, companyBean.getComId()) >= 0) {
+                                companyBean.setIsChecked(true);
+                            } else {
+                                companyBean.setIsChecked(false);
+                            }
                         }
+                        CpiFiltrateActivity.mCheckedIds.clear();
+                        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
+                            if (fileterTagsBean.isHot()) {
+                                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
+                            }
+                        }
+                        mCpiframen.filtrateDate();
+                        selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+
                     }
 
-                    selectCompany2(mShowInfoBeans, companysName, CpiFiltrateActivity.mCheckedIds, type);
-//                    cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, type);
-//                    cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-
-                    mHandler.sendEmptyMessage(SUCCESS);// 请求成功
-                }else {
-                    mHandler.sendEmptyMessage(NODATA_CHILD);// 里面内容暂无数据
-                }
-
-              } else {
+                } else {
                     mHandler.sendEmptyMessage(NODATA);// 暂无数据
-              }
+                }
             }
 
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -210,125 +214,60 @@ public class CPIOddsFragment extends Fragment {
 
     /**
      * 时间
-     *
      * @param dates
      */
-    public void switchd(String dates) {
-            InitData(dates, mParam1);
+    public void switchd(String dates, boolean isDate) {
+        InitData(dates, mParam1, isDate);
     }
 
+    /**
+     * 传选中公司的集合
+     * @param comNameList
+     * 所选中联赛id的集合
+     * @param mCheckedIds
+     * 公司类型
+     * @param comPanyType
+     */
+    public void selectCompany( List<String> comNameList, List<String> mCheckedIds, String comPanyType) {
+        if (CPIFragment.TYPE_PLATE.equals(comPanyType)) {
 
-    public void filtrateData(List<NewOddsInfo.CompanyBean> comNameList, List<String> checkedIdExtra) {
-        mShowInfoBeans.clear();
-        mShowInfoBeans.addAll(mAllInfoBeans);
-        filtrateCompany(mShowInfoBeans, comNameList);
-        mShowInfoBeans = filtrateLeague(mShowInfoBeans, checkedIdExtra);
+            setComPany(mAllInfoBean1, comNameList, mCheckedIds, comPanyType);
 
-        if (cpiRecyclerViewAdapter != null) {
-            cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
-            cpiRecyclerViewAdapter.notifyDataSetChanged();
-        }
-    }
+        } else if (CPIFragment.TYPE_BIG.equals(comPanyType)) {
+            setComPany(mAllInfoBean2, comNameList, mCheckedIds, comPanyType);
 
-    public List<NewOddsInfo.AllInfoBean> filtrateHot(List<NewOddsInfo.AllInfoBean> allInfoBeans, boolean isHot) {
-        List<NewOddsInfo.AllInfoBean> hotList = new ArrayList<>();
-        if (!isHot) {
-            hotList.addAll(mAllInfoBeans);
-            return hotList;
-        }
-
-        for (NewOddsInfo.AllInfoBean bean : allInfoBeans) {
-            if (bean.isHot()) {
-                hotList.add(bean);
-            }
-        }
-        return hotList;
-    }
-
-    public void filtrateCompany(List<NewOddsInfo.AllInfoBean> allInfoBeans, List<NewOddsInfo.CompanyBean> companyList) {
-        for (NewOddsInfo.AllInfoBean bean : allInfoBeans) {
-            for (NewOddsInfo.AllInfoBean.ComListBean company : bean.getComList()) {
-
-                boolean isContainCompany = false;
-                for (NewOddsInfo.CompanyBean companyBean : companyList) {
-                    if (companyBean.getComId().equals(company.getComId())) {
-                        isContainCompany = companyBean.isChecked();
-                        break;
-                    }
-                }
-
-                company.setIsShow(isContainCompany);
-
-            }
-        }
-    }
-
-    private List<NewOddsInfo.AllInfoBean> filtrateLeague(List<NewOddsInfo.AllInfoBean> allInfoBeans, List<String> checkedIdExtra) {
-
-        List<NewOddsInfo.AllInfoBean> filtrateList = new ArrayList<>();
-
-        for (NewOddsInfo.AllInfoBean bean : allInfoBeans) {
-            if (checkedIdExtra.contains(bean.getLeagueId())) {
-                filtrateList.add(bean);
-            }
-        }
-
-        return filtrateList;
-    }
-
-
-    public void selectCompany2(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemp, List<String> comNameList, List<String> mCheckedIds, String comPany) {
-        if (CPIFragment.TYPE_PLATE.equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
-            if (cpiRecyclerViewAdapter != null) {
-                cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
-                cpiRecyclerViewAdapter.notifyDataSetChanged();
-            } else {
-                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, CPIFragment.TYPE_PLATE);
-                cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-            }
-
-        } else if (CPIFragment.TYPE_BIG.equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
-            if (cpiRecyclerViewAdapter != null) {
-                cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
-                cpiRecyclerViewAdapter.notifyDataSetChanged();
-            } else {
-                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, CPIFragment.TYPE_BIG);
-                cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-            }
-
-        } else if (CPIFragment.TYPE_OP.equals(comPany)) {
-            setComPany(hotsAllInfoTemp, comNameList, mCheckedIds);
-            if (cpiRecyclerViewAdapter != null) {
-                cpiRecyclerViewAdapter.setAllInfoBean(mAllInfo);
-                cpiRecyclerViewAdapter.notifyDataSetChanged();
-            } else {
-                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mAllInfo, mContext, CPIFragment.TYPE_OP);
-                cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
-            }
+        } else if (CPIFragment.TYPE_OP.equals(comPanyType)) {
+            setComPany(mAllInfoBean3, comNameList, mCheckedIds, comPanyType);
         }
 
     }
 
-    private void setComPany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemps, List<String> comNameLists, List<String> mCheckedIds) {
+    /**
+     * 每个不同赔率的全部数据
+     * @param hotsAllInfoTemps
+     * 选中公司的集合
+     * @param comNameLists
+     * 所选中联赛id的集合
+     * @param mCheckedIds
+     * 传选中公司的集合
+     * @param comPanyType
+     */
+    private void setComPany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemps, List<String> comNameLists, List<String> mCheckedIds, String comPanyType) {
         mAllInfo.clear();
+        mShowInfoBeans.clear();
         for (int k = 0; k < hotsAllInfoTemps.size(); k++) {
             NewOddsInfo.AllInfoBean pAllInfoBean = new NewOddsInfo.AllInfoBean();
             List<NewOddsInfo.AllInfoBean.ComListBean> mComListBeanList = new ArrayList<>();
             for (int j = 0; j < hotsAllInfoTemps.get(k).getComList().size(); j++) {
 
                 for (int h = 0; h < comNameLists.size(); h++) {
-
                     if (hotsAllInfoTemps.get(k).getComList().get(j).getComName().equals(comNameLists.get(h))) {
                         NewOddsInfo.AllInfoBean.ComListBean mComListBean = new NewOddsInfo.AllInfoBean.ComListBean();
                         mComListBean = hotsAllInfoTemps.get(k).getComList().get(j);
                         mComListBeanList.add(mComListBean);
 
                     }
-
                 }
-
             }
             for (int i = 0; i < mCheckedIds.size(); i++) {
                 if (hotsAllInfoTemps.get(k).getLeagueId().equals(mCheckedIds.get(i))) {
@@ -341,12 +280,35 @@ public class CPIOddsFragment extends Fragment {
                     pAllInfoBean.setLeagueName(hotsAllInfoTemps.get(k).getLeagueName());
                     mAllInfo.add(pAllInfoBean);
                 }
-
-
             }
 
         }
+        //循环判断每个getComList是否为空，为空的不加进去
+        for (int p = 0; p < mAllInfo.size(); p++) {
+            NewOddsInfo.AllInfoBean pAllInfo = new NewOddsInfo.AllInfoBean();
+            if (!mAllInfo.get(p).getComList().isEmpty()) {
+                pAllInfo.setComList(mAllInfo.get(p).getComList());
+                pAllInfo.setMatchInfo(mAllInfo.get(p).getMatchInfo());
+                pAllInfo.setHot(mAllInfo.get(p).isHot());
+                pAllInfo.setLeagueColor(mAllInfo.get(p).getLeagueColor());
+                pAllInfo.setLeagueId(mAllInfo.get(p).getLeagueId());
+                pAllInfo.setLeagueName(mAllInfo.get(p).getLeagueName());
+                mShowInfoBeans.add(pAllInfo);
+            }
+        }
+       if(!mShowInfoBeans.isEmpty()) {
+           if (cpiRecyclerViewAdapter != null) {
+               cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
+               cpiRecyclerViewAdapter.notifyDataSetChanged();
+           } else {
+               cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, comPanyType);
+               cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
 
+           }
+           mHandler.sendEmptyMessage(SUCCESS);// 请求成功
+       }else{
+           mHandler.sendEmptyMessage(NODATA_CHILD);// 内容无数据
+       }
 
     }
 
@@ -362,7 +324,6 @@ public class CPIOddsFragment extends Fragment {
                     cpi_odds_recyclerView.setVisibility(View.VISIBLE);
                     mCpiframen.public_date_layout.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_company.setVisibility(View.VISIBLE);
-//                    System.out.println(">>>>>>>>访问成功");
                     break;
                 case STARTLOADING://正在加载的时候
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
@@ -402,7 +363,7 @@ public class CPIOddsFragment extends Fragment {
                     cpi_fl_plate_noData.setVisibility(View.VISIBLE);
                     mCpiframen.public_date_layout.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_company.setVisibility(View.VISIBLE);
-                    mCpiframen.public_img_filter.setVisibility(View.INVISIBLE);
+                    mCpiframen.public_img_filter.setVisibility(View.VISIBLE);
                     break;
                 default:
                     break;
