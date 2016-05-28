@@ -61,7 +61,7 @@ public class RollBallFragment extends Fragment {
 
     private void loadDatas(){
 
-        mRollBallAdapter=new RollBallAdapter(getContext());
+//        mRollBallAdapter=new RollBallAdapter(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mRollBallAdapter);
 
