@@ -91,7 +91,6 @@ public class HomeGridAdapter extends BaseAdapter {
                                             intent.putExtra("infoTypeName", title);
                                             intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
                                             intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
-                                            System.out.println("lzftoken"+AppConstants.register.getData().getLoginToken());
                                             mContext.startActivity(intent);
                                         } else {// 跳转到登录界面
                                             mContext.startActivity(new Intent(mContext, LoginActivity.class));
