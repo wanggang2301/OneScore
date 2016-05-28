@@ -1261,7 +1261,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
 
     public void reLoadData(){
-       // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         mLoadHandler.postDelayed(mLoadingDataThread, 0);
     }
 
