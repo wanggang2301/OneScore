@@ -87,7 +87,8 @@ public class HomeGridAdapter extends BaseAdapter {
                                     if(jumpAddr.contains("{loginToken}") && "post".equals(reqMethod)){// 请求需要带参
                                         if (CommonUtils.isLogin()) {// 判断用户是否登录
                                             Intent intent = new Intent(mContext, WebActivity.class);
-                                            intent.putExtra("key", jumpAddr.substring(0,jumpAddr.indexOf("?")));// 跳转地址
+//                                            intent.putExtra("key", jumpAddr.substring(0,jumpAddr.indexOf("?")));// 跳转地址
+                                            intent.putExtra("key", jumpAddr);// 跳转地址
                                             intent.putExtra("infoTypeName", title);
                                             intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
                                             intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
