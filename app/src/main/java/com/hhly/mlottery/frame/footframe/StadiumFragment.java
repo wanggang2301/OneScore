@@ -1155,26 +1155,37 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
         //文字直播
         liveTextFragment = new LiveTextFragment(getActivity(), matchLive, mMatchDetail.getLiveStatus());
+
+
         fragmentManager = getChildFragmentManager();
         if (fragmentManager == null) {
             return;
         }
-
-        fragmentManager.beginTransaction().add(R.id.frame_content, liveTextFragment).commit();
+        if (!liveTextFragment.isAdded()) {
+            fragmentManager.beginTransaction().add(R.id.frame_content, liveTextFragment).commit();
+        }
 
         if (flag) {
 
-
             //阵容
             firstPlayersFragment = new FirstPlayersFragment();
-            fragmentManager.beginTransaction().add(R.id.frame_content_players, firstPlayersFragment).commit();
+
+            if (!firstPlayersFragment.isAdded()) {
+                fragmentManager.beginTransaction().add(R.id.frame_content_players, firstPlayersFragment).commit();
+            }
+
             //统计数据
             statisticsFragment = new StatisticsFragment();
-            fragmentManager.beginTransaction().add(R.id.frame_content_corner, statisticsFragment).commit();
+
+            if (!statisticsFragment.isAdded()) {
+                fragmentManager.beginTransaction().add(R.id.frame_content_corner, statisticsFragment).commit();
+            }
 
             //攻防走势
             trendFragment = new TrendFragment();
-            fragmentManager.beginTransaction().add(R.id.frame_content_attack, trendFragment).commit();
+            if (!trendFragment.isAdded()) {
+                fragmentManager.beginTransaction().add(R.id.frame_content_attack, trendFragment).commit();
+            }
 
             fragmentManager.beginTransaction().show(liveTextFragment).commit();
             fragmentManager.beginTransaction().hide(firstPlayersFragment).commit();
