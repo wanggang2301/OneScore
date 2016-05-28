@@ -1156,6 +1156,10 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         //文字直播
         liveTextFragment = new LiveTextFragment(getActivity(), matchLive, mMatchDetail.getLiveStatus());
         fragmentManager = getChildFragmentManager();
+        if (fragmentManager == null) {
+            return;
+        }
+
         fragmentManager.beginTransaction().add(R.id.frame_content, liveTextFragment).commit();
 
         if (flag) {
