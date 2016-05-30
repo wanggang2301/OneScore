@@ -694,6 +694,7 @@
     <string name="get_qq_info_fail">獲取qq用戶信息失敗</string>
     <string name="GET_WEIBO_INFO_FAIL">獲取微博用戶信息失敗</string>
     <string name="system_error">系統錯誤</string>
+    <string name="password_digits">_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
     <string name="realname_error">真實姓名錯誤</string>
     <string name="id_card_format_error">身份證格式錯誤</string>
     <string name="password_error">密碼錯誤</string>
