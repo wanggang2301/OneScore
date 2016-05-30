@@ -434,37 +434,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
             }
         });
-        /*VolleyContentFast.requestJsonByPost(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
-            @Override
-            public synchronized void onResponse(final HomePagerEntity jsonObject) {
-                if (jsonObject != null) {// 请求成功
-                    mHomePagerEntity = jsonObject;
-                    L.d("xxx", "isAudit:" + jsonObject.getIsAudit());
-                    isAuditHandle(jsonObject);
-                    if (mHomePagerEntity.getResult() == 200) {
-                        switch (num) {
-                            case 0:// 首次加载
-                                mHandler.sendEmptyMessage(LOADING_DATA_SUCCESS);
-                                break;
-                            case 1:// 下拉刷新
-                                mHandler.sendEmptyMessage(REFRES_DATA_SUCCESS);
-                                break;
-                        }
-                    } else {
-                        mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
-                    }
-                } else {
-                    mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                // 请求失败
-                L.d("xxx", "请求失败");
-                mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
-            }
-        }, HomePagerEntity.class);*/
     }
 
     /**
