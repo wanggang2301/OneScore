@@ -431,6 +431,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
      * @param num
      * @param screenData
      * @param allData
+     * @param isGuest 判断是否是客队近期战绩（客队取客场）
      */
     private void setScreen(boolean isSite , int num , List<BasketAnalyzeMoreRecentHistoryBean> screenData , List<BasketAnalyzeMoreRecentHistoryBean> allData , boolean isGuest){
 
