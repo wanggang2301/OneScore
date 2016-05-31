@@ -1,17 +1,14 @@
 package com.hhly.mlottery.adapter.cpiadapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.Checkable;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -39,37 +36,46 @@ public class CpiFiltrateMatchAdapter extends CommonAdapter<NewOddsInfo.FileterTa
         //设置tag
 //        holder.setTag(R.id.item_filtrate_checkbox, fileterTagsBean.getLeagueId());
         //设置联赛名称和场次
-        holder.setText(R.id.item_filtrate_checkbox, fileterTagsBean.getLeagueName() + "[" + fileterTagsBean.getMatchsInLeague() + "]");
+        holder.setText(R.id.item_cpi_filtrate_checkbox, fileterTagsBean.getLeagueName() + "[" + fileterTagsBean.getMatchsInLeague() + "]");
         //设置联赛颜色
-        holder.setTextColorString(R.id.item_filtrate_checkbox, fileterTagsBean.getLeagueColor());
+        holder.setTextColorString(R.id.item_cpi_filtrate_checkbox, fileterTagsBean.getLeagueColor());
         if (mCheckedIds.contains(fileterTagsBean.getLeagueId())) {
-            holder.setChecked(R.id.item_filtrate_checkbox, true);
+            holder.setChecked(R.id.item_cpi_filtrate_checkbox, true);
         } else {
-            holder.setChecked(R.id.item_filtrate_checkbox, false);
+            holder.setChecked(R.id.item_cpi_filtrate_checkbox, false);
         }
 
-        Log.d("CpiFiltrateMatchAdapter","fileterTagsBean.getLeagueId() = "+fileterTagsBean.getLeagueId());
-
-        holder.setOnCheckedChangeListener(R.id.item_filtrate_checkbox, new CompoundButton.OnCheckedChangeListener() {
+        holder.setOnClickListener(R.id.item_cpi_filtrate_checkbox, new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (onItemCheckedChangedListener != null) {
-                    onItemCheckedChangedListener.onCheckedChanged(buttonView, isChecked, fileterTagsBean);
+            public void onClick(View v) {
+                if (onItemClickListenerListener != null && v instanceof Checkable) {
+//                    L.d("convert - onclick ", "getLeagueId = " + fileterTagsBean.getLeagueId());
+//                    L.d("convert - onclick ", "((Checkable)v).isChecked() = " + ((Checkable) v).isChecked());
+                    onItemClickListenerListener.onClick(v, ((Checkable) v).isChecked(), fileterTagsBean);
                 }
-
             }
         });
+
+//        holder.setOnCheckedChangeListener(R.id.item_cpi_filtrate_checkbox, new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                L.d("convert - onCheckedChanged ","getLeagueId = " +fileterTagsBean.getLeagueId());
+//
+//
+//            }
+//        });
     }
 
-    private OnItemCheckedChangedListener onItemCheckedChangedListener;
 
-    public void setOnItemCheckedChangedListener(OnItemCheckedChangedListener onItemCheckedChangedListener) {
-        this.onItemCheckedChangedListener = onItemCheckedChangedListener;
+    private OnItemClickListenerListener onItemClickListenerListener;
+
+    public void setOnItemCheckedChangedListener(OnItemClickListenerListener onItemClickListenerListener) {
+        this.onItemClickListenerListener = onItemClickListenerListener;
     }
 
 
-    public interface OnItemCheckedChangedListener {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked, NewOddsInfo.FileterTagsBean fileterTagsBean);
+    public interface OnItemClickListenerListener {
+        public void onClick(View buttonView, boolean isChecked, NewOddsInfo.FileterTagsBean fileterTagsBean);
     }
 
 

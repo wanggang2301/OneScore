@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y96"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/black_grounding">
 
         <TextView
             android:id="@+id/basket_odds_details_time"
@@ -18,13 +19,13 @@
             android:text="----"
             android:textColor="@color/black_details_ball_textcolor"
             android:gravity="center"
-            android:background="@color/black_grounding"/>
+            android:textSize="@dimen/text_size_11"
+            />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent"
-            android:background="@color/black_grounding"
             android:gravity="center">
             <TextView
                 android:id="@+id/basket_odds_details_guestwin"
@@ -33,7 +34,9 @@
                 android:layout_height="wrap_content"
                 android:text="---"
                 android:textColor="@color/black_details_ball_textcolor2"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textSize="@dimen/text_size_11"
+                />
             <LinearLayout
                 android:id="@+id/basket_odds_handicp_ll"
                 android:layout_width="0dp"
@@ -52,9 +55,11 @@
                     android:id="@+id/basket_odds_details_handicap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="---"
+                    android:text="15.5"
                     android:textColor="@color/black_details_ball_textcolor2"
-
+                    android:textSize="@dimen/text_size_11"
+                    android:paddingLeft="@dimen/x3"
+                    android:paddingRight="@dimen/x3"
                     />
             </LinearLayout>
             <TextView
@@ -64,7 +69,9 @@
                 android:layout_height="wrap_content"
                 android:text="---"
                 android:textColor="@color/black_details_ball_textcolor2"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textSize="@dimen/text_size_11"
+                />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

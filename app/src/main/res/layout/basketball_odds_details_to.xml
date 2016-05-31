@@ -103,6 +103,7 @@
                 android:id="@+id/basket_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/black_grounding"
                 android:orientation="horizontal"
                 >
                 <ListView

@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -71,7 +73,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     private boolean isRequestFinish = true;
     private boolean issubmitFinish = true;
     private   int def = 0;
-
+    private static final int JUMP_COMMENT_QUESTCODE = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,6 +160,8 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
 
         mCommentCount = (TextView) findViewById(R.id.tv_commentcount);
         mEditText = (EditText) findViewById(R.id.et_comment);
+        mEditText.requestFocus();
+        mEditText.setSelected(true);
         mSend = (TextView) findViewById(R.id.iv_send);
         mEditText.setOnClickListener(this);
         mSend.setOnClickListener(this);
@@ -191,6 +195,17 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 mEditText.setSelected(hasFocus);
             }
         });
+        mEditText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("lzflogin" + CommonUtils.isLogin());
+                if (!CommonUtils.isLogin()) {
+                    //跳转登录界面
+                    Intent intent1 = new Intent(CounselCommentActivity.this, LoginActivity.class);
+                    startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
+                }
+            }
+        });
     }
 
     @Override
@@ -209,15 +224,21 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
-                    if (CyUtils.isLogin) {//已登录
+                    if (CyUtils.isLogin) {//已登录畅言
                         if (issubmitFinish){//是否提交完成，若提交未完成，则不再重复提交
                             issubmitFinish=false;
                             CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                         }
 
-                    } else {//未登录
-                        ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
-                        CyUtils.loginSso(DeviceInfo.getDeviceId(this), DeviceInfo.getDeviceId(this), sdk);
+                    } else {//未登录畅言
+                        if (CommonUtils.isLogin()){//已登录华海
+                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                            ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
+                        }else {//未登录华海
+                            //跳转登录界面
+                            Intent intent1=new Intent(CounselCommentActivity.this,LoginActivity.class);
+                            startActivityForResult(intent1,JUMP_COMMENT_QUESTCODE);
+                        }
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();
@@ -292,7 +313,9 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //请求下一页数据
-                    getTopicComments(mCurrentPager);
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))){//没有更多数据的时候，上拉不再发起请求
+                        getTopicComments(mCurrentPager);
+                    }
                 }
             }
         });
@@ -307,7 +330,10 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //请求下一页数据
-                    getTopicComments(mCurrentPager);
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
+                        getTopicComments(mCurrentPager);
+                    }
+
                 }
             }
         });
@@ -375,5 +401,14 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         super.onPause();
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd("Football_CounselCommentActivity");
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //接收登录华海成功返回
+        if (requestCode==3){
+            if (resultCode==RESULT_OK){
+                CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+            }
+        }
     }
 }

@@ -31,7 +31,9 @@ public class CpiCompanyAdapter extends BaseAdapter {
         this.mInflater = LayoutInflater.from(context);
 //        this.mCheckedTextView = mCheckedTextView;
     }
-
+    public void setCompanyBean(List<NewOddsInfo.CompanyBean> companyBean) {
+        this.mCompanyBean = companyBean;
+    }
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
@@ -70,11 +72,15 @@ public class CpiCompanyAdapter extends BaseAdapter {
         }
         item.checkedTextView.setText(mCompanyBean.get(position).getComName());
         item.checkedTextView.setChecked(mCompanyBean.get(position).isChecked());
+        item.checkedTextView.setTextColor(context.getResources().getColor(R.color.msg));
         //如果checkedTextView有选中的就给设置选中的背景
         if (item.checkedTextView.isChecked()) {
-            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select_true));
+//            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select_true));
+            item.cpi_img_checked.setSelected(true);
         } else {
-            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select));
+//            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select));
+//            item.cpi_img_checked.setBackgroundResource(R.mipmap.cpi_img_select);
+            item.cpi_img_checked.setSelected(false);
         }
         return convertView;
     }

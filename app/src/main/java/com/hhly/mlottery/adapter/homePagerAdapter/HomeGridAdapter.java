@@ -15,12 +15,14 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketListActivity;
 import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -74,15 +76,32 @@ public class HomeGridAdapter extends BaseAdapter {
                         HomeContentEntity homeContentEntity = mHomePagerEntity.getMenus().getContent().get(position);
                         int jumpType = homeContentEntity.getJumpType();// 跳转类型
                         String jumpAddr = homeContentEntity.getJumpAddr();// 跳转地址
+                        String title = homeContentEntity.getTitle();// 跳转标题
+                        String reqMethod = homeContentEntity.getReqMethod();// 跳转方式
                         if (!TextUtils.isEmpty(jumpAddr)) {
                             switch (jumpType) {
                                 case 0:// 无
                                     break;
                                 case 1:// 页面
                                 {
-                                    Intent intent = new Intent(mContext, WebActivity.class);
-                                    intent.putExtra("key", jumpAddr);
-                                    mContext.startActivity(intent);
+                                    if(jumpAddr.contains("{loginToken}") && "post".equals(reqMethod)){// 请求需要带参
+                                        if (CommonUtils.isLogin()) {// 判断用户是否登录
+                                            Intent intent = new Intent(mContext, WebActivity.class);
+                                            intent.putExtra("key", jumpAddr.substring(0,jumpAddr.indexOf("?")));// 跳转地址
+                                            intent.putExtra("infoTypeName", title);
+                                            intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
+                                            intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
+                                            mContext.startActivity(intent);
+                                        } else {// 跳转到登录界面
+                                            mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                                        }
+                                    }else {// 其它
+                                        Intent intent = new Intent(mContext, WebActivity.class);
+                                        intent.putExtra("key", jumpAddr);
+                                        intent.putExtra("infoTypeName", title);
+                                        intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
+                                        mContext.startActivity(intent);
+                                    }
                                     break;
                                 }
                                 case 2:// 跳内页
@@ -92,7 +111,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, FootballActivity.class);
                                             intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_EXPONENT_VALUE);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Football_Index");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Index");
                                         }
                                         break;
                                         case "11":// 足球数据
@@ -100,7 +119,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, FootballActivity.class);
                                             intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_DATA_VALUE);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Football_Data");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Data");
                                         }
                                         break;
                                         case "12":// 足球资讯
@@ -108,7 +127,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, FootballActivity.class);
                                             intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Football_Information");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Information");
                                         }
                                         break;
                                         case "13":// 足球比分
@@ -116,7 +135,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, FootballActivity.class);
                                             intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_SCORE_VALUE);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Football_Score");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Score");
                                         }
                                         break;
                                         case "14":// 足球视频
@@ -124,7 +143,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, FootballActivity.class);
                                             intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_VIDEO_VALUE);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Football_Video");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Video");
                                         }
                                         break;
                                         case "20":// 篮球即时比分
@@ -132,7 +151,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, BasketListActivity.class);
                                             intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Basketball_Score");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
                                         }
                                         break;
                                         case "21":// 篮球赛果
@@ -140,7 +159,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, BasketListActivity.class);
                                             intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_AMIDITHION_VALUE);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Basketball_Amidithion");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Amidithion");
                                         }
                                         break;
                                         case "22":// 篮球赛程
@@ -148,7 +167,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, BasketListActivity.class);
                                             intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_COMPETITION_VALUE);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Basketball_Competition");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Competition");
                                         }
                                         break;
                                         case "23":// 篮球关注
@@ -156,7 +175,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, BasketListActivity.class);
                                             intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_ATTENTION_VALUE);
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Basketball_Attention");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Attention");
                                         }
                                         break;
                                         case "24":// 篮球资讯
@@ -164,7 +183,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             break;
                                         case "30":// 彩票开奖
                                             mContext.startActivity(new Intent(mContext, NumbersActivity.class));
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_List");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_List");
                                             break;
                                         case "350":// 彩票资讯
                                             Toast.makeText(mContext, "彩票资讯", Toast.LENGTH_SHORT).show();
@@ -174,7 +193,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.ONE));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_HK");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_HK");
                                         }
                                         break;
                                         case "32":// 重庆时时彩
@@ -182,7 +201,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWO));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SSC_CQ");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SSC_CQ");
                                         }
                                         break;
                                         case "33":// 江西时时彩
@@ -190,7 +209,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THREE));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SSC_JX");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SSC_JX");
                                         }
                                         break;
                                         case "34":// 新疆时时彩
@@ -198,7 +217,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.FOUR));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SSC_XJ");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SSC_XJ");
                                         }
                                         break;
                                         case "35":// 云南时时彩
@@ -206,7 +225,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.FIVE));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SSC_YN");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SSC_YN");
                                         }
                                         break;
                                         case "36":// 七星彩
@@ -214,7 +233,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.SIX));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_QXC");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_QXC");
                                         }
                                         break;
                                         case "37":// 广东11选5
@@ -222,7 +241,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.SEVEN));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SYXW_GD");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SYXW_GD");
                                         }
                                         break;
                                         case "38":// 广东快乐10分
@@ -230,7 +249,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.EIGHT));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_KLSF_GD");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_KLSF_GD");
                                         }
                                         break;
                                         case "39":// 湖北11选5
@@ -238,7 +257,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.NINE));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SYXW_HB");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SYXW_HB");
                                         }
                                         break;
                                         case "310":// 安徽快3
@@ -246,7 +265,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TEN));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_KS_AH");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_KS_AH");
                                         }
                                         break;
                                         case "311":// 湖南快乐10分
@@ -254,7 +273,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.ELEVEN));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_KLSF_HN");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_KLSF_HN");
                                         }
                                         break;
                                         case "312":// 快乐8
@@ -276,7 +295,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.FOURTEEN));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SYXW_LN");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SYXW_LN");
                                         }
                                         break;
                                         case "315":// 北京赛车
@@ -284,7 +303,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.FIFTEEN));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_BJSC");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_BJSC");
                                         }
                                         break;
                                         case "316":// 江苏快3
@@ -292,7 +311,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.SIRTEEN));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_KS_JS");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_KS_JS");
                                         }
                                         break;
                                         case "317":// 时时乐
@@ -307,7 +326,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.EIGHTEEN));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_KS_GX");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_KS_GX");
                                         }
                                         break;
                                         case "319":// 幸运农场
@@ -315,7 +334,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.NINETEEN));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_KLSF_XYLC");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_KLSF_XYLC");
                                         }
                                         break;
                                         case "320":// 江苏11选5
@@ -323,7 +342,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SYXW_JS");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SYXW_JS");
                                         }
                                         break;
                                         case "321":// 江西11选5
@@ -331,7 +350,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_ONE));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SYXW_JX");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SYXW_JX");
                                         }
                                         break;
                                         case "322":// 山东11选5
@@ -339,7 +358,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_TWO));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SYXW_SD");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SYXW_SD");
                                         }
                                         break;
                                         case "323":// 天津时时彩
@@ -347,7 +366,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_THREE));
                                             mContext.startActivity(intent);
-                                            MobclickAgent.onEvent(mContext,"HomePager_Menu_Lottery_SSC_TJ");
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SSC_TJ");
                                         }
                                         break;
                                     }
@@ -364,7 +383,7 @@ public class HomeGridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(mHomePagerEntity == null || mHomePagerEntity.getMenus() == null || mHomePagerEntity.getMenus().getContent() == null || mHomePagerEntity.getMenus().getContent().size() == 0){
+        if (mHomePagerEntity == null || mHomePagerEntity.getMenus() == null || mHomePagerEntity.getMenus().getContent() == null || mHomePagerEntity.getMenus().getContent().size() == 0) {
             return 0;
         }
         return mHomePagerEntity.getMenus().getContent().size();

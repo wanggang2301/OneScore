@@ -46,6 +46,8 @@ public class ScoresFragment extends Fragment {
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
+    private final int ROLL_FRAGMENT=4;
+
     private final static String TAG = "ScoresFragment";
     public static List<String> titles;
 
@@ -143,11 +145,15 @@ public class ScoresFragment extends Fragment {
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
         titles.add(getString(R.string.foot_guanzhu_txt));
+       // titles.add("滚球");
+
         fragments = new ArrayList<>();
         fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
+       // fragments.add(RollBallFragment.newInstance());
+
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -496,29 +502,29 @@ public class ScoresFragment extends Fragment {
             if (isImmediate) {
                 MobclickAgent.onPageEnd("Football_ImmediateFragment");
                 isImmediate = false;
-                L.d("xxx", "ImmediateFragment>>>隐藏");
+//                L.d("xxx", "ImmediateFragment>>>隐藏");
             }
             if (isResult) {
                 MobclickAgent.onPageEnd("Football_ResultFragment");
                 isResult = false;
-                L.d("xxx", "ResultFragment>>>隐藏");
+//                L.d("xxx", "ResultFragment>>>隐藏");
             }
             if (isSchedule) {
                 MobclickAgent.onPageEnd("Football_ScheduleFragment");
                 isSchedule = false;
-                L.d("xxx", "ScheduleFragment>>>隐藏");
+//                L.d("xxx", "ScheduleFragment>>>隐藏");
             }
             if (isFocus) {
                 MobclickAgent.onPageEnd("Football_FocusFragment");
                 isFocus = false;
-                L.d("xxx", "FocusFragment>>>隐藏");
+//                L.d("xxx", "FocusFragment>>>隐藏");
             }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        L.d(TAG, "football Fragment destroy..");
+//        L.d(TAG, "football Fragment destroy..");
     }
 
 
@@ -533,6 +539,8 @@ public class ScoresFragment extends Fragment {
         super.onDetach();
         L.d(TAG, "football Fragment detach..");
     }
+
+
 
 
 /*
