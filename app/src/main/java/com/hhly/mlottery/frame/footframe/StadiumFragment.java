@@ -1161,7 +1161,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         }
         if (liveTextFragment == null || !liveTextFragment.isAdded()) {
             liveTextFragment = new LiveTextFragment(getActivity(), matchLive, mMatchDetail.getLiveStatus());
-            fragmentManager.beginTransaction().add(R.id.frame_content, liveTextFragment).commit();
+            fragmentManager.beginTransaction().add(R.id.frame_content, liveTextFragment).commitAllowingStateLoss();
         } else {
             //下拉刷新
             liveTextFragment.updateAdapter(matchLive, mMatchDetail.getLiveStatus());
@@ -1174,26 +1174,26 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
             firstPlayersFragment = new FirstPlayersFragment();
 
             if (!firstPlayersFragment.isAdded()) {
-                fragmentManager.beginTransaction().add(R.id.frame_content_players, firstPlayersFragment).commit();
+                fragmentManager.beginTransaction().add(R.id.frame_content_players, firstPlayersFragment).commitAllowingStateLoss();
             }
 
             //统计数据
             statisticsFragment = new StatisticsFragment();
 
             if (!statisticsFragment.isAdded()) {
-                fragmentManager.beginTransaction().add(R.id.frame_content_corner, statisticsFragment).commit();
+                fragmentManager.beginTransaction().add(R.id.frame_content_corner, statisticsFragment).commitAllowingStateLoss();
             }
 
             //攻防走势
             trendFragment = new TrendFragment();
             if (!trendFragment.isAdded()) {
-                fragmentManager.beginTransaction().add(R.id.frame_content_attack, trendFragment).commit();
+                fragmentManager.beginTransaction().add(R.id.frame_content_attack, trendFragment).commitAllowingStateLoss();
             }
 
-            fragmentManager.beginTransaction().show(liveTextFragment).commit();
-            fragmentManager.beginTransaction().hide(firstPlayersFragment).commit();
-            fragmentManager.beginTransaction().hide(trendFragment).commit();
-            fragmentManager.beginTransaction().hide(statisticsFragment).commit();
+            fragmentManager.beginTransaction().show(liveTextFragment).commitAllowingStateLoss();
+            fragmentManager.beginTransaction().hide(firstPlayersFragment).commitAllowingStateLoss();
+            fragmentManager.beginTransaction().hide(trendFragment).commitAllowingStateLoss();
+            fragmentManager.beginTransaction().hide(statisticsFragment).commitAllowingStateLoss();
 
         }
         //场上阵容
@@ -1213,10 +1213,10 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                         frame_content_corner.setVisibility(View.GONE);
                         frame_content_players.setVisibility(View.GONE);
                         frame_content_attack.setVisibility(View.GONE);
-                        fragmentManager.beginTransaction().hide(firstPlayersFragment).commit();
-                        fragmentManager.beginTransaction().hide(statisticsFragment).commit();
-                        fragmentManager.beginTransaction().hide(trendFragment).commit();
-                        fragmentManager.beginTransaction().show(liveTextFragment).commit();
+                        fragmentManager.beginTransaction().hide(firstPlayersFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().hide(statisticsFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().hide(trendFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().show(liveTextFragment).commitAllowingStateLoss();
                         break;
 
                     case R.id.rb_corner_trend:
@@ -1225,10 +1225,10 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                         frame_content_players.setVisibility(View.GONE);
                         frame_content_corner.setVisibility(View.VISIBLE);
                         frame_content_attack.setVisibility(View.GONE);
-                        fragmentManager.beginTransaction().hide(liveTextFragment).commit();
-                        fragmentManager.beginTransaction().hide(firstPlayersFragment).commit();
-                        fragmentManager.beginTransaction().hide(trendFragment).commit();
-                        fragmentManager.beginTransaction().show(statisticsFragment).commit();
+                        fragmentManager.beginTransaction().hide(liveTextFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().hide(firstPlayersFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().hide(trendFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().show(statisticsFragment).commitAllowingStateLoss();
 
                         break;
 
@@ -1239,10 +1239,10 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                         frame_content_players.setVisibility(View.VISIBLE);
                         frame_content_corner.setVisibility(View.GONE);
                         frame_content_attack.setVisibility(View.GONE);
-                        fragmentManager.beginTransaction().hide(liveTextFragment).commit();
-                        fragmentManager.beginTransaction().hide(statisticsFragment).commit();
-                        fragmentManager.beginTransaction().hide(trendFragment).commit();
-                        fragmentManager.beginTransaction().show(firstPlayersFragment).commit();
+                        fragmentManager.beginTransaction().hide(liveTextFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().hide(statisticsFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().hide(trendFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().show(firstPlayersFragment).commitAllowingStateLoss();
 
                         break;
 
@@ -1252,10 +1252,10 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                         frame_content_players.setVisibility(View.GONE);
                         frame_content_corner.setVisibility(View.GONE);
                         frame_content_attack.setVisibility(View.VISIBLE);
-                        fragmentManager.beginTransaction().hide(liveTextFragment).commit();
-                        fragmentManager.beginTransaction().hide(firstPlayersFragment).commit();
-                        fragmentManager.beginTransaction().show(trendFragment).commit();
-                        fragmentManager.beginTransaction().hide(statisticsFragment).commit();
+                        fragmentManager.beginTransaction().hide(liveTextFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().hide(firstPlayersFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().show(trendFragment).commitAllowingStateLoss();
+                        fragmentManager.beginTransaction().hide(statisticsFragment).commitAllowingStateLoss();
 
                         break;
 
