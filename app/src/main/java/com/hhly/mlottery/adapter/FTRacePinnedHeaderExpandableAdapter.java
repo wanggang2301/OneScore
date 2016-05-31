@@ -35,7 +35,11 @@ public class FTRacePinnedHeaderExpandableAdapter  extends BaseExpandableListAdap
         this.listView = listView;
         inflater = LayoutInflater.from(this.mContext);
     }
+  public void setAllInfor(List<String> groupDataList, List<List<LeagueRoundInfo.RaceBean.ListBean >> childrenDataList){
 
+      this.mGroupDataList = groupDataList;
+      this.mChildrenDataList = childrenDataList;
+  }
     /**
      * 获取组的个数
      *
@@ -225,6 +229,7 @@ public class FTRacePinnedHeaderExpandableAdapter  extends BaseExpandableListAdap
 //    public void setGroupClickStatus(int groupPosition, int status) {
 //        groupStatusMap.put(groupPosition, status);
 //    }
+
 
     @Override
     public int getGroupClickStatus(int groupPosition) {
