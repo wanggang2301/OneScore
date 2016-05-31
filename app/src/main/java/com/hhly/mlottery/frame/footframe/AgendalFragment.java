@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.FTRacePinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.footballDetails.LeagueRoundInfo;
 import com.hhly.mlottery.config.BaseURLs;
@@ -30,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hhly.mlottery.R;
 /**
  * * @ClassName: OneScore
  *
@@ -110,7 +110,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
             switch (msg.what) {
                 case ROUND_LOADING:
                     //轮数正在下载
-                    bottom_lay_round.setVisibility(View.VISIBLE);
+                    bottom_lay_round.setVisibility(View.GONE);
                     // bottom_lay_round.setVisibility(View.GONE);
                     wheeldata_fail.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -363,7 +363,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
             } else {
                 mExpandableAdapter.setAllInfor(mgroupnameList, mRaceListBeans );
                 mExpandableAdapter.notifyDataSetChanged();
-             }
+            }
 
             for (int i = 0; i < mSize; i++) {
                 mlay_agendafg_lv.expandGroup(i); //设置 默认打开的 group
@@ -449,6 +449,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
         mGo_down = (TextView) view.findViewById(R.id.go_down);
         mGo_down.setOnClickListener(this);
         mBack_up.setOnClickListener(this);
+        handle.sendEmptyMessage(ROUND_LOADING);//正在加载数据
     }
 
     @Override
