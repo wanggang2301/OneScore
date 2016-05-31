@@ -139,7 +139,7 @@ public class CPIOddsFragment extends Fragment {
         }
 
         // 2、连接服务器
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_NEW_ODDS, map, new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_NEW_ODDS, map, new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
             @Override
             public synchronized void onResponse(final NewOddsInfo json) {
 
