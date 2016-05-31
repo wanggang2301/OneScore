@@ -126,19 +126,6 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 reLayout(decview, scrollview);
             }
         });
-        //解决mTv_check_info在webview还没加载时显示在顶部的问题
-        isbottomscrollview.setOnScrollToBottomLintener(new IsBottomScrollView.OnScrollToBottomListener() {
-            @Override
-            public void onScrollBottomListener(boolean isBottom) {
-                if (isBottom) {
-                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
-                        mTv_check_info.setVisibility(View.VISIBLE);
-                    } else {
-                        mTv_check_info.setVisibility(View.GONE);
-                    }
-                }
-            }
-        });
     }
 
     //
@@ -346,6 +333,18 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
                     return true;
+                }
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    // TODO Auto-generated method stub
+
+                    super.onPageFinished(view, url);
+                    L.i("lzftype=" + mType + "thirtid=" + mThird);
+                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
+                        mTv_check_info.setVisibility(View.VISIBLE);
+                    } else {
+                        mTv_check_info.setVisibility(View.GONE);
+                    }
                 }
             });
             //其他页传过来的reqMethod为post时，提交token  否则不提交
