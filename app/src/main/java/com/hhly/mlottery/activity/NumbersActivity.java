@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 import com.hhly.mlottery.bean.numbersBean.NumbersOpenBean;
@@ -843,7 +844,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             if (convertView == null) {
                 holder = new ViewHolder();
 
-                if ("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)) {
+                if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
                     convertView = View.inflate(mContext, R.layout.numbers_current_contentinfo, null);// 国语
                 } else {
                     convertView = View.inflate(mContext, R.layout.numbers_current_contentinfo_i18n, null);// 英语
@@ -941,7 +942,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     private void isCountdown(ViewHolder holder, NumberCurrentInfo mNumberInfo) {
         holder.tv_number_time_name.setText("");
 
-        if ("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
         } else {
             holder.tv_number_time_name2.setText("");
         }
@@ -959,7 +960,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             holder.tv_numbers_time.setText(Dates[0] + " " + weekDate);// 设置日期
             holder.tv_number_time_name.setText(mContext.getResources().getString(R.string.number_hk_hint));
 
-            if ("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)) {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             } else {
                 holder.tv_number_time_name2.setText(mContext.getResources().getString(R.string.number_hk_hint2));
             }
@@ -1034,7 +1035,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             holder.tv_numbers_time.setText(Dates[0] + " " + weekDate);// 设置日期
             holder.tv_number_time_name.setText(mContext.getResources().getString(R.string.number_qxc_hint));
 
-            if ("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)) {
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             } else {
                 holder.tv_number_time_name2.setText(mContext.getResources().getString(R.string.number_hk_hint2));
             }

@@ -272,7 +272,7 @@ public class NumberCustomizeActivity extends Activity implements OnClickListener
 	 */
 	public void initView() {
 		
-		if("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)){
+		if("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)){
 			setContentView(R.layout.number_custom_activity);// 国内
 		}else{
 			setContentView(R.layout.number_custom_activity_i18n);// 国外

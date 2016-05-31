@@ -450,7 +450,7 @@ public class NumberDataUtils {
                         tv_zodiac.setText(zod);
 
                         // 自动匹配中英文的字体大小
-                        if ("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)) {
+                        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
                             tv_zodiac.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);// 中文
                         } else {
                             tv_zodiac.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);// 英文

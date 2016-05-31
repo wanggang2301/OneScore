@@ -34,7 +34,6 @@ public class AppConstants {
 	public static String PlayTypeTwo = "playType=2&";// 直播
 	public static String SearchType = "searchType=0&";// 搜索类型
 
-	public static String i18n = MyApp.isLanguage;// 获取语言环境
 	// public static String i18n = "en";// 测试英文语言环境
 
 	// 1至46个数字
