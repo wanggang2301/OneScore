@@ -49,7 +49,6 @@ import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
@@ -479,9 +478,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                     return;
                 }
 
-
                 mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有赛程
-
                 mMatchs = new ArrayList<Match>();//
                 // mMatchs.addAll(mAllMatchs);//用这种方式是把all的引用赋给它了，操作起来比较麻烦
 
@@ -598,7 +595,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                         //mRecyclerView.setLayoutManager(layoutManager);
 
 
-                     /*   if (AppConstants.isGOKeyboard) {
+                      /*  if (AppConstants.isGOKeyboard) {
                            *//* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
                             mInternationalAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                             mInternationalAdapter.setFocusClickListener(mFocusClickListener);
@@ -1264,7 +1261,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
 
     public void reLoadData(){
-       // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         mLoadHandler.postDelayed(mLoadingDataThread, 0);
     }
 
@@ -1376,20 +1373,20 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
     private void updateAdapter() {
 
-        if (AppConstants.isGOKeyboard) {
+       /* if (AppConstants.isGOKeyboard) {
             if (mInternationalAdapter == null) {
                 return;
             }
 
             mInternationalAdapter.updateDatas(mMatchs);
             mInternationalAdapter.notifyDataSetChanged();
-        } else {
+        } else {*/
             if (mAdapter == null) {
                 return;
             }
             mAdapter.updateDatas(mMatchs);
             mAdapter.notifyDataSetChanged();
-        }
+      //  }
     }
 
 
@@ -1407,9 +1404,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
         if (!isLoadedData && mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
             mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-
             mLoadHandler.postDelayed(mLoadingDataThread, 0);
-
         } else {
 
         }

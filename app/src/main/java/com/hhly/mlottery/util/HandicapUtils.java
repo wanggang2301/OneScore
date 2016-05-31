@@ -35,7 +35,7 @@ public class HandicapUtils {
 		}
 		
 		if (handicapF < 0) {
-			result.append("*");
+			result.append("-");
 		}
 
 		handicapF = Math.abs(handicapF);
