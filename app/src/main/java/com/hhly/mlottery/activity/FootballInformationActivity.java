@@ -75,6 +75,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
     private IntegralFragment integralFragment;//积分榜
     private AgendalFragment agendalFragment;//赛程
     private InforFragmentAdapter mInforFragmentAdapter;
+    private boolean isPagerFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +189,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                 for (int i = 0; i < leagueData.size(); i++) {
                     //判断是否为当前赛季
                     mListDatas.add(leagueData.get(i).getDate());
-                    if (leagueData.get(i).isCurrentSeason() && (isFrist||mIsCurenDatas==null)) {
+                    if (leagueData.get(i).isCurrentSeason() && (isFrist || mIsCurenDatas == null)) {
                         //遍历获取数据进行赋值控件
                         //文本框显示数据
                         mIsCurenDatas = leagueData.get(i).getDate();
@@ -222,9 +223,10 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
                 break;
             case AGENDAL_FRAGMENT:
-
-                ((AgendalFragment) listFragment.get(selectedPage)).getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
-
+                if(!isPagerFragment){
+                    ((AgendalFragment) listFragment.get(selectedPage)).getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
+                     isPagerFragment=true;
+                }
                 break;
         }
 
@@ -311,7 +313,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int postion, long arg3) {
                 // TODO Auto-generated method stub
-                MobclickAgent.onEvent(mContext,"Football_InformationFragment_Date");
+                MobclickAgent.onEvent(mContext, "Football_InformationFragment_Date");
                 //获取选择下标数据
                 mIsCurenDatas = mListDatas.get(postion);
 
@@ -356,11 +358,11 @@ public class FootballInformationActivity extends BaseActivity implements View.On
             case R.id.img_back:
                 setResult(Activity.RESULT_OK);
                 finish();
-                MobclickAgent.onEvent(mContext,"Football_InformationFragment_Exit");
+                MobclickAgent.onEvent(mContext, "Football_InformationFragment_Exit");
                 break;
             case R.id.intggral_datas:
                 Toast.makeText(mContext, "亲,请检查你的网络....", Toast.LENGTH_LONG).show();
-                MobclickAgent.onEvent(mContext,"Football_InformationFragment_NotNet");
+                MobclickAgent.onEvent(mContext, "Football_InformationFragment_NotNet");
                 break;
 
             default:

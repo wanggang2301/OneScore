@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballInformationActivity;
 import com.hhly.mlottery.adapter.IntegralExpandableAdapter;
@@ -127,7 +128,6 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
 
     public void initData(List<String> groupDataList, List<List<LangueScoreBean.ListBean>> childDataList, String leagueType) {
 
-
         this.mGroupDataList = groupDataList;
         this.mChildrenDataList = childDataList;
         this.mLeagueType = leagueType;
@@ -158,6 +158,8 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
 
         //获取ListView
         explistview_live = (PinnedHeaderExpandableListView) view.findViewById(R.id.football_integral_lv);
+        explistview_live.setHeaderView(getLayoutInflater(null).inflate(R.layout.integral_items_group, explistview_live, false));
+        explistview_live.setChildDivider(getResources().getDrawable(R.color.line_football_footer));
         //设置悬浮头部VIEW
         // explistview_live.setHeaderView(getActivity().getLayoutInflater().inflate(R.layout.integral_items_group, explistview_live, false));
 
