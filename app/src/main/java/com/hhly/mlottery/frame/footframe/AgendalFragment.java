@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hhly.mlottery.R;
+
 /**
  * * @ClassName: OneScore
  *
@@ -262,7 +263,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     }
 
     //从网络获取轮数数据
-    public void getLeagueRoundDataFromNet(String leagueId, String leagueType, String leagueDate ) {
+    public void getLeagueRoundDataFromNet(String leagueId, String leagueType, String leagueDate) {
 
 
         this.leagueId = leagueId;
@@ -289,7 +290,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
 
                     if (json != null) {
                         //有数据
-                        isLoadDataed = true;
+                       isLoadDataed=true;
                         //从返回的数据中获取round，保存好传给choicewheelutil展示
                         LeagueRoundBean_list = json.getData();
                         if (LeagueRoundBean_list.size() == 0) {
@@ -361,7 +362,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                 mlay_agendafg_lv.setAdapter(mExpandableAdapter);
 
             } else {
-                mExpandableAdapter.setAllInfor(mgroupnameList, mRaceListBeans );
+                mExpandableAdapter.setAllInfor(mgroupnameList, mRaceListBeans);
                 mExpandableAdapter.notifyDataSetChanged();
             }
 
@@ -417,6 +418,9 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
         }, LeagueRoundInfo.class);
     }
 
+    public boolean getisLoadDataed() {
+      return this.isLoadDataed;
+    }
 
     public void initView() {
 
@@ -556,7 +560,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     @Override
     public void onRefresh() {
         //这里需要传入底部轮次textview上显示的轮次 联赛id，赛季
-        if(LeagueRoundBean_list.get(mCurrentIndex).getRound()!=null) {
+        if (LeagueRoundBean_list.get(mCurrentIndex).getRound() != null) {
             getLeagueRaceDataFromNet(LeagueRoundBean_list.get(mCurrentIndex).getRound(), leagueId, datas);//从网络获取赛程数据
         }
         //getLeagueRoundDataFromNet(leagueId, leagueType, datas);

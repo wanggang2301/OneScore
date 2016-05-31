@@ -223,10 +223,9 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                 break;
             case AGENDAL_FRAGMENT:
 
-                if(!isPagerFragment){
-                    ((AgendalFragment) listFragment.get(selectedPage)).getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
-                    isPagerFragment=true;
-                }
+                     if(!((AgendalFragment) listFragment.get(selectedPage)).getisLoadDataed()) {
+                         ((AgendalFragment) listFragment.get(selectedPage)).getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
+                     }
 
                 break;
         }
