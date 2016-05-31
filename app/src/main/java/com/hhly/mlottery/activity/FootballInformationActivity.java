@@ -18,9 +18,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import th.hhly.mlottery.R;
+import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.InforFragmentAdapter;
 import com.hhly.mlottery.adapter.InforPopuWindowdapter;
 import com.hhly.mlottery.bean.footballDetails.IntegralBean;
