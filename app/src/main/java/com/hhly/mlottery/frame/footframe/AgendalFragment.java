@@ -29,8 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import th.hhly.mlottery.R;
-
+import com.hhly.mlottery.R;
 /**
  * * @ClassName: OneScore
  *
