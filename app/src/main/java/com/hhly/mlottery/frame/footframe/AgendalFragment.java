@@ -265,6 +265,9 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     //从网络获取轮数数据
     public void getLeagueRoundDataFromNet(String leagueId, String leagueType, String leagueDate) {
 
+        if (getActivity() == null) {
+            return;
+        }
 
         this.leagueId = leagueId;
         this.leagueType = leagueType;
@@ -290,7 +293,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
 
                     if (json != null) {
                         //有数据
-                       isLoadDataed=true;
+                        isLoadDataed = true;
                         //从返回的数据中获取round，保存好传给choicewheelutil展示
                         LeagueRoundBean_list = json.getData();
                         if (LeagueRoundBean_list.size() == 0) {
@@ -419,7 +422,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     }
 
     public boolean getisLoadDataed() {
-      return this.isLoadDataed;
+        return this.isLoadDataed;
     }
 
     public void initView() {
