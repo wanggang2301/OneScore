@@ -46,12 +46,6 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/football_match_detail_test_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test"
-            android:visibility="gone" />
 
 
         <include layout="@layout/include_football_detail_tabs" />

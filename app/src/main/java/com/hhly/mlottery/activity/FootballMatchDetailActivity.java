@@ -223,12 +223,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         L.e(TAG, "mThirdId = " + mThirdId);
         //mThirdId = "244752";
 
-        findViewById(R.id.football_match_detail_test_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer.valueOf("");
-            }
-        });
 
 
         initAnim();
