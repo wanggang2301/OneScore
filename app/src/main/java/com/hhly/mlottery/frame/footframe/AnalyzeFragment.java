@@ -366,7 +366,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
             }
             mHomeAdapter = new AnalyzeMatchAdapter(getActivity(), mHomeRecentList);
             mHomeRecentListview.setAdapter(mHomeAdapter);
-            mNoHistoryBattel.setVisibility(View.GONE);
+            mNoHomeRecentBattel.setVisibility(View.GONE);
             mHomeRecentBattel.setVisibility(View.VISIBLE);
 
             AnalyzeBean.TeamRecentEntity.HomeEntity homeRecent = analyzeBean.getTeamRecent().getHome();
