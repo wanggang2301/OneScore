@@ -248,7 +248,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                             }
 
                             List<BasketAnalyzeMoreRecentHistoryBean> fistData = new ArrayList<>();
-                            setScreen(true, 6, fistData, mHistoryData);
+                            setScreen(true, 6, fistData, mHistoryData , true);
 
                             if (mHistoryAdaptey == null) {
                                 mHistoryAdaptey = new BasketAnalyzeAdapter(mContext, fistData, R.layout.basket_analyze_details_item);
@@ -278,7 +278,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                             }
                             //默认选中全部场地6场
                             List<BasketAnalyzeMoreRecentHistoryBean> fistData = new ArrayList<>();
-                            setScreen(true, 6, fistData, mRecentData1);
+                            setScreen(true, 6, fistData, mRecentData1 , true);
 
                             //取前六场
                             List<BasketAnalyzeMoreRecentHistoryBean> list = new ArrayList<>();
@@ -319,7 +319,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                             }
 
                             List<BasketAnalyzeMoreRecentHistoryBean> fistData = new ArrayList<>();
-                            setScreen(true, 6, fistData, mRecentData2);
+                            setScreen(true, 6, fistData, mRecentData2 , true);
 
                             //取前六场
                             List<BasketAnalyzeMoreRecentHistoryBean> list = new ArrayList<>();
@@ -431,8 +431,9 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
      * @param num
      * @param screenData
      * @param allData
+     * @param isGuest 判断是否是客队近期战绩（客队取客场）
      */
-    private void setScreen(boolean isSite , int num , List<BasketAnalyzeMoreRecentHistoryBean> screenData , List<BasketAnalyzeMoreRecentHistoryBean> allData){
+    private void setScreen(boolean isSite , int num , List<BasketAnalyzeMoreRecentHistoryBean> screenData , List<BasketAnalyzeMoreRecentHistoryBean> allData , boolean isGuest){
 
         /**
          *  筛选相同主客场比赛
@@ -443,8 +444,17 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
             mHistoryScreenSite = allData;
         }else {
             for (BasketAnalyzeMoreRecentHistoryBean history : allData) {
-                if (history.getGuestTeam().equals(mGuestTeam) && history.getHomeTeam().equals(mHomeTeam)) {
-                    mHistoryScreenSite.add(history);
+//                if (history.getGuestTeam().equals(mGuestTeam) && history.getHomeTeam().equals(mHomeTeam)) {
+//                    mHistoryScreenSite.add(history);
+//                }
+                if (isGuest) {
+                    if (history.isHomeGround()) { //取在主场比赛
+                        mHistoryScreenSite.add(history);
+                    }
+                }else{
+                    if (!history.isHomeGround()) { //取在客场比赛
+                        mHistoryScreenSite.add(history);
+                    }
                 }
             }
         }
@@ -746,13 +756,13 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
             public void onClick(View v) {
 
                 mHistoryScreenNum = new ArrayList<>();
-                setScreen(mHistorySite, mHistoryNum, mHistoryScreenNum, mHistoryData);
+                setScreen(mHistorySite, mHistoryNum, mHistoryScreenNum, mHistoryData , true);
 
                 mGuestRecentScreenNum = new ArrayList<>();
-                setScreen(mGuestRecentSite, mGuestRecentNum, mGuestRecentScreenNum, mRecentData1);
+                setScreen(mGuestRecentSite, mGuestRecentNum, mGuestRecentScreenNum, mRecentData1 , false);
 
                 mHomeRecentScreenNum = new ArrayList<>();
-                setScreen(mHomeRecentSite, mHomeRecentNum, mHomeRecentScreenNum, mRecentData2);
+                setScreen(mHomeRecentSite, mHomeRecentNum, mHomeRecentScreenNum, mRecentData2 , true);
 
                 if (type) {
                     updateAdapter(mHistoryScreenNum, mHistoryAdaptey , 0);
