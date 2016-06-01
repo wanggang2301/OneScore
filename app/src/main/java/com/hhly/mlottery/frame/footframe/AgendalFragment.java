@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hhly.mlottery.R;
+
 /**
  * * @ClassName: OneScore
  *
@@ -262,8 +263,11 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     }
 
     //从网络获取轮数数据
-    public void getLeagueRoundDataFromNet(String leagueId, String leagueType, String leagueDate ) {
+    public void getLeagueRoundDataFromNet(String leagueId, String leagueType, String leagueDate) {
 
+        if (getActivity() == null) {
+            return;
+        }
 
         this.leagueId = leagueId;
         this.leagueType = leagueType;
@@ -361,7 +365,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                 mlay_agendafg_lv.setAdapter(mExpandableAdapter);
 
             } else {
-                mExpandableAdapter.setAllInfor(mgroupnameList, mRaceListBeans );
+                mExpandableAdapter.setAllInfor(mgroupnameList, mRaceListBeans);
                 mExpandableAdapter.notifyDataSetChanged();
             }
 
@@ -417,6 +421,9 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
         }, LeagueRoundInfo.class);
     }
 
+    public boolean getisLoadDataed() {
+        return this.isLoadDataed;
+    }
 
     public void initView() {
 
@@ -556,7 +563,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
     @Override
     public void onRefresh() {
         //这里需要传入底部轮次textview上显示的轮次 联赛id，赛季
-        if(LeagueRoundBean_list.get(mCurrentIndex).getRound()!=null) {
+        if (LeagueRoundBean_list.get(mCurrentIndex).getRound() != null) {
             getLeagueRaceDataFromNet(LeagueRoundBean_list.get(mCurrentIndex).getRound(), leagueId, datas);//从网络获取赛程数据
         }
         //getLeagueRoundDataFromNet(leagueId, leagueType, datas);
