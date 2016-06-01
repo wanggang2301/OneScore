@@ -1370,7 +1370,9 @@ public class NumberDataUtils {
                 number_hk_jy.setText(context.getResources().getString(R.string.number_bjsc_ye));
             }
 
-            if (number % 2 == 0) {
+            if(number == 49){
+                number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_he));
+            }else if (number % 2 == 0) {
                 number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
             } else {
                 number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));
