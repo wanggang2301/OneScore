@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.InforFragmentAdapter;
@@ -75,6 +74,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
     private IntegralFragment integralFragment;//积分榜
     private AgendalFragment agendalFragment;//赛程
     private InforFragmentAdapter mInforFragmentAdapter;
+    private boolean isPagerFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +159,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
                 if (json == null || json.getLangueScore() == null || json.getLeagueTimes() == null) {
 
-                    Toast.makeText(mContext, "数据为空", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(mContext, "数据为空", Toast.LENGTH_LONG).show();
 
                     return;
                 }
@@ -223,7 +223,10 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                 break;
             case AGENDAL_FRAGMENT:
 
-                ((AgendalFragment) listFragment.get(selectedPage)).getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
+                if(!isPagerFragment){
+                    ((AgendalFragment) listFragment.get(selectedPage)).getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
+                    isPagerFragment=true;
+                }
 
                 break;
         }
@@ -359,7 +362,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                 MobclickAgent.onEvent(mContext,"Football_InformationFragment_Exit");
                 break;
             case R.id.intggral_datas:
-                Toast.makeText(mContext, "亲,请检查你的网络....", Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext, "亲,请检查你的网络....", Toast.LENGTH_LONG).show();
                 MobclickAgent.onEvent(mContext,"Football_InformationFragment_NotNet");
                 break;
 

@@ -15,36 +15,6 @@
         android:background="@color/colorPrimary"
         >
         <include layout="@layout/layout_header"/>
-        <!--<ImageView
-            android:id="@+id/public_img_back"
-            style="@style/RippleBackgroudBorderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="@dimen/x24"
-            android:paddingRight="@dimen/x24"
-            android:scaleType="centerInside"
-            android:src="@mipmap/back"/>
-
-        <TextView
-            android:id="@+id/public_txt_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="20sp"/>
-
-        &lt;!&ndash;addtjl添加中间日期显示&ndash;&gt;-->
-
     </RelativeLayout>
     <!--为了查看详细数据按钮不吸底-->
     <com.hhly.mlottery.view.IsBottomScrollView
@@ -53,6 +23,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/scrollview"
         android:layout_below="@+id/top"
+        android:fillViewport="true"
         >
 
         <RelativeLayout

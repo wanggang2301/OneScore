@@ -363,11 +363,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
          */
         //初始化 dialog
 
-        if (isGJB) { //否则  显示国际版 界面
+      /*  if (isGJB) { //否则  显示国际版 界面
             setDialog_internation();
-        } else {    //如果是中文 或繁体--  则用中文ui显示
+        } else {*/    //如果是中文 或繁体--  则用中文ui显示
             setDialog();
-        }
+        //}
 
     }
 
@@ -453,17 +453,17 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     public void updateAdapter() {
 
-        if (isGJB) { //国际版样式
+        /*if (isGJB) { //国际版样式
             if (mInternationAdapter != null) {
                 mInternationAdapter.updateDatas(mMatchs); //默认 显示 热门
                 mInternationAdapter.notifyDataSetChanged();
             }
-        } else {// 中文版样式
+        } else {// 中文版样式*/
             if (mAdapter != null) {
                 mAdapter.updateDatas(mMatchs); //默认 显示 热门
                 mAdapter.notifyDataSetChanged();
             }
-        }
+        //}
     }
 
     // 加载数据

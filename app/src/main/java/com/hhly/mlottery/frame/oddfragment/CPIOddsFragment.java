@@ -178,6 +178,8 @@ public class CPIOddsFragment extends Fragment {
 
                             }
                             selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        }else if(CpiFiltrateActivity.mCheckedIds.isEmpty()){
+                            mHandler.sendEmptyMessage(NODATA_CHILD);
                         }
                     }
                     //否则直接加载判断
@@ -192,6 +194,8 @@ public class CPIOddsFragment extends Fragment {
                         mCpiframen.filtrateDate();
                         if (!mCpiframen.companysName.isEmpty()&& !CpiFiltrateActivity.mCheckedIds.isEmpty() && !"".equals(type)) {
                             selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        }else if(CpiFiltrateActivity.mCheckedIds.isEmpty()){
+                            mHandler.sendEmptyMessage(NODATA_CHILD);
                         }
 
                     }

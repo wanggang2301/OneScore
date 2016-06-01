@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
+        android:id="@+id/layout_home_recent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -85,6 +86,8 @@
         </com.hhly.mlottery.widget.NestedListView>
     </LinearLayout>
 
-
+    <include layout="@layout/analyze_nodata"
+        android:id="@+id/homeRecent_nodata"
+        />
 
 </FrameLayout>

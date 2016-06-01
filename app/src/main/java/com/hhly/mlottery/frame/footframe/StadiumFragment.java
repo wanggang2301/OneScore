@@ -1154,23 +1154,41 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         }
 
         //文字直播
-        liveTextFragment = new LiveTextFragment(getActivity(), matchLive, mMatchDetail.getLiveStatus());
+
         fragmentManager = getChildFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.frame_content, liveTextFragment).commitAllowingStateLoss();
+        if (fragmentManager == null) {
+            return;
+        }
+        if (liveTextFragment == null || !liveTextFragment.isAdded()) {
+            liveTextFragment = new LiveTextFragment(getActivity(), matchLive, mMatchDetail.getLiveStatus());
+            fragmentManager.beginTransaction().add(R.id.frame_content, liveTextFragment).commitAllowingStateLoss();
+        } else {
+            //下拉刷新
+            liveTextFragment.updateAdapter(matchLive, mMatchDetail.getLiveStatus());
+        }
+
 
         if (flag) {
 
-
             //阵容
             firstPlayersFragment = new FirstPlayersFragment();
-            fragmentManager.beginTransaction().add(R.id.frame_content_players, firstPlayersFragment).commitAllowingStateLoss();
+
+            if (!firstPlayersFragment.isAdded()) {
+                fragmentManager.beginTransaction().add(R.id.frame_content_players, firstPlayersFragment).commitAllowingStateLoss();
+            }
+
             //统计数据
             statisticsFragment = new StatisticsFragment();
-            fragmentManager.beginTransaction().add(R.id.frame_content_corner, statisticsFragment).commitAllowingStateLoss();
+
+            if (!statisticsFragment.isAdded()) {
+                fragmentManager.beginTransaction().add(R.id.frame_content_corner, statisticsFragment).commitAllowingStateLoss();
+            }
 
             //攻防走势
             trendFragment = new TrendFragment();
-            fragmentManager.beginTransaction().add(R.id.frame_content_attack, trendFragment).commitAllowingStateLoss();
+            if (!trendFragment.isAdded()) {
+                fragmentManager.beginTransaction().add(R.id.frame_content_attack, trendFragment).commitAllowingStateLoss();
+            }
 
             fragmentManager.beginTransaction().show(liveTextFragment).commitAllowingStateLoss();
             fragmentManager.beginTransaction().hide(firstPlayersFragment).commitAllowingStateLoss();
