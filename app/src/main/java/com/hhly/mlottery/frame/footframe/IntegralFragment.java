@@ -153,7 +153,6 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
 
     }
 
-
     private void initView() {
 
         //获取ListView

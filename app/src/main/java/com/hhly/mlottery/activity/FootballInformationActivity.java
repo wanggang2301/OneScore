@@ -124,7 +124,9 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case ISNET_SUCCESS:
-                    integralFragment.initData(groupDataList, childDataList, mLeagueType);
+                    if(groupDataList!=null&&childDataList!=null&mLeagueType!=null) {
+                        integralFragment.initData(groupDataList, childDataList, mLeagueType);
+                    }
                     // agendalFragment.getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
                     break;
                 case ISNET_RERROR:
