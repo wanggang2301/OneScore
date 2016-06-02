@@ -569,6 +569,10 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
         //getLeagueRoundDataFromNet(leagueId, leagueType, datas);
 
     }
+    public void requestFail() {
+        handle.sendEmptyMessage(RACE_NETERROR);
+    }
+
 
     @Override
     public void onResume() {
