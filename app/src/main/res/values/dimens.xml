@@ -19,6 +19,10 @@
     <dimen name="item_football_racename">13sp</dimen>
     <dimen name="keep_time">13sp</dimen>
 
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="data_border_divider_height">8dp</dimen>
+    <dimen name="data_border_padding_infra_spans">8dp</dimen>
+
     <dimen name="item_football_time">13sp</dimen>
     <dimen name="item_football_hometeam">13sp</dimen>
     <dimen name="item_football_guestteam">13sp</dimen>
@@ -161,7 +165,7 @@
     <dimen name="text_size_82">82sp</dimen>
     <dimen name="text_size_83">83sp</dimen>
     <dimen name="text_size_84">84sp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_margin_half">8dp</dimen>
 
 </resources>
 

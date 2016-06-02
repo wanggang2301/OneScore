@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/whitesmoke"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/home_item_bg"
+              android:orientation="vertical">
 
-    android:orientation="vertical">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center"
+        android:layout_marginTop="5dp"
+        android:visibility="visible">
+
+        <TextView
+            style="@style/WW_Weight_1"
+            android:layout_weight="6"/>
+
+        <TextView
+            style="@style/WW_Weight_1"
+            android:text="亚"/>
+
+        <TextView
+            style="@style/WW_Weight_1"
+            android:text="大"/>
+
+        <TextView
+            style="@style/WW_Weight_1"
+            android:text="欧"/>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/recyclerview_roll"
-        android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_height="match_parent">
+                                            android:id="@+id/recyclerview_roll"
+                                            android:layout_below="@+id/titleContainer"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/home_item_bg">
     </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+</RelativeLayout>

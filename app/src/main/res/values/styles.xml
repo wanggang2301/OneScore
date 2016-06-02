@@ -568,6 +568,56 @@
         <item name="android:layout_marginLeft">18dp</item>
     </style>
 
+    <!-- rollball style-->
+    <style name="item_rollball_linearlayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/home_item_bg</item>
+    </style>
+    <style name="item_rollball_textview">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/res_name_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+        <item name="android:paddingLeft">@dimen/activity_margin_half</item>
+    </style>
+    <style name="MW_White">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="WW_Weight_1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="item_rollball_MeasureSpec_EXACTLY">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/res_name_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
+
+    <style name="Md.Card" parent="CardView">
+        <item name="contentPadding">0dp</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+    </style>
+
+    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+
     <!--AppDialog_Theme-->
     <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorAccent</item>
