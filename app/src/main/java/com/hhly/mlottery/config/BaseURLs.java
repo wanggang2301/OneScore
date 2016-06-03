@@ -566,6 +566,9 @@ public class BaseURLs {
 //	public final static String UMENG_CHANNEL_URL = "http://192.168.10.242:8083/traffic/api";
     public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";
 
+    //用户留存率分析
+    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";
+
     //指数详情
     public final static String URL_FOOTBALL_MATCHODD_DETAILS = URL_API_HOST + FOOTBALLMATCH_MATCHODD_DETAILS;
     //指数分析
