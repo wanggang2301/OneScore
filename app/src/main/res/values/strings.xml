@@ -24,10 +24,6 @@
     <string name="share_summary_default">一比分,专业的足球比分直播平台</string>
 
 
-
-
-
-
     <!--指数-->
     <string name="odd_plate_rb_txt">亚盘</string>
     <string name="odd_op_rb_txt">欧赔</string>
@@ -683,7 +679,6 @@
     <string name="toatalvisiable">显示全部</string>
 
 
-
     <!-- -->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">请输入留言内容</string>
@@ -739,6 +734,15 @@
     <string name="password_error">密码错误</string>
     <string name="username_pass_error">登录名或者密码错误</string>
     <string name="logout_check">确认退出登录?</string>
+
+    <!--1.1.2 begin-->
+    <string name="forget_pwd">忘记密码?</string>
+    <string name="next_step">下一步</string>
+    <string name="find_pw">找回密码</string>
+    <string name="reset_password">重置密码</string>
+    <string name="reseting_password">正在重置密码...</string>
+    <!--1.1.2 end-->
+
     <!-- 登录注册 end-->
 
     <string name="home_pager_version_update">忽略此版本</string>

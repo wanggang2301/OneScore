@@ -19,6 +19,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.account.SendSmsCode;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
@@ -49,8 +50,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 倒计时 默认60s , 间隔1s
      */
     private CountDown countDown;
-    private static final int TIMEOUT = 59699;
-    private static final int TIMEOUT_INTERVEL = 1000;
+
     private ProgressDialog progressBar;
 
 
@@ -121,7 +121,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
-        countDown = new CountDown(TIMEOUT, TIMEOUT_INTERVEL, new CountDown.CountDownCallback() {
+
+        countDown = CountDown.getDefault(new CountDown.CountDownCallback() {
             @Override
             public void onFinish() {
                 enableVeryCode();
@@ -133,11 +134,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     if (tv_verycode.isClickable())
                         tv_verycode.setClickable(false);
 
-                    L.d(TAG,millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
-                    tv_verycode.setText(millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
+                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒");
+                    tv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒");
                 }
             }
         });
+
     }
 
     /**
@@ -267,38 +269,26 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 获取验证码
      */
     private void getVerifyCode() {
+
         String phone = et_username.getText().toString();
-        if (UiUtils.isMobileNO(this ,phone)){
-            countDown.start();
-            String url = BaseURLs.URL_SENDSMSCODE;
-            Map<String, String> param = new HashMap<>();
-            param.put("phone" , phone);
-            param.put("operateType" , OperateType.TYPE_REGISTER);
+        CommonUtils.getVerifyCode(this, phone, OperateType.TYPE_REGISTER, new GetVerifyCodeCallBack() {
+            @Override
+            public void beforGet() {
+                countDown.start();
+            }
 
-            VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
-                @Override
-                public void onResponse(SendSmsCode jsonObject) {
-                    if (jsonObject.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
-                            || jsonObject.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
-                            || jsonObject.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                            ){
-                        countDown.cancel();
-                        enableVeryCode();
-                    }
+            @Override
+            public void onGetResponce(SendSmsCode code) {
+                countDown.cancel();
+                enableVeryCode();
+            }
 
-                    CommonUtils.handlerRequestResult(jsonObject.getResult());
-                }
-            }, new VolleyContentFast.ResponseErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                    L.e(TAG,"发送验证码失败");
-                    countDown.cancel();
-                    enableVeryCode();
-                    UiUtils.toast(MyApp.getInstance() , R.string.immediate_unconection);
-                }
-            } , SendSmsCode.class);
-
-        }
+            @Override
+            public void onGetError(VolleyContentFast.VolleyException exception) {
+                countDown.cancel();
+                enableVeryCode();
+            }
+        });
     }
 
     @Override

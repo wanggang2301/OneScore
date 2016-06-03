@@ -45,6 +45,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ProgressDialog progressBar;
     private ImageView iv_delete;
 
+    public static final int REQUESTCODE_FINDPW = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +114,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         View tv_register = findViewById(R.id.tv_right);
         tv_register.setVisibility(View.VISIBLE);
         tv_register.setOnClickListener(this);
+
+        findViewById(R.id.tv_forgetpw).setOnClickListener(this);
     }
 
     @Override
@@ -151,6 +155,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.tv_login: // 登录
                 MobclickAgent.onEvent(mContext, "LoginActivity_LoginOk");
                 login();
+                break;
+            case R.id.tv_forgetpw:
+                startActivityForResult(new Intent(this , FindPassWordActivity.class) , REQUESTCODE_FINDPW);
                 break;
             default:
                 break;
@@ -220,8 +227,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK){
-            if (requestCode == HomePagerActivity.REQUESTCODE_LOGIN){
-                // 注册成功返回
+            if (requestCode == HomePagerActivity.REQUESTCODE_LOGIN //  注册成功返回
+                    || requestCode == REQUESTCODE_FINDPW){ // 重置密码成功返回
+
                 setResult(RESULT_OK);
                 finish();
             }

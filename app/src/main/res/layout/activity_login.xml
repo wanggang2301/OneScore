@@ -72,6 +72,17 @@
         android:text="@string/login"
         />
 
+    <TextView
+        android:id="@+id/tv_forgetpw"
+        style="@style/login_textview_forget_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="right"
+        android:text="@string/forget_pwd"
+        />
+
 
 
 

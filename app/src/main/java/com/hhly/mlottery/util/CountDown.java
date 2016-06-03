@@ -5,6 +5,9 @@ import android.os.CountDownTimer;
 public class CountDown extends CountDownTimer {
     private static final String TAG = CountDown.class.getSimpleName();
 
+    public static final int TIMEOUT = 59699;
+    public static final int TIMEOUT_INTERVEL = 1000;
+
     private CountDownCallback callback;
 
 
@@ -34,6 +37,16 @@ public class CountDown extends CountDownTimer {
             callback.onTick(millisUntilFinished);
         }
     }
+
+    /**
+     * 获取一个时长60s,间隔1s的倒计时
+     * @param callback
+     * @return
+     */
+    public static CountDown getDefault(CountDownCallback callback){
+        return new CountDown(TIMEOUT , TIMEOUT_INTERVEL , callback);
+    }
+
 
     public interface CountDownCallback{
         void onFinish();

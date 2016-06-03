@@ -9,8 +9,14 @@ import android.text.TextUtils;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.bean.account.SendSmsCode;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -188,6 +194,40 @@ public class CommonUtils {
         }
 
 
+    }
+
+
+    /**
+     * 获取验证码
+     * @param ctx
+     * @param phone
+     * @param oprateType 操作类型
+     * @param callBack
+     */
+    public static void getVerifyCode(Context ctx , String phone , String oprateType, final GetVerifyCodeCallBack callBack) {
+        if (UiUtils.isMobileNO(ctx ,phone)){
+            callBack.beforGet();
+            String url = BaseURLs.URL_SENDSMSCODE;
+            Map<String, String> param = new HashMap<>();
+            param.put("phone" , phone);
+            param.put("operateType" , oprateType);
+
+            VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
+                @Override
+                public void onResponse(SendSmsCode jsonObject) {
+                    callBack.onGetResponce(jsonObject);
+                    CommonUtils.handlerRequestResult(jsonObject.getResult());
+                }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    L.e(TAG,"发送验证码失败");
+                    callBack.onGetError(exception);
+                    UiUtils.toast(MyApp.getInstance() , R.string.immediate_unconection);
+                }
+            } , SendSmsCode.class);
+
+        }
     }
 
 }

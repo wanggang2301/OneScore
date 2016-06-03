@@ -658,6 +658,8 @@ public class BaseURLs {
     public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
     /**登出*/
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
+    /**重置密码*/
+    public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
 
 
 
