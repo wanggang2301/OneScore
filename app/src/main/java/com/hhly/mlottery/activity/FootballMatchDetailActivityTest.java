@@ -19,6 +19,7 @@ import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
+import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
 
@@ -45,11 +46,33 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private Toolbar toolbar;
 
+
+    /**
+     * 赛事id
+     */
+    public String mThirdId;
+
+    private int currentFragmentId = 0;
+
+
+    public final static String BUNDLE_PARAM_THIRDID = "thirdId";
+
+    private final static String TAG = "FootballMatchDetailActivity";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_football_match_details_test);
         this.mContext = getApplicationContext();
+
+        if (getIntent().getExtras() != null) {
+            mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
+            currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
+        }
+
+
+        L.e(TAG, "mThirdId = " + mThirdId);
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

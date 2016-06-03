@@ -233,12 +233,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.football_match_detail_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
-//        mRefreshLayout.setProgressViewEndTarget(false, DisplayUtil.dip2px(getApplicationContext(), 140));
 
-
-//        progressDialog = new ProgressDialog(this, R.style.ProgressDialog);
-//        progressDialog.setCancelable(false);
-//        progressDialog.setCanceledOnTouchOutside(false);
 
         mProgressBarLayout = (RelativeLayout) findViewById(R.id.football_match_detail_progressbar);
 
