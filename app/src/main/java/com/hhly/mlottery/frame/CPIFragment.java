@@ -445,9 +445,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     checktv.setChecked(!checktv.isChecked());
                     //如果是选中
                     if (checktv.isChecked()) {
-                        cpi_img_checked.setBackground(mContext.getResources().getDrawable(R.mipmap.cpi_img_select_true));
+                        cpi_img_checked.setBackgroundResource(R.mipmap.cpi_img_select_true);
                     } else {
-                        cpi_img_checked.setBackground(mContext.getResources().getDrawable(R.mipmap.cpi_img_select));
+                        cpi_img_checked.setBackgroundResource(R.mipmap.cpi_img_select);
                     }
                     tempCompanyCheckedStatus[position] = checktv.isChecked();
                 }
