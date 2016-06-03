@@ -125,7 +125,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             //显示开赛时间
             holder.live_right_time_txt.setText(" " + mChildrenDataList.get(groupPosition).get(childPosition).getMatchTime());
             //如果没开赛显示没开赛的图片
-            holder.live_right_child_img.setBackground(mContext.getResources().getDrawable(R.mipmap.live_iconfont_default));
+            holder.live_right_child_img.setBackgroundResource(R.mipmap.live_iconfont_default);
             //隐藏直播中的布局
             holder.live_right_child_txt.setVisibility(View.GONE);
             //显示没开赛布局
@@ -144,7 +144,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             // 客队
             holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).getGuestteam());
             //如果开赛显示开赛的图片
-            holder.live_right_child_img.setBackground(mContext.getResources().getDrawable(R.mipmap.live_iconfont));
+            holder.live_right_child_img.setBackgroundResource(R.mipmap.live_iconfont);
             //隐藏未开始布局
             holder.live_right_child_layout.setVisibility(View.GONE);
             //显示直播中的布局
