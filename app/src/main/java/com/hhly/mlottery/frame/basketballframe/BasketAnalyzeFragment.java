@@ -936,9 +936,11 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
     private void setRecent(ImageView mImage, int recent) {
         if (recent == 0) {
-            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_lose));
+//            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_lose));
+            mImage.setBackgroundResource(R.mipmap.basket_lose);
         } else if (recent == 1) {
-            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_win));
+//            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_win));
+            mImage.setBackgroundResource(R.mipmap.basket_win);
         }
 //        else {
 //            mImage.setBackground(getContext().getResources().getDrawable(R.mipmap.basket_none));
@@ -954,7 +956,8 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         } else {
             mTextData.setText("--");
             mTextName.setText("--");
-            mLogo.setBackground(getResources().getDrawable(R.mipmap.basket_default));
+//            mLogo.setBackground(getResources().getDrawable(R.mipmap.basket_default));
+            mLogo.setBackgroundResource(R.mipmap.basket_default);
         }
     }
 

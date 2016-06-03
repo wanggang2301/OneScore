@@ -450,7 +450,7 @@ public class NumberDataUtils {
                         tv_zodiac.setText(zod);
 
                         // 自动匹配中英文的字体大小
-                        if ("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)) {
+                        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
                             tv_zodiac.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);// 中文
                         } else {
                             tv_zodiac.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);// 英文
@@ -1370,7 +1370,9 @@ public class NumberDataUtils {
                 number_hk_jy.setText(context.getResources().getString(R.string.number_bjsc_ye));
             }
 
-            if (number % 2 == 0) {
+            if(number == 49){
+                number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_he));
+            }else if (number % 2 == 0) {
                 number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
             } else {
                 number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));

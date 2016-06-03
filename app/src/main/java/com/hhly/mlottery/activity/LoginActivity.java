@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -86,6 +87,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void initView() {
         progressBar = new ProgressDialog(this);
+        progressBar.setCancelable(false);
         progressBar.setMessage(getResources().getString(R.string.logining));
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
@@ -200,6 +202,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 } , Register.class);
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            if (progressBar.isShowing()){
+                L.d(TAG , " progressBar.isShowing() , return false");
+                return false;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

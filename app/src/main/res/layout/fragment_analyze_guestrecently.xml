@@ -4,6 +4,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/layout_guest_recent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -87,5 +88,8 @@
     </LinearLayout>
 
 
+    <include layout="@layout/analyze_nodata"
+        android:id="@+id/guest_recent_nodata"
+        />
 
 </FrameLayout>
