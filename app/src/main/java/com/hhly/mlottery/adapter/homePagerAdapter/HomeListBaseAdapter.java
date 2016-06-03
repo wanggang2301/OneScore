@@ -762,15 +762,18 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (numbers != null) {
             if ("19".equals(homeBodysEntity.getName())) {
                 for (int k = 0, len2 = numbers.size(); k < len2; k++) {
-                    klsf_numbers.get(k).setBackground(mContext.getResources().getDrawable(AppConstants.numberXYLCs[Integer.parseInt(numbers.get(k)) - 1]));
+//                    klsf_numbers.get(k).setBackground(mContext.getResources().getDrawable(AppConstants.numberXYLCs[Integer.parseInt(numbers.get(k)) - 1]));
+                    klsf_numbers.get(k).setBackgroundResource(AppConstants.numberXYLCs[Integer.parseInt(numbers.get(k)) - 1]);
                 }
             } else {
                 for (int k = 0, len2 = numbers.size(); k < len2; k++) {
                     klsf_numbers.get(k).setText(numbers.get(k));
                     if ("19".equals(numbers.get(k)) || "20".equals(numbers.get(k))) {
-                        klsf_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_red));
+//                        klsf_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_red));
+                        klsf_numbers.get(k).setBackgroundResource(R.mipmap.number_bg_red);
                     } else {
-                        klsf_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_blue));
+//                        klsf_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_blue));
+                        klsf_numbers.get(k).setBackgroundResource(R.mipmap.number_bg_blue);
                     }
                 }
             }
@@ -830,9 +833,11 @@ public class HomeListBaseAdapter extends BaseAdapter {
             for (int k = 0, len2 = numbers.size(); k < len2; k++) {
                 qxc_numbers.get(k).setText(numbers.get(k));
                 if (k < 4) {
-                    qxc_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_red));
+//                    qxc_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_red));
+                    qxc_numbers.get(k).setBackgroundResource(R.mipmap.number_bg_red);
                 } else {
-                    qxc_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_blue));
+//                    qxc_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_blue));
+                    qxc_numbers.get(k).setBackgroundResource(R.mipmap.number_bg_blue);
                 }
             }
         }
@@ -998,7 +1003,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (numbers != null) {
             for (int k = 0, len2 = numbers.size(); k < len2; k++) {
                 ssc_numbers.get(k).setText(numbers.get(k));
-                ssc_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_red));
+//                ssc_numbers.get(k).setBackground(mContext.getResources().getDrawable(R.mipmap.number_bg_red));
+                ssc_numbers.get(k).setBackgroundResource(R.mipmap.number_bg_red);
             }
         }
         lotteryView.setLayoutParams(lotteryOtherParams);
