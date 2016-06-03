@@ -7,10 +7,10 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v7.widget.SwitchCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
@@ -29,18 +29,18 @@ import java.util.HashMap;
  */
 public class FootballTypeSettingActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
 
-    private CheckBox cb_goal_shake;
+    private SwitchCompat cb_goal_shake;
 
     private RelativeLayout rl_hometeam_goal;
     private RelativeLayout rl_guestteam_goal;
 
     private RelativeLayout rl_odd;
 
-    private CheckBox cb_rc_shake;
+    private SwitchCompat cb_rc_shake;
 
-    private CheckBox cb_rc_sound;
+    private SwitchCompat cb_rc_sound;
 
-    private CheckBox cb_notice;
+    private SwitchCompat cb_notice;
 
     private ImageView ib_back;
 
@@ -151,17 +151,17 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     private void initView() {
         setContentView(R.layout.mlottery_type_setting);
 
-        cb_goal_shake = (CheckBox) findViewById(R.id.goal_shake);
+        cb_goal_shake = (SwitchCompat) findViewById(R.id.goal_shake);
 
         rl_hometeam_goal = (RelativeLayout) findViewById(R.id.rl_hometeam_goal);
         rl_guestteam_goal = (RelativeLayout) findViewById(R.id.rl_guestteam_goal);
         rl_odd = (RelativeLayout) findViewById(R.id.rl_odd);
 
-        cb_rc_shake = (CheckBox) findViewById(R.id.rc_shake);
+        cb_rc_shake = (SwitchCompat) findViewById(R.id.rc_shake);
 
-        cb_rc_sound = (CheckBox) findViewById(R.id.rc_sound);
+        cb_rc_sound = (SwitchCompat) findViewById(R.id.rc_sound);
 
-        cb_notice = (CheckBox) findViewById(R.id.cb_notice);
+        cb_notice = (SwitchCompat) findViewById(R.id.cb_notice);
 
         ib_back = (ImageView) findViewById(R.id.public_img_back);
         ib_back.setImageResource(R.mipmap.back);
