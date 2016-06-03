@@ -115,6 +115,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //定时刷新线程
 //    private MyThread myThread;
     private String mDate;
+    /**用来判断是否可刷新*/
+    public boolean isVisible=false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -353,7 +355,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mCPIOddsFragment.cpi_fl_plate_networkError.getVisibility() == View.VISIBLE) {
+                if (isVisible) {
                     mMapDayList = getDate();
                     public_txt_date.setText(UiUtils.requestByGetDay(0));
                     selectPosition = 6;
