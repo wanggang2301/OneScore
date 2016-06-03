@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.ResultMultiAdapter;
 import com.hhly.mlottery.adapter.ResultMultiInternationAdapter;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
@@ -609,7 +609,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     @Override
                     public void onItemClick(View view, String data) {
                         String thirdId = data;
-                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
                         intent.putExtra("thirdId", thirdId);
                         intent.putExtra("currentFragmentId", 1);
                         getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     signingConfigs {
     }
@@ -54,6 +53,8 @@ android {
         compile files('libs/qq/open_sdk_r5509.jar')
         compile files('libs/sina/weibosdkcore_release.jar')
         testCompile 'junit:junit:4.12'
+
     }
 
 }
+

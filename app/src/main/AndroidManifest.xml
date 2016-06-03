@@ -108,6 +108,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" />
         <activity
+            android:name=".activity.FootballMatchDetailActivityTest"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" />
+
+
+        <activity
             android:name=".activity.LiveChannelActivity"
             android:screenOrientation="portrait" />
         <activity
