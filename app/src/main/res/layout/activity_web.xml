@@ -41,7 +41,6 @@
                 android:id="@+id/tv_check_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="@dimen/y24"
                 android:layout_marginLeft="@dimen/x30"
                 android:layout_marginRight="@dimen/x30"
@@ -54,6 +53,7 @@
                 android:text="@string/webview_check_info"
                 android:textColor="@color/white"
                 android:textSize="@dimen/number_title"
+                android:layout_below="@+id/baseweb_webview"
                 />
         </RelativeLayout>
 
