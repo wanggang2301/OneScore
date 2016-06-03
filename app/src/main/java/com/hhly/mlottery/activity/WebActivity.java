@@ -108,7 +108,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         loadTopic();
         initEvent();
         model = DeviceInfo.getModel().replace(" ", "");
-//        System.out.println("lzf" +model );
+//        L.i("lzf" + model);
 
 //        getCommentCount();
         CyUtils.getUserInfo(sdk);
