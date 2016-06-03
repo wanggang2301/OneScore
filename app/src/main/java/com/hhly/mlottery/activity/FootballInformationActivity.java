@@ -72,8 +72,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
     private IntegralFragment integralFragment;//积分榜
     private AgendalFragment agendalFragment;//赛程
     private InforFragmentAdapter mInforFragmentAdapter;
-    private boolean isPagerFragment = false;
-
+    private  boolean isLoadData=false;//判断是否加载成功数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +141,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
     //网络请求数据
     public void intiData(final boolean isFrist) {
 
+
         String url = BaseURLs.URL_FOOT_QLEAGUEDATE;
         Map<String, String> myPostParams = new HashMap<>();
         //第二次请求需要日期
@@ -160,6 +160,8 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                     groupDataList.clear();
                     childDataList.clear();
                     mListDatas.clear();
+
+                   // isLoadData=true;//加载数据成功
 
                     //获取默认积分榜数据
                     mAllLangueScore = json.getLangueScore();
@@ -322,8 +324,9 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                 // mAdapter.notifyDataSetChanged();
 
                 //当弹框消失后  请求数据
+               // isLoadData=false;
                 intiData(false);
-                agendalFragment.getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mListDatas.get(postion));
+               // agendalFragment.getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mListDatas.get(postion));
                 // agendalFragment.onRefresh();
 
             }
