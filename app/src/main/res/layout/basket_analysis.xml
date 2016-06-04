@@ -764,7 +764,7 @@
                         />
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/basket_analyze_nodata_hight"
+                        android:layout_height="@dimen/basket_analyze_hight_nodata"
                         android:background="@color/black_grounding" />
                 </LinearLayout>
             </LinearLayout>

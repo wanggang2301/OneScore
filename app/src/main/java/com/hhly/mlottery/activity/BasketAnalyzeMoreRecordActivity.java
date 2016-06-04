@@ -25,6 +25,8 @@ import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreFutureBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreRecentHistoryBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -96,7 +98,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
 
         initView();
 //        initData();
-        mHandler.postDelayed(mRun , 0); // 加载数据
+        mHandler.postDelayed(mRun , 500); // 加载数据
     }
 
     /**
@@ -160,6 +162,8 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.basket_analyze_details_refreshlayout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(BasketAnalyzeMoreRecordActivity.this);
+        mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));
+        mRefresh.setRefreshing(true);
 
         //暂无数据
         mNodataTextview = (TextView) findViewById(R.id.basket_analyze_details_nodata);
@@ -209,7 +213,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                     mSuccessLoad.setVisibility(View.GONE);
                     mErrorLoad.setVisibility(View.GONE);
                     mNodataTextview.setVisibility(View.VISIBLE);
-                }else {
+                } else {
 
                     if (json.getHomeFuture() == null && json.getGuestFuture() == null && json.getHistory() == null &&
                             json.getHomeRecent() == null && json.getGuestRecent() == null && json.getHomeTeam() == null && json.getGuestTeam() == null) {
@@ -411,6 +415,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                         mSuccessLoad.setVisibility(View.VISIBLE);
                     }
                 }
+                mRefresh.setRefreshing(false);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -421,6 +426,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 mSuccessLoad.setVisibility(View.GONE);
                 mNodataTextview.setVisibility(View.GONE);
 
+                mRefresh.setRefreshing(false);
             }
         }, BasketAnalyzeMoreBean.class);
     }
@@ -444,8 +450,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         }else {
             for (BasketAnalyzeMoreRecentHistoryBean history : allData) {
 //                if (history.getGuestTeam().equals(mGuestTeam) && history.getHomeTeam().equals(mHomeTeam)) {
-//                    mHistoryScreenSite.add(history);
-//                }
                 if (isGuest) {
                     if (history.isHomeGround()) { //取在主场比赛
                         mHistoryScreenSite.add(history);
@@ -563,9 +567,9 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
      * @param type  区分对应位置的数据更新 0 历史交锋  1 主队近期  2 客队近期
      */
     public void updateAdapter(List<BasketAnalyzeMoreRecentHistoryBean> mListData , BasketAnalyzeAdapter mAdapter , int type) {
-            if (mAdapter == null) {
-                return;
-            }
+        if (mAdapter == null) {
+            return;
+        }
         if (mListData.size() == 0) {
             switch (type){
                 case 0:
@@ -610,6 +614,8 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 break;
             case R.id.basketball_details_error_btn: //点击刷新
                 MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_Refresh");
+                mErrorLoad.setVisibility(View.GONE);
+                mRefresh.setRefreshing(true);
                 mHandler.postDelayed(mRun , 0);
                 break;
             default:
@@ -758,7 +764,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 setScreen(mHistorySite, mHistoryNum, mHistoryScreenNum, mHistoryData , true);
 
                 mGuestRecentScreenNum = new ArrayList<>();
-                setScreen(mGuestRecentSite, mGuestRecentNum, mGuestRecentScreenNum, mRecentData1 , false);
+                setScreen(mGuestRecentSite, mGuestRecentNum, mGuestRecentScreenNum, mRecentData1 , false); // 客队近期战绩相同主客场去 同在客场比赛
 
                 mHomeRecentScreenNum = new ArrayList<>();
                 setScreen(mHomeRecentSite, mHomeRecentNum, mHomeRecentScreenNum, mRecentData2 , true);
