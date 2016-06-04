@@ -102,8 +102,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     public String currentDate = "";
     //判断是否选中选择热门
 //    public static boolean isHot = true;
-    public  List<NewOddsInfo.CompanyBean> companys = new ArrayList<>();
-    public static List<String> companysName = new ArrayList<>();
+    public List<NewOddsInfo.CompanyBean> companys = new ArrayList<>();
+    public  List<String> companysName = new ArrayList<>();
     private CPIOddsFragment mCPIOddsFragment, mCPIOddsFragment2, mCPIOddsFragment3;
     public List<Map<String, String>> mMapDayList;
     //判断是否是日期选择
@@ -115,7 +115,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //定时刷新线程
 //    private MyThread myThread;
     private String mDate;
-    /**用来判断是否可刷新*/
     public boolean isVisible=false;
 
     @Override
@@ -360,13 +359,19 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     public_txt_date.setText(UiUtils.requestByGetDay(0));
                     selectPosition = 6;
                     for (Fragment fragment : fragments) {
-                        ((CPIOddsFragment) fragment).switchd("", false);
+                        ((CPIOddsFragment) fragment).switchd("", 0);
                     }
                 } else {
-                    filtrateDate();
-                    mCPIOddsFragment.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
-                    mCPIOddsFragment2.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
-                    mCPIOddsFragment3.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
+                    //设置标题时间
+                    public_txt_date.setText(mDate);
+                    for (Fragment fragment : fragments) {
+                        //代表刷新
+                        ((CPIOddsFragment) fragment).switchd(mDate, 2);
+                    }
+//                    filtrateDate();
+//                    mCPIOddsFragment.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
+//                    mCPIOddsFragment2.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
+//                    mCPIOddsFragment3.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
                 }
                 mRefreshLayout.setRefreshing(false);
             }
@@ -415,7 +420,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
                     for (Fragment fragment : fragments) {
                         //代表日期
-                        ((CPIOddsFragment) fragment).switchd(mDate, true);
+                        ((CPIOddsFragment) fragment).switchd(mDate, 1);
                     }
                     isFirst = true;
                     // 关闭 dialog弹窗
