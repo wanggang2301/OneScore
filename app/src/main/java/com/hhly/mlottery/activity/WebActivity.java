@@ -49,6 +49,8 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 /**
  * WebView显示H5
  * 107
@@ -108,7 +110,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         loadTopic();
         initEvent();
         model = DeviceInfo.getModel().replace(" ", "");
-//        L.i("lzf" + model);
+//        System.out.println("lzf" +model );
 
 //        getCommentCount();
         CyUtils.getUserInfo(sdk);
@@ -282,9 +284,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         mSend.setVisibility(View.GONE);
         mCommentCount.setVisibility(View.VISIBLE);
         WebSettings webSettings = mWebView.getSettings();
-        // 优先使用缓存
-        webSettings.setAppCacheEnabled(false);
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        // 不用缓存
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setJavaScriptEnabled(true);
@@ -304,6 +306,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         try {
             Intent intent = getIntent();
             url = intent.getStringExtra("key");
+            L.d("CommonUtils初始url" + url);
 //            url = "http://192.168.33.14:8080/gameweb/h5/index";
 //            url = "http://192.168.37.6:8080/gameweb/h5/index";
             imageurl = intent.getStringExtra("imageurl");
@@ -323,7 +326,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 public_btn_set.setVisibility(View.GONE);
                 scrollview.setVisibility(View.GONE);
             } else {//token为空，说明是资讯，显示分享和评论
-                public_btn_set.setVisibility(View.VISIBLE);
+                public_btn_set.setVisibility(View.GONE);
                 scrollview.setVisibility(View.VISIBLE);
             }
             mWebView.setWebViewClient(new WebViewClient() {
@@ -380,6 +383,7 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         } catch (Exception e) {
             L.d("initData初始化失败:" + e.getMessage());
         }
+        //解决mTv_check_info在webview还没加载时显示在顶部的问题
     }
 
     @Override
@@ -429,22 +433,22 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
-                    if (CyUtils.isLogin) {//已登录
-                        L.i("lzf提交topicid=" + topicid);
-                        CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                    } else {//未登录
-                        if (CommonUtils.isLogin()) {
+                    if (CommonUtils.isLogin()) {//已登录华海
+                        if (CyUtils.isLogin) {//已登录畅言
+                            L.i("lzf提交topicid=" + topicid);
+                            CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
+                        } else {//未登录
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
                             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
-                        } else {
-                            //跳转登录界面
-                            Intent intent1 = new Intent(WebActivity.this, LoginActivity.class);
-                            startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
                         }
-
+                        CyUtils.hideKeyBoard(this);
+                        mEditText.clearFocus();
+                    } else {
+                        //跳转登录界面
+                        Intent intent1 = new Intent(WebActivity.this, LoginActivity.class);
+                        startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
                     }
-                    CyUtils.hideKeyBoard(this);
-                    mEditText.clearFocus();
+
                 }
                 break;
 
@@ -585,7 +589,9 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         //接收登录华海成功返回
         if (requestCode == 3) {
             if (resultCode == RESULT_OK) {
-                CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                if (CommonUtils.isLogin()) {//已登录华海
+                    CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                }
             }
         }
     }
@@ -601,4 +607,5 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }
