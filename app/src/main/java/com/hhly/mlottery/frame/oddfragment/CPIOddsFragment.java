@@ -13,14 +13,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPIFragment;
-import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,9 +109,6 @@ public class CPIOddsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 switchd("", 0);
-                mCpiframen.public_txt_date.setText(UiUtils.requestByGetDay(0));
-                mCpiframen.mMapDayList = mCpiframen.getDate();
-                mCpiframen.selectPosition = 6;
             }
         });
 
@@ -143,68 +140,43 @@ public class CPIOddsFragment extends Fragment {
             @Override
             public synchronized void onResponse(final NewOddsInfo json) {
 
-                if (json != null && json.getCode() != 500 && !json.getCompany().isEmpty() && !json.getFileterTags().isEmpty()) {
+                if (json != null && json.getCode() != 500 && !json.getCompany().isEmpty() && !json.getFileterTags().isEmpty() && !StringUtils.isEmpty(json.getCurrDate())) {
 
                     if (getParentFragment() != null) {
-                        mCpiframen.currentDate = json.getCurrDate();
+                        //如果不是日期或者刷新过来的
+                        if (requestType != 1 && requestType != 2) {
+                            //获取当前日期
+                            mCpiframen.currentDate = json.getCurrDate().trim();
+                            //设置日期
+                            mCpiframen.public_txt_date.setText(mCpiframen.currentDate);
+                            //推算前6天后七天
+                            mCpiframen.mMapDayList = mCpiframen.getDate();
+                            //默认选中当天
+                            mCpiframen.selectPosition = 6;
+                        }
                         mCpiframen.companys = json.getCompany();
+
                     }
                     mFileterTagsBean = json.getFileterTags();
                     if (type.equals(CPIFragment.TYPE_PLATE)) {
-                        mAllInfoBean1.clear();
                         mAllInfoBean1 = json.getAllInfo();
                     } else if (type.equals(CPIFragment.TYPE_BIG)) {
-                        mAllInfoBean2.clear();
                         mAllInfoBean2 = json.getAllInfo();
                     } else if (type.equals(CPIFragment.TYPE_OP)) {
-                        mAllInfoBean3.clear();
                         mAllInfoBean3 = json.getAllInfo();
                     }
-
                     //如果是日期传过来的
                     if (requestType == 1) {
-                        CpiFiltrateActivity.mCheckedIds.clear();
-                        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
-                            if (fileterTagsBean.isHot()) {
-                                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
-                            }
-                        }
-                        for (int h = 0; h < mCpiframen.companys.size(); h++) {
-                            if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
-                                mCpiframen.companys.get(h).setIsChecked(true);
-                            } else {
-                                mCpiframen.companys.get(h).setIsChecked(false);
-                            }
-                        }
-                        if (!mCpiframen.companysName.isEmpty() && !CpiFiltrateActivity.mCheckedIds.isEmpty() && !"".equals(type)) {
-                            selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
-                        } else if (CpiFiltrateActivity.mCheckedIds.isEmpty()) {
-                            mHandler.sendEmptyMessage(NODATA_CHILD);
-                        }
+                        checkedIdsHot();
+                        checkedCompanys(type);
                     }
                     //刷新
                     else if (requestType == 2) {
-                        for (int h = 0; h < mCpiframen.companys.size(); h++) {
-                            if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
-                                mCpiframen.companys.get(h).setIsChecked(true);
-                            } else {
-                                mCpiframen.companys.get(h).setIsChecked(false);
-                            }
-                        }
-                        if (!mCpiframen.companysName.isEmpty() && !CpiFiltrateActivity.mCheckedIds.isEmpty() && !"".equals(type)) {
-                            selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
-                        } else if (CpiFiltrateActivity.mCheckedIds.isEmpty()) {
-                            mHandler.sendEmptyMessage(NODATA_CHILD);
-                        }
+                        checkedCompanys(type);
                     }
-                    //否则直接加载判断
+                    //否则直接加载判断（第一次加载）
                     else {
-                        CpiFiltrateActivity.mCheckedIds.clear();
-                        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
-                            if (fileterTagsBean.isHot()) {
-                                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
-                            }
-                        }
+                        checkedIdsHot();
                         for (NewOddsInfo.CompanyBean companyBean : json.getCompany()) {
                             if (Arrays.binarySearch(defualtCompanyIds, 0, defualtCompanyIds.length, companyBean.getComId()) >= 0) {
                                 companyBean.setIsChecked(true);
@@ -237,11 +209,44 @@ public class CPIOddsFragment extends Fragment {
 
     /**
      * 时间
-     *请求类型
+     * 请求类型
+     *
      * @param dates
      */
     public void switchd(String dates, int requestType) {
         InitData(dates, mParam1, requestType);
+    }
+
+    /**
+     * 筛选热门的id
+     */
+    private void checkedIdsHot() {
+        CpiFiltrateActivity.mCheckedIds.clear();
+        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
+            if (fileterTagsBean.isHot()) {
+                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
+            }
+        }
+    }
+
+
+    /**
+     * 查找当前选中的公司默认给选中，进行数据加载处理
+     * @param oddType 盘口类型
+     */
+    private void checkedCompanys(String oddType) {
+        for (int h = 0; h < mCpiframen.companys.size(); h++) {
+            if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
+                mCpiframen.companys.get(h).setIsChecked(true);
+            } else {
+                mCpiframen.companys.get(h).setIsChecked(false);
+            }
+        }
+        if (!mCpiframen.companysName.isEmpty() && !CpiFiltrateActivity.mCheckedIds.isEmpty() && !"".equals(oddType)) {
+            selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, oddType);
+        } else if (CpiFiltrateActivity.mCheckedIds.isEmpty()) {
+            mHandler.sendEmptyMessage(NODATA_CHILD);
+        }
     }
 
     /**
@@ -264,16 +269,19 @@ public class CPIOddsFragment extends Fragment {
         }
 
     }
+
     /**
      * 即时推送
+     *
      * @param socketAllInfo
      * @param comNameList
      * @param mCheckedIds
      * @param comPanyType
      */
-    public void socketCompany(List<NewOddsInfo.AllInfoBean>socketAllInfo,List<String> comNameList, List<String> mCheckedIds, String comPanyType){
+    public void socketCompany(List<NewOddsInfo.AllInfoBean> socketAllInfo, List<String> comNameList, List<String> mCheckedIds, String comPanyType) {
         setComPany(socketAllInfo, comNameList, mCheckedIds, comPanyType);
     }
+
     /**
      * 每个不同赔率的全部数据
      *
@@ -326,8 +334,6 @@ public class CPIOddsFragment extends Fragment {
                 mShowInfoBeans.add(pAllInfo);
             }
         }
-//        System.out.println(">>>11>" + mShowInfoBeans);
-//        System.out.println(">>>22>" + mShowInfoBeans.size());
         if (!mShowInfoBeans.isEmpty()) {
             if (cpiRecyclerViewAdapter != null) {
                 cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
@@ -339,8 +345,6 @@ public class CPIOddsFragment extends Fragment {
             }
 
             mHandler.sendEmptyMessage(SUCCESS);// 请求成功
-//            System.out.println(">>>>周这里" + SUCCESS);
-//            System.out.println(">>>>22周这里" + mHandler);
 
         } else {
             mHandler.sendEmptyMessage(NODATA_CHILD);// 内容无数据
@@ -360,7 +364,6 @@ public class CPIOddsFragment extends Fragment {
                     cpi_odds_recyclerView.setVisibility(View.VISIBLE);
                     mCpiframen.public_date_layout.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_company.setVisibility(View.VISIBLE);
-//                    System.out.println(">>>>周这里" + mShowInfoBeans);
                     break;
                 case STARTLOADING://正在加载的时候
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
@@ -378,7 +381,7 @@ public class CPIOddsFragment extends Fragment {
                     cpi_fl_plate_loading.setVisibility(View.GONE);
                     mCpiframen.mRefreshLayout.setRefreshing(false);
                     cpi_fl_plate_networkError.setVisibility(View.VISIBLE);
-                    mCpiframen.isVisible=true;
+                    mCpiframen.isVisible = true;
                     mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);

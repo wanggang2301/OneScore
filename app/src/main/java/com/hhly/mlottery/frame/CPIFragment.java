@@ -105,31 +105,22 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     public List<NewOddsInfo.CompanyBean> companys = new ArrayList<>();
     public  List<String> companysName = new ArrayList<>();
     private CPIOddsFragment mCPIOddsFragment, mCPIOddsFragment2, mCPIOddsFragment3;
-    public List<Map<String, String>> mMapDayList;
+    public List<Map<String, String>> mMapDayList=new ArrayList<>();
     //判断是否是日期选择
     private boolean isFirst = false;
     //默认选择当天，当点击item后改变选中的position
-    public int selectPosition = 6;
+    public int selectPosition;
     //判断是否需要一分钟刷新一次
 //    private boolean isTrue;
     //定时刷新线程
 //    private MyThread myThread;
-    private String mDate;
     public boolean isVisible=false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads().detectDiskWrites().detectNetwork()
-                .penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
-                .build());
         mContext = getActivity();
-        //初始化的时候给date赋值
-        mDate=UiUtils.requestByGetDay(0);
-        mMapDayList = getDate();
+
     }
 
     @Nullable
@@ -143,6 +134,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread=new MyThread();
 //            myThread.start();
 //        }
+        //初始化的时候给date赋值
+
         return mView;
     }
 
@@ -173,7 +166,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public_date_layout = (LinearLayout) mView.findViewById(R.id.public_date_layout);
         //显示时间的textview
         public_txt_date = (TextView) mView.findViewById(R.id.public_txt_date);
-        public_txt_date.setText(mDate);
 
         public_txt_date.setOnClickListener(this);
         //热门，公司，筛选
@@ -355,23 +347,16 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             @Override
             public void run() {
                 if (isVisible) {
-                    mMapDayList = getDate();
-                    public_txt_date.setText(UiUtils.requestByGetDay(0));
-                    selectPosition = 6;
                     for (Fragment fragment : fragments) {
                         ((CPIOddsFragment) fragment).switchd("", 0);
                     }
                 } else {
                     //设置标题时间
-                    public_txt_date.setText(mDate);
                     for (Fragment fragment : fragments) {
                         //代表刷新
-                        ((CPIOddsFragment) fragment).switchd(mDate, 2);
+                        ((CPIOddsFragment) fragment).switchd(currentDate, 2);
                     }
-//                    filtrateDate();
-//                    mCPIOddsFragment.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
-//                    mCPIOddsFragment2.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
-//                    mCPIOddsFragment3.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
+                    public_txt_date.setText(currentDate);
                 }
                 mRefreshLayout.setRefreshing(false);
             }
@@ -414,13 +399,13 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     // 记录点击的 item 位置
                     selectPosition = position;
                     //点击之后给date赋值
-                    mDate =mMapList.get(position).get("date");
+                    currentDate =mMapList.get(position).get("date");
                     //设置标题时间
-                    public_txt_date.setText(mDate);
+                    public_txt_date.setText(currentDate);
 
                     for (Fragment fragment : fragments) {
                         //代表日期
-                        ((CPIOddsFragment) fragment).switchd(mDate, 1);
+                        ((CPIOddsFragment) fragment).switchd(currentDate, 1);
                     }
                     isFirst = true;
                     // 关闭 dialog弹窗
@@ -509,66 +494,62 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
      */
     public List<Map<String, String>> getDate() {
         mMapList = new ArrayList<>();
-        new Thread() {
-            @Override
-            public void run() {
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-6));
+                mMap.put("date", UiUtils.getDate(currentDate, -6));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-5));
+                mMap.put("date", UiUtils.getDate(currentDate,-5));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-4));
+                mMap.put("date", UiUtils.getDate(currentDate,-4));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-3));
+                mMap.put("date", UiUtils.getDate(currentDate,-3));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-2));
+                mMap.put("date", UiUtils.getDate(currentDate,-2));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-1));
+                mMap.put("date", UiUtils.getDate(currentDate,-1));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(0));
+                mMap.put("date", UiUtils.getDate(currentDate,0));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(1));
+                mMap.put("date", UiUtils.getDate(currentDate,1));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(2));
+                mMap.put("date", UiUtils.getDate(currentDate,2));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(3));
+                mMap.put("date", UiUtils.getDate(currentDate,3));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(4));
+                mMap.put("date", UiUtils.getDate(currentDate,4));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(5));
+                mMap.put("date", UiUtils.getDate(currentDate,5));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(6));
+                mMap.put("date", UiUtils.getDate(currentDate,6));
                 mMapList.add(mMap);
 
                 mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(7));
+                mMap.put("date", UiUtils.getDate(currentDate,7));
                 mMapList.add(mMap);
-            }
-        }.start();
+
         return mMapList;
     }
 
