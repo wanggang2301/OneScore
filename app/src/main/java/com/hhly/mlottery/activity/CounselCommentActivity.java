@@ -72,8 +72,9 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     private int mCurrentPager = 1;
     private boolean isRequestFinish = true;
     private boolean issubmitFinish = true;
-    private   int def = 0;
+    private int def = 0;
     private static final int JUMP_COMMENT_QUESTCODE = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
             loadTopic(url, title);
         }
         pullUpLoad();//上拉加载更多
-        model=DeviceInfo.getModel().replace(" ", "");
+        model = DeviceInfo.getModel().replace(" ", "");
     }
 
     private void initListView() {
@@ -224,21 +225,21 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
-                    if (CyUtils.isLogin) {//已登录畅言
-                        if (issubmitFinish){//是否提交完成，若提交未完成，则不再重复提交
-                            issubmitFinish=false;
+                    if (CommonUtils.isLogin()) {//已登录华海
+                        if (CyUtils.isLogin) {//已登录畅言
+                            L.i("lzf提交topicid=" + topicid);
                             CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                        }
-
-                    } else {//未登录畅言
-                        if (CommonUtils.isLogin()){//已登录华海
-                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                        } else {//未登录
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
-                        }else {//未登录华海
-                            //跳转登录界面
-                            Intent intent1=new Intent(CounselCommentActivity.this,LoginActivity.class);
-                            startActivityForResult(intent1,JUMP_COMMENT_QUESTCODE);
+                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                         }
+                        CyUtils.hideKeyBoard(this);
+                        mEditText.clearFocus();
+                    } else {
+                        //跳转登录界面
+                        Intent intent1 = new Intent(CounselCommentActivity.this, LoginActivity.class);
+                        startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
+
                     }
                     CyUtils.hideKeyBoard(this);
                     mEditText.clearFocus();
@@ -247,6 +248,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
 
                 break;
         }
+
     }
 
     //下拉刷新回调
@@ -313,7 +315,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
                 if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //请求下一页数据
-                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))){//没有更多数据的时候，上拉不再发起请求
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
                         getTopicComments(mCurrentPager);
                     }
                 }
@@ -376,7 +378,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     //评论提交成功回调接口
     @Override
     public void onRequestSucceeded(SubmitResp submitResp) {
-        issubmitFinish=true;
+        issubmitFinish = true;
         mEditText.setText("");
         //刷新界面
         loadTopic(url, title);
@@ -385,7 +387,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     //评论提交失败回调接口
     @Override
     public void onRequestFailed(CyanException e) {
-        issubmitFinish=true;
+        issubmitFinish = true;
         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
     }
 
@@ -402,12 +404,15 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd("Football_CounselCommentActivity");
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //接收登录华海成功返回
-        if (requestCode==3){
-            if (resultCode==RESULT_OK){
-                CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+        if (requestCode == 3) {
+            if (resultCode == RESULT_OK) {
+                if (CommonUtils.isLogin()) {//已登录华海
+                    CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                }
             }
         }
     }
