@@ -89,6 +89,10 @@
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".activity.WebActivitytest"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <!--评论activity-->
         <activity
             android:name=".activity.CounselCommentActivity"
