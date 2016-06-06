@@ -334,22 +334,23 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
-                    if (CyUtils.isLogin) {//已登录畅言
-                        if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
-                            issubmitFinish = false;
+                    if (CommonUtils.isLogin()) {//已登录华海
+                        if (CyUtils.isLogin) {//已登录畅言
+                            L.i("lzf提交topicid=" + topicid);
                             CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                        }
-
-                    } else {//未登录畅言
-                        if (CommonUtils.isLogin()) {//已登录华海
-                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                        } else {//未登录
                             ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
-                        } else {//未登录华海
-                            //跳转登录界面
-                            Intent intent1 = new Intent(mContext, LoginActivity.class);
-                            startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
+                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                         }
+                        CyUtils.hideKeyBoard(getActivity());
+                        mEditText.clearFocus();
+                    } else {
+                        //跳转登录界面
+                        Intent intent1 = new Intent(mContext, LoginActivity.class);
+                        startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
                     }
+
+
                     CyUtils.hideKeyBoard(getActivity());
                     mEditText.clearFocus();
                 }
@@ -357,6 +358,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
                 break;
         }
+
     }
 
     //获取评论的一切消息  无需登录  并刷新listview
