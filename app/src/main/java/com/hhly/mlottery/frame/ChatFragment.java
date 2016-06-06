@@ -337,7 +337,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                     if (CommonUtils.isLogin()) {//已登录华海
                         if (CyUtils.isLogin) {//已登录畅言
                             L.i("lzf提交topicid=" + topicid);
-                            CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
+                            if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
+                                issubmitFinish = false;
+                                CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
+                            }
                         } else {//未登录
                             ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
                             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
