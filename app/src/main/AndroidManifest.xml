@@ -175,7 +175,7 @@
             android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait"></activity>
 
-        <!--登录注册 begin-->
+        <!-- 登录注册 begin -->
         <!-- 登录界面 -->
         <activity
             android:name=".activity.LoginActivity"
@@ -187,8 +187,9 @@
             android:screenOrientation="portrait"/>
 
         <!-- 用户中心界面 -->
-        <activity android:name=".activity.AccountActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AccountActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- 找回密码界面 -->
         <activity
@@ -196,9 +197,22 @@
             android:screenOrientation="portrait"/>
 
         <!-- 重置密码界面 -->
-        <activity android:name=".activity.ResetPasswordActivity"
-                  android:screenOrientation="portrait"/>
-        <!--登录注册 end-->
+        <activity
+            android:name=".activity.ResetPasswordActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 个人资料 -->
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 修改昵称界面 -->
+        <activity android:name=".activity.ModifyNicknameActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 登录注册 end -->
+
+
         <!-- 畅言的配置项 -->
         <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity"></activity>
 

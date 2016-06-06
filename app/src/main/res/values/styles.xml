@@ -584,6 +584,43 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!--个人资料 TextView-->
+    <style name="login_textview_account_center">
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:textSize">@dimen/home_pager_user_title</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--个人资料 TextView 带上默认margin参数-->
+    <style name="login_textview_account_center_margin" parent="login_textview_account_center">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+    </style>
+
+    <!--个人资料 TextView 灰色字体-->
+    <style name="login_textview_account_center_gray" parent="login_textview_account_center_margin">
+        <item name="android:textColor">@color/content_txt_light_grad</item>
+    </style>
+
+    <!--昵称输入 EditText-->
+    <style name="login_edittext_modify_nickname" parent="login_textview_account_center">
+        <item name="android:background">@null</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
+    <!--昵称提示 TextView-->
+    <style name="login_textview_modify_nickname_hint" parent="login_edittext_common">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:textColor">@color/content_txt_light_grad</item>
+    </style>
+
     <!--登录信息背景 end-->
 
 

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.account.ResetPassword;
+import com.hhly.mlottery.bean.account.BaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
@@ -141,9 +141,9 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
             param.put("newPassword" , MD5Util.getMD5(pwd));
             param.put("smsCode" , verifyCode);
 
-            VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<ResetPassword>() {
+            VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
                 @Override
-                public void onResponse(ResetPassword reset) {
+                public void onResponse(BaseBean reset) {
                     progressBar.dismiss();
 
                     if (reset != null&& reset.getResult() == AccountResultCode.SUCC){
@@ -163,7 +163,7 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
                     L.e(TAG,"重置密码失败");
                     UiUtils.toast(ResetPasswordActivity.this , R.string.immediate_unconection);
                 }
-            } , ResetPassword.class);
+            } , BaseBean.class);
         }
     }
 }

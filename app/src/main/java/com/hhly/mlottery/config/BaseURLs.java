@@ -25,6 +25,7 @@ public class BaseURLs {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
+            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "m.1332255.com";
             } else if (url_config == DebugConfigActivity.URL_242) {
@@ -660,6 +661,8 @@ public class BaseURLs {
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
     /**重置密码*/
     public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
+    /**修改昵称*/
+    public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
 
 
 

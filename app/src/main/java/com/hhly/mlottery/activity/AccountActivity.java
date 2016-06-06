@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     private static final java.lang.String TAG = "AccountActivity";
 
     private ProgressDialog progressBar;
+    private TextView tv_nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,8 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.tv_logout).setOnClickListener(this);
-        ((TextView)findViewById(R.id.tv_phone)).setText(AppConstants.register.getData().getUser().getNickName());
+        tv_nickname = ((TextView)findViewById(R.id.tv_nickname));
+        findViewById(R.id.ll_nickname).setOnClickListener(this);
     }
 
     @Override
@@ -62,6 +65,9 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_logout: // 返回
                 MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
                 showDialog();
+                break;
+            case R.id.ll_nickname: // 昵称头像栏
+                startActivity(new Intent(this , ProfileActivity.class));
                 break;
             default:
                 break;
@@ -128,6 +134,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         /**友盟页面统计*/
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("AccountActivity");
+        tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
     }
 
     @Override

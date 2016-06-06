@@ -742,6 +742,12 @@
     <string name="reset_password">重置密码</string>
     <string name="reseting_password">正在重置密码...</string>
     <string name="reset_password_succ">重置密码成功</string>
+    <string name="pic">头像</string>
+    <string name="nickname">昵称</string>
+    <string name="input_nickname">请输入昵称</string>
+    <string name="nickname_hint">好的名字可以让您的朋友更容易记住您</string>
+    <string name="profile">个人资料</string>
+    <string name="modify_nickname">更改名字</string>
     <!--1.1.2 end-->
 
     <!-- 登录注册 end-->

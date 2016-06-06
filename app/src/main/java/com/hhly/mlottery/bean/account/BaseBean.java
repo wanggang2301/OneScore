@@ -2,9 +2,9 @@ package com.hhly.mlottery.bean.account;
 
 /**
  * Created by lyx on 2016/6/6.
- * 重置密码 返回data : {} , 内容为空
+ * 只返回最外层，data 内容为空
  */
-public class ResetPassword {
+public class BaseBean {
 
     /**
      * result : 8
