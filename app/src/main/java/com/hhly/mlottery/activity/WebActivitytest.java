@@ -98,7 +98,7 @@ public class WebActivitytest extends BaseActivity implements OnClickListener, Cy
         setContentView(R.layout.layouttest);
         Intent intent = getIntent();
         url = intent.getStringExtra("url");
-        System.out.println("lzfsouceidy"+url);
+        System.out.println("lzfsouceidy" + url);
         imageurl = intent.getStringExtra("imageurl");
         title = intent.getStringExtra(INTENT_PARAMS_TITLE);
         ChatFragment fragment = new ChatFragment();
@@ -106,6 +106,7 @@ public class WebActivitytest extends BaseActivity implements OnClickListener, Cy
         bundle.putString("souceid", url);
         bundle.putString("title", title);
         bundle.putBoolean("isHiddenCommentCount", false);
+        bundle.putBoolean("isShowComment", false);
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.sd, fragment).commit();
     }

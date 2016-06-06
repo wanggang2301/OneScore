@@ -68,8 +68,9 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
     private int cmt_sum;//评论总数
     private int mCurrentPager = 1;//页数
-    private boolean isRequestFinish = true;
-    private boolean issubmitFinish = true;
+    private boolean isRequestFinish = true;//是否加载评论结束
+    private boolean issubmitFinish = true;//是否提交评论结束
+    private boolean isShowComment = false;//是否需要显示评论
     private CounselComentLvAdapter mAdapter;
     private String model;
     private int def = 0;
@@ -90,6 +91,11 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         }
         pullUpLoad();//上拉加载更多
         model = DeviceInfo.getModel().replace(" ", "");
+        if (isShowComment) {//显示评论列表
+            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+        } else {//隐藏评论列表
+            mSwipeRefreshLayout.setVisibility(View.GONE);
+        }
         return mView;
     }
 
@@ -98,9 +104,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         sdk = CyanSdk.getInstance(mContext);
         Bundle bundle = getArguments();
         souceid = bundle.getString("souceid");
-        System.out.println("lzfsouceidfg" + souceid);
+        L.i("lzfsouceidfg" + souceid);
         title = bundle.getString("title");
         isHiddenCommentCount = bundle.getBoolean("isHiddenCommentCount");
+        isShowComment = bundle.getBoolean("isShowComment");
 
     }
 
@@ -368,7 +375,11 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     public void loadTopic(String url, String title) {
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-        sdk.loadTopic("", url, title, null, SINGLE_PAGE_COMMENT, SINGLE_PAGE_COMMENT, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+        int count = 30;
+        if (!isShowComment) {
+            count = 0;
+        }
+        sdk.loadTopic("", url, title, null, count, count, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;//文章id
