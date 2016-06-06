@@ -570,6 +570,7 @@
 
 
     <color name="yellow_verify_code">#FFB51A</color>
+    <color name="item_selectable_pressed">@color/defeat_color</color>
 
 
 </resources>

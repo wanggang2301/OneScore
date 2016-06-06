@@ -6,10 +6,10 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
+//    lintOptions {
+//        checkReleaseBuilds false
+//        abortOnError false
+//    }
     defaultConfig {
         applicationId "com.hhly.mlottery"
         minSdkVersion 16
@@ -28,7 +28,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
-
 
         productFlavors {
         }
@@ -58,6 +57,9 @@ android {
         testCompile 'junit:junit:4.12'
 
         compile 'com.jakewharton:butterknife:7.0.1'
+        compile 'com.android.support:percent:23.2.0'
+        compile 'io.reactivex:rxjava:1.1.2'
+        compile 'io.reactivex:rxandroid:1.1.0'
     }
 
 }

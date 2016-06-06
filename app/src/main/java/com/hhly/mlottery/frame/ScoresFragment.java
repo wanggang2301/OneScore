@@ -83,18 +83,20 @@ public class ScoresFragment extends Fragment {
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
 
-    @SuppressLint("ValidFragment") public ScoresFragment(Context context) {
+    @SuppressLint("ValidFragment")
+    public ScoresFragment(Context context) {
         this.mContext = context;
     }
 
     public ScoresFragment() {
     }
 
-    @Override public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         mContext = getActivity();
-        view = View.inflate(mContext,R.layout.frage_football,null);
+        view = View.inflate(mContext, R.layout.frage_football, null);
         initView();
         setupViewPager();
         focusCallback();// 加载关注数
@@ -103,22 +105,22 @@ public class ScoresFragment extends Fragment {
     }
 
     private void initView() {
-        mViewPager = (ViewPager)view.findViewById(R.id.viewpager);
+        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         // 返回菜单
-        mBackImgBtn = (ImageView)view.findViewById(R.id.public_img_back);
+        mBackImgBtn = (ImageView) view.findViewById(R.id.public_img_back);
 
         //中心标题
-        mTitleTv = (TextView)view.findViewById(R.id.public_txt_title);
+        mTitleTv = (TextView) view.findViewById(R.id.public_txt_title);
         //mTitleTv.setVisibility(View.GONE);
         mTitleTv.setText(R.string.football_frame_txt);
         //左边标题
-			/*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
+            /*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
 				public_txt_left_title.setVisibility(View.VISIBLE);
         public_txt_left_title.setText(R.string.football_frame_txt);
 */
         // 筛选
-        mFilterImgBtn = (ImageView)view.findViewById(R.id.public_btn_filter);
-        mSetImgBtn = (ImageView)view.findViewById(R.id.public_btn_set);
+        mFilterImgBtn = (ImageView) view.findViewById(R.id.public_btn_filter);
+        mSetImgBtn = (ImageView) view.findViewById(R.id.public_btn_set);
         mSetImgBtn.setVisibility(View.VISIBLE);
     }
 
@@ -137,7 +139,7 @@ public class ScoresFragment extends Fragment {
     private boolean isFocus = false;
 
     private void setupViewPager() {
-        mTabLayout = (TabLayout)view.findViewById(R.id.tabs);
+        mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
         titles = new ArrayList<>();
         titles.add(getString(R.string.foot_rollball_txt));
         titles.add(getString(R.string.foot_jishi_txt));
@@ -152,180 +154,183 @@ public class ScoresFragment extends Fragment {
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
 
-        pureViewPagerAdapter = new PureViewPagerAdapter(fragments,titles,getChildFragmentManager());
+        pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override public void onPageScrolled(int position,float positionOffset,int positionOffsetPixels) {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                L.d(TAG,"onPageScrolled");
-                L.d(TAG,"position = " + position);
-                L.d(TAG,"positionOffset = " + positionOffset);
-                L.d(TAG,"positionOffsetPixels = " + positionOffsetPixels);
+                L.d(TAG, "onPageScrolled");
+                L.d(TAG, "position = " + position);
+                L.d(TAG, "positionOffset = " + positionOffset);
+                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
 
                 if (positionOffsetPixels == 0) {
                     switch (position) {
-                    case IMMEDIA_FRAGMENT:
-                        mFilterImgBtn.setVisibility(View.VISIBLE);
-                        ((ImmediateFragment)fragments.get(position)).reLoadData();
-                        break;
-                    case RESULT_FRAGMENT:
-                        mFilterImgBtn.setVisibility(View.VISIBLE);
-                        ((ResultFragment)fragments.get(position)).updateAdapter();
-                        break;
-                    case SCHEDULE_FRAGMENT:
-                        mFilterImgBtn.setVisibility(View.VISIBLE);
-                        ((ScheduleFragment)fragments.get(position)).updateAdapter();
-                        break;
-                    case FOCUS_FRAGMENT:
-                        mFilterImgBtn.setVisibility(View.GONE);
-                        ((FocusFragment)fragments.get(position)).reLoadData();
-                        break;
+                        case IMMEDIA_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            ((ImmediateFragment) fragments.get(position)).reLoadData();
+                            break;
+                        case RESULT_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            ((ResultFragment) fragments.get(position)).updateAdapter();
+                            break;
+                        case SCHEDULE_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            ((ScheduleFragment) fragments.get(position)).updateAdapter();
+                            break;
+                        case FOCUS_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.GONE);
+                            ((FocusFragment) fragments.get(position)).reLoadData();
+                            break;
                     }
                 }
             }
 
 
-            @Override public void onPageSelected(final int position) {
+            @Override
+            public void onPageSelected(final int position) {
                 /**判断四个Fragment切换显示或隐藏的状态 */
                 switch (position) {
-                case ROLLBALL_FRAGMENT:
-                    isRollballFragment = true;
-                    isImmediateFragment = false;
-                    isResultFragment = false;
-                    isScheduleFragment = false;
-                    isFocusFragment = false;
-                    break;
-                case IMMEDIA_FRAGMENT:
-                    isImmediateFragment = true;
-                    isRollballFragment = false;
-                    isResultFragment = false;
-                    isScheduleFragment = false;
-                    isFocusFragment = false;
-                    break;
-                case RESULT_FRAGMENT:
-                    isResultFragment = true;
-                    isRollballFragment = false;
-                    isImmediateFragment = false;
-                    isScheduleFragment = false;
-                    isFocusFragment = false;
-                    break;
-                case SCHEDULE_FRAGMENT:
-                    isScheduleFragment = true;
-                    isRollballFragment = false;
-                    isResultFragment = false;
-                    isImmediateFragment = false;
-                    isFocusFragment = false;
-                    break;
-                case FOCUS_FRAGMENT:
-                    isFocusFragment = true;
-                    isRollballFragment = false;
-                    isScheduleFragment = false;
-                    isResultFragment = false;
-                    isImmediateFragment = false;
-                    break;
+                    case ROLLBALL_FRAGMENT:
+                        isRollballFragment = true;
+                        isImmediateFragment = false;
+                        isResultFragment = false;
+                        isScheduleFragment = false;
+                        isFocusFragment = false;
+                        break;
+                    case IMMEDIA_FRAGMENT:
+                        isImmediateFragment = true;
+                        isRollballFragment = false;
+                        isResultFragment = false;
+                        isScheduleFragment = false;
+                        isFocusFragment = false;
+                        break;
+                    case RESULT_FRAGMENT:
+                        isResultFragment = true;
+                        isRollballFragment = false;
+                        isImmediateFragment = false;
+                        isScheduleFragment = false;
+                        isFocusFragment = false;
+                        break;
+                    case SCHEDULE_FRAGMENT:
+                        isScheduleFragment = true;
+                        isRollballFragment = false;
+                        isResultFragment = false;
+                        isImmediateFragment = false;
+                        isFocusFragment = false;
+                        break;
+                    case FOCUS_FRAGMENT:
+                        isFocusFragment = true;
+                        isRollballFragment = false;
+                        isScheduleFragment = false;
+                        isResultFragment = false;
+                        isImmediateFragment = false;
+                        break;
                 }
                 if (isRollballFragment) {
                     if (isRollball) {
                         MobclickAgent.onPageEnd("Football_ResultFragment");
                         isResult = false;
-                        L.d("xxx","ResultFragment>>>隐藏");
+                        L.d("xxx", "ResultFragment>>>隐藏");
                     }
                     if (isSchedule) {
                         MobclickAgent.onPageEnd("Football_ScheduleFragment");
                         isSchedule = false;
-                        L.d("xxx","ScheduleFragment>>>隐藏");
+                        L.d("xxx", "ScheduleFragment>>>隐藏");
                     }
                     if (isFocus) {
                         MobclickAgent.onPageEnd("Football_FocusFragment");
                         isFocus = false;
-                        L.d("xxx","FocusFragment>>>隐藏");
+                        L.d("xxx", "FocusFragment>>>隐藏");
                     }
                     MobclickAgent.onPageStart("Football_ImmediateFragment");
                     isRollball = true;
-                    L.d("xxx","ImmediateFragment>>>显示");
+                    L.d("xxx", "ImmediateFragment>>>显示");
                 }
                 if (isImmediateFragment) {
                     if (isResult) {
                         MobclickAgent.onPageEnd("Football_ResultFragment");
                         isResult = false;
-                        L.d("xxx","ResultFragment>>>隐藏");
+                        L.d("xxx", "ResultFragment>>>隐藏");
                     }
                     if (isSchedule) {
                         MobclickAgent.onPageEnd("Football_ScheduleFragment");
                         isSchedule = false;
-                        L.d("xxx","ScheduleFragment>>>隐藏");
+                        L.d("xxx", "ScheduleFragment>>>隐藏");
                     }
                     if (isFocus) {
                         MobclickAgent.onPageEnd("Football_FocusFragment");
                         isFocus = false;
-                        L.d("xxx","FocusFragment>>>隐藏");
+                        L.d("xxx", "FocusFragment>>>隐藏");
                     }
                     MobclickAgent.onPageStart("Football_ImmediateFragment");
                     isImmediate = true;
-                    L.d("xxx","ImmediateFragment>>>显示");
+                    L.d("xxx", "ImmediateFragment>>>显示");
                 }
                 if (isResultFragment) {
                     if (isImmediate) {
                         MobclickAgent.onPageEnd("Football_ImmediateFragment");
                         isImmediate = false;
-                        L.d("xxx","ImmediateFragment>>>隐藏");
+                        L.d("xxx", "ImmediateFragment>>>隐藏");
                     }
                     if (isSchedule) {
                         MobclickAgent.onPageEnd("Football_ScheduleFragment");
                         isSchedule = false;
-                        L.d("xxx","ScheduleFragment>>>隐藏");
+                        L.d("xxx", "ScheduleFragment>>>隐藏");
                     }
                     if (isFocus) {
                         MobclickAgent.onPageEnd("Football_FocusFragment");
                         isFocus = false;
-                        L.d("xxx","FocusFragment>>>隐藏");
+                        L.d("xxx", "FocusFragment>>>隐藏");
                     }
                     MobclickAgent.onPageStart("Football_ResultFragment");
                     isResult = true;
-                    L.d("xxx","ResultFragment>>>显示");
+                    L.d("xxx", "ResultFragment>>>显示");
                 }
                 if (isScheduleFragment) {
                     if (isImmediate) {
                         MobclickAgent.onPageEnd("Football_ImmediateFragment");
                         isImmediate = false;
-                        L.d("xxx","ImmediateFragment>>>隐藏");
+                        L.d("xxx", "ImmediateFragment>>>隐藏");
                     }
                     if (isResult) {
                         MobclickAgent.onPageEnd("Football_ResultFragment");
                         isResult = false;
-                        L.d("xxx","ResultFragment>>>隐藏");
+                        L.d("xxx", "ResultFragment>>>隐藏");
                     }
                     if (isFocus) {
                         MobclickAgent.onPageEnd("Football_FocusFragment");
                         isFocus = false;
-                        L.d("xxx","FocusFragment>>>隐藏");
+                        L.d("xxx", "FocusFragment>>>隐藏");
                     }
                     MobclickAgent.onPageStart("Football_ScheduleFragment");
                     isSchedule = true;
-                    L.d("xxx","ScheduleFragment>>>显示");
+                    L.d("xxx", "ScheduleFragment>>>显示");
                 }
                 if (isFocusFragment) {
                     if (isImmediate) {
                         MobclickAgent.onPageEnd("Football_ImmediateFragment");
                         isImmediate = false;
-                        L.d("xxx","ImmediateFragment>>>隐藏");
+                        L.d("xxx", "ImmediateFragment>>>隐藏");
                     }
                     if (isResult) {
                         MobclickAgent.onPageEnd("Football_ResultFragment");
                         isResult = false;
-                        L.d("xxx","ResultFragment>>>隐藏");
+                        L.d("xxx", "ResultFragment>>>隐藏");
                     }
                     if (isSchedule) {
                         MobclickAgent.onPageEnd("Football_ScheduleFragment");
                         isSchedule = false;
-                        L.d("xxx","ScheduleFragment>>>隐藏");
+                        L.d("xxx", "ScheduleFragment>>>隐藏");
                     }
                     MobclickAgent.onPageStart("Football_FocusFragment");
                     isFocus = true;
-                    L.d("xxx","FocusFragment>>>显示");
+                    L.d("xxx", "FocusFragment>>>显示");
                 }
             }
 
-            @Override public void onPageScrollStateChanged(int state) {
+            @Override
+            public void onPageScrollStateChanged(int state) {
             }
         });
         mViewPager.setAdapter(pureViewPagerAdapter);
@@ -336,100 +341,114 @@ public class ScoresFragment extends Fragment {
 
     private void initData() {
         mBackImgBtn.setOnClickListener(new OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 getActivity().finish();
-                MobclickAgent.onEvent(mContext,"Football_Exit");
+                MobclickAgent.onEvent(mContext, "Football_Exit");
             }
         });
 
         mFilterImgBtn.setOnClickListener(new OnClickListener() {
-            @Override public void onClick(View view) {
-                MobclickAgent.onEvent(mContext,"Football_Filtrate");
+            @Override
+            public void onClick(View view) {
+                MobclickAgent.onEvent(mContext, "Football_Filtrate");
                 currentFragmentId = mViewPager.getCurrentItem();
-                if (currentFragmentId == IMMEDIA_FRAGMENT) {
+                if (currentFragmentId == ROLLBALL_FRAGMENT) {
+                    Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, true);
+                    bundle.putInt("currentFragmentId", ROLLBALL_FRAGMENT);
+                    LeagueCup[] allCups = RollBallFragment.cupLists.toArray(new LeagueCup[]{});
+                    bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
+                    bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
+                            RollBallFragment.checkCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                } else if (currentFragmentId == IMMEDIA_FRAGMENT) {
                     switch (ImmediateFragment.mLoadDataStatus) {
-                    case ImmediateFragment.LOAD_DATA_STATUS_ERROR:
-                        Intent intent = new Intent(getActivity(),FiltrateMatchConfigActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS,ImmediateFragment.isNetSuccess);
-                        bundle.putInt("currentFragmentId",IMMEDIA_FRAGMENT);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        break;
-                    case ImmediateFragment.LOAD_DATA_STATUS_SUCCESS:
-                        intent = new Intent(getActivity(),FiltrateMatchConfigActivity.class);
-                        bundle = new Bundle();
-                        LeagueCup[] allCups = ImmediateFragment.mCups.toArray(new LeagueCup[] {});
-                        bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS,allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
-                        bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
-                                                  ImmediateFragment.mCheckedCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
-                        bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT,ImmediateFragment.isCheckedDefualt);// 是否默认选择
-                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS,ImmediateFragment.isNetSuccess);
-                        bundle.putInt("currentFragmentId",IMMEDIA_FRAGMENT);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        break;
-                    case ImmediateFragment.LOAD_DATA_STATUS_INIT:
-                    case ImmediateFragment.LOAD_DATA_STATUS_LOADING:
-                        if (!ImmediateFragment.isPause) {
-                            Toast.makeText(getActivity(),R.string.toast_data_loading,Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    default:
-                        break;
+                        case ImmediateFragment.LOAD_DATA_STATUS_ERROR:
+                            Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ImmediateFragment.isNetSuccess);
+                            bundle.putInt("currentFragmentId", IMMEDIA_FRAGMENT);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            break;
+                        case ImmediateFragment.LOAD_DATA_STATUS_SUCCESS:
+                            intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                            bundle = new Bundle();
+                            LeagueCup[] allCups = ImmediateFragment.mCups.toArray(new LeagueCup[]{});
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
+                                    ImmediateFragment.mCheckedCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                            bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, ImmediateFragment.isCheckedDefualt);// 是否默认选择
+                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ImmediateFragment.isNetSuccess);
+                            bundle.putInt("currentFragmentId", IMMEDIA_FRAGMENT);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            break;
+                        case ImmediateFragment.LOAD_DATA_STATUS_INIT:
+                        case ImmediateFragment.LOAD_DATA_STATUS_LOADING:
+                            if (!ImmediateFragment.isPause) {
+                                Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 } else if (currentFragmentId == RESULT_FRAGMENT) {
                     switch (ResultFragment.mLoadDataStatus) {
-                    case ResultFragment.LOAD_DATA_STATUS_ERROR:
-                        Intent mIntent = new Intent(getActivity(),FiltrateMatchConfigActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS,ResultFragment.isNetSuccess);
-                        bundle.putInt("currentFragmentId",RESULT_FRAGMENT);
-                        mIntent.putExtras(bundle);
-                        startActivity(mIntent);
-                        break;
-                    case ResultFragment.LOAD_DATA_STATUS_SUCCESS:
-                        mIntent = new Intent(getActivity(),FiltrateMatchConfigActivity.class);
-                        bundle = new Bundle();
-                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS,ResultFragment.isNetSuccess);
-                        LeagueCup[] allCups = ResultFragment.mCups.toArray(new LeagueCup[] {});
-                        //所有联赛
-                        bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS,allCups);
-                        //当前 选中联赛
-                        bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,ResultFragment.mCheckedCups);
-                        // 是否默认选择  -- 显示选中（标红）
-                        bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT,ResultFragment.isCheckedDefualt);
-                        bundle.putInt("currentFragmentId",RESULT_FRAGMENT);
-                        mIntent.putExtras(bundle);
-                        startActivity(mIntent);
-                        //getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-                        break;
-                    case ResultFragment.LOAD_DATA_STATUS_INIT:
-                    case ResultFragment.LOAD_DATA_STATUS_LOADING:
-                        Toast.makeText(getActivity(),R.string.toast_data_loading,Toast.LENGTH_SHORT).show();
-                        break;
+                        case ResultFragment.LOAD_DATA_STATUS_ERROR:
+                            Intent mIntent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ResultFragment.isNetSuccess);
+                            bundle.putInt("currentFragmentId", RESULT_FRAGMENT);
+                            mIntent.putExtras(bundle);
+                            startActivity(mIntent);
+                            break;
+                        case ResultFragment.LOAD_DATA_STATUS_SUCCESS:
+                            mIntent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                            bundle = new Bundle();
+                            bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ResultFragment.isNetSuccess);
+                            LeagueCup[] allCups = ResultFragment.mCups.toArray(new LeagueCup[]{});
+                            //所有联赛
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);
+                            //当前 选中联赛
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS, ResultFragment.mCheckedCups);
+                            // 是否默认选择  -- 显示选中（标红）
+                            bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, ResultFragment.isCheckedDefualt);
+                            bundle.putInt("currentFragmentId", RESULT_FRAGMENT);
+                            mIntent.putExtras(bundle);
+                            startActivity(mIntent);
+                            //getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                            break;
+                        case ResultFragment.LOAD_DATA_STATUS_INIT:
+                        case ResultFragment.LOAD_DATA_STATUS_LOADING:
+                            Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
+                            break;
                     }
                 } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
                     if (ScheduleFragment.mLoadDataStatus == ScheduleFragment.LOAD_DATA_STATUS_SUCCESS) {
-                        Intent intent = new Intent(getActivity(),FiltrateMatchConfigActivity.class);
+                        Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
                         Bundle bundle = new Bundle();
-                        LeagueCup[] allCups = ScheduleFragment.mAllCup.toArray(new LeagueCup[] {});
-                        bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS,allCups);
-                        bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,ScheduleFragment.mCheckedCups);
-                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS,ScheduleFragment.isNetSuccess);
-                        bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT,ScheduleFragment.isCheckedDefualt);
-                        bundle.putInt("currentFragmentId",SCHEDULE_FRAGMENT);
+                        LeagueCup[] allCups = ScheduleFragment.mAllCup.toArray(new LeagueCup[]{});
+                        bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);
+                        bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS, ScheduleFragment.mCheckedCups);
+                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ScheduleFragment.isNetSuccess);
+                        bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, ScheduleFragment.isCheckedDefualt);
+                        bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     } else if (ScheduleFragment.mLoadDataStatus == ScheduleFragment.LOAD_DATA_STATUS_ERROR) {
-                        Intent intent = new Intent(getActivity(),FiltrateMatchConfigActivity.class);
+                        Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS,ScheduleFragment.isNetSuccess);
-                        bundle.putInt("currentFragmentId",SCHEDULE_FRAGMENT);
+                        bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ScheduleFragment.isNetSuccess);
+                        bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     } else {
-                        Toast.makeText(getActivity(),R.string.toast_data_loading,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -437,33 +456,34 @@ public class ScoresFragment extends Fragment {
 
 
         mSetImgBtn.setOnClickListener(new OnClickListener() {
-            @Override public void onClick(View view) {
-                MobclickAgent.onEvent(mContext,"Football_Setting");
+            @Override
+            public void onClick(View view) {
+                MobclickAgent.onEvent(mContext, "Football_Setting");
                 currentFragmentId = mViewPager.getCurrentItem();
                 if (currentFragmentId == IMMEDIA_FRAGMENT) {
-                    Intent intent = new Intent(mContext,FootballTypeSettingActivity.class);
+                    Intent intent = new Intent(mContext, FootballTypeSettingActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("currentFragmentId",IMMEDIA_FRAGMENT);
+                    bundle.putInt("currentFragmentId", IMMEDIA_FRAGMENT);
                     intent.putExtras(bundle);
                     startActivity(intent);
 
                 } else if (currentFragmentId == RESULT_FRAGMENT) {
-                    Intent intent = new Intent(getActivity(),FootballTypeSettingActivity.class);
+                    Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("currentFragmentId",RESULT_FRAGMENT);
+                    bundle.putInt("currentFragmentId", RESULT_FRAGMENT);
                     intent.putExtras(bundle);
                     startActivity(intent);
 
                 } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
-                    Intent intent = new Intent(getActivity(),FootballTypeSettingActivity.class);
+                    Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("currentFragmentId",SCHEDULE_FRAGMENT);
+                    bundle.putInt("currentFragmentId", SCHEDULE_FRAGMENT);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else if (currentFragmentId == FOCUS_FRAGMENT) {
-                    Intent intent = new Intent(getActivity(),FootballTypeSettingActivity.class);
+                    Intent intent = new Intent(getActivity(), FootballTypeSettingActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("currentFragmentId",FOCUS_FRAGMENT);
+                    bundle.putInt("currentFragmentId", FOCUS_FRAGMENT);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -474,7 +494,7 @@ public class ScoresFragment extends Fragment {
 
 
     public void focusCallback() {
-        String focusIds = PreferenceUtil.getString("focus_ids","");
+        String focusIds = PreferenceUtil.getString("focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
         if ("".equals(focusIds) || arrayId.length == 0) {
             mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt));
@@ -483,7 +503,8 @@ public class ScoresFragment extends Fragment {
         }
     }
 
-    @Override public void onHiddenChanged(boolean hidden) {
+    @Override
+    public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
             onPause();
@@ -492,52 +513,54 @@ public class ScoresFragment extends Fragment {
         }
     }
 
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
         super.onResume();
-        L.d(TAG,"football Fragment resume..");
+        L.d(TAG, "football Fragment resume..");
 
         if (isImmediateFragment) {
             MobclickAgent.onPageStart("Football_ImmediateFragment");
             isImmediate = true;
-            L.d("xxx","ImmediateFragment>>>显示");
+            L.d("xxx", "ImmediateFragment>>>显示");
         }
         if (isResultFragment) {
             MobclickAgent.onPageStart("Football_ResultFragment");
             isResult = true;
-            L.d("xxx","ResultFragment>>>显示");
+            L.d("xxx", "ResultFragment>>>显示");
         }
         if (isScheduleFragment) {
             MobclickAgent.onPageStart("Football_ScheduleFragment");
             isSchedule = true;
-            L.d("xxx","ScheduleFragment>>>显示");
+            L.d("xxx", "ScheduleFragment>>>显示");
         }
         if (isFocusFragment) {
             MobclickAgent.onPageStart("Football_FocusFragment");
             isFocus = true;
-            L.d("xxx","FocusFragment>>>显示");
+            L.d("xxx", "FocusFragment>>>显示");
         }
     }
 
-    @Override public void onPause() {
+    @Override
+    public void onPause() {
         super.onPause();
         if (isImmediate) {
             MobclickAgent.onPageEnd("Football_ImmediateFragment");
             isImmediate = false;
             //                L.d("xxx", "ImmediateFragment>>>隐藏");
-            L.d("xxx","ImmediateFragment>>>隐藏");
+            L.d("xxx", "ImmediateFragment>>>隐藏");
         }
         if (isResult) {
             MobclickAgent.onPageEnd("Football_ResultFragment");
             isResult = false;
             //                L.d("xxx", "ResultFragment>>>隐藏");
-            L.d("xxx","ResultFragment>>>隐藏");
+            L.d("xxx", "ResultFragment>>>隐藏");
         }
         if (isSchedule) {
             MobclickAgent.onPageEnd("Football_ScheduleFragment");
             isSchedule = false;
             //                L.d("xxx", "ScheduleFragment>>>隐藏");
 
-            L.d("xxx","ScheduleFragment>>>隐藏");
+            L.d("xxx", "ScheduleFragment>>>隐藏");
 
         }
         if (isFocus) {
@@ -546,29 +569,32 @@ public class ScoresFragment extends Fragment {
 
             //                L.d("xxx", "FocusFragment>>>隐藏");
 
-            L.d("xxx","FocusFragment>>>隐藏");
+            L.d("xxx", "FocusFragment>>>隐藏");
 
         }
     }
 
-    @Override public void onDestroy() {
+    @Override
+    public void onDestroy() {
         super.onDestroy();
 
         //        L.d(TAG, "football Fragment destroy..");
 
-        L.d(TAG,"football Fragment destroy..");
+        L.d(TAG, "football Fragment destroy..");
 
     }
 
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
-        L.d(TAG,"football Fragment destroy view..");
+        L.d(TAG, "football Fragment destroy view..");
     }
 
-    @Override public void onDetach() {
+    @Override
+    public void onDetach() {
         super.onDetach();
-        L.d(TAG,"football Fragment detach..");
+        L.d(TAG, "football Fragment detach..");
     }
 
 
