@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
@@ -21,6 +20,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,9 +43,9 @@ public class CPIOddsFragment extends Fragment {
     private RecyclerView cpi_odds_recyclerView;
     private CPIRecyclerViewAdapter cpiRecyclerViewAdapter;
     private LinearLayoutManager linearLayoutManager;
-    public static List<NewOddsInfo.AllInfoBean> mAllInfoBean1 = new ArrayList<>();
-    public static List<NewOddsInfo.AllInfoBean> mAllInfoBean2 = new ArrayList<>();
-    public static List<NewOddsInfo.AllInfoBean> mAllInfoBean3 = new ArrayList<>();
+    public List<NewOddsInfo.AllInfoBean> mAllInfoBean1 = new ArrayList<>();
+    public List<NewOddsInfo.AllInfoBean> mAllInfoBean2 = new ArrayList<>();
+    public List<NewOddsInfo.AllInfoBean> mAllInfoBean3 = new ArrayList<>();
     public List<NewOddsInfo.AllInfoBean> mAllInfo = new ArrayList<>();
     public List<NewOddsInfo.AllInfoBean> mShowInfoBeans = new ArrayList<>();
     //热门联赛筛选
@@ -86,7 +86,7 @@ public class CPIOddsFragment extends Fragment {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_cpi_odds, container, false);//item_cpi_odds
         InitView();
-        switchd("", false);
+        switchd("", 0);
         return mView;
     }
 
@@ -108,7 +108,7 @@ public class CPIOddsFragment extends Fragment {
         cpi_plate_reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchd("", false);
+                switchd("", 0);
                 mCpiframen.public_txt_date.setText(UiUtils.requestByGetDay(0));
                 mCpiframen.mMapDayList = mCpiframen.getDate();
                 mCpiframen.selectPosition = 6;
@@ -123,7 +123,7 @@ public class CPIOddsFragment extends Fragment {
      * @param date
      * @param type
      */
-    public void InitData(String date, final String type, final boolean isDate) {
+    public void InitData(String date, final String type, final int requestType) {
         mHandler.sendEmptyMessage(STARTLOADING);
         Map<String, String> map = new HashMap<>();
 
@@ -139,11 +139,11 @@ public class CPIOddsFragment extends Fragment {
         }
 
         // 2、连接服务器
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_NEW_ODDS, map, new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_NEW_ODDS, map, new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
             @Override
             public synchronized void onResponse(final NewOddsInfo json) {
 
-                if (json != null && json.getCode() != 500) {
+                if (json != null && json.getCode() != 500 && !json.getCompany().isEmpty() &&!json.getFileterTags().isEmpty()) {
 
                     if (getParentFragment() != null) {
                         mCpiframen.currentDate = json.getCurrDate();
@@ -160,26 +160,51 @@ public class CPIOddsFragment extends Fragment {
                         mAllInfoBean3.clear();
                         mAllInfoBean3 = json.getAllInfo();
                     }
-                    CpiFiltrateActivity.mCheckedIds.clear();
-                    for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
-                        if (fileterTagsBean.isHot()) {
-                            CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
-                        }
-                    }
+
                     //如果是日期传过来的
-                    if (isDate) {
+                    if (requestType==1) {
+                        CpiFiltrateActivity.mCheckedIds.clear();
+                        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
+                            if (fileterTagsBean.isHot()) {
+                                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
+                            }
+                        }
                         for (int h = 0; h < mCpiframen.companys.size(); h++) {
                             if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
                                 mCpiframen.companys.get(h).setIsChecked(true);
                             } else {
                                 mCpiframen.companys.get(h).setIsChecked(false);
                             }
-
                         }
-                        selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        if (!mCpiframen.companysName.isEmpty() && !CpiFiltrateActivity.mCheckedIds.isEmpty() && !"".equals(type)) {
+                            selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        } else if (CpiFiltrateActivity.mCheckedIds.isEmpty()) {
+                            mHandler.sendEmptyMessage(NODATA_CHILD);
+                        }
+                    }
+                    //刷新
+                    else if(requestType==2){
+                        for (int h = 0; h < mCpiframen.companys.size(); h++) {
+                            if (mCpiframen.companysName.contains(mCpiframen.companys.get(h).getComName())) {
+                                mCpiframen.companys.get(h).setIsChecked(true);
+                            } else {
+                                mCpiframen.companys.get(h).setIsChecked(false);
+                            }
+                        }
+                        if (!mCpiframen.companysName.isEmpty() && !CpiFiltrateActivity.mCheckedIds.isEmpty() && !"".equals(type)) {
+                            selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        } else if (CpiFiltrateActivity.mCheckedIds.isEmpty()) {
+                            mHandler.sendEmptyMessage(NODATA_CHILD);
+                        }
                     }
                     //否则直接加载判断
                     else {
+                        CpiFiltrateActivity.mCheckedIds.clear();
+                        for (NewOddsInfo.FileterTagsBean fileterTagsBean : mFileterTagsBean) {
+                            if (fileterTagsBean.isHot()) {
+                                CpiFiltrateActivity.mCheckedIds.add(fileterTagsBean.getLeagueId());
+                            }
+                        }
                         for (NewOddsInfo.CompanyBean companyBean : json.getCompany()) {
                             if (Arrays.binarySearch(defualtCompanyIds, 0, defualtCompanyIds.length, companyBean.getComId()) >= 0) {
                                 companyBean.setIsChecked(true);
@@ -188,7 +213,11 @@ public class CPIOddsFragment extends Fragment {
                             }
                         }
                         mCpiframen.filtrateDate();
-                        selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        if (!mCpiframen.companysName.isEmpty() && !CpiFiltrateActivity.mCheckedIds.isEmpty() && !"".equals(type)) {
+                            selectCompany(mCpiframen.companysName, CpiFiltrateActivity.mCheckedIds, type);
+                        } else if (CpiFiltrateActivity.mCheckedIds.isEmpty()) {
+                            mHandler.sendEmptyMessage(NODATA_CHILD);
+                        }
 
                     }
 
@@ -208,21 +237,21 @@ public class CPIOddsFragment extends Fragment {
 
     /**
      * 时间
+     *请求类型
      * @param dates
      */
-    public void switchd(String dates, boolean isDate) {
-        InitData(dates, mParam1, isDate);
+    public void switchd(String dates, int requestType) {
+        InitData(dates, mParam1, requestType);
     }
 
     /**
      * 传选中公司的集合
-     * @param comNameList
-     * 所选中联赛id的集合
-     * @param mCheckedIds
-     * 公司类型
+     *
+     * @param comNameList 所选中联赛id的集合
+     * @param mCheckedIds 公司类型
      * @param comPanyType
      */
-    public void selectCompany( List<String> comNameList, List<String> mCheckedIds, String comPanyType) {
+    public void selectCompany(List<String> comNameList, List<String> mCheckedIds, String comPanyType) {
         if (CPIFragment.TYPE_PLATE.equals(comPanyType)) {
 
             setComPany(mAllInfoBean1, comNameList, mCheckedIds, comPanyType);
@@ -238,12 +267,10 @@ public class CPIOddsFragment extends Fragment {
 
     /**
      * 每个不同赔率的全部数据
-     * @param hotsAllInfoTemps
-     * 选中公司的集合
-     * @param comNameLists
-     * 所选中联赛id的集合
-     * @param mCheckedIds
-     * 传选中公司的集合
+     *
+     * @param hotsAllInfoTemps 选中公司的集合
+     * @param comNameLists     所选中联赛id的集合
+     * @param mCheckedIds      传选中公司的集合
      * @param comPanyType
      */
     private void setComPany(List<NewOddsInfo.AllInfoBean> hotsAllInfoTemps, List<String> comNameLists, List<String> mCheckedIds, String comPanyType) {
@@ -290,19 +317,25 @@ public class CPIOddsFragment extends Fragment {
                 mShowInfoBeans.add(pAllInfo);
             }
         }
-       if(!mShowInfoBeans.isEmpty()) {
-           if (cpiRecyclerViewAdapter != null) {
-               cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
-               cpiRecyclerViewAdapter.notifyDataSetChanged();
-           } else {
-               cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, comPanyType);
-               cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
+//        System.out.println(">>>11>" + mShowInfoBeans);
+//        System.out.println(">>>22>" + mShowInfoBeans.size());
+        if (!mShowInfoBeans.isEmpty()) {
+            if (cpiRecyclerViewAdapter != null) {
+                cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
+                cpiRecyclerViewAdapter.notifyDataSetChanged();
+            } else {
+                cpiRecyclerViewAdapter = new CPIRecyclerViewAdapter(mShowInfoBeans, mContext, comPanyType);
+                cpi_odds_recyclerView.setAdapter(cpiRecyclerViewAdapter);
 
-           }
-           mHandler.sendEmptyMessage(SUCCESS);// 请求成功
-       }else{
-           mHandler.sendEmptyMessage(NODATA_CHILD);// 内容无数据
-       }
+            }
+
+            mHandler.sendEmptyMessage(SUCCESS);// 请求成功
+//            System.out.println(">>>>周这里" + SUCCESS);
+//            System.out.println(">>>>22周这里" + mHandler);
+
+        } else {
+            mHandler.sendEmptyMessage(NODATA_CHILD);// 内容无数据
+        }
 
     }
 
@@ -318,6 +351,7 @@ public class CPIOddsFragment extends Fragment {
                     cpi_odds_recyclerView.setVisibility(View.VISIBLE);
                     mCpiframen.public_date_layout.setVisibility(View.VISIBLE);
                     mCpiframen.public_img_company.setVisibility(View.VISIBLE);
+//                    System.out.println(">>>>周这里" + mShowInfoBeans);
                     break;
                 case STARTLOADING://正在加载的时候
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
@@ -325,7 +359,7 @@ public class CPIOddsFragment extends Fragment {
                     cpi_odds_recyclerView.setVisibility(View.GONE);
                     cpi_fl_plate_loading.setVisibility(View.VISIBLE);
                     mCpiframen.mRefreshLayout.setRefreshing(true);
-                    mCpiframen.public_date_layout.setVisibility(View.GONE);
+//                    mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
                     break;
@@ -335,6 +369,7 @@ public class CPIOddsFragment extends Fragment {
                     cpi_fl_plate_loading.setVisibility(View.GONE);
                     mCpiframen.mRefreshLayout.setRefreshing(false);
                     cpi_fl_plate_networkError.setVisibility(View.VISIBLE);
+                    mCpiframen.isVisible=true;
                     mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
@@ -345,7 +380,7 @@ public class CPIOddsFragment extends Fragment {
                     mCpiframen.mRefreshLayout.setRefreshing(false);
                     cpi_fl_plate_networkError.setVisibility(View.GONE);
                     cpi_fl_plate_noData.setVisibility(View.VISIBLE);
-                    mCpiframen.public_date_layout.setVisibility(View.GONE);
+//                    mCpiframen.public_date_layout.setVisibility(View.GONE);
                     mCpiframen.public_img_company.setVisibility(View.GONE);
                     mCpiframen.public_img_filter.setVisibility(View.GONE);
                     break;

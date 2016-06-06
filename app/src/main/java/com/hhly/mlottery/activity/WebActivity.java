@@ -34,7 +34,6 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.ToastTools;
-import com.hhly.mlottery.view.IsBottomScrollView;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.exception.CyanException;
@@ -118,25 +117,11 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
     private void initScrollView() {
         //解决adjustresize和透明状态栏的冲突
         scrollview = (ScrollView) findViewById(R.id.scrollview);
-        final IsBottomScrollView isbottomscrollview = (IsBottomScrollView) findViewById(R.id.isbottomscrollview);
         final View decview = getWindow().getDecorView();
         decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 reLayout(decview, scrollview);
-            }
-        });
-        //解决mTv_check_info在webview还没加载时显示在顶部的问题
-        isbottomscrollview.setOnScrollToBottomLintener(new IsBottomScrollView.OnScrollToBottomListener() {
-            @Override
-            public void onScrollBottomListener(boolean isBottom) {
-                if (isBottom) {
-                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
-                        mTv_check_info.setVisibility(View.VISIBLE);
-                    } else {
-                        mTv_check_info.setVisibility(View.GONE);
-                    }
-                }
             }
         });
     }
@@ -298,8 +283,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         mCommentCount.setVisibility(View.VISIBLE);
         WebSettings webSettings = mWebView.getSettings();
         // 优先使用缓存
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setAppCacheEnabled(false);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setJavaScriptEnabled(true);
@@ -319,6 +304,8 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
         try {
             Intent intent = getIntent();
             url = intent.getStringExtra("key");
+//            url = "http://192.168.33.14:8080/gameweb/h5/index";
+//            url = "http://192.168.37.6:8080/gameweb/h5/index";
             imageurl = intent.getStringExtra("imageurl");
             title = intent.getStringExtra(INTENT_PARAMS_TITLE);
             subtitle = intent.getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
@@ -326,14 +313,18 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
             token = intent.getStringExtra("token");
+//            token ="fe95688ec6074e1cb4486c0bd3a60c34";
+//            String token =AppConstants.register.getData().getLoginToken();
+            String deviceId = AppConstants.deviceToken;
+//            url="http://game1.1332255.com:8082/h5/index?loginToken="+token+"&deviceToken="+deviceId;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
-            if (TextUtils.isEmpty(token)) {//token为空，说明是资讯，显示分享和评论
-                public_btn_set.setVisibility(View.VISIBLE);
-                scrollview.setVisibility(View.VISIBLE);
-            } else {//不是新闻资讯的时候隐藏分享和评论
+            if (!TextUtils.isEmpty(token) && reqMethod != null && reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
                 public_btn_set.setVisibility(View.GONE);
                 scrollview.setVisibility(View.GONE);
+            } else {//token为空，说明是资讯，显示分享和评论
+                public_btn_set.setVisibility(View.VISIBLE);
+                scrollview.setVisibility(View.VISIBLE);
             }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -341,20 +332,31 @@ public class WebActivity extends BaseActivity implements OnClickListener, CyanRe
                     view.loadUrl(url);
                     return true;
                 }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    // TODO Auto-generated method stub
+
+                    super.onPageFinished(view, url);
+                    L.i("lzftype=" + mType + "thirtid=" + mThird);
+                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
+                        mTv_check_info.setVisibility(View.VISIBLE);
+                    } else {
+                        mTv_check_info.setVisibility(View.GONE);
+                    }
+                }
             });
             //其他页传过来的reqMethod为post时，提交token  否则不提交
             if (reqMethod != null && token != null && reqMethod.equals("post")) {
 
-                mWebView.postUrl(url, token.getBytes("utf-8"));
-                System.out.println("lzfwebview" + url);
-
-
-            } else {
-                mWebView.loadUrl(url);
+//                mWebView.postUrl(url, token.getBytes("utf-8"));
+//                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
+                url = url.replace("{loginToken}", token);
+                url = url.replace("{deviceToken}", deviceId);
             }
-
-//
+            mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
+            L.d("CommonUtils:" + "token=" + token + "reqMethod" + reqMethod + "url=" + url);
 
 //            /**加載成功显示 分享按钮*/
 //            public_btn_set.setVisibility(View.VISIBLE);

@@ -67,6 +67,25 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
      */
     private LinearLayout mHistoryBattel;
 
+    /**
+     * 无主队近况
+     */
+    private LinearLayout mNoHomeRecentBattel;
+
+    /**
+     * 正常的主队近况
+     */
+    private LinearLayout mHomeRecentBattel;
+    /**
+     * 无客队近况
+     */
+    private LinearLayout mNoGuestRecentBattel;
+
+    /**
+     * 正常的客队近况
+     */
+    private LinearLayout mGuestRecentBattel;
+
     private View view;
     /**
      * 积分排行的listView
@@ -124,13 +143,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
      * 客队近况数据
      */
     private List<AnalyzeBean.TeamRecentEntity.GuestEntity.BattlesEntity> mGuestRecentList;
-    //六个模块
+    //五个模块
     private AnalyzeTitle mTitleRank;
     private AnalyzeTitle mTitleGoal;
     private AnalyzeTitle mTitleHistory;
     private AnalyzeTitle mTitleHomeRecently;
     private AnalyzeTitle mTitleGuestRecently;
-    private AnalyzeTitle mTitleOpinion;
     /**
      * 历史对战的文字概括
      */
@@ -219,14 +237,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
         mTitleHistory = (AnalyzeTitle) view.findViewById(R.id.analyze_title_history);
         mTitleHomeRecently = (AnalyzeTitle) view.findViewById(R.id.analyze_title_home_recently);
         mTitleGuestRecently = (AnalyzeTitle) view.findViewById(R.id.analyze_title_guest_recently);
-        mTitleOpinion = (AnalyzeTitle) view.findViewById(R.id.analyze_title_opinion);
 
         mTitleRank.setTitle(getActivity().getString(R.string.ranking));
         mTitleGoal.setTitle(getActivity().getString(R.string.goal_and_loss));
         mTitleHistory.setTitle(getActivity().getString(R.string.history_battle));
         mTitleHomeRecently.setTitle(getActivity().getString(R.string.home_recent));
         mTitleGuestRecently.setTitle(getActivity().getString(R.string.guest_recent));
-        mTitleOpinion.setTitle(getActivity().getString(R.string.opinion));
 
         //网络异常及正在加载的控件，
         mProgressBarLayout = (RelativeLayout) view.findViewById(R.id.analyze_progressbar);
@@ -261,11 +277,17 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
         mHomeText = (TextView) view.findViewById(R.id.analyze_homerecently_text);
         mGuestText = (TextView) view.findViewById(R.id.analyze_guestrecently_text);
 
-
+        //有无历史对战
         mNoHistoryBattel = (LinearLayout) view.findViewById(R.id.history_nodata);
         mHistoryBattel = (LinearLayout) view.findViewById(R.id.layout_history);
 
+        //有无主队近况
+        mNoHomeRecentBattel= (LinearLayout) view.findViewById(R.id.homeRecent_nodata);
+        mHomeRecentBattel= (LinearLayout) view.findViewById(R.id.layout_home_recent);
 
+        //有无客队近况
+        mNoGuestRecentBattel= (LinearLayout) view.findViewById(R.id.guest_recent_nodata);
+        mGuestRecentBattel= (LinearLayout) view.findViewById(R.id.layout_guest_recent);
     }
 
     /**
@@ -312,7 +334,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
         mTitleHistory.addLayout(R.layout.fragment_analyze_history);
         mTitleHomeRecently.addLayout(R.layout.fragment_analyze_homerecently);
         mTitleGuestRecently.addLayout(R.layout.fragment_analyze_guestrecently);
-        mTitleOpinion.addLayout(R.layout.fragment_analyze_opinion);
 
         initView();//初始化加载的布局的listview等
 
@@ -334,14 +355,48 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
             mHistoryText.setText(Html.fromHtml(setHistoryText(historyBattle)));//不同字不同颜色
         }
 
-        //主队近况
-        mHomeRecentList = analyzeBean.getTeamRecent().getHome().getBattles();
-        mHomeAdapter = new AnalyzeMatchAdapter(getActivity(), mHomeRecentList);
-        mHomeRecentListview.setAdapter(mHomeAdapter);
-        //客队近况
-        mGuestRecentList = analyzeBean.getTeamRecent().getGuest().getBattles();
-        mGuestAdapter = new AnalyzeMatchAdapter(getActivity(), mGuestRecentList);
-        mGuestRecentListview.setAdapter(mGuestAdapter);
+        if(analyzeBean.getTeamRecent().getHome()==null){ //无主队近况
+            mNoHomeRecentBattel.setVisibility(View.VISIBLE);
+            mHomeRecentBattel.setVisibility(View.GONE);
+        }else{
+
+            mHomeRecentList = analyzeBean.getTeamRecent().getHome().getBattles();
+            if(getActivity()==null){
+                return;
+            }
+            mHomeAdapter = new AnalyzeMatchAdapter(getActivity(), mHomeRecentList);
+            mHomeRecentListview.setAdapter(mHomeAdapter);
+            mNoHomeRecentBattel.setVisibility(View.GONE);
+            mHomeRecentBattel.setVisibility(View.VISIBLE);
+
+            AnalyzeBean.TeamRecentEntity.HomeEntity homeRecent = analyzeBean.getTeamRecent().getHome();
+
+            mHomeText.setText(Html.fromHtml(setHomeRecentText(homeRecent)));
+        }
+
+        //客队近况无比赛
+
+        if(analyzeBean.getTeamRecent().getGuest()==null){
+            mGuestRecentBattel.setVisibility(View.GONE);
+            mNoGuestRecentBattel.setVisibility(View.VISIBLE);
+        }else{
+            //客队近况
+            mGuestRecentList = analyzeBean.getTeamRecent().getGuest().getBattles();
+            if(getActivity()==null){
+                return;
+            }
+            mGuestAdapter = new AnalyzeMatchAdapter(getActivity(), mGuestRecentList);
+            mGuestRecentListview.setAdapter(mGuestAdapter);
+
+            mGuestRecentBattel.setVisibility(View.VISIBLE);
+            mNoGuestRecentBattel.setVisibility(View.GONE);
+
+            AnalyzeBean.TeamRecentEntity.GuestEntity guestRecent = analyzeBean.getTeamRecent().getGuest();
+
+            mGuestText.setText(Html.fromHtml(setGuestRecentText(guestRecent)));
+        }
+
+
         //积分排名
         mRankList = analyzeBean.getScoreRank();
         mRankAdapter = new AnalyzeRankAdapter(getActivity(), mRankList);
@@ -351,16 +406,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
         mGoalList = analyzeBean.getGoalAndLoss();
         mGoalAdapter = new AnalyzeRankAdapter(getActivity(), mGoalList);
         mGoalAndLossListview.setAdapter(mGoalAdapter);
-
-
-        AnalyzeBean.TeamRecentEntity.HomeEntity homeRecent = analyzeBean.getTeamRecent().getHome();
-
-        mHomeText.setText(Html.fromHtml(setHomeRecentText(homeRecent)));
-
-        AnalyzeBean.TeamRecentEntity.GuestEntity guestRecent = analyzeBean.getTeamRecent().getGuest();
-
-        mGuestText.setText(Html.fromHtml(setGuestRecentText(guestRecent)));
-
         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 
     }

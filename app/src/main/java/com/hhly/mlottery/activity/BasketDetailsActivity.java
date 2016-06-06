@@ -781,10 +781,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                     addFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
-
-                mHomeScore.setText("70");
-                mGuestScore.setText("80");
-                mVS.setText(":");
                 break;
         }
     }

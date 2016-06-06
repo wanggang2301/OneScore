@@ -1190,9 +1190,21 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
              * 过滤筛选0场的情况，防止筛选0场时刷新 切换设置时出现异常
              */
             if (mChickedFilter.size() != 0 || mBasketballType == TYPE_FOCUS){
-                updateAdapter();
-                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (childrenDataList != null) {
+                    if (childrenDataList.size() != 0) {
+                        updateAdapter();
+                        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }else{
+                        mbasket_unfiltrate.setVisibility(View.VISIBLE);
+                        mSwipeRefreshLayout.setVisibility(View.GONE);
+                        mLoadingLayout.setVisibility(View.GONE);
+                    }
+                }else{
+                    mbasket_unfiltrate.setVisibility(View.VISIBLE);
+                    mSwipeRefreshLayout.setVisibility(View.GONE);
+                    mLoadingLayout.setVisibility(View.GONE);
+                }
             }else{
 
                 mbasket_unfiltrate.setVisibility(View.VISIBLE);
