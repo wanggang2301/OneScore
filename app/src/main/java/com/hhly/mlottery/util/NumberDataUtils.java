@@ -1370,9 +1370,9 @@ public class NumberDataUtils {
                 number_hk_jy.setText(context.getResources().getString(R.string.number_bjsc_ye));
             }
 
-            if(number == 49){
+            if (number == 49) {
                 number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_he));
-            }else if (number % 2 == 0) {
+            } else if (number % 2 == 0) {
                 number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
             } else {
                 number_hk_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));
@@ -1474,6 +1474,71 @@ public class NumberDataUtils {
                     number_hk_tm.setTextColor(context.getResources().getColor(R.color.number_green));
                     break;
             }
+        }
+    }
+
+    /**
+     * 设置彩种名称
+     */
+    public static void setTextTitle(Context mContext, TextView tv, String name) {
+        switch (name) {
+            case "1":// 香港彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_hk));
+                break;
+            case "6":// 七星彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_qxc));
+                break;
+            case "15":// 北京赛车
+                tv.setText(mContext.getResources().getString(R.string.number_cz_bj_sc));
+                break;
+            case "8":// 广东快乐十分
+                tv.setText(mContext.getResources().getString(R.string.number_cz_gd_klsf));
+                break;
+            case "11":// 湖南快乐十分
+                tv.setText(mContext.getResources().getString(R.string.number_cz_hn_klsf));
+                break;
+            case "19":// 幸运农场
+                tv.setText(mContext.getResources().getString(R.string.number_cz_xylc));
+                break;
+            case "2":// 重庆时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_cq_ssc));
+                break;
+            case "3":// 江西时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_jx_ssc));
+                break;
+            case "4":// 新疆时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_xj_ssc));
+                break;
+            case "5":// 云南时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_yn_ssc));
+                break;
+            case "23":// 天津时时彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_tj_ssc));
+                break;
+            case "7":// 广东十一选五
+                tv.setText(mContext.getResources().getString(R.string.number_cz_gd_syxw));
+                break;
+            case "9":// 湖北十一选五
+                tv.setText(mContext.getResources().getString(R.string.number_cz_hb_syxw));
+                break;
+            case "20":// 江苏十一选五
+                tv.setText(mContext.getResources().getString(R.string.number_cz_js_syxw));
+                break;
+            case "21":// 江西十一选五
+                tv.setText(mContext.getResources().getString(R.string.number_cz_jx_syxw));
+                break;
+            case "22":// 山东十一选五
+                tv.setText(mContext.getResources().getString(R.string.number_cz_sd_syxw));
+                break;
+            case "10":// 安徽快3
+                tv.setText(mContext.getResources().getString(R.string.number_cz_ah_ks));
+                break;
+            case "16":// 江苏快3
+                tv.setText(mContext.getResources().getString(R.string.number_cz_js_ks));
+                break;
+            case "18":// 广西快3
+                tv.setText(mContext.getResources().getString(R.string.number_cz_gx_ks));
+                break;
         }
     }
 }
