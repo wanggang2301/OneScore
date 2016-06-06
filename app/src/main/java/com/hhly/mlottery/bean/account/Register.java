@@ -2,6 +2,7 @@ package com.hhly.mlottery.bean.account;
 
 /**
  * Created by lyx on 2016/5/19.
+ * 注册返回bean （完整内容）
  */
 public class Register {
 

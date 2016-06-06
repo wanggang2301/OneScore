@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ProgressDialog progressBar;
     private ImageView iv_delete;
 
-    public static final int REQUESTCODE_FINDPW = 100;
+    public static final int REQUESTCODE_FINDPW = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +157,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 login();
                 break;
             case R.id.tv_forgetpw:
+                MobclickAgent.onEvent(mContext, "LoginActivity_FindPassWord");
                 startActivityForResult(new Intent(this , FindPassWordActivity.class) , REQUESTCODE_FINDPW);
                 break;
             default:
@@ -194,7 +195,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             setResult(RESULT_OK);
                             finish();
                         }else{
-                            CommonUtils.handlerRequestResult(register.getResult());
+                            CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
                         }
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
@@ -227,11 +228,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK){
-            if (requestCode == HomePagerActivity.REQUESTCODE_LOGIN //  注册成功返回
-                    || requestCode == REQUESTCODE_FINDPW){ // 重置密码成功返回
-
-                setResult(RESULT_OK);
-                finish();
+            switch (requestCode){
+                case HomePagerActivity.REQUESTCODE_LOGIN:
+                    L.i(TAG , "注册成功返回" );
+                    setResult(RESULT_OK);
+                    finish();
+                    break;
+                case REQUESTCODE_FINDPW:
+                    L.i(TAG , "忘记密码成功返回" );
+                    break;
             }
         }
 

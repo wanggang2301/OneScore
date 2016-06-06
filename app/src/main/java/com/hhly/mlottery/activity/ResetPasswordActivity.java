@@ -11,13 +11,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.bean.account.ResetPassword;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.AccountType;
 import com.umeng.analytics.MobclickAgent;
 
@@ -118,6 +121,7 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.tv_comfirm:
+                MobclickAgent.onEvent(mContext, "ResetPasswordActivity_Reset_Password_Confirm");
                 modifyPassword();
                 break;
             default:
@@ -132,29 +136,25 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
 
             String url = BaseURLs.URL_RESETPASSWORD;
             Map<String, String> param = new HashMap<>();
-            param.put("account" , phone);
+            param.put("phone" , phone);
             param.put("accountType" , AccountType.TYPE_PHONE);
             param.put("newPassword" , MD5Util.getMD5(pwd));
             param.put("smsCode" , verifyCode);
 
-            VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+            VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<ResetPassword>() {
                 @Override
-                public void onResponse(Register register) {
-                    // TODO
-
-
+                public void onResponse(ResetPassword reset) {
                     progressBar.dismiss();
 
-//                    if (register != null&& register.getResult() == AccountResultCode.SUCC){
-//                        CommonUtils.saveRegisterInfo(register);
-//                        UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
-//                        L.d(TAG,"注册成功");
-//                        setResult(RESULT_OK);
-//                        finish();
-//                    }else{
-//                        L.e(TAG,"成功请求，注册失败");
-//                        CommonUtils.handlerRequestResult(register.getResult());
-//                    }
+                    if (reset != null&& reset.getResult() == AccountResultCode.SUCC){
+                        UiUtils.toast(MyApp.getInstance(), R.string.reset_password_succ);
+                        L.d(TAG,"重置密码成功");
+                        setResult(RESULT_OK);
+                        finish();
+                    }else{
+                        L.e(TAG,"成功请求，重置密码失败");
+                        CommonUtils.handlerRequestResult(reset.getResult() , reset.getMsg());
+                    }
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
                 @Override
@@ -163,7 +163,7 @@ public class ResetPasswordActivity extends BaseActivity implements View.OnClickL
                     L.e(TAG,"重置密码失败");
                     UiUtils.toast(ResetPasswordActivity.this , R.string.immediate_unconection);
                 }
-            } , Register.class);
+            } , ResetPassword.class);
         }
     }
 }

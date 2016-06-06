@@ -251,7 +251,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     finish();
                 }else{
                     L.e(TAG,"成功请求，注册失败");
-                    CommonUtils.handlerRequestResult(register.getResult());
+                    CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -279,8 +279,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onGetResponce(SendSmsCode code) {
-                countDown.cancel();
-                enableVeryCode();
+//              // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
+                if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
+                        || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
+                        || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
+                        ){
+                    countDown.cancel();
+                    enableVeryCode();
+                }
             }
 
             @Override

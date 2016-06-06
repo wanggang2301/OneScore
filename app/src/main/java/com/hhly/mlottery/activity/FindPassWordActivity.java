@@ -20,6 +20,7 @@ import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.OperateType;
 import com.umeng.analytics.MobclickAgent;
 
@@ -34,7 +35,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
     private static final java.lang.String TAG = "FindPassWordActivity";
     public static final java.lang.String PHONE = "phone";
     public static final java.lang.String VERIFYCODE = "verifycode";
-    private static final int RESET_PW = 100;
+    private static final int RESET_PW = 300;
     private EditText et_username , et_verifycode;
     private TextView tv_nextstep , tv_verycode;
     private ImageView iv_delete;
@@ -168,7 +169,12 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onGetResponce(SendSmsCode code) {
-                resetCountDown();
+                // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
+                if (code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
+                        || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
+                        ){
+                    resetCountDown();
+                }
             }
 
             @Override
@@ -217,9 +223,10 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_OK){
+        if (resultCode == RESULT_OK){
             switch (requestCode){
                 case RESET_PW:
+                    L.d(TAG , " 重置密码成功返回");
                     setResult(RESULT_OK);
                     finish();
                     break;

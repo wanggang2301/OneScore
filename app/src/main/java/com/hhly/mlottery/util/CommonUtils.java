@@ -119,7 +119,16 @@ public class CommonUtils {
      * 请求账户信息返回统一处理
      * @param rescode
      */
+    @Deprecated
     public static void handlerRequestResult(int rescode){
+        handlerRequestResult(rescode , null);
+    }
+
+    /**
+     * 请求账户信息返回统一处理
+     * @param rescode
+     */
+    public static void handlerRequestResult(int rescode , String defaultMessage){
         L.d(TAG , "handlerRequestResult rescode =  "+ rescode);
         switch (rescode){
             case AccountResultCode.SUCC:
@@ -191,9 +200,14 @@ public class CommonUtils {
             case AccountResultCode.USERNAME_PASS_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
                 break;
+            default:
+                L.e(TAG , "未定义错误码 : rescode = "+ rescode + " , defaultMessage = "+ defaultMessage);
+                if (!TextUtils.isEmpty(defaultMessage)){
+
+                    UiUtils.toast(MyApp.getInstance() , defaultMessage);
+                }
+                break;
         }
-
-
     }
 
 
@@ -216,7 +230,7 @@ public class CommonUtils {
                 @Override
                 public void onResponse(SendSmsCode jsonObject) {
                     callBack.onGetResponce(jsonObject);
-                    CommonUtils.handlerRequestResult(jsonObject.getResult());
+                    handlerRequestResult(jsonObject.getResult() , jsonObject.getMsg());
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
                 @Override

@@ -109,7 +109,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                     setResult(RESULT_OK);
                     finish();
                 }else{
-                    CommonUtils.handlerRequestResult(register.getResult());
+                    CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
