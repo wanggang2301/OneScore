@@ -77,6 +77,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     private int def = 0;
     private boolean isHiddenCommentCount = false;//是否显示评论数  true  永不显示  false 打开键盘隐藏  隐藏键盘显示
     private Context mContext;
+    private onKeyBoardHiddenLisener mKeyBoardHiddenLisener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -300,6 +301,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
             if (model.equals("m2note")) {
                 h -= 145;
             }
+            mKeyBoardHiddenLisener.keyBoardShow();
 
         } else if (h < 300) {//软键盘隐藏
             if (h != 0) {
@@ -320,7 +322,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 mSend.setVisibility(View.VISIBLE);
                 mCommentCount.setVisibility(View.GONE);
             }
-//            mEditText.setHint(R.string.hint_content);
+            mEditText.setHint(R.string.hint_content);
+            mKeyBoardHiddenLisener.keyBoardHidden();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
             if (isShowComment) {
@@ -487,4 +490,13 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
     }
 
+    public void setKeyBoardHiddenLisener(onKeyBoardHiddenLisener keyBoardHiddenLisener) {
+        this.mKeyBoardHiddenLisener = keyBoardHiddenLisener;
+    }
+
+    public interface onKeyBoardHiddenLisener {
+        void keyBoardHidden();
+
+        void keyBoardShow();
+    }
 }

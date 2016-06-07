@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.animation.ObjectAnimator;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -19,9 +20,9 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
+import com.hhly.mlottery.frame.ChatFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.widget.ProgressWebView;
@@ -61,7 +62,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     private Tencent mTencent;
     //    private ScrollView scrollview;
     private SharePopupWindow sharePopupWindow;
-    private String model;
+    private float y;
 
 
     @Override
@@ -72,7 +73,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         initData();
         //获取评论信息 无需登录  这里主要拿评论总数和文章id
         initEvent();
-        model = DeviceInfo.getModel().replace(" ", "");
+//        model = DeviceInfo.getModel().replace(" ", "");
 //        System.out.println("lzf" +model );
     }
 
@@ -105,6 +106,12 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         }
     }
 
+    public void d() {
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mTv_check_info, "translationY", mTv_check_info.getY(), mTv_check_info.getY() + y)
+                .setDuration(50);
+        objectAnimator.start();
+
+    }
 
     private void initView() {
         ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
@@ -121,6 +128,34 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         mTv_check_info = (TextView) findViewById(R.id.tv_check_info);
         mTv_check_info.setVisibility(View.GONE);
         mPublic_img_back.setOnClickListener(this);
+        mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
+            @Override
+            public void onSChanged(int l, int t, int oldl, int oldt) {
+                System.out.println("lzf+l=" + l + "t=" + t + "oldl=" + oldl + "oldt" + oldt);
+                System.out.println("lzf+getContentHeight=" + mWebView.getContentHeight() * mWebView.getScale() + "getHeight=" + (mWebView.getHeight() + mWebView.getScrollY()));
+                y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
+                if (y < 2) {
+
+                    //已经处于底端
+//                    mTv_check_info.setVisibility(View.VISIBLE);
+                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
+                        mTv_check_info.setVisibility(View.VISIBLE);
+                    } else {
+                        mTv_check_info.setVisibility(View.GONE);
+                    }
+                } else {
+                    if (mTv_check_info.getVisibility() == View.VISIBLE) {
+                        if (y > 150) {
+                            mTv_check_info.setVisibility(View.GONE);
+//                            d();
+                        } else {
+                            mTv_check_info.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+
+            }
+        });
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
         webSettings.setAppCacheEnabled(true);
@@ -168,7 +203,19 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                scrollview.setVisibility(View.VISIBLE);
                 //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
                 //String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager
-                CyUtils.addComment(url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                ChatFragment chatFragment=new ChatFragment();
+                chatFragment.setKeyBoardHiddenLisener(new ChatFragment.onKeyBoardHiddenLisener() {
+                    @Override
+                    public void keyBoardHidden() {
+
+                    }
+
+                    @Override
+                    public void keyBoardShow() {
+                        mTv_check_info.setVisibility(View.GONE);
+                    }
+                });
+                CyUtils.addComment(chatFragment,url, title, false, false, getSupportFragmentManager(), R.id.comment);
             }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -177,18 +224,18 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                     return true;
                 }
 
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    // TODO Auto-generated method stub
-
-                    super.onPageFinished(view, url);
-                    L.i("lzftype=" + mType + "thirtid=" + mThird);
-                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
-                        mTv_check_info.setVisibility(View.VISIBLE);
-                    } else {
-                        mTv_check_info.setVisibility(View.GONE);
-                    }
-                }
+//                @Override
+//                public void onPageFinished(WebView view, String url) {
+//                    // TODO Auto-generated method stub
+//
+//                    super.onPageFinished(view, url);
+//                    L.i("lzftype=" + mType + "thirtid=" + mThird);
+//                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
+//                        mTv_check_info.setVisibility(View.VISIBLE);
+//                    } else {
+//                        mTv_check_info.setVisibility(View.GONE);
+//                    }
+//                }
             });
             //其他页传过来的reqMethod为post时，提交token  否则不提交
             if (reqMethod != null && token != null && reqMethod.equals("post")) {
