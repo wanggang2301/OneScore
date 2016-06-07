@@ -491,17 +491,7 @@ public class UiUtils {
         boolean temp =  m.matches();
         if (temp){
             try {
-
-                L.i(TAG , "a".getBytes("GBK").length +"");
-                L.i(TAG , "我".getBytes("GBK").length +"");
-                L.i(TAG , "來".getBytes("GBK").length +"");
-                L.i(TAG , "1".getBytes("GBK").length +"");
-                L.i(TAG , "-".getBytes("GBK").length +"");
-                L.i(TAG , "_".getBytes("GBK").length +"");
-
-                L.i(TAG , nickName.getBytes("GBK").length +"");
-
-
+                L.i(TAG ,nickName + " gbk lenght = "+ nickName.getBytes("GBK").length +"");
                 if (nickName.getBytes("GBK").length <= NICKNAME_MAX_LENGTH){
                     match = true;
                 }
