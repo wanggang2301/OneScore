@@ -1393,8 +1393,6 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 hSocketClient.close();
             }
         }
-
-
     }
 
 

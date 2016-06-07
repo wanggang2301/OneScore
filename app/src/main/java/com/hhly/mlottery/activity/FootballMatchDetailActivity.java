@@ -761,22 +761,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
         isInitedViewPager = true;
 
-        /*mViewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        //mRefreshLayout.setEnabled(false);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        //mRefreshLayout.setEnabled(true);
-                        break;
-                }
-                return false;
-            }
-        });*/
     }
 
     @Override
