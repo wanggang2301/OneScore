@@ -88,7 +88,7 @@ public class AppConstants {
 	public static final int FORTY_NINE = 49;
 
 	// 彩票种类名称
-	public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
+	/*public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_cq_ssc), // "重庆时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_jx_ssc), // "江西时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_xj_ssc),// "新疆时时彩"
@@ -111,7 +111,7 @@ public class AppConstants {
 			MyApp.getContext().getResources().getString(R.string.number_cz_jx_syxw),// "江西十一选五"
 			MyApp.getContext().getResources().getString(R.string.number_cz_sd_syxw),// "山东十一选五"
 			MyApp.getContext().getResources().getString(R.string.number_cz_tj_ssc) // "天津时时彩"
-	};
+	};*/
 
 	// 北京赛车开奖号码
 	public static int[] numberCarNos = { R.mipmap.car_no1, R.mipmap.car_no2, R.mipmap.car_no3, R.mipmap.car_no4, R.mipmap.car_no5, R.mipmap.car_no6, R.mipmap.car_no7,

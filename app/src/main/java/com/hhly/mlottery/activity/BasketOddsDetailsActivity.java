@@ -20,6 +20,8 @@ import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsDetailsBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.OddsDataEntity;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
@@ -48,7 +50,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
 
     private List<String> mCompany = new ArrayList<>(); //公司名list
     private String mOddsId ; //公司id
-//    private String mOddsType; //赔率id
+    //    private String mOddsType; //赔率id
     private ImageView mBackImg;
     private TextView mTittle;
 
@@ -139,6 +141,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.basket_odds_details_refreshlayout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(BasketOddsDetailsActivity.this);
+        mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(this, StaticValues.REFRASH_OFFSET_END));
         mRefresh.setRefreshing(true);
 
         solveConflict(mListView1);
@@ -313,7 +316,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         @Override
         public void convert(ViewHolder holder, BasketDetailOddsBean.CompanyOddsEntity data) {
             if (data != null) {
-                    holder.setText(R.id.basket_odds_company_text , data.getCompany());
+                holder.setText(R.id.basket_odds_company_text , data.getCompany());
             }
             if (mPosition == holder.getPosition()) {
                 holder.setBackgroundColor(R.id.basket_odds_company_text , getResources().getColor(R.color.black_grounding));

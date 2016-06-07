@@ -452,40 +452,42 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         } else {
             for (int i = 0, len = jsonObject.getMenus().getContent().size(); i < len; i++) {
                 HomeContentEntity homeContentEntity = jsonObject.getMenus().getContent().get(i);
-                switch (homeContentEntity.getJumpAddr()) {
-                    case "30":
-                    case "31":
-                    case "350":
-                    case "32":
-                    case "33":
-                    case "34":
-                    case "35":
-                    case "36":
-                    case "37":
-                    case "38":
-                    case "39":
-                    case "310":
-                    case "311":
-                    case "312":
-                    case "313":
-                    case "314":
-                    case "315":
-                    case "316":
-                    case "317":
-                    case "318":
-                    case "319":
-                    case "320":
-                    case "321":
-                    case "322":
-                    case "323":
-                        // 正在审核中，不显示彩票信息
-                        if ("false".equals(jsonObject.getIsAudit())) {
+                if (homeContentEntity != null) {
+                    switch (homeContentEntity.getJumpAddr()) {
+                        case "30":
+                        case "31":
+                        case "350":
+                        case "32":
+                        case "33":
+                        case "34":
+                        case "35":
+                        case "36":
+                        case "37":
+                        case "38":
+                        case "39":
+                        case "310":
+                        case "311":
+                        case "312":
+                        case "313":
+                        case "314":
+                        case "315":
+                        case "316":
+                        case "317":
+                        case "318":
+                        case "319":
+                        case "320":
+                        case "321":
+                        case "322":
+                        case "323":
+                            // 正在审核中，不显示彩票信息
+                            if ("false".equals(jsonObject.getIsAudit())) {
+                                contentList.add(homeContentEntity);
+                            }
+                            break;
+                        default:
                             contentList.add(homeContentEntity);
-                        }
-                        break;
-                    default:
-                        contentList.add(homeContentEntity);
-                        break;
+                            break;
+                    }
                 }
             }
             menusEntity.setContent(contentList);
@@ -498,11 +500,15 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         } else {
             for (int i = 0, len = jsonObject.getOtherLists().size(); i < len; i++) {
                 HomeOtherListsEntity homeOtherListsEntity = jsonObject.getOtherLists().get(i);
-                if (homeOtherListsEntity.getContent().getLabType() == 3 && "true".equals(jsonObject.getIsAudit())) {
-                    // 正在审核中，不显示彩票信息
-                } else {
-                    // 审核完成，显示全部内容
-                    otherList.add(homeOtherListsEntity);
+                if (homeOtherListsEntity != null) {
+                    if (homeOtherListsEntity.getContent() != null) {
+                        if (homeOtherListsEntity.getContent().getLabType() == 3 && "true".equals(jsonObject.getIsAudit())) {
+                            // 正在审核中，不显示彩票信息
+                        } else {
+                            // 审核完成，显示全部内容
+                            otherList.add(homeOtherListsEntity);
+                        }
+                    }
                 }
             }
         }
@@ -657,7 +663,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      * 获取本地数据
      */
     public void readObjectFromFile() {
-        L.d("xxx","获取本地数据.");
+        L.d("xxx", "获取本地数据.");
         String jsondata = PreferenceUtil.getString(AppConstants.HOME_PAGER_DATA_KEY, null);
         if (jsondata != null) {
             mHomePagerEntity = JSON.parseObject(jsondata, HomePagerEntity.class);
@@ -703,7 +709,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         switch (v.getId()) {
             case R.id.iv_account:
                 MobclickAgent.onEvent(mContext, "LoginActivity_Start");
-                if (CommonUtils.isLogin()){
+                if (CommonUtils.isLogin()) {
                     goToAccountActivity();
                 } else {
                     goToLoginActivity();

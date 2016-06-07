@@ -412,20 +412,15 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         /**
          * 去除两端的空格，trim()；  防止-->  "XX   ..."情况
          */
-        if(childredata.getHomeTeam()==null){
-            holder.home_name.setText("");
-            holder.guest_name.setText(childredata.getGuestTeam().trim());
-        }
-        else if(childredata.getGuestTeam()==null){
+        if (childredata.getHomeTeam() != null) {
             holder.home_name.setText(childredata.getHomeTeam().trim());
-            holder.guest_name.setText("");
-        }else if(childredata.getHomeTeam()== null&&childredata.getGuestTeam()==null){
-            holder.home_name.setText("");
-            holder.guest_name.setText("");
+        }else{
+            holder.home_name.setText("--");
         }
-        else{
-            holder.home_name.setText(childredata.getHomeTeam().trim());
+        if (childredata.getGuestTeam() != null) {
             holder.guest_name.setText(childredata.getGuestTeam().trim());
+        }else{
+            holder.guest_name.setText("--");
         }
 
 
