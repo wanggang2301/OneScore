@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -190,6 +192,7 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                 builder.setMessage(mMessage);// 提示内容
             }
             builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
