@@ -12,8 +12,10 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_height"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         >
+
         <include layout="@layout/layout_header"/>
     </RelativeLayout>
     <!--为了查看详细数据按钮不吸底-->
@@ -21,7 +23,7 @@
         android:id="@+id/isbottomscrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/scrollview"
+        android:layout_above="@+id/comment"
         android:layout_below="@+id/top"
         android:fillViewport="true"
         >
@@ -41,6 +43,7 @@
                 android:id="@+id/tv_check_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/baseweb_webview"
                 android:layout_marginBottom="@dimen/y24"
                 android:layout_marginLeft="@dimen/x30"
                 android:layout_marginRight="@dimen/x30"
@@ -53,20 +56,17 @@
                 android:text="@string/webview_check_info"
                 android:textColor="@color/white"
                 android:textSize="@dimen/number_title"
-                android:layout_below="@+id/baseweb_webview"
                 />
         </RelativeLayout>
 
     </com.hhly.mlottery.view.IsBottomScrollView>
     <!--解决adjustresize和透明状态栏的冲突-->
     <ScrollView
-        android:id="@+id/scrollview"
+        android:id="@+id/comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         >
-
-        <include layout="@layout/inputcomment_layout"/>
     </ScrollView>
-
 </RelativeLayout>
+

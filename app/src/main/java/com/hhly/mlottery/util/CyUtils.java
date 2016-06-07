@@ -2,9 +2,12 @@ package com.hhly.mlottery.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.fastjson.JSON;
+import com.hhly.mlottery.frame.ChatFragment;
 import com.sohu.cyan.android.sdk.api.CallBack;
 import com.sohu.cyan.android.sdk.api.Config;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
@@ -26,12 +29,19 @@ import java.io.File;
  */
 public class CyUtils {
     public static boolean isLogin = false;
+    public static final int JUMP_COMMENT_QUESTCODE = 3;//跳转登录界面的请求码
+    public static final int JUMP_QUESTCODE = 1;//跳转全部评论页面的请求码
+    public static final int SINGLE_PAGE_COMMENT = 30;//一页获取的评论数
+    public static final int JUMP_RESULTCODE = 2;//一页获取的评论数
+    public static final int RESULT_OK = -1;//登录界面返回的结果码
+    public static final String ISHIDDENCOMMENTCOUNT = "isHiddenCommentCount";
+    public static final String ISSHOWCOMMENT = "isShowComment";
+    public static final String INTENT_PARAMS_SID = "sourceid";
+    public static final String INTENT_PARAMS_TITLE = "title";
 
     //初始化畅言
     public static void initCy(Context context) {
         Config config = new Config();
-//        Config.CommentSettings comment = config.comment;
-//        comment.useFace=true;
         try {
             CyanSdk.register(context, "cyslrkBTR", "021bf43427836304a81c1ff382f326e3",
                     "http://10.2.58.251:8081/login-success.html", config);
@@ -41,6 +51,18 @@ public class CyUtils {
             e.printStackTrace();
             L.i("lzf初始化畅言失败");
         }
+    }
+
+    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行  注意R.id.comment此容器最好是scrollview
+    public static void addComment(String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager, int container) {
+        ChatFragment fragment = new ChatFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(CyUtils.INTENT_PARAMS_SID, url);//需要评论的文章的url或者其他唯一标识
+        bundle.putString(CyUtils.INTENT_PARAMS_TITLE, title);//需要评论的文章的标题
+        bundle.putBoolean(CyUtils.ISHIDDENCOMMENTCOUNT, ishiddencommentcount);//是否隐藏评论数按钮
+        bundle.putBoolean(CyUtils.ISSHOWCOMMENT, isshowcomment);//是否显示评论列表
+        fragment.setArguments(bundle);
+        fragmentManager.beginTransaction().add(container, fragment).commit();
     }
 
     //单点登录

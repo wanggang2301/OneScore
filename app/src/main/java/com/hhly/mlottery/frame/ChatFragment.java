@@ -16,12 +16,14 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.CounselCommentActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
 import com.hhly.mlottery.config.StaticValues;
@@ -46,7 +48,7 @@ import java.util.ArrayList;
 
 /**
  * @author hhly204
- * @ClassName: ChatFragment
+ * @ClassName: ChatFragment    注意  装此碎片的容器，只有评论框时必须是scrollview 有评论框和评论列表时  必须是RelativeLayout
  * @Description: 全部评论页面
  * @date 2016-6-3
  */
@@ -64,9 +66,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     private CyanSdk sdk;
     private String souceid;//被评论的资源的唯一标识
     private String title;//文章的标题
-    private static final int SINGLE_PAGE_COMMENT = 30;//一页获取的评论数
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
-    private int cmt_sum;//评论总数
+    public static int cmt_sum;//评论总数
     private int mCurrentPager = 1;//页数
     private boolean isRequestFinish = true;//是否加载评论结束
     private boolean issubmitFinish = true;//是否提交评论结束
@@ -75,7 +76,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     private String model;
     private int def = 0;
     private boolean isHiddenCommentCount = false;//是否显示评论数  true  永不显示  false 打开键盘隐藏  隐藏键盘显示
-    private static final int JUMP_COMMENT_QUESTCODE = 3;
     private Context mContext;
 
     @Override
@@ -87,15 +87,15 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         initListView();
         //获取评论的一切信息
         if (!TextUtils.isEmpty(souceid)) {
-            loadTopic(souceid, title);
+            if (isShowComment) {
+                loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
+            } else {
+                loadTopic(souceid, title, 0);
+            }
+
         }
         pullUpLoad();//上拉加载更多
         model = DeviceInfo.getModel().replace(" ", "");
-        if (isShowComment) {//显示评论列表
-            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-        } else {//隐藏评论列表
-            mSwipeRefreshLayout.setVisibility(View.GONE);
-        }
         return mView;
     }
 
@@ -103,12 +103,17 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         mContext = getActivity() == null ? MyApp.getContext() : getActivity();
         sdk = CyanSdk.getInstance(mContext);
         Bundle bundle = getArguments();
-        souceid = bundle.getString("souceid");
-        L.i("lzfsouceidfg" + souceid);
-        title = bundle.getString("title");
-        isHiddenCommentCount = bundle.getBoolean("isHiddenCommentCount");
-        isShowComment = bundle.getBoolean("isShowComment");
-
+        if (bundle != null) {
+            souceid = bundle.getString(CyUtils.INTENT_PARAMS_SID);
+            L.i("lzfsouceidfg" + souceid);
+            title = bundle.getString(CyUtils.INTENT_PARAMS_TITLE);
+            isHiddenCommentCount = bundle.getBoolean(CyUtils.ISHIDDENCOMMENTCOUNT);
+            isShowComment = bundle.getBoolean(CyUtils.ISSHOWCOMMENT);
+        }
+//        单点登录   nickname可以相同  用户id不能相同
+        if (CommonUtils.isLogin()) {
+            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+        }
     }
 
     private void initListView() {
@@ -134,6 +139,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
 
         mCommentCount = (TextView) mView.findViewById(R.id.tv_commentcount);
+        mCommentCount.setOnClickListener(this);
         mEditText = (EditText) mView.findViewById(R.id.et_comment);
         mEditText.requestFocus();
         mEditText.setSelected(true);
@@ -175,7 +181,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 if (!CommonUtils.isLogin()) {
                     //跳转登录界面
                     Intent intent1 = new Intent(mContext, LoginActivity.class);
-                    startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
+                    startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                 }
             }
         });
@@ -248,7 +254,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         mProgressBar.setVisibility(View.VISIBLE);
         isRequestFinish = false;
         mLoadMore.setText(R.string.foot_loadingmore);
-        sdk.getTopicComments(topicid, SINGLE_PAGE_COMMENT, page, null, "", 1, 5, new CyanRequestListener<TopicCommentsResp>() {
+        sdk.getTopicComments(topicid, CyUtils.SINGLE_PAGE_COMMENT, page, null, "", 1, 5, new CyanRequestListener<TopicCommentsResp>() {
             @Override
             public void onRequestSucceeded(TopicCommentsResp topicCommentsResp) {
                 isRequestFinish = true;
@@ -317,10 +323,18 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 //            mEditText.setHint(R.string.hint_content);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) scrollview.getLayoutParams();
+            if (isShowComment) {
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+                lp.setMargins(0, 0, 0, h - def);
+            } else {
+                ScrollView.LayoutParams lp = (ScrollView.LayoutParams) scrollview.getLayoutParams();
+                lp.setMargins(0, 0, 0, h - def);
+            }
+//            ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) scrollview.getLayoutParams();
+//            lp.setMargins(0, 0, 0, h - def);
 //            int x= DisplayUtil.px2dip(WebActivity.this, h - def);
 //            Log.e("lzfh - def", (h - def) + "");
-            lp.setMargins(0, 0, 0, h - def);
+
             scrollview.requestLayout();
         }
     }
@@ -328,13 +342,9 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.public_img_back://返回
-//                CyUtils.hideKeyBoard(mContext);
-////                setResult(2, new Intent().putExtra("cmt_sum", cmt_sum));
-//                MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Exit");
-//                finish();
-//                break;
             case R.id.iv_send://发送评论
+                boolean x = mSwipeRefreshLayout.getVisibility() == View.VISIBLE;
+                System.out.println("lzfonResume" + x);
                 MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
@@ -357,14 +367,19 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                     } else {
                         //跳转登录界面
                         Intent intent1 = new Intent(mContext, LoginActivity.class);
-                        startActivityForResult(intent1, JUMP_COMMENT_QUESTCODE);
+                        startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                     }
 
-
-                    CyUtils.hideKeyBoard(getActivity());
-                    mEditText.clearFocus();
                 }
-
+                break;
+            case R.id.tv_commentcount://评论数
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_CommentCount");
+                Intent intent = new Intent(mContext, CounselCommentActivity.class);
+                intent.putExtra(CyUtils.INTENT_PARAMS_SID, souceid);
+                L.i("lzfsouceidfg" + souceid);
+                intent.putExtra(CyUtils.INTENT_PARAMS_TITLE, title);
+                startActivityForResult(intent, CyUtils.JUMP_QUESTCODE);
+//                startActivity(intent);
 
                 break;
         }
@@ -372,29 +387,31 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     }
 
     //获取评论的一切消息  无需登录  并刷新listview
-    public void loadTopic(String url, String title) {
+    public void loadTopic(String url, String title, int pagenum) {
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-        int count = 30;
-        if (!isShowComment) {
-            count = 0;
-        }
-        sdk.loadTopic("", url, title, null, count, count, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+        sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;//文章id
                 cmt_sum = topicLoadResp.cmt_sum;//评论总数
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
-                if (mCommentArrayList.size() == 0) {
+                if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
                     mSwipeRefreshLayout.setVisibility(View.GONE);
-                    mNoData.setVisibility(View.VISIBLE);
+                    if (isShowComment) {//显示评论的时候 mNoData显示
+                        mNoData.setVisibility(View.VISIBLE);
+                    } else {
+                        mNoData.setVisibility(View.GONE);//不显示评论的时候 mNoData不显示
+                    }
                 } else {
+
                     mAdapter.setInfosList(mCommentArrayList);
                     mAdapter.notifyDataSetChanged();
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mNoData.setVisibility(View.GONE);
                     mListView.setSelection(0);
+                    L.i("lzfnotifyDataSetChanged==");
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
                 L.i("lzf最新列表=" + mCommentArrayList.size());
@@ -402,7 +419,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 if (getActivity() != null) {
                     getActivity().setResult(2, new Intent().putExtra("cmt_sum", cmt_sum));
                 }
-
             }
 
             @Override
@@ -410,7 +426,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 L.i("lzftopicid=" + e.toString());
                 L.i("lzfcmt_sum=" + e.toString());
                 if (mCommentArrayList != null && mCommentArrayList.size() != 0) {//已经有数据  说明不是第一次操作  既是下拉刷新的操作
-
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                 } else {//没有数据  说明是第一次操作
                     mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -427,14 +442,27 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         //下拉刷新后当前页数重新为1，不然先上拉加载到没有数据  再回去下拉刷新  然后再上拉就没有数据了，其实是有的
         mCurrentPager = 1;
         mLoadMore.setText(R.string.foot_loadmore);
-        loadTopic(souceid, title);
+        loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //接收全部评论页面返回的评论总数
+        if (!isShowComment) {
+            if (requestCode == CyUtils.JUMP_QUESTCODE) {
+                if (resultCode == CyUtils.JUMP_RESULTCODE) {
+                    int defaultnum = 0;
+                    if (!TextUtils.isEmpty(mCommentCount.getText())) {
+                        defaultnum = Integer.parseInt(mCommentCount.getText().toString());
+                    }
+                    String commentcount = data.getIntExtra("cmt_sum", defaultnum) + "";
+                    mCommentCount.setText(commentcount);
+                }
+            }
+        }
         //接收登录华海成功返回
         if (requestCode == 3) {
-            if (resultCode == getActivity().RESULT_OK) {
+            if (resultCode == CyUtils.RESULT_OK) {
                 if (CommonUtils.isLogin()) {
                     CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                 }
@@ -449,7 +477,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         issubmitFinish = true;
         mEditText.setText("");
         //刷新界面
-        loadTopic(souceid, title);
+        loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
     }
 
     //评论提交失败回调接口
@@ -458,4 +486,5 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         issubmitFinish = true;
         ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
     }
+
 }

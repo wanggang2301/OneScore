@@ -8,8 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/scrollview"
-        android:layout_below="@+id/top"
-
         >
 
         <com.hhly.mlottery.view.PullUpRefreshListView
@@ -31,13 +29,14 @@
         android:visibility="gone"/>
 
     <!--解决adjustresize和透明状态栏的冲突-->
-    <ScrollView
+    <LinearLayout
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:orientation="vertical"
         >
 
         <include layout="@layout/inputcomment_layout"/>
-    </ScrollView>
+    </LinearLayout>
 </RelativeLayout>

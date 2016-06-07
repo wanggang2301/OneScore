@@ -43,7 +43,7 @@ public class TalkAboutBallFragment extends Fragment implements View.OnClickListe
         bundle.putString("title", title);
         bundle.putBoolean("isHiddenCommentCount", false);
         fragment.setArguments(bundle);
-        getChildFragmentManager().beginTransaction().add(R.id.sd, fragment).commit();
+//        getChildFragmentManager().beginTransaction().add(R.id.sd, fragment).commit();
     }
 
     private void initView() {
