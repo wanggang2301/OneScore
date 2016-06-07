@@ -54,7 +54,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     private int mType;// 关联赛事类型
     private String mThird;// 关联赛事ID
     private String infoTypeName;// 资讯类型名
-    private static final String INTENT_PARAMS_URL = "url";
     private static final String INTENT_PARAMS_TITLE = "title";
     private ImageView public_btn_set;
     private ShareTencentCallBack mShareTencentCallBack;
@@ -146,7 +145,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             Intent intent = getIntent();
             url = intent.getStringExtra("key");
             L.d("CommonUtils初始url" + url);
-            System.out.println();
 //            url = "http://192.168.33.14:8080/gameweb/h5/index";
 //            url = "http://192.168.37.6:8080/gameweb/h5/index";
             imageurl = intent.getStringExtra("imageurl");
@@ -166,7 +164,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 public_btn_set.setVisibility(View.GONE);
 //                scrollview.setVisibility(View.GONE);
             } else {//token为空，说明是资讯，显示分享和评论
-                public_btn_set.setVisibility(View.GONE);
+                public_btn_set.setVisibility(View.VISIBLE);
 //                scrollview.setVisibility(View.VISIBLE);
                 //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
                 //String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager

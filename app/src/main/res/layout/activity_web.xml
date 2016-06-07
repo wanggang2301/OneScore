@@ -19,18 +19,11 @@
         <include layout="@layout/layout_header"/>
     </RelativeLayout>
     <!--为了查看详细数据按钮不吸底-->
-    <com.hhly.mlottery.view.IsBottomScrollView
-        android:id="@+id/isbottomscrollview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/comment"
-        android:layout_below="@+id/top"
-        android:fillViewport="true"
-        >
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/comment"
+            android:layout_below="@+id/top">
 
             <com.hhly.mlottery.widget.ProgressWebView
                 android:id="@+id/baseweb_webview"
@@ -58,8 +51,6 @@
                 android:textSize="@dimen/number_title"
                 />
         </RelativeLayout>
-
-    </com.hhly.mlottery.view.IsBottomScrollView>
     <!--解决adjustresize和透明状态栏的冲突-->
     <ScrollView
         android:id="@+id/comment"
