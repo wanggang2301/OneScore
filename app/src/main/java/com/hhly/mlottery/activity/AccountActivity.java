@@ -48,11 +48,10 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
 
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.my);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
+        findViewById(R.id.public_btn_set).setOnClickListener(this);
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.tv_logout).setOnClickListener(this);
         tv_nickname = ((TextView)findViewById(R.id.tv_nickname));
-        findViewById(R.id.ll_nickname).setOnClickListener(this);
     }
 
     @Override
@@ -66,7 +65,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
                 showDialog();
                 break;
-            case R.id.ll_nickname: // 昵称头像栏
+            case R.id.public_btn_set: // 昵称头像栏
                 startActivity(new Intent(this , ProfileActivity.class));
                 break;
             default:

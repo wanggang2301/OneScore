@@ -86,6 +86,15 @@ public class Register {
         public static class UserBean {
             private String nickName;
             private String userId;
+            private String loginAccount;
+
+            public String getLoginAccount() {
+                return loginAccount;
+            }
+
+            public void setLoginAccount(String loginAccount) {
+                this.loginAccount = loginAccount;
+            }
 
             public String getNickName() {
                 return nickName;
@@ -108,6 +117,7 @@ public class Register {
                 return "UserBean{" +
                         "nickName='" + nickName + '\'' +
                         ", userId='" + userId + '\'' +
+                        ", loginAccount='" + loginAccount + '\'' +
                         '}';
             }
         }

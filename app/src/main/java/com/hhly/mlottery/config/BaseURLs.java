@@ -663,6 +663,8 @@ public class BaseURLs {
     public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
     /**修改昵称*/
     public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
+    /**修改密码*/
+    public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
 
 
 

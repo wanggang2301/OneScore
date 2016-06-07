@@ -14,7 +14,6 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class ProfileActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final int MODIFY_NICKNAME = 400;
     private TextView tv_nickname;
 
     @Override
@@ -38,7 +37,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.rl_nickname).setOnClickListener(this);
+        findViewById(R.id.rl_modifypass).setOnClickListener(this);
         tv_nickname = ((TextView)findViewById(R.id.tv_nickname));
+        ((TextView)findViewById(R.id.tv_account_real)).setText(AppConstants.register.getData().getUser().getLoginAccount());
     }
 
     @Override
@@ -49,7 +50,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.rl_nickname: // 昵称栏
-                startActivityForResult(new Intent(this , ModifyNicknameActivity.class) , MODIFY_NICKNAME);
+                startActivity(new Intent(this , ModifyNicknameActivity.class));
+                break;
+            case R.id.rl_modifypass: // 修改密码
+                startActivity(new Intent(this , ModifyPasswordActivity.class));
                 break;
             default:
                 break;

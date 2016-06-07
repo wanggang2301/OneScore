@@ -9,20 +9,21 @@
 
     <include layout="@layout/layout_header" />
 
+    <!-- 修改头像-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:minHeight="@dimen/profile_item_minheight"
         android:background="@color/white"
-        android:visibility="gone">
+        >
 
 
         <TextView
             android:id="@+id/tv_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/login_textview_account_center"
+            style="@style/login_textview_account_center_margin"
             android:src="@mipmap/person"
             android:text="@string/pic"
             android:layout_centerVertical="true"
@@ -37,7 +38,97 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="15dp"
+            android:layout_centerVertical="true"
             android:src="@mipmap/portrait"
+            />
+
+
+        <!--<ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/plate_icon"
+            />-->
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"
+        />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/profile_item_minheight"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+
+        <TextView
+            android:id="@+id/tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/login_textview_account_center_margin"
+            android:text="@string/account"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_toRightOf="@+id/tv_account"
+            android:id="@+id/tv_account_real"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/login_textview_account_center_gray"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"
+        />
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/profile_item_minheight"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+
+        <TextView
+            android:id="@+id/tv_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/login_textview_account_center_margin"
+            android:src="@mipmap/person"
+            android:text="@string/nickname"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_toRightOf="@+id/tv_nick"
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/login_textview_account_center_gray"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/person"
+            android:text="@string/nickname"
+            android:layout_centerVertical="true"
             />
 
 
@@ -52,16 +143,14 @@
 
     </RelativeLayout>
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_football_footer"
-        android:visibility="gone"/>
-
+        />
 
     <RelativeLayout
-        android:id="@+id/rl_nickname"
+        android:id="@+id/rl_modifypass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/profile_item_minheight"
@@ -70,27 +159,13 @@
 
 
         <TextView
-            android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/login_textview_account_center_margin"
             android:src="@mipmap/person"
-            android:text="@string/nickname"
+            android:text="@string/modify_password"
             android:layout_centerVertical="true"
             />
-
-        <TextView
-            android:layout_toRightOf="@+id/tv"
-            android:id="@+id/tv_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/login_textview_account_center_gray"
-            android:layout_marginLeft="20dp"
-            android:src="@mipmap/person"
-            android:text="@string/nickname"
-            android:layout_centerVertical="true"
-            />
-
 
         <ImageView
             android:layout_width="wrap_content"

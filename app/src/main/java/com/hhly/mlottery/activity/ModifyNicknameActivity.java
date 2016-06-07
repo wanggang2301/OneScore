@@ -103,39 +103,42 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
 
     private void modify() {
 
-        progressBar.show();
-        String url = BaseURLs.URL_EDITNICKNAME;
         final String nickName = et_nickname.getText().toString();
-        Map<String, String> param = new HashMap<>();
-        param.put("loginToken" , AppConstants.register.getData().getLoginToken());
-        param.put("deviceToken" , AppConstants.deviceToken);
-        param.put("nickname" , nickName);
+        if (UiUtils.checkNickname(this , nickName)) {
+            progressBar.show();
+            String url = BaseURLs.URL_EDITNICKNAME;
+            Map<String, String> param = new HashMap<>();
+            param.put("loginToken" , AppConstants.register.getData().getLoginToken());
+            param.put("deviceToken" , AppConstants.deviceToken);
+            param.put("nickname" , nickName);
 
-        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
-            @Override
-            public void onResponse(BaseBean bean) {
+            VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
+                @Override
+                public void onResponse(BaseBean bean) {
 
-                progressBar.dismiss();
+                    progressBar.dismiss();
 
-                if (bean.getResult() == AccountResultCode.SUCC){
-                    UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
-                    AppConstants.register.getData().getUser().setNickName(nickName);
-                    CommonUtils.saveRegisterInfo(AppConstants.register);
-                    finish();
-                }else{
-                    CommonUtils.handlerRequestResult(bean.getResult() , bean.getMsg());
+                    if (bean.getResult() == AccountResultCode.SUCC){
+                        UiUtils.toast(MyApp.getInstance(), R.string.modify_nickname_succ);
+                        AppConstants.register.getData().getUser().setNickName(nickName);
+                        CommonUtils.saveRegisterInfo(AppConstants.register);
+                        finish();
+                    }else{
+                        CommonUtils.handlerRequestResult(bean.getResult() , bean.getMsg());
+                    }
                 }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
-                progressBar.dismiss();
+                    progressBar.dismiss();
 
-                L.e(TAG , " 修改nickName失败");
-                UiUtils.toast(ModifyNicknameActivity.this , R.string.immediate_unconection);
-            }
-        } , BaseBean.class);
+                    L.e(TAG , " 修改nickName失败");
+                    UiUtils.toast(ModifyNicknameActivity.this , R.string.immediate_unconection);
+                }
+            } , BaseBean.class);
+        }
+
     }
 
     @Override

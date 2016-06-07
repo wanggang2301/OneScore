@@ -547,6 +547,15 @@
         <item name="android:hint">@string/pwd_empty</item>
     </style>
 
+    <!--密码号码的格式 TextView ：整个 Item 带宽高-->
+    <style name="login_edittext_password_measured" parent="login_edittext_password">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:background">@drawable/selector_loginbtn</item>
+    </style>
+
     <!--登录 TextView-->
     <style name="login_edittext_loginbtn" parent="loginbtn_blue">
         <item name="android:layout_height">48dp</item>
@@ -610,6 +619,7 @@
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingTop">15dp</item>
         <item name="android:paddingBottom">15dp</item>
+        <item name="android:maxLength">15</item>
     </style>
 
     <!--昵称提示 TextView-->

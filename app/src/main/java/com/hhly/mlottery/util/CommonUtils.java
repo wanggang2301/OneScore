@@ -5,6 +5,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.widget.EditText;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
@@ -38,12 +39,14 @@ public class CommonUtils {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID , "");
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME , "");
             PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN , "");
+            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT , "");
 
             AppConstants.register = new Register();
 
         }else {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID , register.getData().getUser().getUserId());
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME , register.getData().getUser().getNickName());
+            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT , register.getData().getUser().getLoginAccount());
 
             String token = register.getData().getLoginToken();
             L.d(TAG , " saveRegisterInfo   token = "+ token);
@@ -63,6 +66,7 @@ public class CommonUtils {
         Register.DataBean.UserBean userBean = new Register.DataBean.UserBean();
         userBean.setUserId(PreferenceUtil.getString(AppConstants.SPKEY_USERID , ""));
         userBean.setNickName(PreferenceUtil.getString(AppConstants.SPKEY_NICKNAME , ""));
+        userBean.setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT , ""));
 
         Register.DataBean dataBean = new Register.DataBean();
 
@@ -241,6 +245,21 @@ public class CommonUtils {
                 }
             } , SendSmsCode.class);
 
+        }
+    }
+
+
+    /**
+     * 光标移动到结尾
+     * @param ets
+     */
+    public static void selectionLast(EditText... ets){
+        for (EditText et:ets
+             ) {
+            String pwd = et.getText().toString();
+            if(!TextUtils.isEmpty(pwd)){
+                et.setSelection(pwd.length());
+            }
         }
     }
 

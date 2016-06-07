@@ -206,6 +206,8 @@ public class AppConstants {
 	public static final String SPKEY_TOKEN = "token";
 	/**保存nickName的key*/
 	public static final String SPKEY_NICKNAME = "nickName";
+	/**保存loginAccount的key*/
+	public static final String SPKEY_LOGINACCOUNT = "loginAccount";
 	/**应用启动的时候初始化*/
 	public static String deviceToken ="";
 	/**应用启动的时候初始化*/
