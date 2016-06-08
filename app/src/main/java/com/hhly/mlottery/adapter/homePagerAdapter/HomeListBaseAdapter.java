@@ -643,35 +643,61 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             switch (homeBodysEntity.getName()) {
                                 case "1":// 香港彩
-                                    lotteryHKAddView(lotteryHKParams, homeBodysEntity, AppConstants.numberNames[Integer.parseInt(homeBodysEntity.getName()) - 1]);
+                                    lotteryHKAddView(lotteryHKParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_hk));
                                     break;
                                 case "6":// 七星彩
-                                    lotteryQXCAddView(lotteryOtherParams, homeBodysEntity, AppConstants.numberNames[Integer.parseInt(homeBodysEntity.getName()) - 1]);
+                                    lotteryQXCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_qxc));
                                     break;
                                 case "15":// 北京赛车
-                                    lotteryBJSCAddView(lotteryOtherParams, homeBodysEntity, AppConstants.numberNames[Integer.parseInt(homeBodysEntity.getName()) - 1]);
+                                    lotteryBJSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_bj_sc));
                                     break;
                                 case "8":// 广东快乐十分
+                                    lotteryKLSFAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gd_klsf));
+                                    break;
                                 case "11":// 湖南快乐十分
+                                    lotteryKLSFAddView(lotteryOtherParams, homeBodysEntity,mContext.getResources().getString(R.string.number_cz_hn_klsf) );
+                                    break;
                                 case "19":// 幸运农场
-                                    lotteryKLSFAddView(lotteryOtherParams, homeBodysEntity, AppConstants.numberNames[Integer.parseInt(homeBodysEntity.getName()) - 1]);
+                                    lotteryKLSFAddView(lotteryOtherParams, homeBodysEntity,mContext.getResources().getString(R.string.number_cz_xylc) );
                                     break;
                                 case "2":// 重庆时时彩
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_cq_ssc));
+                                    break;
                                 case "3":// 江西时时彩
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_jx_ssc));
+                                    break;
                                 case "4":// 新疆时时彩
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_xj_ssc));
+                                    break;
                                 case "5":// 云南时时彩
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_yn_ssc));
+                                    break;
                                 case "23":// 天津时时彩
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_tj_ssc));
+                                    break;
                                 case "7":// 广东十一选五
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gd_syxw));
+                                    break;
                                 case "9":// 湖北十一选五
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_hb_syxw));
+                                    break;
                                 case "20":// 江苏十一选五
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_js_syxw));
+                                    break;
                                 case "21":// 江西十一选五
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_jx_syxw));
+                                    break;
                                 case "22":// 山东十一选五
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, AppConstants.numberNames[Integer.parseInt(homeBodysEntity.getName()) - 1]);
+                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_sd_syxw));
                                     break;
                                 case "10":// 安徽快3
+                                    lotteryKSAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_ah_ks));
+                                    break;
                                 case "16":// 江苏快3
+                                    lotteryKSAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_js_ks));
+                                    break;
                                 case "18":// 广西快3
-                                    lotteryKSAddView(lotteryOtherParams, homeBodysEntity, AppConstants.numberNames[Integer.parseInt(homeBodysEntity.getName()) - 1]);
+                                    lotteryKSAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gx_ks));
                                     break;
                             }
                         }
