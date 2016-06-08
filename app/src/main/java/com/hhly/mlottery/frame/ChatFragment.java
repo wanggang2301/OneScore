@@ -78,6 +78,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     private boolean isHiddenCommentCount = false;//是否显示评论数  true  永不显示  false 打开键盘隐藏  隐藏键盘显示
     private Context mContext;
     private onKeyBoardHiddenLisener mKeyBoardHiddenLisener;
+    private onPullDownRefreshLisener mOnPullDownRefreshLisener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -301,7 +302,11 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
             if (model.equals("m2note")) {
                 h -= 145;
             }
-            mKeyBoardHiddenLisener.keyBoardShow();
+
+            if (mKeyBoardHiddenLisener != null) {
+                mKeyBoardHiddenLisener.keyBoardShow();
+            }
+
 
         } else if (h < 300) {//软键盘隐藏
             if (h != 0) {
@@ -323,7 +328,10 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 mCommentCount.setVisibility(View.GONE);
             }
             mEditText.setHint(R.string.hint_content);
-            mKeyBoardHiddenLisener.keyBoardHidden();
+            if (mKeyBoardHiddenLisener != null) {
+                mKeyBoardHiddenLisener.keyBoardHidden();
+            }
+
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
             if (isShowComment) {
@@ -446,6 +454,9 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         mCurrentPager = 1;
         mLoadMore.setText(R.string.foot_loadmore);
         loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
+        if (mOnPullDownRefreshLisener != null) {
+            mOnPullDownRefreshLisener.onPullDownRefresh();
+        }
     }
 
     @Override
@@ -490,13 +501,24 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
     }
 
+    //提供键盘显示隐藏的接口供外部调用
     public void setKeyBoardHiddenLisener(onKeyBoardHiddenLisener keyBoardHiddenLisener) {
         this.mKeyBoardHiddenLisener = keyBoardHiddenLisener;
+    }
+
+    //提供下拉刷新的接口供外部调用
+    public void setOnPullDownRefreshLisener(onPullDownRefreshLisener mOnPullDownRefreshLisener) {
+        this.mOnPullDownRefreshLisener = mOnPullDownRefreshLisener;
     }
 
     public interface onKeyBoardHiddenLisener {
         void keyBoardHidden();
 
         void keyBoardShow();
+    }
+
+    public interface onPullDownRefreshLisener {
+        void onPullDownRefresh();
+
     }
 }

@@ -63,6 +63,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     //    private ScrollView scrollview;
     private SharePopupWindow sharePopupWindow;
     private float y;
+    private float startyY;
 
 
     @Override
@@ -107,9 +108,10 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     }
 
     public void d() {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mTv_check_info, "translationY", mTv_check_info.getY(), mTv_check_info.getY() + y)
-                .setDuration(50);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mTv_check_info, "translationY", mTv_check_info.getY(), mTv_check_info.getY())
+                .setDuration(0);
         objectAnimator.start();
+        System.out.println("lzfmTv_check_info.getY()=" + startyY);
 
     }
 
@@ -126,6 +128,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
         mWebView = (ProgressWebView) findViewById(R.id.baseweb_webview);
         mTv_check_info = (TextView) findViewById(R.id.tv_check_info);
+//        startyY = mTv_check_info.getY();
         mTv_check_info.setVisibility(View.GONE);
         mPublic_img_back.setOnClickListener(this);
         mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
@@ -144,7 +147,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                         mTv_check_info.setVisibility(View.GONE);
                     }
                 } else {
-                    if (mTv_check_info.getVisibility() == View.VISIBLE) {
+                    if (mTv_check_info.getVisibility() == View.VISIBLE) {//给一个容差  避免临界点闪烁
                         if (y > 150) {
                             mTv_check_info.setVisibility(View.GONE);
 //                            d();
@@ -203,19 +206,19 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                scrollview.setVisibility(View.VISIBLE);
                 //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
                 //String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager
-                ChatFragment chatFragment=new ChatFragment();
-                chatFragment.setKeyBoardHiddenLisener(new ChatFragment.onKeyBoardHiddenLisener() {
-                    @Override
-                    public void keyBoardHidden() {
-
-                    }
-
-                    @Override
-                    public void keyBoardShow() {
-                        mTv_check_info.setVisibility(View.GONE);
-                    }
-                });
-                CyUtils.addComment(chatFragment,url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                ChatFragment chatFragment = new ChatFragment();
+//                chatFragment.setKeyBoardHiddenLisener(new ChatFragment.onKeyBoardHiddenLisener() {
+//                    @Override
+//                    public void keyBoardHidden() {
+//
+//                    }
+//
+//                    @Override
+//                    public void keyBoardShow() {
+//                        mTv_check_info.setVisibility(View.GONE);
+//                    }
+//                });
+                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
             }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override

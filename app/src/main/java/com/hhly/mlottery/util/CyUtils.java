@@ -53,7 +53,7 @@ public class CyUtils {
         }
     }
 
-    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行  注意R.id.comment此容器最好是scrollview
+    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
     public static void addComment(ChatFragment fragment,String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager, int container) {
         Bundle bundle = new Bundle();
         bundle.putString(CyUtils.INTENT_PARAMS_SID, url);//需要评论的文章的url或者其他唯一标识

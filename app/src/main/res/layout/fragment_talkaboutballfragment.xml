@@ -17,6 +17,12 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/talkball_home_like"
+                style="@style/MatchDetailLike"
+                android:layout_below="@id/football_match_detail_home_name_layout"
+                android:src="@mipmap/like_red"/>
+
+            <ImageView
                 android:id="@+id/talkball_like_anim_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,8 +41,8 @@
                 android:layout_below="@id/talkball_like_anim_img"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="4dp"
-                android:text=" 3999999999999"
-                android:textColor="@color/white"
+                android:text="0"
+                android:textColor="@color/black"
                 android:textSize="10sp"/>
         </RelativeLayout>
 
@@ -47,8 +53,8 @@
             android:layout_height="@dimen/y10"
             android:layout_marginBottom="5dp"
             android:layout_weight="4"
-            android:max="100"
-            android:progress="25"
+            android:max="2"
+            android:progress="1"
             android:progressDrawable="@drawable/pro_analyze"/>
 
         <RelativeLayout
@@ -57,14 +63,22 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/talkball_guest_like"
+                style="@style/MatchDetailLike"
+                android:layout_below="@id/football_match_detail_guest_layout"
+                android:src="@mipmap/like_blue"/>
+
+            <ImageView
                 android:id="@+id/talkbail_guest_like_anim_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="7dp"
                 android:src="@mipmap/like_anim_right"
                 />
-
 
             <TextView
                 android:id="@+id/talkbail_guest_like_count"
@@ -72,20 +86,18 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/talkbail_guest_like_anim_img"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                android:text="sdsadas "
-                android:textColor="@color/white"
+                android:layout_marginBottom="4dp"
+                android:text="0"
+                android:textColor="@color/black"
                 android:textSize="10sp"/>
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/talkball_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/talkball_head"
-        android:background="#f00"
         android:orientation="vertical">
-
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
