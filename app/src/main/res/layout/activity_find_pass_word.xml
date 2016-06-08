@@ -68,12 +68,36 @@
         android:maxLength="6"
         />
 
+
+    <LinearLayout
+        style="@style/login_item_bg"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        >
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/login_edittext_password"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+
+        <ImageView
+            android:id="@+id/iv_eye"
+            style="@style/login_item_image_right"
+            android:src="@mipmap/close_eye"/>
+
+    </LinearLayout>
+
+
+
     <TextView
         style="@style/login_edittext_loginbtn"
-        android:id="@+id/tv_nextstep"
+        android:id="@+id/tv_comfirm"
         android:layout_marginTop="30dp"
-        android:text="@string/next_step"
+        android:text="@string/about_confirm"
         />
-
 
 </LinearLayout>

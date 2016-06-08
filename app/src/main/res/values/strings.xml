@@ -759,10 +759,11 @@
     <string name="input_password_confirm">请输入确认密码</string>
     <string name="show_password">显示密码</string>
     <string name="old_pw">旧</string>
-    <string name="new_pw">显示密码</string>
+    <string name="new_pw">新密码</string>
     <string name="comfirm_pw">确认</string>
     <string name="pw_not_same">新密码与确认密码不一致</string>
     <string name="account">账号</string>
+    <string name="pwd_format_just_length">密码长度为6-16位</string>
     <!--1.1.2 end-->
 
     <!-- 登录注册 end-->

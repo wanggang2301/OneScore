@@ -1,9 +1,11 @@
 package com.hhly.mlottery.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,18 +14,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.account.BaseBean;
 import com.hhly.mlottery.bean.account.SendSmsCode;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.hhly.mlottery.util.net.account.AccountType;
 import com.hhly.mlottery.util.net.account.OperateType;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,9 +45,10 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
     public static final java.lang.String PHONE = "phone";
     public static final java.lang.String VERIFYCODE = "verifycode";
     private static final int RESET_PW = 300;
-    private EditText et_username , et_verifycode;
-    private TextView tv_nextstep , tv_verycode;
-    private ImageView iv_delete;
+    private EditText et_username , et_verifycode ,et_password;
+    private TextView tv_verycode ,tv_comfirm;
+    private ImageView iv_delete , iv_eye;
+    private ProgressDialog progressBar;
 
     /**
      * 倒计时 默认60s , 间隔1s
@@ -98,8 +108,6 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.find_pw);
 
-        tv_nextstep = (TextView) findViewById(R.id.tv_nextstep);
-        tv_nextstep.setOnClickListener(this);
         findViewById(R.id.public_img_back).setOnClickListener(this);
 
         et_username = (EditText) findViewById(R.id.et_username);
@@ -110,6 +118,17 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
         tv_verycode.setOnClickListener(this);
 
         iv_delete = (ImageView) findViewById(R.id.iv_delete);
+
+        tv_comfirm = (TextView) findViewById(R.id.tv_comfirm);
+        tv_comfirm.setOnClickListener(this);
+
+        et_password = (EditText) findViewById(R.id.et_password);
+        iv_eye = (ImageView) findViewById(R.id.iv_eye);
+        iv_eye.setOnClickListener(this);
+
+        progressBar = new ProgressDialog(this);
+        progressBar.setCancelable(false);
+        progressBar.setMessage(getResources().getString(R.string.reseting_password));
 
     }
 
@@ -128,10 +147,23 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
                 MobclickAgent.onEvent(mContext, "FindPassWordActivity_VeryCode");
                 getVerifyCode();
                 break;
-            case R.id.tv_nextstep: // 下一步
-                MobclickAgent.onEvent(mContext, "FindPassWordActivity_NextStep");
-                nextStep();
+            case R.id.iv_eye:  // 显示密码
+                MobclickAgent.onEvent(mContext, "FindPassWordActivity_PassWord_isHide");
+                int inputType = et_password.getInputType();
+                if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD){
+                    et_password.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    iv_eye.setImageResource(R.mipmap.close_eye);
+                }else{
+                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    iv_eye.setImageResource(R.mipmap.open_eye);
+                }
 
+                // 光标移动到结尾
+                CommonUtils.selectionLast(et_password);
+                break;
+            case R.id.tv_comfirm:
+                MobclickAgent.onEvent(mContext, "FindPassWordActivity_Reset_Password_Confirm");
+                modifyPassword();
                 break;
 
             default:
@@ -139,24 +171,52 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    /**
-     * 下一步
-     */
-    private void nextStep() {
+
+    private void modifyPassword() {
 
         String phone = et_username.getText().toString();
-        String verifycode = et_verifycode.getText().toString();
+        String verifyCode = et_verifycode.getText().toString();
+        String pwd = et_password.getText().toString();
 
         if (UiUtils.isMobileNO(this , phone)){
-            if (UiUtils.checkVerifyCode(this , verifycode)){
-                Intent i = new Intent(this , ResetPasswordActivity.class);
-                i.putExtra(PHONE , phone);
-                i.putExtra(VERIFYCODE , verifycode);
-                startActivityForResult(i , RESET_PW);
+            if (UiUtils.checkVerifyCode(this , verifyCode)){
+
+                if (UiUtils.checkPassword(this , pwd)){
+                    progressBar.show();
+
+                    String url = BaseURLs.URL_RESETPASSWORD;
+                    Map<String, String> param = new HashMap<>();
+                    param.put("phone" , phone);
+                    param.put("accountType" , AccountType.TYPE_PHONE);
+                    param.put("newPassword" , MD5Util.getMD5(pwd));
+                    param.put("smsCode" , verifyCode);
+
+                    VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
+                        @Override
+                        public void onResponse(BaseBean reset) {
+                            progressBar.dismiss();
+
+                            if (reset != null&& reset.getResult() == AccountResultCode.SUCC){
+                                UiUtils.toast(MyApp.getInstance(), R.string.reset_password_succ);
+                                L.d(TAG,"重置密码成功");
+                                setResult(RESULT_OK);
+                                finish();
+                            }else{
+                                L.e(TAG,"成功请求，重置密码失败");
+                                CommonUtils.handlerRequestResult(reset.getResult() , reset.getMsg());
+                            }
+                        }
+                    }, new VolleyContentFast.ResponseErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                            progressBar.dismiss();
+                            L.e(TAG,"重置密码失败");
+                            UiUtils.toast(FindPassWordActivity.this , R.string.immediate_unconection);
+                        }
+                    } , BaseBean.class);
+                }
             }
         }
-
-
     }
 
     private void getVerifyCode() {

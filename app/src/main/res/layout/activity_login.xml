@@ -51,7 +51,7 @@
         <EditText
             android:id="@+id/et_password"
             android:layout_width="0dp"
-            style="@style/login_edittext_password"
+            style="@style/login_edittext_password_no_digits"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 

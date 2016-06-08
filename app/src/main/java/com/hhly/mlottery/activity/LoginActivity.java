@@ -145,10 +145,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
 
                 // 光标移动到结尾
-                String pwd = et_password.getText().toString();
-                if(!TextUtils.isEmpty(pwd)){
-                    et_password.setSelection(pwd.length());
-                }
+                CommonUtils.selectionLast(et_password);
 
 
                 break;
@@ -174,7 +171,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String passWord = et_password.getText().toString();
 
         if (UiUtils.isMobileNO(this ,userName)){
-            if (UiUtils.checkPassword(this , passWord)){
+            if (UiUtils.checkPassword_JustLength(this , passWord)){
                 // 登录
                 progressBar.show();
                 String url = BaseURLs.URL_LOGIN;

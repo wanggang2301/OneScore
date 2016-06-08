@@ -431,6 +431,10 @@ public class UiUtils {
     private static String REG_PHONE = "^((14[0-9])|(17[0-9])|(13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
     /**密码格式*/
     private static String REG_PASSWORD = "^[0-9a-zA-Z_]{6,16}$";
+    /**密码最小长度*/
+    private static final int PASSWORD_MIN_LENGTH = 6;
+    /**密码最大长度*/
+    private static final int PASSWORD_MAX_LENGTH = 16;
 
 	/**
 	 * 检查手机号码是否符合格式
@@ -569,5 +573,34 @@ public class UiUtils {
         return match;
     }
 
+
+    /**
+     * 只检查密码长度 6 - 16 位
+     * @param ctx
+     * @param pwd
+     * @return
+     */
+    public static boolean checkPassword_JustLength(Activity ctx, String pwd) {
+        return checkPassword_JustLength(ctx , pwd , "");
+    }
+
+    public static boolean checkPassword_JustLength(Activity ctx, String pwd , String defaultToast) {
+        boolean match = false;
+        if (!TextUtils.isEmpty(pwd)){
+            if (pwd.length() >= PASSWORD_MIN_LENGTH && pwd.length() <= PASSWORD_MAX_LENGTH){
+                match = true;
+            }
+        }
+        if (!match){
+            if (TextUtils.isEmpty(defaultToast)){
+                // 弹出默认提示
+                toast(ctx.getApplicationContext(), R.string.pwd_format_just_length);
+            }else {
+                // 弹出传入的提示
+                toast(ctx.getApplicationContext(), defaultToast);
+            }
+        }
+        return match;
+    }
 
 }

@@ -191,10 +191,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     iv_eye.setImageResource(R.mipmap.open_eye);
                 }
                 // 光标移动到结尾
-                String pwd = et_password.getText().toString();
-                if(!TextUtils.isEmpty(pwd)){
-                    et_password.setSelection(pwd.length());
-                }
+                CommonUtils.selectionLast(et_password);
 
                 break;
             case R.id.tv_verycode:

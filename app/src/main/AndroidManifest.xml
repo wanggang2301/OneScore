@@ -200,11 +200,6 @@
             android:name=".activity.FindPassWordActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- 重置密码界面 -->
-        <activity
-            android:name=".activity.ResetPasswordActivity"
-            android:screenOrientation="portrait"/>
-
         <!-- 个人资料 -->
         <activity
             android:name=".activity.ProfileActivity"

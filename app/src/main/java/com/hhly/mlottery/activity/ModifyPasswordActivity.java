@@ -45,7 +45,13 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void onResume() {
+        /**友盟页面统计*/
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("RegisterActivity");
         super.onResume();
+        et_password_old.setFocusable(true);
+        et_password_old.setFocusableInTouchMode(true);
+        et_password_old.requestFocus();
     }
 
     private void initView() {
@@ -90,9 +96,8 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
         Resources res = getResources();
 
         // 检查旧密码格式
-        if(UiUtils.checkPassword(ModifyPasswordActivity.this , pwOld , false ,
-                res.getString(R.string.input_password_old) ,
-                res.getString(R.string.old_pw)+ res.getString(R.string.pwd_format))){
+        if(UiUtils.checkPassword_JustLength(ModifyPasswordActivity.this , pwOld ,
+                res.getString(R.string.old_pw)+ res.getString(R.string.pwd_format_just_length))){
 
             // 检查新密码格式
             if(UiUtils.checkPassword(ModifyPasswordActivity.this , pwNew , false ,
