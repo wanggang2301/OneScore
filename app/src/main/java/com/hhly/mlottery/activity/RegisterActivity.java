@@ -2,6 +2,8 @@ package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -243,6 +245,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (register != null&& register.getResult() == AccountResultCode.SUCC){
                     CommonUtils.saveRegisterInfo(register);
                     UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
+
+                    //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
+                    sendUserInfoToServer(register);
+
                     L.d(TAG,"注册成功");
                     setResult(RESULT_OK);
                     finish();
@@ -260,6 +266,47 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 UiUtils.toast(RegisterActivity.this , R.string.immediate_unconection);
             }
         } , Register.class);
+    }
+
+    /**
+     * 给服务器发送注册成功后用户id和渠道id（用来统计留存率）
+     * @param register
+     */
+    private void sendUserInfoToServer(Register register) {
+
+        String url = BaseURLs.USER_ACTION_ANALYSIS_URL;
+        Map<String,String> pramas = new HashMap<>();
+        pramas.put("appType","appRegist");
+        pramas.put("userid",register.getData().getUser().getUserId());
+        String CHANNEL_ID;
+        try {
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+
+            if (appInfo.metaData != null) {
+                CHANNEL_ID = appInfo.metaData.getString("UMENG_CHANNEL");
+                pramas.put("channel", CHANNEL_ID);
+            }else {
+                pramas.put("channel","vnp56ams");
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+            pramas.put("channel","vnp56ams");
+            e.printStackTrace();
+        }
+
+        VolleyContentFast.requestStringByPost(url, pramas, new VolleyContentFast.ResponseSuccessListener<String>() {
+            @Override
+            public void onResponse(String jsonObject) {
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        });
+
+
+
+
     }
 
     /**
