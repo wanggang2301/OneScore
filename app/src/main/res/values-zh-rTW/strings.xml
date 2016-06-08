@@ -731,6 +731,7 @@
     <string name="pw_not_same">新密碼與確認密碼不一致</string>
     <string name="account">賬號</string>
     <string name="pwd_format_just_length">密碼長度爲6-16位</string>
+    <string name="verify_time_limit">兩次發送間隔不得小于60秒</string>
     <!--1.1.2 end-->
 
 

@@ -764,6 +764,7 @@
     <string name="pw_not_same">新密码与确认密码不一致</string>
     <string name="account">账号</string>
     <string name="pwd_format_just_length">密码长度为6-16位</string>
+    <string name="verify_time_limit">两次发送间隔不得小于60秒</string>
     <!--1.1.2 end-->
 
     <!-- 登录注册 end-->

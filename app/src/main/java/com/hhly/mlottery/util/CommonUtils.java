@@ -141,11 +141,13 @@ public class CommonUtils {
             case AccountResultCode.SYSTEM_ERROR:
             case AccountResultCode.PARAM_ERROR:
             case AccountResultCode.NO_AGGREEMENT:
-            case AccountResultCode.INTERVEL_LESS:
             case AccountResultCode.PLATFORM_NOT_EXIST:
             case AccountResultCode.OPERATOR_TYPE_NOT_EXIST:
             case AccountResultCode.SERVER_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.system_error);
+                break;
+            case AccountResultCode.INTERVEL_LESS:
+                UiUtils.toast(MyApp.getInstance() , R.string.verify_time_limit);
                 break;
             case AccountResultCode.MAIL_FORMAT_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.mail_format_error);
