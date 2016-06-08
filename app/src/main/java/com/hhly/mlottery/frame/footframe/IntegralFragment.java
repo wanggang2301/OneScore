@@ -137,17 +137,23 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
         if (mGroupDataList.isEmpty()) {
             mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
         } else {
-            mExpandableAdapter = new IntegralExpandableAdapter(childDataList, groupDataList, context, explistview_live, leagueType);
-            //Log.v(TAG, "integral_groupDataList==========" + groupDataList);
-            // Log.v(TAG, "integral_childDataList==========" + childDataList);
-            explistview_live.setAdapter(mExpandableAdapter);
+            if(mExpandableAdapter==null) {
+                mExpandableAdapter = new IntegralExpandableAdapter(childDataList, groupDataList, context, explistview_live, leagueType);
+                //Log.v(TAG, "integral_groupDataList==========" + groupDataList);
+                // Log.v(TAG, "integral_childDataList==========" + childDataList);
+                explistview_live.setAdapter(mExpandableAdapter);
+                explistview_live.setGroupIndicator(null);
+            }else{
+                mExpandableAdapter.setAllInfor(childDataList, groupDataList);
+                explistview_live.setGroupIndicator(null);
+                mExpandableAdapter.notifyDataSetChanged();
+            }
+
+
             //默认展开所有数据
             for (int i = 0; i < mGroupDataList.size(); i++) {
                 explistview_live.expandGroup(i);
             }
-
-            explistview_live.setGroupIndicator(null);
-            mExpandableAdapter.notifyDataSetChanged();
 
             isLoadedData = true;
             mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);

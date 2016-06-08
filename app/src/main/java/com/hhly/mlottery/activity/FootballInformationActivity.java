@@ -88,7 +88,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         initEvent();
         intiData(true);
 
-    }
+}
 
 
     //初始化viewPager
