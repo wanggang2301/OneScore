@@ -49,6 +49,8 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.my);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setOnClickListener(this);
+        // 是否需要设置 设置按钮src
+//        public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.tv_logout).setOnClickListener(this);
         tv_nickname = ((TextView)findViewById(R.id.tv_nickname));
