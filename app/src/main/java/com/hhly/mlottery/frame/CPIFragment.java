@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,29 +26,44 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
+import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
+import org.java_websocket.drafts.Draft_17;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Tenney on 2016/4/6.
  * 新版指数
  */
-public class CPIFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class CPIFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseMessageListener {
 
 
     public final static String TYPE_BIG = "big";
@@ -103,9 +119,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //判断是否选中选择热门
 //    public static boolean isHot = true;
     public List<NewOddsInfo.CompanyBean> companys = new ArrayList<>();
-    public  List<String> companysName = new ArrayList<>();
+    public List<String> companysName = new ArrayList<>();
     private CPIOddsFragment mCPIOddsFragment, mCPIOddsFragment2, mCPIOddsFragment3;
-    public List<Map<String, String>> mMapDayList=new ArrayList<>();
+    public List<Map<String, String>> mMapDayList = new ArrayList<>();
     //判断是否是日期选择
     private boolean isFirst = false;
     //默认选择当天，当点击item后改变选中的position
@@ -114,7 +130,13 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //    private boolean isTrue;
     //定时刷新线程
 //    private MyThread myThread;
-    public boolean isVisible=false;
+    public boolean isVisible = false;
+    //推送
+    private HappySocketClient hSocketClient;
+    private URI hSocketUri = null;
+    //心跳时间
+    private long pushStartTime;
+    private Timer computeWebSocketConnTimer = new Timer();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,11 +156,184 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread=new MyThread();
 //            myThread.start();
 //        }
-        //初始化的时候给date赋值
+        try {
+            hSocketUri = new URI("ws://192.168.10.242:61634/USER.topic.indexcenter");
+//			hSocketUri = new URI("ws://m.1332255.com/ws/USER.topic.indexcenter");
+//			hSocketUri = new URI("ws://m.13322.com/ws");
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         return mView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        startWebsocket();
+//        computeWebSocket();
+    }
+
+    private void computeWebSocket() {
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                System.out.println(df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+                long pushEndTime = System.currentTimeMillis();
+                if ((pushEndTime - pushStartTime) >= 5000) {
+                    System.out.println("重新启动socket");
+                    startWebsocket();
+                }
+            }
+        };
+        computeWebSocketConnTimer.schedule(tt, 5000, 5000);
+    }
+
+    private synchronized void startWebsocket() {
+        if (hSocketClient != null) {
+            if (!hSocketClient.isClosed()) {
+                hSocketClient.close();
+            }
+
+            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+            hSocketClient.setSocketResponseMessageListener(this);
+            hSocketClient.setSocketResponseCloseListener(this);
+            hSocketClient.setSocketResponseErrorListener(this);
+            try {
+                hSocketClient.connect();
+            } catch (IllegalThreadStateException e) {
+                hSocketClient.close();
+            }
+        } else {
+            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+            hSocketClient.setSocketResponseMessageListener(this);
+            hSocketClient.setSocketResponseCloseListener(this);
+            hSocketClient.setSocketResponseErrorListener(this);
+            try {
+                hSocketClient.connect();
+            } catch (IllegalThreadStateException e) {
+                hSocketClient.close();
+            }
+        }
+
+
+    }
+
+    public void dd() {
+        onMessage("");
+    }
+
+    public void onMessage(String message) {
+        // TODO Auto-generated method stub
+        pushStartTime = System.currentTimeMillis(); // 记录起始时间
+        System.out.println(">>>message》》》》" + message);
+        if (message.startsWith("MESSAGE")) {
+            String[] msgs = message.split("\n");
+            String ws_json = msgs[msgs.length - 1];
+
+            int type = 0;
+            try {
+                JSONObject jsonObject = new JSONObject(ws_json);
+                type = jsonObject.getInt("type");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (type != 0) {
+                Message msg = Message.obtain();
+                msg.obj = ws_json;
+                msg.arg1 = type;
+                mSocketHandler.sendMessage(msg);
+            }
+
+        }
+//		hSocketClient.send("SUBSCRIBE\nid:" + "dsdadasdsadas" + "\ndestination:/topic/USER.topic.liveEvent." + 337067 + "." + "zh" + "\n\n");
+    }
+
+    public void onError(Exception exception) {
+        // TODO Auto-generated method stub
+        System.out.println(">>>exception" + exception);
+    }
+
+    public void onClose(String message) {
+        // TODO Auto-generated method stub
+        System.out.println(">>>onClose");
+    }
+
+    Handler mSocketHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.arg1 == 1) {//时间
+//                String ws_json = (String) msg.obj;
+//                WebFootBallSocketOdds webSocketOddsTime = null;
+//                try {
+//                    webSocketOddsTime = JSON.parseObject(ws_json, WebFootBallSocketOdds.class);
+//                } catch (Exception e) {
+//                    L.i(">>>", "ws_json异常" + e);
+//                }
+//                upDateTime(webSocketOddsTime);
+            } else if (msg.arg1 == 2) {//赔率
+                String ws_json = (String) msg.obj;
+                WebFootBallSocketOdds webSocketOdds = null;
+                try {
+                    webSocketOdds = JSON.parseObject(ws_json, WebFootBallSocketOdds.class);
+                } catch (Exception e) {
+                    L.i(">>>", "ws_json异常" + e);
+                }
+                mCPIOddsFragment.upDateOdds(webSocketOdds);
+            } else if (msg.arg1 == 3) {//主客队得分
+//                String ws_json = (String) msg.obj;
+//                WebFootBallSocketOdds webSocketOddsScore = null;
+//                try {
+//                    webSocketOddsScore = JSON.parseObject(ws_json, WebFootBallSocketOdds.class);
+//                } catch (Exception e) {
+//                    L.i(">>>", "ws_json异常" + e);
+//                }
+//                upDateScore(webSocketOddsScore);
+            }
+        }
+    };
+
+    /**
+     * 时间推送
+     */
+    private void upDateTime(WebFootBallSocketOdds webSocketOddsTime){
+
+    }
+//    /**
+//     * 赔率推送
+//     */
+//    public void upDateOdds(WebFootBallSocketOdds webSocketOdds){
+//
+//    }
+    /**
+     * 主客队比分推送
+     */
+    private void upDateScore(WebFootBallSocketOdds webSocketOddsScore){
+
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        computeWebSocketConnTimer.cancel();
+
+        if (hSocketClient != null) {
+            hSocketClient.close();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        computeWebSocketConnTimer.cancel();
+
+        if (hSocketClient != null) {
+            hSocketClient.close();
+        }
+    }
 
     private void initView() {
         mRefreshLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.cpi_refresh_layout);
@@ -263,6 +458,13 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     }
 
+    /**
+     * 推送比赛信息
+     */
+    public void startSocket() {
+
+    }
+
     @Override
     public void onClick(View view) {
 
@@ -282,10 +484,10 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
                 break;
             case R.id.public_txt_date://点击日期的textview
-                if(mMapDayList.size()==14){
+                if (mMapDayList.size() == 14) {
                     setDialog(0);//代表日期
-                }else{
-                    UiUtils.toast(mContext,R.string.loading_txt);
+                } else {
+                    UiUtils.toast(mContext, R.string.loading_txt);
                 }
 
                 break;
@@ -399,7 +601,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     // 记录点击的 item 位置
                     selectPosition = position;
                     //点击之后给date赋值
-                    currentDate =mMapList.get(position).get("date");
+                    currentDate = mMapList.get(position).get("date");
                     //设置标题时间
                     public_txt_date.setText(currentDate);
 
@@ -494,61 +696,61 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
      */
     public List<Map<String, String>> getDate() {
         mMapList = new ArrayList<>();
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate, -6));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, -6));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,-5));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, -5));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,-4));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, -4));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,-3));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, -3));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,-2));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, -2));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,-1));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, -1));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,0));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, 0));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,1));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, 1));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,2));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, 2));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,3));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, 3));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,4));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, 4));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,5));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, 5));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,6));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, 6));
+        mMapList.add(mMap);
 
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.getDate(currentDate,7));
-                mMapList.add(mMap);
+        mMap = new HashMap<>();
+        mMap.put("date", UiUtils.getDate(currentDate, 7));
+        mMapList.add(mMap);
 
         return mMapList;
     }

@@ -17,6 +17,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.util.StringUtils;
@@ -205,7 +206,12 @@ public class CPIOddsFragment extends Fragment {
             }
         }, NewOddsInfo.class);
     }
+    /**
+     * 赔率推送
+     */
+    public void upDateOdds(WebFootBallSocketOdds webSocketOdds){
 
+    }
 
     /**
      * 时间

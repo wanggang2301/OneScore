@@ -39,7 +39,29 @@
                 android:gravity="center|left"
                 android:layout_marginLeft="10dp"
                 android:text="22:33"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
+            <LinearLayout
+                android:id="@+id/cpi_item_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/cpi_item_keepTime_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center|left"
+                    android:text="56"
+                    android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/cpi_item_seconds_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center|left"
+                    android:text="&apos;" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/cpi_scoreAndName_txt"
