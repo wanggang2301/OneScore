@@ -700,6 +700,40 @@
     <string name="password_error">密碼錯誤</string>
     <string name="username_pass_error">登錄名或者密碼錯誤</string>
     <string name="logout_check">確認退出登錄?</string>
+
+
+    <!--1.1.2 begin-->
+    <string name="forget_pwd">忘記密碼?</string>
+    <string name="next_step">下一步</string>
+    <string name="find_pw">找回密碼</string>
+    <string name="reset_password">重置密碼</string>
+    <string name="reseting_password">正在重置密碼...</string>
+    <string name="reset_password_succ">重置密碼成功</string>
+    <string name="pic">頭像</string>
+    <string name="nickname">昵稱</string>
+    <string name="input_nickname">請輸入昵稱</string>
+    <string name="nickname_hint">好的名字可以讓您的朋友更容易記住您</string>
+    <string name="profile">個人資料</string>
+    <string name="modify_nickname">更改名字</string>
+    <string name="modify_nickname_succ">修改昵稱成功</string>
+    <string name="nickname_format">昵稱格式爲1-15個字符，由中英文數字和字符_-組成,中文算兩個字符</string>
+    <string name="modify_password">修改密碼</string>
+    <string name="modifying_password">正在修改密碼...</string>
+    <string name="modify_password_succ">修改密碼成功</string>
+    <string name="modify_password_fail">修改密碼失敗</string>
+    <string name="input_password_old">請輸入舊密碼</string>
+    <string name="input_password_new">請輸入新密碼</string>
+    <string name="input_password_confirm">請輸入確認密碼</string>
+    <string name="show_password">顯示密碼</string>
+    <string name="old_pw">舊</string>
+    <string name="new_pw">新</string>
+    <string name="comfirm_pw">確認</string>
+    <string name="pw_not_same">新密碼與確認密碼不一致</string>
+    <string name="account">賬號</string>
+    <string name="pwd_format_just_length">密碼長度爲6-16位</string>
+    <!--1.1.2 end-->
+
+
     <!-- 登录注册 end-->
 
     <string name="home_pager_version_update">忽略此版本</string>

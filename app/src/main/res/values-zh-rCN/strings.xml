@@ -726,6 +726,39 @@
     <string name="password_error">密码错误</string>
     <string name="username_pass_error">登录名或者密码错误</string>
     <string name="logout_check">确认退出登录?</string>
+
+    <!--1.1.2 begin-->
+    <string name="forget_pwd">忘记密码?</string>
+    <string name="next_step">下一步</string>
+    <string name="find_pw">找回密码</string>
+    <string name="reset_password">重置密码</string>
+    <string name="reseting_password">正在重置密码...</string>
+    <string name="reset_password_succ">重置密码成功</string>
+    <string name="pic">头像</string>
+    <string name="nickname">昵称</string>
+    <string name="input_nickname">请输入昵称</string>
+    <string name="nickname_hint">好的名字可以让您的朋友更容易记住您</string>
+    <string name="profile">个人资料</string>
+    <string name="modify_nickname">更改名字</string>
+    <string name="modify_nickname_succ">修改昵称成功</string>
+    <string name="nickname_format">昵称格式为1-15个字符，由中英文数字和字符_-组成,中文算两个字符</string>
+    <string name="modify_password">修改密码</string>
+    <string name="modifying_password">正在修改密码...</string>
+    <string name="modify_password_succ">修改密码成功</string>
+    <string name="modify_password_fail">修改密码失败</string>
+    <string name="input_password_old">请输入旧密码</string>
+    <string name="input_password_new">请输入新密码</string>
+    <string name="input_password_confirm">请输入确认密码</string>
+    <string name="show_password">显示密码</string>
+    <string name="old_pw">旧</string>
+    <string name="new_pw">新</string>
+    <string name="comfirm_pw">确认</string>
+    <string name="pw_not_same">新密码与确认密码不一致</string>
+    <string name="account">账号</string>
+    <string name="pwd_format_just_length">密码长度为6-16位</string>
+    <!--1.1.2 end-->
+
+
     <!-- 登录注册 end-->
 
 
