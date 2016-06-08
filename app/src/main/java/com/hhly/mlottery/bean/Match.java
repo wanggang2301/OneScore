@@ -3,6 +3,7 @@ package com.hhly.mlottery.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  * @author chenml
  * @date 2015-10-13 下午6:51:47
  */
-public class Match implements Parcelable,Cloneable{
+public class Match implements Parcelable,Cloneable, Comparator<Match> {
 	private String thirdId;
 	private String racename;
 	private String raceId;
@@ -56,7 +57,15 @@ public class Match implements Parcelable,Cloneable{
 	private int guestTeamTextColorId;
 
 	private int itemBackGroundColorId;//用于进球背景变化
+	private int isTopData; // 用来控制是否置顶，选择对应的背景图片，及顺序 顺序越小越靠顶部
 
+	public int getIsTopData() {
+		return isTopData;
+	}
+
+	public void setIsTopData(int isTopData) {
+		this.isTopData = isTopData;
+	}
 
 	public static final Creator<Match> CREATOR = new Creator<Match>() {
 		@Override
@@ -90,8 +99,6 @@ public class Match implements Parcelable,Cloneable{
 		this.itemBackGroundColorId = itemBackGroundColorId;
 	}
 
-
-
 	public int getLeftOddTextColorId() {
 		return leftOddTextColorId;
 	}
@@ -110,9 +117,6 @@ public class Match implements Parcelable,Cloneable{
 	public void setMidOddTextColorId(int midOddTextColorId) {
 		this.midOddTextColorId = midOddTextColorId;
 	}
-
-
-
 
 	public String getThirdId() {
 		return thirdId;
@@ -229,8 +233,6 @@ public class Match implements Parcelable,Cloneable{
 		this.matchOdds = matchOdds;
 	}
 
-
-
 	public String getHomeScore() {
 		return homeScore;
 	}
@@ -264,8 +266,6 @@ public class Match implements Parcelable,Cloneable{
 	public void setHomeId(String homeId) {
 		this.homeId = homeId;
 	}
-
-
 
 	public String getHomeHalfScore() {
 		return homeHalfScore;
@@ -346,6 +346,26 @@ public class Match implements Parcelable,Cloneable{
 		return super.clone();
 	}
 
+	@Override
+	public int compare(Match lhs, Match rhs) {
+		return String.valueOf(rhs.isTopData).compareTo(String.valueOf(lhs
+				.isTopData));
+	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
+		Match match = (Match) o;
+
+		if (thirdId != null ? !thirdId.equals(match.thirdId) : match.thirdId != null) return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = thirdId != null ? thirdId.hashCode() : 0;
+		return result;
+	}
 }

@@ -16,7 +16,7 @@
 
         <TextView
             style="@style/WW_Weight_1"
-            android:layout_weight="12"/>
+            android:layout_weight="10"/>
 
         <TextView
             style="@style/WW_Weight_1"

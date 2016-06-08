@@ -571,6 +571,8 @@
     <!-- rollball style-->
     <style name="item_rollball_linearlayout">
         <item name="android:layout_width">0dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@color/home_item_bg</item>
@@ -591,6 +593,7 @@
     <style name="MW_White">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1.1</item>
         <item name="android:background">@color/white</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">center_vertical</item>

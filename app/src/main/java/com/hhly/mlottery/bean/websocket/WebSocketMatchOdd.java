@@ -25,6 +25,4 @@ public class WebSocketMatchOdd {
 	public void setData(List<Map<String, String>> data) {
 		this.data = data;
 	}
-	
-	
 }

@@ -296,12 +296,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                 @Override
                 public void onError(Exception exception) {
-                    RollBallFragment.this.setupWebSocketClient();
+//                    RollBallFragment.this.setupWebSocketClient();
                 }
 
                 @Override
                 public void onClose(String message) {
-                    RollBallFragment.this.setupWebSocketClient();
+//                    RollBallFragment.this.setupWebSocketClient();
                 }
             });
 
