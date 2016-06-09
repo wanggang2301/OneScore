@@ -25,7 +25,7 @@ public class BaseURLs {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
-            url_config = DebugConfigActivity.URL_242;
+//            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "m.1332255.com";
             } else if (url_config == DebugConfigActivity.URL_242) {
