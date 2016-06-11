@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HandicapUtils;
@@ -36,6 +37,7 @@ public class CardViewListAdapter extends BaseAdapter {
     private NewOddsInfo.AllInfoBean.ComListBean.CurrLevelBean mCurrLevelBean;
     private NewOddsInfo.AllInfoBean.ComListBean.PreLevelBean mPreLevelBean;
     private String oddType;
+    private String mCardPlate,mCardOp,mCardBig;
 
     public CardViewListAdapter(Context context, List<NewOddsInfo.AllInfoBean.ComListBean> mComList, String oddType) {
         super();
@@ -120,17 +122,19 @@ public class CardViewListAdapter extends BaseAdapter {
             item.cpi_item_list_guest_txt.setTextColor(context.getResources().getColor(R.color.black));
         }
         if (CPIFragment.TYPE_PLATE.equals(oddType)) {//亚盘
+            mCardPlate=CPIFragment.TYPE_PLATE;
                 //转换盘口
                 item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicap(mCurrLevelBean.getMiddle()));
                 item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicap(mPreLevelBean.getMiddle()));
                item.cpi_item_list_odds_txt.setWidth(200);
         } else if (CPIFragment.TYPE_BIG.equals(oddType)) {//大小
-
+            mCardBig=CPIFragment.TYPE_BIG;
                 item.cpi_item_list_odds_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mCurrLevelBean.getMiddle()));
                 item.cpi_item_list_odds2_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(mPreLevelBean.getMiddle()));
                item.cpi_item_list_odds_txt.setWidth(120);
 
         } else if (CPIFragment.TYPE_OP.equals(oddType)){//欧赔
+            mCardOp=CPIFragment.TYPE_OP;
             //不用转换盘口
                 item.cpi_item_list_odds_txt.setText(mCurrLevelBean.getMiddle());
                 item.cpi_item_list_odds2_txt.setText(mPreLevelBean.getMiddle());
@@ -170,6 +174,56 @@ public class CardViewListAdapter extends BaseAdapter {
             cpi_item_list_guest2_txt = (TextView) v.findViewById(R.id.cpi_item_list_guest2_txt);
         }
     }
+
+    /**
+     * 更新单个position
+     * @param webFootBallSocketOdds
+     * @param plateType
+     */
+    public void upDateCardView(WebFootBallSocketOdds webFootBallSocketOdds,String plateType){
+        //如果是亚盘
+        if(mCardPlate.equals(plateType)){
+            for (int t = 0; t <mComList.size() ; t++) {
+                    System.out.println(">>>mComListttttt"+mComList.get(t).getComId());
+
+            }
+            //循环推送过来的赔率
+            for (int j = 0; j <webFootBallSocketOdds.getData().size() ; j++) {
+                for (int i = 0; i <mComList.size() ; i++) {
+                   if(webFootBallSocketOdds.getData().get(j).get("comId").equals(mComList.get(i).getComId())){
+                       Map<String, String> listOdd= webFootBallSocketOdds.getData().get(j);
+                       //如果即时主队比分不为空
+                       if(!"".equals(listOdd.get("leftOdds"))){
+                        //即赔
+//                           item.cpi_item_list_home_txt.setText(mCurrLevelBean.getLeft());
+//                           item.cpi_item_list_guest_txt.setText(mCurrLevelBean.getRight());
+                       }
+                       //如果即时盘口不为空
+                       if(!"".equals(listOdd.get("mediumOdds"))){
+
+                       }
+                       //如果即时客队不为空
+                       if(!"".equals(listOdd.get("rightOdds"))){
+
+                       }
+                       System.out.println(">>comId++"+webFootBallSocketOdds.getData().get(j).get("comId")+">>>mComList"+mComList.get(i).getComId());
+
+                   }
+                }
+            }
+
+            System.out.println(">>1upDateCardView++"+mCardPlate+">>>"+plateType);
+        }
+        //如果是欧赔
+        else if(mCardOp.equals(plateType)){
+            System.out.println(">>2upDateCardView++"+mCardOp+">>>"+plateType);
+        }
+        //如果是大小球
+        else if(mCardBig.equals(plateType)){
+            System.out.println(">>3upDateCardView++"+mCardBig+">>>"+plateType);
+        }
+    }
+
 
     /**
      * 清除数据

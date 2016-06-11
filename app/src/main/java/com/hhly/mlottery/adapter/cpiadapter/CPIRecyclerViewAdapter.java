@@ -17,6 +17,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.widget.CpiListView;
 
@@ -39,6 +40,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
 
     //标记是哪个类型“亚盘，大小，欧赔
     private String stType;
+    private String mPlate,mOp,mBig;
 
     public CPIRecyclerViewAdapter(List<NewOddsInfo.AllInfoBean> mAllInfoBean, Context context, String stType) {
         this.mAllInfoBean = mAllInfoBean;
@@ -116,6 +118,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         }
         //亚盘
         if (stType.equals(CPIFragment.TYPE_PLATE)) {
+            mPlate=CPIFragment.TYPE_PLATE;
             for (int i = 0; i < mAllInfoBean.get(position).getComList().size(); i++) {
                 //亚盘如果降
                 if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
@@ -130,6 +133,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             }
             cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
         } else if (stType.equals(CPIFragment.TYPE_BIG)) {
+            mBig=CPIFragment.TYPE_BIG;
             for (int i = 0; i < mAllInfoBean.get(position).getComList().size(); i++) {
                 //大小球如果降
                 if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
@@ -144,6 +148,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             }
             cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
         } else {
+            mOp=CPIFragment.TYPE_OP;
             cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
         }
 
@@ -194,6 +199,27 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         });
 
 
+    }
+    /**
+     *  亚盘 大小，欧赔 赔率
+     */
+
+    public void upDatePlate(WebFootBallSocketOdds webFootBallSocketOdds,String plateType){
+          //如果是亚盘
+         if(mPlate.equals(plateType)){
+             System.out.println(">>stType1++"+mPlate+">>>"+plateType);
+             cardViewListAdapter.upDateCardView(webFootBallSocketOdds,plateType);
+         }
+         //如果是欧赔
+         else if(mOp.equals(plateType)){
+             System.out.println(">>stType2++"+mOp+">>>"+plateType);
+             cardViewListAdapter.upDateCardView(webFootBallSocketOdds, plateType);
+        }
+         //如果是大小球
+         else if(mBig.equals(plateType)){
+             System.out.println(">>stType3++"+mBig+">>>"+plateType);
+             cardViewListAdapter.upDateCardView(webFootBallSocketOdds,plateType);
+         }
     }
 
     @Override

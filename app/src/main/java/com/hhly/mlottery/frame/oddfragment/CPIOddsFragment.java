@@ -18,6 +18,7 @@ import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerViewAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
+import com.hhly.mlottery.bean.websocket.WebFootBallSocketTime;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.util.StringUtils;
@@ -207,9 +208,43 @@ public class CPIOddsFragment extends Fragment {
         }, NewOddsInfo.class);
     }
     /**
-     * 赔率推送
+     * 赔率推送赔率
      */
     public void upDateOdds(WebFootBallSocketOdds webSocketOdds){
+        for (int i = 0; i <webSocketOdds.getData().size(); i++) {
+            WebFootBallSocketOdds webFootBallSocketOdds = new WebFootBallSocketOdds();
+            //如果是亚盘的
+            if("1".equals(webSocketOdds.getData().get(i).get("oddType"))){
+                webFootBallSocketOdds.setData(webSocketOdds.getData());
+                cpiRecyclerViewAdapter.upDatePlate(webFootBallSocketOdds, CPIFragment.TYPE_PLATE);
+            }
+            //如果是欧赔的
+            else if("2".equals(webSocketOdds.getData().get(i).get("oddType"))){
+                webFootBallSocketOdds.setData(webSocketOdds.getData());
+                cpiRecyclerViewAdapter.upDatePlate(webFootBallSocketOdds, CPIFragment.TYPE_OP);
+            }
+            //如果是大小的
+            else if("3".equals(webSocketOdds.getData().get(i).get("oddType"))){
+                webFootBallSocketOdds.setData(webSocketOdds.getData());
+                cpiRecyclerViewAdapter.upDatePlate(webFootBallSocketOdds, CPIFragment.TYPE_BIG);
+
+            }
+        }
+    }
+
+    /**
+     * 时间和主客队比分
+     * @param webSocketTimeAndScore
+     */
+    public void upDateTimeAndScore(WebFootBallSocketTime webSocketTimeAndScore,String oddType){
+        //如果是时间传过来的
+        if("time".equals(oddType)){
+
+        }
+        //否者就是主客队比分
+        else{
+
+        }
 
     }
 
