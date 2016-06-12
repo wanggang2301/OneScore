@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
 
     <!--<include layout="@layout/layout_header"/>-->
     <!-- 头-->
@@ -12,6 +11,7 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_height"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         >
 
@@ -46,41 +46,44 @@
         <!--addtjl添加中间日期显示-->
 
     </RelativeLayout>
+    <!--
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/comment_swiperefreshlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/scrollview"
-        android:layout_below="@+id/top"
-
-        >
-
-        <com.hhly.mlottery.view.PullUpRefreshListView
-            android:id="@+id/comment_lv"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/comment_swiperefreshlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_above="@+id/scrollview"
+            android:layout_below="@+id/top"
+            android:background="#f00"
+            android:visibility="gone"
+            >
 
-    <TextView
-        android:id="@+id/nodata"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="@string/comment_contentnull"
-        android:visibility="gone"/>
+            <com.hhly.mlottery.view.PullUpRefreshListView
+                android:id="@+id/comment_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/nodata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/comment_contentnull"
+            android:visibility="gone"/>
+    -->
 
     <!--解决adjustresize和透明状态栏的冲突-->
-    <ScrollView
+    <RelativeLayout
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top"
         android:layout_alignParentBottom="true"
         >
-        <include layout="@layout/inputcomment_layout"/>
-    </ScrollView>
+    </RelativeLayout>
 </RelativeLayout>

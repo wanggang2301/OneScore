@@ -2,6 +2,7 @@ package com.hhly.mlottery.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ScrollView;
 
 /**
@@ -36,5 +37,10 @@ public class IsBottomScrollView extends ScrollView {
 
     public interface OnScrollToBottomListener{
         public void onScrollBottomListener(boolean isBottom);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return false;
     }
 }
