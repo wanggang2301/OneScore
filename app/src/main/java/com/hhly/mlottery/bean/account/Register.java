@@ -2,6 +2,7 @@ package com.hhly.mlottery.bean.account;
 
 /**
  * Created by lyx on 2016/5/19.
+ * 注册返回bean （完整内容）
  */
 public class Register {
 
@@ -85,6 +86,15 @@ public class Register {
         public static class UserBean {
             private String nickName;
             private String userId;
+            private String loginAccount;
+
+            public String getLoginAccount() {
+                return loginAccount;
+            }
+
+            public void setLoginAccount(String loginAccount) {
+                this.loginAccount = loginAccount;
+            }
 
             public String getNickName() {
                 return nickName;
@@ -107,6 +117,7 @@ public class Register {
                 return "UserBean{" +
                         "nickName='" + nickName + '\'' +
                         ", userId='" + userId + '\'' +
+                        ", loginAccount='" + loginAccount + '\'' +
                         '}';
             }
         }

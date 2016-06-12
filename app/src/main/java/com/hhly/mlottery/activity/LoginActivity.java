@@ -3,6 +3,8 @@ package com.hhly.mlottery.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -44,6 +46,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ImageView iv_eye;
     private ProgressDialog progressBar;
     private ImageView iv_delete;
+
+    public static final int REQUESTCODE_FINDPW = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +116,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         View tv_register = findViewById(R.id.tv_right);
         tv_register.setVisibility(View.VISIBLE);
         tv_register.setOnClickListener(this);
+
+        findViewById(R.id.tv_forgetpw).setOnClickListener(this);
     }
 
     @Override
@@ -141,16 +147,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
 
                 // 光标移动到结尾
-                String pwd = et_password.getText().toString();
-                if(!TextUtils.isEmpty(pwd)){
-                    et_password.setSelection(pwd.length());
-                }
+                CommonUtils.selectionLast(et_password);
 
 
                 break;
             case R.id.tv_login: // 登录
                 MobclickAgent.onEvent(mContext, "LoginActivity_LoginOk");
                 login();
+                break;
+            case R.id.tv_forgetpw:
+                MobclickAgent.onEvent(mContext, "LoginActivity_FindPassWord");
+                startActivityForResult(new Intent(this , FindPassWordActivity.class) , REQUESTCODE_FINDPW);
                 break;
             default:
                 break;
@@ -166,10 +173,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String passWord = et_password.getText().toString();
 
         if (UiUtils.isMobileNO(this ,userName)){
-            if (UiUtils.checkPassword(this , passWord)){
+            if (UiUtils.checkPassword_JustLength(this , passWord)){
                 // 登录
                 progressBar.show();
-                String url = BaseURLs.URL_LOGIN;
+                final String url = BaseURLs.URL_LOGIN;
                 Map<String, String> param = new HashMap<>();
                 param.put("account" , userName);
                 param.put("password" , MD5Util.getMD5(passWord));
@@ -185,9 +192,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                             CommonUtils.saveRegisterInfo(register);
                             setResult(RESULT_OK);
+                            //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
+                            sendUserInfoToServer(register);
                             finish();
                         }else{
-                            CommonUtils.handlerRequestResult(register.getResult());
+                            CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
                         }
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
@@ -202,6 +211,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 } , Register.class);
             }
         }
+    }
+
+    private void sendUserInfoToServer(Register register) {
+        final String url = BaseURLs.USER_ACTION_ANALYSIS_URL;
+        final Map<String,String> params = new HashMap<>();
+        params.put("userid",register.getData().getUser().getUserId());
+        String CHANNEL_ID;
+        try {
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+
+            if (appInfo.metaData != null) {
+                CHANNEL_ID = appInfo.metaData.getString("UMENG_CHANNEL");
+                params.put("appType","appLogin");
+                params.put("channel", CHANNEL_ID);
+            }else {
+                //获取不到渠道号id的时候
+                params.put("appType","appLoginInfo");
+                //没有渠道号id的话，服务器指定要传这个“vnp56ams”参数
+                params.put("channel","vnp56ams");
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+            params.put("appType","appLoginInfo");
+            params.put("channel","vnp56ams");
+            e.printStackTrace();
+        }
+
+        VolleyContentFast.requestStringByPost(url, params, new VolleyContentFast.ResponseSuccessListener<String>() {
+            @Override
+            public void onResponse(String jsonObject) {
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        });
     }
 
     @Override
@@ -220,10 +265,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK){
-            if (requestCode == HomePagerActivity.REQUESTCODE_LOGIN){
-                // 注册成功返回
-                setResult(RESULT_OK);
-                finish();
+            switch (requestCode){
+                case HomePagerActivity.REQUESTCODE_LOGIN:
+                    L.i(TAG , "注册成功返回" );
+                    setResult(RESULT_OK);
+                    finish();
+                    break;
+                case REQUESTCODE_FINDPW:
+                    L.i(TAG , "忘记密码成功返回" );
+                    break;
             }
         }
 

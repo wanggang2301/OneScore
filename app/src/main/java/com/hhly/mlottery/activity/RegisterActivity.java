@@ -2,6 +2,8 @@ package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -19,6 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.account.SendSmsCode;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CountDown;
@@ -49,8 +52,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 倒计时 默认60s , 间隔1s
      */
     private CountDown countDown;
-    private static final int TIMEOUT = 59699;
-    private static final int TIMEOUT_INTERVEL = 1000;
+
     private ProgressDialog progressBar;
 
 
@@ -121,7 +123,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
-        countDown = new CountDown(TIMEOUT, TIMEOUT_INTERVEL, new CountDown.CountDownCallback() {
+
+        countDown = CountDown.getDefault(new CountDown.CountDownCallback() {
             @Override
             public void onFinish() {
                 enableVeryCode();
@@ -133,11 +136,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     if (tv_verycode.isClickable())
                         tv_verycode.setClickable(false);
 
-                    L.d(TAG,millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
-                    tv_verycode.setText(millisUntilFinished/ TIMEOUT_INTERVEL + "秒");
+                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒");
+                    tv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒");
                 }
             }
         });
+
     }
 
     /**
@@ -189,10 +193,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     iv_eye.setImageResource(R.mipmap.open_eye);
                 }
                 // 光标移动到结尾
-                String pwd = et_password.getText().toString();
-                if(!TextUtils.isEmpty(pwd)){
-                    et_password.setSelection(pwd.length());
-                }
+                CommonUtils.selectionLast(et_password);
 
                 break;
             case R.id.tv_verycode:
@@ -244,12 +245,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (register != null&& register.getResult() == AccountResultCode.SUCC){
                     CommonUtils.saveRegisterInfo(register);
                     UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
+
+                    //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
+                    sendUserInfoToServer(register);
+
                     L.d(TAG,"注册成功");
                     setResult(RESULT_OK);
                     finish();
                 }else{
                     L.e(TAG,"成功请求，注册失败");
-                    CommonUtils.handlerRequestResult(register.getResult());
+                    CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -264,41 +269,76 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     /**
+     * 给服务器发送注册成功后用户id和渠道id（用来统计留存率）
+     * @param register
+     */
+    private void sendUserInfoToServer(Register register) {
+
+        String url = BaseURLs.USER_ACTION_ANALYSIS_URL;
+        Map<String,String> pramas = new HashMap<>();
+        pramas.put("appType","appRegist");
+        pramas.put("userid",register.getData().getUser().getUserId());
+        String CHANNEL_ID;
+        try {
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+
+            if (appInfo.metaData != null) {
+                CHANNEL_ID = appInfo.metaData.getString("UMENG_CHANNEL");
+                pramas.put("channel", CHANNEL_ID);
+            }else {
+                pramas.put("channel","vnp56ams");
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+            pramas.put("channel","vnp56ams");
+            e.printStackTrace();
+        }
+
+        VolleyContentFast.requestStringByPost(url, pramas, new VolleyContentFast.ResponseSuccessListener<String>() {
+            @Override
+            public void onResponse(String jsonObject) {
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        });
+
+
+
+
+    }
+
+    /**
      * 获取验证码
      */
     private void getVerifyCode() {
+
         String phone = et_username.getText().toString();
-        if (UiUtils.isMobileNO(this ,phone)){
-            countDown.start();
-            String url = BaseURLs.URL_SENDSMSCODE;
-            Map<String, String> param = new HashMap<>();
-            param.put("phone" , phone);
-            param.put("operateType" , OperateType.TYPE_REGISTER);
+        CommonUtils.getVerifyCode(this, phone, OperateType.TYPE_REGISTER, new GetVerifyCodeCallBack() {
+            @Override
+            public void beforGet() {
+                countDown.start();
+            }
 
-            VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
-                @Override
-                public void onResponse(SendSmsCode jsonObject) {
-                    if (jsonObject.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
-                            || jsonObject.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
-                            || jsonObject.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                            ){
-                        countDown.cancel();
-                        enableVeryCode();
-                    }
-
-                    CommonUtils.handlerRequestResult(jsonObject.getResult());
-                }
-            }, new VolleyContentFast.ResponseErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                    L.e(TAG,"发送验证码失败");
+            @Override
+            public void onGetResponce(SendSmsCode code) {
+//              // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
+                if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
+                        || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
+                        || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
+                        ){
                     countDown.cancel();
                     enableVeryCode();
-                    UiUtils.toast(MyApp.getInstance() , R.string.immediate_unconection);
                 }
-            } , SendSmsCode.class);
+            }
 
-        }
+            @Override
+            public void onGetError(VolleyContentFast.VolleyException exception) {
+                countDown.cancel();
+                enableVeryCode();
+            }
+        });
     }
 
     @Override

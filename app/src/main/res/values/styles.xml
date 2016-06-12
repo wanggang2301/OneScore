@@ -501,7 +501,8 @@
     </style>
 
 
-    <!--登录信息背景-->
+    <!--登录信息背景 begin-->
+    <!-- 长条背景 默认白色-->
     <style name="login_item_bg">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginRight">15dp</item>
@@ -509,22 +510,26 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/selector_loginbtn</item>
     </style>
+
+    <!-- 长条背景 蓝色背景-->
     <style name="loginbtn_blue" parent="login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_blue</item>
     </style>
 
-
+    <!--TextView 字体 13sp-->
     <style name="login_edittext_common">
         <item name="android:textSize">13sp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:background">@null</item>
     </style>
 
+    <!--手机号码的格式-->
     <style name="login_edittext_phonenumber" parent="login_edittext_common">
         <item name="android:maxLength">11</item>
     </style>
 
 
+    <!--退出登录的 TextView-->
     <style name="login_textview_logout">
         <item name="android:textSize">15sp</item>
         <item name="android:layout_width">match_parent</item>
@@ -534,7 +539,7 @@
         <item name="android:background">@color/white</item>
     </style>
 
-
+    <!--密码号码的格式 TextView-->
     <style name="login_edittext_password" parent="login_edittext_common">
         <item name="android:inputType">textPassword</item>
         <item name="android:digits">@string/password_digits</item>
@@ -543,6 +548,29 @@
     </style>
 
 
+    <!--密码号码的格式 TextView , 不限制输入字符-->
+    <style name="login_edittext_password_no_digits" parent="login_edittext_password">
+        <item name="android:digits">@null</item>
+    </style>
+
+
+    <!--密码号码的格式 TextView ：整个 Item 带宽高-->
+    <style name="login_edittext_password_measured" parent="login_edittext_password">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:background">@drawable/selector_loginbtn</item>
+    </style>
+
+
+    <!--密码号码的格式 TextView ：整个Item带宽高  不限制输入字符-->
+    <style name="login_edittext_password_measured_no_digits" parent="login_edittext_password_measured">
+        <item name="android:digits">@null</item>
+    </style>
+
+
+    <!--登录 TextView-->
     <style name="login_edittext_loginbtn" parent="loginbtn_blue">
         <item name="android:layout_height">48dp</item>
         <item name="android:textSize">18sp</item>
@@ -550,6 +578,7 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <!--整个条目 两边的 ImageView 样式-->
     <style name="login_item_image">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">wrap_content</item>
@@ -558,15 +587,67 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
+    <!--整个条目 右边的 ImageView 样式-->
     <style name="login_item_image_right" parent="login_item_image">
         <item name="android:paddingRight">18dp</item>
         <item name="android:paddingLeft">10dp</item>
     </style>
 
+    <!--整个条目 左边的 ImageView 样式-->
     <style name="login_item_image_left" parent="login_item_image">
         <item name="android:layout_marginRight">18dp</item>
         <item name="android:layout_marginLeft">18dp</item>
     </style>
+
+    <!--忘记密码 TextView-->
+    <style name="login_textview_forget_pw" parent="login_edittext_common">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--个人资料 TextView-->
+    <style name="login_textview_account_center">
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:textSize">@dimen/home_pager_user_title</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--个人资料 TextView 带上默认margin参数-->
+    <style name="login_textview_account_center_margin" parent="login_textview_account_center">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+    </style>
+
+    <!--个人资料 TextView 灰色字体-->
+    <style name="login_textview_account_center_gray" parent="login_textview_account_center_margin">
+        <item name="android:textColor">@color/content_txt_light_grad</item>
+    </style>
+
+    <!--昵称输入 EditText-->
+    <style name="login_edittext_modify_nickname" parent="login_textview_account_center">
+        <item name="android:background">@null</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:maxLength">15</item>
+    </style>
+
+    <!--昵称提示 TextView-->
+    <style name="login_textview_modify_nickname_hint" parent="login_edittext_common">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:textColor">@color/content_txt_light_grad</item>
+    </style>
+
+    <!--登录信息背景 end-->
+
+
 
     <!--AppDialog_Theme-->
     <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Light.Dialog.Alert">
