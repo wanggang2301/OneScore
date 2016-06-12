@@ -53,6 +53,10 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
                 .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
                 .cacheOnDisc(true).considerExifParams(true).build();
     }
+    public void setAllInfor(List<List<IntegralBean.LangueScoreBean.ListBean>> childDataList, List<String> groupDataList) {
+        this.mGroupDataList = groupDataList;
+        this.mChildrenDataList = childDataList;
+    }
 
 
     /**
@@ -181,6 +185,7 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
         return true;
     }
+
 
 /*
     public void updateDatas(List<List<IntegralBean.LangueScoreBean.ListBean>> childrenDataList, List<String> groupDataList) {

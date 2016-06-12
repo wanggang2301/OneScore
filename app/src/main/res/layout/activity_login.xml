@@ -51,7 +51,7 @@
         <EditText
             android:id="@+id/et_password"
             android:layout_width="0dp"
-            style="@style/login_edittext_password"
+            style="@style/login_edittext_password_no_digits"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
@@ -70,6 +70,17 @@
         android:id="@+id/tv_login"
         android:layout_marginTop="30dp"
         android:text="@string/login"
+        />
+
+    <TextView
+        android:id="@+id/tv_forgetpw"
+        style="@style/login_textview_forget_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:layout_gravity="right"
+        android:text="@string/forget_pwd"
         />
 
 
