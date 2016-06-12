@@ -15,7 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.bean.footballDetails.TrendAllBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -29,10 +29,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 攻防
- * Created by asus1 on 2015/12/29.
+ * @author wang gang
+ * @date 2016/6/12 11:21
+ * @des ${TODO}
  */
-public class TrendFragment extends Fragment {
+public class StatisticsFragmentTest extends Fragment {
+
 
     private View mView;
     private Context mContext;
@@ -56,12 +58,19 @@ public class TrendFragment extends Fragment {
     private MyLineChart myLineChartAttack;// 攻防图表对象
     private MyLineChart myLineChartCorner;// 角球图表对象
 
+    public static StatisticsFragmentTest newInstance() {
+        StatisticsFragmentTest fragment = new StatisticsFragmentTest();
+
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.attack_trend, container, false);
         mContext = getActivity();
         initView();
+        initData();
         initEvent();
         return mView;
     }
@@ -78,8 +87,8 @@ public class TrendFragment extends Fragment {
                 getVolleyData();
             }
         });
-      /*  // 走势图滚动监听
-        sv_attack.setOnTouchListener(new View.OnTouchListener() {
+        // 走势图滚动监听
+     /*   sv_attack.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -88,7 +97,7 @@ public class TrendFragment extends Fragment {
                     case MotionEvent.ACTION_MOVE:
                         if (sv_attack.getScrollY() != 0) {// 处于顶部
                             if (getActivity() != null) {
-                                ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(false);
+                              //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
                             }
                         }
                         break;
@@ -96,7 +105,7 @@ public class TrendFragment extends Fragment {
                     case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
                         if (getActivity() != null) {
-                            ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(true);
+                          //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
                         }
                         break;
                 }
@@ -154,7 +163,8 @@ public class TrendFragment extends Fragment {
      */
     public void initData() {
         boolean mStart = StadiumFragment.isStart;// 判断是否完场
-        if (!mStart) {
+      //  if (!mStart) {
+        if (false) {
             // 显示走势图
             fl_attackTrend_loading.setVisibility(View.GONE);
             fl_attackTrend_networkError.setVisibility(View.GONE);
@@ -225,7 +235,7 @@ public class TrendFragment extends Fragment {
         }
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // 获取对象ID
-        String mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
+        String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
         // 设置参数
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("thirdId", mThirdId);
@@ -299,7 +309,5 @@ public class TrendFragment extends Fragment {
             initData();
         }
         super.onHiddenChanged(hidden);
-
-
     }
 }

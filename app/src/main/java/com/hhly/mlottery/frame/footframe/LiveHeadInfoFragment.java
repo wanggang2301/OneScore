@@ -56,7 +56,6 @@ public class LiveHeadInfoFragment extends Fragment {
         }
         this.mContext = getActivity();
         initView();
-
         return mView;
     }
 
