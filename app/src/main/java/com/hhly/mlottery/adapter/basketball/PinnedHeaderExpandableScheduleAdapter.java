@@ -12,10 +12,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
@@ -23,6 +21,7 @@ import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
+import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.view.PinnedHeaderExpandableListView;
@@ -38,7 +37,7 @@ import java.util.Map;
  * 篮球列表的Adapter
  * Created by yixq on 2015/12/30.
  */
-public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements HeaderAdapter {
+public class PinnedHeaderExpandableScheduleAdapter extends BaseExpandableListAdapter implements HeaderAdapter {
 
     private List<String> groupDataList;//父类view 数据
     private List<List<BasketMatchBean>> childrenDataList;//子view数据
@@ -52,9 +51,9 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private Map<String, BasketAllOddBean> MatchOdds;
 //	private BasketOddsBean MatchOdds;
 
-    private ImmedBasketballFragment.BasketFocusClickListener mFocus; //关注监听回掉
+    private ScheduleBasketballFragment.BasketFocusClickListener mFocus; //关注监听回掉
 
-    public void setmFocus(ImmedBasketballFragment.BasketFocusClickListener mFocus) {
+    public void setmFocus(ScheduleBasketballFragment.BasketFocusClickListener mFocus) {
         this.mFocus = mFocus;
     }
 //    private Bitmap mDefualtImg;
@@ -69,7 +68,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private DisplayImageOptions options; //
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
 
-    public PinnedHeaderExpandableAdapter(List<List<BasketMatchBean>> childrenDataList, List<String> groupDataList
+    public PinnedHeaderExpandableScheduleAdapter(List<List<BasketMatchBean>> childrenDataList, List<String> groupDataList
             , Context mContext, PinnedHeaderExpandableListView listView) {
         this.groupDataList = groupDataList;
         this.childrenDataList = childrenDataList;
@@ -174,7 +173,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             /**
              * 适配4.1系统
              */
-            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+            int currentapiVersion = Build.VERSION.SDK_INT;
             if (currentapiVersion == 16) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.setMargins(0,25,0,25);
