@@ -53,6 +53,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -107,6 +108,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public static List<LeagueCup> cupLists;// 全部联赛
     public static LeagueCup[] checkCups;
     private boolean isCheckedDefualt = false;// true为默认选中全部，但是在筛选页面不选中
+    private Subscription subscription;
 
     public static RollBallFragment newInstance(int index) {
         Bundle bundle = new Bundle();
@@ -164,7 +166,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             }
         });
 
-        RxBus.getDefault().toObserverable(Match.class).delay(60, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Match>() {
+        subscription = RxBus.getDefault().toObserverable(Match.class).delay(60, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Match>() {
             @Override
             public void call(final Match match) {
                 synchronized (cupLists) {
@@ -254,11 +256,15 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public void onDestroyView() {
         super.onDestroyView();
         eventBus.unregister(this);
+        if (adapter != null && adapter.getSubscription() != null)
+            if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();
+        if (subscription.isUnsubscribed()) subscription.unsubscribe();
         ButterKnife.unbind(this);
     }
 
     @Override
     public void onItemClick(View convertView, int position) {
+        // TODO: 点击item跳转入口，点击的当前条目thirdId获取方式 showDataLists.get(position).getThirdId();
         Toast.makeText(getContext(), showDataLists.get(position).getThirdId(), Toast.LENGTH_SHORT).show();
     }
 

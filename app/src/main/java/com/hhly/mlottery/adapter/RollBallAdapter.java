@@ -23,6 +23,7 @@ import com.hhly.mlottery.util.AnimUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -38,12 +40,14 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     public static final int VIEW_TYPE_DEFAULT = 1;
 
     private static int topDataCount = 1;
-    private static int A = 1;
+    private boolean notify_locked_tag;
     private int handicap;
     private Map<Match, Boolean> isTopDataCacheMaps = new HashMap<>();
+    private List<Object> cacheWebSocketPushData = new ArrayList<>();
 
     private Context context;
     private boolean resetColor;
+    private Subscription subscription;
 
     public RollBallAdapter(Context context) {
         super();
@@ -84,7 +88,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         final Match data = getItemByPosition(position);
         if (data == null) return;
 
-        A++;
+        notify_locked_tag = true;
         final CardView container = viewHolder.findViewById(R.id.container);
         RelativeLayout rlHalfContainer = viewHolder.findViewById(R.id.rlHalfContainer);
         TextView tvRaceName = viewHolder.findViewById(R.id.tvRaceName);
@@ -274,6 +278,23 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 RollBallAdapter.this.transformMapper(position);
             }
         });
+
+        subscription = RxBus.getDefault().toObserverable().subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                if (o == null) {
+                    notify_locked_tag = false;
+                    if (cacheWebSocketPushData != null && cacheWebSocketPushData.size() > 0) {
+                        updateItemFromWebSocket(cacheWebSocketPushData.get(0));
+                        cacheWebSocketPushData.remove(0);
+                    }
+                }
+            }
+        });
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
     }
 
     private void setupKeepTimeStyle(TextView keepTime, String text, int color) {
@@ -323,17 +344,22 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
     public void updateItemFromWebSocket(Object o) {
         List<Match> matchList = getList();
-        for (int i = 0; i < matchList.size(); i++) {
-            Match match = matchList.get(i);
-            if (o instanceof WebSocketMatchStatus) {
-                this.updateTypeStatus(match, i, (WebSocketMatchStatus) o);
-            } else if (o instanceof WebSocketMatchOdd) {
-                this.updateTypeOdds(match, i, (WebSocketMatchOdd) o);
-            } else if (o instanceof WebSocketMatchEvent) {
-                this.updateTypeEvent(match, i, (WebSocketMatchEvent) o);
-            } else if (o instanceof WebSocketMatchChange) {
-                this.updateTypeMatchChange(match, i, (WebSocketMatchChange) o);
+        if (!notify_locked_tag) {
+            for (int i = 0; i < matchList.size(); i++) {
+                Match match = matchList.get(i);
+                if (o instanceof WebSocketMatchStatus) {
+                    this.updateTypeStatus(match, i, (WebSocketMatchStatus) o);
+                } else if (o instanceof WebSocketMatchOdd) {
+                    this.updateTypeOdds(match, i, (WebSocketMatchOdd) o);
+                } else if (o instanceof WebSocketMatchEvent) {
+                    this.updateTypeEvent(match, i, (WebSocketMatchEvent) o);
+                } else if (o instanceof WebSocketMatchChange) {
+                    this.updateTypeMatchChange(match, i, (WebSocketMatchChange) o);
+                }
             }
+        } else {
+            cacheWebSocketPushData.add(o);
+            RxBus.getDefault().post(null);
         }
     }
 
