@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.animation.ObjectAnimator;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -63,7 +62,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     //    private ScrollView scrollview;
     private SharePopupWindow sharePopupWindow;
     private float y;
-    private float startyY;
 
 
     @Override
@@ -107,13 +105,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         }
     }
 
-    public void d() {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mTv_check_info, "translationY", mTv_check_info.getY(), mTv_check_info.getY())
-                .setDuration(0);
-        objectAnimator.start();
-        System.out.println("lzfmTv_check_info.getY()=" + startyY);
-
-    }
 
     private void initView() {
         ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
@@ -156,7 +147,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                         }
                     }
                 }
-
+//
             }
         });
         WebSettings webSettings = mWebView.getSettings();

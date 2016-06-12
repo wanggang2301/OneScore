@@ -17,7 +17,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ChatFragment;
-import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.HashMap;
@@ -90,7 +89,7 @@ public class TalkAboutBallFragment extends Fragment {
                 requestData(ADDKEYHOME, "0");
             }
         });
-        CyUtils.addComment(fragment, mThirdId, mThirdId, false, true, getChildFragmentManager(), R.id.talkball_chat);
+//        CyUtils.addComment(fragment, mThirdId, mThirdId, false, true, getChildFragmentManager(), R.id.talkball_chat);
     }
 
     /** bn

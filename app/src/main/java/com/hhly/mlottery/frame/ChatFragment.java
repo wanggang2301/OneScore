@@ -311,7 +311,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         } else if (h < 300) {//软键盘隐藏
             if (h != 0) {
                 def = h;//因为有的手机在键盘隐藏时   int h = screenheight - r.bottom;这两个的
-                // 差值h不是0，有一个差值，所以把这个差值保存起来，重新layou的时候，减去这个差值
+                // 差值h不是0，有一个差值，所以把这个差值保存起来，重新layout的时候，减去这个差值
             }
             if (TextUtils.isEmpty(mEditText.getText())) {
 
@@ -354,8 +354,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_send://发送评论
-                boolean x = mSwipeRefreshLayout.getVisibility() == View.VISIBLE;
-                System.out.println("lzfonResume" + x);
                 MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
@@ -519,6 +517,5 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
     public interface onPullDownRefreshLisener {
         void onPullDownRefresh();
-
     }
 }
