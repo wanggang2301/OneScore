@@ -19,6 +19,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchChange;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchEvent;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
+import com.hhly.mlottery.util.AnimUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 
@@ -112,9 +113,9 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         TextView tvRightOdds_EU = viewHolder.findViewById(R.id.tvRightOdds_EU);
 
         // 初始化数据
+        if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
         this.setVisiableStateOfThisViews(container, rlHalfContainer, tvHomeScore, tvGuestScore);
-        this.initializedTextColor(tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
-        tvKeepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
+        this.initializedTextColor(tvKeepTime, tvGuestScore, tvHomeScore, tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
 
         // 置顶
         if (data.getIsTopData() > 0 || isTopDataCacheMaps.get(data)) {
@@ -125,53 +126,80 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             RollBallAdapter.this.showShadow(container, 1f);
         }
 
-        // WebSocket推送时，赔率的颜色变化
+        // webSocket实时推送事件动画处理
+        if (data.getSocketPushType() != null) {
+            switch (data.getSocketPushType()) {
+                case STATUS:
+                    break;
+                case ODDS:
+                    break;
+                case EVENT:
+                    this.setupEventAnimator(data, tvHomeScore, tvGuestScore);
+                    break;
+                case MATCHCHANGE:
+                    this.setupMatchChangeAnimator(data, tvHomeTeam, tvGuestTeam);
+                    break;
+            }
+        }
+
+        // 赔率的颜色变化状态
         switch (handicap) {
-            // 亚盘
-            case 1:
+            case 1: // 亚盘
                 setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
                 break;
-            // 大小球
-            case 2:
+            case 2: // 大小球
                 setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
                 break;
-            // 欧赔
-            case 3:
+            case 3: // 欧赔
                 setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
                 break;
         }
 
-        // TODO:后台数据应该将默认值为null情况，改成0更合理；
-        if (TextUtils.isEmpty(data.getKeepTime())) {
-            data.setKeepTime("0");
-        }
-
         // 比赛状态
-        // TODO: -11 待定 -13 中断没有写
         switch (data.getStatusOrigin()) {
             case "0": // 未开赛
                 rlHalfContainer.setVisibility(View.INVISIBLE);
                 tvHomeScore.setVisibility(View.INVISIBLE);
                 tvGuestScore.setVisibility(View.INVISIBLE);
-                tvKeepTime.setText("VS");
-                tvKeepTime.setTextColor(context.getResources().getColor(R.color.res_pl_color));
+                this.setupKeepTimeStyle(tvKeepTime, "VS", R.color.res_pl_color);
                 break;
             case "1": // 上半场进行时间
-                if (Integer.parseInt(data.getKeepTime()) > 45) tvKeepTime.setText("45+");
-                else tvKeepTime.setText(data.getKeepTime() + "'");
-                break;
-            case "3": // 下半场进行时间
-                if (Integer.parseInt(data.getKeepTime()) > 90) tvKeepTime.setText("90+");
-                else tvKeepTime.setText(data.getKeepTime() + "'");
+                if (Integer.parseInt(data.getKeepTime()) > 45) {
+                    this.setupKeepTimeStyle(tvKeepTime, "45+", R.color.football_keeptime);
+
+                } else tvKeepTime.setText(data.getKeepTime() + "'");
                 break;
             case "2": // 中场
-                tvKeepTime.setText("中场");
+                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_midfield), R.color.football_keeptime);
+                break;
+            case "3": // 下半场进行时间
+                if (Integer.parseInt(data.getKeepTime()) > 90) {
+                    this.setupKeepTimeStyle(tvKeepTime, "90+", R.color.football_keeptime);
+                } else tvKeepTime.setText(data.getKeepTime() + "'");
                 break;
             case "4": // 加时
-                tvKeepTime.setText("加时");
+                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_overtime), R.color.football_keeptime);
                 break;
             case "5": // 点球
-                tvKeepTime.setText("点球");
+                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_point), R.color.football_keeptime);
+                break;
+            case "-1": // 完场
+                this.setupKeepTimeStyle(tvKeepTime, /*"(" + data.getHomeHalfScore() + ":" + data.getGuestHalfScore() + ")"*/"完", R.color.red);
+                break;
+            case "-10": // 取消
+                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_cancel), R.color.red);
+                break;
+            case "-11": // 待定
+                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_hold), R.color.red);
+                break;
+            case "-12": // 腰斩
+                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_cut), R.color.red);
+                break;
+            case "-13": // 中断
+                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_mesomere), R.color.bg_header);
+                break;
+            case "-14": // 推迟
+                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_postpone), R.color.red);
                 break;
         }
 
@@ -220,15 +248,15 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         tvGuestRedCard.setText(data.getGuest_rc());
         // 亚盘赔率
         tvLeftOdds_YA.setText(asiaLet != null ? asiaLet.getLeftOdds() : "-");
-        tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getHandicapValue(): "-");
+        tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getHandicapValue() : "-");
         tvRightOdds_YA.setText(asiaLet != null ? asiaLet.getRightOdds() : "-");
         // 大小盘赔率
         tvLeftOdds_DA.setText(asiaSize != null ? asiaSize.getLeftOdds() : "-");
-        tvHandicapValue_DA_BLACK.setText(asiaSize != null ? asiaSize.getHandicapValue(): "-");
+        tvHandicapValue_DA_BLACK.setText(asiaSize != null ? asiaSize.getHandicapValue() : "-");
         tvRightOdds_DA.setText(asiaSize != null ? asiaSize.getRightOdds() : "-");
         // 欧盘赔率
         tvLeftOdds_EU.setText(euro != null ? euro.getLeftOdds() : "-");
-        tvMediumOdds_EU.setText(euro != null ?  euro.getMediumOdds(): "-");
+        tvMediumOdds_EU.setText(euro != null ? euro.getMediumOdds() : "-");
         tvRightOdds_EU.setText(euro != null ? euro.getRightOdds() : "-");
 
         // 控制器
@@ -246,6 +274,31 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 RollBallAdapter.this.transformMapper(position);
             }
         });
+    }
+
+    private void setupKeepTimeStyle(TextView keepTime, String text, int color) {
+        keepTime.setText(text);
+        keepTime.setTextColor(context.getResources().getColor(color));
+    }
+
+    private void setupEventAnimator(Match match, TextView homeScore, TextView guestScore) {
+        if (match.getHomeTeamTextColorId() != 0) {
+            homeScore.setTextColor(context.getResources().getColor(match.getHomeTeamTextColorId()));
+            AnimUtils.toBigAnim2(homeScore);
+            match.setHomeTeamTextColorId(0);
+        } else if (match.getGuestTeamTextColorId() != 0) {
+            guestScore.setTextColor(context.getResources().getColor(match.getGuestTeamTextColorId()));
+            AnimUtils.toBigAnim2(guestScore);
+            match.setGuestTeamTextColorId(0);
+        }
+        match.setSocketPushType(null);
+    }
+
+    private void setupMatchChangeAnimator(Match match, View... views) {
+        for (View view : views) {
+            AnimUtils.toBigAnim2(view);
+        }
+        match.setSocketPushType(null);
     }
 
     private void setVisiableStateOfThisViews(View... views) {
@@ -313,26 +366,12 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
             this.WebSocketMarkTopStatu(match);
             getList().set(position, match);
-//            notifyItemChanged(position);
-            notifyDataSetChanged();
+            notifyItemChanged(position);
         }
 
         // 界面1分钟后销毁
         if (target[0] != null) {
-            /**
-             * 0：未开，页面显示VS
-             1：上半场，页面显示KeepTime（注：KeepTime>45，显示45+）
-             3：下半场，显示KeepTime（注： KeepTime>90，显示90+）
-             2：中场
-             4：加时
-             5：点球
-             -1：完场，在KeepTime位置显示半场比分(1分钟后清除)
-             -10：取消，1分钟后清除
-             -11：待定
-             -12：腰斩，1分钟后清除
-             -13：中断
-             -14：推迟，1分钟后清除
-             */
+            /** -10：取消，1分钟后清除,-12：腰斩，1分钟后清除,-14：推迟，1分钟后清除 */
             if ("-1".equals(target[0].getStatusOrigin()) || "-10".equals(target[0].getStatusOrigin()) || "-12".equals(target[0].getStatusOrigin()) || "-14".equals(target[0].getStatusOrigin())) {
                 RxBus.getDefault().post(target[0]);
             }
@@ -384,7 +423,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             match.setItemBackGroundColorId(R.color.item_football_event_yellow);
             String eventType = webSocketMatchEvent.getData().get("eventType");
             if ("1".equals(eventType) || "2".equals(eventType) || "5".equals(eventType) || "6".equals(eventType)) {// 主队有效进球传
-                // 客队有效进球5or客队进球取消6
+                // 客队有效进球5 or 客队进球取消6
                 if (webSocketMatchEvent.getData().get("homeScore") != null) {
                     match.setHomeScore(webSocketMatchEvent.getData().get("homeScore"));
                 }
@@ -392,7 +431,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                     match.setGuestScore(webSocketMatchEvent.getData().get("guestScore"));
                 }
             } else if ("3".equals(eventType) || "4".equals(eventType) || "7".equals(eventType) || "8".equals(
-                    eventType)) {// 主队红牌3or主队红牌取消4
+                    eventType)) {// 主队红牌3 or 主队红牌取消4
                 if (webSocketMatchEvent.getData().get("home_rc") != null) {
                     match.setHome_rc(webSocketMatchEvent.getData().get("home_rc"));
                 }
@@ -413,14 +452,14 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 match.setGuestTeamTextColorId(R.color.red);
             }
             this.WebSocketMarkTopStatu(match);
+            match.setSocketPushType(Match.SOCKET_PUSH_TYPE.EVENT);
             getList().set(position, match);
-            notifyItemChanged(position);// 先换颜色
+            notifyItemChanged(position);
 
             // 五秒后把颜色修改回来
-            Observable.timer(5, TimeUnit.MINUTES).subscribe(new Action1<Long>() {
+            Observable.timer(5000, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Long>() {
                 @Override
                 public void call(Long aLong) {
-                    resetColor = true;
                     notifyItemChanged(position);
                 }
             });
@@ -451,9 +490,9 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                     match.setRacename(webSocketMatchChange.getData().get("racename"));
                 }
                 this.WebSocketMarkTopStatu(match);
+                match.setSocketPushType(Match.SOCKET_PUSH_TYPE.MATCHCHANGE);
                 getList().set(position, match);
-//                notifyItemChanged(position);
-                notifyDataSetChanged();
+                notifyItemChanged(position);
             }
         }
     }
@@ -481,25 +520,25 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         float midMapOddF = Float.parseFloat(!newHandicapValue.equals("-") ? newHandicapValue : "0.00");
 
         if (leftMatchOddF < leftMapOddF) {// 左边的值升了
-            match.setLeftOddTextColorId(R.color.odd_rise_red);
+            match.setLeftOddTextColorId(R.color.odds_up_bg);
         } else if (leftMatchOddF > leftMapOddF) {// 左边的值降了
-            match.setLeftOddTextColorId(R.color.odd_drop_green);
+            match.setLeftOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setLeftOddTextColorId(R.color.white);
         }
 
         if (rightMatchOddF < rightMapOddF) {// 右边的值升了
-            match.setRightOddTextColorId(R.color.odd_rise_red);
+            match.setRightOddTextColorId(R.color.odds_up_bg);
         } else if (rightMatchOddF > rightMapOddF) {// 右边的值降了
-            match.setRightOddTextColorId(R.color.odd_drop_green);
+            match.setRightOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setRightOddTextColorId(R.color.white);
         }
 
         if (midMatchOddF < midMapOddF) {// 中间的值升了
-            match.setMidOddTextColorId(R.color.odd_rise_red);
+            match.setMidOddTextColorId(R.color.odds_up_bg);
         } else if (midMatchOddF > midMapOddF) {// 中间的值降了
-            match.setMidOddTextColorId(R.color.odd_drop_green);
+            match.setMidOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setMidOddTextColorId(R.color.white);
         }
@@ -527,11 +566,11 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void initializedTextColor(/*TextView tvHandicapValue_DA_BLACK, TextView tvHandicapValue_YA_BLACK, */TextView... textViews) {
-//        tvHandicapValue_DA_BLACK.setTextColor(context.getResources().getColor(R.color.res_name_color));
-//        tvHandicapValue_YA_BLACK.setTextColor(context.getResources().getColor(R.color.res_name_color));
+    private void initializedTextColor(TextView keepTime, TextView homeScore, TextView guestScore, TextView... textViews) {
+        keepTime.setTextColor(context.getResources().getColor(R.color.text_about_color));
+        homeScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
+        guestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
         for (TextView tv : textViews) {
-//            tv.setTextColor(context.getResources().getColor(R.color.res_pl_color));
             tv.setBackgroundColor(context.getResources().getColor(R.color.white));
         }
     }

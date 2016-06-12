@@ -27,21 +27,21 @@
         <LinearLayout
             android:id="@+id/ll1"
             style="@style/item_rollball_linearlayout"
+            android:layout_marginLeft="1dp"
             android:background="@color/white"
             android:clickable="true"
-            android:layout_marginLeft="1dp"
             android:gravity="center_vertical"
-            android:minHeight="113dp"
+            android:minHeight="114dp"
             app:layout_widthPercent="15%">
 
             <TextView
                 android:id="@+id/tvRaceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
-                android:layout_marginLeft="1dp"
                 android:maxWidth="65dp"
                 android:textColor="@color/orange"
                 android:textSize="@dimen/text_size_11"
@@ -73,7 +73,7 @@
             android:layout_toRightOf="@+id/ll1"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:minHeight="113dp"
+            android:minHeight="114dp"
             app:layout_widthPercent="7%">
 
             <TextView
@@ -116,7 +116,7 @@
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll2"
             android:gravity="center_vertical"
-            android:minHeight="113dp"
+            android:minHeight="114dp"
             app:layout_widthPercent="44%">
 
             <RelativeLayout style="@style/MW_White">
@@ -174,7 +174,7 @@
                         android:layout_marginTop="10dp"
                         android:text="半场 :"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_13" />
+                        android:textSize="@dimen/text_size_12" />
 
                     <TextView
                         android:id="@+id/tvHomeHalfScore"
@@ -260,7 +260,7 @@
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll3"
             android:gravity="center_vertical"
-            android:minHeight="113dp"
+            android:minHeight="114dp"
             android:textColor="@color/res_name_color"
             app:layout_widthPercent="11%">
 
@@ -289,7 +289,7 @@
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll4"
             android:gravity="center_vertical"
-            android:minHeight="113dp"
+            android:minHeight="114dp"
             app:layout_widthPercent="11%">
 
             <TextView
@@ -314,10 +314,10 @@
             android:id="@+id/ll6"
             style="@style/item_rollball_linearlayout"
             android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:layout_toRightOf="@id/ll5"
             android:gravity="center_vertical"
-            android:layout_marginRight="1dp"
-            android:minHeight="113dp"
+            android:minHeight="114dp"
             app:layout_widthPercent="11%">
 
             <TextView

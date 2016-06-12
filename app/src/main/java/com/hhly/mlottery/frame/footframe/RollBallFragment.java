@@ -259,6 +259,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     public void onItemClick(View convertView, int position) {
+        Toast.makeText(getContext(), showDataLists.get(position).getThirdId(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
