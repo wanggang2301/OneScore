@@ -211,7 +211,9 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     request.setMimeType("application/vnd.android.package-archive");
                     L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                    request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), "ybf.apk");
+                    String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"),mUpdateInfo.getUrl().length());
+                    L.d("xxx","mAppName:>>" + mAppName);
+                    request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), mAppName);
                     // 设置为可被媒体扫描器找到
                     request.allowScanningByMediaScanner();
                     // 设置为可见和可管理
