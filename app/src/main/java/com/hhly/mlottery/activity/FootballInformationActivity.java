@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * @ClassName: OneScore
  * @author:Administrator luyao
- * @Description: 足球数据二级显示
+ * @Description: 足球数据内页显示
  * @data: 2016/3/29 16:32
  */
 public class FootballInformationActivity extends BaseActivity implements View.OnClickListener {
@@ -165,34 +165,36 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
                     //获取默认积分榜数据
                     mAllLangueScore = json.getLangueScore();
-                    mSize = mAllLangueScore.size();
-                    //获取子类父类数据
-                    for (int i = 0; i < mSize; i++) {
-                        //循环添加父view数据  可扩展view
-                        groupDataList.add(mAllLangueScore.get(i).getGroup());
-                        childDataList.add(mAllLangueScore.get(i).getList());
-                    }
-
-                    //设置联赛标头
-                    mTeam_abb = json.getLeagueTimes().getAbb();
-                    mTxt_title.setText(mTeam_abb);
-                    // Log.v(TAG, "mTeam_abb" + mTeam_abb);
-
-                    //获取联赛赛季时间
-                    leagueData = json.getLeagueTimes().getLeagueDate();
-                    for (int i = 0; i < leagueData.size(); i++) {
-                        //判断是否为当前赛季
-                        mListDatas.add(leagueData.get(i).getDate());
-                        if (leagueData.get(i).isCurrentSeason() && (isFrist || mIsCurenDatas == null)) {
-                            //遍历获取数据进行赋值控件
-                            //文本框显示数据
-                            mIsCurenDatas = leagueData.get(i).getDate();
-                            integral_datas.setText(mIsCurenDatas);
-
+                    if( mAllLangueScore !=null) {
+                        mSize = mAllLangueScore.size();
+                        //获取子类父类数据
+                        for (int i = 0; i < mSize; i++) {
+                            //循环添加父view数据  可扩展view
+                            groupDataList.add(mAllLangueScore.get(i).getGroup());
+                            childDataList.add(mAllLangueScore.get(i).getList());
                         }
-                    }
 
-                    mViewHandler.sendEmptyMessage(ISNET_SUCCESS);
+                        //设置联赛标头
+                        mTeam_abb = json.getLeagueTimes().getAbb();
+                        mTxt_title.setText(mTeam_abb);
+                        // Log.v(TAG, "mTeam_abb" + mTeam_abb);
+
+                        //获取联赛赛季时间
+                        leagueData = json.getLeagueTimes().getLeagueDate();
+                        for (int i = 0; i < leagueData.size(); i++) {
+                            //判断是否为当前赛季
+                            mListDatas.add(leagueData.get(i).getDate());
+                            if (leagueData.get(i).isCurrentSeason() && (isFrist || mIsCurenDatas == null)) {
+                                //遍历获取数据进行赋值控件
+                                //文本框显示数据
+                                mIsCurenDatas = leagueData.get(i).getDate();
+                                integral_datas.setText(mIsCurenDatas);
+
+                            }
+                        }
+
+                        mViewHandler.sendEmptyMessage(ISNET_SUCCESS);
+                    }
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
