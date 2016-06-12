@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.footballDetails.BottomOdds;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.DetailsRollOdd;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,11 @@ public class DetailsRollballFragment extends Fragment {
     private List<MatchTextLiveBean> matchLive;
     private List<Integer> allMatchLiveMsgId;
     private int mViewType = 0;
+
+    public static final int ASIA = 0;
+    public static final int BIG_SMALL_BALL = 1;
+
+    public static final int EU = 2;
 
     private static final String DETAILSROLLBALL_PARAM = "DETAILSROLLBALL_PARAM";
     private static final String DETAILSROLLBALL_TYPE = "DETAILSROLLBALL_TYPE";
@@ -81,11 +89,23 @@ public class DetailsRollballFragment extends Fragment {
     private TextView pre_first_not_tv;
     private ImageView pre_weather_img;//天气图
 
-
     private TextView live_time; //实时时间
 
     private TextView live_text;  //实时直播
 
+    private DetailsRollOdd odd_alet; //亚盘
+
+    private DetailsRollOdd odd_asize; //大小
+
+    private DetailsRollOdd odd_eur; //欧赔
+
+    private ImageView live_infos;
+
+    private BottomOddsDetailsFragment mBottomOddsDetailsFragment;
+
+    private LiveTextFragmentTest liveTextFragmentTest;
+
+    private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
     public static DetailsRollballFragment newInstance(int fragmentType, MatchDetail matchDetail) {
         DetailsRollballFragment fragment = new DetailsRollballFragment();
@@ -105,7 +125,6 @@ public class DetailsRollballFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         mView = inflater.inflate(R.layout.fragment_details_rollball, container, false);
         initView();
         if (getArguments() != null) {
@@ -118,20 +137,19 @@ public class DetailsRollballFragment extends Fragment {
             } else {
                 mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
                 mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
-                initData();
-
+                initLiveText();
+                initOdds();
             }
         }
 
         return mView;
-
     }
 
 
     /**
      * 比赛赛中、赛后初始化数据
      */
-    private void initData() {
+    private void initLiveText() {
         matchLive = new ArrayList<MatchTextLiveBean>();
         // xMatchLive = new ArrayList<MatchTimeLiveBean>();
 
@@ -145,7 +163,6 @@ public class DetailsRollballFragment extends Fragment {
             allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
         }
 
-        //获取文字直播处理
 
         //完场处理
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
@@ -175,9 +192,83 @@ public class DetailsRollballFragment extends Fragment {
         }
 
 
+        //文字直播
+        live_infos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "bottomLive");
+                } else {
+                    liveTextFragmentTest = new LiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    liveTextFragmentTest.show(getChildFragmentManager(), "bottomLive");
+                }
+            }
+        });
 
-        //文字直播还未处理
+
     }
+
+
+    private void initOdds() {
+
+        // Map<String, String> params = new HashMap<>();
+        //params.put("thirdId", mThirdId);
+        String url = "http://192.168.31.70:8080/mlottery/core/footballBallList.ballListOverview.do?thirdId=336621&lang=zh";
+
+        VolleyContentFast.requestJsonByGet(url, null,
+                new VolleyContentFast.ResponseSuccessListener<BottomOdds>() {
+                    @Override
+                    public void onResponse(BottomOdds bottomOdds) {
+                        if (!bottomOdds.getResult().equals("200")) {
+                            return;
+                        }
+                        initItemOdd(bottomOdds);
+                    }
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                        //  mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
+                    }
+                }, BottomOdds.class
+        );
+    }
+
+    private void initItemOdd(final BottomOdds bottomOdds) {
+        odd_alet.setTitle("亚盘");
+        odd_asize.setTitle("大小球");
+        odd_eur.setTitle("欧赔");
+        odd_alet.setTableLayoutData(bottomOdds.getAsianlistOdd());
+        odd_asize.setTableLayoutData(bottomOdds.getOverunderlistOdd());
+        odd_eur.setTableLayoutData(bottomOdds.getEuropelistOdd());
+
+        //亚盘
+        odd_alet.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0),0);
+                mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
+            }
+        });
+
+
+        odd_asize.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getOverunderlistOdd().get(0),1);
+                mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
+            }
+        });
+
+        odd_eur.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getEuropelistOdd().get(0),2);
+                mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
+            }
+        });
+    }
+
 
     private void initView() {
         pre_dataTime_txt = (TextView) mView.findViewById(R.id.pre_dataTime_txt);//开始时间
@@ -192,10 +283,13 @@ public class DetailsRollballFragment extends Fragment {
 
         pre_first_guest_data_txt = (TextView) mView.findViewById(R.id.pre_first_guest_data_txt);//克队首发阵容
         pre_first_guest_datas_txt = (TextView) mView.findViewById(R.id.pre_first_guest_datas_txt);//客队首发人员
-
-
         live_time = (TextView) mView.findViewById(R.id.live_time);
         live_text = (TextView) mView.findViewById(R.id.live_text);
+
+        odd_alet = (DetailsRollOdd) mView.findViewById(R.id.odd_alet);
+        odd_asize = (DetailsRollOdd) mView.findViewById(R.id.odd_asize);
+        odd_eur = (DetailsRollOdd) mView.findViewById(R.id.odd_eur);
+        live_infos = (ImageView) mView.findViewById(R.id.live_infos);
     }
 
     public void initPreData() {
@@ -289,8 +383,12 @@ public class DetailsRollballFragment extends Fragment {
         live_text.setText(msg);
     }
 
-    public void setLiveTextDetails() {
+    public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
 
+        if (liveTextFragmentTest != null) {
+            liveTextFragmentTest.updataLiveTextAdapter(matchLive);
+        }
 
     }
+
 }

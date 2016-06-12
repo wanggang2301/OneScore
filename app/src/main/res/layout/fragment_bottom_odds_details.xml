@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="400dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,15 +15,17 @@
         android:paddingTop="8dp">
 
         <TextView
+            android:id="@+id/odd_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="文字直播: " />
+            android:text="亚盘初盘 : " />
 
         <TextView
+            android:id="@+id/first_odd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=""
+            android:text="0.84 - 21.01"
             android:textColor="@color/red" />
 
         <ImageView
@@ -38,12 +41,11 @@
         android:layout_height="1px"
         android:background="@color/blue" />
 
-    <ListView
-        android:id="@+id/timelistview"
+    <include layout="@layout/item_view_bottom_odds"></include>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:clickable="false"
-        android:divider="@null"></ListView>
+        android:layout_height="match_parent" />
+
 </LinearLayout>

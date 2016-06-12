@@ -155,8 +155,7 @@ public class LiveTextFragment extends Fragment implements AbsListView.OnScrollLi
 
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,
-                         int visibleItemCount, int totalItemCount) {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         lastItem = firstVisibleItem + visibleItemCount - 1;  //减1是因为上面加了个addFooterView
     }
     private  boolean isSucessedLoad=true;

@@ -49,16 +49,19 @@ public class PreHeadInfoFrament extends Fragment {
 
     private RelativeLayout mMatchTypeLayout;
 
+    private int mType = 0;
 
     private TextView mMatchType1;
 
     private TextView mMatchType2;
 
-    public static PreHeadInfoFrament newInstance(MatchDetail matchDetail) {
+    public static PreHeadInfoFrament newInstance() {
         PreHeadInfoFrament fragment = new PreHeadInfoFrament();
-        Bundle args = new Bundle();
+      /*  Bundle args = new Bundle();
         args.putParcelable(PREHEADINFO_PARAM, matchDetail);
-        fragment.setArguments(args);
+        args.putInt(PREHEADINFO_TYPE, mType);
+
+        fragment.setArguments(args);*/
         return fragment;
     }
 
@@ -68,13 +71,11 @@ public class PreHeadInfoFrament extends Fragment {
         mView = inflater.inflate(R.layout.fragment_pre_headinfo, container, false);
         if (getArguments() != null) {
             mMatchDetail = getArguments().getParcelable(PREHEADINFO_PARAM);
-            // mViewType = getArguments().getInt(PREHEADINFO_TYPE);
+            mType = getArguments().getInt(PREHEADINFO_TYPE);
         }
 
         initView();
 
-
-        initData();
         return mView;
     }
 
@@ -92,7 +93,7 @@ public class PreHeadInfoFrament extends Fragment {
         mMatchType2 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype2);
     }
 
-    private void initData() {
+    public void initData(MatchDetail mMatchDetail) {
         loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_home_icon);
         loadImage(mMatchDetail.getGuestTeamInfo().getUrl(), iv_guest_icon);
         tv_homename.setText(mMatchDetail.getHomeTeamInfo().getName());

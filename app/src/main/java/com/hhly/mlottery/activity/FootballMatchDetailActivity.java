@@ -241,7 +241,11 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
         TextView reloadBtn = (TextView) findViewById(R.id.network_exception_reload_btn);
         reloadBtn.setOnClickListener(this);
+
+
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+
+
         loadData();
 //        loadImage();
 
@@ -508,6 +512,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     initViewPager(matchDetail);
                     mPreStatus = matchDetail.getLiveStatus();
                 } else {
+
+                    //下拉刷新
                     if ("0".equals(mPreStatus) && "0".equals(matchDetail.getLiveStatus()) && !isFinishing()) {//如果上一个状态是赛前，目前状态也是赛前，更新页面数据即可
                         mStadiumFragment.setMatchDetail(matchDetail);
                         mStadiumFragment.initPreData();
@@ -1034,7 +1040,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh() {  //下拉刷新
 
         new Handler().postDelayed(new Runnable() {
             @Override

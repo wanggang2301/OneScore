@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!--足球内页改版(滚球等)-->
+    <string name="live_title">实况直播</string>
+    <string name="jipan">即盘</string>
+    <string name="chupan">初盘</string>
+    <string name="alet_first">亚盘初盘:</string>
+    <string name="asize_first">大小球初盘:</string>
+    <string name="eu_first">欧赔初盘:</string>
+
+
     <!--分享-->
     <string name="errcode_success">发送成功</string>
     <string name="errcode_cancel">发送取消</string>
@@ -22,10 +32,6 @@
     <string name="share_uninstall_qq">您还未安装QQ客户端</string>
     <string name="share_recommend">推荐</string>
     <string name="share_summary_default">一比分,专业的足球比分直播平台</string>
-
-
-
-
 
 
     <!--指数-->
@@ -55,6 +61,8 @@
     <string name="danger_attack_txt">危险进攻</string>
     <string name="shoot_correct_txt">射正球门</string>
     <string name="shoot_miss_txt">射偏球门</string>
+    <string name="shoot">进攻</string>
+
     <string name="live_text_txt">直播</string>
     <string name="first_players_txt">阵容</string>
     <string name="statistics_txt">统计</string>
@@ -681,7 +689,6 @@
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暂无评论内容</string>
     <string name="toatalvisiable">显示全部</string>
-
 
 
     <!-- -->

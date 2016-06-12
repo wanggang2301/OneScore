@@ -15,14 +15,12 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="center">
-
             <TextView
                 android:id="@+id/title"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.5"
                 android:text="亚盘"
-                android:textColor="@color/blue" />
-
+                android:textColor="@color/content_txt_light_grad" />
             <TextView
                 android:layout_marginLeft="20dp"
                 android:layout_weight="4" />
@@ -32,10 +30,11 @@
             <TextView android:layout_weight="4" />
 
             <ImageView
+                android:id="@+id/odd_infos"
                 android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-
                 android:src="@mipmap/details" />
         </TableRow>
 
@@ -49,28 +48,33 @@
             <TextView
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.5"
-                android:background="@mipmap/chupan"
+                android:background="@mipmap/jipan"
                 android:gravity="center_vertical"
                 android:paddingLeft="6dp"
-                android:text="即时"
-                android:textColor="@color/blue" />
+                android:text="@string/jipan"
+                android:textColor="@color/white" />
 
             <TextView
+                android:id="@+id/live_left"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="4"
                 android:gravity="center"
                 android:text="2.56"
-                android:textColor="@color/blue" />
+                android:textColor="@color/content_txt_black" />
 
             <TextView
+                android:id="@+id/live_middle"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="-0/0.5" />
+                android:text="-0/0.5"
+                android:textColor="@color/content_txt_black"/>
 
             <TextView
+                android:id="@+id/live_right"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="0.39" />
+                android:text="0.39"
+                android:textColor="@color/content_txt_black"/>
 
             <ImageView
                 android:layout_marginRight="10dp"
@@ -93,22 +97,27 @@
                 android:background="@mipmap/chupan"
                 android:gravity="center_vertical"
                 android:paddingLeft="6dp"
-                android:text="初盘"
-                android:textColor="@color/blue" />
+                android:text="@string/chupan"
+                android:textColor="@color/white" />
             <TextView
+                android:id="@+id/first_left"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="4"
                 android:gravity="center"
                 android:text="2.56"
-                android:textColor="@color/blue" />
+                android:textColor="@color/content_txt_black"/>
             <TextView
+                android:id="@+id/first_middle"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="55" />
+                android:text="55"
+                android:textColor="@color/content_txt_black"/>
             <TextView
+                android:id="@+id/first_right"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="555" />
+                android:text="555"
+                android:textColor="@color/content_txt_black"/>
             <ImageView
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"

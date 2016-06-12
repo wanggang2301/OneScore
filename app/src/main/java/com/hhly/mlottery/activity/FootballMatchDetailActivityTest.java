@@ -29,9 +29,12 @@ import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
+import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
+import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.Tets;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
@@ -169,7 +172,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private PreHeadInfoFrament mPreHeadInfoFrament;
     private LiveHeadInfoFragment mLiveHeadInfoFragment;
 
-    private DetailsRollballFragment mDetailsRollballFragment;
+    private DetailsRollballFragment mDetailsRollballFragment; //滚球
+
+    private AnalyzeFragment mAnalyzeFragment;  //分析
+    private OddsFragment mOddsFragment;         //指数
+
+    private StatisticsFragment mStatisticsFragment;  //统计
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,6 +193,16 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         L.e(TAG, "mThirdId = " + mThirdId);
 
         initView();
+
+
+        mPreHeadInfoFrament = PreHeadInfoFrament.newInstance();
+        mLiveHeadInfoFragment = new LiveHeadInfoFragment().newInstance();
+
+        basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment);
+        mHeadviewpager.setAdapter(basePagerAdapter);
+        mHeadviewpager.setCurrentItem(0);
+
+//
 
         loadData();
 
@@ -240,10 +259,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     public void onRefresh() {
 
+
+        L.d("www", "刷新");
+
     }
 
 
     private void loadData() {
+
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
@@ -261,16 +284,18 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     initViewPager(matchDetail);
                     mPreStatus = matchDetail.getLiveStatus();
                 } else {
-                   /* if ("0".equals(mPreStatus) && "0".equals(matchDetail.getLiveStatus()) && !isFinishing()) {//如果上一个状态是赛前，目前状态也是赛前，更新页面数据即可
-                        mStadiumFragment.setMatchDetail(matchDetail);
-                        mStadiumFragment.initPreData();
+
+
+                    if ("0".equals(mPreStatus) && "0".equals(matchDetail.getLiveStatus()) && !isFinishing()) {//如果上一个状态是赛前，目前状态也是赛前，更新页面数据即可
+                        // mStadiumFragment.setMatchDetail(matchDetail);
+                        // mStadiumFragment.initPreData();
                     } else if ("0".equals(mPreStatus) && "1".equals(matchDetail.getLiveStatus()) && !isFinishing()) {//从赛前跳到赛中
-                        mStadiumFragment.setMatchDetail(matchDetail);
-                        mStadiumFragment.activateMatch();
-                        mReloadTimer.cancel();
+                        // mStadiumFragment.setMatchDetail(matchDetail);
+                        //  mStadiumFragment.activateMatch();
+                        //  mReloadTimer.cancel();
                     } else if ("1".equals(mPreStatus) && "1".equals(matchDetail.getLiveStatus()) && !isFinishing()) {
-                        mStadiumFragment.refreshStadiumData(matchDetail);
-                    }*/
+                        // mStadiumFragment.refreshStadiumData(matchDetail);
+                    }
                 }
 
               /*  mHomeNameText.setText(matchDetail.getHomeTeamInfo().getName());
@@ -364,30 +389,34 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         //初始化头部ViewPager
         // mViewPager = (ViewPager) findViewById(R.id.headviewpager);
 
-        mPreHeadInfoFrament = PreHeadInfoFrament.newInstance(matchDetail);
+
+        //  mPreHeadInfoFrament = PreHeadInfoFrament.newInstance(matchDetail, 1);
 
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
-            basePagerAdapter.addFragments(mPreHeadInfoFrament);
+
+            mPreHeadInfoFrament.initData(matchDetail);
+
+
+
+
+          /*  basePagerAdapter.addFragments(mPreHeadInfoFrament);
             mHeadviewpager.setAdapter(basePagerAdapter);
-            mHeadviewpager.setCurrentItem(0);
+            mHeadviewpager.setCurrentItem(0);*/
 
             mPreHeadInfoFrament.setScoreText("VS");
             toolbarTitle = matchDetail.getHomeTeamInfo().getName() + " VS " + matchDetail.getGuestTeamInfo().getName();
 
+
             mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
-            mTabsAdapter.addFragments(mDetailsRollballFragment, Tets.newInstance(), Tets.newInstance(), Tets.newInstance(), Tets.newInstance());
-            mViewPager.setAdapter(mTabsAdapter);
-            mTabLayout.setupWithViewPager(mViewPager);
+
         } else {
             //赛中和赛后头部
-            mLiveHeadInfoFragment = new LiveHeadInfoFragment().newInstance(matchDetail);
-            basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment);
-            mHeadviewpager.setAdapter(basePagerAdapter);
-            mHeadviewpager.setCurrentItem(0);
+            mPreHeadInfoFrament.initData(matchDetail);
+            mLiveHeadInfoFragment.initData(matchDetail);
+
+
             matchLive = mMatchDetail.getMatchInfo().getMatchLive();
             allMatchLiveMsgId = new ArrayList<>();
-
-
 
 
             //完场
@@ -444,123 +473,18 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             }
 
-
-            //赛后  赛中下面
+            //赛后赛中下面赔率显示
             mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
-            mTabsAdapter.addFragments(mDetailsRollballFragment, Tets.newInstance(), Tets.newInstance(), Tets.newInstance(), Tets.newInstance());
-            mViewPager.setAdapter(mTabsAdapter);
-            mTabLayout.setupWithViewPager(mViewPager);
-
-
         }
 
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
+        mOddsFragment = OddsFragment.newInstance("", "");
+        mStatisticsFragment = StatisticsFragment.newInstance();
 
-
-
-
-
-
-/*
-
-        mViewPagerAdapter = new MatchDetailFragmentAdapter(getSupportFragmentManager(), fragments);
+        mTabsAdapter.addFragments(mDetailsRollballFragment, Tets.newInstance(), mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
-        mViewPager.setAdapter(mViewPagerAdapter);
-
-
-        final LinearLayout tabLine = (LinearLayout) findViewById(R.id.football_match_detail_tabline);
-        final LinearLayout tabLineLayout = (LinearLayout) findViewById(R.id.football_match_detail_tabline_layout);
-        int displayWidth = DeviceInfo.getDisplayWidth(getApplicationContext());
-        tabLine.setLayoutParams(new LinearLayout.LayoutParams(displayWidth / 3, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                int lineWidth = tabLine.getWidth();
-                int marginLeft = (int) (lineWidth * (position + positionOffset));
-                tabLineLayout.setPadding(marginLeft, 0, 0, 0);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mTab1.setTextColor(getResources().getColor(R.color.content_txt_black));
-                mTab2.setTextColor(getResources().getColor(R.color.content_txt_black));
-                mTab3.setTextColor(getResources().getColor(R.color.content_txt_black));
-
-                switch (position) {
-                    case 0:
-                        isStadiumFragment = true;
-                        isOddsFragment = false;
-                        isAnalyzeFragment = false;
-                        mTab1.setTextColor(getResources().getColor(R.color.tab_text));
-                        mRefreshLayout.setEnabled(true);
-                        break;
-                    case 1:
-                        isStadiumFragment = false;
-                        isOddsFragment = true;
-                        isAnalyzeFragment = false;
-                        mTab2.setTextColor(getResources().getColor(R.color.tab_text));
-                        mRefreshLayout.setEnabled(true);
-                        break;
-                    case 2:
-                        isStadiumFragment = false;
-                        isOddsFragment = false;
-                        isAnalyzeFragment = true;
-                        mTab3.setTextColor(getResources().getColor(R.color.tab_text));
-                        mRefreshLayout.setEnabled(false);
-                        break;
-                }
-                if (isStadiumFragment) {
-                    if (isOdds) {
-                        MobclickAgent.onPageEnd("Football_MatchDataInfo_OddsFragment");
-                        isOdds = false;
-                        L.d("xxx", "isOddsFragment>>>隐藏");
-                    }
-                    if (isAnalyze) {
-                        MobclickAgent.onPageEnd("Football_MatchDataInfo_AnalyzeFragment");
-                        isAnalyze = false;
-                        L.d("xxx", "isAnalyzeFragment>>>隐藏");
-                    }
-                    MobclickAgent.onPageStart("Football_MatchDataInfo_StadiumFragment");
-                    isStadium = true;
-                    L.d("xxx", "isStadiumFragment>>>显示");
-                }
-                if (isOddsFragment) {
-                    if (isStadium) {
-                        MobclickAgent.onPageEnd("Football_MatchDataInfo_StadiumFragment");
-                        isStadium = false;
-                        L.d("xxx", "StadiumFragment>>>隐藏");
-                    }
-                    if (isAnalyze) {
-                        MobclickAgent.onPageEnd("Football_MatchDataInfo_AnalyzeFragment");
-                        isAnalyze = false;
-                        L.d("xxx", "isAnalyzeFragment>>>隐藏");
-                    }
-                    MobclickAgent.onPageStart("Football_MatchDataInfo_OddsFragment");
-                    isOdds = true;
-                    L.d("xxx", "isOddsFragment>>>显示");
-                }
-                if (isAnalyzeFragment) {
-                    if (isStadium) {
-                        MobclickAgent.onPageEnd("Football_MatchDataInfo_StadiumFragment");
-                        isStadium = false;
-                        L.d("xxx", "StadiumFragment>>>隐藏");
-                    }
-                    if (isOdds) {
-                        MobclickAgent.onPageEnd("Football_MatchDataInfo_OddsFragment");
-                        isOdds = false;
-                        L.d("xxx", "isOddsFragment>>>隐藏");
-                    }
-                    MobclickAgent.onPageStart("Football_MatchDataInfo_AnalyzeFragment");
-                    isAnalyze = true;
-                    L.d("xxx", "isOddsFragment>>>显示");
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });*/
-
+        mViewPager.setAdapter(mTabsAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
         isInitedViewPager = true;
 
     }
@@ -1483,17 +1407,18 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             matchLive.add(0, matchTextLiveBean);
             Collections.sort(matchLive, new FootballLiveTextComparator()); //排序
             mDetailsRollballFragment.setLiveText(matchLive.get(0).getMsgText());
+            mDetailsRollballFragment.setLiveTextDetails(matchLive);
+
 
             //liveTextFragment.getTimeAdapter().notifyDataSetChanged();
         }
 
-/*
         //自己推送一条结束消息     -1 完场
         if (MATCHFINISH.equals(matchTextLiveBean.getState())) {
             matchLive.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt), "", "", "0", "", ""));
-            liveTextFragment.getTimeAdapter().notifyDataSetChanged();
+            mDetailsRollballFragment.setLiveText(matchLive.get(0).getMsgText());
+            mDetailsRollballFragment.setLiveTextDetails(matchLive);
         }
-*/
 
 
     }

@@ -60,3 +60,6 @@ android {
 
 }
 
+dependencies {
+    compile 'com.android.support:design:24.0.0-alpha2'
+}

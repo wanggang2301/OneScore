@@ -30,7 +30,7 @@
                     android:id="@+id/laba"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:src="@mipmap/laba" />
 
                 <TextView
@@ -40,17 +40,23 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/laba"
-                    android:text="实况播报" />
+                    android:text="@string/live_title"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/text_size_13" />
 
                 <TextView
                     android:id="@+id/live_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/bobao"
-                    android:background="@color/blue"
+                    android:background="@drawable/details_time_bg"
+                    android:gravity="center"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
                     android:text="58"
+                    android:textSize="@dimen/text_size_12"
                     android:textColor="#FFFFFF" />
 
                 <TextView
@@ -60,10 +66,13 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/live_time"
-                    android:text="主队中后场组织进攻" />
+                    android:text="主队中后场组织进攻"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/text_size_11"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/live_infos"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
@@ -73,20 +82,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@+id/rl_live">
+                android:layout_below="@+id/rl_live"
+                android:orientation="vertical">
 
                 <com.hhly.mlottery.widget.DetailsRollOdd
+                    android:id="@+id/odd_alet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"></com.hhly.mlottery.widget.DetailsRollOdd>
 
                 <com.hhly.mlottery.widget.DetailsRollOdd
+                    android:id="@+id/odd_asize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"></com.hhly.mlottery.widget.DetailsRollOdd>
 
                 <com.hhly.mlottery.widget.DetailsRollOdd
+                    android:id="@+id/odd_eur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"></com.hhly.mlottery.widget.DetailsRollOdd>

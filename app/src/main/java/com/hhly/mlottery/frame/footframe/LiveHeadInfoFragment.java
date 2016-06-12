@@ -42,11 +42,8 @@ public class LiveHeadInfoFragment extends Fragment {
 
     private MatchDetail mMatchDetail;
 
-    public static LiveHeadInfoFragment newInstance(MatchDetail matchDetail) {
+    public static LiveHeadInfoFragment newInstance() {
         LiveHeadInfoFragment fragment = new LiveHeadInfoFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(LIVEHEADINFO_PARAM, matchDetail);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -59,7 +56,7 @@ public class LiveHeadInfoFragment extends Fragment {
         }
         this.mContext = getActivity();
         initView();
-        initData();
+
         return mView;
     }
 
@@ -89,7 +86,7 @@ public class LiveHeadInfoFragment extends Fragment {
     }
 
 
-    private void initData(){
+    public void initData(MatchDetail mMatchDetail){
         homename.setText(mMatchDetail.getHomeTeamInfo().getName());
         guestname.setText(mMatchDetail.getGuestTeamInfo().getName());
     }
