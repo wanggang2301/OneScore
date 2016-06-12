@@ -35,7 +35,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         title = intent.getStringExtra(CyUtils.INTENT_PARAMS_TITLE);
         initView();
 
-        CyUtils.addComment(new ChatFragment(),url, title, true, true, getSupportFragmentManager(), R.id.scrollview);
+        CyUtils.addComment(new ChatFragment(), url, title, true, true, getSupportFragmentManager(), R.id.scrollview);
     }
 
     private void initView() {

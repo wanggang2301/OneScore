@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3"
+        android:weightSum="4"
 
         >
 
@@ -33,6 +33,13 @@
             style="@style/MatchDetailTab"
             android:clickable="false"
             android:text="@string/football_detail_analyze_tab"
+            android:textColor="@color/content_txt_black"
+            />
+        <TextView
+            android:id="@+id/football_match_detail_tab4"
+            style="@style/MatchDetailTab"
+            android:clickable="false"
+            android:text="聊球"
             android:textColor="@color/content_txt_black"
             />
     </LinearLayout>
