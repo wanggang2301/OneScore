@@ -34,8 +34,8 @@ import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
-import com.hhly.mlottery.frame.footframe.StatisticsFragment;
-import com.hhly.mlottery.frame.footframe.Tets;
+import com.hhly.mlottery.frame.footframe.StatisticsFragmentTest;
+import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.L;
@@ -174,10 +174,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
 
+    private TalkAboutBallFragment mTalkAboutBallFragment;
+
     private AnalyzeFragment mAnalyzeFragment;  //分析
     private OddsFragment mOddsFragment;         //指数
 
-    private StatisticsFragment mStatisticsFragment;  //统计
+    private StatisticsFragmentTest mStatisticsFragment;  //统计
 
 
     @Override
@@ -259,14 +261,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     public void onRefresh() {
 
-
         L.d("www", "刷新");
-
     }
 
-
     private void loadData() {
-
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
@@ -481,11 +479,17 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
         }
 
+        mTalkAboutBallFragment = new TalkAboutBallFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("param1", mThirdId);
+        mTalkAboutBallFragment.setArguments(bundle);
+
+
         mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
         mOddsFragment = OddsFragment.newInstance("", "");
-        mStatisticsFragment = StatisticsFragment.newInstance();
+        mStatisticsFragment = StatisticsFragmentTest.newInstance();
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment, Tets.newInstance(), mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
+        mTabsAdapter.addFragments(mDetailsRollballFragment,mTalkAboutBallFragment , mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

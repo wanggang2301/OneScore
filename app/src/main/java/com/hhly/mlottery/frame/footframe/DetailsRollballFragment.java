@@ -198,7 +198,7 @@ public class DetailsRollballFragment extends Fragment {
             public void onClick(View v) {
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
                     finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "bottomLive");
+                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
                 } else {
                     liveTextFragmentTest = new LiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
                     liveTextFragmentTest.show(getChildFragmentManager(), "bottomLive");

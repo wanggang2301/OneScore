@@ -36,7 +36,9 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp">
 
             <TextView
                 android:id="@+id/score"
