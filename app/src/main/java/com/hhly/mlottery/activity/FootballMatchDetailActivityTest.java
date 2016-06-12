@@ -421,6 +421,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             //完场
             if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
+
+
                 mPreHeadInfoFrament.setScoreText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
                 mPreHeadInfoFrament.setScoreClolor(mContext.getResources().getColor(R.color.score));
                 toolbarTitle = mMatchDetail.getHomeTeamInfo().getName() + " " + mMatchDetail.getHomeTeamInfo().getScore() + "-" + mMatchDetail.getGuestTeamInfo().getScore() + " " + mMatchDetail.getGuestTeamInfo().getName();
@@ -432,9 +434,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
+                mLiveHeadInfoFragment.initFootBallEventData(mMatchDetail);
+
                 String state = matchLive.get(0).getState();//获取最后一个的比赛状态
                 mKeepTime = matchLive.get(0).getTime();//获取时间
-
+                mLiveHeadInfoFragment.showTimeView(mKeepTime);
                 if (NOTOPEN.equals(state)) {
                     //未开state=0
                     mLiveHeadInfoFragment.setKeepTime(mContext.getResources().getString(R.string.not_start_txt));
@@ -922,15 +926,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
 
-  /*
+
                 //x时间轴
-                addFootballEvent(matchTextLiveBean);
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
-                // showFootballEvent();//显示事件
-                showFootballEventByState();
-                if (statisticsFragment.isVisible()) {
-                    statisticsFragment.initData();
-                }*/
+                mLiveHeadInfoFragment.showFootballEventByState();
+//                if (statisticsFragment.isVisible()) {
+//                    statisticsFragment.initData();
+//                }
                 break;
             case "1030"://取消主队进球
 
@@ -952,10 +955,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mPreHeadInfoFrament.setScoreText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-/*
-                cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                showFootballEventByState();*/
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
 
 
                 break;
@@ -974,11 +976,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 mPreHeadInfoFrament.setScoreText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
-    /*
-                addFootballEvent(matchTextLiveBean);
+
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
-                // showFootballEvent();//显示事件
-                showFootballEventByState();*/
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "2054"://取消客队进球
@@ -999,20 +1001,20 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 mPreHeadInfoFrament.setScoreText(mathchStatisInfo.getHome_score() + ":" + mathchStatisInfo.getGuest_score());
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
-/*
-                cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                showFootballEventByState();*/
+
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "1025": //主队角球
                 mathchStatisInfo.setHome_corner(mathchStatisInfo.getHome_corner() + 1);
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-              /*  addFootballEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
-                // showFootballEvent();//显示事件
-                showFootballEventByState();*/
+                mLiveHeadInfoFragment.showFootballEventByState();
 
                 break;
 
@@ -1023,21 +1025,19 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-               /*
-                cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                showFootballEventByState();*/
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "2049": //客队角球
                 mathchStatisInfo.setGuest_corner(mathchStatisInfo.getGuest_corner() + 1);
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-               /*
-                addFootballEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
-                // showFootballEvent();//显示事件
-                showFootballEventByState();*/
+                mLiveHeadInfoFragment.showFootballEventByState();
 
                 break;
 
@@ -1047,10 +1047,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-/*
-                // showFootballEvent();//显示事件
-                cancelFootBallEvent(iterator, matchTextLiveBean);
-                showFootballEventByState();*/
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
 
                 break;
 
@@ -1060,10 +1059,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-                //  addFootballEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
-                // // showFootballEvent();//显示事件
-                // showFootballEventByState();
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "1048": //取消 主队黄牌
@@ -1073,9 +1072,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-                //    cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                // showFootballEventByState();
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "1045": //主队两黄变一红
@@ -1085,9 +1084,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-                //addFootballEvent(matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                //showFootballEventByState();
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "1046": //取消主队黄牌过度到红牌
@@ -1097,9 +1097,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-                // cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                // showFootballEventByState();
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
 
@@ -1108,10 +1108,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-                // addFootballEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
-                // showFootballEvent();//显示事件
-                //  showFootballEventByState();
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "2072":  //取消客队黄牌
@@ -1121,9 +1121,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-                // cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                //  showFootballEventByState();
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
 
@@ -1133,9 +1133,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-                //  addFootballEvent(matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                //  showFootballEventByState();
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
+                //事件放入并展示
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "2070": //取消客队两黄变一红
@@ -1147,19 +1148,19 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-                //cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                //showFootballEventByState();
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "1032":  //主队红牌
                 mathchStatisInfo.setHome_rc(mathchStatisInfo.getHome_rc() + 1);
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-                //  addFootballEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
-                // showFootballEvent();//显示事件
-                // showFootballEventByState();
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
             case "1047": //取消主队红牌
                 if (mathchStatisInfo.getHome_rc() > 0) {
@@ -1167,9 +1168,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
-                // cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                // showFootballEventByState();
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
 
                 break;
 
@@ -1178,10 +1179,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-                //addFootballEvent(matchTextLiveBean);
+                //x时间轴
+                mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
-                // showFootballEvent();//显示事件
-                // showFootballEventByState();
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "2071":  //取消客队红牌
@@ -1191,9 +1192,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-                //cancelFootBallEvent(iterator, matchTextLiveBean);
-                // showFootballEvent();//显示事件
-                //  showFootballEventByState();
+                //取消进球时间，重绘
+                mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
+                mLiveHeadInfoFragment.showFootballEventByState();
                 break;
 
             case "1026":    //主队危险进攻
@@ -1519,7 +1520,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             }
         }
 
-        //  timeView.updateTime(Integer.parseInt(mKeepTime));
+        mLiveHeadInfoFragment.showTimeView(mKeepTime);
 
         if (isMatchStart) {
             if (liveTextTime >= matchKeepTime) {

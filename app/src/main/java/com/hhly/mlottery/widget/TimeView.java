@@ -13,7 +13,7 @@ import com.hhly.mlottery.util.StadiumUtils;
 
 
 /**
- * Created by andy on 2015/12/31.
+ * Created by madongyun 155 on 2015/12/31.
  */
 public class TimeView extends View {
 
@@ -100,7 +100,7 @@ public class TimeView extends View {
         float leftWidth = (width - midBlackWidth) / 2;
         float rightWidth = leftWidth;
         Paint mPaintGreen = new Paint();
-        mPaintGreen.setColor(getResources().getColor(R.color.tabhost));
+        mPaintGreen.setColor(getResources().getColor(R.color.timeviewcolor));
 
         if(mTime<=45){
             mCanvas.drawRect(0, 0,(width - midBlackWidth) / TOTAL_LINE_NUM * mTime, height, mPaintGreen);
