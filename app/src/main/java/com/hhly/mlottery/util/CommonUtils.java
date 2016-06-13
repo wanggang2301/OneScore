@@ -206,6 +206,9 @@ public class CommonUtils {
             case AccountResultCode.USERNAME_PASS_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
                 break;
+            case AccountResultCode.NICKNAME_SENSITIVE:
+                UiUtils.toast(MyApp.getInstance() , R.string.nickname_sensitive);
+                break;
             default:
                 L.e(TAG , "未定义错误码 : rescode = "+ rescode + " , defaultMessage = "+ defaultMessage);
                 if (!TextUtils.isEmpty(defaultMessage)){

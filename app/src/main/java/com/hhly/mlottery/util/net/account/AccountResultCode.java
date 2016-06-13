@@ -71,9 +71,6 @@ public interface AccountResultCode {
     /**获取微博用户信息失败*/
     int GET_WEIBO_INFO_FAIL =21;
 
-    /**后台报错*/
-    int SERVER_ERROR =500;
-
     /**用户未登陆*/
     int USER_NOT_LOGIN =22;
 
@@ -85,5 +82,11 @@ public interface AccountResultCode {
 
     /**密码错误*/
     int PASSWORD_ERROR =43;
+
+    /**用户名敏感*/
+    int NICKNAME_SENSITIVE =70;
+
+    /**后台报错*/
+    int SERVER_ERROR =500;
 
 }

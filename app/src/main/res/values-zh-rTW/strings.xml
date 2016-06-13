@@ -732,6 +732,7 @@
     <string name="account">賬號</string>
     <string name="pwd_format_just_length">密碼長度爲6-16位</string>
     <string name="verify_time_limit">兩次發送間隔不得小于60秒</string>
+    <string name="nickname_sensitive">昵稱包含敏感詞語</string>
     <!--1.1.2 end-->
 
 
