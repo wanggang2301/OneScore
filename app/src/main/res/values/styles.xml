@@ -26,7 +26,6 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-
     <style name="AppTheme.BlackStatusBar.ColorGreen"></style>
 
     <style name="Widget" />
@@ -248,6 +247,21 @@
         <item name="android:max">240</item>
         <item name="android:background">@mipmap/line</item>
     </style>
+
+
+    <!-- 客队样式 -->
+    <style name="StyleProgressBarguest_statics" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">5dp</item>
+        <item name="android:progressDrawable">@drawable/pro</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">100</item>
+        <item name="android:progress">50</item>
+    </style>
+
+
     <!-- 主队样式 -->
     <style name="StyleProgressBarhome_team24" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:minHeight">4dip</item>
@@ -293,7 +307,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
-        <item name="android:background">@color/white</item>
 
     </style>
     <!-- 主队和客队的射门数 begin -->
@@ -312,6 +325,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/progress_score</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:text">0</item>
         <!-- 主队和客队的射门数 end -->
     </style>
 
@@ -516,6 +530,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/selector_loginbtn</item>
     </style>
+
     <style name="loginbtn_blue" parent="login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_blue</item>
     </style>

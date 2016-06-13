@@ -550,17 +550,6 @@ public class StatisticsFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
 
-        L.d("789",hidden+"");
-        if (!hidden) {// 显示
-            initData();
-
-        } else {// 隐藏
-
-        }
-        super.onHiddenChanged(hidden);
-    }
 
 }

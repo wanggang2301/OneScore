@@ -157,8 +157,6 @@ public class DetailsRollballFragment extends Fragment {
                 mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
                 mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
                 initLiveText();
-
-                L.d("ddd","fffff");
                 initOdds();
             }
         }
@@ -181,7 +179,10 @@ public class DetailsRollballFragment extends Fragment {
 
         allMatchLiveMsgId = new ArrayList<>();
         for (MatchTextLiveBean ml : matchLive) {
-            allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
+
+            if (ml.getMsgId() != null && !"".equals(ml.getMsgId())) {
+                allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
+            }
         }
 
 
@@ -269,7 +270,7 @@ public class DetailsRollballFragment extends Fragment {
             return;
         }
 
-        L.d("ddd","加载数据");
+        L.d("ddd", "加载数据");
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // Map<String, String> params = new HashMap<>();
         //params.put("thirdId", mThirdId);
