@@ -157,7 +157,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                         case "21":// 篮球赛果
                                         {
                                             Intent intent = new Intent(mContext, BasketListActivity.class);
-                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_AMIDITHION_VALUE);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Amidithion");
                                         }
@@ -165,7 +165,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                         case "22":// 篮球赛程
                                         {
                                             Intent intent = new Intent(mContext, BasketListActivity.class);
-                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_COMPETITION_VALUE);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Competition");
                                         }
@@ -173,20 +173,20 @@ public class HomeGridAdapter extends BaseAdapter {
                                         case "23":// 篮球关注
                                         {
                                             Intent intent = new Intent(mContext, BasketListActivity.class);
-                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_ATTENTION_VALUE);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Attention");
                                         }
                                         break;
                                         case "24":// 篮球资讯
-                                            Toast.makeText(mContext, "篮球资讯", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(mContext, "篮球资讯", Toast.LENGTH_SHORT).show();
                                             break;
                                         case "30":// 彩票开奖
                                             mContext.startActivity(new Intent(mContext, NumbersActivity.class));
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_List");
                                             break;
                                         case "350":// 彩票资讯
-                                            Toast.makeText(mContext, "彩票资讯", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(mContext, "彩票资讯", Toast.LENGTH_SHORT).show();
                                             break;
                                         case "31":// 香港开奖
                                         {
