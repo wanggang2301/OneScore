@@ -217,7 +217,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
+//        startActivity(new Intent(this, InputActivity.class));
     }
 
     private void initView() {
@@ -645,11 +645,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     protected void onDestroy() {
