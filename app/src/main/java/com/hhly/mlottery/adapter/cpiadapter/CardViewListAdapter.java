@@ -85,15 +85,12 @@ public class CardViewListAdapter extends BaseAdapter {
             if ("green".equals(mCurrLevelBean.getCurrTextBgColor())) {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.white));
                 item.cpi_item_list_odds_txt.setBackgroundResource(R.color.tabhost);
-                System.out.println(">>>green)" + mCurrLevelBean.getCurrTextBgColor());
             } else if ("red".equals(mCurrLevelBean.getCurrTextBgColor())) {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.white));
                 item.cpi_item_list_odds_txt.setBackgroundResource(R.color.red);
-                System.out.println(">>>red)"+mCurrLevelBean.getCurrTextBgColor());
             } else if ("black".equals(mCurrLevelBean.getCurrTextBgColor())) {
                 item.cpi_item_list_odds_txt.setTextColor(context.getResources().getColor(R.color.black));
                 item.cpi_item_list_odds_txt.setBackgroundResource(R.color.transparency);
-                System.out.println(">>>black)" + mCurrLevelBean.getCurrTextBgColor());
             } else {
                 //欧赔
                 if (mCurrLevelBean.getMiddleUp() == -1) {

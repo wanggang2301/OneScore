@@ -369,6 +369,12 @@ public class CPIOddsFragment extends Fragment {
                                 matchInfoBean.setKeepTime(keepTime);
                                 break;
                             case 2:
+                               if(Integer.parseInt(keepTime) > 45) {
+                                   //如果还是上半场，但是大于45分钟了显示45+
+                                   matchInfoBean.setKeepTime("45+");
+                                }else{
+                                   matchInfoBean.setKeepTime(keepTime);
+                               }
                                 matchInfoBean.setIsShowTitle(true);
                                 break;
                             case 3:
