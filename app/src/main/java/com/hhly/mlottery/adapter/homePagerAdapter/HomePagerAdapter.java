@@ -225,17 +225,28 @@ public class HomePagerAdapter extends PagerAdapter {
                             break;
                         case 1:// 页面
                         {
-                            Intent intent = new Intent(mContext, WebActivity.class);
-                            intent.putExtra("key", jumpAddr.substring(0, jumpAddr.indexOf("?")));// 跳转地址
-                            intent.putExtra("infoTypeName", title);
-                            intent.putExtra("imageurl", picUrl);
-                            intent.putExtra("title", title);
-                            intent.putExtra("subtitle", "");
-                            intent.putExtra("reqMethod", "get");
-                            if (jumpAddr.contains("?token")) {
-                                intent.putExtra("token", "token");
+                            if (jumpAddr.contains("{loginToken}")) {// 是否需要登录
+                                if (CommonUtils.isLogin()) {// 判断用户是否登录
+                                    Intent intent = new Intent(mContext, WebActivity.class);
+                                    intent.putExtra("key", jumpAddr);// 跳转地址
+                                    intent.putExtra("infoTypeName", title);
+                                    intent.putExtra("imageurl", picUrl);
+                                    intent.putExtra("title", title);
+                                    intent.putExtra("subtitle", "");
+                                    intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
+                                    mContext.startActivity(intent);
+                                } else {
+                                    mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                                }
+                            } else {
+                                Intent intent = new Intent(mContext, WebActivity.class);
+                                intent.putExtra("key", jumpAddr);// 跳转地址
+                                intent.putExtra("infoTypeName", title);
+                                intent.putExtra("imageurl", picUrl);
+                                intent.putExtra("title", title);
+                                intent.putExtra("subtitle", "");
+                                mContext.startActivity(intent);
                             }
-                            mContext.startActivity(intent);
                             break;
                         }
                         case 2:// 内页

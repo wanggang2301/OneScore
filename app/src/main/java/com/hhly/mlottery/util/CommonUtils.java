@@ -5,12 +5,19 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.widget.EditText;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.bean.account.SendSmsCode;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -32,12 +39,14 @@ public class CommonUtils {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID , "");
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME , "");
             PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN , "");
+            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT , "");
 
             AppConstants.register = new Register();
 
         }else {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID , register.getData().getUser().getUserId());
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME , register.getData().getUser().getNickName());
+            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT , register.getData().getUser().getLoginAccount());
 
             String token = register.getData().getLoginToken();
             L.d(TAG , " saveRegisterInfo   token = "+ token);
@@ -57,6 +66,7 @@ public class CommonUtils {
         Register.DataBean.UserBean userBean = new Register.DataBean.UserBean();
         userBean.setUserId(PreferenceUtil.getString(AppConstants.SPKEY_USERID , ""));
         userBean.setNickName(PreferenceUtil.getString(AppConstants.SPKEY_NICKNAME , ""));
+        userBean.setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT , ""));
 
         Register.DataBean dataBean = new Register.DataBean();
 
@@ -113,7 +123,16 @@ public class CommonUtils {
      * 请求账户信息返回统一处理
      * @param rescode
      */
+    @Deprecated
     public static void handlerRequestResult(int rescode){
+        handlerRequestResult(rescode , null);
+    }
+
+    /**
+     * 请求账户信息返回统一处理
+     * @param rescode
+     */
+    public static void handlerRequestResult(int rescode , String defaultMessage){
         L.d(TAG , "handlerRequestResult rescode =  "+ rescode);
         switch (rescode){
             case AccountResultCode.SUCC:
@@ -185,9 +204,63 @@ public class CommonUtils {
             case AccountResultCode.USERNAME_PASS_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
                 break;
+            default:
+                L.e(TAG , "未定义错误码 : rescode = "+ rescode + " , defaultMessage = "+ defaultMessage);
+                if (!TextUtils.isEmpty(defaultMessage)){
+
+                    UiUtils.toast(MyApp.getInstance() , defaultMessage);
+                }
+                break;
         }
+    }
 
 
+    /**
+     * 获取验证码
+     * @param ctx
+     * @param phone
+     * @param oprateType 操作类型
+     * @param callBack
+     */
+    public static void getVerifyCode(Context ctx , String phone , String oprateType, final GetVerifyCodeCallBack callBack) {
+        if (UiUtils.isMobileNO(ctx ,phone)){
+            callBack.beforGet();
+            String url = BaseURLs.URL_SENDSMSCODE;
+            Map<String, String> param = new HashMap<>();
+            param.put("phone" , phone);
+            param.put("operateType" , oprateType);
+
+            VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
+                @Override
+                public void onResponse(SendSmsCode jsonObject) {
+                    callBack.onGetResponce(jsonObject);
+                    handlerRequestResult(jsonObject.getResult() , jsonObject.getMsg());
+                }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    L.e(TAG,"发送验证码失败");
+                    callBack.onGetError(exception);
+                    UiUtils.toast(MyApp.getInstance() , R.string.immediate_unconection);
+                }
+            } , SendSmsCode.class);
+
+        }
+    }
+
+
+    /**
+     * 光标移动到结尾
+     * @param ets
+     */
+    public static void selectionLast(EditText... ets){
+        for (EditText et:ets
+             ) {
+            String pwd = et.getText().toString();
+            if(!TextUtils.isEmpty(pwd)){
+                et.setSelection(pwd.length());
+            }
+        }
     }
 
 }

@@ -15,7 +15,7 @@ public class AppConstants {
 	/** 是否是测试连接，测试连接用于阶段测试使用 */
 	public static final boolean isTestLink = false;
 	/** 是否为测试消息推送。true为debug模式，false为生产模式 */
-	public static final boolean isDebugMode = false;
+	public static final boolean isDebugMode = true;
 	/**
 	 * 判断是否上传奔溃日志到友盟
 	 */
@@ -88,7 +88,7 @@ public class AppConstants {
 	public static final int FORTY_NINE = 49;
 
 	// 彩票种类名称
-	public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
+	/*public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_cq_ssc), // "重庆时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_jx_ssc), // "江西时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_xj_ssc),// "新疆时时彩"
@@ -111,7 +111,7 @@ public class AppConstants {
 			MyApp.getContext().getResources().getString(R.string.number_cz_jx_syxw),// "江西十一选五"
 			MyApp.getContext().getResources().getString(R.string.number_cz_sd_syxw),// "山东十一选五"
 			MyApp.getContext().getResources().getString(R.string.number_cz_tj_ssc) // "天津时时彩"
-	};
+	};*/
 
 	// 北京赛车开奖号码
 	public static int[] numberCarNos = { R.mipmap.car_no1, R.mipmap.car_no2, R.mipmap.car_no3, R.mipmap.car_no4, R.mipmap.car_no5, R.mipmap.car_no6, R.mipmap.car_no7,
@@ -206,6 +206,8 @@ public class AppConstants {
 	public static final String SPKEY_TOKEN = "token";
 	/**保存nickName的key*/
 	public static final String SPKEY_NICKNAME = "nickName";
+	/**保存loginAccount的key*/
+	public static final String SPKEY_LOGINACCOUNT = "loginAccount";
 	/**应用启动的时候初始化*/
 	public static String deviceToken ="";
 	/**应用启动的时候初始化*/

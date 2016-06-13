@@ -46,7 +46,7 @@
     <!-- 篮球详情页-->
     <dimen name="flexible_space_image_height">240dp</dimen>
     <dimen name="flexible_space_show_fab_offset">120dp</dimen>
-	<dimen name="mheight">172dp</dimen>
+    <dimen name="mheight">172dp</dimen>
     <dimen name="item_height">53dp</dimen>
     <dimen name="item_title_height">30dp</dimen>
     <dimen name="paddingtop">68dp</dimen>
@@ -166,6 +166,14 @@
     <dimen name="text_size_83">83sp</dimen>
     <dimen name="text_size_84">84sp</dimen>
     <dimen name="activity_margin_half">8dp</dimen>
+
+
+    <!--登录注册相关 begin-->
+
+    <!--个人资料 每个Item的最小高度-->
+    <dimen name="profile_item_minheight">60dp</dimen>
+
+    <!--登录注册相关 end-->
 
 </resources>
 

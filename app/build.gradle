@@ -12,10 +12,10 @@ android {
 //    }
     defaultConfig {
         applicationId "com.hhly.mlottery"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 22
-        versionCode 14
-        versionName "1.1.1"
+        versionCode 15
+        versionName "1.1.2.0608"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
