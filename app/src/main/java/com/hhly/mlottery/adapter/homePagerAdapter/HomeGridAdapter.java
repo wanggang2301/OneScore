@@ -84,7 +84,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                     break;
                                 case 1:// 页面
                                 {
-                                    if(jumpAddr.contains("{loginToken}") && "post".equals(reqMethod)){// 请求需要带参
+                                    if(jumpAddr.contains("{loginToken}")){// 是否需要登录
                                         if (CommonUtils.isLogin()) {// 判断用户是否登录
                                             Intent intent = new Intent(mContext, WebActivity.class);
                                             intent.putExtra("key", jumpAddr);// 跳转地址
