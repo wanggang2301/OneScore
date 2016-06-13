@@ -11,7 +11,7 @@ android {
         incremental true
         javaMaxHeapSize "4g"
         //关闭预编译
-        preDexLibraries = false
+//        preDexLibraries = false
     }
 
     packagingOptions {

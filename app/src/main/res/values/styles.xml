@@ -615,7 +615,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/white</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_weight">5</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:text">-</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textSize">@dimen/text_size_13</item>
@@ -624,7 +624,7 @@
     <style name="MW_White">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1.0</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:background">@color/white</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">center_vertical</item>
@@ -639,6 +639,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:maxWidth">100dp</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/res_name_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
