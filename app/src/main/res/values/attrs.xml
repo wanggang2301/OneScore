@@ -73,4 +73,10 @@
         <item>@string/data_date_txt1</item>
     </string-array>
 
+    <!--足球篮球切换-->
+    <string-array name="ball_select">
+        <item>@string/football_frame_txt</item>
+        <item>@string/basket_left</item>
+    </string-array>
+
 </resources>

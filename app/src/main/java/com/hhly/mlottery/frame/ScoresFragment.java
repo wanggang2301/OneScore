@@ -12,12 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
+import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballTypeSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.bean.LeagueCup;
@@ -28,6 +31,7 @@ import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.widget.BallSelectArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -82,6 +86,8 @@ public class ScoresFragment extends Fragment {
     private TabLayout mTabLayout;
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
+    private Spinner mSpinner;
+    private String[] mItems;
 
     @SuppressLint("ValidFragment")
     public ScoresFragment(Context context) {
@@ -101,7 +107,25 @@ public class ScoresFragment extends Fragment {
         setupViewPager();
         focusCallback();// 加载关注数
         initData();
+        initEVent();
         return view;
+    }
+
+    private void initEVent() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               if(mContext.getResources().getString(R.string.basket_left).equals(mItems[position])){// 选择篮球
+                   ((FootballActivity)mContext).ly_tab_bar.setVisibility(View.GONE);
+                   ((FootballActivity)mContext).switchFragment(5);
+               }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -111,13 +135,20 @@ public class ScoresFragment extends Fragment {
 
         //中心标题
         mTitleTv = (TextView) view.findViewById(R.id.public_txt_title);
-        //mTitleTv.setVisibility(View.GONE);
-        mTitleTv.setText(R.string.football_frame_txt);
+        mTitleTv.setVisibility(View.GONE);
+//        mTitleTv.setText(R.string.football_frame_txt);
         //左边标题
             /*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
 				public_txt_left_title.setVisibility(View.VISIBLE);
-        public_txt_left_title.setText(R.string.football_frame_txt);
-*/
+        public_txt_left_title.setText(R.string.football_frame_txt);*/
+
+        mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
+        mSpinner.setVisibility(View.VISIBLE);
+        mItems = getResources().getStringArray(R.array.ball_select);
+        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext , mItems);
+        mSpinner.setAdapter(mAdapter);
+        mSpinner.setSelection(0);
+
         // 筛选
         mFilterImgBtn = (ImageView) view.findViewById(R.id.public_btn_filter);
         mSetImgBtn = (ImageView) view.findViewById(R.id.public_btn_set);
@@ -510,6 +541,7 @@ public class ScoresFragment extends Fragment {
             onPause();
         } else {
             onResume();
+            mSpinner.setSelection(0);
         }
     }
 

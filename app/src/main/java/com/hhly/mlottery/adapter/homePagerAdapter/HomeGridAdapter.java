@@ -148,8 +148,8 @@ public class HomeGridAdapter extends BaseAdapter {
                                         break;
                                         case "20":// 篮球即时比分
                                         {
-                                            Intent intent = new Intent(mContext, BasketListActivity.class);
-                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
+                                            Intent intent = new Intent(mContext, FootballActivity.class);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
                                         }
