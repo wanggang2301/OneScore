@@ -207,46 +207,7 @@ public class CPIOddsFragment extends Fragment {
             }
         }, NewOddsInfo.class);
     }
-    /**
-     * 赔率推送赔率
-     */
-    public void upDateOdds(WebFootBallSocketOdds webSocketOdds){
-        for (int i = 0; i <webSocketOdds.getData().size(); i++) {
-            WebFootBallSocketOdds webFootBallSocketOdds = new WebFootBallSocketOdds();
-            //如果是亚盘的
-            if("1".equals(webSocketOdds.getData().get(i).get("oddType"))){
-                webFootBallSocketOdds.setData(webSocketOdds.getData());
-                cpiRecyclerViewAdapter.upDatePlate(webFootBallSocketOdds, CPIFragment.TYPE_PLATE);
-            }
-            //如果是欧赔的
-            else if("2".equals(webSocketOdds.getData().get(i).get("oddType"))){
-                webFootBallSocketOdds.setData(webSocketOdds.getData());
-                cpiRecyclerViewAdapter.upDatePlate(webFootBallSocketOdds, CPIFragment.TYPE_OP);
-            }
-            //如果是大小的
-            else if("3".equals(webSocketOdds.getData().get(i).get("oddType"))){
-                webFootBallSocketOdds.setData(webSocketOdds.getData());
-                cpiRecyclerViewAdapter.upDatePlate(webFootBallSocketOdds, CPIFragment.TYPE_BIG);
 
-            }
-        }
-    }
-
-    /**
-     * 时间和主客队比分
-     * @param webSocketTimeAndScore
-     */
-    public void upDateTimeAndScore(WebFootBallSocketTime webSocketTimeAndScore,String oddType){
-        //如果是时间传过来的
-        if("time".equals(oddType)){
-
-        }
-        //否者就是主客队比分
-        else{
-
-        }
-
-    }
 
     /**
      * 时间
@@ -273,6 +234,7 @@ public class CPIOddsFragment extends Fragment {
 
     /**
      * 查找当前选中的公司默认给选中，进行数据加载处理
+     *
      * @param oddType 盘口类型
      */
     private void checkedCompanys(String oddType) {
@@ -309,18 +271,6 @@ public class CPIOddsFragment extends Fragment {
             setComPany(mAllInfoBean3, comNameList, mCheckedIds, comPanyType);
         }
 
-    }
-
-    /**
-     * 即时推送
-     *
-     * @param socketAllInfo
-     * @param comNameList
-     * @param mCheckedIds
-     * @param comPanyType
-     */
-    public void socketCompany(List<NewOddsInfo.AllInfoBean> socketAllInfo, List<String> comNameList, List<String> mCheckedIds, String comPanyType) {
-        setComPany(socketAllInfo, comNameList, mCheckedIds, comPanyType);
     }
 
     /**
@@ -391,6 +341,210 @@ public class CPIOddsFragment extends Fragment {
             mHandler.sendEmptyMessage(NODATA_CHILD);// 内容无数据
         }
 
+    }
+
+    /**
+     * 时间和主客队比分
+     *
+     * @param webSocketTimeAndScore
+     */
+    public void upDateTimeAndScore(WebFootBallSocketTime webSocketTimeAndScore, String oddType) {
+            for (int h = 0; h < mShowInfoBeans.size(); h++) {
+                //如果赛事里面id有推送过来的id
+                if (mShowInfoBeans.get(h).getMatchInfo().getMatchId().equals(webSocketTimeAndScore.getThirdId())) {
+                    NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = mShowInfoBeans.get(h).getMatchInfo();
+                    //如果是时间传过来的
+                    if ("time".equals(oddType)) {
+                        String statusOrigin = webSocketTimeAndScore.getData().get("statusOrigin");
+                        int status= Integer.parseInt(statusOrigin);
+                        String keepTime = webSocketTimeAndScore.getData().get("keepTime");
+                        /*0:未开, 1:上半场, 2:中场, 3:下半场, 4:加时, 5:点球
+                       -1:完场, -10:取消, -11:待定, -12:腰斩, -13:中断, -14:推迟, -100:隐藏. */
+                        switch (status) {
+                            case 0:
+                                matchInfoBean.setIsShowTitle(false);
+                                break;
+                            case 1:
+                                matchInfoBean.setIsShowTitle(true);
+                                matchInfoBean.setKeepTime(keepTime);
+                                break;
+                            case 2:
+                                matchInfoBean.setIsShowTitle(true);
+                                break;
+                            case 3:
+                                matchInfoBean.setIsShowTitle(true);
+                                break;
+                            case 4:
+                                matchInfoBean.setIsShowTitle(true);
+                                break;
+                            case 5:
+                                matchInfoBean.setIsShowTitle(true);
+                                break;
+                            case -1:
+                                break;
+                            case -10:
+                                break;
+                            case -11:
+                                break;
+                            case -12:
+                                break;
+                            case -13:
+                                break;
+                            case -14:
+                                break;
+                            case -100:
+                                break;
+                            default:
+                                break;
+                        }
+                    }else if("score".equals(oddType)){
+                        //如果是主客队比分的
+                        String matchResult = webSocketTimeAndScore.getData().get("matchResult");
+                        if(!StringUtils.isEmpty(matchResult)) {
+                            //1-5代表正常开赛，这个还需沟通
+                            matchInfoBean.setMatchState("1");
+                            matchInfoBean.setMatchResult(matchResult);
+                        }
+                    }
+                    if (cpiRecyclerViewAdapter != null) {
+                        System.out.println(">>mAllshuaxi时间刷新了");
+                        cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
+                        cpiRecyclerViewAdapter.notifyDataSetChanged();
+
+                }
+            }
+
+        }
+        //否者就是主客队比分
+//        else {
+//
+//        }
+
+    }
+
+    /**
+     * 赔率推送赔率
+     */
+    public void upDateOdds(WebFootBallSocketOdds webSKOdds, int oddType) {
+        //如果是亚盘的
+        if (oddType == 1) {
+            filtrateSocket(webSKOdds, 1);
+        }
+        //如果是欧赔的
+        else if (oddType == 2) {
+            filtrateSocket(webSKOdds, 2);
+        }
+        //如果是大小的
+        else if (oddType == 3) {
+            filtrateSocket(webSKOdds, 3);
+        }
+
+    }
+
+    /**
+     * 根据推送过来的赔率更新单个item数据
+     *
+     * @param webSocketOdds
+     */
+    private void filtrateSocket(WebFootBallSocketOdds webSocketOdds, int typeNum) {
+        for (int h = 0; h < mShowInfoBeans.size(); h++) {
+            //如果赛事里面id有推送过来的id
+            if (mShowInfoBeans.get(h).getMatchInfo().getMatchId().equals(webSocketOdds.getThirdId())) {
+                //如果推送的数据不为空
+                if (!webSocketOdds.getData().isEmpty()) {
+
+                    for (int e = 0; e < webSocketOdds.getData().size(); e++) {
+
+                        for (int j = 0; j < mShowInfoBeans.get(h).getComList().size(); j++) {
+
+                            if (webSocketOdds.getData().get(e).get("comId").equals(mShowInfoBeans.get(h).getComList().get(j).getComId())) {
+                                NewOddsInfo.AllInfoBean.ComListBean comListBean = mShowInfoBeans.get(h).getComList().get(j);
+                                Map<String, String> mapDate = webSocketOdds.getData().get(e);
+                                //如果即时主队数据不为空
+                                if (!StringUtils.isEmpty(mapDate.get("leftOdds"))) {
+                                    setOddType(comListBean, mapDate.get("leftOdds"), comListBean.getCurrLevel().getLeft(), "left");
+                                    comListBean.getCurrLevel().setLeft(mapDate.get("leftOdds"));
+                                }
+                                //如果即时盘口数据不为空
+                                if (!StringUtils.isEmpty(mapDate.get("mediumOdds"))) {
+                                    if (typeNum == 2) {//如果是欧赔
+                                        setOddType(comListBean, mapDate.get("mediumOdds"), comListBean.getCurrLevel().getMiddle(), "middle2");
+                                    } else {//否则就是大小 和亚盘了
+                                        setOddType(comListBean, mapDate.get("mediumOdds"), comListBean.getCurrLevel().getMiddle(), "middle13");
+                                    }
+                                    comListBean.getCurrLevel().setMiddle(mapDate.get("mediumOdds"));
+                                }
+                                //如果即时客队数据不为空
+                                if (!StringUtils.isEmpty(mapDate.get("rightOdds"))) {
+                                    setOddType(comListBean, mapDate.get("rightOdds"), comListBean.getCurrLevel().getRight(), "right");
+                                    comListBean.getCurrLevel().setRight(mapDate.get("rightOdds"));
+                                }
+                                if (cpiRecyclerViewAdapter != null) {
+                                    System.out.println(">>mAllshuaxi刷新了");
+                                    cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
+                                    cpiRecyclerViewAdapter.notifyDataSetChanged();
+
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    /**
+     * @param currentComBean
+     * @param currentDate
+     * @param nextDate
+     * @param about          左中右 （主 盘 客）
+     */
+    private void setOddType(NewOddsInfo.AllInfoBean.ComListBean currentComBean, String currentDate, String nextDate, String about) {
+        if (about.equals("right")) {
+            if (Double.parseDouble(currentDate) > Double.parseDouble(nextDate)) {
+                currentComBean.getCurrLevel().setRightUp(1);
+
+            } else if (Double.parseDouble(currentDate) < Double.parseDouble(nextDate)) {
+                currentComBean.getCurrLevel().setRightUp(-1);
+
+            } else {
+                currentComBean.getCurrLevel().setRightUp(0);
+            }
+        } else if (about.equals("left")) {
+            if (Double.parseDouble(currentDate) > Double.parseDouble(nextDate)) {
+                currentComBean.getCurrLevel().setLeftUp(1);
+
+            } else if (Double.parseDouble(currentDate) < Double.parseDouble(nextDate)) {
+                currentComBean.getCurrLevel().setLeftUp(-1);
+
+            } else {
+                currentComBean.getCurrLevel().setLeftUp(0);
+            }
+        } else if (about.equals("middle2")) {//欧赔的盘口
+            if (Double.parseDouble(currentDate) > Double.parseDouble(nextDate)) {
+                currentComBean.getCurrLevel().setMiddleUp(1);
+
+            } else if (Double.parseDouble(currentDate) < Double.parseDouble(nextDate)) {
+                currentComBean.getCurrLevel().setMiddleUp(-1);
+
+            } else {
+                currentComBean.getCurrLevel().setMiddleUp(0);
+            }
+        } else if (about.equals("middle13")) {//亚盘，大小球盘口
+            if (Double.parseDouble(currentDate) > Double.parseDouble(nextDate)) {
+                currentComBean.getCurrLevel().setCurrTextBgColor("red");
+                System.out.println(">>>red 推送的" + currentDate + ">>>当前的" + nextDate + ">>>颜色" + currentComBean.getCurrLevel().getCurrTextBgColor());
+            } else if (Double.parseDouble(currentDate) < Double.parseDouble(nextDate)) {
+                currentComBean.getCurrLevel().setCurrTextBgColor("green");
+                System.out.println(">>>green 推送的" + currentDate + ">>>当前的" + nextDate + ">>>颜色" + currentComBean.getCurrLevel().getCurrTextBgColor());
+            } else {
+                currentComBean.getCurrLevel().setCurrTextBgColor("black");
+                System.out.println(">>>black 推送的" + currentDate + ">>>当前的" + nextDate + ">>>颜色" + currentComBean.getCurrLevel().getCurrTextBgColor());
+            }
+        }
     }
 
     private Handler mHandler = new Handler() {

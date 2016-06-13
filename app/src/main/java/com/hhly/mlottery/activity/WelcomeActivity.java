@@ -9,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -141,7 +143,7 @@ public class WelcomeActivity extends BaseActivity {
     HttpHandler httpHandler;
     //	private RequestQueue mRequestQueue;
     private Location location;
-    //	private LocationManager locationManager;
+    	private LocationManager locationManager;
     public PackageManager mPackageManager;
     public static PackageInfo mPackageInfo;
     private String mStartimageUrl;
@@ -180,18 +182,18 @@ public class WelcomeActivity extends BaseActivity {
                 .build();
         universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
         universalImageLoader.init(config);
-/*		 获取经纬度
-//		String serviceName = Context.LOCATION_SERVICE;
-//		locationManager = (LocationManager) getSystemService(serviceName);
-//		Criteria criteria = new Criteria();
-//		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-//		criteria.setAltitudeRequired(false);
-//		criteria.setBearingRequired(false);
-//		criteria.setCostAllowed(true);
-//		criteria.setPowerRequirement(Criteria.POWER_LOW);
-//		String provider = locationManager.getBestProvider(criteria, true);
-//		location = locationManager.getLastKnownLocation(provider);
-		获取经纬度end */
+//		 获取经纬度
+		String serviceName = Context.LOCATION_SERVICE;
+		locationManager = (LocationManager) getSystemService(serviceName);
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setAltitudeRequired(false);
+		criteria.setBearingRequired(false);
+		criteria.setCostAllowed(true);
+		criteria.setPowerRequirement(Criteria.POWER_LOW);
+		String provider = locationManager.getBestProvider(criteria, true);
+		location = locationManager.getLastKnownLocation(provider);
+//		获取经纬度end
 
         getUmeng();
         msg = Message.obtain();

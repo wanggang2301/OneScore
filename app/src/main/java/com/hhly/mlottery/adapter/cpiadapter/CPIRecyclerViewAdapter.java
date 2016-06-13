@@ -2,7 +2,6 @@ package com.hhly.mlottery.adapter.cpiadapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -17,7 +16,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
-import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.widget.CpiListView;
 
@@ -40,7 +38,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
 
     //标记是哪个类型“亚盘，大小，欧赔
     private String stType;
-    private String mPlate,mOp,mBig;
+
 
     public CPIRecyclerViewAdapter(List<NewOddsInfo.AllInfoBean> mAllInfoBean, Context context, String stType) {
         this.mAllInfoBean = mAllInfoBean;
@@ -61,6 +59,10 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         TextView cpi_item_home_txt;//主队
         TextView cpi_item_odds_txt;//盘口
         TextView cpi_item_guest_txt;//客队
+        LinearLayout cpi_item_layout;//比赛进行时候即时时间的layout
+        TextView cpi_item_keepTime_txt;//即时时间textview
+        TextView cpi_item_seconds_txt;//即时时间分钟的 “ ' ”
+
 
         public CPIViewHolder(final View itemView) {
             super(itemView);
@@ -73,6 +75,10 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             cpi_item_home_txt = (TextView) itemView.findViewById(R.id.cpi_item_home_txt);
             cpi_item_odds_txt = (TextView) itemView.findViewById(R.id.cpi_item_odds_txt);
             cpi_item_guest_txt = (TextView) itemView.findViewById(R.id.cpi_item_guest_txt);
+
+            cpi_item_layout = (LinearLayout) itemView.findViewById(R.id.cpi_item_layout);
+            cpi_item_keepTime_txt = (TextView) itemView.findViewById(R.id.cpi_item_keepTime_txt);
+            cpi_item_seconds_txt = (TextView) itemView.findViewById(R.id.cpi_item_seconds_txt);
 
         }
 
@@ -107,18 +113,22 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         cpiViewHolder.cpi_item_leagueName_txt.setText(mAllInfoBean.get(position).getLeagueName());
         //比赛时间
         cpiViewHolder.cpi_item_time_txt.setText(matchInfoBean.getOpenTime());
+        //如果推送即时比赛开赛了
+        if(matchInfoBean.isShowTitle()){
+            cpiViewHolder.cpi_item_layout.setVisibility(View.VISIBLE);
+            cpiViewHolder.cpi_item_keepTime_txt.setText(matchInfoBean.getKeepTime());
+        }
         //比赛的主客队名称和比分
         if ("0".equals(matchInfoBean.getMatchState())) {
             //未开赛
             cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
-                    "&nbsp;"+"VS" + "&nbsp;" + matchInfoBean.getMatchGuestName()));
+                    "&nbsp;" + "VS" + "&nbsp;" + matchInfoBean.getMatchGuestName()));
         } else { //开赛
             cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
                     "<font color=#ff0000>&nbsp;" + matchInfoBean.getMatchResult() + "</font>&nbsp;" + matchInfoBean.getMatchGuestName()));
         }
         //亚盘
         if (stType.equals(CPIFragment.TYPE_PLATE)) {
-            mPlate=CPIFragment.TYPE_PLATE;
             for (int i = 0; i < mAllInfoBean.get(position).getComList().size(); i++) {
                 //亚盘如果降
                 if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
@@ -133,7 +143,6 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             }
             cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
         } else if (stType.equals(CPIFragment.TYPE_BIG)) {
-            mBig=CPIFragment.TYPE_BIG;
             for (int i = 0; i < mAllInfoBean.get(position).getComList().size(); i++) {
                 //大小球如果降
                 if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
@@ -148,7 +157,6 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             }
             cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
         } else {
-            mOp=CPIFragment.TYPE_OP;
             cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
         }
 
@@ -200,27 +208,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
 
 
     }
-    /**
-     *  亚盘 大小，欧赔 赔率
-     */
 
-    public void upDatePlate(WebFootBallSocketOdds webFootBallSocketOdds,String plateType){
-          //如果是亚盘
-         if(mPlate.equals(plateType)){
-             System.out.println(">>stType1++"+mPlate+">>>"+plateType);
-             cardViewListAdapter.upDateCardView(webFootBallSocketOdds,plateType);
-         }
-         //如果是欧赔
-         else if(mOp.equals(plateType)){
-             System.out.println(">>stType2++"+mOp+">>>"+plateType);
-             cardViewListAdapter.upDateCardView(webFootBallSocketOdds, plateType);
-        }
-         //如果是大小球
-         else if(mBig.equals(plateType)){
-             System.out.println(">>stType3++"+mBig+">>>"+plateType);
-             cardViewListAdapter.upDateCardView(webFootBallSocketOdds,plateType);
-         }
-    }
 
     @Override
     public int getItemCount() {
