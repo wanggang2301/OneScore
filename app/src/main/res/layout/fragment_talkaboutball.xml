@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/talkball_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/talkball_home_like"
+                style="@style/MatchDetailLike"
+                android:layout_below="@id/football_match_detail_home_name_layout"
+                android:src="@mipmap/like_red"/>
+
+            <ImageView
+                android:id="@+id/talkball_like_anim_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="4dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="7dp"
+                android:src="@mipmap/like_anim_left"
+                />
+
+            <TextView
+                android:id="@+id/talkball_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/talkball_like_anim_img"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="10sp"/>
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/talkball_pro"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/y10"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="4"
+            android:max="2"
+            android:progress="1"
+            android:progressDrawable="@drawable/pro_analyze"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/talkball_guest_like"
+                style="@style/MatchDetailLike"
+                android:layout_below="@id/football_match_detail_guest_layout"
+                android:src="@mipmap/like_blue"/>
+
+            <ImageView
+                android:id="@+id/talkbail_guest_like_anim_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="4dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="7dp"
+                android:src="@mipmap/like_anim_right"
+                />
+
+            <TextView
+                android:id="@+id/talkbail_guest_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/talkbail_guest_like_anim_img"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="4dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="10sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/comment_swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/comment_inputcontainer"
+        android:layout_below="@+id/talkball_head"
+        >
+
+        <com.hhly.mlottery.view.PullUpRefreshListView
+            android:id="@+id/comment_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/nodata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/comment_contentnull"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/comment_inputcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#dddddd"/>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f5f5f5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp"
+
+            >
+
+            <TextView
+                android:id="@+id/et_comment"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_counselcomment_edit"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_content"
+                android:maxLength="100"
+                android:paddingLeft="10dp"
+                android:textColor="#333333"
+                android:textColorHint="#999999"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_commentcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:drawableLeft="@mipmap/icon_commentcount"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:textColor="#F55E4D"
+                android:textSize="13sp"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

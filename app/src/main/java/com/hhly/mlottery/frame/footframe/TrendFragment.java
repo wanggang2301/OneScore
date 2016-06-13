@@ -7,7 +7,6 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -23,7 +22,6 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.MyLineChart;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +78,7 @@ public class TrendFragment extends Fragment {
                 getVolleyData();
             }
         });
-        // 走势图滚动监听
+      /*  // 走势图滚动监听
         sv_attack.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -104,7 +102,7 @@ public class TrendFragment extends Fragment {
                 }
                 return false;
             }
-        });
+        });*/
     }
 
     /**
@@ -116,7 +114,7 @@ public class TrendFragment extends Fragment {
         ff_corner = (FrameLayout) mView.findViewById(R.id.fl_main_corner);
         fl_attackTrend_loading = (FrameLayout) mView.findViewById(R.id.fl_attackTrend_loading);
         fl_attackTrend_networkError = (FrameLayout) mView.findViewById(R.id.fl_attackTrend_networkError);
-        sv_attack = (ScrollView) mView.findViewById(R.id.sv_attack);
+      //  sv_attack = (ScrollView) mView.findViewById(R.id.sv_attack);
 
         reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新
         // 攻防走势图控件
