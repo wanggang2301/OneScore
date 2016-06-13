@@ -62,7 +62,7 @@
                 android:id="@+id/ivItemPositionControl"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:src="@mipmap/roll_top" />
         </LinearLayout>
@@ -256,7 +256,7 @@
             android:minHeight="110dp"
             android:gravity="center_vertical"
             android:textColor="@color/res_name_color"
-            app:layout_widthPercent="11%">
+            app:layout_widthPercent="11.3%">
 
             <TextView
                 android:id="@+id/tvHandicapValue_YA_BLACK"
@@ -284,7 +284,7 @@
             android:layout_toRightOf="@id/ll4"
             android:minHeight="110dp"
             android:gravity="center_vertical"
-            app:layout_widthPercent="11%">
+            app:layout_widthPercent="11.3%">
 
             <TextView
                 android:id="@+id/tvHandicapValue_DA_BLACK"
@@ -312,7 +312,7 @@
             android:layout_toRightOf="@id/ll5"
             android:minHeight="110dp"
             android:gravity="center_vertical"
-            app:layout_widthPercent="11%">
+            app:layout_widthPercent="11.3%">
 
             <TextView
                 android:id="@+id/tvMediumOdds_EU"
