@@ -50,8 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import de.greenrobot.event.EventBus;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -75,17 +74,15 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private final static int VIEW_STATUS_NET_ERROR = 4001;
     private final static int VIEW_STATUS_FLITER_NO_DATA = 5001;
     private final static int DELAY_REQUEST_API = 60 * 1000; // 10 min
-    @Bind(R.id.recyclerview_roll)
+    @BindView(R.id.recyclerview_roll)
     RecyclerView recyclerView;
-    @Bind(R.id.titleContainer)
-    LinearLayout titleContainer;
-    @Bind(R.id.football_immediate_no_data_tv)
+    @BindView(R.id.football_immediate_no_data_tv)
     TextView footballImmediateNoDataTv;
-    @Bind(R.id.football_immediate_unfocus_ll)
+    @BindView(R.id.football_immediate_unfocus_ll)
     RelativeLayout footballImmediateUnfocusLl;
-    @Bind(R.id.network_exception_reload_btn)
+    @BindView(R.id.network_exception_reload_btn)
     TextView networkExceptionReloadBtn;
-    @Bind(R.id.network_exception_layout)
+    @BindView(R.id.network_exception_layout)
     LinearLayout networkExceptionLayout;
 
     public static final int LOAD_DATA_STATUS_INIT = 0;
@@ -259,7 +256,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (adapter != null && adapter.getSubscription() != null)
             if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();
         if (subscription.isUnsubscribed()) subscription.unsubscribe();
-        ButterKnife.unbind(this);
     }
 
     @Override
@@ -469,7 +465,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     /**
-     * 刷选返回
+     * 筛选返回
      * 接受消息的页面实现
      */
     public void onEventMainThread(Map<String, Object> map) {
@@ -489,7 +485,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 showDataLists.add(match);
             }
         }
-        List<LeagueCup> leagueCupList = new ArrayList<LeagueCup>();
+        List<LeagueCup> leagueCupList = new ArrayList<>();
 
         for (LeagueCup cup : cupLists) {
             boolean isExistId = false;

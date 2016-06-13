@@ -84,7 +84,6 @@ public abstract class BaseFragment extends Fragment {
 		 * 当fragment从回退栈返回时（addToBackStack）， 可能不会调用onSavedInstance() 只会销毁视图， 所以这里也要保存一份数据；
 		 */
 		this.saveInstanceState();
-		ButterKnife.unbind(this);
 	}
 
 	@Override public void onDestroy() {
