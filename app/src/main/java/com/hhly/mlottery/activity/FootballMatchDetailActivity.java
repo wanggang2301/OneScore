@@ -183,7 +183,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     private AnalyzeFragment mAnalyzeFragment;
     private OddsFragment mOddsFragment;
     private TalkAboutBallFragment mTalkAboutBallFragment;
-//    private ChatFragment1 mChatFragment;
 
     /**
      * 判断ViewPager是否已经初始化过
@@ -672,20 +671,14 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mOddsFragment = OddsFragment.newInstance("", "");
 
         //聊球
-//        mTalkAboutBallFragment = new TalkAboutBallFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("param1", mThirdId);
-//        mTalkAboutBallFragment.setArguments(bundle);
-//        mChatFragment = new ChatFragment1();
+        mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(CyUtils.INTENT_PARAMS_SID, mThirdId);//需要评论的文章的url或者其他唯一标识
-        bundle.putString(CyUtils.INTENT_PARAMS_TITLE, mThirdId);//需要评论的文章的标题
-        bundle.putBoolean(CyUtils.ISHIDDENCOMMENTCOUNT, false);//是否隐藏评论数按钮
-        bundle.putBoolean(CyUtils.ISSHOWCOMMENT, true);//是否显示评论列表
-//        mChatFragment.setArguments(bundle);
+        bundle.putString("param1", mThirdId);
+        mTalkAboutBallFragment.setArguments(bundle);
+
         fragments.add(mOddsFragment);
         fragments.add(mAnalyzeFragment);
-//        fragments.add(mChatFragment);
+        fragments.add(mTalkAboutBallFragment);
 
 
         mViewPagerAdapter = new MatchDetailFragmentAdapter(getSupportFragmentManager(), fragments);

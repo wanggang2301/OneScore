@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.ResultMultiAdapter;
 import com.hhly.mlottery.adapter.ScheduleAdapter;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
@@ -449,7 +449,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                             @Override
                             public void onItemClick(View view, String data) {
                                 String thirdId = data;
-                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
                                 intent.putExtra("thirdId", thirdId);
                                 intent.putExtra("currentFragmentId", 2);
                                 getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
