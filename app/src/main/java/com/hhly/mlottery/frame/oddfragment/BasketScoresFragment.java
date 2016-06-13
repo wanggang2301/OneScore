@@ -224,81 +224,65 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
                 }
                 if (isImmediateFragment) {
                     if (isResult) {
-                        MobclickAgent.onPageEnd("Football_ResultFragment");
                         isResult = false;
                         L.d("xxx", "ResultFragment>>>隐藏");
                     }
                     if (isSchedule) {
-                        MobclickAgent.onPageEnd("Football_ScheduleFragment");
                         isSchedule = false;
                         L.d("xxx", "ScheduleFragment>>>隐藏");
                     }
                     if (isFocus) {
-                        MobclickAgent.onPageEnd("Football_FocusFragment");
                         isFocus = false;
                         L.d("xxx", "FocusFragment>>>隐藏");
                     }
-                    MobclickAgent.onPageStart("Football_ImmediateFragment");
                     isImmediate = true;
                     L.d("xxx", "ImmediateFragment>>>显示");
                 }
                 if (isResultFragment) {
                     if (isImmediate) {
-                        MobclickAgent.onPageEnd("Football_ImmediateFragment");
                         isImmediate = false;
                         L.d("xxx", "ImmediateFragment>>>隐藏");
                     }
                     if (isSchedule) {
-                        MobclickAgent.onPageEnd("Football_ScheduleFragment");
                         isSchedule = false;
                         L.d("xxx", "ScheduleFragment>>>隐藏");
                     }
                     if (isFocus) {
-                        MobclickAgent.onPageEnd("Football_FocusFragment");
                         isFocus = false;
                         L.d("xxx", "FocusFragment>>>隐藏");
                     }
-                    MobclickAgent.onPageStart("Football_ResultFragment");
                     isResult = true;
                     L.d("xxx", "ResultFragment>>>显示");
                 }
                 if (isScheduleFragment) {
                     if (isImmediate) {
-                        MobclickAgent.onPageEnd("Football_ImmediateFragment");
                         isImmediate = false;
                         L.d("xxx", "ImmediateFragment>>>隐藏");
                     }
                     if (isResult) {
-                        MobclickAgent.onPageEnd("Football_ResultFragment");
                         isResult = false;
                         L.d("xxx", "ResultFragment>>>隐藏");
                     }
                     if (isFocus) {
-                        MobclickAgent.onPageEnd("Football_FocusFragment");
                         isFocus = false;
                         L.d("xxx", "FocusFragment>>>隐藏");
                     }
-                    MobclickAgent.onPageStart("Football_ScheduleFragment");
                     isSchedule = true;
                     L.d("xxx", "ScheduleFragment>>>显示");
                 }
                 if (isFocusFragment) {
                     if (isImmediate) {
-                        MobclickAgent.onPageEnd("Football_ImmediateFragment");
                         isImmediate = false;
                         L.d("xxx", "ImmediateFragment>>>隐藏");
                     }
                     if (isResult) {
-                        MobclickAgent.onPageEnd("Football_ResultFragment");
                         isResult = false;
                         L.d("xxx", "ResultFragment>>>隐藏");
                     }
                     if (isSchedule) {
-                        MobclickAgent.onPageEnd("Football_ScheduleFragment");
                         isSchedule = false;
                         L.d("xxx", "ScheduleFragment>>>隐藏");
                     }
-                    MobclickAgent.onPageStart("Football_FocusFragment");
                     isFocus = true;
                     L.d("xxx", "FocusFragment>>>显示");
                 }
@@ -481,22 +465,18 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
         L.d(TAG, "football Fragment resume..");
 
         if (isImmediateFragment) {
-            MobclickAgent.onPageStart("Football_ImmediateFragment");
             isImmediate = true;
             L.d("xxx", "ImmediateFragment>>>显示");
         }
         if (isResultFragment) {
-            MobclickAgent.onPageStart("Football_ResultFragment");
             isResult = true;
             L.d("xxx", "ResultFragment>>>显示");
         }
         if (isScheduleFragment) {
-            MobclickAgent.onPageStart("Football_ScheduleFragment");
             isSchedule = true;
             L.d("xxx", "ScheduleFragment>>>显示");
         }
         if (isFocusFragment) {
-            MobclickAgent.onPageStart("Football_FocusFragment");
             isFocus = true;
             L.d("xxx", "FocusFragment>>>显示");
         }
@@ -506,22 +486,18 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     public void onPause() {
         super.onPause();
             if (isImmediate) {
-                MobclickAgent.onPageEnd("Football_ImmediateFragment");
                 isImmediate = false;
 //                L.d("xxx", "ImmediateFragment>>>隐藏");
             }
             if (isResult) {
-                MobclickAgent.onPageEnd("Football_ResultFragment");
                 isResult = false;
 //                L.d("xxx", "ResultFragment>>>隐藏");
             }
             if (isSchedule) {
-                MobclickAgent.onPageEnd("Football_ScheduleFragment");
                 isSchedule = false;
 //                L.d("xxx", "ScheduleFragment>>>隐藏");
             }
             if (isFocus) {
-                MobclickAgent.onPageEnd("Football_FocusFragment");
                 isFocus = false;
 //                L.d("xxx", "FocusFragment>>>隐藏");
             }
@@ -537,13 +513,11 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        L.d(TAG, "football Fragment destroy view..");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        L.d(TAG, "football Fragment detach..");
     }
 
     @Override
