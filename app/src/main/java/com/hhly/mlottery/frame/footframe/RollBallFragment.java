@@ -261,7 +261,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onItemClick(View convertView, int position) {
         // TODO: 点击item跳转入口，点击的当前条目thirdId获取方式 showDataLists.get(position).getThirdId();
-        Toast.makeText(getContext(), showDataLists.get(position).getThirdId(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), showDataLists.get(position).getThirdId(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

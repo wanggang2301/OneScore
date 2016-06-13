@@ -17,7 +17,7 @@
     style="@style/Md.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
@@ -30,8 +30,8 @@
             android:layout_marginLeft="1dp"
             android:background="@color/white"
             android:clickable="true"
+            android:minHeight="110dp"
             android:gravity="center_vertical"
-            android:minHeight="114dp"
             app:layout_widthPercent="15%">
 
             <TextView
@@ -69,11 +69,11 @@
 
         <LinearLayout
             android:id="@+id/ll2"
+            android:minHeight="110dp"
             style="@style/item_rollball_linearlayout"
             android:layout_toRightOf="@+id/ll1"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:minHeight="114dp"
             app:layout_widthPercent="7%">
 
             <TextView
@@ -115,8 +115,8 @@
             style="@style/item_rollball_linearlayout"
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll2"
+            android:minHeight="110dp"
             android:gravity="center_vertical"
-            android:minHeight="114dp"
             app:layout_widthPercent="44%">
 
             <RelativeLayout style="@style/MW_White">
@@ -124,9 +124,7 @@
                 <TextView
                     android:id="@+id/tvHomeTeam"
                     style="@style/item_rollball_MeasureSpec_EXACTLY"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="@dimen/activity_margin_half"
-                    android:layout_marginTop="10dp"
                     tools:text="皇家马德里" />
 
                 <TextView
@@ -169,9 +167,7 @@
                         android:id="@+id/tvSpace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="@dimen/activity_margin_half"
-                        android:layout_marginTop="10dp"
                         android:text="半场 :"
                         android:textColor="@color/red"
                         android:textSize="@dimen/text_size_12" />
@@ -220,9 +216,7 @@
                 <TextView
                     android:id="@+id/tvGuestTeam"
                     style="@style/item_rollball_MeasureSpec_EXACTLY"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="@dimen/activity_margin_half"
-                    android:layout_marginTop="10dp"
                     tools:text="巴萨" />
 
                 <TextView
@@ -259,8 +253,8 @@
             style="@style/item_rollball_linearlayout"
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll3"
+            android:minHeight="110dp"
             android:gravity="center_vertical"
-            android:minHeight="114dp"
             android:textColor="@color/res_name_color"
             app:layout_widthPercent="11%">
 
@@ -288,8 +282,8 @@
             style="@style/item_rollball_linearlayout"
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll4"
+            android:minHeight="110dp"
             android:gravity="center_vertical"
-            android:minHeight="114dp"
             app:layout_widthPercent="11%">
 
             <TextView
@@ -316,8 +310,8 @@
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:layout_toRightOf="@id/ll5"
+            android:minHeight="110dp"
             android:gravity="center_vertical"
-            android:minHeight="114dp"
             app:layout_widthPercent="11%">
 
             <TextView
