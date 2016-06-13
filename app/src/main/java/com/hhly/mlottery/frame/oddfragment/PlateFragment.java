@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.OddDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.OddsAdapter;
 import com.hhly.mlottery.adapter.OddsDetailsAdapter;
@@ -202,13 +201,13 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
                         if (mRight_listview.getFirstVisiblePosition() != 0) {
-                            ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
+                            ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(false);
                         }
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                        ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
+                        ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(true);
                         break;
                 }
                 return false;

@@ -270,8 +270,12 @@
                 <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
             </intent-filter>
         </receiver>
-
-
+        <activity
+            android:name=".activity.InputActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleTop"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"
+            />
     </application>
 
 </manifest>
