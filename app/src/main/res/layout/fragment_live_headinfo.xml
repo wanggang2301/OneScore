@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mdy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
@@ -242,8 +243,38 @@
 
         </RelativeLayout>
     </LinearLayout>
+    <!---->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <com.hhly.mlottery.widget.FootballEventView
+            android:id="@+id/time_layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y40"
+            mdy:image_gravity="b"
+            mdy:mdymargin="@dimen/x20"
+            mdy:midwidth_proportion="30" />
 
+        <com.hhly.mlottery.widget.TimeView
+            android:id="@+id/time_football"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y25"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:background="@drawable/timeview_bg"
+            mdy:time_midwidth_proportion="30"
+            mdy:time_textsize="@dimen/text_size_10" />
+
+        <com.hhly.mlottery.widget.FootballEventView
+            android:id="@+id/time_layout_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y40"
+            mdy:image_gravity="t"
+            mdy:mdymargin="@dimen/x20"
+            mdy:midwidth_proportion="30" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

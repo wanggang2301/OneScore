@@ -35,7 +35,6 @@ import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.ChatFragment;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
@@ -44,6 +43,7 @@ import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.StadiumFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -183,7 +183,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     private AnalyzeFragment mAnalyzeFragment;
     private OddsFragment mOddsFragment;
     private TalkAboutBallFragment mTalkAboutBallFragment;
-    private ChatFragment mChatFragment;
+//    private ChatFragment1 mChatFragment;
 
     /**
      * 判断ViewPager是否已经初始化过
@@ -676,16 +676,16 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 //        Bundle bundle = new Bundle();
 //        bundle.putString("param1", mThirdId);
 //        mTalkAboutBallFragment.setArguments(bundle);
-    /*    mChatFragment = new ChatFragment();
+//        mChatFragment = new ChatFragment1();
         Bundle bundle = new Bundle();
         bundle.putString(CyUtils.INTENT_PARAMS_SID, mThirdId);//需要评论的文章的url或者其他唯一标识
         bundle.putString(CyUtils.INTENT_PARAMS_TITLE, mThirdId);//需要评论的文章的标题
         bundle.putBoolean(CyUtils.ISHIDDENCOMMENTCOUNT, false);//是否隐藏评论数按钮
         bundle.putBoolean(CyUtils.ISSHOWCOMMENT, true);//是否显示评论列表
-        mChatFragment.setArguments(bundle);
+//        mChatFragment.setArguments(bundle);
         fragments.add(mOddsFragment);
         fragments.add(mAnalyzeFragment);
-        fragments.add(mChatFragment);*/
+//        fragments.add(mChatFragment);
 
 
         mViewPagerAdapter = new MatchDetailFragmentAdapter(getSupportFragmentManager(), fragments);

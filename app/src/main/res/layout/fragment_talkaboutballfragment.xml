@@ -99,5 +99,9 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/talkball_head"
         >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="50dp"/>
     </RelativeLayout>
 </RelativeLayout>
