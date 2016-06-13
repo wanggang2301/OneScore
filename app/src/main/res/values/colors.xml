@@ -143,6 +143,7 @@
     <color name="yellow_card_color">#FF9900</color>
     <color name="transparent">#00000000</color>
     <color name="half_transparent">#88000000</color>
+    <color name="half_transparent2">#11000000</color>
 
     <!-- 筛选 -->
     <color name="filtrate_match_checkbox_defualt">#888</color>
@@ -547,6 +548,7 @@
     <color name="basket_score_white">#FFFFFF</color>
     <color name="basket_win_color">#FF1F1F</color>
     <color name="basket_parting_line">#444</color>
+    <color name="ripple_design_blue">#00bcd4</color>
 
 
     <color name="radiobutton_normal">#fff</color>

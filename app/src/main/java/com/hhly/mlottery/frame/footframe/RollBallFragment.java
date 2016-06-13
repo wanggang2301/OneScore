@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footframe;
 
 import android.animation.Animator;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -256,12 +257,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (adapter != null && adapter.getSubscription() != null)
             if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();
         if (subscription.isUnsubscribed()) subscription.unsubscribe();
+        if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
     }
 
     @Override
     public void onItemClick(View convertView, int position) {
         // TODO: 点击item跳转入口，点击的当前条目thirdId获取方式 showDataLists.get(position).getThirdId();
-//        Toast.makeText(getContext(), showDataLists.get(position).getThirdId(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -329,9 +330,15 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupRecyclerView() {
-        dataDecration = new BorderDividerItemDecration(
-                getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
-                getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            dataDecration = new BorderDividerItemDecration(
+                    getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height),
+                    getResources().getDimensionPixelOffset(R.dimen.data_border_padding_infra_spans));
+        } else {
+            dataDecration = new BorderDividerItemDecration(
+                    getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height_half),
+                    getResources().getDimensionPixelOffset(R.dimen.data_border_divider_height_half));
+        }
         recyclerView.addItemDecoration(dataDecration);
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -465,6 +472,15 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     /**
+     * 比赛详情返回FootballMatchDetailActivity
+     * 接受消息的页面实现
+     */
+    public void onEventMainThread(String currentFragmentId) {
+        this.feedAdapter(showDataLists);
+        ((ScoresFragment) getParentFragment()).focusCallback();
+    }
+
+    /**
      * 筛选返回
      * 接受消息的页面实现
      */
@@ -510,15 +526,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         } else {
             apiHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
         }
-    }
-
-    /**
-     * 比赛详情返回FootballMatchDetailActivity
-     * 接受消息的页面实现
-     */
-    public void onEventMainThread(String currentFragmentId) {
-        this.feedAdapter(showDataLists);
-        ((ScoresFragment) getParentFragment()).focusCallback();
     }
 
     private static class ApiHandler extends Handler {

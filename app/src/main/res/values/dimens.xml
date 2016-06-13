@@ -21,6 +21,7 @@
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="data_border_divider_height">8dp</dimen>
+    <dimen name="data_border_divider_height_half">4dp</dimen>
     <dimen name="data_border_padding_infra_spans">8dp</dimen>
 
     <dimen name="item_football_time">13sp</dimen>
