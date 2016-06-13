@@ -136,7 +136,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 System.out.println("lzf+l=" + l + "t=" + t + "oldl=" + oldl + "oldt" + oldt);
                 System.out.println("lzf+getContentHeight=" + mWebView.getContentHeight() * mWebView.getScale() + "getHeight=" + (mWebView.getHeight() + mWebView.getScrollY()));
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
-                if (y < 10) {
+                if (y < 3) {
 
                     //已经处于底端
 //                    mTv_check_info.setVisibility(View.VISIBLE);
@@ -188,6 +188,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             subtitle = intent.getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
+            System.out.println("lzf:" + "mType=" + mType + "mThird" + mThird);
             infoTypeName = intent.getStringExtra("infoTypeName");
             token = intent.getStringExtra("token");
 //            token ="fe95688ec6074e1cb4486c0bd3a60c34";
