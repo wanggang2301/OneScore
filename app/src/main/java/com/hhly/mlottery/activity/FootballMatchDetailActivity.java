@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.animation.ObjectAnimator;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,7 +44,6 @@ import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.StadiumFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
-import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -920,6 +920,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 eventBusPost();
 
                 // setResult(Activity.RESULT_OK);
+                sendBroadcast(new Intent("closeself"));
                 finish();
                 break;
             case R.id.layout_match_header_focus_img:
