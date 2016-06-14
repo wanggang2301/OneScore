@@ -499,7 +499,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mTalkAboutBallFragment.setArguments(bundle);
 
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId,"");
         //指数
         mOddsFragment = OddsFragment.newInstance("", "");
 
@@ -539,9 +539,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             //统计图
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
                             mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
-
-
-
 
 
                             break;
@@ -803,6 +800,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
+    }
 
     @Override
     protected void onDestroy() {
@@ -813,6 +811,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             hSocketClient.close();
         }
     }
+
 
     /***
      * 开始推送socket
