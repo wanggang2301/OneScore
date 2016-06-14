@@ -190,20 +190,26 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
             token = intent.getStringExtra("token");
-//            token ="fe95688ec6074e1cb4486c0bd3a60c34";
-//            String token =AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
-//            url="http://game1.1332255.com:8082/h5/index?loginToken="+token+"&deviceToken="+deviceId;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
-            if (!TextUtils.isEmpty(token) && reqMethod != null && reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
-                public_btn_set.setVisibility(View.GONE);
-            } else {//token为空，说明是资讯，显示分享和评论
-                public_btn_set.setVisibility(View.VISIBLE);
+//            if (!TextUtils.isEmpty(token) && reqMethod != null && reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
+//                public_btn_set.setVisibility(View.GONE);
+//            } else {//token为空，说明是资讯，显示分享和评论
+//                public_btn_set.setVisibility(View.VISIBLE);
+//                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+//                ChatFragment chatFragment = new ChatFragment();
+//                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+//            }
+            if (url != null && url.contains("comment")) {
                 //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                //String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager
                 ChatFragment chatFragment = new ChatFragment();
                 CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+            }
+            if (url != null && url.contains("share")) {
+                public_btn_set.setVisibility(View.VISIBLE);
+            } else {
+                public_btn_set.setVisibility(View.GONE);
             }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
