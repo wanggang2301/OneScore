@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
@@ -169,7 +168,7 @@ public class StatisticsFragment extends Fragment {
         if (getActivity() == null) {
             return;
         } else {
-            map.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+            map.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
 
             L.i("dddffdfd");
 

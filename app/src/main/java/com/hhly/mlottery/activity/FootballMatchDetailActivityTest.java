@@ -29,6 +29,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footframe.OldAnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
@@ -229,7 +230,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
+//        startActivity(new Intent(this, InputActivity.class));
     }
 
     private void initView() {
@@ -257,8 +258,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         //底部ViewPager(滚球、指数等)
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(titles);
-        // mViewPager.setAdapter();
-        // mTabLayout.setupWithViewPager(mViewPager);
     }
 
 
@@ -443,6 +442,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 String state = matchLive.get(0).getState();//获取最后一个的比赛状态
                 mKeepTime = matchLive.get(0).getTime();//获取时间
+
+                if (Integer.parseInt(mKeepTime) >= (45 * 60 * 1000)) {
+                    if (state.equals(FIRSTHALF) || state.equals(HALFTIME)) {//上半场补时中场时间轴不变
+                        mKeepTime = 45 * 60 * 1000 + "";//时间继续赋值为45分钟
+                    }
+                }
+
                 mLiveHeadInfoFragment.showTimeView(mKeepTime);
                 if (NOTOPEN.equals(state)) {
                     //未开state=0
@@ -465,7 +471,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     mLiveHeadInfoFragment.setKeepTime(mContext.getResources().getString(R.string.pause_txt));
                     mLiveHeadInfoFragment.setfrequencyText("");
                     isMatchStart = false;
-                    mKeepTime = 45 * 60 * 1000 + "";
 
                 } else if (SECONDHALF.equals(state) && StadiumUtils.convertStringToInt(mKeepTime) <= 90) {
                     //下半场state=3
@@ -798,8 +803,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
-
-    }
 
     @Override
     protected void onDestroy() {
@@ -1792,7 +1795,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             }
         }
 
-        mLiveHeadInfoFragment.showTimeView(mKeepTime);
+        mLiveHeadInfoFragment.showTimeView(mKeepTime); //刷新时间轴
 
         if (isMatchStart) {
             if (liveTextTime >= matchKeepTime) {

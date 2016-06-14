@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.animation.ObjectAnimator;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,7 +36,7 @@ import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footframe.OldAnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
@@ -43,7 +44,6 @@ import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.StadiumFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
-import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -180,10 +180,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     private String mPreStatus;
 
     private StadiumFragment mStadiumFragment;
-    private AnalyzeFragment mAnalyzeFragment;
+    private OldAnalyzeFragment mOldAnalyzeFragment;
     private OddsFragment mOddsFragment;
     private TalkAboutBallFragment mTalkAboutBallFragment;
-//    private ChatFragment1 mChatFragment;
 
     /**
      * 判断ViewPager是否已经初始化过
@@ -666,26 +665,21 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         fragments.add(mStadiumFragment);
 
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
-        //  mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId,"ni","hao");
+        mOldAnalyzeFragment = OldAnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
+        //  mOldAnalyzeFragment = OldAnalyzeFragment.newInstance(mThirdId,"ni","hao");
         //指数
         mOddsFragment = OddsFragment.newInstance("", "");
 
         //聊球
-//        mTalkAboutBallFragment = new TalkAboutBallFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("param1", mThirdId);
-//        mTalkAboutBallFragment.setArguments(bundle);
-//        mChatFragment = new ChatFragment1();
+        mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(CyUtils.INTENT_PARAMS_SID, mThirdId);//需要评论的文章的url或者其他唯一标识
-        bundle.putString(CyUtils.INTENT_PARAMS_TITLE, mThirdId);//需要评论的文章的标题
-        bundle.putBoolean(CyUtils.ISHIDDENCOMMENTCOUNT, false);//是否隐藏评论数按钮
-        bundle.putBoolean(CyUtils.ISSHOWCOMMENT, true);//是否显示评论列表
-//        mChatFragment.setArguments(bundle);
+        bundle.putString("param1", mThirdId);
+        mTalkAboutBallFragment.setArguments(bundle);
+
         fragments.add(mOddsFragment);
-        fragments.add(mAnalyzeFragment);
+        fragments.add(mOldAnalyzeFragment);
 //        fragments.add(mChatFragment);
+        fragments.add(mTalkAboutBallFragment);
 
 
         mViewPagerAdapter = new MatchDetailFragmentAdapter(getSupportFragmentManager(), fragments);
@@ -927,7 +921,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 eventBusPost();
 
                 // setResult(Activity.RESULT_OK);
+                sendBroadcast(new Intent("closeself"));
                 finish();
+                overridePendingTransition(0, android.R.anim.fade_out);
                 break;
             case R.id.layout_match_header_focus_img:
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");

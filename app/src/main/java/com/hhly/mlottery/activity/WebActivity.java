@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.view.animation.TranslateAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -24,6 +25,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ShareConstants;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
@@ -59,10 +61,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     private ShareTencentCallBack mShareTencentCallBack;
     private ShareCopyLinkCallBack mShareCopyLinkCallBack;
     private Tencent mTencent;
-    //    private ScrollView scrollview;
     private SharePopupWindow sharePopupWindow;
     private float y;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +70,20 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         setContentView(R.layout.activity_web);
         initView();
         initData();
-        //获取评论信息 无需登录  这里主要拿评论总数和文章id
         initEvent();
-//        model = DeviceInfo.getModel().replace(" ", "");
-//        System.out.println("lzf" +model );
     }
 
+    int x = 0;
+
+    public void initAnimosion(int endy) {
+        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, x, x + endy);
+        translateAnimation.setDuration(0);
+        translateAnimation.setFillAfter(true);
+        mTv_check_info.startAnimation(translateAnimation);
+        x -= endy;
+        ToastTools.ShowQuickCenter(WebActivity.this, x + "");
+
+    }
 
     private void initEvent() {
         // 跳转关联赛事详情
@@ -128,7 +136,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 System.out.println("lzf+l=" + l + "t=" + t + "oldl=" + oldl + "oldt" + oldt);
                 System.out.println("lzf+getContentHeight=" + mWebView.getContentHeight() * mWebView.getScale() + "getHeight=" + (mWebView.getHeight() + mWebView.getScrollY()));
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
-                if (y < 2) {
+                if (y < 10) {
 
                     //已经处于底端
 //                    mTv_check_info.setVisibility(View.VISIBLE);
@@ -146,8 +154,10 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                             mTv_check_info.setVisibility(View.VISIBLE);
                         }
                     }
+
+
                 }
-//
+//                initAnimosion(t - oldt);
             }
         });
         WebSettings webSettings = mWebView.getSettings();
@@ -163,10 +173,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
         String us = webSettings.getUserAgentString();
-//        System.out.println("lzfus="+us);
         webSettings.setUserAgentString(us.replace("Android", "yibifen Android"));//给useagent加个标识yibifen
-//        System.out.println("lzfus1=" + webSettings.getUserAgentString());
-
     }
 
     protected void initData() {
@@ -183,33 +190,26 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
             token = intent.getStringExtra("token");
-//            token ="fe95688ec6074e1cb4486c0bd3a60c34";
-//            String token =AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
-//            url="http://game1.1332255.com:8082/h5/index?loginToken="+token+"&deviceToken="+deviceId;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
-            if (!TextUtils.isEmpty(token) && reqMethod != null && reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
-                public_btn_set.setVisibility(View.GONE);
-//                scrollview.setVisibility(View.GONE);
-            } else {//token为空，说明是资讯，显示分享和评论
-                public_btn_set.setVisibility(View.VISIBLE);
-//                scrollview.setVisibility(View.VISIBLE);
+//            if (!TextUtils.isEmpty(token) && reqMethod != null && reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
+//                public_btn_set.setVisibility(View.GONE);
+//            } else {//token为空，说明是资讯，显示分享和评论
+//                public_btn_set.setVisibility(View.VISIBLE);
+//                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+//                ChatFragment chatFragment = new ChatFragment();
+//                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+//            }
+            if (url != null && url.contains("comment")) {
                 //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                //String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager
                 ChatFragment chatFragment = new ChatFragment();
-//                chatFragment.setKeyBoardHiddenLisener(new ChatFragment.onKeyBoardHiddenLisener() {
-//                    @Override
-//                    public void keyBoardHidden() {
-//
-//                    }
-//
-//                    @Override
-//                    public void keyBoardShow() {
-//                        mTv_check_info.setVisibility(View.GONE);
-//                    }
-//                });
                 CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+            }
+            if (url != null && url.contains("share")) {
+                public_btn_set.setVisibility(View.VISIBLE);
+            } else {
+                public_btn_set.setVisibility(View.GONE);
             }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -289,7 +289,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_img_back://返回
-
                 if (mWebView.canGoBack()) {
                     mWebView.goBack();// 返回上一页面
 
@@ -297,7 +296,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                     MobclickAgent.onEvent(mContext, "Football_DataInfo_Exit");
                     finish();
                 }
-
                 break;
             case R.id.public_btn_set: //分享
                 //  @style/AppTheme.BlackStatusBar.ColorGreen

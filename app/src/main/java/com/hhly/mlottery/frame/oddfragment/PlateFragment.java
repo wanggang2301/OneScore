@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.OddDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.OddsAdapter;
