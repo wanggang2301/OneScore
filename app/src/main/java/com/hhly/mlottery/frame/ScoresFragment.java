@@ -528,9 +528,9 @@ public class ScoresFragment extends Fragment {
         String focusIds = PreferenceUtil.getString("focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
         if ("".equals(focusIds) || arrayId.length == 0) {
-            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt));
+            mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getString(R.string.foot_guanzhu_txt));
         } else {
-            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
         }
     }
 
