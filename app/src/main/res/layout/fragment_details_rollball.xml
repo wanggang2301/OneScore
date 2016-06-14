@@ -55,7 +55,7 @@
                     android:gravity="center"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
-                    android:text="58"
+                    android:text="未开"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_12" />
 
@@ -66,7 +66,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/live_time"
-                    android:text="主队中后场组织进攻"
+                    android:text="实况直播敬请关注"
                     android:textColor="#666666"
                     android:textSize="@dimen/text_size_11" />
 

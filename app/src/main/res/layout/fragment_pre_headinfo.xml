@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="皇马"
+                android:text="主队"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="巴萨"
+                android:text="客队"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -80,7 +80,7 @@
                 android:id="@+id/race_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="深圳超级杯"
+                android:text=""
                 android:textColor="@color/white" />
 
 
@@ -134,7 +134,7 @@
                     android:id="@+id/score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2 : 2"
+                    android:text="---"
                     android:textColor="@color/white"
                     android:textSize="38sp" />
 
@@ -144,7 +144,7 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="06-03 18:00"
+                android:text="00-00 00:00"
                 android:textColor="@color/white" />
 
         </LinearLayout>

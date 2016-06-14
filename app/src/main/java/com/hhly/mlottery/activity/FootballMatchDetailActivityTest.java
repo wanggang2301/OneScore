@@ -10,7 +10,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -30,6 +29,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footframe.OldAnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
@@ -68,10 +68,10 @@ import java.util.TimerTask;
  * @date 2016/6/2 16:53
  * @des 足球内页改版
  */
-public class FootballMatchDetailActivityTest extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, SwipeRefreshLayout.OnRefreshListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
+public class FootballMatchDetailActivityTest extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
 
 
-    public ExactSwipeRefrashLayout mRefreshLayout;
+    private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
     private FragmentManager fragmentManager;
     private ViewPager mHeadviewpager;
@@ -184,6 +184,17 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private StatisticsFragmentTest mStatisticsFragment;  //统计
 
+    private int mStartTime;// 获取推送的开赛时间
+
+
+    /***
+     * 走势图
+     */
+    private ArrayList<Integer> homeCorners = new ArrayList<>();
+    private ArrayList<Integer> guestCorners = new ArrayList<>();
+    private ArrayList<Integer> homeDangers = new ArrayList<>();
+    private ArrayList<Integer> guestDangers = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,14 +211,16 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         initView();
 
 
+        /***
+         * 足球内页头部ViewPager
+         */
         mPreHeadInfoFrament = PreHeadInfoFrament.newInstance();
         mLiveHeadInfoFragment = new LiveHeadInfoFragment().newInstance();
-
         basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment);
         mHeadviewpager.setAdapter(basePagerAdapter);
         mHeadviewpager.setCurrentItem(0);
 
-//
+
 
         loadData();
 
@@ -261,7 +274,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 verticalOffset < mHeadviewpager.getHeight()) {
             mRefreshLayout.setEnabled(false);
         } else {
-            mRefreshLayout.setEnabled(true);
+           // mRefreshLayout.setEnabled(true);
+            mRefreshLayout.setEnabled(false); //展开禁止刷新
+
         }
     }
 
@@ -391,31 +406,15 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private void initViewPager(MatchDetail matchDetail) {
 
-        //初始化头部ViewPager
-        // mViewPager = (ViewPager) findViewById(R.id.headviewpager);
-
-
-        //  mPreHeadInfoFrament = PreHeadInfoFrament.newInstance(matchDetail, 1);
-
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
 
             mPreHeadInfoFrament.initData(matchDetail);
-
-
-
-
-          /*  basePagerAdapter.addFragments(mPreHeadInfoFrament);
-            mHeadviewpager.setAdapter(basePagerAdapter);
-            mHeadviewpager.setCurrentItem(0);*/
-
             mPreHeadInfoFrament.setScoreText("VS");
             toolbarTitle = matchDetail.getHomeTeamInfo().getName() + " VS " + matchDetail.getGuestTeamInfo().getName();
-
-
             mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
 
         } else {
-            //赛中和赛后头部
+            //头部Viewpager赛中和赛后头初始化数据
             mPreHeadInfoFrament.initData(matchDetail);
             mLiveHeadInfoFragment.initData(matchDetail);
 
@@ -443,6 +442,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 String state = matchLive.get(0).getState();//获取最后一个的比赛状态
                 mKeepTime = matchLive.get(0).getTime();//获取时间
+
+                if (Integer.parseInt(mKeepTime) >= (45 * 60 * 1000)) {
+                    if (state.equals(FIRSTHALF) || state.equals(HALFTIME)) {//上半场补时中场时间轴不变
+                        mKeepTime = 45 * 60 * 1000 + "";//时间继续赋值为45分钟
+                    }
+                }
+
                 mLiveHeadInfoFragment.showTimeView(mKeepTime);
                 if (NOTOPEN.equals(state)) {
                     //未开state=0
@@ -453,7 +459,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 } else if (FIRSTHALF.equals(state) && StadiumUtils.convertStringToInt(mKeepTime) <= 45) {
                     //上半场state=1
                     mLiveHeadInfoFragment.setKeepTime(StadiumUtils.convertStringToInt(mKeepTime) + "");
-                    mLiveHeadInfoFragment.setfrequencyText("");
+                    mLiveHeadInfoFragment.setfrequencyText("'");
                     isMatchStart = true;
                 } else if (FIRSTHALF.equals(state) && StadiumUtils.convertStringToInt(mKeepTime) > 45) {
                     mLiveHeadInfoFragment.setKeepTime("45+");
@@ -465,7 +471,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     mLiveHeadInfoFragment.setKeepTime(mContext.getResources().getString(R.string.pause_txt));
                     mLiveHeadInfoFragment.setfrequencyText("");
                     isMatchStart = false;
-                    mKeepTime = 45 * 60 * 1000 + "";
 
                 } else if (SECONDHALF.equals(state) && StadiumUtils.convertStringToInt(mKeepTime) <= 90) {
                     //下半场state=3
@@ -486,21 +491,61 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
         }
 
+
+        //聊球
         mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
         bundle.putString("param1", mThirdId);
         mTalkAboutBallFragment.setArguments(bundle);
 
-
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
+        //分析
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId,"");
+        //指数
         mOddsFragment = OddsFragment.newInstance("", "");
-        mStatisticsFragment = StatisticsFragmentTest.newInstance();
+
+        //统计
+        mStatisticsFragment = StatisticsFragmentTest.newInstance(mMatchDetail.getLiveStatus());
 
         mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         isInitedViewPager = true;
+
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (positionOffsetPixels == 0) {
+                    switch (position) {
+                        case 4:
+
+
+                            //走势图
+                            mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
+                            mStatisticsFragment.initData(mMatchDetail.getLiveStatus());
+
+
+                            //统计图
+                            mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                            mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
+
+
+                            break;
+                    }
+                }
+            }
+        });
 
     }
 
@@ -641,10 +686,121 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mathchStatisInfo.setHome_rescue(mathchStatisInfo.getGuest_shoot_correct() - mathchStatisInfo.getGuest_score());
         mathchStatisInfo.setGuest_rescue(mathchStatisInfo.getHome_shoot_correct() - mathchStatisInfo.getHome_score());
 
+        homeCorners.clear();
+        homeDangers.clear();
+        guestCorners.clear();
+        guestDangers.clear();
+        homeCorners = initMatchTrend("1025", "1050", StadiumUtils.convertStringToInt(matchLive.get(0).getTime()));//通过最后一个事件来获取时间
+        homeDangers = initMatchTrend("1026", null, StadiumUtils.convertStringToInt(matchLive.get(0).getTime()));
+        guestCorners = initMatchTrend("2049", "2074", StadiumUtils.convertStringToInt(matchLive.get(0).getTime()));
+        guestDangers = initMatchTrend("2050", null, StadiumUtils.convertStringToInt(matchLive.get(0).getTime()));
+        homeCorners.add(0, 0);
+        homeDangers.add(0, 0);
+        guestCorners.add(0, 0);
+        guestDangers.add(0, 0);
+
+
+
         return mathchStatisInfo;
     }
 
 
+    /**
+     * 按时间段统计走势图的数据
+     *
+     * @param code  进球的code
+     * @param code2 取消的code
+     * @param time  开赛的当前时间
+     * @return 统计好的数据集合
+     */
+    private ArrayList<Integer> initMatchTrend(String code, String code2, int time) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int time15 = 0, time30 = 0, time45 = 0, time60 = 0, time75 = 0, time90 = 0;
+
+        for (MatchTextLiveBean matchTextLiveBean : matchLive) {
+            Integer dd = StadiumUtils.convertStringToInt(matchTextLiveBean.getTime());
+            if (code.equals(matchTextLiveBean.getCode())) {  //主队角球
+                if (FIRSTHALF.equals(matchTextLiveBean.getState()) || HALFTIME.equals(matchTextLiveBean.getState())) {// 上半场和中场
+                    if (dd >= 0 && dd <= 15 && time >= 15) {
+                        time15++;
+                    }
+                    if (dd > 15 && dd <= 30 && time >= 30) {
+                        time30++;
+                    }
+                    if (dd > 30 && time >= 45) {
+                        time45++;
+                    }
+                } else if (SECONDHALF.equals(matchTextLiveBean.getState())) {// 下半场
+                    if (dd >= 0 && dd <= 60 && time >= 60) {
+                        time60++;
+                    }
+                    if (dd > 60 && dd <= 75 && time >= 75) {
+                        time75++;
+                    }
+                    if (dd > 75 && time >= 90) {
+                        time90++;
+                    }
+                }
+            }
+        }
+
+        if (code2 != null) {
+            for (MatchTextLiveBean matchTextLiveBean : matchLive) {
+                if (code2.equals(matchTextLiveBean.getCode())) {  //主队角球
+                    if (FIRSTHALF.equals(matchTextLiveBean.getState()) || HALFTIME.equals(matchTextLiveBean.getState())) {// 上半场和中场
+                        if (time >= 0 && time <= 15) {
+                            time15--;
+                        }
+                        if (time > 15 && time <= 30) {
+                            time30--;
+                        }
+                        if (time > 30) {
+                            time45--;
+                        }
+                    } else if (SECONDHALF.equals(matchTextLiveBean.getState())) {// 下半场
+                        if (time >= 0 && time <= 60) {
+                            time60--;
+                        }
+                        if (time > 60 && time <= 75) {
+                            time75--;
+                        }
+                        if (time > 75) {
+                            time90--;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if (time >= 15) {
+            list.add(time15);
+        }
+        if (time >= 30) {
+            list.add(time30 + time15);
+        }
+        if (time >= 45) {
+            list.add(time45 + time30 + time15);
+        }
+        if (time >= 60) {
+            list.add(time60 + time45 + time30 + time15);
+        }
+        if (time >= 75) {
+            list.add(time75 + time60 + time45 + time30 + time15);
+        }
+        if (time >= 90) {
+            list.add(time90 + time75 + time60 + time45 + time30 + time15);
+        }
+
+        return list;
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void onDestroy() {
@@ -656,8 +812,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }
     }
 
+
     /***
-     * 开始socket
+     * 开始推送socket
      */
     private synchronized void startWebsocket() {
         if (hSocketClient != null) {
@@ -734,6 +891,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private Timer computeWebSocketConnTimer = new Timer();
 
+    /***
+     * 计算推送Socket断开重新连接
+     */
     private void computeWebSocket() {
         TimerTask tt = new TimerTask() {
             @Override
@@ -877,21 +1037,28 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 //  halfScore.setText("(" + tv_home_score.getText() + ":" + tv_guest_score.getText() + ")");
                 mLiveHeadInfoFragment.setfrequencyText("");
                 isMatchStart = false;
-                // 获取上半场的走势图数据
-            /*    homeCorners.clear();
-                guestCorners.clear();
-                homeDangers.clear();
-                guestDangers.clear();
-                homeCorners = initMatchTrend("1025", "1050", mStartTime);
-                guestCorners = initMatchTrend("2049", "2074", mStartTime);
-                homeDangers = initMatchTrend("1026", null, mStartTime);
-                guestDangers = initMatchTrend("2050", null, mStartTime);
-                homeCorners.add(0, 0);
-                guestCorners.add(0, 0);
-                homeDangers.add(0, 0);
-                guestDangers.add(0, 0);
-                trendFragment.initData();// 刷新攻防走势图
-                statisticsFragment.initData();// 刷新统计*/
+
+
+                if (mStatisticsFragment.isVisible()) {
+                    // 获取上半场的走势图数据
+                    homeCorners.clear();
+                    guestCorners.clear();
+                    homeDangers.clear();
+                    guestDangers.clear();
+                    homeCorners = initMatchTrend("1025", "1050", mStartTime);
+                    guestCorners = initMatchTrend("2049", "2074", mStartTime);
+                    homeDangers = initMatchTrend("1026", null, mStartTime);
+                    guestDangers = initMatchTrend("2050", null, mStartTime);
+                    homeCorners.add(0, 0);
+                    guestCorners.add(0, 0);
+                    homeDangers.add(0, 0);
+                    guestDangers.add(0, 0);
+                    mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);// 刷新攻防走势图
+                    mStatisticsFragment.initData(mMatchDetail.getLiveStatus());// 刷新攻防走势图
+
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
             case "12":
             case "13":  //下半场开始
@@ -907,9 +1074,34 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 trendFragment.initData();// 刷新攻防走势图
                 statisticsFragment.initData();// 刷新统计
 
+
+
+
                 //点赞不可点
                 ((FootballMatchDetailActivity) getActivity()).finishMatch();
 */
+
+                if (mStatisticsFragment.isVisible()) {
+                    // 获取上半场的走势图数据
+                    homeCorners.clear();
+                    guestCorners.clear();
+                    homeDangers.clear();
+                    guestDangers.clear();
+                    homeCorners = initMatchTrend("1025", "1050", mStartTime);
+                    guestCorners = initMatchTrend("2049", "2074", mStartTime);
+                    homeDangers = initMatchTrend("1026", null, mStartTime);
+                    guestDangers = initMatchTrend("2050", null, mStartTime);
+                    homeCorners.add(0, 0);
+                    guestCorners.add(0, 0);
+                    homeDangers.add(0, 0);
+                    guestDangers.add(0, 0);
+                    mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);// 刷新攻防走势图
+                    mStatisticsFragment.initData("-1");// 刷新攻防走势图
+
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson("-1");// 刷新统计
+                }
+
                 if (hSocketClient != null) {
                     if (!hSocketClient.isClosed()) {
                         hSocketClient.close();
@@ -931,8 +1123,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
 
 
-
-
                 //x时间轴
                 mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
@@ -940,6 +1130,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 //                if (statisticsFragment.isVisible()) {
 //                    statisticsFragment.initData();
 //                }
+
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
             case "1030"://取消主队进球
 
@@ -964,7 +1159,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 //取消进球时间，重绘
                 mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
                 mLiveHeadInfoFragment.showFootballEventByState();
-
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
 
                 break;
             case "2053"://客队进球
@@ -987,6 +1185,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mLiveHeadInfoFragment.addFootballEvent(matchTextLiveBean);
                 //事件放入并展示
                 mLiveHeadInfoFragment.showFootballEventByState();
+
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
 
             case "2054"://取消客队进球
@@ -1011,6 +1214,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 //取消进球时间，重绘
                 mLiveHeadInfoFragment.cancelFootBallEvent(iterator, matchTextLiveBean);
                 mLiveHeadInfoFragment.showFootballEventByState();
+
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
 
             case "1025": //主队角球
@@ -1233,6 +1441,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }*/
+
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
 
             case "2063":  //客队射正球门
@@ -1248,6 +1461,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     statisticsFragment.initData();
                 }*/
 
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
 
             case "1040":    //主队射偏球门
@@ -1262,6 +1479,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }*/
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
 
                 //如果有变动就刷新统计数据
                 break;
@@ -1275,7 +1496,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }*/
-
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 //如果有变动就刷新统计数据
                 break;
 
@@ -1291,7 +1515,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }*/
-
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
 
                 //如果有变动就刷新统计数据
                 break;
@@ -1307,7 +1534,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     statisticsFragment.initData();
                 }
                 */
-
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 //如果有变动就刷新统计数据
                 break;
 
@@ -1332,7 +1562,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }*/
-
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
 
                 //如果有变动就刷新统计数据
                 break;
@@ -1342,7 +1575,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }*/
-
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
 
                 //如果有变动就刷新统计数据
                 break;
@@ -1352,7 +1588,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }*/
-
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 //如果有变动就刷新统计数据
                 break;
             case "2051"://客队任意球
@@ -1360,6 +1599,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }//如果有变动就刷新统计数据*/
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
 
             case "1042"://主队犯规
@@ -1367,24 +1610,40 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                /* if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }//如果有变动就刷新统计数据*/
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
             case "1054"://主队界外球
                 mathchStatisInfo.setHome_lineOut(mathchStatisInfo.getHome_lineOut() + 1);
              /*   if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }//如果有变动就刷新统计数据*/
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
             case "2066"://客队犯规
                 mathchStatisInfo.setGuest_foul(mathchStatisInfo.getGuest_foul() + 1);
               /*  if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }//如果有变动就刷新统计数据*/
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
             case "2078"://客队界外球
                 mathchStatisInfo.setGuest_lineOut(mathchStatisInfo.getGuest_lineOut() + 1);
               /*  if (statisticsFragment.isVisible()) {
                     statisticsFragment.initData();
                 }//如果有变动就刷新统计数据*/
+                if (mStatisticsFragment.isVisible()) {
+                    mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
+                }
                 break;
             case "256": //取消（不显示，指定消息取消）
             case "257"://清除（多个指定消息不显示）
@@ -1426,10 +1685,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mDetailsRollballFragment.setLiveText(matchLive.get(0).getMsgText());
             mDetailsRollballFragment.setLiveTextDetails(matchLive);
         }
-
-
     }
 
+
+    /***
+     * 检查是否推送消息有漏
+     * @param currMsgId
+     */
     private void isLostMsgId(String currMsgId) {
         if (allMatchLiveMsgId == null) {
             return;
@@ -1458,6 +1720,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }
     }
 
+
+    /***
+     * 推送有漏消息请求
+     * @param preMsgId
+     * @param msgId
+     */
     private void isRequestMsgIdRepeat(String preMsgId, String msgId) {
 
         Map<String, String> msgIdParams = new HashMap<>();
@@ -1526,7 +1794,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             }
         }
 
-        mLiveHeadInfoFragment.showTimeView(mKeepTime);
+        mLiveHeadInfoFragment.showTimeView(mKeepTime); //刷新时间轴
 
         if (isMatchStart) {
             if (liveTextTime >= matchKeepTime) {
@@ -1543,6 +1811,31 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 } else if (SECONDHALF.equals(state) && matchKeepTime > 90) {
                     mLiveHeadInfoFragment.setKeepTime("90+");
                 }
+            }
+
+            mStartTime = StadiumUtils.convertStringToInt(data.get("time"));
+            switch (mStartTime) {
+                case 15:
+                case 30:
+                case 45:
+                case 60:
+                case 75:
+                case 90:
+                    homeCorners.clear();
+                    guestCorners.clear();
+                    homeDangers.clear();
+                    guestDangers.clear();
+                    homeCorners = initMatchTrend("1025", "1050", mStartTime);
+                    guestCorners = initMatchTrend("2049", "2074", mStartTime);
+                    homeDangers = initMatchTrend("1026", null, mStartTime);
+                    guestDangers = initMatchTrend("2050", null, mStartTime);
+                    homeCorners.add(0, 0);
+                    guestCorners.add(0, 0);
+                    homeDangers.add(0, 0);
+                    guestDangers.add(0, 0);
+                    mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);// 刷新攻防走势图
+                    mStatisticsFragment.initData(mMatchDetail.getLiveStatus());
+                    break;
             }
         }
     }

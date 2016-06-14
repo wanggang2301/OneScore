@@ -574,5 +574,8 @@
 
     <color name="yellow_verify_code">#FFB51A</color>
 
-
+    <!--足球改版分析界面颜色-->
+    <color name="analyze_title">#3f5672</color>
+    <color name="history_win">#333333</color>
+    <color name="more_record">#0090ff</color>
 </resources>

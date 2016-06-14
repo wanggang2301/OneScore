@@ -36,7 +36,7 @@ import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footframe.OldAnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
@@ -180,7 +180,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     private String mPreStatus;
 
     private StadiumFragment mStadiumFragment;
-    private AnalyzeFragment mAnalyzeFragment;
+    private OldAnalyzeFragment mOldAnalyzeFragment;
     private OddsFragment mOddsFragment;
     private TalkAboutBallFragment mTalkAboutBallFragment;
 
@@ -665,8 +665,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         fragments.add(mStadiumFragment);
 
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
-        //  mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId,"ni","hao");
+        mOldAnalyzeFragment = OldAnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
+        //  mOldAnalyzeFragment = OldAnalyzeFragment.newInstance(mThirdId,"ni","hao");
         //指数
         mOddsFragment = OddsFragment.newInstance("", "");
 
@@ -677,7 +677,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mTalkAboutBallFragment.setArguments(bundle);
 
         fragments.add(mOddsFragment);
-        fragments.add(mAnalyzeFragment);
+        fragments.add(mOldAnalyzeFragment);
+//        fragments.add(mChatFragment);
         fragments.add(mTalkAboutBallFragment);
 
 
@@ -922,6 +923,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 // setResult(Activity.RESULT_OK);
                 sendBroadcast(new Intent("closeself"));
                 finish();
+                overridePendingTransition(0, android.R.anim.fade_out);
                 break;
             case R.id.layout_match_header_focus_img:
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");

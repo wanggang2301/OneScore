@@ -202,13 +202,13 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
                         if (mRight_listview.getFirstVisiblePosition() != 0) {
-                            ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
+                           // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
                         }
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                        ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
+                       // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
                         break;
                 }
                 return false;
@@ -222,14 +222,14 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
                         if (mListView.getFirstVisiblePosition() != 0) {
-                            //((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(false);
+                          //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
                         }
 
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                        //((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(true);
+                       // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
                         break;
                 }
                 return false;
@@ -243,13 +243,13 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
                         if (mLeft_listview.getFirstVisiblePosition() != 0) {
-                           // ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(false);
+                          //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
                         }
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                        //((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(true);
+                       // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
                         break;
                 }
                 return false;
@@ -280,7 +280,7 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
         if (getActivity() == null) {
             return;
         }
-        mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
+        mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("thirdId", mThirdId);
         myPostParams.put("oddType", oddType);

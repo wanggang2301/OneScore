@@ -72,7 +72,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      * 赛事id
      */
     public String mThirdId;
-    public final static String BUNDLE_PARAM_THIRDID = "thirdId";
     /**
      * 评论相关
      */
@@ -383,23 +382,34 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //            }
 //        }
 //
-//
         if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
-            if (resultCode == CyUtils.RESULT_OK) { //接收登录华海成功返回
-                if (CommonUtils.isLogin()) {
-                    CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
-                }
-
+            switch (resultCode) {
+                case CyUtils.RESULT_OK:
+                    if (CommonUtils.isLogin()) { //接收登录华海成功返回
+                        CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                    }
+                    break;
+                case CyUtils.RESULT_CODE://接收评论输入页面返回
+                    loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
+                    lp.setMargins(0, 0, 0, 0);
+                    mSwipeRefreshLayout.requestLayout();
+                    break;
             }
-            if (resultCode == CyUtils.RESULT_CODE) { //接收评论输入页面返回
-                loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
-                mLinearLayout.setVisibility(View.VISIBLE);
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
-                lp.setMargins(0, 0, 0, 0);
-                mSwipeRefreshLayout.requestLayout();
-
-
-            }
+//            if (resultCode == CyUtils.RESULT_OK) { //接收登录华海成功返回
+//                if (CommonUtils.isLogin()) {
+//                    CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+//                }
+//
+//            }
+//            if (resultCode == CyUtils.RESULT_CODE) { //接收评论输入页面返回
+//                loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+//                mLinearLayout.setVisibility(View.VISIBLE);
+//                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
+//                lp.setMargins(0, 0, 0, 0);
+//                mSwipeRefreshLayout.requestLayout();
+//            }
         }
     }
 
