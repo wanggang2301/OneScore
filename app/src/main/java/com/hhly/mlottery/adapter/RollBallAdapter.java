@@ -267,7 +267,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         tvRightOdds_YA.setText(asiaLet != null ? asiaLet.getRightOdds() : "-");
         // 大小盘赔率
         tvLeftOdds_DA.setText(asiaSize != null ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()) : "-");
-        tvHandicapValue_DA_BLACK.setText(asiaSize != null ? asiaSize.getLeftOdds() : "-");
+        tvHandicapValue_DA_BLACK.setText(asiaSize != null? asiaSize.getLeftOdds() : "-");
         tvRightOdds_DA.setText(asiaSize != null ? asiaSize.getRightOdds() : "-");
         // 欧盘赔率
         tvLeftOdds_EU.setText(euro != null ? euro.getMediumOdds() : "-");
@@ -393,11 +393,12 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
+    // 置顶颜色
     private void showShadow(final View view, float alpha) {
         view.setAlpha(alpha);
-//        ObjectAnimator.ofFloat(view, View.ALPHA, 0, 0.8f).setDuration(400).start();
     }
 
+    // 置顶操作
     private void transformMapper(int position) {
         List<Match> list = getList();
         Match data = list.get(position);
@@ -407,6 +408,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         notifyDataSetChanged();
     }
 
+    // WebSocket推送消息分发处理
     public void updateItemFromWebSocket(Object o) {
         List<Match> matchList = getList();
         if (!notify_locked_tag) {
@@ -478,19 +480,28 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 if (oddDataMaps.get("handicap").equals("asiaLet")) {
                     handicap = 1;
                     MatchOdd asiaLetOdd = this.getMatchOdd(match, "asiaLet");
-                    this.changeOddTextColor(match, asiaLetOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), asiaLetOdd.getRightOdds(), oddDataMaps.get("rightOdds"), asiaLetOdd.getHandicapValue(), oddDataMaps.get("mediumOdds"));
+                    if (asiaLetOdd != null)
+                        this.changeOddTextColor(match, asiaLetOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), asiaLetOdd.getRightOdds(), oddDataMaps.get("rightOdds"), asiaLetOdd.getHandicapValue(), oddDataMaps.get("mediumOdds"));
+                    else
+                        this.changeOddTextColor(match, "0.00", oddDataMaps.get("leftOdds"), "0.00", oddDataMaps.get("rightOdds"), "0.00", oddDataMaps.get("mediumOdds"));
                     this.updateMatchOdd(match, asiaLetOdd, oddDataMaps, "asiaLet");
                     // 欧赔
                 } else if (oddDataMaps.get("handicap").equals("euro")) {
                     handicap = 3;
                     MatchOdd euroOdd = this.getMatchOdd(match, "euro");
-                    this.changeOddTextColor(match, euroOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), euroOdd.getRightOdds(), oddDataMaps.get("rightOdds"), euroOdd.getMediumOdds(), oddDataMaps.get("mediumOdds"));
+                    if (euroOdd != null)
+                        this.changeOddTextColor(match, euroOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), euroOdd.getRightOdds(), oddDataMaps.get("rightOdds"), euroOdd.getMediumOdds(), oddDataMaps.get("mediumOdds"));
+                    else
+                        this.changeOddTextColor(match, "0.00", oddDataMaps.get("leftOdds"), "0.00", oddDataMaps.get("rightOdds"), "0.00", oddDataMaps.get("mediumOdds"));
                     this.updateMatchOdd(match, euroOdd, oddDataMaps, "euro");
                     // 大小
                 } else if (oddDataMaps.get("handicap").equals("asiaSize")) {
                     handicap = 2;
                     MatchOdd asiaSizeOdd = this.getMatchOdd(match, "asiaSize");
-                    this.changeOddTextColor(match, asiaSizeOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), asiaSizeOdd.getRightOdds(), oddDataMaps.get("rightOdds"), asiaSizeOdd.getHandicapValue(), oddDataMaps.get("mediumOdds"));
+                    if (asiaSizeOdd != null)
+                        this.changeOddTextColor(match, asiaSizeOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), asiaSizeOdd.getRightOdds(), oddDataMaps.get("rightOdds"), asiaSizeOdd.getHandicapValue(), oddDataMaps.get("mediumOdds"));
+                    else
+                        this.changeOddTextColor(match, "0.00", oddDataMaps.get("leftOdds"), "0.00", oddDataMaps.get("rightOdds"), "0.00", oddDataMaps.get("mediumOdds"));
                     this.updateMatchOdd(match, asiaSizeOdd, oddDataMaps, "asiaSize");
                 }
             }
@@ -604,31 +615,31 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     // 赔率推送消息
     private void changeOddTextColor(Match match, String oldLeftOdds, String newLeftOdds, String oldRightOdds, String newRightOdds, String oldHandicapValue, String newHandicapValue) {
         float leftMatchOddF = oldLeftOdds != null && !oldLeftOdds.equals("-") ? Float.parseFloat(oldLeftOdds) : (float) 0.00;
-        float rightMatchOddF = oldRightOdds != null && !oldLeftOdds.equals("-") ? Float.parseFloat(oldRightOdds) : (float) 0.00;
+        float rightMatchOddF = oldRightOdds != null && !oldRightOdds.equals("-") ? Float.parseFloat(oldRightOdds) : (float) 0.00;
         float leftMapOddF = Float.parseFloat(!newLeftOdds.equals("-") ? newLeftOdds : "0.00");
         float rightMapOddF = Float.parseFloat(!newRightOdds.equals("-") ? newRightOdds : "0.00");
-        float midMatchOddF = oldHandicapValue != null && !oldLeftOdds.equals("-") ? Float.parseFloat(oldHandicapValue) : (float) 0.00;
+        float midMatchOddF = oldHandicapValue != null && !oldHandicapValue.equals("-") ? Float.parseFloat(oldHandicapValue) : (float) 0.00;
         float midMapOddF = Float.parseFloat(!newHandicapValue.equals("-") ? newHandicapValue : "0.00");
 
-        if (leftMatchOddF < leftMapOddF) {// 左边的值升了
+        if (leftMatchOddF < leftMapOddF && leftMapOddF != 0.00) {// 左边的值升了
             match.setLeftOddTextColorId(R.color.odds_up_bg);
-        } else if (leftMatchOddF > leftMapOddF) {// 左边的值降了
+        } else if (leftMatchOddF > leftMapOddF && leftMapOddF != 0.00) {// 左边的值降了
             match.setLeftOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setLeftOddTextColorId(R.color.white);
         }
 
-        if (rightMatchOddF < rightMapOddF) {// 右边的值升了
+        if (rightMatchOddF < rightMapOddF && rightMapOddF != 0.00) {// 右边的值升了
             match.setRightOddTextColorId(R.color.odds_up_bg);
-        } else if (rightMatchOddF > rightMapOddF) {// 右边的值降了
+        } else if (rightMatchOddF > rightMapOddF && rightMapOddF != 0.00) {// 右边的值降了
             match.setRightOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setRightOddTextColorId(R.color.white);
         }
 
-        if (midMatchOddF < midMapOddF) {// 中间的值升了
+        if (midMatchOddF < midMapOddF && midMapOddF != 0.00) {// 中间的值升了
             match.setMidOddTextColorId(R.color.odds_up_bg);
-        } else if (midMatchOddF > midMapOddF) {// 中间的值降了
+        } else if (midMatchOddF > midMapOddF && midMapOddF != 0.00) {// 中间的值降了
             match.setMidOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setMidOddTextColorId(R.color.white);
@@ -637,17 +648,17 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
     private void setupOddTextColor(Match data, TextView leftOdds, TextView midOdds, TextView rightOdds) {
         if (!resetColor) {
-            if (data.getLeftOddTextColorId() != 0) {
-                leftOdds.setBackgroundResource(data.getLeftOddTextColorId());
-                data.setLeftOddTextColorId(0);
+            if (data.getMidOddTextColorId() != 0) {
+                leftOdds.setBackgroundResource(data.getMidOddTextColorId());
+                data.setMidOddTextColorId(0);
             }
             if (data.getRightOddTextColorId() != 0) {
                 rightOdds.setBackgroundResource(data.getRightOddTextColorId());
                 data.setRightOddTextColorId(0);
             }
-            if (data.getMidOddTextColorId() != 0) {
-                midOdds.setBackgroundResource(data.getMidOddTextColorId());
-                data.setMidOddTextColorId(0);
+            if (data.getLeftOddTextColorId() != 0) {
+                midOdds.setBackgroundResource(data.getLeftOddTextColorId());
+                data.setLeftOddTextColorId(0);
             }
         } else {
             resetColor = false;
