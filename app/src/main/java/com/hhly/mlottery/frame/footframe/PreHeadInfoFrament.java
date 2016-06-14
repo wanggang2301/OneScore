@@ -37,6 +37,8 @@ public class PreHeadInfoFrament extends Fragment {
 
     private ImageView iv_home_icon;
     private ImageView iv_guest_icon;
+    private ImageView iv_setting;
+
 
     private TextView tv_homename;
     private TextView tv_guestname;
@@ -81,8 +83,12 @@ public class PreHeadInfoFrament extends Fragment {
 
 
     private void initView() {
+
+
         iv_home_icon = (ImageView) mView.findViewById(R.id.iv_home_icon);
         iv_guest_icon = (ImageView) mView.findViewById(R.id.iv_guest_icon);
+
+
         tv_homename = (TextView) mView.findViewById(R.id.tv_home_name);
         tv_guestname = (TextView) mView.findViewById(R.id.tv_guest_name);
         racename = (TextView) mView.findViewById(R.id.race_name);
@@ -91,6 +97,8 @@ public class PreHeadInfoFrament extends Fragment {
         mMatchTypeLayout = (RelativeLayout) mView.findViewById(R.id.football_match_detail_matchtype_layout);
         mMatchType1 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype1);
         mMatchType2 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype2);
+
+
     }
 
     public void initData(MatchDetail mMatchDetail) {
@@ -129,6 +137,9 @@ public class PreHeadInfoFrament extends Fragment {
         } else {
             date.setText("");//开赛时间
         }
+
+
+
     }
 
 
@@ -153,4 +164,21 @@ public class PreHeadInfoFrament extends Fragment {
     public void setScoreClolor(int id) {
         score.setTextColor(id);
     }
+
+
+
+
+  /*  @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (getActivity() != null) {
+                getActivity().finish();
+                getActivity().overridePendingTransition(0, android.R.anim.fade_out);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }*/
+
+
 }

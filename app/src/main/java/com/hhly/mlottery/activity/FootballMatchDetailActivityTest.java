@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
@@ -27,9 +33,10 @@ import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
+import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
+import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
-import com.hhly.mlottery.frame.footframe.OldAnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
@@ -39,11 +46,16 @@ import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.tencent.connect.share.QQShare;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
@@ -69,6 +81,14 @@ import java.util.TimerTask;
  * @des 足球内页改版
  */
 public class FootballMatchDetailActivityTest extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
+
+    private final int ERROR = -1;//访问失败
+    private final int SUCCESS = 0;// 访问成功
+    private final int STARTLOADING = 1;// 正在加载中
+
+    private FrameLayout fl_odds_loading;
+
+    private FrameLayout fl_odds_net_error;
 
 
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
@@ -185,6 +205,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private StatisticsFragmentTest mStatisticsFragment;  //统计
 
     private int mStartTime;// 获取推送的开赛时间
+    private TextView reLoading; //赔率请求失败重新加载
 
 
     /***
@@ -194,6 +215,21 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private ArrayList<Integer> guestCorners = new ArrayList<>();
     private ArrayList<Integer> homeDangers = new ArrayList<>();
     private ArrayList<Integer> guestDangers = new ArrayList<>();
+
+    private ImageView iv_setting;
+
+
+
+    private String shareHomeIconUrl;
+
+
+    private SharePopupWindow sharePopupWindow;
+
+    private ShareTencentCallBack mShareTencentCallBack;
+
+    private ShareCopyLinkCallBack mShareCopyLinkCallBack;
+
+    private Tencent mTencent;
 
 
     @Override
@@ -221,8 +257,32 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mHeadviewpager.setCurrentItem(0);
 
 
-
         loadData();
+
+
+        iv_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //
+            }
+        });
+
+        mShareTencentCallBack = new ShareTencentCallBack() {
+            @Override
+            public void onClick(int flag) {
+                // shareQQ(flag);
+                onClickShare(flag);
+            }
+        };
+
+        mShareCopyLinkCallBack = new ShareCopyLinkCallBack() {
+            @Override
+            public void onClick() {
+                ClipboardManager cmb = (ClipboardManager) FootballMatchDetailActivityTest.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                cmb.setText("http://m.13322.com");
+
+            }
+        };
 
         try {
             hSocketUri = new URI(BaseURLs.WS_SERVICE);
@@ -237,6 +297,15 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        iv_setting = (ImageView) findViewById(R.id.iv_setting);
+
 
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
@@ -258,7 +327,39 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         //底部ViewPager(滚球、指数等)
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(titles);
+
+
+        fl_odds_loading = (FrameLayout) findViewById(R.id.fl_odds_loading);
+        fl_odds_net_error = (FrameLayout) findViewById(R.id.fl_odds_networkError);
+        reLoading = (TextView) findViewById(R.id.reLoading);
+
+        reLoading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
     }
+
+
+    private void onClickShare(int flag) {
+        mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+
+        String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
+        String appname = getString(R.string.share_to_qq_app_name);
+        String summary = getString(R.string.share_summary);
+
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY, summary);
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://m.13322.com");
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, shareHomeIconUrl);
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
+        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, flag);
+        mTencent.shareToQQ(FootballMatchDetailActivityTest.this, params, qqShareListener);
+    }
+
 
 
     @Override
@@ -274,7 +375,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 verticalOffset < mHeadviewpager.getHeight()) {
             mRefreshLayout.setEnabled(false);
         } else {
-           // mRefreshLayout.setEnabled(true);
+            // mRefreshLayout.setEnabled(true);
             mRefreshLayout.setEnabled(false); //展开禁止刷新
 
         }
@@ -287,6 +388,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     }
 
     private void loadData() {
+        mHandler.sendEmptyMessage(STARTLOADING);
+
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
@@ -294,9 +397,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             public void onResponse(MatchDetail matchDetail) {
 
                 if (!"200".equals(matchDetail.getResult())) {
-                    //mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     return;
                 }
+
+                iv_setting.setVisibility(View.VISIBLE); //显示分享
 
                 mMatchDetail = matchDetail;
 
@@ -387,7 +491,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
 
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);*/
-
+                mHandler.sendEmptyMessage(SUCCESS);
                 if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                     startWebsocket();
                     computeWebSocket();
@@ -398,7 +502,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                //   mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
+                mHandler.sendEmptyMessage(ERROR);
             }
         }, MatchDetail.class);
     }
@@ -499,7 +603,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mTalkAboutBallFragment.setArguments(bundle);
 
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId,"");
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "");
         //指数
         mOddsFragment = OddsFragment.newInstance("", "");
 
@@ -507,7 +611,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mStatisticsFragment = StatisticsFragmentTest.newInstance(mMatchDetail.getLiveStatus());
 
         mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
-        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         isInitedViewPager = true;
@@ -698,7 +802,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         homeDangers.add(0, 0);
         guestCorners.add(0, 0);
         guestDangers.add(0, 0);
-
 
 
         return mathchStatisInfo;
@@ -1690,6 +1793,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     /***
      * 检查是否推送消息有漏
+     *
      * @param currMsgId
      */
     private void isLostMsgId(String currMsgId) {
@@ -1723,6 +1827,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     /***
      * 推送有漏消息请求
+     *
      * @param preMsgId
      * @param msgId
      */
@@ -1874,6 +1979,31 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         return lang.trim();
     }
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case STARTLOADING:// 正在加载中
+                    fl_odds_loading.setVisibility(View.VISIBLE);
+                    fl_odds_net_error.setVisibility(View.GONE);
+                    mViewPager.setVisibility(View.GONE);
+                    break;
+                case SUCCESS:// 加载成功
+                    fl_odds_loading.setVisibility(View.GONE);
+                    fl_odds_net_error.setVisibility(View.GONE);
+                    mViewPager.setVisibility(View.VISIBLE);
+
+                    break;
+                case ERROR:// 加载失败
+                    fl_odds_loading.setVisibility(View.GONE);
+                    fl_odds_net_error.setVisibility(View.VISIBLE);
+                    mViewPager.setVisibility(View.GONE);
+                    // isHttpData = false;
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onClose(String message) {
@@ -1888,4 +2018,35 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         //super.onSaveInstanceState(outState, outPersistentState);
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+
+
+
+
+    IUiListener qqShareListener = new IUiListener() {
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onComplete(Object response) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onError(UiError e) {
+            // TODO Auto-generated method stub
+        }
+    };
 }

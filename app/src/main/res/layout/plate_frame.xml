@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
@@ -12,10 +13,10 @@
         android:id="@+id/plate_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y65"
+        android:background="@color/plate_title_bg"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="visible"
-        android:background="@color/plate_title_bg">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="0dp"
@@ -23,8 +24,8 @@
             android:layout_weight="1.2"
             android:gravity="center"
             android:text="@string/odd_company_txt"
-            android:textSize="13sp"
-            android:textColor="@color/version"/>
+            android:textColor="@color/version"
+            android:textSize="13sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -45,8 +46,8 @@
                 android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/odd_home_txt"
-                android:textSize="13sp"
-                android:textColor="@color/version"/>
+                android:textColor="@color/version"
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/plate_dish_txt_id"
@@ -55,8 +56,8 @@
                 android:layout_weight="4"
                 android:gravity="center"
                 android:text="@string/odd_dish_txt"
-                android:textSize="13sp"
-                android:textColor="@color/version"/>
+                android:textColor="@color/version"
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/plate_guest_txt_id"
@@ -65,8 +66,8 @@
                 android:layout_weight="3"
                 android:gravity="center"
                 android:text="@string/odd_guest_txt"
-                android:textSize="13sp"
-                android:textColor="@color/version"/>
+                android:textColor="@color/version"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <View
@@ -74,6 +75,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.7" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/fl_plate_txt_view"
         android:layout_width="match_parent"
@@ -153,7 +155,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/nodata_txt"/>
+            android:text="@string/nodata_txt" />
     </FrameLayout>
     <!--有数据的layout-->
     <LinearLayout
@@ -163,14 +165,16 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <ListView
+        <com.hhly.mlottery.widget.NestedListView
             android:id="@+id/plate_frame_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/transparency"
             android:dividerHeight="0.5dp"
             android:listSelector="@color/transparency"
-            android:visibility="visible" />
+            android:visibility="visible" >
+
+        </com.hhly.mlottery.widget.NestedListView>
 
         <LinearLayout
             android:id="@+id/odds_details_layout"
