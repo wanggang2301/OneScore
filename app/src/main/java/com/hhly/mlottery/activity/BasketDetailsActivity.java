@@ -1280,13 +1280,13 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 mVS.setText(":");
                 mTitleVS.setText(":");
 
-                if(mGuestNum!=score.getGuestScore()){
+                if (mGuestNum != score.getGuestScore()) {
                     scoreAnimation(mGuestScore);
-                    mGuestNum=score.getGuestScore();
+                    mGuestNum = score.getGuestScore();
                 }
-                if(mHomeNum!=score.getHomeScore()){
+                if (mHomeNum != score.getHomeScore()) {
                     scoreAnimation(mHomeScore);
-                    mHomeNum=score.getHomeScore();
+                    mHomeNum = score.getHomeScore();
                 }
 
                 setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分

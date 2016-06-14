@@ -164,7 +164,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         // 不用缓存
         webSettings.setAppCacheEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -189,7 +189,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
-            token = intent.getStringExtra("token");
+            token = AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
@@ -201,16 +201,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                ChatFragment chatFragment = new ChatFragment();
 //                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
 //            }
-            if (url != null && url.contains("comment")) {
-                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                ChatFragment chatFragment = new ChatFragment();
-                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
-            }
-            if (url != null && url.contains("share")) {
-                public_btn_set.setVisibility(View.VISIBLE);
-            } else {
-                public_btn_set.setVisibility(View.GONE);
-            }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -231,11 +221,25 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                    }
 //                }
             });
-            //其他页传过来的reqMethod为post时，提交token  否则不提交
-            if (reqMethod != null && token != null && reqMethod.equals("post")) {
-
-//                mWebView.postUrl(url, token.getBytes("utf-8"));
-//                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
+//            //其他页传过来的reqMethod为post时，提交token  否则不提交
+//            if (reqMethod != null && token != null && reqMethod.equals("post")) {
+//
+////                mWebView.postUrl(url, token.getBytes("utf-8"));
+////                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
+//                url = url.replace("{loginToken}", token);
+//                url = url.replace("{deviceToken}", deviceId);
+//            }
+            if (url != null ) {
+                if (url.contains("comment")){
+                    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+                    ChatFragment chatFragment = new ChatFragment();
+                    CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                }
+                if (url.contains("share")) {
+                    public_btn_set.setVisibility(View.VISIBLE);//显示分享
+                } else {
+                    public_btn_set.setVisibility(View.GONE);//隐藏分享
+                }
                 url = url.replace("{loginToken}", token);
                 url = url.replace("{deviceToken}", deviceId);
             }
