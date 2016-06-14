@@ -11,6 +11,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.hhly.mlottery.R;
@@ -64,6 +65,8 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	}
 	
 	private void initView() {
+		TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
+		public_txt_title.setText(R.string.basket_setting_tittle);
 		
 		mAlet = (RelativeLayout) findViewById(R.id.rl_alet);
 		mAlet.setOnClickListener(this);
@@ -90,8 +93,11 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		mTb_ranking = (ToggleButton) findViewById(R.id.tb_ranking);
 		mTb_ranking.setOnCheckedChangeListener(this);
 		
-		mBack = (ImageView) findViewById(R.id.ib_back);
+		mBack = (ImageView) findViewById(R.id.public_img_back);
 		mBack.setOnClickListener(this);
+
+		findViewById(R.id.public_btn_set).setVisibility(View.GONE); //隐藏设置按键
+		findViewById(R.id.public_btn_filter).setVisibility(View.GONE); //隐藏筛选按键
 		
 	}
 
@@ -179,7 +185,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			save();
 			break;
 
-		case R.id.ib_back:
+		case R.id.public_img_back:
 			MobclickAgent.onEvent(mContext,"Basketball_Setting_Exit");
 			Intent intent = new Intent();
 			intent.putExtra("resultType", resultstring);

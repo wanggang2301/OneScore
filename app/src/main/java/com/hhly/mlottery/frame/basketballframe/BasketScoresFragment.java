@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.oddfragment;
+package com.hhly.mlottery.frame.basketballframe;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
