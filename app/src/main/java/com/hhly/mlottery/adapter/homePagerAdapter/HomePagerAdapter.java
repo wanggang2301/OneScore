@@ -233,7 +233,7 @@ public class HomePagerAdapter extends PagerAdapter {
                                     intent.putExtra("imageurl", picUrl);
                                     intent.putExtra("title", title);
                                     intent.putExtra("subtitle", "");
-                                    intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
+//                                    intent.putExtra("token", AppConstants.register.getData().getLoginToken());// 用户token
                                     mContext.startActivity(intent);
                                 } else {
                                     mContext.startActivity(new Intent(mContext, LoginActivity.class));
