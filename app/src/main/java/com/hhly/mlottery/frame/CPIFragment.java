@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -89,7 +89,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 切换Viewpager的标签
      */
-    private TextView mTab1, mTab2, mTab3;
+    private TabLayout mTabLayout;
     //记录是否完成viewpager初始化
     private boolean isInitViewPager = false;
     private ViewPager mViewPager;
@@ -424,16 +424,12 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public_img_filter = (ImageView) mView.findViewById(R.id.public_img_filter);
         public_img_filter.setOnClickListener(this);
         public_img_filter.setVisibility(View.INVISIBLE);
+
+        mTabLayout = (TabLayout) mView.findViewById(R.id.tabs);
     }
 
     //初始化viewPager
     private void initViewPager() {
-        mTab1 = (TextView) mView.findViewById(R.id.cpi_match_detail_tab1);
-        mTab2 = (TextView) mView.findViewById(R.id.cpi_match_detail_tab2);
-        mTab3 = (TextView) mView.findViewById(R.id.cpi_match_detail_tab3);
-        mTab1.setOnClickListener(this);
-        mTab2.setOnClickListener(this);
-        mTab3.setOnClickListener(this);
         mViewPager = (ViewPager) mView.findViewById(R.id.cpi_viewpager);
         fragments = new ArrayList<>();
         //亚盘
@@ -452,59 +448,13 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         mCPIOddsFragment3 = CPIOddsFragment.newInstance(TYPE_OP, "");
         fragments.add(mCPIOddsFragment3);
 
-
         mCPIViewPagerAdapter = new CPIFragmentAdapter(getChildFragmentManager(), fragments);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mCPIViewPagerAdapter);
-        final LinearLayout tabLine = (LinearLayout) mView.findViewById(R.id.cpi_match_detail_tabline);
-        final LinearLayout tabLineLayout = (LinearLayout) mView.findViewById(R.id.cpi_match_detail_tabline_layout);
-        int displayWidth = DeviceInfo.getDisplayWidth(mContext);
-        tabLine.setLayoutParams(new LinearLayout.LayoutParams(displayWidth / 3, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                int lineWidth = tabLine.getWidth();
-                int marginLeft = (int) (lineWidth * (position + positionOffset));
-                tabLineLayout.setPadding(marginLeft, 0, 0, 0);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mTab1.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-                mTab2.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-                mTab3.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-
-                switch (position) {
-                    case 0:
-                        mTab1.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-                        mRefreshLayout.setEnabled(true);
-                        mTab2.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
-                        mTab3.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
-                        break;
-                    case 1:
-                        mTab2.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-                        mRefreshLayout.setEnabled(true);
-                        mTab1.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
-                        mTab3.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
-                        break;
-                    case 2:
-                        mTab3.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-                        mRefreshLayout.setEnabled(true);
-                        mTab2.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
-                        mTab1.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
         //标记是否初始化
         isInitViewPager = true;
-
-
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     /**
@@ -856,7 +806,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             this.mFragmentList = fragmentList;
         }
 
-
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);
@@ -865,6 +814,20 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         @Override
         public int getCount() {
             return mFragmentList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getString(R.string.odd_plate_rb_txt);
+                case 1:
+                    return getString(R.string.asiasize);
+                case 2:
+                    return getString(R.string.odd_op_rb_txt);
+                default:
+                    return getString(R.string.odd_plate_rb_txt);
+            }
         }
     }
 }
