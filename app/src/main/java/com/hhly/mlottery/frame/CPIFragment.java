@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -64,7 +65,6 @@ import java.util.TimerTask;
  * 新版指数
  */
 public class CPIFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseMessageListener {
-
 
     public final static String TYPE_BIG = "big";
     public final static String TYPE_PLATE = "plate";
@@ -472,16 +472,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 if (getActivity() == null) return;
                 getActivity().finish();
                 break;
-            case R.id.cpi_match_detail_tab1:
-                mViewPager.setCurrentItem(0);
-                break;
-            case R.id.cpi_match_detail_tab2:
-                mViewPager.setCurrentItem(1);
-                break;
-            case R.id.cpi_match_detail_tab3:
-                mViewPager.setCurrentItem(2);
-
-                break;
             case R.id.public_txt_date://点击日期的textview
                 if (mMapDayList.size() == 14) {
                     setDialog(0);//代表日期
@@ -515,11 +505,10 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 break;
             default:
                 break;
-
         }
     }
 
-    LinkedList<String> ddList = new LinkedList();
+    LinkedList<String> ddList = new LinkedList<>();
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -638,9 +627,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     checktv.setChecked(!checktv.isChecked());
                     //如果是选中
                     if (checktv.isChecked()) {
-                        cpi_img_checked.setBackground(mContext.getResources().getDrawable(R.mipmap.cpi_img_select_true));
+                        cpi_img_checked.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.cpi_img_select_true));
                     } else {
-                        cpi_img_checked.setBackground(mContext.getResources().getDrawable(R.mipmap.cpi_img_select));
+                        cpi_img_checked.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.cpi_img_select));
                     }
                     tempCompanyCheckedStatus[position] = checktv.isChecked();
                 }
@@ -688,6 +677,12 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     }
 
+    private void addDate(int offset) {
+        Map<String, String> map = new HashMap<>();
+        map.put("date", UiUtils.getDate(currentDate, offset));
+        mMapList.add(map);
+    }
+
     /**
      * 获取日期列表
      *
@@ -695,62 +690,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
      */
     public List<Map<String, String>> getDate() {
         mMapList = new ArrayList<>();
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, -6));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, -5));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, -4));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, -3));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, -2));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, -1));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, 0));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, 1));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, 2));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, 3));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, 4));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, 5));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, 6));
-        mMapList.add(mMap);
-
-        mMap = new HashMap<>();
-        mMap.put("date", UiUtils.getDate(currentDate, 7));
-        mMapList.add(mMap);
-
+        for (int i = -6; i < 8; i++) {
+            addDate(i);
+        }
         return mMapList;
     }
 
@@ -766,38 +708,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         }
     }
 
-    /**
-     * 60秒请求一次数据
-     */
-//  class MyThread extends Thread{
-//      @Override
-//      public void run() {
-//          while (isTrue){
-//                  try {
-//                      Thread.sleep(60000);//休眠一分钟
-//                  } catch (InterruptedException e) {
-//                      return;
-//                  }
-//                 CpiFiltrateActivity.isDefualHot = true;
-//                  mCPIOddsFragment.InitData(mDate,TYPE_PLATE,true);
-//                  mCPIOddsFragment2.InitData(mDate,TYPE_BIG,true);
-//                  mCPIOddsFragment3.InitData(mDate,TYPE_OP,true);
-//
-//          }
-//      }
-//
-//  }
-
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        isTrue=false;
-//        myThread.interrupt();
-//        myThread=null;
-//    }
-
     private class CPIFragmentAdapter extends FragmentPagerAdapter {
-
 
         private List<Fragment> mFragmentList;
 
