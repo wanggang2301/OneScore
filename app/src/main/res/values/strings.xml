@@ -167,6 +167,7 @@
     <string name="immediate_status_cancel">取消</string>
     <string name="immediate_status_hold">待定</string>
     <string name="immediate_status_cut">腰斩</string>
+    <string name="immediate_status_end">完</string>
     <string name="immediate_status_mesomere">中断</string>
     <string name="immediate_status_postpone">推迟</string>
     <string name="immediate_unconection">当前网络不给力...</string>

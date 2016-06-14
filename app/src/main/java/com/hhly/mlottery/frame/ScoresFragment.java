@@ -115,10 +115,10 @@ public class ScoresFragment extends Fragment {
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               if(mContext.getResources().getString(R.string.basket_left).equals(mItems[position])){// 选择篮球
-                   ((FootballActivity)mContext).ly_tab_bar.setVisibility(View.GONE);
-                   ((FootballActivity)mContext).switchFragment(5);
-               }
+                if (mContext.getResources().getString(R.string.basket_left).equals(mItems[position])) {// 选择篮球
+                    ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.GONE);
+                    ((FootballActivity) mContext).switchFragment(5);
+                }
             }
 
             @Override
@@ -139,13 +139,13 @@ public class ScoresFragment extends Fragment {
 //        mTitleTv.setText(R.string.football_frame_txt);
         //左边标题
             /*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
-				public_txt_left_title.setVisibility(View.VISIBLE);
+                public_txt_left_title.setVisibility(View.VISIBLE);
         public_txt_left_title.setText(R.string.football_frame_txt);*/
 
         mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
         mSpinner.setVisibility(View.VISIBLE);
         mItems = getResources().getStringArray(R.array.ball_select);
-        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext , mItems);
+        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);
         mSpinner.setAdapter(mAdapter);
         mSpinner.setSelection(0);
 
@@ -197,20 +197,29 @@ public class ScoresFragment extends Fragment {
 
                 if (positionOffsetPixels == 0) {
                     switch (position) {
+                        case ROLLBALL_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.INVISIBLE);
+                            ((RollBallFragment) fragments.get(position)).feedAdapter();
+                            break;
                         case IMMEDIA_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ImmediateFragment) fragments.get(position)).reLoadData();
                             break;
                         case RESULT_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ResultFragment) fragments.get(position)).updateAdapter();
                             break;
                         case SCHEDULE_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ScheduleFragment) fragments.get(position)).updateAdapter();
                             break;
                         case FOCUS_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.GONE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((FocusFragment) fragments.get(position)).reLoadData();
                             break;
                     }
@@ -528,9 +537,9 @@ public class ScoresFragment extends Fragment {
         String focusIds = PreferenceUtil.getString("focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
         if ("".equals(focusIds) || arrayId.length == 0) {
-            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt));
+            mTabLayout.getTabAt(4).setText(getString(R.string.foot_guanzhu_txt));
         } else {
-            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            mTabLayout.getTabAt(4).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
         }
     }
 
