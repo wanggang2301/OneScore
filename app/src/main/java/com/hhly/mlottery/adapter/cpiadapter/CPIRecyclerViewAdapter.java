@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.cpiadapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -94,6 +95,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
 
     @Override
     public void onBindViewHolder(CPIViewHolder cpiViewHolder, final int position) {
+
         if (CPIFragment.TYPE_PLATE.equals(stType)) {
             cpiViewHolder.cpi_item_home_txt.setText(R.string.odd_home_txt);
             cpiViewHolder.cpi_item_odds_txt.setText(R.string.odd_dish_txt);
@@ -108,13 +110,15 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             cpiViewHolder.cpi_item_guest_txt.setText(R.string.odd_guest_op_txt);
         }
 
-        NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = mAllInfoBean.get(position).getMatchInfo();
+        final NewOddsInfo.AllInfoBean allInfoBean = mAllInfoBean.get(position);
+        NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = allInfoBean.getMatchInfo();
         //获得联赛名称
-        cpiViewHolder.cpi_item_leagueName_txt.setText(mAllInfoBean.get(position).getLeagueName());
+        cpiViewHolder.cpi_item_leagueName_txt.setText(allInfoBean.getLeagueName());
+        cpiViewHolder.cpi_item_leagueName_txt.setTextColor(Color.parseColor(allInfoBean.getLeagueColor()));
         //比赛时间
         cpiViewHolder.cpi_item_time_txt.setText(matchInfoBean.getOpenTime());
         //如果推送即时比赛开赛了
-        if(matchInfoBean.isShowTitle()){
+        if (matchInfoBean.isShowTitle()) {
             cpiViewHolder.cpi_item_layout.setVisibility(View.VISIBLE);
             cpiViewHolder.cpi_item_keepTime_txt.setText(matchInfoBean.getKeepTime());
         }
@@ -129,35 +133,35 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         }
         //亚盘
         if (stType.equals(CPIFragment.TYPE_PLATE)) {
-            for (int i = 0; i < mAllInfoBean.get(position).getComList().size(); i++) {
+            for (int i = 0; i < allInfoBean.getComList().size(); i++) {
                 //亚盘如果降
-                if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
-                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
+                if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
+                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
                 }
                 //亚盘如果升
-                else if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
-                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
+                else if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
+                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
                 } else {
-                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
+                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
                 }
             }
-            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
+            cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
         } else if (stType.equals(CPIFragment.TYPE_BIG)) {
-            for (int i = 0; i < mAllInfoBean.get(position).getComList().size(); i++) {
+            for (int i = 0; i < allInfoBean.getComList().size(); i++) {
                 //大小球如果降
-                if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
-                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
+                if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
+                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
                 }
                 //大小球如果升
-                else if (mAllInfoBean.get(position).getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
-                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
+                else if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
+                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
                 } else {
-                    mAllInfoBean.get(position).getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
+                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
                 }
             }
-            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
+            cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
         } else {
-            cardViewListAdapter = new CardViewListAdapter(context, mAllInfoBean.get(position).getComList(), stType);
+            cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
         }
 
         cpiViewHolder.item_cpi_odds_listview.setDivider(context.getResources().getDrawable(R.color.homwe_grey));
@@ -170,26 +174,26 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             public void onItemClick(AdapterView<?> parent, View view, int positionNunber, long id) {
 
                 List<Map<String, String>> obList = new ArrayList<>();// 建立一个数组存储listview上显示的数据
-                for (int m = 0; m < mAllInfoBean.get(position).getComList().size(); m++) {
+                for (int m = 0; m < allInfoBean.getComList().size(); m++) {
                     Map<String, String> obMap = new HashMap<>();
-                    obMap.put("id", mAllInfoBean.get(position).getComList().get(m).getComId());
-                    obMap.put("name", mAllInfoBean.get(position).getComList().get(m).getComName());
-                    obMap.put("thirdid", mAllInfoBean.get(position).getMatchInfo().getMatchId());
+                    obMap.put("id", allInfoBean.getComList().get(m).getComId());
+                    obMap.put("name", allInfoBean.getComList().get(m).getComName());
+                    obMap.put("thirdid", allInfoBean.getMatchInfo().getMatchId());
                     obList.add(obMap);
                 }
                 //点击指数页面，传值给详情界面
                 Intent intent = new Intent(context, CpiDetailsActivity.class);
                 intent.putExtra("obListEntity", (Serializable) obList);
-                intent.putExtra("comId", mAllInfoBean.get(position).getComList().get(positionNunber).getComId());
+                intent.putExtra("comId", allInfoBean.getComList().get(positionNunber).getComId());
                 intent.putExtra("positionNunber", positionNunber + "");
                 intent.putExtra("stType", stType);
                 //如果未开赛
-                if ("0".equals(mAllInfoBean.get(position).getMatchInfo().getMatchState())) {
-                    intent.putExtra("PKScore", mAllInfoBean.get(position).getMatchInfo().getMatchHomeName()
-                            + "\t" + "VS" + "\t" + mAllInfoBean.get(position).getMatchInfo().getMatchGuestName());
+                if ("0".equals(allInfoBean.getMatchInfo().getMatchState())) {
+                    intent.putExtra("PKScore", allInfoBean.getMatchInfo().getMatchHomeName()
+                            + "\t" + "VS" + "\t" + allInfoBean.getMatchInfo().getMatchGuestName());
                 } else {//否则开赛了
-                    intent.putExtra("PKScore", mAllInfoBean.get(position).getMatchInfo().getMatchHomeName()
-                            + "\t" + mAllInfoBean.get(position).getMatchInfo().getMatchResult() + "\t" + mAllInfoBean.get(position).getMatchInfo().getMatchGuestName());
+                    intent.putExtra("PKScore", allInfoBean.getMatchInfo().getMatchHomeName()
+                            + "\t" + allInfoBean.getMatchInfo().getMatchResult() + "\t" + allInfoBean.getMatchInfo().getMatchGuestName());
                 }
                 context.startActivity(intent);
 
@@ -201,7 +205,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", mAllInfoBean.get(position).getMatchInfo().getMatchId());
+                intent.putExtra("thirdId", allInfoBean.getMatchInfo().getMatchId());
                 context.startActivity(intent);
             }
         });

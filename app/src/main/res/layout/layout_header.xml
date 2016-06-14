@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/header_layout"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/header_height"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/status_bar_offset">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/header_layout"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/header_height"
+              android:background="@color/colorPrimary"
+              android:orientation="vertical"
+              android:paddingTop="@dimen/status_bar_offset">
 
 
     <RelativeLayout
@@ -104,7 +105,7 @@
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:text="2016-4-7"
+                    tools:text="2016-4-7"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     style="@style/RippleBackgroudBorderless"/>

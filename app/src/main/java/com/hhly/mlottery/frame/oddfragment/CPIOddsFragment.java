@@ -349,73 +349,91 @@ public class CPIOddsFragment extends Fragment {
      * @param webSocketTimeAndScore
      */
     public void upDateTimeAndScore(WebFootBallSocketTime webSocketTimeAndScore, String oddType) {
-            for (int h = 0; h < mShowInfoBeans.size(); h++) {
-                //如果赛事里面id有推送过来的id
-                if (mShowInfoBeans.get(h).getMatchInfo().getMatchId().equals(webSocketTimeAndScore.getThirdId())) {
-                    NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = mShowInfoBeans.get(h).getMatchInfo();
-                    //如果是时间传过来的
-                    if ("time".equals(oddType)) {
-                        String statusOrigin = webSocketTimeAndScore.getData().get("statusOrigin");
-                        int status= Integer.parseInt(statusOrigin);
-                        String keepTime = webSocketTimeAndScore.getData().get("keepTime");
+        for (int h = 0; h < mShowInfoBeans.size(); h++) {
+            //如果赛事里面id有推送过来的id
+            if (mShowInfoBeans.get(h).getMatchInfo().getMatchId().equals(webSocketTimeAndScore.getThirdId())) {
+                NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = mShowInfoBeans.get(h).getMatchInfo();
+                //如果是时间传过来的
+                if ("time".equals(oddType)) {
+                    String statusOrigin = webSocketTimeAndScore.getData().get("statusOrigin");
+                    int status = Integer.parseInt(statusOrigin);
+                    String keepTime = webSocketTimeAndScore.getData().get("keepTime");
                         /*0:未开, 1:上半场, 2:中场, 3:下半场, 4:加时, 5:点球
                        -1:完场, -10:取消, -11:待定, -12:腰斩, -13:中断, -14:推迟, -100:隐藏. */
-                        switch (status) {
-                            case 0:
-                                matchInfoBean.setIsShowTitle(false);
-                                break;
-                            case 1:
-                                matchInfoBean.setIsShowTitle(true);
+                    switch (status) {
+                        case 0:
+                            matchInfoBean.setIsShowTitle(false);
+                            break;
+                        case 1:
+                            matchInfoBean.setIsShowTitle(true);
+                            matchInfoBean.setKeepTime(keepTime);
+                            break;
+                        case 2:
+                            if (Integer.parseInt(keepTime) > 45) {
+                                //如果还是上半场，但是大于45分钟了显示45+
+                                matchInfoBean.setKeepTime("45+");
+                            } else {
                                 matchInfoBean.setKeepTime(keepTime);
-                                break;
-                            case 2:
-                               if(Integer.parseInt(keepTime) > 45) {
-                                   //如果还是上半场，但是大于45分钟了显示45+
-                                   matchInfoBean.setKeepTime("45+");
-                                }else{
-                                   matchInfoBean.setKeepTime(keepTime);
-                               }
-                                matchInfoBean.setIsShowTitle(true);
-                                break;
-                            case 3:
-                                matchInfoBean.setIsShowTitle(true);
-                                break;
-                            case 4:
-                                matchInfoBean.setIsShowTitle(true);
-                                break;
-                            case 5:
-                                matchInfoBean.setIsShowTitle(true);
-                                break;
-                            case -1:
-                                break;
-                            case -10:
-                                break;
-                            case -11:
-                                break;
-                            case -12:
-                                break;
-                            case -13:
-                                break;
-                            case -14:
-                                break;
-                            case -100:
-                                break;
-                            default:
-                                break;
-                        }
-                    }else if("score".equals(oddType)){
-                        //如果是主客队比分的
-                        String matchResult = webSocketTimeAndScore.getData().get("matchResult");
-                        if(!StringUtils.isEmpty(matchResult)) {
-                            //1-5代表正常开赛，这个还需沟通
-                            matchInfoBean.setMatchState("1");
-                            matchInfoBean.setMatchResult(matchResult);
-                        }
+                            }
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case 3:
+                            if (Integer.parseInt(keepTime) > 90) {
+                                //如果还是上半场，但是大于90分钟了显示90+
+                                matchInfoBean.setKeepTime("90+");
+                            } else {
+                                matchInfoBean.setKeepTime(keepTime);
+                            }
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case 4:
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case 5:
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case -1:
+                            matchInfoBean.setKeepTime(getString(R.string.finish_txt));
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case -10:
+                            matchInfoBean.setKeepTime(getString(R.string.fottball_home_quxiao));
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case -11:
+                            matchInfoBean.setKeepTime(getString(R.string.fottball_home_daiding));
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case -12:
+                            matchInfoBean.setKeepTime(getString(R.string.fottball_home_yaozhan));
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case -13:
+                            matchInfoBean.setKeepTime(getString(R.string.fottball_home_zhongduan));
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case -14:
+                            matchInfoBean.setKeepTime(getString(R.string.fottball_home_tuichi));
+                            matchInfoBean.setIsShowTitle(true);
+                            break;
+                        case -100:
+                            break;
+                        default:
+                            break;
                     }
-                    if (cpiRecyclerViewAdapter != null) {
-                        System.out.println(">>mAllshuaxi时间刷新了");
-                        cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
-                        cpiRecyclerViewAdapter.notifyDataSetChanged();
+                } else if ("score".equals(oddType)) {
+                    //如果是主客队比分的
+                    String matchResult = webSocketTimeAndScore.getData().get("matchResult");
+                    if (!StringUtils.isEmpty(matchResult)) {
+                        //1-5代表正常开赛，这个还需沟通
+                        matchInfoBean.setMatchState("1");
+                        matchInfoBean.setMatchResult(matchResult);
+                    }
+                }
+                if (cpiRecyclerViewAdapter != null) {
+                    System.out.println(">>mAllshuaxi时间刷新了");
+                    cpiRecyclerViewAdapter.setAllInfoBean(mShowInfoBeans);
+                    cpiRecyclerViewAdapter.notifyDataSetChanged();
 
                 }
             }

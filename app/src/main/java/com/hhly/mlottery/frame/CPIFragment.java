@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -29,13 +29,11 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
-import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketTime;
-import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -139,8 +137,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //心跳时间
     private long pushStartTime;
     private Timer computeWebSocketConnTimer = new Timer();
-    private String ss="{'data':[{'comId':'38','leftOdds':'0.94','mediumOdds':'0.50','oddType':'1','rightOdds':'0.98','uptime':'18:40'}],'thirdId':'331959','type':2}";
-    private String ss2="{'data':[{'comId':'381','leftOdds':'0.924','mediumOdds':'0.530','oddType':'2','rightOdds':'0.938','uptime':'18:430'}],'thirdId':'3313959','type':2}";
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,9 +157,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread.start();
 //        }
         try {
-            hSocketUri = new URI("ws://192.168.10.242:61634/topic");
+//            hSocketUri = new URI("ws://192.168.10.242:61634/topic");
 //			hSocketUri = new URI("ws://m.1332255.com/ws/USER.topic.indexcenter");
-//			hSocketUri = new URI("ws://m.13322.com/ws");
+            hSocketUri = new URI("ws://m.13322.com/ws");
         } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -174,32 +171,36 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     @Override
     public void onResume() {
         super.onResume();
-//        startWebsocket();
-//        computeWebSocket();
-        MyT myT=new MyT();
-            myT.start();
+        startWebsocket();
+        computeWebSocket();
+        MyT myT = new MyT();
+        myT.start();
     }
-      class MyT extends Thread{
-      @Override
-      public void run() {
-          while (true){
-                  try {
-                      Thread.sleep(10000);//休眠5s
-                  } catch (InterruptedException e) {
-                      return;
-                  }
-              onMessage("MESSAGE");
 
-          }
-      }
+    class MyT extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(10000);//休眠5s
+                } catch (InterruptedException e) {
+                    return;
+                }
+                onMessage("MESSAGE");
 
-  }
+            }
+        }
+
+    }
+
     private void computeWebSocket() {
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                System.out.println(df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+                System.out.println(df.format(new Date()) + "---监听socket连接状态:Open=" +
+                        hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() +
+                        ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
                 long pushEndTime = System.currentTimeMillis();
                 if ((pushEndTime - pushStartTime) >= 5000) {
                     System.out.println("重新启动socket");
@@ -236,25 +237,22 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 hSocketClient.close();
             }
         }
-
-
     }
 
 
     public void onMessage(String message) {
         // TODO Auto-generated method stub
         pushStartTime = System.currentTimeMillis(); // 记录起始时间
-        if(message.startsWith("CONNECTED")){
+        if (message.startsWith("CONNECTED")) {
             String id = "android" + DeviceInfo.getDeviceId(getActivity());
             id = MD5Util.getMD5(id);
             hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
-        }
-        else if (message.startsWith("MESSAGE")) {
+        } else if (message.startsWith("MESSAGE")) {
 //            String[] msgs = message.split("\n");
 //            String ws_json = msgs[msgs.length - 1];
             //赔率模拟数据
             //String ws_json = "{'data':[{'comId':'38','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'337089','type':2}";
-           //时间模拟数据
+            //时间模拟数据
 //            String ws_json = "{'data':{'keepTime':21,'statusOrigin':1},'thirdId':'337089','type':1} ";
             //比分模拟推送
             String ws_json = "{'data':{'matchResult':'80:80'},'thirdId':'337089','type':3}";
@@ -314,15 +312,15 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     for (int i = 0; i < webSocketOdds.getData().size(); i++) {
                         //如果是亚盘的
                         if ("1".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                            mCPIOddsFragment.upDateOdds(webSocketOdds,1);
+                            mCPIOddsFragment.upDateOdds(webSocketOdds, 1);
                         }
                         //如果是欧赔的
                         else if ("2".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                            mCPIOddsFragment3.upDateOdds(webSocketOdds,2);
+                            mCPIOddsFragment3.upDateOdds(webSocketOdds, 2);
                         }
                         //如果是大小的
                         else if ("3".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                            mCPIOddsFragment2.upDateOdds(webSocketOdds,3);
+                            mCPIOddsFragment2.upDateOdds(webSocketOdds, 3);
                         }
                     }
                 } catch (Exception e) {
@@ -348,7 +346,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 时间推送
      */
-    private void upDateTime(WebFootBallSocketOdds webSocketOddsTime){
+    private void upDateTime(WebFootBallSocketOdds webSocketOddsTime) {
 
     }
 //    /**
@@ -357,12 +355,14 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //    public void upDateOdds(WebFootBallSocketOdds webSocketOdds){
 //
 //    }
+
     /**
      * 主客队比分推送
      */
-    private void upDateScore(WebFootBallSocketOdds webSocketOddsScore){
+    private void upDateScore(WebFootBallSocketOdds webSocketOddsScore) {
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -471,28 +471,28 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
             @Override
             public void onPageSelected(int position) {
-                mTab1.setTextColor(getResources().getColor(R.color.white));
-                mTab2.setTextColor(getResources().getColor(R.color.white));
-                mTab3.setTextColor(getResources().getColor(R.color.white));
+                mTab1.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                mTab2.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                mTab3.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
 
                 switch (position) {
                     case 0:
-                        mTab1.setTextColor(getResources().getColor(R.color.white));
+                        mTab1.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                         mRefreshLayout.setEnabled(true);
-                        mTab2.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        mTab3.setTextColor(getResources().getColor(R.color.line_football_footer));
+                        mTab2.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
+                        mTab3.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
                         break;
                     case 1:
-                        mTab2.setTextColor(getResources().getColor(R.color.white));
+                        mTab2.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                         mRefreshLayout.setEnabled(true);
-                        mTab1.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        mTab3.setTextColor(getResources().getColor(R.color.line_football_footer));
+                        mTab1.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
+                        mTab3.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
                         break;
                     case 2:
-                        mTab3.setTextColor(getResources().getColor(R.color.white));
+                        mTab3.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                         mRefreshLayout.setEnabled(true);
-                        mTab2.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        mTab1.setTextColor(getResources().getColor(R.color.line_football_footer));
+                        mTab2.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
+                        mTab1.setTextColor(ContextCompat.getColor(getContext(), R.color.line_football_footer));
                         break;
                 }
             }
@@ -520,7 +520,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         switch (view.getId()) {
             case R.id.public_img_back:
                 if (getActivity() == null) return;
-                ((FootballActivity) getActivity()).finish();
+                getActivity().finish();
                 break;
             case R.id.cpi_match_detail_tab1:
                 mViewPager.setCurrentItem(0);

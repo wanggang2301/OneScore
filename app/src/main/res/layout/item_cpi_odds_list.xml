@@ -1,97 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/y10"
-    android:paddingTop="@dimen/y10">
-
-    <TextView
-        android:id="@+id/cpi_item_list_company_txt"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center|left"
-        android:layout_marginLeft="10dp"
-        android:text="浩博"
-        android:textSize="13sp" />
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/y10"
+        android:paddingTop="@dimen/y10">
 
         <TextView
-            android:id="@+id/cpi_item_list_home_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/cpi_item_list_company_txt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="1.46"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/cpi_item_list_home2_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="1.23"
-            android:textSize="13sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/cpi_item_list_odds_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="1.0"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/cpi_item_list_odds2_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:text="3.5/4"
+            android:gravity="center_vertical|start"
             android:textSize="13sp"
-            android:gravity="center"/>
+            tools:text="浩博"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cpi_item_list_home_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="13sp"
+                tools:text="1.46"/>
+
+            <TextView
+                android:id="@+id/cpi_item_list_home2_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="13sp"
+                tools:text="1.23"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cpi_item_list_odds_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="13sp"
+                tools:text="1.0"/>
+
+            <TextView
+                android:id="@+id/cpi_item_list_odds2_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="13sp"
+                tools:text="3.5/4"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cpi_item_list_guest_txt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="13sp"
+                tools:text="1.56"/>
+
+            <TextView
+                android:id="@+id/cpi_item_list_guest2_txt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="13sp"
+                tools:text="1.20"/>
+        </LinearLayout>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/cpi_item_list_guest_txt"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="1.56"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/cpi_item_list_guest2_txt"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="1.20"
-            android:textSize="13sp" />
-    </LinearLayout>
-
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/homwe_grey"/>
 
 </LinearLayout>
