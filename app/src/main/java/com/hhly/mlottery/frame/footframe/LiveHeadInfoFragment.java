@@ -238,6 +238,8 @@ public class LiveHeadInfoFragment extends Fragment {
         tv_guest_rc.setText(String.valueOf(mathchStatisInfo.getGuest_rc()));
         tv_guest_yc.setText(String.valueOf(mathchStatisInfo.getGuest_yc()));
         score.setText(String.valueOf(mathchStatisInfo.getHome_score()) + ":" + String.valueOf(mathchStatisInfo.getGuest_score()));
+        tv_frequency.setText("'");
+
         tv_guest_danger.setText(String.valueOf(mathchStatisInfo.getGuest_danger()));
         tv_guest_shoot_correct.setText(String.valueOf(mathchStatisInfo.getGuest_shoot_correct()));
         tv_guest_shoot_miss.setText(String.valueOf(mathchStatisInfo.getGuest_shoot_miss()));

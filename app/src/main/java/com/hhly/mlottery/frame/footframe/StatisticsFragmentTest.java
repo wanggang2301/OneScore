@@ -41,6 +41,9 @@ import java.util.Map;
 public class StatisticsFragmentTest extends Fragment {
 
 
+    private static String STA_PARM = "STA_PARM";
+
+    private String type = "";
     private View mView;
     private Context mContext;
 
@@ -84,8 +87,12 @@ public class StatisticsFragmentTest extends Fragment {
     private MathchStatisInfo mMathchStatisInfo;
 
 
-    public static StatisticsFragmentTest newInstance() {
+    public static StatisticsFragmentTest newInstance(String type) {
+
+        Bundle args = new Bundle();
+        args.putString(STA_PARM, type);
         StatisticsFragmentTest fragment = new StatisticsFragmentTest();
+        fragment.setArguments(args);
 
         return fragment;
     }
@@ -95,10 +102,29 @@ public class StatisticsFragmentTest extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_statistics, container, false);
         mContext = getActivity();
+        Bundle args = getArguments();
+        if (args != null) {
+            type = args.getString(STA_PARM);
+        }
         initView();
-        //initData();
+        loadData();
         initEvent();
         return mView;
+    }
+
+
+    private void loadData() {
+
+
+        if ("-1".equals(type)) {
+            getVolleyData();
+            getVolleyDataStatic();
+
+        } else {
+            initData(type);
+            initJson(type);
+        }
+
     }
 
     /**
@@ -111,6 +137,15 @@ public class StatisticsFragmentTest extends Fragment {
             public void onClick(View v) {
                 // 请求数据
                 getVolleyData();
+            }
+        });
+
+
+        reLoadin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 请求数据
+                getVolleyDataStatic();
             }
         });
         // 走势图滚动监听
@@ -151,7 +186,7 @@ public class StatisticsFragmentTest extends Fragment {
         fl_attackTrend_networkError = (FrameLayout) mView.findViewById(R.id.fl_attackTrend_networkError);
         //  sv_attack = (ScrollView) mView.findViewById(R.id.sv_attack);
 
-        reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新
+        reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新走势图
         // 攻防走势图控件
         myLineChartAttack = new MyLineChart(mContext);
         myLineChartAttack.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
@@ -190,7 +225,7 @@ public class StatisticsFragmentTest extends Fragment {
         fl_cornerTrend_loading = (FrameLayout) mView.findViewById(R.id.fl_cornerTrend_loading);
         fl_cornerTrend_networkError = (FrameLayout) mView.findViewById(R.id.fl_cornerTrend_networkError);
         layout_match_bottom = (RelativeLayout) mView.findViewById(R.id.layout_match_bottom);
-        reLoadin = (TextView) mView.findViewById(R.id.reLoadin);// 刷新
+        reLoadin = (TextView) mView.findViewById(R.id.reLoadin);// 刷新统计图
 
 
         //主（客）队进度条
@@ -230,20 +265,14 @@ public class StatisticsFragmentTest extends Fragment {
 
 
     public void setList(List<Integer> hCorners, List<Integer> gCorners, List<Integer> hDangers, List<Integer> gDangers) {
-        mHomeCorners.clear();
-        mGuestCorners.clear();
-        mHomeDangers.clear();
-        mGuestDangers.clear();
-
         mHomeCorners = hCorners;
         mGuestCorners = gCorners;
         mHomeDangers = hDangers;
         mGuestDangers = gDangers;
-
     }
 
     /**
-     * 初始化数据
+     * 初始化数据走势图数据
      */
     public void initData(String id) {
 
@@ -255,11 +284,17 @@ public class StatisticsFragmentTest extends Fragment {
 
         } else if ("1".equals(id)) {
 
+          /*  L.d("1111","mHomeCorners="+mHomeCorners.size()+"");
+            L.d("1111","mGuestCorners="+mGuestCorners.size()+"");
+            L.d("1111","mHomeDangers="+mHomeDangers.size()+"");
+            L.d("1111","mGuestDangers="+mGuestDangers.size()+"");
+*/
+
             showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
             showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
 
         } else if ("-1".equals(id)) {
-            getVolleyData();
+            // getVolleyData();
         }
     }
 
@@ -309,7 +344,7 @@ public class StatisticsFragmentTest extends Fragment {
     }
 
     /**
-     * 请求后台数据
+     * 请求走势图后台数据
      *
      * @return
      */
@@ -362,7 +397,7 @@ public class StatisticsFragmentTest extends Fragment {
 
 
     /**
-     * 请求后台数据
+     * 请求统计图后台数据
      *
      * @return
      */
@@ -403,9 +438,14 @@ public class StatisticsFragmentTest extends Fragment {
         mMathchStatisInfo = m;
     }
 
-    //初始化json数据，绑定txt
+    /***
+     * 初始化统计图数据
+     *
+     * @param id
+     */
     public void initJson(String id) {
 
+        //未开赛
         if ("0".equals(id)) {
             prohome_team.setProgress(50);
             prohome_trapping.setProgress(50);
@@ -436,6 +476,16 @@ public class StatisticsFragmentTest extends Fragment {
             if (mMathchStatisInfo == null) {
                 return;
             }
+
+
+            prohome_team.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_shoot_door(), mMathchStatisInfo.getGuest_shoot_door()));
+            prohome_trapping.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_rescue(), mMathchStatisInfo.getGuest_rescue()));
+            prohome_foul.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_foul(), mMathchStatisInfo.getGuest_foul()));
+            prohome_offside.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_away(), mMathchStatisInfo.getGuest_away()));
+            prohome_freehit.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_free_kick(), mMathchStatisInfo.getGuest_free_kick()));
+            prohome_lineout.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_lineOut(), mMathchStatisInfo.getGuest_lineOut()));
+
+
             guest_team_txt.setText(mMathchStatisInfo.getGuest_shoot_door() + "");
             home_team_txt.setText(mMathchStatisInfo.getHome_shoot_door() + "");
 
@@ -455,7 +505,7 @@ public class StatisticsFragmentTest extends Fragment {
             home_lineout_txt.setText(mMathchStatisInfo.getHome_lineOut() + "");
 
         } else if ("-1".equals(id)) {//完场
-            getVolleyDataStatic();
+            // getVolleyDataStatic();
         }
     }
 

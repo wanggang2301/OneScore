@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="皇马"
+                android:text="主队"
                 android:textColor="@color/white"
                 android:textSize="15dp" />
         </RelativeLayout>
@@ -44,7 +44,7 @@
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10:10"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="13sp" />
 
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="0"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="13sp" />
 
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/keepTime"
-                    android:text="'"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="13sp" />
 
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="巴萨"
+                android:text="客队"
                 android:textColor="@color/white"
                 android:textSize="15dp" />
         </RelativeLayout>
@@ -334,10 +334,6 @@
                 android:max="100"
                 android:progress="50"
                 android:progressDrawable="@drawable/pro" />
-
-
-
-
         </LinearLayout>
 
 
