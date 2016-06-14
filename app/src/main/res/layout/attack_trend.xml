@@ -75,130 +75,130 @@
             </LinearLayout>
         </FrameLayout>
 
-            <!--走势图-->
-            <LinearLayout
-                android:id="@+id/ll_trend_main"
+        <!--走势图-->
+        <LinearLayout
+            android:id="@+id/ll_trend_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <!--角球折线图走势-->
+            <RelativeLayout
+                android:id="@+id/rl_cornerTrend_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-                <!--角球折线图走势-->
-                <RelativeLayout
-                    android:id="@+id/rl_cornerTrend_data"
+                android:visibility="visible">
+
+                <FrameLayout
+                    android:id="@+id/fl_main_corner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/x440"
+                    android:paddingLeft="@dimen/x80"
+                    android:paddingRight="@dimen/x40"></FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_time_name_corner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fl_main_corner"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/y20"
+                    android:paddingLeft="@dimen/x120">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/homeTeam"
+                        android:textColor="@color/firstPlayers_homeTeam_bg"
+                        android:textSize="@dimen/number_desc" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="25dip"
+                        android:text="@string/guestTeam"
+                        android:textColor="@color/firstPlayers_visitingTeam_bg"
+                        android:textSize="@dimen/number_desc" />
+                </LinearLayout>
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="visible">
+                    android:paddingLeft="@dimen/x30"
+                    android:paddingTop="@dimen/y20"
+                    android:text="@string/corner"
+                    android:textColor="@color/res_pl_color"
+                    android:textSize="@dimen/number_desc" />
 
-                    <FrameLayout
-                        android:id="@+id/fl_main_corner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/x440"
-                        android:paddingLeft="@dimen/x80"
-                        android:paddingRight="@dimen/x40"></FrameLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_time_name_corner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/fl_main_corner"
-                        android:orientation="horizontal"
-                        android:paddingBottom="@dimen/y20"
-                        android:paddingLeft="@dimen/x120">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/homeTeam"
-                            android:textColor="@color/firstPlayers_homeTeam_bg"
-                            android:textSize="@dimen/number_desc" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="25dip"
-                            android:text="@string/guestTeam"
-                            android:textColor="@color/firstPlayers_visitingTeam_bg"
-                            android:textSize="@dimen/number_desc" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/x30"
-                        android:paddingTop="@dimen/y20"
-                        android:text="@string/corner"
-                        android:textColor="@color/res_pl_color"
-                        android:textSize="@dimen/number_desc" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@id/ll_time_name_corner"
-                        android:layout_alignParentRight="true"
-                        android:paddingRight="@dimen/x140"
-                        android:text="@string/game_time"
-                        android:textColor="@color/res_pl_color"
-                        android:textSize="@dimen/number_desc" />
-
-                </RelativeLayout>
-                <!--攻防折线图走势-->
-                <RelativeLayout
-                    android:id="@+id/rl_attackTrend_data"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="visible">
+                    android:layout_above="@id/ll_time_name_corner"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="@dimen/x140"
+                    android:text="@string/game_time"
+                    android:textColor="@color/res_pl_color"
+                    android:textSize="@dimen/number_desc" />
 
-                    <FrameLayout
-                        android:id="@+id/fl_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/x440"
-                        android:paddingLeft="@dimen/x80"
-                        android:paddingRight="@dimen/x40"></FrameLayout>
+            </RelativeLayout>
+            <!--攻防折线图走势-->
+            <RelativeLayout
+                android:id="@+id/rl_attackTrend_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
 
-                    <LinearLayout
-                        android:id="@+id/ll_time_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/fl_main"
-                        android:orientation="horizontal"
-                        android:paddingBottom="@dimen/y20"
-                        android:paddingLeft="@dimen/x120">
+                <FrameLayout
+                    android:id="@+id/fl_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/x440"
+                    android:paddingLeft="@dimen/x80"
+                    android:paddingRight="@dimen/x40"></FrameLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/homeTeam"
-                            android:textColor="@color/firstPlayers_homeTeam_bg"
-                            android:textSize="@dimen/number_desc" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="25dip"
-                            android:text="@string/guestTeam"
-                            android:textColor="@color/firstPlayers_visitingTeam_bg"
-                            android:textSize="@dimen/number_desc" />
-                    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_time_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fl_main"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/y20"
+                    android:paddingLeft="@dimen/x120">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/x30"
-                        android:paddingTop="@dimen/y20"
-                        android:text="@string/attack"
-                        android:textColor="@color/res_pl_color"
+                        android:text="@string/homeTeam"
+                        android:textColor="@color/firstPlayers_homeTeam_bg"
                         android:textSize="@dimen/number_desc" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_above="@id/ll_time_name"
-                        android:layout_alignParentRight="true"
-                        android:paddingRight="@dimen/x140"
-                        android:text="@string/game_time"
-                        android:textColor="@color/res_pl_color"
+                        android:paddingLeft="25dip"
+                        android:text="@string/guestTeam"
+                        android:textColor="@color/firstPlayers_visitingTeam_bg"
                         android:textSize="@dimen/number_desc" />
-                </RelativeLayout>
-            </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/x30"
+                    android:paddingTop="@dimen/y20"
+                    android:text="@string/attack"
+                    android:textColor="@color/res_pl_color"
+                    android:textSize="@dimen/number_desc" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/ll_time_name"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="@dimen/x140"
+                    android:text="@string/game_time"
+                    android:textColor="@color/res_pl_color"
+                    android:textSize="@dimen/number_desc" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

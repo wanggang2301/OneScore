@@ -173,7 +173,7 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                 for (int m = 0; m < mListOddEntity.size(); m++) {// initData为一个list类型的数据源
                     Map<String, String> obMap = new HashMap<>();
                     obMap.put("id", mListOddEntity.get(m).getId());
-                    obMap.put("name",mListOddEntity.get(m).getName());
+                    obMap.put("name", mListOddEntity.get(m).getName());
                     obList.add(obMap);
                 }
                 //点击指数页面，传值给详情界面
@@ -202,13 +202,13 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
                         if (mRight_listview.getFirstVisiblePosition() != 0) {
-                            ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(false);
+                            ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
                         }
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                        ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(true);
+                        ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
                         break;
                 }
                 return false;
@@ -277,10 +277,10 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
     public void InitData() {
         // 设置参数
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
-        if(getActivity()==null){
+        if (getActivity() == null) {
             return;
         }
-        mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
+        mThirdId = ((FootballMatchDetailActivity) getActivity()).mThirdId;
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("thirdId", mThirdId);
         myPostParams.put("oddType", oddType);

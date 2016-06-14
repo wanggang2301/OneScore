@@ -2,12 +2,16 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -15,6 +19,7 @@ import com.hhly.mlottery.bean.footballDetails.BottomOdds;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -29,6 +34,11 @@ import java.util.List;
  * @des ${TODO}
  */
 public class DetailsRollballFragment extends Fragment {
+
+    private final int ERROR = -1;//访问失败
+    private final int SUCCESS = 0;// 访问成功
+    private final int STARTLOADING = 1;// 正在加载中
+
     private View mView;
 
     private Context mContext;
@@ -93,6 +103,8 @@ public class DetailsRollballFragment extends Fragment {
 
     private TextView live_text;  //实时直播
 
+    private TextView reLoading; //赔率请求失败重新加载
+
     private DetailsRollOdd odd_alet; //亚盘
 
     private DetailsRollOdd odd_asize; //大小
@@ -100,6 +112,13 @@ public class DetailsRollballFragment extends Fragment {
     private DetailsRollOdd odd_eur; //欧赔
 
     private ImageView live_infos;
+
+
+    private FrameLayout fl_odds_loading;
+
+    private FrameLayout fl_odds_net_error;
+
+    private LinearLayout ll_odds;
 
     private BottomOddsDetailsFragment mBottomOddsDetailsFragment;
 
@@ -138,6 +157,8 @@ public class DetailsRollballFragment extends Fragment {
                 mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
                 mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
                 initLiveText();
+
+                L.d("ddd","fffff");
                 initOdds();
             }
         }
@@ -206,12 +227,50 @@ public class DetailsRollballFragment extends Fragment {
             }
         });
 
+        reLoading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initOdds();
+            }
+        });
+
 
     }
 
 
-    private void initOdds() {
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
 
+            switch (msg.what) {
+                case STARTLOADING:// 正在加载中
+                    fl_odds_loading.setVisibility(View.VISIBLE);
+                    fl_odds_net_error.setVisibility(View.GONE);
+                    ll_odds.setVisibility(View.GONE);
+                    break;
+                case SUCCESS:// 加载成功
+                    fl_odds_loading.setVisibility(View.GONE);
+                    fl_odds_net_error.setVisibility(View.GONE);
+                    ll_odds.setVisibility(View.VISIBLE);
+
+                    break;
+                case ERROR:// 加载失败
+                    fl_odds_loading.setVisibility(View.GONE);
+                    fl_odds_net_error.setVisibility(View.VISIBLE);
+                    ll_odds.setVisibility(View.GONE);
+                    // isHttpData = false;
+                    break;
+            }
+        }
+    };
+
+    private void initOdds() {
+        if (getActivity() == null) {
+            return;
+        }
+
+        L.d("ddd","加载数据");
+        mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // Map<String, String> params = new HashMap<>();
         //params.put("thirdId", mThirdId);
         String url = "http://192.168.31.70:8080/mlottery/core/footballBallList.ballListOverview.do?thirdId=336621&lang=zh";
@@ -223,12 +282,13 @@ public class DetailsRollballFragment extends Fragment {
                         if (!bottomOdds.getResult().equals("200")) {
                             return;
                         }
+
                         initItemOdd(bottomOdds);
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        //  mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
+                        mHandler.sendEmptyMessage(ERROR);
                     }
                 }, BottomOdds.class
         );
@@ -246,7 +306,7 @@ public class DetailsRollballFragment extends Fragment {
         odd_alet.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0),0);
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), 0);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
@@ -255,7 +315,7 @@ public class DetailsRollballFragment extends Fragment {
         odd_asize.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getOverunderlistOdd().get(0),1);
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getOverunderlistOdd().get(0), 1);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
@@ -263,10 +323,13 @@ public class DetailsRollballFragment extends Fragment {
         odd_eur.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getEuropelistOdd().get(0),2);
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getEuropelistOdd().get(0), 2);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
+
+        mHandler.sendEmptyMessage(SUCCESS);
+
     }
 
 
@@ -290,6 +353,13 @@ public class DetailsRollballFragment extends Fragment {
         odd_asize = (DetailsRollOdd) mView.findViewById(R.id.odd_asize);
         odd_eur = (DetailsRollOdd) mView.findViewById(R.id.odd_eur);
         live_infos = (ImageView) mView.findViewById(R.id.live_infos);
+
+        fl_odds_loading = (FrameLayout) mView.findViewById(R.id.fl_odds_loading);
+        fl_odds_net_error = (FrameLayout) mView.findViewById(R.id.fl_odds_networkError);
+
+        ll_odds = (LinearLayout) mView.findViewById(R.id.ll_0dds);
+
+        reLoading = (TextView) mView.findViewById(R.id.reLoading);
     }
 
     public void initPreData() {

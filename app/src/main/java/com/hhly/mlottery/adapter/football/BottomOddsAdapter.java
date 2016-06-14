@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballDetails.BottomOdds;
+import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
 
 import java.util.List;
 
@@ -20,21 +20,55 @@ import java.util.List;
 public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    private List<BottomOdds> list;
+    private List<BottomOddsDetailsItem> list;
     private Context mContext;
 
-    public BottomOddsAdapter(Context context, List<BottomOdds> datas) {
+    public BottomOddsAdapter(Context context, List<BottomOddsDetailsItem> datas) {
         this.mContext = context;
         this.list = datas;
-
-
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        BottomOddsHolder  hold = (BottomOddsHolder) holder;
 
+        //1 升 0无 -1降
+
+        BottomOddsHolder hold = (BottomOddsHolder) holder;
+        hold.item_time.setText(list.get(position).getTime() + "'");
+        hold.item_score.setText(list.get(position).getScore());
+        hold.item_home.setText(list.get(position).getOdd().getLeft());
+        setTextViewColor(hold.item_home, 0, list.get(position).getOdd().getLeftUp());
+
+        hold.item_handicap.setText(list.get(position).getOdd().getMiddle());
+        setTextViewColor(hold.item_handicap, 1, list.get(position).getOdd().getMiddleUp());
+
+        hold.item_guest.setText(list.get(position).getOdd().getRight());
+        setTextViewColor(hold.item_guest, 0, list.get(position).getOdd().getRightUp());
+
+    }
+
+    private void setTextViewColor(TextView textView, int flag, String b) {
+        textView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+        textView.setBackgroundResource(R.color.white);
+        if ("1".equals(b)) {
+            if (flag == 0) {
+                textView.setTextColor(mContext.getResources().getColor(R.color.odds_details));
+            } else {
+                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setBackgroundResource(R.color.analyze_left);
+            }
+        } else if ("-1".equals(b)) {
+            if (flag == 0) {
+                textView.setTextColor(mContext.getResources().getColor(R.color.odds_left));
+            } else {
+                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setBackgroundResource(R.color.odds_left);
+            }
+        } else if ("0".equals(b)){
+            textView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            textView.setBackgroundResource(R.color.white);
+        }
     }
 
 
@@ -51,6 +85,7 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView item_home;
         TextView item_handicap;
         TextView item_guest;
+
         public BottomOddsHolder(final View itemView) {
             super(itemView);
             item_time = (TextView) itemView.findViewById(R.id.time);
@@ -63,6 +98,6 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return 50;
+        return list.size();
     }
 }

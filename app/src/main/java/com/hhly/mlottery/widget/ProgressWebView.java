@@ -14,7 +14,7 @@ import com.hhly.mlottery.R;
  * @Description: 带进度条的WebView
  */
 @SuppressWarnings("deprecation")
-public class ProgressWebView extends WebView {
+public class ProgressWebView extends WebView  {
 
     private ProgressBar progressbar;
     private ScrollInterface mScrollInterface;
@@ -79,4 +79,5 @@ public class ProgressWebView extends WebView {
         public void onSChanged(int l, int t, int oldl, int oldt);
 
     }
+
 }

@@ -44,6 +44,7 @@ import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
@@ -70,7 +71,9 @@ import java.util.TimerTask;
  */
 public class FootballMatchDetailActivityTest extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, SwipeRefreshLayout.OnRefreshListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    public ExactSwipeRefrashLayout mRefreshLayout;
+
     private FragmentManager fragmentManager;
     private ViewPager mHeadviewpager;
     private ViewPager mViewPager;
@@ -215,21 +218,25 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
+//        startActivity(new Intent(this, InputActivity.class));
     }
 
     private void initView() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+
+        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout);
+        mRefreshLayout.setColorSchemeResources(R.color.tabhost);
+        mRefreshLayout.setOnRefreshListener(this);
+
+
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mHeadviewpager = (ViewPager) findViewById(R.id.headviewpager);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
         appBarLayout.addOnOffsetChangedListener(this);
         fragmentManager = getSupportFragmentManager();
 
@@ -253,9 +260,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         if (mCollapsingToolbarLayout.getHeight() +
                 verticalOffset < mHeadviewpager.getHeight()) {
-            mSwipeRefreshLayout.setEnabled(false);
+            mRefreshLayout.setEnabled(false);
         } else {
-            mSwipeRefreshLayout.setEnabled(true);
+            mRefreshLayout.setEnabled(true);
         }
     }
 
@@ -496,7 +503,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mOddsFragment = OddsFragment.newInstance("", "");
         mStatisticsFragment = StatisticsFragmentTest.newInstance();
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment,mTalkAboutBallFragment , mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
+        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -645,11 +652,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     protected void onDestroy() {

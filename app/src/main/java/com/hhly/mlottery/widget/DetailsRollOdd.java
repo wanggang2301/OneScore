@@ -60,12 +60,53 @@ public class DetailsRollOdd extends FrameLayout {
 
 
     public void setTableLayoutData(List<BottomOddsItem> bottomOddsItem) {
-        live_left.setText(bottomOddsItem.get(1).getHomeOdd());
-        live_middle.setText(bottomOddsItem.get(1).getHand());
-        live_right.setText(bottomOddsItem.get(1).getGuestOdd());
-        first_left.setText(bottomOddsItem.get(0).getHomeOdd());
-        first_middle.setText(bottomOddsItem.get(0).getHand());
-        first_right.setText(bottomOddsItem.get(0).getGuestOdd());
 
+        if (bottomOddsItem.get(0) != null) {
+            first_left.setText(bottomOddsItem.get(0).getLeft());
+            first_middle.setText(bottomOddsItem.get(0).getMiddle());
+            first_right.setText(bottomOddsItem.get(0).getRight());
+            setTextViewColor(first_left, 0, bottomOddsItem.get(0).getLeftUp());
+            setTextViewColor(first_middle, 1, bottomOddsItem.get(0).getMiddleUp());
+            setTextViewColor(first_right, 0, bottomOddsItem.get(0).getRightUp());
+
+        }
+
+        if (bottomOddsItem.get(1) != null) {
+            live_left.setText(bottomOddsItem.get(1).getLeft());
+
+            live_middle.setText(bottomOddsItem.get(1).getMiddle());
+
+            live_right.setText(bottomOddsItem.get(1).getRight());
+
+            setTextViewColor(live_left, 0, bottomOddsItem.get(1).getLeftUp());
+            setTextViewColor(live_middle, 1, bottomOddsItem.get(1).getMiddleUp());
+            setTextViewColor(live_right, 0, bottomOddsItem.get(1).getRightUp());
+
+        }
+
+
+    }
+
+    private void setTextViewColor(TextView textView, int flag, String b) {
+        textView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+        textView.setBackgroundResource(R.color.white);
+        if ("1".equals(b)) {
+            if (flag == 0) {
+                textView.setTextColor(mContext.getResources().getColor(R.color.odds_details));
+            } else {
+                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setBackgroundResource(R.color.analyze_left);
+            }
+        } else if ("-1".equals(b)) {
+            if (flag == 0) {
+                textView.setTextColor(mContext.getResources().getColor(R.color.odds_left));
+            } else {
+                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setBackgroundResource(R.color.odds_left);
+            }
+        } else if ("0".equals(b)) {
+            textView.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            textView.setBackgroundResource(R.color.white);
+        }
     }
 }

@@ -240,16 +240,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
     }
 
-    private void initScrollView() {
-        //解决adjustresize和透明状态栏的冲突
-        final View decview = getActivity().getWindow().getDecorView();
-        decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                reLayout(decview, mView);
-            }
-        });
-    }
+
 
     //分页查询文章怕评论数据 无需登录
     public void getTopicComments(int page) {
@@ -283,7 +274,16 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
             }
         });
     }
-
+    private void initScrollView() {
+        //解决adjustresize和透明状态栏的冲突
+        final View decview = getActivity().getWindow().getDecorView();
+        decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                reLayout(decview, mView);
+            }
+        });
+    }
     //在某个view里重新布局某个view
     public void reLayout(View decview, View scrollview) {
         Rect r = new Rect();

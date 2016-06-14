@@ -10,57 +10,64 @@ import android.os.Parcelable;
  */
 public class BottomOddsItem implements Parcelable {
 
-    private String time;
-    private String score;
+    private String left;
+    private String middle;
+    private String right;
 
-    private String homeOdd;
+    private String leftUp;
 
-    private String hand;
+    private String middleUp;
 
-    private String guestOdd;
+    private String rightUp;
 
-    public void setTime(String time) {
-        this.time = time;
+
+    public String getMiddle() {
+        return middle;
     }
 
-    public String getScore() {
-        return score;
+    public void setMiddle(String middle) {
+        this.middle = middle;
     }
 
-    public void setScore(String score) {
-        this.score = score;
+    public String getRight() {
+        return right;
     }
 
-    public String getHomeOdd() {
-        return homeOdd;
+    public void setRight(String right) {
+        this.right = right;
     }
 
-    public void setHomeOdd(String homeOdd) {
-        this.homeOdd = homeOdd;
+    public String getLeft() {
+        return left;
     }
 
-    public String getHand() {
-        return hand;
+    public void setLeft(String left) {
+        this.left = left;
     }
 
-    public void setHand(String hand) {
-        this.hand = hand;
+    public String getLeftUp() {
+        return leftUp;
     }
 
-    public String getGuestOdd() {
-        return guestOdd;
+    public void setLeftUp(String leftUp) {
+        this.leftUp = leftUp;
     }
 
-    public void setGuestOdd(String guestOdd) {
-        this.guestOdd = guestOdd;
+    public String getMiddleUp() {
+        return middleUp;
     }
 
-
-
-    public String getTime() {
-        return time;
+    public void setMiddleUp(String middleUp) {
+        this.middleUp = middleUp;
     }
 
+    public String getRightUp() {
+        return rightUp;
+    }
+
+    public void setRightUp(String rightUp) {
+        this.rightUp = rightUp;
+    }
 
     @Override
     public int describeContents() {
@@ -69,25 +76,27 @@ public class BottomOddsItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.time);
-        dest.writeString(this.score);
-        dest.writeString(this.homeOdd);
-        dest.writeString(this.hand);
-        dest.writeString(this.guestOdd);
+        dest.writeString(this.left);
+        dest.writeString(this.middle);
+        dest.writeString(this.right);
+        dest.writeString(this.leftUp);
+        dest.writeString(this.middleUp);
+        dest.writeString(this.rightUp);
     }
 
     public BottomOddsItem() {
     }
 
     protected BottomOddsItem(Parcel in) {
-        this.time = in.readString();
-        this.score = in.readString();
-        this.homeOdd = in.readString();
-        this.hand = in.readString();
-        this.guestOdd = in.readString();
+        this.left = in.readString();
+        this.middle = in.readString();
+        this.right = in.readString();
+        this.leftUp = in.readString();
+        this.middleUp = in.readString();
+        this.rightUp = in.readString();
     }
 
-    public static final Parcelable.Creator<BottomOddsItem> CREATOR = new Parcelable.Creator<BottomOddsItem>() {
+    public static final Creator<BottomOddsItem> CREATOR = new Creator<BottomOddsItem>() {
         @Override
         public BottomOddsItem createFromParcel(Parcel source) {
             return new BottomOddsItem(source);
