@@ -31,7 +31,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
 import com.hhly.mlottery.adapter.ImmediateInternationalAdapter;
 import com.hhly.mlottery.bean.HotFocusLeagueCup;
@@ -552,7 +552,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                         @Override
                                         public void onItemClick(View view, String data) {
                                             String thirdId = data;
-                                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
                                             intent.putExtra("thirdId", thirdId);
                                             intent.putExtra("currentFragmentId", 0);
 
@@ -611,7 +611,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                 @Override
                                 public void onItemClick(View view, String data) {
                                     String thirdId = data;
-                                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
                                     intent.putExtra("thirdId", thirdId);
                                     getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                                 }
