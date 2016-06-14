@@ -549,8 +549,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     }
                 }
 
-
                 if (!isCheckedDefualt) {
+
+               // if (!isCheckedDefualt) {
                     //否则显示  筛选后的比赛
 
                     mMatchs.clear();

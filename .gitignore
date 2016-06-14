@@ -34,3 +34,5 @@ signing.properties
 .idea
 
 gradle.properties
+
+captures

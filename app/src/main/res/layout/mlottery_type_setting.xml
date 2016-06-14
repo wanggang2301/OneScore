@@ -35,10 +35,9 @@
                 android:background="@color/line_football_footer" />
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical">
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,21 +49,20 @@
                     android:textSize="@dimen/item_football_hometeam"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    />
+                    android:id="@+id/textView" />
 
-                <CheckBox
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/goal_shake"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:background="@android:color/transparent"
-                    android:button="@drawable/setting_switch_bg"
                     android:checked="true"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn="" />
+                    />
+
+
+
             </RelativeLayout>
 
             <View
@@ -170,19 +168,16 @@
                     android:textColor="#000"
                     android:textSize="@dimen/item_football_hometeam" />
 
-                <CheckBox
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/rc_shake"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dip"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:background="@android:color/transparent"
-                    android:button="@drawable/setting_switch_bg"
-                    android:checked="true"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn="" />
+                    android:checked="true"/>
+
+
             </RelativeLayout>
 
             <View
@@ -205,19 +200,16 @@
                     android:textColor="#000"
                     android:textSize="@dimen/item_football_hometeam" />
 
-                <CheckBox
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/rc_sound"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dip"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:background="@android:color/transparent"
-                    android:button="@drawable/setting_switch_bg"
-                    android:checked="true"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn="" />
+                    android:checked="true"/>
+
+
             </RelativeLayout>
 
             <View
@@ -240,19 +232,16 @@
                     android:textColor="@color/week"
                     android:textSize="@dimen/item_football_hometeam" />
 
-                <CheckBox
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/cb_notice"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dip"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:background="@android:color/transparent"
-                    android:button="@drawable/setting_switch_bg"
-                    android:checked="true"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn="" />
+                    android:checked="true"/>
+
+
             </RelativeLayout>
 
             <View

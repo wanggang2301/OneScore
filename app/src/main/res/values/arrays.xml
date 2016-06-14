@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="football_score_tab_names">
+        <item>滚球</item>
+        <item>即时</item>
+        <item>赛果</item>
+        <item>赛程</item>
+        <item>关注</item>
+    </string-array>
+
+    <string-array name="basketball_score_tab_names">
+        <item>即时</item>
+        <item>赛果</item>
+        <item>赛程</item>
+        <item>关注</item>
+    </string-array>
+
+    <string-array name="match_tab_names_new">
+        <item>赛事</item>
+        <item>资讯</item>
+        <item>视频</item>
+        <item>指数</item>
+        <item>数据</item>
+    </string-array>
+
+    <string-array name="match_tab_type_names">
+        <item>篮球</item>
+        <item>足球</item>
+    </string-array>
+
+    <string-array name="basketball_match_tab_names">
+        <item>分析</item>
+        <item>欧赔</item>
+        <item>亚盘</item>
+        <item>大小</item>
+    </string-array>
+
+    <string-array name="football_match_tab_names">
+        <item>滚球</item>
+        <item>聊球</item>
+        <item>分析</item>
+        <item>指数</item>
+        <item>统计</item>
+    </string-array>
+
+    <string-array name="football_live_tab_names">
+        <item>滚球</item>
+        <item>事件</item>
+        <item>走势</item>
+        <item>统计</item>
+    </string-array>
+
+    <string-array name="data_tab_names">
+        <item>积分榜</item>
+        <item>赛程</item>
+    </string-array>
+
+</resources>

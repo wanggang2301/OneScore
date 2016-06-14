@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.footframe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,6 +51,7 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
     private PinnedHeaderExpandableListView explistview_live;//列表显示数据
     private IntegralExpandableAdapter mExpandableAdapter;//数据显示适配器
     private RelativeLayout mNoDataLayout;//无赛事显示
+    protected Activity mActivity;
     private final static int VIEW_STATUS_LOADING = 11;
     private final static int VIEW_STATUS_SUCCESS = 33;
     private static final int VIEW_STATUS_NET_ERROR = 44;
@@ -119,7 +121,7 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.football_integral, container, false);
-        context = getActivity();
+        context = mActivity;
 
         initView();
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -135,24 +137,29 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
         if (mGroupDataList.isEmpty()) {
             mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
         } else {
-            mExpandableAdapter = new IntegralExpandableAdapter(childDataList, groupDataList, context, explistview_live, leagueType);
-            //Log.v(TAG, "integral_groupDataList==========" + groupDataList);
-            // Log.v(TAG, "integral_childDataList==========" + childDataList);
-            explistview_live.setAdapter(mExpandableAdapter);
+            if(mExpandableAdapter==null) {
+                mExpandableAdapter = new IntegralExpandableAdapter(childDataList, groupDataList, context, explistview_live, leagueType);
+                //Log.v(TAG, "integral_groupDataList==========" + groupDataList);
+                // Log.v(TAG, "integral_childDataList==========" + childDataList);
+                explistview_live.setAdapter(mExpandableAdapter);
+                explistview_live.setGroupIndicator(null);
+            }else{
+                mExpandableAdapter.setAllInfor(childDataList, groupDataList);
+                explistview_live.setGroupIndicator(null);
+                mExpandableAdapter.notifyDataSetChanged();
+            }
+
+
             //默认展开所有数据
             for (int i = 0; i < mGroupDataList.size(); i++) {
                 explistview_live.expandGroup(i);
             }
-
-            explistview_live.setGroupIndicator(null);
-            mExpandableAdapter.notifyDataSetChanged();
 
             isLoadedData = true;
             mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
         }
 
     }
-
 
     private void initView() {
 
@@ -189,7 +196,7 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
             case R.id.network_exception_reload_btn:
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 // initData();
-                if (getActivity() != null) {
+                if (mActivity != null) {
                     ((FootballInformationActivity) getActivity()).intiData(false);
                 }
                 break;
@@ -200,7 +207,7 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onRefresh() {
-        if (getActivity() != null) {
+        if (mActivity != null) {
             ((FootballInformationActivity) getActivity()).intiData(false);
         }
     }
@@ -220,5 +227,11 @@ public class IntegralFragment extends Fragment implements View.OnClickListener, 
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("IntegralFragment");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity= (Activity) context;
     }
 }

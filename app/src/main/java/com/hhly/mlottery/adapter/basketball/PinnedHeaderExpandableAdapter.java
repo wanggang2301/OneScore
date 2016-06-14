@@ -177,8 +177,17 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             int currentapiVersion = android.os.Build.VERSION.SDK_INT;
             if (currentapiVersion == 16) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0,20,0,20);
+                params.setMargins(0,25,0,25);
                 holder.basket_half_score.setLayoutParams(params);
+
+                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+                params2.setMargins(120, 0, 10, 0);
+//                holder.basket_score.setGravity(1);
+                holder.basket_score.setLayoutParams(params2);
+
+                RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+                params3.setMargins(55, 0, 0, 0);
+                holder.basket_guest_all_score.setLayoutParams(params3);
             }
             holder.basket_leftOdds = (TextView) convertView.findViewById(R.id.basket_leftOdds);
             holder.basket_rightOdds = (TextView) convertView.findViewById(R.id.basket_rightOdds);
@@ -412,20 +421,15 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         /**
          * 去除两端的空格，trim()；  防止-->  "XX   ..."情况
          */
-        if(childredata.getHomeTeam()==null){
-            holder.home_name.setText("");
-            holder.guest_name.setText(childredata.getGuestTeam().trim());
-        }
-        else if(childredata.getGuestTeam()==null){
+        if (childredata.getHomeTeam() != null) {
             holder.home_name.setText(childredata.getHomeTeam().trim());
-            holder.guest_name.setText("");
-        }else if(childredata.getHomeTeam()== null&&childredata.getGuestTeam()==null){
-            holder.home_name.setText("");
-            holder.guest_name.setText("");
+        }else{
+            holder.home_name.setText("--");
         }
-        else{
-            holder.home_name.setText(childredata.getHomeTeam().trim());
+        if (childredata.getGuestTeam() != null) {
             holder.guest_name.setText(childredata.getGuestTeam().trim());
+        }else{
+            holder.guest_name.setText("--");
         }
 
 

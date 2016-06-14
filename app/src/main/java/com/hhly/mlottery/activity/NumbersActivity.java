@@ -880,7 +880,8 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 holder.ll_item.setBackgroundColor(Color.WHITE);
             }
 
-            holder.tv_numbers_name.setText(AppConstants.numberNames[Integer.parseInt(mNumberInfo.getName()) - 1]);
+//            holder.tv_numbers_name.setText(AppConstants.numberNames[Integer.parseInt(mNumberInfo.getName()) - 1]);
+            NumberDataUtils.setTextTitle(mContext,holder.tv_numbers_name,mNumberInfo.getName());// 设置彩票名称
             holder.tv_numbers_issue.setText(mContext.getResources().getString(R.string.number_code_di) + mNumberInfo.getIssue() + mContext.getResources().getString(R.string.number_code_qi));
 
             numbers.clear();// 清除上次数据

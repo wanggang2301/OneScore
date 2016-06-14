@@ -23,8 +23,9 @@ public class BaseURLs {
 
     private static String getHost() {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
-            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
+            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_242);
 
+//            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "m.1332255.com";
             } else if (url_config == DebugConfigActivity.URL_242) {
@@ -566,6 +567,9 @@ public class BaseURLs {
 //	public final static String UMENG_CHANNEL_URL = "http://192.168.10.242:8083/traffic/api";
     public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";
 
+    //用户留存率分析
+    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";
+
     //指数详情
     public final static String URL_FOOTBALL_MATCHODD_DETAILS = URL_API_HOST + FOOTBALLMATCH_MATCHODD_DETAILS;
     //指数分析
@@ -658,6 +662,12 @@ public class BaseURLs {
     public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
     /**登出*/
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
+    /**重置密码*/
+    public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
+    /**修改昵称*/
+    public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
+    /**修改密码*/
+    public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
 
 
 

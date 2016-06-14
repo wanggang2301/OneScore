@@ -362,15 +362,21 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
                         // 保存设置语言的类型
                         PreferenceUtil.commitString("language", "rVI");
                     }
+                    MyApp.isLanguage = PreferenceUtil.getString("language","");
                     MyApp.mResources.updateConfiguration(MyApp.mConfiguration, MyApp.mDm);
+                    AppManager.getAppManager().finishAllActivity();// 结束所有任务栈
+                    Intent intent = new Intent();
+                    intent.setClass(this,HomePagerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);// 跳回到首页面
 //			getActivity().finish();
 //                    startActivity(it);
                     //从上往下切入
 //			getActivity().overridePendingTransition(R.anim.slide_in_from_top, R.anim.slide_out_to_bottom);
                     //从下往上切入
 //                    overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
-                    AppManager.getAppManager().finishActivity(HomeUserOptionsActivity.class);
-                    System.exit(0);	//杀掉当前应用
+//                    AppManager.getAppManager().finishActivity(HomeUserOptionsActivity.class);
+//                    System.exit(0);	//杀掉当前应用
 //			UiUtils.reStart(mContext);//重新启动
                     break;
                 default:

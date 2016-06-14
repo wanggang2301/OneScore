@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     private static final java.lang.String TAG = "AccountActivity";
 
     private ProgressDialog progressBar;
+    private TextView tv_nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,12 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
 
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.my);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
+        findViewById(R.id.public_btn_set).setOnClickListener(this);
+        // 是否需要设置 设置按钮src
+//        public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.tv_logout).setOnClickListener(this);
-        ((TextView)findViewById(R.id.tv_phone)).setText(AppConstants.register.getData().getUser().getNickName());
+        tv_nickname = ((TextView)findViewById(R.id.tv_nickname));
     }
 
     @Override
@@ -62,6 +66,9 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_logout: // 返回
                 MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
                 showDialog();
+                break;
+            case R.id.public_btn_set: // 昵称头像栏
+                startActivity(new Intent(this , ProfileActivity.class));
                 break;
             default:
                 break;
@@ -109,7 +116,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                     setResult(RESULT_OK);
                     finish();
                 }else{
-                    CommonUtils.handlerRequestResult(register.getResult());
+                    CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -128,6 +135,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         /**友盟页面统计*/
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("AccountActivity");
+        tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
     }
 
     @Override

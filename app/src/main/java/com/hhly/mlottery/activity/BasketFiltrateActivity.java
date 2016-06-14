@@ -13,7 +13,11 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.FiltrateAdapter;
 import com.hhly.mlottery.bean.basket.BasketMatchFilter;
+import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.FiltrateMatchFragment;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.view.GrapeGridview;
 import com.umeng.analytics.MobclickAgent;
 
@@ -85,6 +89,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
 
     private FiltrateAdapter mAdapter1;
     private FiltrateAdapter mAdapter2;
+    private int currentId;
 
 //    private boolean aa = false;
 
@@ -187,6 +192,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
        Serializable mSerialIzableChicked =  getIntent().getSerializableExtra("MatchChickedFilterDatas"); // 选中的
         mAllFilterDatas = (List<BasketMatchFilter>)mSerializableAll;//赋值==>> 得到List<BasketMatchFilter> 对象 （所有的数据）
         mChickedFilterDatas = (List<BasketMatchFilter>)mSerialIzableChicked; // 选中的
+        currentId = getIntent().getIntExtra("currentfragment" , 0);
 
         if (mAllFilterDatas == null){
             return;
@@ -373,6 +379,20 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
                 intent.putExtras(bundle);
                 setResult(Activity.RESULT_OK, intent);
 
+                Map<String,Object> map=new HashMap<>();
+                map.put("checkedCupIds", mCupChicked);
+//                map.put("checkedDefualt", false); currentId
+
+                if (currentId==0) {
+                    ImmedBasketballFragment.BasketImmedEventBus.post(map);
+                }else if (currentId==1){
+                    ResultBasketballFragment.BasketResultEventBus.post(map);
+                }else if (currentId==2){
+                    ScheduleBasketballFragment.BasketScheduleEventBus.post(map);
+                }
+//                ImmedBasketballFragment.BasketImmedEventBus.post(map);
+
+                L.d("currentId >>>>>>>>>>>","currentId == >"+currentId);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;

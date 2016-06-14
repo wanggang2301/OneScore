@@ -29,15 +29,14 @@ public class CounselComentLvAdapter extends BaseAdapter {
     private List<Comment> mInfosList;//
     private Activity mActivity;
     private String mString = "...";
-    private String total ;
-    private List<Integer> mlist= new ArrayList<>();//用来存储SpannableString的点击
+    private String total;
+    private List<Integer> mlist = new ArrayList<>();//用来存储SpannableString的点击
 
 
     public CounselComentLvAdapter(Activity activity) {
 
         this.mActivity = activity;
-        this.total=mActivity.getResources().getString(R.string.toatalvisiable);
-
+        this.total = mActivity.getResources().getString(R.string.toatalvisiable);
 
     }
 
@@ -51,13 +50,11 @@ public class CounselComentLvAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-
         return mInfosList == null ? 0 : mInfosList.size();
     }
 
     @Override
     public Object getItem(int position) {
-
         return mInfosList == null ? null : mInfosList.get(position);
     }
 
@@ -87,17 +84,16 @@ public class CounselComentLvAdapter extends BaseAdapter {
         }
         //暂时写死游客
 //        holder.nickname.setText(R.string.user_name);
-        holder.nickname.setText( mInfosList.get(position).passport.nickname);
+        holder.nickname.setText(mInfosList.get(position).passport.nickname);
         String time = DateUtil.transferLongToDate(mInfosList.get(position).create_time);
         holder.time.setText(time);
-
         if (mInfosList.get(position).content.length() > 50) {//字数大于50，则隐藏多于50的部分
-          if (mlist.contains(position)){//全部显示过   就让他一直保持全部显示
-              holder.content.setText(mInfosList.get(position).content);
-          }else {//没有全部显示过  就收起来
-              holder.content.setText(mInfosList.get(position).content.substring(0, 49));
-              SpanText(holder.content,position);
-          }
+            if (mlist.contains(position)) {//全部显示过   就让他一直保持全部显示
+                holder.content.setText(mInfosList.get(position).content);
+            } else {//没有全部显示过  就收起来
+                holder.content.setText(mInfosList.get(position).content.substring(0, 49));
+                SpanText(holder.content, position);
+            }
         } else {
             holder.content.setText(mInfosList.get(position).content);
         }

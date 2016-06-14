@@ -123,7 +123,7 @@
         >
         <RelativeLayout
             android:id="@+id/rl_iv"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x210"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x10"
             android:orientation="vertical">
@@ -133,9 +133,8 @@
                 android:layout_width="@dimen/x80"
                 android:layout_height="@dimen/x80"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/x80"
-                android:layout_marginRight="@dimen/x80"
-                />
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
 
@@ -187,7 +186,7 @@
                     android:layout_gravity="center_horizontal"
                     android:text=":"
                     android:textColor="#0085E1"
-                    android:textSize="@dimen/text_size_30"
+                    android:textSize="@dimen/text_size_25"
                     android:layout_marginTop="-3dp"
                     android:paddingRight="@dimen/x16"
                     android:paddingLeft="@dimen/x16"
@@ -200,7 +199,7 @@
                     android:layout_height="wrap_content"
                     android:text="100"
                     android:textColor="#0085E1"
-                    android:textSize="@dimen/text_size_30"
+                    android:textSize="@dimen/text_size_25"
                     android:layout_toLeftOf="@+id/basket_score"/>
 
                 <TextView
@@ -209,7 +208,7 @@
                     android:layout_height="wrap_content"
                     android:text="100"
                     android:textColor="#0085E1"
-                    android:textSize="@dimen/text_size_30"
+                    android:textSize="@dimen/text_size_25"
                     android:layout_toRightOf="@+id/basket_score"
                     />
             <TextView
@@ -279,7 +278,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_iv2"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x210"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginRight="-32dp"
@@ -291,9 +290,8 @@
                 android:layout_width="@dimen/x80"
                 android:layout_height="@dimen/x80"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/x76"
-                android:layout_marginRight="@dimen/x76"
-                />
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
         <LinearLayout

@@ -88,7 +88,7 @@ public class AppConstants {
 	public static final int FORTY_NINE = 49;
 
 	// 彩票种类名称
-	public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
+	/*public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_cq_ssc), // "重庆时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_jx_ssc), // "江西时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_xj_ssc),// "新疆时时彩"
@@ -111,7 +111,7 @@ public class AppConstants {
 			MyApp.getContext().getResources().getString(R.string.number_cz_jx_syxw),// "江西十一选五"
 			MyApp.getContext().getResources().getString(R.string.number_cz_sd_syxw),// "山东十一选五"
 			MyApp.getContext().getResources().getString(R.string.number_cz_tj_ssc) // "天津时时彩"
-	};
+	};*/
 
 	// 北京赛车开奖号码
 	public static int[] numberCarNos = { R.mipmap.car_no1, R.mipmap.car_no2, R.mipmap.car_no3, R.mipmap.car_no4, R.mipmap.car_no5, R.mipmap.car_no6, R.mipmap.car_no7,
@@ -184,6 +184,7 @@ public class AppConstants {
 	// 首页跳转key_value
 	public static final String FOTTBALL_KEY = "football";// 足球界面跳转Key
 	public static final int FOTTBALL_SCORE_VALUE = 0;// 足球比分跳转value
+	public static final int BASKETBALL_SCORE_VALUE = 5;// 篮球比分跳转value
 	public static final int FOTTBALL_INFORMATION_VALUE = 1;// 足球资讯跳转value
 	public static final int FOTTBALL_DATA_VALUE = 2;// 足球数据跳转value
 	public static final int FOTTBALL_VIDEO_VALUE = 3;// 足球视频跳转value
@@ -206,6 +207,8 @@ public class AppConstants {
 	public static final String SPKEY_TOKEN = "token";
 	/**保存nickName的key*/
 	public static final String SPKEY_NICKNAME = "nickName";
+	/**保存loginAccount的key*/
+	public static final String SPKEY_LOGINACCOUNT = "loginAccount";
 	/**应用启动的时候初始化*/
 	public static String deviceToken ="";
 	/**应用启动的时候初始化*/

@@ -73,7 +73,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="none">
-
         <!--走势图-->
         <LinearLayout
             android:id="@+id/ll_trend_main"
@@ -143,7 +142,7 @@
             <!--攻防折线图走势-->
             <RelativeLayout
                 android:id="@+id/rl_attackTrend_data"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible">
 

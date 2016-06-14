@@ -56,6 +56,8 @@ public class FirstPlayersFragment extends Fragment {
     private static final int SUCCESS = 0;// 访问成功
     private static final int STARTLOADING = 1;// 数据加载中
     private ScrollView sv_first;
+    private TextView tv_homeTeam_title;
+    private TextView tv_visitingTeam_title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,6 +162,8 @@ public class FirstPlayersFragment extends Fragment {
                 int dip5 = DisplayUtil.dip2px(mContext, 5);
                 int dip10 = DisplayUtil.dip2px(mContext, 10);
 
+                ll_rosters_homeTeam.removeAllViews();
+                ll_rosters_homeTeam.addView(tv_homeTeam_title);
                 // 添加主队名单
                 for (int i = 0, len = homeLineUpList.size(); i < len; i++) {
                     TextView tv_homeTeams = new TextView(mContext);
@@ -175,6 +179,9 @@ public class FirstPlayersFragment extends Fragment {
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 params.gravity = Gravity.RIGHT;// 设置靠右对齐
+
+                ll_rosters_visitingTeam.removeAllViews();
+                ll_rosters_visitingTeam.addView(tv_visitingTeam_title);
                 // 添加客队名单
                 for (int i = 0, len = guestLineUpList.size(); i < len; i++) {
                     TextView tv_visitingTeams = new TextView(mContext);
@@ -219,6 +226,9 @@ public class FirstPlayersFragment extends Fragment {
         ll_rosters_visitingTeam = (LinearLayout) mView.findViewById(R.id.ll_rosters_visitingTeam);
         reLoading = (TextView) mView.findViewById(R.id.reLoading);
         sv_first = (ScrollView) mView.findViewById(R.id.sv_first);
+
+        tv_homeTeam_title = (TextView) mView.findViewById(R.id.tv_homeTeam_title);
+        tv_visitingTeam_title = (TextView) mView.findViewById(R.id.tv_visitingTeam_title);
 
         /*iv_loading_img = (ImageView) mView.findViewById(R.id.iv_loading_img);
         mAnimation = AnimationUtils.loadAnimation(mContext, R.anim.cirle);
