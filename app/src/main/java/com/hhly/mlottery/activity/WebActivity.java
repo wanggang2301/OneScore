@@ -162,9 +162,9 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         });
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        webSettings.setAppCacheEnabled(false);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -229,8 +229,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                url = url.replace("{loginToken}", token);
 //                url = url.replace("{deviceToken}", deviceId);
 //            }
-            if (url != null ) {
-                if (url.contains("comment")){
+            if (url != null) {
+                if (url.contains("comment")) {
                     //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
                     ChatFragment chatFragment = new ChatFragment();
                     CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
