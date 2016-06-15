@@ -193,10 +193,10 @@ public class ScoresFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                L.d(TAG, "onPageScrolled");
-                L.d(TAG, "position = " + position);
-                L.d(TAG, "positionOffset = " + positionOffset);
-                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
+//                L.d(TAG, "onPageScrolled");
+//                L.d(TAG, "position = " + position);
+//                L.d(TAG, "positionOffset = " + positionOffset);
+//                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
 
                 if (positionOffsetPixels == 0) {
                     switch (position) {

@@ -29,8 +29,10 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.RxBus;
@@ -38,6 +40,7 @@ import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.nostra13.universalimageloader.utils.L;
 
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
@@ -130,13 +133,13 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupSwipeRefresh() {
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
     }
 
     @Override
     protected void initListeners() {
-        swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private boolean moveToDown = false;
 
@@ -303,6 +306,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                             if (!"".equals(type)) {
                                 Message msg = Message.obtain();
                                 msg.obj = ws_json;
+                                L.i("hhlylog", "RollballFragment WebSocket Push Data [ " + ws_json + "]");
                                 msg.arg1 = Integer.parseInt(type);
                                 apiHandler.sendMessage(msg);
                             }
@@ -397,6 +401,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     public void feedAdapter() {
+        if (apiHandler != null) apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         this.initData();
     }
 
