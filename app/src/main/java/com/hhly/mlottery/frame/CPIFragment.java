@@ -156,7 +156,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread.start();
 //        }
         try {
-            System.out.println(BaseURLs.URL_CPI_SOCKET);
             hSocketUri = new URI(BaseURLs.URL_CPI_SOCKET);
 //            hSocketUri = new URI("ws://192.168.10.242:61634/topic");
 //			hSocketUri = new URI("ws://m.1332255.com/ws/USER.topic.indexcenter");
