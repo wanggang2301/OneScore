@@ -923,7 +923,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 // setResult(Activity.RESULT_OK);
                 sendBroadcast(new Intent("closeself"));
                 finish();
-                overridePendingTransition(0, android.R.anim.fade_out);
                 break;
             case R.id.layout_match_header_focus_img:
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");

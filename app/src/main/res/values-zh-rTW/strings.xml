@@ -646,6 +646,7 @@
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暫無評論內容</string>
     <string name="toatalvisiable">顯示全部</string>
+    <string name="chatball">聊球</string>
     <!-- -->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">請輸入留言內容</string>

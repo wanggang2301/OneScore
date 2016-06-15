@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.footframe;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -94,6 +95,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ARG_PARAM3 = "param3";
     private static final String ADDKEYHOME = "homeAdd";
     private static final String ADDKEYGUEST = "guestAdd";
+    private Context mContext;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -188,7 +196,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void initView() {
-        sdk = CyanSdk.getInstance(getActivity());
+        sdk = CyanSdk.getInstance(mContext);
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
@@ -213,7 +221,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.comment_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getActivity(), StaticValues.REFRASH_OFFSET_END));
+        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
         mCommentCount = (TextView) mView.findViewById(R.id.tv_commentcount);
         mCommentCount.setOnClickListener(this);
         mTextView = (TextView) mView.findViewById(R.id.et_comment);
@@ -436,17 +444,18 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             case R.id.et_comment:
                 if (!CommonUtils.isLogin()) {
                     //跳转登录界面
-                    Intent intent1 = new Intent(getActivity(), LoginActivity.class);
+                    Intent intent1 = new Intent(mContext, LoginActivity.class);
                     startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                 } else {//跳转输入评论页面
-                    Intent intent2 = new Intent(getActivity(), InputActivity.class);
+                    Intent intent2 = new Intent(mContext, InputActivity.class);
                     intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
                     startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
+                    getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     mLinearLayout.setVisibility(View.GONE);
                     System.out.println("lzftalk跳" + topicid);
                     //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
                     RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
-                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(getActivity(), 60));
+                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(mContext, 60));
                     mSwipeRefreshLayout.requestLayout();
 
                 }
