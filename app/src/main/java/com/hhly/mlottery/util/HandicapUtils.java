@@ -112,7 +112,7 @@ public class HandicapUtils {
 			handicapF = Float.parseFloat(handicap);
 		}catch(NumberFormatException e){
 			
-			return "e";
+			return "-";
 		}
 
 		float fractionalPart = handicapF - (int) handicapF;
