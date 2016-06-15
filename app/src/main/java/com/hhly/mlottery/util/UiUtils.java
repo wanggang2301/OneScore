@@ -430,7 +430,8 @@ public class UiUtils {
     /**手机号码格式*/
     private static String REG_PHONE = "^((14[0-9])|(17[0-9])|(13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
     /**密码格式*/
-    private static String REG_PASSWORD = "^[0-9a-zA-Z_]{6,16}$";
+   // private static String REG_PASSWORD = "^[0-9a-zA-Z_]{6,16}$";
+   private static final String REG_PASSWORD = "[A-Z0-9a-z!@#$%^&*.~/\\{\\}|()'\"?><,.`\\+-=_\\[\\]:;]{6,16}$";
     /**密码最小长度*/
     private static final int PASSWORD_MIN_LENGTH = 6;
     /**密码最大长度*/
