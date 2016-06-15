@@ -452,6 +452,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         //标记是否初始化
         isInitViewPager = true;
         mTabLayout.setupWithViewPager(mViewPager);
+
     }
 
     /**
