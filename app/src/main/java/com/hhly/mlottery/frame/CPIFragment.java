@@ -144,7 +144,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
-
     }
 
     @Nullable
