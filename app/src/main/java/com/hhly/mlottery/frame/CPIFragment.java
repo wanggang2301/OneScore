@@ -142,7 +142,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
-
     }
 
     @Nullable
@@ -450,6 +449,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         //标记是否初始化
         isInitViewPager = true;
         mTabLayout.setupWithViewPager(mViewPager);
+
     }
 
     /**

@@ -9,7 +9,6 @@ import java.util.Map;
  */
 public class WebFootBallSocketTime {
 
-
     private String thirdId;
 
     private  int type;
