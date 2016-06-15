@@ -243,6 +243,24 @@ public class NewOddsInfo {
             private String matchResult;
             private String openTime;
             private String matchState;
+            private boolean isShowTitle=false;
+            private String keepTime;
+
+            public String getKeepTime() {
+                return keepTime;
+            }
+
+            public void setKeepTime(String keepTime) {
+                this.keepTime = keepTime;
+            }
+
+            public boolean isShowTitle() {
+                return isShowTitle;
+            }
+
+            public void setIsShowTitle(boolean isShowTitle) {
+                this.isShowTitle = isShowTitle;
+            }
 
             public String getMatchId() {
                 return matchId;
