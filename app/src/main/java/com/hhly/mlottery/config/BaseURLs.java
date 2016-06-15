@@ -651,7 +651,7 @@ public class BaseURLs {
     /**新版指数*/
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
     /**指数推送*/
-    public final static String URL_CPI_SOCKET = WS_SERVICE + "/topic/USER.topic.indexcenter";
+    public final static String URL_CPI_SOCKET = WS_SERVICE;
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
