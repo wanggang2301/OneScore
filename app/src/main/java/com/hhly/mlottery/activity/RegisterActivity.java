@@ -89,6 +89,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         /**友盟页面统计*/
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd("RegisterActivity");
+
     }
 
     private void initView() {
