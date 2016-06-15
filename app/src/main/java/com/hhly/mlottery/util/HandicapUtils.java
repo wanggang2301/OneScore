@@ -31,7 +31,7 @@ public class HandicapUtils {
 			handicapF = Float.parseFloat(handicap);
 		}catch(NumberFormatException e){
 			
-			return "e";
+			return "-";
 		}
 		
 		if (handicapF < 0) {

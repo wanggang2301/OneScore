@@ -578,8 +578,9 @@
     <color name="item_selectable_pressed">@color/res_time_color</color>
 
     <!-- ODDS -->
-    <color name="odds_up_bg">#E91E63</color>
-    <color name="odds_down_bg">#4CAF50</color>
+    <color name="odds_up_bg">#FF6A6A</color>
+    <color name="odds_down_bg">#00DB1A</color>
+    <color name="background_layout">#EAEEF4</color>
 
 
 </resources>
