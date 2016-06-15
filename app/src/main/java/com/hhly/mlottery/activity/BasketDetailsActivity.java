@@ -28,6 +28,8 @@ import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsBaseFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
+import com.hhly.mlottery.frame.footframe.BasketTalkAboutBallFragment;
+import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -1380,7 +1382,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         //        private static final String[] TITLES = new String[]{"Applepie", "Butter Cookie", "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "KitKat", "Lollipop"};
         private String[] TITLES = new String[]{BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze), BasketDetailsActivity.this.getResources().getString(R.string.basket_eur),
-                BasketDetailsActivity.this.getResources().getString(R.string.basket_alet), BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze_sizeof)};
+                BasketDetailsActivity.this.getResources().getString(R.string.basket_alet), BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze_sizeof) , "聊球"};
 
         private int mScrollY;
         private String mThirdId;
@@ -1409,6 +1411,10 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                 }
                 case 2: {
                     f = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
+                    break;
+                }
+                case 4:{
+                    f = new BasketTalkAboutBallFragment();
                     break;
                 }
                 case 3:
