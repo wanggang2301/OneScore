@@ -10,12 +10,14 @@
     <include layout="@layout/layout_header" />
 
     <EditText
+        android:layout_marginTop="20dp"
         android:id="@+id/et_nickname"
-        style="@style/login_edittext_modify_nickname"
+        style="@style/login_edittext_password_measured"
         android:hint="@string/input_nickname"
         />
 
     <TextView
+        android:layout_marginLeft="20dp"
         style="@style/login_textview_modify_nickname_hint"
         android:text="@string/nickname_hint"
         />

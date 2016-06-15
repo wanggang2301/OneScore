@@ -665,7 +665,7 @@
     <string name="logining">正在登錄...</string>
     <string name="login_succ">登錄成功</string>
     <string name="login_fail">登錄失敗</string>
-    <string name="pwd_format">密碼格式爲6-16位字母數字下劃線</string>
+    <string name="pwd_format">密碼格式爲6-16位數字和字符組成</string>
     <string name="pwd_format_hint">6-16位字符,區分大小寫</string>
     <string name="pwd_empty">請輸入密碼</string>
     <string name="phone_empty">請輸入手機號碼</string>
@@ -723,8 +723,8 @@
     <string name="modify_password_succ">修改密碼成功</string>
     <string name="modify_password_fail">修改密碼失敗</string>
     <string name="input_password_old">請輸入舊密碼</string>
-    <string name="input_password_new">請輸入新密碼</string>
-    <string name="input_password_confirm">請輸入確認密碼</string>
+    <string name="input_password_new">請輸入新密碼(由6-16位數字和字符組成)</string>
+    <string name="input_password_confirm">請保持和新密碼壹致</string>
     <string name="show_password">顯示密碼</string>
     <string name="old_pw">舊</string>
     <string name="new_pw">新</string>
@@ -732,6 +732,8 @@
     <string name="pw_not_same">新密碼與確認密碼不一致</string>
     <string name="account">賬號</string>
     <string name="pwd_format_just_length">密碼長度爲6-16位</string>
+    <string name="verify_time_limit">兩次發送間隔不得小于60秒</string>
+    <string name="nickname_sensitive">昵稱包含敏感詞語</string>
     <!--1.1.2 end-->
 
 

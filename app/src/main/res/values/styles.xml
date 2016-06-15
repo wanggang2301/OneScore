@@ -698,6 +698,7 @@
         <item name="android:paddingTop">15dp</item>
         <item name="android:paddingBottom">15dp</item>
         <item name="android:maxLength">15</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <!--昵称提示 TextView-->
