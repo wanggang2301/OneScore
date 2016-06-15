@@ -35,6 +35,7 @@ import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketTime;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -56,6 +57,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -157,11 +159,12 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread.start();
 //        }
         try {
-            hSocketUri = new URI("ws://192.168.10.242:61634/topic");
+            System.out.println(BaseURLs.URL_CPI_SOCKET);
+            hSocketUri = new URI(BaseURLs.URL_CPI_SOCKET);
+//            hSocketUri = new URI("ws://192.168.10.242:61634/topic");
 //			hSocketUri = new URI("ws://m.1332255.com/ws/USER.topic.indexcenter");
 //            hSocketUri = new URI("ws://m.13322.com/ws");
         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -171,7 +174,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     @Override
     public void onResume() {
         super.onResume();
-        startWebsocket();
+        startWebSocket();
         computeWebSocket();
 //        MyT myT = new MyT();
 //        myT.start();
@@ -197,21 +200,22 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                // 设置日期格式
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
                 System.out.println(df.format(new Date()) + "---监听socket连接状态:Open=" +
                         hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() +
                         ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
                 long pushEndTime = System.currentTimeMillis();
                 if ((pushEndTime - pushStartTime) >= 5000) {
                     System.out.println("重新启动socket");
-                    startWebsocket();
+                    startWebSocket();
                 }
             }
         };
         computeWebSocketConnTimer.schedule(tt, 5000, 5000);
     }
 
-    private synchronized void startWebsocket() {
+    private synchronized void startWebSocket() {
         if (hSocketClient != null) {
             if (!hSocketClient.isClosed()) {
                 hSocketClient.close();
@@ -288,49 +292,15 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             super.handleMessage(msg);
             String ws_json = (String) msg.obj;
             ws_json = ws_json.substring(0, ws_json.length() - 1);
-            if (msg.arg1 == 1) {//时间
-                try {
-                    WebFootBallSocketTime webSocketOddsTime =
-                            JSON.parseObject(ws_json, WebFootBallSocketTime.class);
-                    for (Fragment fragment : fragments) {
-                        ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsTime, "time");
-                    }
-                } catch (Exception e) {
-                    L.i(">>>", "ws_json1异常" + e);
-                }
-
-            } else if (msg.arg1 == 2) {//赔率
-                try {
-                    WebFootBallSocketOdds webSocketOdds =
-                            JSON.parseObject(ws_json, WebFootBallSocketOdds.class);
-                    for (int i = 0; i < webSocketOdds.getData().size(); i++) {
-                        //如果是亚盘的
-                        if ("1".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                            mCPIOddsFragment.upDateOdds(webSocketOdds, 1);
-                        }
-                        //如果是欧赔的
-                        else if ("2".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                            mCPIOddsFragment3.upDateOdds(webSocketOdds, 2);
-                        }
-                        //如果是大小的
-                        else if ("3".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                            mCPIOddsFragment2.upDateOdds(webSocketOdds, 3);
-                        }
-                    }
-                } catch (Exception e) {
-                    L.i(">>>", "ws_json2异常" + e);
-                }
-
-            } else if (msg.arg1 == 3) {//主客队得分
-                try {
-                    WebFootBallSocketTime webSocketOddsScore =
-                            JSON.parseObject(ws_json, WebFootBallSocketTime.class);
-                    for (Fragment fragment : fragments) {
-                        ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsScore, "score");
-                    }
-                } catch (Exception e) {
-                    L.i(">>>", "ws_json3异常" + e);
-                }
+            if (msg.arg1 == 1) {
+                // 时间
+                upDateTime(ws_json);
+            } else if (msg.arg1 == 2) {
+                // 赔率
+                upDateOdds(ws_json);
+            } else if (msg.arg1 == 3) {
+                // 主客队得分
+                upDateScore(ws_json);
             }
         }
     };
@@ -338,21 +308,57 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 时间推送
      */
-    private void upDateTime(WebFootBallSocketOdds webSocketOddsTime) {
-
+    private void upDateTime(String json) {
+        try {
+            WebFootBallSocketTime webSocketOddsTime =
+                    JSON.parseObject(json, WebFootBallSocketTime.class);
+            for (Fragment fragment : fragments) {
+                ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsTime, "time");
+            }
+        } catch (Exception e) {
+            L.i(">>>", "ws_json1异常" + e);
+        }
     }
-//    /**
-//     * 赔率推送
-//     */
-//    public void upDateOdds(WebFootBallSocketOdds webSocketOdds){
-//
-//    }
+
+    /**
+     * 赔率推送
+     */
+    public void upDateOdds(String json) {
+        try {
+            WebFootBallSocketOdds webSocketOdds =
+                    JSON.parseObject(json, WebFootBallSocketOdds.class);
+            for (int i = 0; i < webSocketOdds.getData().size(); i++) {
+                //如果是亚盘的
+                if ("1".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+                    mCPIOddsFragment.upDateOdds(webSocketOdds, 1);
+                }
+                //如果是欧赔的
+                else if ("2".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+                    mCPIOddsFragment3.upDateOdds(webSocketOdds, 2);
+                }
+                //如果是大小的
+                else if ("3".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+                    mCPIOddsFragment2.upDateOdds(webSocketOdds, 3);
+                }
+            }
+        } catch (Exception e) {
+            L.i(">>>", "ws_json2异常" + e);
+        }
+    }
 
     /**
      * 主客队比分推送
      */
-    private void upDateScore(WebFootBallSocketOdds webSocketOddsScore) {
-
+    private void upDateScore(String json) {
+        try {
+            WebFootBallSocketTime webSocketOddsScore =
+                    JSON.parseObject(json, WebFootBallSocketTime.class);
+            for (Fragment fragment : fragments) {
+                ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsScore, "score");
+            }
+        } catch (Exception e) {
+            L.i(">>>", "ws_json3异常" + e);
+        }
     }
 
     @Override
