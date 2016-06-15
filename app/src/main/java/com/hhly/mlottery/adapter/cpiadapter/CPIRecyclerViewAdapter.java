@@ -191,13 +191,12 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 if ("0".equals(allInfoBean.getMatchInfo().getMatchState())) {
                     intent.putExtra("PKScore", allInfoBean.getMatchInfo().getMatchHomeName()
                             + "\t" + "VS" + "\t" + allInfoBean.getMatchInfo().getMatchGuestName());
-                } else {//否则开赛了
+                } else {
+                    //否则开赛了
                     intent.putExtra("PKScore", allInfoBean.getMatchInfo().getMatchHomeName()
                             + "\t" + allInfoBean.getMatchInfo().getMatchResult() + "\t" + allInfoBean.getMatchInfo().getMatchGuestName());
                 }
                 context.startActivity(intent);
-
-
             }
         });
         //为 cardView设置点击事件

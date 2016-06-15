@@ -115,7 +115,7 @@ public class CpiDetailsActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    public class CpiDetailsFragmentAdapter extends FragmentPagerAdapter {
+    class CpiDetailsFragmentAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> mFragmentList;
 
