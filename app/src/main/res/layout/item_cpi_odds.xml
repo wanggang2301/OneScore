@@ -52,6 +52,7 @@
                         android:gravity="center|left"
                         android:text="22:33"
                         android:textSize="13sp" />
+
                     <LinearLayout
                         android:id="@+id/cpi_item_layout"
                         android:layout_width="wrap_content"

@@ -55,6 +55,7 @@
                         android:textSize="13sp"
                         tools:text="22:33"/>
 
+
                     <LinearLayout
                         android:id="@+id/cpi_item_layout"
                         android:layout_width="wrap_content"
