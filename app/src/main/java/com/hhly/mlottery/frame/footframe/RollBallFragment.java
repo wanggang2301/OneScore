@@ -608,8 +608,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         fragment.swipeRefreshLayout.setRefreshing(true);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
-                        fragment.adapter.setList(null);
-                        fragment.adapter.notifyDataSetChanged();
                         break;
                     case VIEW_STATUS_NO_ANY_DATA:
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
@@ -627,7 +625,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         fragment.swipeRefreshLayout.setRefreshing(false);
                         fragment.networkExceptionLayout.setVisibility(View.VISIBLE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
-                        Toast.makeText(fragment.getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        fragment.adapter.setList(null);
+                        fragment.adapter.notifyDataSetChanged();
                         break;
                     case VIEW_STATUS_FLITER_NO_DATA:
                         fragment.swipeRefreshLayout.setRefreshing(false);
