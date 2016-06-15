@@ -674,6 +674,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
         bundle.putString("param1", mThirdId);
+        bundle.putInt("type", 0);//1 籃球/0 足球
         mTalkAboutBallFragment.setArguments(bundle);
 
         fragments.add(mOddsFragment);
