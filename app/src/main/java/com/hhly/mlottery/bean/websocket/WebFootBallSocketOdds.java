@@ -9,7 +9,6 @@ import java.util.Map;
  */
 public class WebFootBallSocketOdds {
 
-
     private String thirdId;
 
     private  int type;
