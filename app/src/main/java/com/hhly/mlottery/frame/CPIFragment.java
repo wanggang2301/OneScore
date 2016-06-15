@@ -11,7 +11,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -110,7 +109,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //dialoglistview
     private ListView dialog_list;
     private List<Map<String, String>> mMapList;
-    private Map<String, String> mMap;
     /*dialog控件 end*/
     //日期
     private CpiDateAdapter cpiDateAdapter;
@@ -179,6 +177,27 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //        myT.start();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        computeWebSocketConnTimer.cancel();
+
+        if (hSocketClient != null) {
+            hSocketClient.close();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        computeWebSocketConnTimer.cancel();
+
+        if (hSocketClient != null) {
+            hSocketClient.close();
+        }
+    }
+
     class MyT extends Thread {
         @Override
         public void run() {
@@ -192,7 +211,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
             }
         }
-
     }
 
     private void computeWebSocket() {
@@ -360,27 +378,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        computeWebSocketConnTimer.cancel();
-
-        if (hSocketClient != null) {
-            hSocketClient.close();
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        computeWebSocketConnTimer.cancel();
-
-        if (hSocketClient != null) {
-            hSocketClient.close();
-        }
-    }
-
     private void initView() {
         mRefreshLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.cpi_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
@@ -508,6 +505,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     LinkedList<String> ddList = new LinkedList<>();
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -515,7 +513,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         if (requestCode == 10086) {
             switch (resultCode) {
                 case 0:
-                    ArrayList<String> checkedIdExtra = (ArrayList<String>) data.getSerializableExtra("key");
+                    ArrayList<String> checkedIdExtra = (ArrayList<String>)
+                            data.getSerializableExtra("key");
                     ddList.clear();
                     ddList.addAll(checkedIdExtra);
                     filtrateDate();
@@ -555,9 +554,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 初始化 设置 dialog 弹窗
      *
-     * @dateAndcompanyNumber 0代表日期，1代表公司
+     * @param dateAndCompanyNumber 0代表日期，1代表公司
      */
-    public void setDialog(int dateAndcompanyNumber) {
+    public void setDialog(int dateAndCompanyNumber) {
         // Dialog 设置
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext, R.style.AlertDialog);
         View view = View.inflate(mContext, R.layout.alertdialog, null);
@@ -569,7 +568,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         mAlertDialog.setCancelable(true);
         mAlertDialog.setCanceledOnTouchOutside(true);
         //如果选择的是日期
-        if (dateAndcompanyNumber == 0) {
+        if (dateAndCompanyNumber == 0) {
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 1000);
             dialog_list.setLayoutParams(params);
@@ -706,7 +705,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         }
     }
 
-    private class CPIFragmentAdapter extends FragmentPagerAdapter {
+    class CPIFragmentAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> mFragmentList;
 

@@ -10,7 +10,7 @@ import java.util.List;
 public class NewOddsInfo {
 
     private String currDate;
-    private int code;
+    private int code; 
     private List<String> focusLeagueIds;
     /**
      * leagueId : 250
@@ -86,7 +86,7 @@ public class NewOddsInfo {
         this.allInfo = allInfo;
     }
 
-    public static class FileterTagsBean implements Serializable{
+    public static class FileterTagsBean implements Serializable {
         private String leagueId;
         private String leagueName;
         private String leagueColor;
@@ -243,7 +243,7 @@ public class NewOddsInfo {
             private String matchResult;
             private String openTime;
             private String matchState;
-            private boolean isShowTitle=false;
+            private boolean isShowTitle = false;
             private String keepTime;
 
             public String getKeepTime() {
