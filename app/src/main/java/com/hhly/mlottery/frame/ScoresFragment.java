@@ -89,6 +89,8 @@ public class ScoresFragment extends Fragment {
     private Spinner mSpinner;
     private String[] mItems;
 
+    private RollBallFragment rollBallFragment;
+
     @SuppressLint("ValidFragment")
     public ScoresFragment(Context context) {
         this.mContext = context;
@@ -179,7 +181,8 @@ public class ScoresFragment extends Fragment {
         titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(RollBallFragment.newInstance(ROLLBALL_FRAGMENT));
+        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT);
+        fragments.add(rollBallFragment);
         fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
@@ -398,10 +401,15 @@ public class ScoresFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, true);
                     bundle.putInt("currentFragmentId", ROLLBALL_FRAGMENT);
-                    LeagueCup[] allCups = RollBallFragment.cupLists.toArray(new LeagueCup[]{});
+                    LeagueCup[] allCups = null;
+                    if (rollBallFragment.getLeagueCupLists() != null) {
+                        allCups = rollBallFragment.getLeagueCupLists().toArray(new LeagueCup[]{});
+                    }
                     bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
-                    bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
-                            RollBallFragment.checkCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                    if (rollBallFragment.getLeagueCupChecked() != null) {
+                        bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
+                                rollBallFragment.getLeagueCupChecked());// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                    }
                     intent.putExtras(bundle);
                     startActivity(intent);
 
@@ -644,7 +652,7 @@ public class ScoresFragment extends Fragment {
 
 
 /*
-		@Override
+        @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             //   setResult(Activity.RESULT_OK);
