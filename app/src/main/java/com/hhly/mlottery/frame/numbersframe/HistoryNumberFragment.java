@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 import com.hhly.mlottery.bean.numbersBean.NumberHistoryHKInfo;
@@ -122,7 +123,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
         mNumberName = null;
         mNumberName = getArguments().getString("mNumberName");
 
-        if ("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             view = inflater.inflate(R.layout.numbers_history_page, container, false);// 国语
         } else {
             view = inflater.inflate(R.layout.numbers_history_page_i18n, container, false);// 英语

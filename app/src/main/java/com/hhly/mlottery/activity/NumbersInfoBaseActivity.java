@@ -15,6 +15,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.numbersframe.CurrentNumberFragment;
 import com.hhly.mlottery.frame.numbersframe.HistoryNumberFragment;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.NumberDataUtils;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -87,7 +88,8 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
 	 private void initData() {
 		 
 		 if(!TextUtils.isEmpty(mNumberName)){
-			 title.setText(AppConstants.numberNames[Integer.parseInt(mNumberName) - 1]);// 设置开奖标题
+//			 title.setText(AppConstants.numberNames[Integer.parseInt(mNumberName) - 1]);// 设置开奖标题
+			 NumberDataUtils.setTextTitle(mContext,title,mNumberName);// 设置开奖标题
 		 }else{
 			 title.setText("  ");
 		 }

@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -8,7 +9,9 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -397,13 +400,18 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         myPostParams.put("version", version);
         myPostParams.put("versionCode", versionCode);
         myPostParams.put("channelNumber", channelNumber);
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<HomePagerEntity>() {
+        VolleyContentFast.requestStringByGet(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, null, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
-            public synchronized void onResponse(final HomePagerEntity jsonObject) {
+            public void onResponse(String jsonObject) {
                 if (jsonObject != null) {// 请求成功
-                    mHomePagerEntity = jsonObject;
-                    L.d("xxx", "isAudit:" + jsonObject.getIsAudit());
-                    isAuditHandle(jsonObject);
+                    try {
+                        mHomePagerEntity = JSON.parseObject(jsonObject, HomePagerEntity.class);
+                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, jsonObject);// 保存首页缓存数据
+                        L.d("xxx", "保存数据到本地！jsonObject:" + jsonObject);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    isAuditHandle(mHomePagerEntity);
                     if (mHomePagerEntity.getResult() == 200) {
                         switch (num) {
                             case 0:// 首次加载
@@ -427,7 +435,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 L.d("xxx", "请求失败");
                 mHandler.sendEmptyMessage(LOADING_DATA_ERROR);// 加载失败
             }
-        }, HomePagerEntity.class);
+        });
     }
 
     /**
@@ -444,40 +452,42 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         } else {
             for (int i = 0, len = jsonObject.getMenus().getContent().size(); i < len; i++) {
                 HomeContentEntity homeContentEntity = jsonObject.getMenus().getContent().get(i);
-                switch (homeContentEntity.getJumpAddr()) {
-                    case "30":
-                    case "31":
-                    case "350":
-                    case "32":
-                    case "33":
-                    case "34":
-                    case "35":
-                    case "36":
-                    case "37":
-                    case "38":
-                    case "39":
-                    case "310":
-                    case "311":
-                    case "312":
-                    case "313":
-                    case "314":
-                    case "315":
-                    case "316":
-                    case "317":
-                    case "318":
-                    case "319":
-                    case "320":
-                    case "321":
-                    case "322":
-                    case "323":
-                        // 正在审核中，不显示彩票信息
-                        if ("false".equals(jsonObject.getIsAudit())) {
+                if (homeContentEntity != null) {
+                    switch (homeContentEntity.getJumpAddr()) {
+                        case "30":
+                        case "31":
+                        case "350":
+                        case "32":
+                        case "33":
+                        case "34":
+                        case "35":
+                        case "36":
+                        case "37":
+                        case "38":
+                        case "39":
+                        case "310":
+                        case "311":
+                        case "312":
+                        case "313":
+                        case "314":
+                        case "315":
+                        case "316":
+                        case "317":
+                        case "318":
+                        case "319":
+                        case "320":
+                        case "321":
+                        case "322":
+                        case "323":
+                            // 正在审核中，不显示彩票信息
+                            if ("false".equals(jsonObject.getIsAudit())) {
+                                contentList.add(homeContentEntity);
+                            }
+                            break;
+                        default:
                             contentList.add(homeContentEntity);
-                        }
-                        break;
-                    default:
-                        contentList.add(homeContentEntity);
-                        break;
+                            break;
+                    }
                 }
             }
             menusEntity.setContent(contentList);
@@ -490,11 +500,15 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         } else {
             for (int i = 0, len = jsonObject.getOtherLists().size(); i < len; i++) {
                 HomeOtherListsEntity homeOtherListsEntity = jsonObject.getOtherLists().get(i);
-                if (homeOtherListsEntity.getContent().getLabType() == 3 && "true".equals(jsonObject.getIsAudit())) {
-                    // 正在审核中，不显示彩票信息
-                } else {
-                    // 审核完成，显示全部内容
-                    otherList.add(homeOtherListsEntity);
+                if (homeOtherListsEntity != null) {
+                    if (homeOtherListsEntity.getContent() != null) {
+                        if (homeOtherListsEntity.getContent().getLabType() == 3 && "true".equals(jsonObject.getIsAudit())) {
+                            // 正在审核中，不显示彩票信息
+                        } else {
+                            // 审核完成，显示全部内容
+                            otherList.add(homeOtherListsEntity);
+                        }
+                    }
                 }
             }
         }
@@ -522,8 +536,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
                         home_page_list.setAdapter(mListBaseAdapter);
-                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, VolleyContentFast.jsonData);// 保存首页缓存数据
-                        L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
                     }
                     break;
                 case LOADING_DATA_ERROR:
@@ -535,8 +547,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     if (mHomePagerEntity != null) {
                         mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
                         home_page_list.setAdapter(mListBaseAdapter);
-                        PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, VolleyContentFast.jsonData);// 保存首页缓存数据
-                        L.d("xxx", "保存数据到本地！json:" + VolleyContentFast.jsonData);
                     }
                     break;
                 case VERSION_UPDATA_SUCCESS:// 检查版本更新
@@ -582,72 +592,80 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      * 新版本更新提示
      */
     private void promptVersionUp() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
-        builder.setCancelable(false);// 设置对话框以外不可点击
-        builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
-        String mMessage = mUpdateInfo.getDescription();// 获取提示内容
-        if (mUpdateInfo != null) {
-            if (mMessage.contains("#")) {
-                mMessage = mMessage.replace("#", "\n");// 换行处理
-            }
-            builder.setMessage(mMessage);// 提示内容
-        }
-        builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
-                DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-                Uri uri = Uri.parse(mUpdateInfo.getUrl());
-                DownloadManager.Request request = new DownloadManager.Request(uri);
-                //指定在WIFI状态下，执行下载操作。
-                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-                //是否允许漫游状态下，执行下载操作
-                request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
-                //是否允许“计量式的网络连接”执行下载操作
-                request.setAllowedOverMetered(false);// 默认是允许的。
-                //request.setTitle("一比分新版本下载");
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setMimeType("application/vnd.android.package-archive");
-                L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), "ybf.apk");
-                // 设置为可被媒体扫描器找到
-                request.allowScanningByMediaScanner();
-                // 设置为可见和可管理
-                request.setVisibleInDownloadsUi(true);
-                long id = downloadManager.enqueue(request);
-                L.d("xxx", "id = " + id);
-            }
-        });
-        builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);
-                if (versionIgnore != null) {
-                    versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
-                } else {
-                    versionIgnore = String.valueOf(mUpdateInfo.getVersion());
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+            builder.setCancelable(false);// 设置对话框以外不可点击
+            builder.setTitle(mContext.getResources().getString(R.string.about_soft_update));// 提示标题
+            String mMessage = mUpdateInfo.getDescription();// 获取提示内容
+            if (mUpdateInfo != null) {
+                if (mMessage.contains("#")) {
+                    mMessage = mMessage.replace("#", "\n");// 换行处理
                 }
-                PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
-                L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
-                dialog.cancel();
+                builder.setMessage(mMessage);// 提示内容
             }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+            builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
+                    DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse(mUpdateInfo.getUrl());
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    //指定在WIFI状态下，执行下载操作。
+                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+                    //是否允许漫游状态下，执行下载操作
+                    request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
+                    //是否允许“计量式的网络连接”执行下载操作
+                    request.setAllowedOverMetered(false);// 默认是允许的。
+                    //request.setTitle("一比分新版本下载");
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setMimeType("application/vnd.android.package-archive");
+                    L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+                    String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"),mUpdateInfo.getUrl().length());
+                    L.d("xxx","mAppName:>>" + mAppName);
+                    request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), mAppName);
+                    // 设置为可被媒体扫描器找到
+                    request.allowScanningByMediaScanner();
+                    // 设置为可见和可管理
+                    request.setVisibleInDownloadsUi(true);
+                    long id = downloadManager.enqueue(request);
+                    L.d("xxx", "id = " + id);
+                }
+            });
+            builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);
+                    if (versionIgnore != null) {
+                        versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
+                    } else {
+                        versionIgnore = String.valueOf(mUpdateInfo.getVersion());
+                    }
+                    PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
+                    L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 获取本地数据
      */
     public void readObjectFromFile() {
+        L.d("xxx", "获取本地数据.");
         String jsondata = PreferenceUtil.getString(AppConstants.HOME_PAGER_DATA_KEY, null);
         if (jsondata != null) {
             mHomePagerEntity = JSON.parseObject(jsondata, HomePagerEntity.class);
@@ -664,7 +682,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      */
     private void showDefData() {
         try {
-            String defDataJson = "{\"banners\": {\"content\": [{\"jumpType\": 0,\"picUrl\": \"xxx\"}],\"result\": 200},\"menus\": {\"content\": [{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球比分\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球视频\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球指数\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球数据\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"足球资讯\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"篮球比分\"}],\"result\": 200},\"otherLists\": [{\"content\": {\"bodys\": [{\"date\": \"\",\"guestHalfScore\": 0,\"guestId\": 177,\"guestLogoUrl\": \"xxx\",\"guestScore\": 0,\"guestteam\": \"\",\"homeHalfScore\": 0,\"homeId\": 180,\"homeLogoUrl\": \"xxx\",\"homeScore\": 0,\"hometeam\": \"\",\"jumpType\": 2,\"raceColor\": \"#9933FF\",\"raceId\": \"1\",\"racename\": \"\",\"statusOrigin\": \"0\",\"thirdId\": \"307689\",\"time\": \"\"},{\"date\": \"\",\"guestHalfScore\": 0,\"guestId\": 6164,\"guestLogoUrl\": \"xxx\",\"guestScore\": 0,\"guestteam\": \"\",\"homeHalfScore\": 0,\"homeId\": 6162,\"homeLogoUrl\": \"xxx\",\"homeScore\": 0,\"hometeam\": \"\",\"jumpType\": 2,\"raceColor\": \"#000080\",\"raceId\": \"511\",\"racename\": \"\",\"statusOrigin\": \"0\",\"thirdId\": \"312127\",\"time\": \"\"}],\"labType\": 1},\"result\": 200},{\"content\": {\"bodys\": [{\"date\": \"\",\"jumpType\": 1,\"time\": \"\",\"title\": \"\"},{\"date\": \"\", \"jumpType\": 1,\"picUrl\": \"xxx\",\"time\": \"\",\"title\": \"\"}],\"labType\": 2},\"result\": 200}], \"result\": 200}";
+            String defDataJson = "{\"banners\": {\"content\": [{\"jumpType\": 0,\"picUrl\": \"xxx\"}],\"result\": 200},\"menus\": {\"content\": [{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"\"},{\"jumpType\": 2,\"picUrl\": \"xxx\",\"title\": \"\"}],\"result\": 200},\"otherLists\": [{\"content\": {\"bodys\": [{\"date\": \"\",\"guestHalfScore\": 0,\"guestId\": 177,\"guestLogoUrl\": \"xxx\",\"guestScore\": 0,\"guestteam\": \"\",\"homeHalfScore\": 0,\"homeId\": 180,\"homeLogoUrl\": \"xxx\",\"homeScore\": 0,\"hometeam\": \"\",\"jumpType\": 2,\"raceColor\": \"#9933FF\",\"raceId\": \"1\",\"racename\": \"\",\"statusOrigin\": \"0\",\"thirdId\": \"307689\",\"time\": \"\"},{\"date\": \"\",\"guestHalfScore\": 0,\"guestId\": 6164,\"guestLogoUrl\": \"xxx\",\"guestScore\": 0,\"guestteam\": \"\",\"homeHalfScore\": 0,\"homeId\": 6162,\"homeLogoUrl\": \"xxx\",\"homeScore\": 0,\"hometeam\": \"\",\"jumpType\": 2,\"raceColor\": \"#000080\",\"raceId\": \"511\",\"racename\": \"\",\"statusOrigin\": \"0\",\"thirdId\": \"312127\",\"time\": \"\"}],\"labType\": 1},\"result\": 200},{\"content\": {\"bodys\": [{\"date\": \"\",\"jumpType\": 1,\"time\": \"\",\"title\": \"\"},{\"date\": \"\", \"jumpType\": 1,\"picUrl\": \"xxx\",\"time\": \"\",\"title\": \"\"}],\"labType\": 2},\"result\": 200}], \"result\": 200}";
             mHomePagerEntity = JSON.parseObject(defDataJson, HomePagerEntity.class);
 
             mListBaseAdapter = new HomeListBaseAdapter(mContext, mHomePagerEntity);
@@ -693,7 +711,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         switch (v.getId()) {
             case R.id.iv_account:
                 MobclickAgent.onEvent(mContext, "LoginActivity_Start");
-                if (CommonUtils.isLogin()){
+                if (CommonUtils.isLogin()) {
                     goToAccountActivity();
                 } else {
                     goToLoginActivity();

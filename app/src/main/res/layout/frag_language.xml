@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dip"/> 
+        android:layout_height="@dimen/y32"/>
 	<!--  简体-->
     <RelativeLayout
         android:id="@+id/language_china_layout"

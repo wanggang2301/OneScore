@@ -65,11 +65,11 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.startBtn:
-				startActivity(new Intent(WelcomeViewActivity.this, HomePagerActivity.class));
 				//第一次启动保存为yes
 				PreferenceUtil.commitString("isFirst", "YES");
 				//第一次启动的时候保存版本号
 				PreferenceUtil.commitString("versionName", WelcomeActivity.mPackageInfo.versionName);
+				startActivity(new Intent(WelcomeViewActivity.this, HomePagerActivity.class));
 				finish();
 				break;
 			default:

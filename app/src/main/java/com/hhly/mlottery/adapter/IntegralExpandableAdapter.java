@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import java.util.List;
  * @data: 2016/4/8 9:22
  */
 public class IntegralExpandableAdapter extends BaseExpandableListAdapter implements PinnedHeaderExpandableListView.HeaderAdapter, ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupClickListener {
+    private static final String TAG = "IntegralExpandableAdapter";
     private List<String> mGroupDataList;
     private List<List<IntegralBean.LangueScoreBean.ListBean>> mChildrenDataList;
     private Context mContext;
@@ -44,12 +46,16 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
         this.mChildrenDataList = childrenDataList;
         this.listView = listView;
         this.mContext = context;
-        this.leagueType=leagueType;
+        this.leagueType = leagueType;
         inflater = LayoutInflater.from(mContext);
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.mipmap.live_default).showImageOnFail(R.mipmap.live_default)
                 .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
                 .cacheOnDisc(true).considerExifParams(true).build();
+    }
+    public void setAllInfor(List<List<IntegralBean.LangueScoreBean.ListBean>> childDataList, List<String> groupDataList) {
+        this.mGroupDataList = groupDataList;
+        this.mChildrenDataList = childDataList;
     }
 
 
@@ -127,7 +133,7 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
         //名次
         holder.integral_ranking.setText((childPosition + 1) + "");
         if ("2".equals(leagueType)) {
-            System.out.print("leagueType============="+leagueType);
+            System.out.print("leagueType=============" + leagueType);
             if (childPosition < 2) {
                 holder.integral_ranking.setTextColor(mContext.getResources().getColor(R.color.foot_integal_se));
             } else {
@@ -179,6 +185,7 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
         return true;
     }
+
 
 /*
     public void updateDatas(List<List<IntegralBean.LangueScoreBean.ListBean>> childrenDataList, List<String> groupDataList) {
@@ -319,17 +326,21 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
     }
 
 
-
-
     /**
      * 设置置顶的  item数据
      */
     @Override
     public void configureHeader(View header, int groupPosition,
                                 int childPosition, int alpha) {
-        String groupData = this.mGroupDataList.get(groupPosition).toString();
-        ((TextView) header.findViewById(R.id.live_item_day_txt)).setText(groupData);
 
+        String groupData = this.mGroupDataList.get(groupPosition).toString();
+
+        if (groupData.equals("empty")) {
+            header.findViewById(R.id.integral_grouping).setVisibility(View.GONE);
+
+        } else {
+            ((TextView) header.findViewById(R.id.integral_grouping)).setText(groupData);
+        }
     }
 
     private SparseIntArray groupStatusMap = new SparseIntArray();

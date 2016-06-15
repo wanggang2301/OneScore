@@ -41,7 +41,6 @@ import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -311,9 +310,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 //                    mListView.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (isLoadData) {
-                        if (mContext!=null) {
-                            Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                     } else {
                         mLine.setVisibility(View.GONE);
                         mLoadingLayout.setVisibility(View.GONE);
@@ -481,7 +478,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         }, ScheduleMatchs.class);
 
         initFocusClickListener();
-
         choiceDateList();
     }
 
@@ -567,17 +563,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 	 */
 
     public void updateAdapter() {
-        if (AppConstants.isGOKeyboard) {
+       /* if (AppConstants.isGOKeyboard) {
             if (internalAdapter != null) {
                 // internalAdapter.updateDatas(mMatchs);
                 //  internalAdapter.notifyDataSetChanged();
             }
-        } else {
+        } else {*/
             if (mAdapter != null) {
                 mAdapter.updateDatas(mMatchs);
                 mAdapter.notifyDataSetChanged();
             }
-        }
+      //  }
 
     }
 

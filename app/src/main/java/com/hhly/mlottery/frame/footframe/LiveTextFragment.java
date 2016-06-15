@@ -22,9 +22,7 @@ import com.hhly.mlottery.adapter.LiveTextAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,6 +85,20 @@ public class LiveTextFragment extends Fragment implements AbsListView.OnScrollLi
     }
 
     public LiveTextFragment() {
+    }
+
+
+
+    public void updateAdapter(List<MatchTextLiveBean> matchTextLiveBeanList, String status){
+        if (matchTextLiveBeanList.size() > 0) {
+            if ("3".equals(matchTextLiveBeanList.get(0).getCode())) {
+                //999代表完场  time位置显示黄色“完场”
+                matchTextLiveBeanList.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt)+"", "", "", "0", "", ""));
+            }
+        }
+        list = filterLiveText(matchTextLiveBeanList);
+        livestatus = status;
+        timeAdp.notifyDataSetChanged();
     }
 
 
