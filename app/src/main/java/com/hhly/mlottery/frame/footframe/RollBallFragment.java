@@ -12,14 +12,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.adapter.RollBallAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
-import com.hhly.mlottery.adapter.decration.BorderDividerItemDecration;
 import com.hhly.mlottery.base.BaseFragment;
 import com.hhly.mlottery.bean.HotFocusLeagueCup;
 import com.hhly.mlottery.bean.ImmediateMatchs;
@@ -55,9 +53,11 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import de.greenrobot.event.EventBus;
+import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static com.hhly.mlottery.util.Preconditions.checkNotNull;
 
@@ -92,27 +92,21 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @BindView(R.id.titleContainer)
     PercentRelativeLayout titleContainer;
 
-    public static final int LOAD_DATA_STATUS_INIT = 0;
-    public static final int LOAD_DATA_STATUS_LOADING = 1;
-    public static final int LOAD_DATA_STATUS_SUCCESS = 2;
-    public static final int LOAD_DATA_STATUS_ERROR = 3;
-    public static int mLoadDataStatus = LOAD_DATA_STATUS_INIT;// 加载数据状态
-    public static boolean isNetSuccess = true;// 告诉筛选页面数据是否加载成功
     public static EventBus eventBus;
-    private LinearLayoutManager layoutManager;
-    private BorderDividerItemDecration dataDecration;
-    private RollBallAdapter adapter;
-
-    private ApiHandler apiHandler;
-    private boolean resestTheLifeCycle;
-    private boolean loadingMoreData;
-    private HappySocketClient socketClient;
-    private List<Match> dataLists;
-    private List<Match> showDataLists;
     public static List<LeagueCup> cupLists;// 全部联赛
     public static LeagueCup[] checkCups;
-    private boolean isCheckedDefualt = false;// true为默认选中全部，但是在筛选页面不选中
+
+    //    private BorderDividerItemDecration dataDecration;
+    private ApiHandler apiHandler;
+    private RollBallAdapter adapter;
+    private HappySocketClient socketClient;
+    private LinearLayoutManager layoutManager;
     private Subscription subscription;
+    private boolean resestTheLifeCycle;
+    private boolean loadingMoreData;
+    private boolean websocketConnectionIsError;
+    private List<Match> dataLists;
+    private List<Match> showDataLists;
 
     public static RollBallFragment newInstance(int index) {
         Bundle bundle = new Bundle();
@@ -319,12 +313,14 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                     @Override
                     public void onError(Exception exception) {
-//                    RollBallFragment.this.setupWebSocketClient();
+                        websocketConnectionIsError = true;
+                        RollBallFragment.this.reConnectionWebSocket();
                     }
 
                     @Override
                     public void onClose(String message) {
-//                    RollBallFragment.this.setupWebSocketClient();
+                        if (!websocketConnectionIsError)
+                            RollBallFragment.this.reConnectionWebSocket();
                     }
                 });
 
@@ -333,7 +329,19 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 if (socketClient != null) socketClient.close();
                 e.printStackTrace();
             }
+
+            if (websocketConnectionIsError) this.initData();
+            websocketConnectionIsError = false;
         }
+    }
+
+    private void reConnectionWebSocket() {
+        Observable.timer(2000, TimeUnit.MILLISECONDS).observeOn(Schedulers.io()).subscribe(new Action1<Long>() {
+            @Override
+            public void call(Long aLong) {
+                RollBallFragment.this.setupWebSocketClient();
+            }
+        });
     }
 
     private void setupTitleAnimations(View titleView, int translationY, Animator.AnimatorListener animatorListener) {
@@ -401,7 +409,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void clearDecoration() {
-        this.recyclerView.removeItemDecoration(this.dataDecration);
+//        this.recyclerView.removeItemDecoration(this.dataDecration);
     }
 
 
@@ -543,7 +551,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
         checkCups = leagueCupList.toArray(new LeagueCup[]{});
         this.feedAdapter(showDataLists);
-        isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
 
         if (showDataLists.size() == 0) {// 没有比赛
             apiHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
