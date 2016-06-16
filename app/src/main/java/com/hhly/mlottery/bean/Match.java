@@ -430,7 +430,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
             return String.valueOf(rhs.isTopData).compareTo(String.valueOf(lhs
                     .isTopData));
         } else {
-            return String.valueOf(lhs.sortId).compareTo(String.valueOf(rhs.sortId));
+            return new Integer(lhs.sortId).compareTo(new Integer(rhs.sortId));
         }
 
     }

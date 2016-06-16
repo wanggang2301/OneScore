@@ -110,7 +110,6 @@ public class HandicapUtils {
         try {
             handicapF = Float.parseFloat(handicap);
         } catch (NumberFormatException e) {
-
             return "e";
         }
 
