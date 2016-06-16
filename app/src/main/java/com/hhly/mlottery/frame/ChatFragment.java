@@ -518,4 +518,14 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     public interface onPullDownRefreshLisener {
         void onPullDownRefresh();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        try {
+            sdk.logOut();
+        } catch (CyanException e) {
+            e.printStackTrace();
+        }
+    }
 }
