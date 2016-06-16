@@ -29,7 +29,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:textColor="@color/content_txt_light_grad"
+            android:textColor="@color/line_football_footer"
             />
         <!--近期战绩-->
         <LinearLayout
@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="15dp"
-            android:visibility="gone"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -322,7 +321,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:textColor="@color/content_txt_light_grad"
+            android:textColor="@color/line_football_footer"
             />
     <LinearLayout
         android:id="@+id/basket_analyze_runking"
@@ -516,7 +515,7 @@
             android:layout_gravity="center"
             android:textSize="@dimen/text_size_13"
             android:textColor="@color/more_record"
-            android:text="完整积分榜"/>
+            android:text="完整积分榜 >>"/>
 
      </LinearLayout>
         <View
@@ -564,7 +563,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:textColor="@color/content_txt_light_grad"
+            android:textColor="@color/line_football_footer"
             />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -647,7 +646,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
+                    android:background="@color/line_football_footer"
                     />
 
                 <RelativeLayout
@@ -688,7 +687,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/black"/>
+                android:background="@color/line_football_footer"/>
             <!--第二行-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -733,7 +732,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
+                    android:background="@color/line_football_footer"
                     />
 
                 <RelativeLayout
@@ -796,7 +795,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:textColor="@color/content_txt_light_grad"
+            android:textColor="@color/line_football_footer"
             />
         <RelativeLayout
             android:layout_width="match_parent"
@@ -805,6 +804,7 @@
             android:paddingBottom="15dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:gravity="center_vertical"
             >
             <TextView
                 android:id="@+id/lineup_home_team"
@@ -814,8 +814,48 @@
                 android:textColor="@color/odds_details"
                 android:textSize="@dimen/text_size_15"
                 />
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/hometeam_uniform"
+                android:layout_toRightOf="@id/lineup_home_team"
+                android:layout_marginLeft="5dp"
+                android:paddingTop="2dp"
+                />
+            <TextView
+                android:id="@+id/lineup_guest_team"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="皇马"
+                android:textColor="@color/more_record"
+                android:textSize="@dimen/text_size_15"
+                android:layout_alignParentRight="true"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/guestteam_uniform"
+                android:layout_toLeftOf="@id/lineup_guest_team"
+                android:layout_marginRight="5dp"
+                android:paddingTop="2dp"
+                />
         </RelativeLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/player_background"
+                android:layout_gravity="center_horizontal|bottom" />
+
+            <com.hhly.mlottery.widget.NestedListView
+                android:id="@+id/listview_player_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
