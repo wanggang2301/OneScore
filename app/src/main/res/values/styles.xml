@@ -692,13 +692,13 @@
 
     <!--昵称输入 EditText-->
     <style name="login_edittext_modify_nickname" parent="login_textview_account_center">
-        <item name="android:background">@null</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
         <item name="android:maxLength">15</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/selector_loginbtn</item>
     </style>
 
     <!--昵称提示 TextView-->
