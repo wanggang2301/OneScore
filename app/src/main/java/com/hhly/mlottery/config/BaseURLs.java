@@ -671,6 +671,9 @@ public class BaseURLs {
     /**修改密码*/
     public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
 
+    /**资讯Id查询*/
+    public final static String URL_INFORMATION_BY_THIRDID = URL_API_HOST + "info.findSingleInfo.do";
+
 
 
 }
