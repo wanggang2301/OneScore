@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -71,7 +72,9 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
 				//第一次启动的时候保存版本号
 				try {
 					// 得到应用程序的包信息对象
-					PreferenceUtil.commitString("versionName", getPackageManager().getPackageInfo(mContext.getPackageName(), 0).versionName);
+                    PackageManager packageManager = getPackageManager();
+                    PackageInfo packageInfo = packageManager.getPackageInfo(getApplicationContext().getPackageName(), 0);
+					PreferenceUtil.commitString("versionName", packageInfo.versionName);
 				} catch (PackageManager.NameNotFoundException e) {
 					e.printStackTrace();
 					// 此异常不会发生
