@@ -11,10 +11,15 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.R.string;
+import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -47,6 +52,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	
 	String resultstring;
 	Intent intent;
+	private int mCurrentId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,8 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	}
 	
 	private void initView() {
+		TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
+		public_txt_title.setText(R.string.basket_setting_tittle);
 		
 		mAlet = (RelativeLayout) findViewById(R.id.rl_alet);
 		mAlet.setOnClickListener(this);
@@ -85,8 +93,11 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		mTb_ranking = (ToggleButton) findViewById(R.id.tb_ranking);
 		mTb_ranking.setOnCheckedChangeListener(this);
 		
-		mBack = (ImageView) findViewById(R.id.ib_back);
+		mBack = (ImageView) findViewById(R.id.public_img_back);
 		mBack.setOnClickListener(this);
+
+		findViewById(R.id.public_btn_set).setVisibility(View.GONE); //隐藏设置按键
+		findViewById(R.id.public_btn_filter).setVisibility(View.GONE); //隐藏筛选按键
 		
 	}
 
@@ -123,6 +134,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		resultstring = "";
 		intent = getIntent();
 
+		mCurrentId = intent.getIntExtra("currentfragment",0);
 		//设置默认初始化值
 		boolean asize = PreferenceUtil.getBoolean(MyConstants.BASKETBALL_rbSizeBall, false); //大小球
 		boolean eur = PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBOCOMPENSATE, false);//欧赔
@@ -173,11 +185,22 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			save();
 			break;
 
-		case R.id.ib_back:
+		case R.id.public_img_back:
 			MobclickAgent.onEvent(mContext,"Basketball_Setting_Exit");
 			Intent intent = new Intent();
 			intent.putExtra("resultType", resultstring);
 
+			if (mCurrentId==0){
+				ImmedBasketballFragment.BasketImmedEventBus.post(mCurrentId);
+			}else if (mCurrentId==1){
+				ResultBasketballFragment.BasketResultEventBus.post(mCurrentId);
+			}else if (mCurrentId==2){
+//				L.i("102","赛程发送");
+				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
+			}else if (mCurrentId==3){
+				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+			}
+//			ImmedBasketballFragment.BasketImmedEventBus.post(0);
 			setResult(Activity.RESULT_OK,intent);
 			finish();
 			overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
@@ -221,6 +244,17 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			Intent intent = new Intent();
 			intent.putExtra("resultType", resultstring);
+
+			if (mCurrentId==0){
+				ImmedBasketballFragment.BasketImmedEventBus.post(mCurrentId);
+			}else if (mCurrentId==1){
+				ResultBasketballFragment.BasketResultEventBus.post(mCurrentId);
+			}else if (mCurrentId==2){
+//				L.i("102","赛程发送");
+				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
+			}else if (mCurrentId==3){
+				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+			}
 
 			setResult(Activity.RESULT_OK,intent);
 			finish();
