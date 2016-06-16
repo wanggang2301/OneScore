@@ -55,6 +55,16 @@
                         android:textSize="13sp"
                         tools:text="22:33"/>
 
+                    <TextView
+                        android:id="@+id/tv_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical|start"
+                        android:textSize="13sp"
+                        tools:text="完"/>
+
 
                     <LinearLayout
                         android:id="@+id/cpi_item_layout"
