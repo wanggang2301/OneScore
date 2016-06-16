@@ -98,6 +98,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ADDKEYGUEST = "guestAdd";
     private Context mContext;
     private int type;//1 籃球/0 足球
+    private String state="-1";
+
 
     @Override
     public void onAttach(Context context) {
@@ -112,6 +114,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (getArguments() != null) {
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
+            state = getArguments().getString("state");
 
         }
     }
@@ -124,6 +127,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         initAnim();
         pullUpLoad();//上拉加载更多
         return mView;
+
     }
 
     /**
@@ -187,7 +191,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //            ToastTools.ShowQuickCenter(getActivity(),"足球");
         }else if (type==1){
             url= BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
-            ToastTools.ShowQuickCenter(getActivity(),"籃球");
+//            ToastTools.ShowQuickCenter(getActivity(),"籃球");
         }
         VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<MatchLike>() {
             @Override
@@ -224,7 +228,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mGuestLike.setOnClickListener(this);
         ivHomeLike.setVisibility(View.INVISIBLE);
         ivGuestLike.setVisibility(View.INVISIBLE);
-        setClickableLikeBtn(true);
         //评论相关
         mNoData = (TextView) mView.findViewById(R.id.nodata);
         mListView = (PullUpRefreshListView) mView.findViewById(R.id.comment_lv);
@@ -245,6 +248,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (!TextUtils.isEmpty(mThirdId)) {
             loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
         }
+        //以前的规则是-1不可点  现在延续
+        if (state!=null&&state.equals("-1")){
+            setClickableLikeBtn(false);
+        }else {
+            setClickableLikeBtn(true);
+        }
+        System.out.println("fggstate="+state);
     }
 
     public void setClickableLikeBtn(boolean clickable) {

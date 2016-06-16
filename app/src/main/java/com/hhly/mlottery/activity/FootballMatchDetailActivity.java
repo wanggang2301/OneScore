@@ -512,11 +512,10 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
                 //数据加载成功后显示分享
                 mShare.setVisibility(View.VISIBLE);
-
+                mPreStatus = matchDetail.getLiveStatus();
 
                 if (!isInitedViewPager) {//如果ViewPager未初始化
                     initViewPager(matchDetail);
-                    mPreStatus = matchDetail.getLiveStatus();
                 } else {
 
                     //下拉刷新
@@ -673,8 +672,10 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         //聊球
         mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("param1", mThirdId);
+        bundle.putString("param1", mThirdId);//"1072757"
         bundle.putInt("type", 0);//1 籃球/0 足球
+        bundle.putString("state", mPreStatus);
+        System.out.println("fggstate=" + mPreStatus);
         mTalkAboutBallFragment.setArguments(bundle);
 
         fragments.add(mOddsFragment);
@@ -684,7 +685,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
 
         mViewPagerAdapter = new MatchDetailFragmentAdapter(getSupportFragmentManager(), fragments);
-        mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mViewPagerAdapter);
 
 

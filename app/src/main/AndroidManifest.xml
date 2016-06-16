@@ -274,7 +274,7 @@
             android:name=".activity.InputActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleTop"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustPan"
             />
     </application>
 
