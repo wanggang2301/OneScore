@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class Match implements Parcelable, Cloneable, Comparator<Match> {
     private String thirdId;
+    private int sortId;
     private String racename;
     private String raceId;
     private String raceColor;
@@ -57,11 +58,19 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     private int itemBackGroundColorId;//用于进球背景变化
     private int isTopData; // 用来控制是否置顶，选择对应的背景图片，及顺序 顺序越小越靠顶部
-    private boolean isFinishMatch; // 用来记录比赛是否完场
     private SOCKET_PUSH_TYPE socketPushType;
 
     public enum SOCKET_PUSH_TYPE {
         STATUS, ODDS, EVENT, MATCHCHANGE
+    }
+
+
+    public int getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(int sortId) {
+        this.sortId = sortId;
     }
 
     public SOCKET_PUSH_TYPE getSocketPushType() {
@@ -78,14 +87,6 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     public void setIsTopData(int isTopData) {
         this.isTopData = isTopData;
-    }
-
-    public boolean isFinishMatch() {
-        return isFinishMatch;
-    }
-
-    public void setFinishMatch(boolean finishMatch) {
-        isFinishMatch = finishMatch;
     }
 
     public static final Creator<Match> CREATOR = new Creator<Match>() {
@@ -429,7 +430,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
             return String.valueOf(rhs.isTopData).compareTo(String.valueOf(lhs
                     .isTopData));
         } else {
-            return lhs.time.compareTo(rhs.time);
+            return String.valueOf(lhs.sortId).compareTo(String.valueOf(rhs.sortId));
         }
 
     }

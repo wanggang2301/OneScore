@@ -653,7 +653,7 @@
     </style>
 
     <!-- cardView 通用 -->
-    <dimen name="card_elevation">0.1dp</dimen>
+    <dimen name="card_elevation">0.5dp</dimen>
     <dimen name="card_corner_radius">3dp</dimen>
 
     <!--忘记密码 TextView-->

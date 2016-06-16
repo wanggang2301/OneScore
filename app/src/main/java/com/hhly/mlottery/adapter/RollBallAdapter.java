@@ -143,7 +143,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
         this.setVisiableStateOfThisViews(container, rlHalfContainer, tvHomeScore, tvGuestScore);
         this.initializedTextColor(tvKeepTime, tvGuestScore, tvHomeScore, tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
-        tvHandicapValue_DA_BLACK.setTextColor(context.getResources().getColor(R.color.res_name_color));
+        tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_name_color));
         tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_name_color));
 
         // 置顶
@@ -294,16 +294,17 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             tvGuestRedCard.setText(data.getGuest_rc());
         } else tvGuestRedCard.setVisibility(View.INVISIBLE);
         // 亚盘赔率
-        tvLeftOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89? HandicapUtils.changeHandicap(asiaLet.getHandicapValue()) : "封");
-        tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getLeftOdds() : " ");
+        tvLeftOdds_YA.setText(asiaLet != null  && Integer.parseInt(data.getKeepTime()) < 89? HandicapUtils.changeHandicap(asiaLet.getHandicapValue()) : " ");
+        tvHandicapValue_YA_BLACK.setText(asiaLet != null  && Integer.parseInt(data.getKeepTime()) < 89? asiaLet.getLeftOdds() : "封");
         tvRightOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89? asiaLet.getRightOdds() : " ");
         // 大小盘赔率
-        tvLeftOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()) : "封");
-        tvHandicapValue_DA_BLACK.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? asiaSize.getLeftOdds() : " ");
+        tvLeftOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()) : " ");
+        tvHandicapValue_DA_BLACK.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? asiaSize.getLeftOdds() : "封");
         tvRightOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? asiaSize.getRightOdds() : " ");
         // 欧盘赔率
-        tvLeftOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getMediumOdds() : "封");
-        tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getLeftOdds() : " ");
+        tvLeftOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getMediumOdds() : " ");
+        tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getLeftOdds() : "封");
+        if (tvMediumOdds_EU.getText().equals("封")) tvLeftOdds_EU.setTextColor(context.getResources().getColor(R.color.res_name_color));
         tvRightOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getRightOdds() : " ");
 
         // 控制器

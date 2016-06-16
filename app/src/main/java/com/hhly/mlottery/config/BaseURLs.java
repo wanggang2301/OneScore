@@ -473,6 +473,9 @@ public class BaseURLs {
     //即时(增加队徽请求字段)
     private final static String URL_IMMEDIATE = "androidMatchResults.findImmediateMatchs.do";
 
+    // 滚球
+    private final static String URL_ROLLBALL = "matchResults.findBallList.do";
+
 
     // 热门和焦点
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
@@ -507,6 +510,8 @@ public class BaseURLs {
     public final static String URL_MainMatchs = URL_API_HOST + URL_MAIN;
 
     public final static String URL_ImmediateMatchs = URL_API_HOST + URL_IMMEDIATE;
+
+    public final static String URL_Rollball = URL_API_HOST + URL_ROLLBALL;
 
     public final static String URL_ResultMatchs = URL_API_HOST + URL_RESULT;
 
