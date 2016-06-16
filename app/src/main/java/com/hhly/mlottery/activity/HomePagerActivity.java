@@ -266,9 +266,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             public void onClick(View v) {
                 startActivity(new Intent(HomePagerActivity.this, HomeUserOptionsActivity.class));
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
-//                    ChatSdkRequest request = new ChatSdkRequest(v.getContext());
-//                    request.setCompanyCode("13322");
-//                    request.sendToTarget();
+//                ChatSdkRequest request = new ChatSdkRequest(v.getContext());
+//                request.setCompanyCode("13322");
+//                request.sendToTarget();
             }
         });
         if (AppConstants.isTestEnv) {

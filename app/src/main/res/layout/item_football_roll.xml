@@ -19,7 +19,8 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:visibility="gone"
+    android:visibility="visible"
+    android:background="@color/line_football_footer"
     app:cardUseCompatPadding="true">
 
     <android.support.percent.PercentRelativeLayout
@@ -41,7 +42,7 @@
                 android:id="@+id/tvRaceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
+                android:layout_marginLeft="0.3dp"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
@@ -84,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="1dp"
+                android:layout_marginRight="0.3dp"
                 android:textColor="@color/text_about_color"
                 android:textSize="@dimen/text_size_13"
                 tools:text="1" />
@@ -121,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="1dp"
+                android:layout_marginRight="0.3dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/text_about_color"
                 android:textSize="@dimen/text_size_13"
@@ -131,7 +132,7 @@
         <LinearLayout
             android:id="@+id/ll3"
             style="@style/item_rollball_linearlayout"
-            android:layout_marginLeft="1dp"
+            android:layout_marginLeft="0.3dp"
             android:layout_toRightOf="@id/ll2"
             android:gravity="center_vertical"
             android:minHeight="110dp"
@@ -175,7 +176,7 @@
 
             <RelativeLayout
                 style="@style/MW_White"
-                android:layout_marginTop="1dp">
+                android:layout_marginTop="0.3dp">
 
                 <RelativeLayout
                     android:id="@+id/rlHalfContainer"
@@ -229,7 +230,7 @@
 
             <RelativeLayout
                 style="@style/MW_White"
-                android:layout_marginTop="1dp">
+                android:layout_marginTop="0.3dp">
 
                 <TextView
                     android:id="@+id/tvGuestTeam"
@@ -269,7 +270,7 @@
         <LinearLayout
             android:id="@+id/ll4"
             style="@style/item_rollball_linearlayout"
-            android:layout_marginLeft="1dp"
+            android:layout_marginLeft="0.3dp"
             android:layout_toRightOf="@id/ll3"
             android:gravity="center_vertical"
             android:minHeight="110dp"
@@ -284,13 +285,13 @@
             <TextView
                 android:id="@+id/tvLeftOdds_YA"
                 style="@style/item_rollball_textview"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="0.3dp"
                 android:textColor="@color/res_name_color" />
 
             <TextView
                 android:id="@+id/tvRightOdds_YA"
                 style="@style/item_rollball_textview"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="0.3dp"
                 android:textColor="@color/res_pl_color" />
 
         </LinearLayout>
@@ -298,7 +299,7 @@
         <LinearLayout
             android:id="@+id/ll5"
             style="@style/item_rollball_linearlayout"
-            android:layout_marginLeft="1dp"
+            android:layout_marginLeft="0.3dp"
             android:layout_toRightOf="@id/ll4"
             android:gravity="center_vertical"
             android:minHeight="110dp"
@@ -312,21 +313,21 @@
             <TextView
                 android:id="@+id/tvLeftOdds_DA"
                 style="@style/item_rollball_textview"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="0.3dp"
                 android:textColor="@color/res_name_color" />
 
             <TextView
                 android:id="@+id/tvRightOdds_DA"
                 style="@style/item_rollball_textview"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="0.3dp"
                 android:textColor="@color/res_pl_color" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll6"
             style="@style/item_rollball_linearlayout"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
+            android:layout_marginLeft="0.3dp"
+            android:layout_marginRight="0.3dp"
             android:layout_toRightOf="@id/ll5"
             android:gravity="center_vertical"
             android:minHeight="110dp"
@@ -340,13 +341,13 @@
             <TextView
                 android:id="@+id/tvLeftOdds_EU"
                 style="@style/item_rollball_textview"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="0.3dp"
                 android:textColor="@color/res_pl_color" />
 
             <TextView
                 android:id="@+id/tvRightOdds_EU"
                 style="@style/item_rollball_textview"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="0.3dp"
                 android:textColor="@color/res_pl_color" />
 
         </LinearLayout>

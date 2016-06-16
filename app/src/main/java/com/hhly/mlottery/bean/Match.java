@@ -57,6 +57,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     private int itemBackGroundColorId;//用于进球背景变化
     private int isTopData; // 用来控制是否置顶，选择对应的背景图片，及顺序 顺序越小越靠顶部
+    private boolean isFinishMatch; // 用来记录比赛是否完场
     private SOCKET_PUSH_TYPE socketPushType;
 
     public enum SOCKET_PUSH_TYPE {
@@ -77,6 +78,14 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     public void setIsTopData(int isTopData) {
         this.isTopData = isTopData;
+    }
+
+    public boolean isFinishMatch() {
+        return isFinishMatch;
+    }
+
+    public void setFinishMatch(boolean finishMatch) {
+        isFinishMatch = finishMatch;
     }
 
     public static final Creator<Match> CREATOR = new Creator<Match>() {

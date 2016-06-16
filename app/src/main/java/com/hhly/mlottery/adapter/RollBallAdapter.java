@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -22,7 +23,6 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchEvent;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.util.AnimUtils;
-import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 
@@ -63,7 +63,11 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         for (int i = list.size() - 1; i >= 0; i--) {
             Match data = (Match) list.get(i);
             boolean isTopData = PreferenceUtil.getBoolean(data.getThirdId(), false);
+            boolean isFinishMatch = PreferenceUtil.getBoolean(data.getThirdId() + data.getThirdId(), false);
             if (isTopData) data.setIsTopData(topDataCount++);
+            if (isFinishMatch && data.getStatusOrigin().equals("-1")) data.setIsTopData(-1);
+            else
+                PreferenceUtil.commitBoolean(data.getThirdId() + data.getThirdId(), false); // 完场比赛要置于列表底部
             isTopDataCacheMaps.put(data, isTopData);
         }
         Collections.sort(list, new Match());
@@ -157,13 +161,13 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 赔率的颜色变化状态
         switch (handicap) {
             case 1: // 亚盘
-                setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
+                setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA, false);
                 break;
             case 2: // 大小球
-                setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
+                setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA, false);
                 break;
             case 3: // 欧赔
-                setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
+                setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU, true);
                 break;
         }
 
@@ -200,6 +204,8 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 break;
             case "-1": // 完场
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_end), R.color.red, false);
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.red));
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.red));
                 break;
             case "-10": // 取消
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_cancel), R.color.red, false);
@@ -248,9 +254,15 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 主队名称
         tvHomeTeam.setText(data.getHometeam());
         // 主队黄牌数
-        tvHomeYellowCard.setText(data.getHome_yc());
+        if (!data.getHome_yc().equals("0")) {
+            tvHomeYellowCard.setVisibility(View.VISIBLE);
+            tvHomeYellowCard.setText(data.getHome_yc());
+        } else tvHomeYellowCard.setVisibility(View.INVISIBLE);
         // 主队红牌数
-        tvHomeRedCard.setText(data.getHome_rc());
+        if (!data.getHome_rc().equals("0")) {
+            tvHomeRedCard.setVisibility(View.VISIBLE);
+            tvHomeRedCard.setText(data.getHome_rc());
+        } else tvHomeRedCard.setVisibility(View.INVISIBLE);
         // 半场主队得分数
         tvHomeHalfScore.setText(data.getHomeHalfScore());
         // 半场客服的分数
@@ -258,19 +270,25 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 客队名称
         tvGuestTeam.setText(data.getGuestteam());
         // 客队黄牌数
-        tvGuestYelloCard.setText(data.getGuest_yc());
+        if (!data.getGuest_yc().equals("0")) {
+            tvGuestYelloCard.setVisibility(View.VISIBLE);
+            tvGuestYelloCard.setText(data.getGuest_yc());
+        } else tvGuestYelloCard.setVisibility(View.INVISIBLE);
         // 客队红牌数
-        tvGuestRedCard.setText(data.getGuest_rc());
+        if (!data.getGuest_rc().equals("0")) {
+            tvGuestRedCard.setVisibility(View.VISIBLE);
+            tvGuestRedCard.setText(data.getGuest_rc());
+        } else tvGuestRedCard.setVisibility(View.INVISIBLE);
         // 亚盘赔率
-        tvLeftOdds_YA.setText(asiaLet != null ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue()) : "-");
+        tvLeftOdds_YA.setText(asiaLet != null ? /*HandicapUtils.changeHandicap(*/asiaLet.getHandicapValue() : "封");
         tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getLeftOdds() : "-");
         tvRightOdds_YA.setText(asiaLet != null ? asiaLet.getRightOdds() : "-");
         // 大小盘赔率
-        tvLeftOdds_DA.setText(asiaSize != null ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()) : "-");
-        tvHandicapValue_DA_BLACK.setText(asiaSize != null? asiaSize.getLeftOdds() : "-");
+        tvLeftOdds_DA.setText(asiaSize != null ? /*HandicapUtils.changeHandicapByBigLittleBall(*/asiaSize.getHandicapValue() : "封");
+        tvHandicapValue_DA_BLACK.setText(asiaSize != null ? asiaSize.getLeftOdds() : "-");
         tvRightOdds_DA.setText(asiaSize != null ? asiaSize.getRightOdds() : "-");
         // 欧盘赔率
-        tvLeftOdds_EU.setText(euro != null ? euro.getMediumOdds() : "-");
+        tvLeftOdds_EU.setText(euro != null ? euro.getMediumOdds() : "封");
         tvMediumOdds_EU.setText(euro != null ? euro.getLeftOdds() : "-");
         tvRightOdds_EU.setText(euro != null ? euro.getRightOdds() : "-");
 
@@ -462,7 +480,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             notifyItemChanged(position);
         }
 
-        // 界面1分钟后销毁
+        // 界面1分钟后置于列表底部
         if (target[0] != null) {
             /** -10：取消，1分钟后清除,-12：腰斩，1分钟后清除,-14：推迟，1分钟后清除 */
             if ("-1".equals(target[0].getStatusOrigin()) || "-10".equals(target[0].getStatusOrigin()) || "-12".equals(target[0].getStatusOrigin()) || "-14".equals(target[0].getStatusOrigin())) {
@@ -476,6 +494,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (match.getThirdId().equals(webSocketMatchOdd.getThirdId())) {
             final List<Map<String, String>> matchOddDataLists = webSocketMatchOdd.getData();
             for (Map<String, String> oddDataMaps : matchOddDataLists) {
+                Log.e("HILO", oddDataMaps.toString() + "::::");
                 // 亚赔
                 if (oddDataMaps.get("handicap").equals("asiaLet")) {
                     handicap = 1;
@@ -509,7 +528,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             getList().set(position, match);
             notifyItemChanged(position);
 
-            Observable.timer(5000, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Long>() {
+            Observable.timer(5, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Long>() {
                 @Override
                 public void call(Long aLong) {
                     resetColor = true;
@@ -646,18 +665,28 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void setupOddTextColor(Match data, TextView leftOdds, TextView midOdds, TextView rightOdds) {
+    private void setupOddTextColor(Match data, TextView leftOdds, TextView midOdds, TextView rightOdds, boolean isEuData) {
+        leftOdds.setTextColor(context.getResources().getColor(R.color.res_name_color));
+        midOdds.setTextColor(context.getResources().getColor(R.color.res_pl_color));
+        if (!isEuData) rightOdds.setTextColor(context.getResources().getColor(R.color.res_pl_color));
+        else rightOdds.setTextColor(context.getResources().getColor(R.color.res_name_color));
         if (!resetColor) {
             if (data.getMidOddTextColorId() != 0) {
                 leftOdds.setBackgroundResource(data.getMidOddTextColorId());
+                if (data.getMidOddTextColorId() != R.color.white) // 不是平 一定是红升绿降
+                    leftOdds.setTextColor(context.getResources().getColor(R.color.white));
                 data.setMidOddTextColorId(0);
             }
             if (data.getRightOddTextColorId() != 0) {
                 rightOdds.setBackgroundResource(data.getRightOddTextColorId());
+                if (data.getRightOddTextColorId() != R.color.white)
+                    rightOdds.setTextColor(context.getResources().getColor(R.color.white));
                 data.setRightOddTextColorId(0);
             }
             if (data.getLeftOddTextColorId() != 0) {
                 midOdds.setBackgroundResource(data.getLeftOddTextColorId());
+                if (data.getLeftOddTextColorId() != R.color.white)
+                    midOdds.setTextColor(context.getResources().getColor(R.color.white));
                 data.setLeftOddTextColorId(0);
             }
         } else {

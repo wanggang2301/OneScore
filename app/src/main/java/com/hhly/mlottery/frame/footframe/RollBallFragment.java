@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footframe;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.RollBallAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.base.BaseFragment;
@@ -34,6 +36,7 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -216,8 +219,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         }
                     }
                 }
-                allDataLists.remove(match);
-                feedAdapterLists.remove(match);
+
+                PreferenceUtil.commitBoolean(match.getThirdId()+match.getThirdId(), true); // 完场比赛要置于列表底部
                 RollBallFragment.this.feedAdapter(feedAdapterLists);
 
                 if (feedAdapterLists.size() == 0) {
@@ -270,7 +273,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     public void onItemClick(View convertView, int position) {
-        // TODO: 点击item跳转入口，点击的当前条目thirdId获取方式 feedAdapterLists.get(position).getThirdId();
+        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+        intent.putExtra("thirdId", feedAdapterLists.get(position).getThirdId());
+        intent.putExtra("currentFragmentId", 0);
+        getParentFragment().startActivity(intent);
     }
 
     @Override

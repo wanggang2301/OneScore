@@ -68,6 +68,57 @@ public class HandicapUtils {
 		return result.toString();
 	}
 
+	/**
+	 * 亚盘盘口转换
+	 *
+	 * @param handicap
+	 * @return
+	 */
+	public static String changeHandicap2(String handicap) {
+
+		if(TextUtils.isEmpty(handicap)){
+			return "-";
+		}
+		StringBuffer result = new StringBuffer();
+		float handicapF;
+		try{
+			handicapF = Float.parseFloat(handicap);
+		}catch(NumberFormatException e){
+			return "-";
+		}
+		if (handicapF < 0) {
+			result.append("*");
+		}
+		handicapF = Math.abs(handicapF);
+		float fractionalPart = handicapF - (int) handicapF;
+
+		if (fractionalPart == 0.25f || fractionalPart == 0.75f) {
+			float left = handicapF - 0.25f;
+			float right = handicapF + 0.25f;
+
+			numToBall(left, result);
+			result.append("/");
+			numToBall(right, result);
+
+		} else if (fractionalPart == 0.5f) {
+			if ((int) handicapF == 0) {
+				result.append("半球");
+			} else if ((int) handicapF == 1) {
+				result.append("球半");
+			} else {
+				result.append(numToCN((int) handicapF) + "球半");
+			}
+		} else if (fractionalPart == 0.0f) {
+			if ((int) handicapF == 0) {
+				result.append("平手");
+			} else {
+				result.append(numToCN((int) handicapF) + "球");
+			}
+		}
+
+		return result.toString();
+	}
+
 	private static char numToCN(int num) {
 		String st = PreferenceUtil.getString("language", "rCN");
 		if ("rTW".equals(st)) {
