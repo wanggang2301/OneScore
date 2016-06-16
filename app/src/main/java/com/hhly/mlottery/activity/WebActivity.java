@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -108,6 +109,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                             break;
                         }
                     }
+//                    startActivity(new Intent(WebActivity.this,InputActivity.class));
                 }
             });
         }
@@ -119,7 +121,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         public_btn_filter.setVisibility(View.GONE);
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setImageResource(R.mipmap.share);
-        public_btn_set.setVisibility(View.GONE);
+        public_btn_set.setVisibility(View.VISIBLE);
 
         public_btn_set.setOnClickListener(this);
 
@@ -231,14 +233,13 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                url = url.replace("{deviceToken}", deviceId);
 //            }
             if (url != null) {
-                if (url.contains("comment")) {
-                    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                    ChatFragment chatFragment = new ChatFragment();
-                    CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+                ChatFragment chatFragment = new ChatFragment();
+                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                if (url.contains("comment=false")) {
+                  getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
                 }
-                if (url.contains("share")) {
-                    public_btn_set.setVisibility(View.VISIBLE);//显示分享
-                } else {
+                if (url.contains("share=false")) {
                     public_btn_set.setVisibility(View.GONE);//隐藏分享
                 }
                 url = url.replace("{loginToken}", token);
@@ -246,7 +247,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             }
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
-            L.d("CommonUtils:" + "token=" + token + "reqMethod" + reqMethod + "url=" + url);
+            Log.d("CommonUtils:" , "token=" + token + "reqMethod" + reqMethod + "url=" + url);
 
             mShareTencentCallBack = new ShareTencentCallBack() {
                 @Override
