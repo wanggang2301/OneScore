@@ -135,9 +135,10 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
         Bundle bundle = getArguments();
         Parcelable[] cups = bundle.getParcelableArray(ALL_CUPS);
         mAllCups = new ArrayList<>();
-
-        for (Parcelable cup : cups) {
-            mAllCups.add((LeagueCup) cup);
+        if (cups != null && cups.length > 0) {
+            for (Parcelable cup : cups) {
+                mAllCups.add((LeagueCup) cup);
+            }
         }
 
         Parcelable[] checkedCups = bundle.getParcelableArray(CHECKED_CUPS);
@@ -145,7 +146,7 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
         mSelectedCups = new ArrayList<>();
 
         isCheckedDefualt = bundle.getBoolean(CHECKED_DEFUALT);
-        if (!isCheckedDefualt) {
+        if (!isCheckedDefualt && checkedCups != null && checkedCups.length > 0) {
             for (Parcelable cup : checkedCups) {
                 mCheckedIds.add(((LeagueCup) cup).getRaceId());
                 mSelectedCups.add((LeagueCup) cup);
