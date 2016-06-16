@@ -649,10 +649,15 @@
     <string name="basket_analyze_dialog_cancle">取消</string>
     <string name="basket_analyze_dialog_ok">确定</string>
 
-
     <string name="basket_odds_euro_details">欧赔详情</string>
     <string name="basket_odds_asiaLet_details">亚盘详情</string>
     <string name="basket_odds_asiaSize_details">大小球详情</string>
+
+    <!--足球分析详情-->
+    <string name="football_analyze_details">分析明细</string>
+    <string name="football_analyze_details_time">时间</string>
+    <string name="football_analyze_details_matchs">联赛</string>
+    <string name="football_analyze_details_game">比赛</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

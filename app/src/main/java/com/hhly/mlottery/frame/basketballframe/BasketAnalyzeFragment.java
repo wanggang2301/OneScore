@@ -19,6 +19,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketAnalyzeMoreRecordActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeContentBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeFutureMatchBean;
@@ -189,6 +190,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
         mProgressBar = (ProgressBar) mView.findViewById(R.id.basket_progressbar);
         mBasketProgressbarGuest = (TextView) mView.findViewById(R.id.basket_progressbar_guest);
+
         mBasketProgressbarHome = (TextView) mView.findViewById(R.id.basket_progressbar_home);
         mRecentGuestImg1 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest1);
         mRecentGuestImg2 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest2);

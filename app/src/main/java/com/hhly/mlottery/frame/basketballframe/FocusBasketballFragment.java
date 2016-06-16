@@ -28,7 +28,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
-import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableAdapter;
+import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableFocusAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketMatchFilter;
@@ -77,7 +77,7 @@ import de.greenrobot.event.EventBus;
  * 篮球比分fragment
  * Created by yixq on 2015/12/30.
  */
-public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
+public class FocusBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
 
     private static final String TAG = "ImmedBasketballFragment";
     private static final String PARAMS = "BASKET_PARAMS";
@@ -106,7 +106,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     private HappySocketClient mSocketClient;//客户端  socket;
 
     private int expandFlag = -1;//控制列表的展开
-    private PinnedHeaderExpandableAdapter adapter;
+    private PinnedHeaderExpandableFocusAdapter adapter;
 
     private View mView;
     private Context mContext;
@@ -163,10 +163,10 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     /**
      * 关注事件EventBus
      */
-    public static EventBus BasketImmedEventBus;
+//    public static EventBus BasketImmedEventBus;
 //    public static EventBus BasketResultEventBus;
 //    public static EventBus BasketScheduleEventBus;
-//    public static EventBus BasketFocusEventBus;
+    public static EventBus BasketFocusEventBus;
 
 
     /**
@@ -184,8 +184,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * @param basketballType
      * @return
      */
-    public static ImmedBasketballFragment newInstance(int basketballType) {
-        ImmedBasketballFragment fragment = new ImmedBasketballFragment();
+    public static FocusBasketballFragment newInstance(int basketballType) {
+        FocusBasketballFragment fragment = new FocusBasketballFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(PARAMS, basketballType);
         fragment.setArguments(bundle);
@@ -198,10 +198,10 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 //            mBasketballType = getArguments().getInt(PARAMS);
-            mBasketballType = 0;
+            mBasketballType = 3;
         }
-        BasketImmedEventBus=new EventBus();
-        BasketImmedEventBus.register(this);
+            BasketFocusEventBus = new EventBus();
+            BasketFocusEventBus.register(this);
 
 //        switch (mBasketballType){
 //            case TYPE_IMMEDIATE:
@@ -479,7 +479,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                 }
 
                 if (adapter == null || mBasketballType == TYPE_IMMEDIATE || mBasketballType == TYPE_FOCUS) {
-                    adapter = new PinnedHeaderExpandableAdapter(childrenDataList, groupDataList, getActivity(), explistview);
+                    adapter = new PinnedHeaderExpandableFocusAdapter(childrenDataList, groupDataList, getActivity(), explistview);
                     explistview.setAdapter(adapter);
 
                     adapter.setmFocus(mFocusClickListener);//设置关注
@@ -585,7 +585,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
                             mSwipeRefreshLayout.setVisibility(View.GONE);
                             mLoadingLayout.setVisibility(View.GONE);
                         } else {
-                            adapter = new PinnedHeaderExpandableAdapter(childrenDataList, groupDataList, getActivity(), explistview);
+                            adapter = new PinnedHeaderExpandableFocusAdapter(childrenDataList, groupDataList, getActivity(), explistview);
                             explistview.setAdapter(adapter);
                             adapter.setmFocus(mFocusClickListener);//设置关注
                         }
@@ -661,10 +661,9 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 //                    intent.putExtra("MatchChickedFilterDatas", (Serializable) mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
 ////                getParentFragment().startActivityForResult(intent, REQUEST_FILTERCODE);
 ////                    getActivity().startActivityForResult(intent, REQUEST_FILTERCODE);
-//                    intent.putExtra("currentfragment" , 0);
-////                    Bundle bundlefil = new Bundle();
-////                    bundlefil.putInt("currentfragment" , 0);
-////                    intent.putExtras(bundlefil);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("currentfragment" , mBasketballType);
+//                    intent.putExtras(bundle);
 //                    startActivity(intent);
 //                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
 //                }else if(isLoad == 0){
@@ -672,7 +671,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 //                }else{
 //                    Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
 //                }
-//                L.d("mBasketballType jishi >>>>>>>>>>>","mBasketballType == >"+mBasketballType);
 //                break;
             case R.id.public_img_back:  //返回
                 MobclickAgent.onEvent(mContext, "Basketball_Exit");
@@ -708,9 +706,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     }
 
     public void LoadData(){
-        if (mChickedFilter.size()!=0) {
-            mLoadHandler.postDelayed(mRun, 0);
-        }
+        mLoadHandler.postDelayed(mRun, 0);
     }
 
     /**

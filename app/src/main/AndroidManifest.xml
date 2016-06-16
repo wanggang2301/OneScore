@@ -145,6 +145,11 @@
             android:name=".activity.BasketAnalyzeMoreRecordActivity"
             android:screenOrientation="portrait"/>
 
+        <!-- 足球分析明细 -->
+        <activity
+            android:name=".activity.FootballAnalyzeDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <!--<receiver android:name=".activity.WelcomeActivity$DownLoadBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />

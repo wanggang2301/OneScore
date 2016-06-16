@@ -27,7 +27,11 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsBaseFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
+import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
+import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -174,6 +178,12 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private int mGuestNum=0;
     private int mHomeNum=0;
 
+    private int mCurrentId;
+    private final int IMMEDIA_FRAGMENT = 0;
+    private final int RESULT_FRAGMENT = 1;
+    private final int SCHEDULE_FRAGMENT = 2;
+    private final int FOCUS_FRAGMENT = 3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +191,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         setContentView(R.layout.basket_detailsactivity_activity);
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
+            mCurrentId = getIntent().getExtras().getInt("currentfragment");
         }
 
 
@@ -773,6 +784,9 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             case R.id.basket_details_back:
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Exit");
                 setResult(Activity.RESULT_OK);
+
+                eventBusPost();
+
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
@@ -793,6 +807,9 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             setResult(Activity.RESULT_OK);
+
+            eventBusPost();
+
             finish();
             overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
             return true;
@@ -1433,6 +1450,29 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         @Override
         public CharSequence getPageTitle(int position) {
             return TITLES[position];
+        }
+    }
+
+    private void eventBusPost() {
+            if (ImmedBasketballFragment.BasketImmedEventBus != null) {
+                ImmedBasketballFragment.BasketImmedEventBus.post("");
+            }
+        if (mCurrentId == IMMEDIA_FRAGMENT) {
+            if (ImmedBasketballFragment.BasketImmedEventBus != null) {
+                ImmedBasketballFragment.BasketImmedEventBus.post("");
+            }
+        } else if (mCurrentId == RESULT_FRAGMENT) {
+            if (ResultBasketballFragment.BasketResultEventBus != null) {
+                ResultBasketballFragment.BasketResultEventBus.post("");
+            }
+        } else if (mCurrentId == SCHEDULE_FRAGMENT) {
+            if (ScheduleBasketballFragment.BasketScheduleEventBus != null) {
+                ScheduleBasketballFragment.BasketScheduleEventBus.post("");
+            }
+        } else if (mCurrentId == FOCUS_FRAGMENT) {
+            if (FocusBasketballFragment.BasketFocusEventBus != null) {
+                FocusBasketballFragment.BasketFocusEventBus.post("");
+            }
         }
     }
 
