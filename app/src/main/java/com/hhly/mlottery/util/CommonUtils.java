@@ -141,11 +141,13 @@ public class CommonUtils {
             case AccountResultCode.SYSTEM_ERROR:
             case AccountResultCode.PARAM_ERROR:
             case AccountResultCode.NO_AGGREEMENT:
-            case AccountResultCode.INTERVEL_LESS:
             case AccountResultCode.PLATFORM_NOT_EXIST:
             case AccountResultCode.OPERATOR_TYPE_NOT_EXIST:
             case AccountResultCode.SERVER_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.system_error);
+                break;
+            case AccountResultCode.INTERVEL_LESS:
+                UiUtils.toast(MyApp.getInstance() , R.string.verify_time_limit);
                 break;
             case AccountResultCode.MAIL_FORMAT_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.mail_format_error);
@@ -203,6 +205,9 @@ public class CommonUtils {
                 break;
             case AccountResultCode.USERNAME_PASS_ERROR:
                 UiUtils.toast(MyApp.getInstance() , R.string.username_pass_error);
+                break;
+            case AccountResultCode.NICKNAME_SENSITIVE:
+                UiUtils.toast(MyApp.getInstance() , R.string.nickname_sensitive);
                 break;
             default:
                 L.e(TAG , "未定义错误码 : rescode = "+ rescode + " , defaultMessage = "+ defaultMessage);

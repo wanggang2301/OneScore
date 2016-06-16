@@ -15,51 +15,51 @@ import com.hhly.mlottery.widget.MyScrollLayout;
 import com.hhly.mlottery.widget.OnViewChangeListener;
 
 /**
- * 
- * @ClassName: WelcomeViewActivity 
- * @Description: 引导界面
  * @author Tenney
+ * @ClassName: WelcomeViewActivity
+ * @Description: 引导界面
  * @date 2015-12-22 下午12:21:26
  */
 public class WelcomeViewActivity extends BaseActivity implements OnViewChangeListener {
 
-	private MyScrollLayout mScrollLayout;
-	private Button startBtn;
-	//开机引导页的几张动画
-	private RelativeLayout wel_layout_img1,wel_layout_img2,wel_layout_img3;
-	
+    private MyScrollLayout mScrollLayout;
+    private Button startBtn;
+    //开机引导页的几张动画
+    private RelativeLayout wel_layout_img1, wel_layout_img2, wel_layout_img3;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_welcomeview);
-		initView();
-		initImg();
-	}
 
-	private void initView() {
-		mScrollLayout =$(R.id.ScrollLayout);
-		startBtn =$(R.id.startBtn);
-		startBtn.setOnClickListener(onClick);
-		mScrollLayout.SetOnViewChangeListener(this);
-		wel_layout_img1=$(R.id.wel_layout_img1);
-		wel_layout_img2=$(R.id.wel_layout_img2);
-		wel_layout_img3=$(R.id.wel_layout_img3);
-	}
-	
-	//判断是什么语言加载什么图片
-	public void initImg(){
-		//如果是繁体语言环境
-		if(MyApp.isLanguage.equals("rTW")){
-			wel_layout_img1.setBackgroundResource(R.mipmap.welcome1);
-			wel_layout_img2.setBackgroundResource(R.mipmap.welcome2);
-			wel_layout_img3.setBackgroundResource(R.mipmap.welcome3);
-		}else if(MyApp.isLanguage.equals("rCN")){
-			wel_layout_img1.setBackgroundResource(R.mipmap.welcome1);
-			wel_layout_img2.setBackgroundResource(R.mipmap.welcome2);
-			wel_layout_img3.setBackgroundResource(R.mipmap.welcome3);
-		}
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_welcomeview);
+        initView();
+        initImg();
+    }
+
+    private void initView() {
+        mScrollLayout = $(R.id.ScrollLayout);
+        startBtn = $(R.id.startBtn);
+        startBtn.setOnClickListener(onClick);
+        mScrollLayout.SetOnViewChangeListener(this);
+        wel_layout_img1 = $(R.id.wel_layout_img1);
+        wel_layout_img2 = $(R.id.wel_layout_img2);
+        wel_layout_img3 = $(R.id.wel_layout_img3);
+    }
+
+    //判断是什么语言加载什么图片
+    public void initImg() {
+        //如果是繁体语言环境
+        if (MyApp.isLanguage.equals("rTW")) {
+            wel_layout_img1.setBackgroundResource(R.mipmap.welcome1);
+            wel_layout_img2.setBackgroundResource(R.mipmap.welcome2);
+            wel_layout_img3.setBackgroundResource(R.mipmap.welcome3);
+        } else if (MyApp.isLanguage.equals("rCN")) {
+            wel_layout_img1.setBackgroundResource(R.mipmap.welcome1);
+            wel_layout_img2.setBackgroundResource(R.mipmap.welcome2);
+            wel_layout_img3.setBackgroundResource(R.mipmap.welcome3);
+        }
+    }
+
 
 	private View.OnClickListener onClick = new View.OnClickListener() {
 		@Override
@@ -86,26 +86,33 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
 		}
 	};
 
-	/**
-	 * 屏蔽返回键的方法
-	 */
-	public boolean onKeyDown(int keyCode,KeyEvent event){
-		 switch(keyCode){
-		 case KeyEvent.KEYCODE_HOME:return true;
-		 case KeyEvent.KEYCODE_BACK:return true;
-		 case KeyEvent.KEYCODE_CALL:return true;
-		 case KeyEvent.KEYCODE_SYM: return true;
-		 case KeyEvent.KEYCODE_VOLUME_DOWN: return true;
-		 case KeyEvent.KEYCODE_VOLUME_UP: return true;
-		 case KeyEvent.KEYCODE_STAR: return true;
-		 }
-		 return super.onKeyDown(keyCode, event);
-	}
+    /**
+     * 屏蔽返回键的方法
+     */
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_HOME:
+                return true;
+            case KeyEvent.KEYCODE_BACK:
+                return true;
+            case KeyEvent.KEYCODE_CALL:
+                return true;
+            case KeyEvent.KEYCODE_SYM:
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                return true;
+            case KeyEvent.KEYCODE_STAR:
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
-	@Override
-	public void OnViewChange(int view) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void OnViewChange(int view) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

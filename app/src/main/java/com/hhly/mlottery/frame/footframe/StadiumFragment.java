@@ -437,10 +437,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
                 if (currMatchTextLiveBean != null) {
                     isLostMsgId(currMatchTextLiveBean.getMsgId());
-                }
-                allMatchLiveMsgId.add(0, Integer.parseInt(currMatchTextLiveBean.getMsgId()));
-
-                if (currMatchTextLiveBean != null) {
+                    allMatchLiveMsgId.add(0, Integer.parseInt(currMatchTextLiveBean.getMsgId()));
                     updatePushData(currMatchTextLiveBean);
                 }
             }

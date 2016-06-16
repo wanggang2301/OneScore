@@ -664,13 +664,13 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            L.e(TAG, "__handleMessage__");
+//            L.e(TAG, "__handleMessage__");
 
             L.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 1) {
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
-                WebSocketMatchStatus webSocketMatchStatus = null;
+                WebSocketMatchStatus webSocketMatchStatus;
                 try {
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 } catch (Exception e) {
@@ -684,7 +684,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             } else if (msg.arg1 == 2) {
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
-                WebSocketMatchOdd webSocketMatchOdd = null;
+                WebSocketMatchOdd webSocketMatchOdd;
                 try {
                     webSocketMatchOdd = JSON.parseObject(ws_json, WebSocketMatchOdd.class);
                 } catch (Exception e) {
@@ -713,7 +713,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             } else if (msg.arg1 == 3) {
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
-                WebSocketMatchEvent webSocketMatchEvent = null;
+                WebSocketMatchEvent webSocketMatchEvent;
                 try {
                     webSocketMatchEvent = JSON.parseObject(ws_json, WebSocketMatchEvent.class);
                 } catch (Exception e) {
@@ -725,7 +725,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             } else if (msg.arg1 == 5) {
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
-                WebSocketMatchChange webSocketMatchChange = null;
+                WebSocketMatchChange webSocketMatchChange;
                 try {
                     webSocketMatchChange = JSON.parseObject(ws_json, WebSocketMatchChange.class);
                 } catch (Exception e) {
@@ -1487,7 +1487,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
     @Override
     public void onMessage(String message) {
-        L.w(TAG, "message = " + message);
+//        L.w(TAG, "message = " + message);
         // L.e(TAG, "websocket isClosed = " + client.isClosed());
         // L.e(TAG, "websocket isClosing = " + client.isClosing());
         // L.e(TAG, "websocket isConnecting = " + client.isConnecting());

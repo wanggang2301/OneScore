@@ -23,7 +23,7 @@ public class BaseURLs {
 
     private static String getHost() {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
-            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_242);
+            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
 //            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
@@ -650,6 +650,8 @@ public class BaseURLs {
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
     /**新版指数*/
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
+    /**指数推送*/
+    public final static String URL_CPI_SOCKET = WS_SERVICE + "/topic/USER.topic.indexcenter";
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";

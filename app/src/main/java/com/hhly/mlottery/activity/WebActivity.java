@@ -162,8 +162,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         });
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setAppCacheEnabled(false);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setJavaScriptEnabled(true);
@@ -190,22 +190,18 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             mThird = intent.getStringExtra("thirdId");
             System.out.println("lzf:" + "mType=" + mType + "mThird" + mThird);
             infoTypeName = intent.getStringExtra("infoTypeName");
-            token = intent.getStringExtra("token");
-//            token ="fe95688ec6074e1cb4486c0bd3a60c34";
-//            String token =AppConstants.register.getData().getLoginToken();
+            token = AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
-//            url="http://game1.1332255.com:8082/h5/index?loginToken="+token+"&deviceToken="+deviceId;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
-            if (!TextUtils.isEmpty(token) && reqMethod != null && reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
-                public_btn_set.setVisibility(View.GONE);
-            } else {//token为空，说明是资讯，显示分享和评论
-                public_btn_set.setVisibility(View.VISIBLE);
-                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                //String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager
-                ChatFragment chatFragment = new ChatFragment();
-                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
-            }
+//            if (!TextUtils.isEmpty(token) && reqMethod != null && reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
+//                public_btn_set.setVisibility(View.GONE);
+//            } else {//token为空，说明是资讯，显示分享和评论
+//                public_btn_set.setVisibility(View.VISIBLE);
+//                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+//                ChatFragment chatFragment = new ChatFragment();
+//                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+//            }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -226,11 +222,25 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                    }
 //                }
             });
-            //其他页传过来的reqMethod为post时，提交token  否则不提交
-            if (reqMethod != null && token != null && reqMethod.equals("post")) {
-
-//                mWebView.postUrl(url, token.getBytes("utf-8"));
-//                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
+//            //其他页传过来的reqMethod为post时，提交token  否则不提交
+//            if (reqMethod != null && token != null && reqMethod.equals("post")) {
+//
+////                mWebView.postUrl(url, token.getBytes("utf-8"));
+////                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
+//                url = url.replace("{loginToken}", token);
+//                url = url.replace("{deviceToken}", deviceId);
+//            }
+            if (url != null) {
+                if (url.contains("comment")) {
+                    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+                    ChatFragment chatFragment = new ChatFragment();
+                    CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                }
+                if (url.contains("share")) {
+                    public_btn_set.setVisibility(View.VISIBLE);//显示分享
+                } else {
+                    public_btn_set.setVisibility(View.GONE);//隐藏分享
+                }
                 url = url.replace("{loginToken}", token);
                 url = url.replace("{deviceToken}", deviceId);
             }

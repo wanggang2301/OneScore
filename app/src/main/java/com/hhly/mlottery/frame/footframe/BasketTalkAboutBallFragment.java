@@ -1,9 +1,9 @@
 package com.hhly.mlottery.frame.footframe;
 
-import android.content.Context;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -21,18 +22,21 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivity;
 import com.hhly.mlottery.activity.InputActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.basketballframe.BasketDetailsBaseFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.ObservableListView;
 import com.hhly.mlottery.view.PullUpRefreshListView;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.Comment;
@@ -46,12 +50,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author hhly204
- * @ClassName: TalkAboutBallFragment
- * @Description: 聊球页面
- * @date 2016-6-2
+ * @author yixq
+ * @ClassName: BasketTalkAboutBallFragment
+ * @Description: 篮球聊球页面
+ * @date 2016-6-14
  */
-public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class BasketTalkAboutBallFragment extends BasketDetailsBaseFragment<ObservableListView> implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private View mView;
     private ProgressBar talkballpro;//客队Vs主队点赞的比例
     private ImageView ivHomeLike;//点赞主队
@@ -95,13 +99,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ARG_PARAM3 = "param3";
     private static final String ADDKEYHOME = "homeAdd";
     private static final String ADDKEYGUEST = "guestAdd";
-    private Context mContext;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext = context;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +111,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_talkaboutball, null);
+        mView = inflater.inflate(R.layout.fragment_talkaboutball_basket, null);
         initView();
         requestLikeData(ADDKEYHOME, "0");
         initAnim();
@@ -196,32 +193,52 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void initView() {
-        sdk = CyanSdk.getInstance(mContext);
+        sdk = CyanSdk.getInstance(getActivity());
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
-        talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
-        ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
-        ivGuestLike = (ImageView) mView.findViewById(R.id.talkbail_guest_like_anim_img);
-        tvHomeLikeCount = (TextView) mView.findViewById(R.id.talkball_like_count);
-        tvGuestLikeCount = (TextView) mView.findViewById(R.id.talkbail_guest_like_count);
-        mHomeLike = (ImageView) mView.findViewById(R.id.talkball_home_like);
-        mGuestLike = (ImageView) mView.findViewById(R.id.talkball_guest_like);
+        mListView = (PullUpRefreshListView) mView.findViewById(R.id.scroll);
+//        talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
+//        ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
+//        ivGuestLike = (ImageView) mView.findViewById(R.id.talkbail_guest_like_anim_img);
+//        tvHomeLikeCount = (TextView) mView.findViewById(R.id.talkball_like_count);
+//        tvGuestLikeCount = (TextView) mView.findViewById(R.id.talkbail_guest_like_count);
+
+        //头部
+        View paddingView = new View(getActivity());
+        final int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+                flexibleSpaceImageHeight);
+        paddingView.setLayoutParams(lp);
+        // This is required to disable header's list selector effect
+        paddingView.setClickable(true);
+
+        //标题
+        View viewTitle = View.inflate(getActivity(), R.layout.fragment_talkaboutball_title,null);
+        //欧赔亚盘大小球标题设置
+        talkballpro= (ProgressBar) viewTitle.findViewById(R.id.talkball_pro);
+        ivHomeLike = (ImageView) viewTitle.findViewById(R.id.talkball_like_anim_img);
+        tvHomeLikeCount = (TextView) viewTitle.findViewById(R.id.talkball_like_count);
+        ivGuestLike = (ImageView) viewTitle.findViewById(R.id.talkbail_guest_like_anim_img);
+        tvGuestLikeCount = (TextView) viewTitle.findViewById(R.id.talkbail_guest_like_count);
+
+        mHomeLike = (ImageView) viewTitle.findViewById(R.id.talkball_home_like);
+        mGuestLike = (ImageView) viewTitle.findViewById(R.id.talkball_guest_like);
         mHomeLike.setOnClickListener(this);
         mGuestLike.setOnClickListener(this);
+
         ivHomeLike.setVisibility(View.INVISIBLE);
         ivGuestLike.setVisibility(View.INVISIBLE);
         setClickableLikeBtn(true);
         //评论相关
         mNoData = (TextView) mView.findViewById(R.id.nodata);
-        mListView = (PullUpRefreshListView) mView.findViewById(R.id.comment_lv);
         mListView.setItemsCanFocus(true);
         mAdapter = new CounselComentLvAdapter(getActivity());
         mListView.setAdapter(mAdapter);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.comment_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
+        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getActivity(), StaticValues.REFRASH_OFFSET_END));
         mCommentCount = (TextView) mView.findViewById(R.id.tv_commentcount);
         mCommentCount.setOnClickListener(this);
         mTextView = (TextView) mView.findViewById(R.id.et_comment);
@@ -232,6 +249,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (!TextUtils.isEmpty(mThirdId)) {
             loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
         }
+
+        mListView.addHeaderView(paddingView);
+        mListView.addHeaderView(viewTitle);
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -444,18 +464,17 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             case R.id.et_comment:
                 if (!CommonUtils.isLogin()) {
                     //跳转登录界面
-                    Intent intent1 = new Intent(mContext, LoginActivity.class);
+                    Intent intent1 = new Intent(getActivity(), LoginActivity.class);
                     startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                 } else {//跳转输入评论页面
-                    Intent intent2 = new Intent(mContext, InputActivity.class);
+                    Intent intent2 = new Intent(getActivity(), InputActivity.class);
                     intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
                     startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
-                    getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     mLinearLayout.setVisibility(View.GONE);
                     System.out.println("lzftalk跳" + topicid);
                     //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
                     RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
-                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(mContext, 60));
+                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(getActivity(), 60));
                     mSwipeRefreshLayout.requestLayout();
 
                 }
@@ -473,5 +492,41 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 requestLikeData(ADDKEYGUEST, "1");
                 break;
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void setScrollY(int scrollY, int threshold) {
+        ObservableListView listView;
+        View view = getView();
+        if (view == null) {
+            return;
+        }
+        listView = (ObservableListView) view.findViewById(R.id.scroll);
+        if (listView == null) {
+            return;
+        }
+        View firstVisibleChild = listView.getChildAt(0);
+        if (firstVisibleChild != null) {
+            int offset = scrollY;
+            int position = 0;
+            listView.setSelectionFromTop(position, -offset);
+        }
+
+    }
+
+    @Override
+    protected void updateFlexibleSpace(int scrollY, View view) {
+        // Also pass this event to parent Activity
+        BasketDetailsActivity parentActivity =
+                (BasketDetailsActivity) getActivity();
+        if (parentActivity != null) {
+            parentActivity.onScrollChanged(scrollY, (ObservableListView) view.findViewById(R.id.scroll));
+        }
+    }
+
+    @Override
+    public void initData() {
+
     }
 }

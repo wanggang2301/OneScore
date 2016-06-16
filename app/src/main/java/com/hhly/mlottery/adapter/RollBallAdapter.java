@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,6 +22,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchEvent;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.util.AnimUtils;
+import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 
@@ -39,7 +42,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
     public static final int VIEW_TYPE_DEFAULT = 1;
 
-    private static int topDataCount = 1;
+    private int topDataCount = 1;
     private boolean notify_locked_tag;
     private int handicap;
     private Map<Match, Boolean> isTopDataCacheMaps = new HashMap<>();
@@ -57,10 +60,14 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     public void setList(List list) {
         getList().clear();
         if (list == null) return;
-        getList().addAll(list);
-        for (int i = 0; i < list.size(); i++) {
-            isTopDataCacheMaps.put((Match) list.get(i), false);
+        for (int i = list.size() - 1; i >= 0; i--) {
+            Match data = (Match) list.get(i);
+            boolean isTopData = PreferenceUtil.getBoolean(data.getThirdId(), false);
+            if (isTopData) data.setIsTopData(topDataCount++);
+            isTopDataCacheMaps.put(data, isTopData);
         }
+        Collections.sort(list, new Match());
+        getList().addAll(list);
     }
 
     @Override
@@ -115,6 +122,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         TextView tvLeftOdds_EU = viewHolder.findViewById(R.id.tvLeftOdds_EU);
         TextView tvMediumOdds_EU = viewHolder.findViewById(R.id.tvMediumOdds_EU);
         TextView tvRightOdds_EU = viewHolder.findViewById(R.id.tvRightOdds_EU);
+        TextView keepTimeShuffle = viewHolder.findViewById(R.id.keepTimeShuffle);
 
         // 初始化数据
         if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
@@ -124,10 +132,10 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 置顶
         if (data.getIsTopData() > 0 || isTopDataCacheMaps.get(data)) {
             ivItemPositionControl.setImageResource(R.mipmap.roll_default);
-            RollBallAdapter.this.showShadow(container, 0.8f);
+//            RollBallAdapter.this.showShadow(container, 0.8f);
         } else {
             ivItemPositionControl.setImageResource(R.mipmap.roll_top);
-            RollBallAdapter.this.showShadow(container, 1f);
+//            RollBallAdapter.this.showShadow(container, 1f);
         }
 
         // webSocket实时推送事件动画处理
@@ -165,45 +173,48 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 rlHalfContainer.setVisibility(View.INVISIBLE);
                 tvHomeScore.setVisibility(View.INVISIBLE);
                 tvGuestScore.setVisibility(View.INVISIBLE);
-                this.setupKeepTimeStyle(tvKeepTime, "VS", R.color.res_pl_color);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, "VS", R.color.res_pl_color, false);
+
                 break;
             case "1": // 上半场进行时间
                 if (Integer.parseInt(data.getKeepTime()) > 45) {
-                    this.setupKeepTimeStyle(tvKeepTime, "45+", R.color.football_keeptime);
+                    this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, "45+", R.color.football_keeptime, true);
 
-                } else tvKeepTime.setText(data.getKeepTime() + "'");
+                } else tvKeepTime.setText(data.getKeepTime());
+                this.startShuffleAnimation(keepTimeShuffle);
                 break;
             case "2": // 中场
-                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_midfield), R.color.football_keeptime);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_midfield), R.color.football_keeptime, false);
                 break;
             case "3": // 下半场进行时间
                 if (Integer.parseInt(data.getKeepTime()) > 90) {
-                    this.setupKeepTimeStyle(tvKeepTime, "90+", R.color.football_keeptime);
-                } else tvKeepTime.setText(data.getKeepTime() + "'");
+                    this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, "90+", R.color.football_keeptime, true);
+                } else tvKeepTime.setText(data.getKeepTime());
+                this.startShuffleAnimation(keepTimeShuffle);
                 break;
             case "4": // 加时
-                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_overtime), R.color.football_keeptime);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_overtime), R.color.football_keeptime, false);
                 break;
             case "5": // 点球
-                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_point), R.color.football_keeptime);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_point), R.color.football_keeptime, false);
                 break;
             case "-1": // 完场
-                this.setupKeepTimeStyle(tvKeepTime, /*"(" + data.getHomeHalfScore() + ":" + data.getGuestHalfScore() + ")"*/"完", R.color.red);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_end), R.color.red, false);
                 break;
             case "-10": // 取消
-                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_cancel), R.color.red);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_cancel), R.color.red, false);
                 break;
             case "-11": // 待定
-                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_hold), R.color.red);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_hold), R.color.red, false);
                 break;
             case "-12": // 腰斩
-                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_cut), R.color.red);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_cut), R.color.red, false);
                 break;
             case "-13": // 中断
-                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_mesomere), R.color.bg_header);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_mesomere), R.color.bg_header, false);
                 break;
             case "-14": // 推迟
-                this.setupKeepTimeStyle(tvKeepTime, context.getString(R.string.immediate_status_postpone), R.color.red);
+                this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_postpone), R.color.red, false);
                 break;
         }
 
@@ -251,27 +262,30 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 客队红牌数
         tvGuestRedCard.setText(data.getGuest_rc());
         // 亚盘赔率
-        tvLeftOdds_YA.setText(asiaLet != null ? asiaLet.getLeftOdds() : "-");
-        tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getHandicapValue() : "-");
+        tvLeftOdds_YA.setText(asiaLet != null ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue()) : "-");
+        tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getLeftOdds() : "-");
         tvRightOdds_YA.setText(asiaLet != null ? asiaLet.getRightOdds() : "-");
         // 大小盘赔率
-        tvLeftOdds_DA.setText(asiaSize != null ? asiaSize.getLeftOdds() : "-");
-        tvHandicapValue_DA_BLACK.setText(asiaSize != null ? asiaSize.getHandicapValue() : "-");
+        tvLeftOdds_DA.setText(asiaSize != null ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()) : "-");
+        tvHandicapValue_DA_BLACK.setText(asiaSize != null? asiaSize.getLeftOdds() : "-");
         tvRightOdds_DA.setText(asiaSize != null ? asiaSize.getRightOdds() : "-");
         // 欧盘赔率
-        tvLeftOdds_EU.setText(euro != null ? euro.getLeftOdds() : "-");
-        tvMediumOdds_EU.setText(euro != null ? euro.getMediumOdds() : "-");
+        tvLeftOdds_EU.setText(euro != null ? euro.getMediumOdds() : "-");
+        tvMediumOdds_EU.setText(euro != null ? euro.getLeftOdds() : "-");
         tvRightOdds_EU.setText(euro != null ? euro.getRightOdds() : "-");
 
         // 控制器
         itemPositionControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data.getIsTopData() > 0) {
+                boolean isTopData = PreferenceUtil.getBoolean(data.getThirdId(), false);
+                if (isTopData) {
                     data.setIsTopData(0);
+                    PreferenceUtil.commitBoolean(data.getThirdId(), false);
                     if (isTopDataCacheMaps.containsKey(data)) isTopDataCacheMaps.put(data, false);
                 } else {
                     data.setIsTopData(topDataCount);
+                    PreferenceUtil.commitBoolean(data.getThirdId(), true);
                     if (isTopDataCacheMaps.containsKey(data)) isTopDataCacheMaps.put(data, true);
                     topDataCount++;
                 }
@@ -293,11 +307,62 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         });
     }
 
+    private void startShuffleAnimation(final TextView keepTimeShuffle) {
+        keepTimeShuffle.setText("\'");
+        keepTimeShuffle.setVisibility(View.VISIBLE);
+        final AlphaAnimation alphaAnimation1 = new AlphaAnimation(1, 1);
+        alphaAnimation1.setDuration(500);
+        final AlphaAnimation alphaAnimation0 = new AlphaAnimation(0, 0);
+        alphaAnimation0.setDuration(500);
+        alphaAnimation1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                keepTimeShuffle.startAnimation(alphaAnimation0);
+            }
+        });
+
+        alphaAnimation0.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                keepTimeShuffle.startAnimation(alphaAnimation1);
+
+            }
+        });
+        keepTimeShuffle.startAnimation(alphaAnimation1);
+    }
+
     public Subscription getSubscription() {
         return subscription;
     }
 
-    private void setupKeepTimeStyle(TextView keepTime, String text, int color) {
+    private void setupKeepTimeStyle(TextView keepTime, TextView keepTimeShuffle, String text, int color, boolean isShowShuffle) {
+        if (isShowShuffle) {
+            keepTimeShuffle.setVisibility(View.VISIBLE);
+        } else {
+            keepTimeShuffle.setVisibility(View.INVISIBLE);
+            keepTimeShuffle.clearAnimation();
+        }
         keepTime.setText(text);
         keepTime.setTextColor(context.getResources().getColor(color));
     }
@@ -328,11 +393,12 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
+    // 置顶颜色
     private void showShadow(final View view, float alpha) {
         view.setAlpha(alpha);
-//        ObjectAnimator.ofFloat(view, View.ALPHA, 0, 0.8f).setDuration(400).start();
     }
 
+    // 置顶操作
     private void transformMapper(int position) {
         List<Match> list = getList();
         Match data = list.get(position);
@@ -342,6 +408,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         notifyDataSetChanged();
     }
 
+    // WebSocket推送消息分发处理
     public void updateItemFromWebSocket(Object o) {
         List<Match> matchList = getList();
         if (!notify_locked_tag) {
@@ -413,19 +480,28 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 if (oddDataMaps.get("handicap").equals("asiaLet")) {
                     handicap = 1;
                     MatchOdd asiaLetOdd = this.getMatchOdd(match, "asiaLet");
-                    this.changeOddTextColor(match, asiaLetOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), asiaLetOdd.getRightOdds(), oddDataMaps.get("rightOdds"), asiaLetOdd.getHandicapValue(), oddDataMaps.get("mediumOdds"));
+                    if (asiaLetOdd != null)
+                        this.changeOddTextColor(match, asiaLetOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), asiaLetOdd.getRightOdds(), oddDataMaps.get("rightOdds"), asiaLetOdd.getHandicapValue(), oddDataMaps.get("mediumOdds"));
+                    else
+                        this.changeOddTextColor(match, "0.00", oddDataMaps.get("leftOdds"), "0.00", oddDataMaps.get("rightOdds"), "0.00", oddDataMaps.get("mediumOdds"));
                     this.updateMatchOdd(match, asiaLetOdd, oddDataMaps, "asiaLet");
                     // 欧赔
                 } else if (oddDataMaps.get("handicap").equals("euro")) {
                     handicap = 3;
                     MatchOdd euroOdd = this.getMatchOdd(match, "euro");
-                    this.changeOddTextColor(match, euroOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), euroOdd.getRightOdds(), oddDataMaps.get("rightOdds"), euroOdd.getMediumOdds(), oddDataMaps.get("mediumOdds"));
+                    if (euroOdd != null)
+                        this.changeOddTextColor(match, euroOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), euroOdd.getRightOdds(), oddDataMaps.get("rightOdds"), euroOdd.getMediumOdds(), oddDataMaps.get("mediumOdds"));
+                    else
+                        this.changeOddTextColor(match, "0.00", oddDataMaps.get("leftOdds"), "0.00", oddDataMaps.get("rightOdds"), "0.00", oddDataMaps.get("mediumOdds"));
                     this.updateMatchOdd(match, euroOdd, oddDataMaps, "euro");
                     // 大小
                 } else if (oddDataMaps.get("handicap").equals("asiaSize")) {
                     handicap = 2;
                     MatchOdd asiaSizeOdd = this.getMatchOdd(match, "asiaSize");
-                    this.changeOddTextColor(match, asiaSizeOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), asiaSizeOdd.getRightOdds(), oddDataMaps.get("rightOdds"), asiaSizeOdd.getHandicapValue(), oddDataMaps.get("mediumOdds"));
+                    if (asiaSizeOdd != null)
+                        this.changeOddTextColor(match, asiaSizeOdd.getLeftOdds(), oddDataMaps.get("leftOdds"), asiaSizeOdd.getRightOdds(), oddDataMaps.get("rightOdds"), asiaSizeOdd.getHandicapValue(), oddDataMaps.get("mediumOdds"));
+                    else
+                        this.changeOddTextColor(match, "0.00", oddDataMaps.get("leftOdds"), "0.00", oddDataMaps.get("rightOdds"), "0.00", oddDataMaps.get("mediumOdds"));
                     this.updateMatchOdd(match, asiaSizeOdd, oddDataMaps, "asiaSize");
                 }
             }
@@ -539,31 +615,31 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     // 赔率推送消息
     private void changeOddTextColor(Match match, String oldLeftOdds, String newLeftOdds, String oldRightOdds, String newRightOdds, String oldHandicapValue, String newHandicapValue) {
         float leftMatchOddF = oldLeftOdds != null && !oldLeftOdds.equals("-") ? Float.parseFloat(oldLeftOdds) : (float) 0.00;
-        float rightMatchOddF = oldRightOdds != null && !oldLeftOdds.equals("-") ? Float.parseFloat(oldRightOdds) : (float) 0.00;
+        float rightMatchOddF = oldRightOdds != null && !oldRightOdds.equals("-") ? Float.parseFloat(oldRightOdds) : (float) 0.00;
         float leftMapOddF = Float.parseFloat(!newLeftOdds.equals("-") ? newLeftOdds : "0.00");
         float rightMapOddF = Float.parseFloat(!newRightOdds.equals("-") ? newRightOdds : "0.00");
-        float midMatchOddF = oldHandicapValue != null && !oldLeftOdds.equals("-") ? Float.parseFloat(oldHandicapValue) : (float) 0.00;
+        float midMatchOddF = oldHandicapValue != null && !oldHandicapValue.equals("-") ? Float.parseFloat(oldHandicapValue) : (float) 0.00;
         float midMapOddF = Float.parseFloat(!newHandicapValue.equals("-") ? newHandicapValue : "0.00");
 
-        if (leftMatchOddF < leftMapOddF) {// 左边的值升了
+        if (leftMatchOddF < leftMapOddF && leftMapOddF != 0.00) {// 左边的值升了
             match.setLeftOddTextColorId(R.color.odds_up_bg);
-        } else if (leftMatchOddF > leftMapOddF) {// 左边的值降了
+        } else if (leftMatchOddF > leftMapOddF && leftMapOddF != 0.00) {// 左边的值降了
             match.setLeftOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setLeftOddTextColorId(R.color.white);
         }
 
-        if (rightMatchOddF < rightMapOddF) {// 右边的值升了
+        if (rightMatchOddF < rightMapOddF && rightMapOddF != 0.00) {// 右边的值升了
             match.setRightOddTextColorId(R.color.odds_up_bg);
-        } else if (rightMatchOddF > rightMapOddF) {// 右边的值降了
+        } else if (rightMatchOddF > rightMapOddF && rightMapOddF != 0.00) {// 右边的值降了
             match.setRightOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setRightOddTextColorId(R.color.white);
         }
 
-        if (midMatchOddF < midMapOddF) {// 中间的值升了
+        if (midMatchOddF < midMapOddF && midMapOddF != 0.00) {// 中间的值升了
             match.setMidOddTextColorId(R.color.odds_up_bg);
-        } else if (midMatchOddF > midMapOddF) {// 中间的值降了
+        } else if (midMatchOddF > midMapOddF && midMapOddF != 0.00) {// 中间的值降了
             match.setMidOddTextColorId(R.color.odds_down_bg);
         } else {
             match.setMidOddTextColorId(R.color.white);
@@ -572,17 +648,17 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
     private void setupOddTextColor(Match data, TextView leftOdds, TextView midOdds, TextView rightOdds) {
         if (!resetColor) {
-            if (data.getLeftOddTextColorId() != 0) {
-                leftOdds.setBackgroundResource(data.getLeftOddTextColorId());
-                data.setLeftOddTextColorId(0);
+            if (data.getMidOddTextColorId() != 0) {
+                leftOdds.setBackgroundResource(data.getMidOddTextColorId());
+                data.setMidOddTextColorId(0);
             }
             if (data.getRightOddTextColorId() != 0) {
                 rightOdds.setBackgroundResource(data.getRightOddTextColorId());
                 data.setRightOddTextColorId(0);
             }
-            if (data.getMidOddTextColorId() != 0) {
-                midOdds.setBackgroundResource(data.getMidOddTextColorId());
-                data.setMidOddTextColorId(0);
+            if (data.getLeftOddTextColorId() != 0) {
+                midOdds.setBackgroundResource(data.getLeftOddTextColorId());
+                data.setLeftOddTextColorId(0);
             }
         } else {
             resetColor = false;

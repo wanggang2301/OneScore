@@ -133,6 +133,7 @@ public class WelcomeActivity extends BaseActivity {
         criteria.setPowerRequirement(Criteria.POWER_LOW);
         String provider = locationManager.getBestProvider(criteria, true);
         location = locationManager.getLastKnownLocation(provider);
+
         // 获取经纬度end
 
         getUmeng();

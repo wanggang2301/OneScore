@@ -89,6 +89,8 @@ public class ScoresFragment extends Fragment {
     private Spinner mSpinner;
     private String[] mItems;
 
+    private RollBallFragment rollBallFragment;
+
     @SuppressLint("ValidFragment")
     public ScoresFragment(Context context) {
         this.mContext = context;
@@ -115,10 +117,10 @@ public class ScoresFragment extends Fragment {
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               if(mContext.getResources().getString(R.string.basket_left).equals(mItems[position])){// 选择篮球
-                   ((FootballActivity)mContext).ly_tab_bar.setVisibility(View.GONE);
-                   ((FootballActivity)mContext).switchFragment(5);
-               }
+                if (mContext.getResources().getString(R.string.basket_left).equals(mItems[position])) {// 选择篮球
+                    ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.GONE);
+                    ((FootballActivity) mContext).switchFragment(5);
+                }
             }
 
             @Override
@@ -145,7 +147,7 @@ public class ScoresFragment extends Fragment {
         mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
         mSpinner.setVisibility(View.VISIBLE);
         mItems = getResources().getStringArray(R.array.ball_select);
-        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext , mItems);
+        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);
         mSpinner.setAdapter(mAdapter);
         mSpinner.setSelection(0);
 
@@ -179,7 +181,8 @@ public class ScoresFragment extends Fragment {
         titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
-        fragments.add(RollBallFragment.newInstance(ROLLBALL_FRAGMENT));
+        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT);
+        fragments.add(rollBallFragment);
         fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
@@ -190,27 +193,36 @@ public class ScoresFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                L.d(TAG, "onPageScrolled");
-                L.d(TAG, "position = " + position);
-                L.d(TAG, "positionOffset = " + positionOffset);
-                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
+//                L.d(TAG, "onPageScrolled");
+//                L.d(TAG, "position = " + position);
+//                L.d(TAG, "positionOffset = " + positionOffset);
+//                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
 
                 if (positionOffsetPixels == 0) {
                     switch (position) {
+                        case ROLLBALL_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.INVISIBLE);
+                            ((RollBallFragment) fragments.get(position)).feedAdapter();
+                            break;
                         case IMMEDIA_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ImmediateFragment) fragments.get(position)).reLoadData();
                             break;
                         case RESULT_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ResultFragment) fragments.get(position)).updateAdapter();
                             break;
                         case SCHEDULE_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ScheduleFragment) fragments.get(position)).updateAdapter();
                             break;
                         case FOCUS_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.GONE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((FocusFragment) fragments.get(position)).reLoadData();
                             break;
                     }
@@ -389,10 +401,15 @@ public class ScoresFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, true);
                     bundle.putInt("currentFragmentId", ROLLBALL_FRAGMENT);
-                    LeagueCup[] allCups = RollBallFragment.cupLists.toArray(new LeagueCup[]{});
+                    LeagueCup[] allCups = null;
+                    if (rollBallFragment.getLeagueCupLists() != null) {
+                        allCups = rollBallFragment.getLeagueCupLists().toArray(new LeagueCup[]{});
+                    }
                     bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
-                    bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
-                            RollBallFragment.checkCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                    if (rollBallFragment.getLeagueCupChecked() != null) {
+                        bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
+                                rollBallFragment.getLeagueCupChecked());// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                    }
                     intent.putExtras(bundle);
                     startActivity(intent);
 
@@ -635,7 +652,7 @@ public class ScoresFragment extends Fragment {
 
 
 /*
-		@Override
+        @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             //   setResult(Activity.RESULT_OK);

@@ -55,7 +55,7 @@ public class HappySocketClient extends WebSocketClient {
 		if (socketResponseMessageListener != null) {
 			socketResponseMessageListener.onMessage(message);
 		} else {
-			Log.e(TAG, "socketResponseMessageListener is null");
+			Log.e(TAG, "socketResponseMessageListener is null and RollballFragment callback is [[" + webSocketCallback + "]]");
 		}
 
 	}

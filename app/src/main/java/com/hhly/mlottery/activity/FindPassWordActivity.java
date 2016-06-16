@@ -118,6 +118,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
         tv_verycode.setOnClickListener(this);
 
         iv_delete = (ImageView) findViewById(R.id.iv_delete);
+        iv_delete.setOnClickListener(this);
 
         tv_comfirm = (TextView) findViewById(R.id.tv_comfirm);
         tv_comfirm.setOnClickListener(this);

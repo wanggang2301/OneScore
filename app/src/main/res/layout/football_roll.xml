@@ -1,43 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/home_item_bg"
-              android:orientation="vertical">
+<?xml version="1.0" encoding="utf-8"?><!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordiNatorContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">-->
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_item_bg">
+
+    <!--<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/app_bar_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/home_item_bg"-->
+    <!--app:elevation="0.5dp">-->
+
+    <!-- app:layout_scrollFlags="scroll|enterAlways" -->
+
+    <android.support.percent.PercentRelativeLayout
         android:id="@+id/titleContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center"
-        android:layout_marginTop="5dp"
-        android:visibility="visible">
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        android:background="@drawable/selector_item_clickable">
 
         <TextView
-            style="@style/WW_Weight_1"
-            android:layout_weight="10"/>
+            android:id="@+id/t1"
+            style="@style/WW_Width_0dp"
+            app:layout_widthPercent="65%" />
 
         <TextView
-            style="@style/WW_Weight_1"
-            android:text="亚"/>
+            android:id="@+id/t2"
+            style="@style/WW_Width_0dp"
+            android:layout_toRightOf="@id/t1"
+            android:text="亚"
+            app:layout_widthPercent="14%" />
 
         <TextView
-            style="@style/WW_Weight_1"
-            android:text="大"/>
+            android:id="@+id/t3"
+            style="@style/WW_Width_0dp"
+            android:layout_toRightOf="@id/t2"
+            android:text="大"
+            app:layout_widthPercent="13%" />
 
         <TextView
-            style="@style/WW_Weight_1"
-            android:text="欧"/>
-    </LinearLayout>
+            android:id="@+id/t4"
+            style="@style/WW_Width_0dp"
+            android:layout_toRightOf="@id/t3"
+            android:text="欧"
+            app:layout_widthPercent="5%" />
+    </android.support.percent.PercentRelativeLayout>
+    <!--</android.support.design.widget.AppBarLayout>-->
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            android:id="@+id/recyclerview_roll"
-                                            android:layout_below="@+id/titleContainer"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/home_item_bg">
-    </android.support.v7.widget.RecyclerView>
+    <include
+        layout="@layout/view_recyclerview_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleContainer" />
 
     <RelativeLayout
         android:id="@+id/football_immediate_unfocus_ll"
@@ -64,5 +87,5 @@
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
-    <include layout="@layout/network_exception"/>
-</RelativeLayout>
+    <include layout="@layout/network_exception" />
+</RelativeLayout><!--</android.support.design.widget.CoordinatorLayout>-->

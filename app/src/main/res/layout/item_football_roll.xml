@@ -17,7 +17,10 @@
     style="@style/Md.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:visibility="gone">
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:visibility="gone"
+    app:cardUseCompatPadding="true">
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
@@ -30,8 +33,8 @@
             android:layout_marginLeft="1dp"
             android:background="@color/white"
             android:clickable="true"
-            android:minHeight="110dp"
             android:gravity="center_vertical"
+            android:minHeight="110dp"
             app:layout_widthPercent="15%">
 
             <TextView
@@ -69,12 +72,12 @@
 
         <LinearLayout
             android:id="@+id/ll2"
-            android:minHeight="110dp"
             style="@style/item_rollball_linearlayout"
             android:layout_toRightOf="@+id/ll1"
             android:background="@color/white"
             android:gravity="center_vertical"
-            app:layout_widthPercent="7%">
+            android:minHeight="110dp"
+            app:layout_widthPercent="10%">
 
             <TextView
                 android:id="@+id/tvHomeScore"
@@ -86,18 +89,33 @@
                 android:textSize="@dimen/text_size_13"
                 tools:text="1" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center">
             <TextView
                 android:id="@+id/tvKeepTime"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="1dp"
-                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:maxWidth="50dp"
+                android:textColor="@color/text_about_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="63" />
+
+            <TextView
+                android:id="@+id/keepTimeShuffle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tvKeepTime"
                 android:gravity="center"
                 android:textColor="@color/text_about_color"
                 android:textSize="@dimen/text_size_13"
-                tools:text="63'" />
-
+                android:text=" "
+                android:visibility="invisible"/>
+            </RelativeLayout>
             <TextView
                 android:id="@+id/tvGuestScore"
                 android:layout_width="wrap_content"
@@ -115,9 +133,9 @@
             style="@style/item_rollball_linearlayout"
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll2"
-            android:minHeight="110dp"
             android:gravity="center_vertical"
-            app:layout_widthPercent="44%">
+            android:minHeight="110dp"
+            app:layout_widthPercent="35%">
 
             <RelativeLayout style="@style/MW_White">
 
@@ -253,10 +271,10 @@
             style="@style/item_rollball_linearlayout"
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll3"
-            android:minHeight="110dp"
             android:gravity="center_vertical"
+            android:minHeight="110dp"
             android:textColor="@color/res_name_color"
-            app:layout_widthPercent="11.3%">
+            app:layout_widthPercent="13.3%">
 
             <TextView
                 android:id="@+id/tvHandicapValue_YA_BLACK"
@@ -282,9 +300,9 @@
             style="@style/item_rollball_linearlayout"
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/ll4"
-            android:minHeight="110dp"
             android:gravity="center_vertical"
-            app:layout_widthPercent="11.3%">
+            android:minHeight="110dp"
+            app:layout_widthPercent="13.3%">
 
             <TextView
                 android:id="@+id/tvHandicapValue_DA_BLACK"
@@ -310,9 +328,9 @@
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:layout_toRightOf="@id/ll5"
-            android:minHeight="110dp"
             android:gravity="center_vertical"
-            app:layout_widthPercent="11.3%">
+            android:minHeight="110dp"
+            app:layout_widthPercent="13.3%">
 
             <TextView
                 android:id="@+id/tvMediumOdds_EU"
