@@ -562,7 +562,7 @@
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="5dp"
             android:textColor="@color/line_football_footer"
             />
             <RelativeLayout
@@ -850,10 +850,69 @@
                 android:src="@mipmap/player_background"
                 android:layout_gravity="center_horizontal|bottom" />
 
-            <com.hhly.mlottery.widget.NestedListView
-                android:id="@+id/listview_player_message"
+        <!--暂无首发-->
+        <FrameLayout
+            android:id="@+id/fl_firsPlayers_not"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/first_players_not_hint" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/x10"
+                    android:text="@string/firsPlayers_not"
+                    android:textColor="@color/content_txt_light_grad"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </FrameLayout>
+            <!--主客队信息-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <!--主、客队名单-->
+            <LinearLayout
+                android:id="@+id/fl_firsPlayers_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!--主队名单-->
+                <LinearLayout
+                    android:id="@+id/ll_rosters_homeTeam"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/x50"
+                    android:paddingTop="@dimen/y40">
+
+                </LinearLayout>
+                <!--客队名单-->
+                <LinearLayout
+                    android:id="@+id/ll_rosters_visitingTeam"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="vertical"
+                    android:paddingRight="@dimen/x50"
+                    android:paddingTop="@dimen/y40">
+
+                </LinearLayout>
+            </LinearLayout>
+            </RelativeLayout>
         </FrameLayout>
 
     </LinearLayout>

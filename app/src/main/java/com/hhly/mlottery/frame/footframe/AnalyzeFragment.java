@@ -1,14 +1,18 @@
 package com.hhly.mlottery.frame.footframe;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +21,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketListActivity;
 import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
 import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
+import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NestedListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -41,6 +47,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private ImageLoader mImageLoader;
 
     private View mView;
+    private Context mContext;// 上下文对象
+
 
     /**
      * 历史交锋
@@ -103,6 +111,10 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private TextView mHomeTeamName;
     private TextView mGuestTeamName;
     private NestedListView mListView;
+    private LinearLayout ll_rosters_homeTeam;// 主队名单容器
+    private LinearLayout ll_rosters_visitingTeam;// 客队名单容器
+    private FrameLayout fl_firsPlayers_not;// 暂无首发容器
+    private LinearLayout fl_firsPlayers_content;// 首发内容容器
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -207,7 +219,11 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         //球员信息
         mHomeTeamName= (TextView) mView.findViewById(R.id.lineup_home_team);
         mGuestTeamName= (TextView) mView.findViewById(R.id.lineup_guest_team);
-        mListView= (NestedListView) mView.findViewById(R.id.listview_player_message);
+//        mListView= (NestedListView) mView.findViewById(R.id.listview_player_message);
+        ll_rosters_homeTeam = (LinearLayout) mView.findViewById(R.id.ll_rosters_homeTeam);
+        ll_rosters_visitingTeam = (LinearLayout) mView.findViewById(R.id.ll_rosters_visitingTeam);
+        fl_firsPlayers_not = (FrameLayout) mView.findViewById(R.id.fl_firsPlayers_not);
+        fl_firsPlayers_content = (LinearLayout) mView.findViewById(R.id.fl_firsPlayers_content);
     }
 
     private void initData() {
@@ -234,6 +250,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      */
     private void setListener() {
         mTextMoreGame.setOnClickListener(this);
+        mIntegralTable.setOnClickListener(this);
     }
 
 
@@ -300,6 +317,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mGuestGoalOrLose.setText(entity.getGuest().getGoal()+"/"+entity.getGuest().getMiss());
         mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
         mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
+        //是否显示积分榜
+        if(analyzeBean.getFullScoreRank()==1){
+            mIntegralTable.setVisibility(View.VISIBLE);
+        }else if(analyzeBean.getFullScoreRank()==0){
+            mIntegralTable.setVisibility(View.GONE);
+        }
+
         //攻防对比
         mHomeGoal.setText(analyzeBean.getAttackDefense().getHomeFieldGoal());
         mHomeLose.setText(analyzeBean.getAttackDefense().getHomeFieldLose());
@@ -310,6 +334,56 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mHomeTeamName.setText(entity.getHome().getTeam());
         mGuestTeamName.setText(entity.getGuest().getTeam());
 
+        List<PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
+        List<PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
+
+        if(getActivity()!=null){
+            mContext=getActivity();
+            if (homeLineUpList != null && guestLineUpList != null) {
+                if (homeLineUpList.size() > 0) {
+                    // 显示首发内容
+                    fl_firsPlayers_not.setVisibility(View.GONE);
+                    fl_firsPlayers_content.setVisibility(View.VISIBLE);
+
+                    int dip5 = DisplayUtil.dip2px(mContext, 5);
+                    int dip10 = DisplayUtil.dip2px(mContext, 10);
+
+                    // 添加主队名单
+                    for (int i = 0, len = homeLineUpList.size(); i < len; i++) {
+                        TextView tv_homeTeams = new TextView(mContext);
+                        tv_homeTeams.setText(homeLineUpList.get(i).getName());
+                        if (i == 0) {
+                            tv_homeTeams.setPadding(dip5, dip10, 0, dip10);
+                        } else {
+                            tv_homeTeams.setPadding(dip5, 0, 0, dip10);
+                        }
+                        tv_homeTeams.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+                        ll_rosters_homeTeam.addView(tv_homeTeams);
+                    }
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.gravity = Gravity.RIGHT;// 设置靠右对齐
+                    // 添加客队名单
+                    for (int i = 0, len = guestLineUpList.size(); i < len; i++) {
+                        TextView tv_visitingTeams = new TextView(mContext);
+                        tv_visitingTeams.setText(guestLineUpList.get(i).getName());
+                        tv_visitingTeams.setLayoutParams(params);
+                        if (i == 0) {
+                            tv_visitingTeams.setPadding(0, dip10, dip5, dip10);
+                        } else {
+                            tv_visitingTeams.setPadding(0, 0, dip5, dip10);
+                        }
+                        tv_visitingTeams.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+                        ll_rosters_visitingTeam.addView(tv_visitingTeams);
+                    }
+                    return;
+                }
+            }
+            // 显示暂无首发提示
+            fl_firsPlayers_not.setVisibility(View.VISIBLE);
+            fl_firsPlayers_content.setVisibility(View.GONE);
+        }
+
     }
 
     /**
@@ -318,6 +392,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * @param recent
      */
     private void setRecent(ImageView mImage, int recent) {
+        if(recent==0){
+            mImage.setBackgroundResource(R.mipmap.basket_draw);
+        }
         if (recent == 2) {
             mImage.setBackgroundResource(R.mipmap.basket_lose);
         } else if (recent == 1) {
