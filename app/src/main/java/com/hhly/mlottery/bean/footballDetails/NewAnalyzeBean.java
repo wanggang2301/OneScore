@@ -139,6 +139,18 @@ public class NewAnalyzeBean {
         public List<PlayerInfo> getGuestLineUp() {
             return guestLineUp;
         }
+
+        public static class PlayerInfo{
+            private String Name;
+
+            public String getName() {
+                return Name;
+            }
+
+            public void setName(String name) {
+                this.Name = name;
+            }
+        }
     }
 
     public static class ScoreRankEntity {

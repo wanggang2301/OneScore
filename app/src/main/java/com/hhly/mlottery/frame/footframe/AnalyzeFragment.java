@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.footframe;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketListActivity;
+import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
 import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NestedListView;
@@ -230,7 +233,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * 设置监听事件
      */
     private void setListener() {
-
+        mTextMoreGame.setOnClickListener(this);
     }
 
 
@@ -327,7 +330,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.football_analyze_more_record:
-
+                Intent intent=new Intent(getActivity(),FootballAnalyzeDetailsActivity.class);
+                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID,"78235");
+                startActivity(intent);
                 break;
             case R.id.football_analyze_integral_table:
 
