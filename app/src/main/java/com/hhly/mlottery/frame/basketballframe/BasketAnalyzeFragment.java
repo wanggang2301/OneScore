@@ -19,6 +19,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketAnalyzeMoreRecordActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeContentBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeFutureMatchBean;
@@ -189,6 +190,16 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
         mProgressBar = (ProgressBar) mView.findViewById(R.id.basket_progressbar);
         mBasketProgressbarGuest = (TextView) mView.findViewById(R.id.basket_progressbar_guest);
+        mBasketProgressbarGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FootballAnalyzeDetailsActivity.class);
+                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID, mThirdId);//跳转到详情
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+            }
+        });
+
         mBasketProgressbarHome = (TextView) mView.findViewById(R.id.basket_progressbar_home);
         mRecentGuestImg1 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest1);
         mRecentGuestImg2 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest2);

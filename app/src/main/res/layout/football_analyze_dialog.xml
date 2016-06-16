@@ -4,7 +4,6 @@
     android:layout_width="337dp"
     android:layout_height="240dp"
     android:orientation="vertical"
-    android:background="@color/black_details_ball_textcolor2"
     >
 
     <TextView
@@ -25,6 +24,7 @@
         android:paddingLeft="30dp"
         android:paddingBottom="10dp"
         android:textColor="@color/black_details_ball_textcolor"
+        android:background="@color/black_details_ball_textcolor2"
         />
 
     <RadioGroup
@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="30dp"
+        android:background="@color/black_details_ball_textcolor2"
         >
         <RadioButton
             android:id="@+id/football_analyze_allsite"
@@ -64,6 +65,7 @@
         android:paddingLeft="30dp"
         android:paddingBottom="10dp"
         android:textColor="@color/black_details_ball_textcolor"
+        android:background="@color/black_details_ball_textcolor2"
         />
 
     <RadioGroup
@@ -73,6 +75,7 @@
         android:orientation="horizontal"
         android:paddingLeft="30dp"
         android:paddingBottom="20dp"
+        android:background="@color/black_details_ball_textcolor2"
         >
         <RadioButton
             android:id="@+id/football_analyze_num_six"
@@ -156,6 +159,10 @@
             android:textColor="@color/football_screen_checked_text_color"
             android:background="@color/black_details_ball_textcolor2"
             />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/selected_bg" />
         <Button
             android:id="@+id/football_analyze_confirm"
             android:layout_width="0dp"

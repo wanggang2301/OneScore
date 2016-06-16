@@ -133,7 +133,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
+                                android:layout_weight="1.7"
                                 android:gravity="center"
                                 android:text="@string/football_analyze_details_time"
                                 android:textSize="@dimen/text_size_10" />
@@ -149,31 +149,31 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4"
+                                android:layout_weight="2"
                                 android:gravity="center"
-                                android:text="@string/football_analyze_details_game"
+                                android:text=""
                                 android:textSize="@dimen/text_size_10" />
-
-                            <!--<TextView-->
-                                <!--android:layout_width="0dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="2"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="@string/basket_analyze_home"-->
-                                <!--android:textSize="@dimen/text_size_10" />-->
-
-                            <!--<TextView-->
-                                <!--android:layout_width="0dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="1.1"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="@string/basket_analyze_score"-->
-                                <!--android:textSize="@dimen/text_size_10" />-->
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="0.7"
+                                android:gravity="center"
+                                android:text="@string/football_analyze_details_game"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text=""
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_sizeof"
                                 android:textSize="@dimen/text_size_10" />
@@ -181,7 +181,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_let_points"
                                 android:textSize="@dimen/text_size_10" />
@@ -269,7 +269,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
+                                android:layout_weight="1.7"
                                 android:gravity="center"
                                 android:text="@string/football_analyze_details_time"
                                 android:textSize="@dimen/text_size_10" />
@@ -285,32 +285,32 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4"
+                                android:layout_weight="2"
                                 android:gravity="center"
-                                android:text="@string/football_analyze_details_game"
+                                android:text=""
                                 android:textSize="@dimen/text_size_10" />
-
-                            <!--<TextView-->
-                                <!--android:layout_width="0dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="2"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="@string/basket_analyze_home"-->
-                                <!--android:textSize="@dimen/text_size_10" />-->
-
-                            <!--<TextView-->
-                                <!--android:layout_width="0dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="1.1"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="@string/basket_analyze_score"-->
-                                <!--android:textColor="@color/black_details_textcolor"-->
-                                <!--android:textSize="@dimen/text_size_10" />-->
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="0.7"
+                                android:gravity="center"
+                                android:text="@string/football_analyze_details_game"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/black_details_textcolor"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_sizeof"
                                 android:textSize="@dimen/text_size_10" />
@@ -318,7 +318,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_let_points"
                                 android:textSize="@dimen/text_size_10" />
@@ -377,7 +377,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
+                                android:layout_weight="1.7"
                                 android:gravity="center"
                                 android:text="@string/football_analyze_details_time"
                                 android:textSize="@dimen/text_size_10" />
@@ -393,31 +393,31 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4"
+                                android:layout_weight="2"
                                 android:gravity="center"
-                                android:text="@string/football_analyze_details_game"
+                                android:text=""
                                 android:textSize="@dimen/text_size_10" />
-
-                            <!--<TextView-->
-                                <!--android:layout_width="0dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="2"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="@string/basket_analyze_home"-->
-                                <!--android:textSize="@dimen/text_size_10" />-->
-
-                            <!--<TextView-->
-                                <!--android:layout_width="0dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_weight="1.1"-->
-                                <!--android:gravity="center"-->
-                                <!--android:text="@string/basket_analyze_score"-->
-                                <!--android:textSize="@dimen/text_size_10" />-->
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="0.7"
+                                android:gravity="center"
+                                android:text="@string/football_analyze_details_game"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text=""
+                                android:textSize="@dimen/text_size_10" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_sizeof"
                                 android:textSize="@dimen/text_size_10" />
@@ -425,7 +425,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.5"
                                 android:gravity="center"
                                 android:text="@string/basket_analyze_let_points"
                                 android:textSize="@dimen/text_size_10" />
@@ -501,7 +501,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.2"
                                 android:gravity="center"
                                 android:text="@string/football_analyze_details_time"
                                 android:textSize="@dimen/text_size_11" />
@@ -591,7 +591,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.2"
                                 android:gravity="center"
                                 android:text="@string/football_analyze_details_time"
                                 android:textSize="@dimen/text_size_11" />

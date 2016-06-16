@@ -17,7 +17,7 @@
             android:id="@+id/football_data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="center"
             android:text="16-03-31"
             android:textColor="@color/basket_vs"
@@ -35,7 +35,7 @@
             android:textSize="@dimen/text_size_11" />
 
         <TextView
-            android:id="@+id/football_guest_name"
+            android:id="@+id/football_home_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
@@ -46,7 +46,7 @@
             android:textSize="@dimen/text_size_11" />
 
         <TextView
-            android:id="@+id/football_home_name"
+            android:id="@+id/football_guest_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"

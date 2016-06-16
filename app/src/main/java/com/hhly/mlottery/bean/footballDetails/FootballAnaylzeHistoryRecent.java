@@ -14,10 +14,29 @@ public class FootballAnaylzeHistoryRecent {
     private int guestScore; // 2,
     private int markTeam; //: 2,
     private int teamColor; //: 0,
-    private int ctotScore; //: null,
-    private int tot; //: 0,
-    private int casLetGoal; //: null,
-    private int let; //: 0
+    private String ctotScore; //: null,
+    private String tot; //: 0,
+    private String casLetGoal; //: null,
+    private String let; //: 0
+
+    private boolean homeGround;//	false
+    private int result; //	1
+
+    public boolean isHomeGround() {
+        return homeGround;
+    }
+
+    public void setHomeGround(boolean homeGround) {
+        this.homeGround = homeGround;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
 
     public String getTime() {
         return time;
@@ -83,35 +102,35 @@ public class FootballAnaylzeHistoryRecent {
         this.teamColor = teamColor;
     }
 
-    public int getCtotScore() {
+    public String getCtotScore() {
         return ctotScore;
     }
 
-    public void setCtotScore(int ctotScore) {
+    public void setCtotScore(String ctotScore) {
         this.ctotScore = ctotScore;
     }
 
-    public int getTot() {
+    public String getTot() {
         return tot;
     }
 
-    public void setTot(int tot) {
+    public void setTot(String tot) {
         this.tot = tot;
     }
 
-    public int getCasLetGoal() {
+    public String getCasLetGoal() {
         return casLetGoal;
     }
 
-    public void setCasLetGoal(int casLetGoal) {
+    public void setCasLetGoal(String casLetGoal) {
         this.casLetGoal = casLetGoal;
     }
 
-    public int getLet() {
+    public String getLet() {
         return let;
     }
 
-    public void setLet(int let) {
+    public void setLet(String let) {
         this.let = let;
     }
 }
