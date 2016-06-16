@@ -169,7 +169,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      * 接收推送消息
      */
     private void pushData() {
-        MobclickAgent.setDebugMode(AppConstants.isDebugMode);//测试的时候的数据需要设置debug模式
+        MobclickAgent.setDebugMode(AppConstants.isTestEnv);//测试的时候的数据需要设置debug模式
         PushAgent mPushAgent = PushAgent.getInstance(mContext);
         mPushAgent.enable();// 开启推送
         mPushAgent.onAppStart();// 统计应用启动
