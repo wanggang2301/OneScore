@@ -63,7 +63,7 @@ public class CpiDateAdapter extends BaseAdapter {
         }
         if (defItem == position) {//如果点击listview的当前的position相等
             //设置背景颜色
-            convertView.setBackgroundResource(R.color.timeLineColor);
+            convertView.setBackgroundResource(R.color.content_txt_grad);
         } else {
             convertView.setBackgroundResource(R.color.transparent);
         }

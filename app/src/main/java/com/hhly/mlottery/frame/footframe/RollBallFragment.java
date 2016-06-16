@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footframe;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.RollBallAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.base.BaseFragment;
@@ -109,6 +111,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private List<Match> allDataLists; // 所有数据
     private List<Match> feedAdapterLists; // 要展示的数据
 
+
     public static RollBallFragment newInstance(int index) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
@@ -129,12 +132,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         this.setupSwipeRefresh();
         this.setupRecyclerView();
         this.setupAdapter();
-    }
-
-    private void setupSwipeRefresh() {
-        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
     }
 
     @Override
@@ -168,6 +165,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         networkExceptionReloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                swipeRefreshLayout.setRefreshing(true);
+                networkExceptionLayout.setVisibility(View.GONE);
                 RollBallFragment.this.initData();
             }
         });
@@ -175,7 +174,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         subscription = RxBus.getDefault().toObserverable(Match.class).delay(60, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Match>() {
             @Override
             public void call(final Match match) {
-                synchronized (leagueCupLists) {
+                RollBallFragment.this.initData();
+                /*synchronized (leagueCupLists) {
                     LeagueCup targetCup = null;
                     for (LeagueCup cup : leagueCupLists) {
                         if (match.getRaceId().equals(cup.getRaceId())) {
@@ -216,8 +216,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         }
                     }
                 }
-                allDataLists.remove(match);
-                feedAdapterLists.remove(match);
+
+//                PreferenceUtil.commitBoolean(match.getThirdId()+match.getThirdId(), true); // 完场比赛要置于列表底部
                 RollBallFragment.this.feedAdapter(feedAdapterLists);
 
                 if (feedAdapterLists.size() == 0) {
@@ -226,7 +226,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                     } else {
                         apiHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
                     }
-                }
+                }*/
             }
         }, new Action1<Throwable>() {
             @Override
@@ -266,11 +266,15 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();
         if (subscription.isUnsubscribed()) subscription.unsubscribe();
         if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
+        if (adapter != null) adapter.getSharedPreperences().edit().clear().commit();
     }
 
     @Override
     public void onItemClick(View convertView, int position) {
-        // TODO: 点击item跳转入口，点击的当前条目thirdId获取方式 feedAdapterLists.get(position).getThirdId();
+        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+        intent.putExtra("thirdId", feedAdapterLists.get(position).getThirdId());
+        intent.putExtra("currentFragmentId", 0);
+        getParentFragment().startActivity(intent);
     }
 
     @Override
@@ -354,6 +358,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         //		initData();
     }
 
+    private void setupSwipeRefresh() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
+    }
+
     private void setupEventBus() {
         if (null == eventBus) {
             eventBus = new EventBus();
@@ -417,9 +427,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 //        this.recyclerView.removeItemDecoration(this.dataDecration);
     }
 
-
     public void requestApi() {
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_ImmediateMatchs,
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_Rollball,
                 new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
                     @Override
                     public void onResponse(ImmediateMatchs jsonObject) {

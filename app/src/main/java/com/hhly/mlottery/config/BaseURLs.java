@@ -37,7 +37,7 @@ public class BaseURLs {
             }
         }
 
-        return "m.13322.com";
+		return  "m.13322.com";
 
     }
 
@@ -474,6 +474,9 @@ public class BaseURLs {
     //即时(增加队徽请求字段)
     private final static String URL_IMMEDIATE = "androidMatchResults.findImmediateMatchs.do";
 
+    // 滚球
+    private final static String URL_ROLLBALL = "matchResults.findBallList.do";
+
 
     // 热门和焦点
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
@@ -507,6 +510,8 @@ public class BaseURLs {
     public final static String URL_MainMatchs = URL_API_HOST + URL_MAIN;
 
     public final static String URL_ImmediateMatchs = URL_API_HOST + URL_IMMEDIATE;
+
+    public final static String URL_Rollball = URL_API_HOST + URL_ROLLBALL;
 
     public final static String URL_ResultMatchs = URL_API_HOST + URL_RESULT;
 
@@ -653,41 +658,25 @@ public class BaseURLs {
      * 新版指数
      */
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
-    /**
-     * 指数推送
-     */
-    public final static String URL_CPI_SOCKET = WS_SERVICE + "/topic/USER.topic.indexcenter";
+    /**指数推送*/
+    public final static String URL_CPI_SOCKET = WS_SERVICE;
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
     public final static String URL_STARTPIC = URL_API_HOST + STARTPIC;
-    /**
-     * 发送验证码
-     */
+    /**发送验证码*/
     public final static String URL_SENDSMSCODE = URL_API_HOST + "androidUserCenter.sendSmsCode.do";
-    /**
-     * 注册
-     */
+    /**注册*/
     public final static String URL_REGISTER = URL_API_HOST + "androidUserCenter.register.do";
-    /**
-     * 登录
-     */
+    /**登录*/
     public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
-    /**
-     * 登出
-     */
+    /**登出*/
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
-    /**
-     * 重置密码
-     */
+    /**重置密码*/
     public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
-    /**
-     * 修改昵称
-     */
+    /**修改昵称*/
     public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
-    /**
-     * 修改密码
-     */
+    /**修改密码*/
     public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
 
 
