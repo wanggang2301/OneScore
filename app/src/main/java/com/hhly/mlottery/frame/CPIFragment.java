@@ -259,9 +259,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         }
     }
 
-
     public void onMessage(String message) {
-        // TODO Auto-generated method stub
         pushStartTime = System.currentTimeMillis(); // 记录起始时间
         if (message.startsWith("CONNECTED")) {
             String id = "android" + DeviceInfo.getDeviceId(getActivity());
