@@ -1,7 +1,9 @@
 package com.hhly.mlottery.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchEvent;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.util.AnimUtils;
+import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 
@@ -42,7 +45,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
     public static final int VIEW_TYPE_DEFAULT = 1;
 
-    private int topDataCount = 1;
+    private int topDataCount = Integer.MAX_VALUE;
     private boolean notify_locked_tag;
     private int handicap;
     private Map<Match, Boolean> isTopDataCacheMaps = new HashMap<>();
@@ -51,10 +54,14 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     private Context context;
     private boolean resetColor;
     private Subscription subscription;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     public RollBallAdapter(Context context) {
         super();
         this.context = context;
+        sharedPreferences = context.getSharedPreferences("ROLLBALL_ADAPTER",Activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
 
     public void setList(List list) {
@@ -62,16 +69,20 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (list == null) return;
         for (int i = list.size() - 1; i >= 0; i--) {
             Match data = (Match) list.get(i);
-            boolean isTopData = PreferenceUtil.getBoolean(data.getThirdId(), false);
-            boolean isFinishMatch = PreferenceUtil.getBoolean(data.getThirdId() + data.getThirdId(), false);
-            if (isTopData) data.setIsTopData(topDataCount++);
-            if (isFinishMatch && data.getStatusOrigin().equals("-1")) data.setIsTopData(-1);
-            else
-                PreferenceUtil.commitBoolean(data.getThirdId() + data.getThirdId(), false); // 完场比赛要置于列表底部
+            boolean isTopData = false;
+            if(isTopDataCacheMaps.containsKey(data)) {
+                isTopData = isTopDataCacheMaps.get(data);
+            }
             isTopDataCacheMaps.put(data, isTopData);
+            int topDataCount = sharedPreferences.getInt(data.getThirdId(), 0);
+            data.setIsTopData(topDataCount);
         }
         Collections.sort(list, new Match());
         getList().addAll(list);
+    }
+
+    public SharedPreferences getSharedPreperences() {
+        return sharedPreferences;
     }
 
     @Override
@@ -132,6 +143,8 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
         this.setVisiableStateOfThisViews(container, rlHalfContainer, tvHomeScore, tvGuestScore);
         this.initializedTextColor(tvKeepTime, tvGuestScore, tvHomeScore, tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
+        tvHandicapValue_DA_BLACK.setTextColor(context.getResources().getColor(R.color.res_name_color));
+        tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_name_color));
 
         // 置顶
         if (data.getIsTopData() > 0 || isTopDataCacheMaps.get(data)) {
@@ -161,13 +174,13 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 赔率的颜色变化状态
         switch (handicap) {
             case 1: // 亚盘
-                setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA, false);
+                setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
                 break;
             case 2: // 大小球
-                setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA, false);
+                setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
                 break;
             case 3: // 欧赔
-                setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU, true);
+                setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
                 break;
         }
 
@@ -186,6 +199,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
                 } else tvKeepTime.setText(data.getKeepTime());
                 this.startShuffleAnimation(keepTimeShuffle);
+                rlHalfContainer.setVisibility(View.GONE);
                 break;
             case "2": // 中场
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_midfield), R.color.football_keeptime, false);
@@ -280,33 +294,32 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             tvGuestRedCard.setText(data.getGuest_rc());
         } else tvGuestRedCard.setVisibility(View.INVISIBLE);
         // 亚盘赔率
-        tvLeftOdds_YA.setText(asiaLet != null ? /*HandicapUtils.changeHandicap(*/asiaLet.getHandicapValue() : "封");
-        tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getLeftOdds() : "-");
-        tvRightOdds_YA.setText(asiaLet != null ? asiaLet.getRightOdds() : "-");
+        tvLeftOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89? HandicapUtils.changeHandicap(asiaLet.getHandicapValue()) : "封");
+        tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getLeftOdds() : " ");
+        tvRightOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89? asiaLet.getRightOdds() : " ");
         // 大小盘赔率
-        tvLeftOdds_DA.setText(asiaSize != null ? /*HandicapUtils.changeHandicapByBigLittleBall(*/asiaSize.getHandicapValue() : "封");
-        tvHandicapValue_DA_BLACK.setText(asiaSize != null ? asiaSize.getLeftOdds() : "-");
-        tvRightOdds_DA.setText(asiaSize != null ? asiaSize.getRightOdds() : "-");
+        tvLeftOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()) : "封");
+        tvHandicapValue_DA_BLACK.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? asiaSize.getLeftOdds() : " ");
+        tvRightOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? asiaSize.getRightOdds() : " ");
         // 欧盘赔率
-        tvLeftOdds_EU.setText(euro != null ? euro.getMediumOdds() : "封");
-        tvMediumOdds_EU.setText(euro != null ? euro.getLeftOdds() : "-");
-        tvRightOdds_EU.setText(euro != null ? euro.getRightOdds() : "-");
+        tvLeftOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getMediumOdds() : "封");
+        tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getLeftOdds() : " ");
+        tvRightOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getRightOdds() : " ");
 
         // 控制器
         itemPositionControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isTopData = PreferenceUtil.getBoolean(data.getThirdId(), false);
-                if (isTopData) {
+                if (data.getIsTopData() > 0) {
+                    editor.putInt(data.getThirdId(), 0);
                     data.setIsTopData(0);
-                    PreferenceUtil.commitBoolean(data.getThirdId(), false);
                     if (isTopDataCacheMaps.containsKey(data)) isTopDataCacheMaps.put(data, false);
                 } else {
-                    data.setIsTopData(topDataCount);
-                    PreferenceUtil.commitBoolean(data.getThirdId(), true);
+                    editor.putInt(data.getThirdId(), topDataCount--);
+                    data.setIsTopData(topDataCount--);
                     if (isTopDataCacheMaps.containsKey(data)) isTopDataCacheMaps.put(data, true);
-                    topDataCount++;
                 }
+                editor.commit();
                 RollBallAdapter.this.transformMapper(position);
             }
         });
@@ -665,11 +678,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    private void setupOddTextColor(Match data, TextView leftOdds, TextView midOdds, TextView rightOdds, boolean isEuData) {
-        leftOdds.setTextColor(context.getResources().getColor(R.color.res_name_color));
-        midOdds.setTextColor(context.getResources().getColor(R.color.res_pl_color));
-        if (!isEuData) rightOdds.setTextColor(context.getResources().getColor(R.color.res_pl_color));
-        else rightOdds.setTextColor(context.getResources().getColor(R.color.res_name_color));
+    private void setupOddTextColor(Match data, TextView leftOdds, TextView midOdds, TextView rightOdds) {
         if (!resetColor) {
             if (data.getMidOddTextColorId() != 0) {
                 leftOdds.setBackgroundResource(data.getMidOddTextColorId());
@@ -703,6 +712,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         guestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
         for (TextView tv : textViews) {
             tv.setBackgroundColor(context.getResources().getColor(R.color.white));
+            tv.setTextColor(context.getResources().getColor(R.color.res_pl_color));
         }
     }
 

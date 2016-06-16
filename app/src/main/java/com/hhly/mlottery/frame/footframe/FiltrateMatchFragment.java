@@ -136,6 +136,7 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
         Parcelable[] cups = bundle.getParcelableArray(ALL_CUPS);
         mAllCups = new ArrayList<>();
 
+        if (cups == null) getActivity().finish();
         for (Parcelable cup : cups) {
             mAllCups.add((LeagueCup) cup);
         }

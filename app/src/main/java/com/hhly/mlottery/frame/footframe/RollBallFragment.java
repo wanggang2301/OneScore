@@ -36,7 +36,6 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -112,6 +111,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private List<Match> allDataLists; // 所有数据
     private List<Match> feedAdapterLists; // 要展示的数据
 
+
     public static RollBallFragment newInstance(int index) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
@@ -132,12 +132,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         this.setupSwipeRefresh();
         this.setupRecyclerView();
         this.setupAdapter();
-    }
-
-    private void setupSwipeRefresh() {
-        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
     }
 
     @Override
@@ -171,6 +165,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         networkExceptionReloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                swipeRefreshLayout.setRefreshing(true);
+                networkExceptionLayout.setVisibility(View.GONE);
                 RollBallFragment.this.initData();
             }
         });
@@ -178,7 +174,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         subscription = RxBus.getDefault().toObserverable(Match.class).delay(60, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Match>() {
             @Override
             public void call(final Match match) {
-                synchronized (leagueCupLists) {
+                RollBallFragment.this.initData();
+                /*synchronized (leagueCupLists) {
                     LeagueCup targetCup = null;
                     for (LeagueCup cup : leagueCupLists) {
                         if (match.getRaceId().equals(cup.getRaceId())) {
@@ -220,7 +217,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                     }
                 }
 
-                PreferenceUtil.commitBoolean(match.getThirdId()+match.getThirdId(), true); // 完场比赛要置于列表底部
+//                PreferenceUtil.commitBoolean(match.getThirdId()+match.getThirdId(), true); // 完场比赛要置于列表底部
                 RollBallFragment.this.feedAdapter(feedAdapterLists);
 
                 if (feedAdapterLists.size() == 0) {
@@ -229,7 +226,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                     } else {
                         apiHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
                     }
-                }
+                }*/
             }
         }, new Action1<Throwable>() {
             @Override
@@ -269,6 +266,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();
         if (subscription.isUnsubscribed()) subscription.unsubscribe();
         if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
+        if (adapter != null) adapter.getSharedPreperences().edit().clear().commit();
     }
 
     @Override
@@ -360,6 +358,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         //		initData();
     }
 
+    private void setupSwipeRefresh() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
+    }
+
     private void setupEventBus() {
         if (null == eventBus) {
             eventBus = new EventBus();
@@ -422,7 +426,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private void clearDecoration() {
 //        this.recyclerView.removeItemDecoration(this.dataDecration);
     }
-
 
     public void requestApi() {
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ImmediateMatchs,

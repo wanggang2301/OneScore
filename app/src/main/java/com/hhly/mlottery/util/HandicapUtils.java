@@ -3,226 +3,174 @@ package com.hhly.mlottery.util;
 import android.text.TextUtils;
 
 /**
- * 
+ * @author chenml
  * @ClassName: HandicapUtils
  * @Description: 盘口计算
- * @author chenml
  * @date 2015-10-21 下午4:57:40
  */
 public class HandicapUtils {
 
-	private static char[] numCNs = { '零', '一', '两', '三', '四', '五', '六', '七', '八', '九', '十' };
-	private static char[] numTWs = { '零', '一', '兩', '三', '四', '五', '六', '七', '八', '九', '十' };
+    private static float[] numCNs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    private static float[] numTWs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-	/**
-	 * 亚盘盘口转换
-	 * 
-	 * @param handicap
-	 * @return
-	 */
-	public static String changeHandicap(String handicap) {
-		
-		if(TextUtils.isEmpty(handicap)){
-			return " ";
-		}
-		StringBuffer result = new StringBuffer();
-		float handicapF = 0.0f;
-		try{
-			handicapF = Float.parseFloat(handicap);
-		}catch(NumberFormatException e){
-			
-			return "-";
-		}
-		
-		if (handicapF < 0) {
-			result.append("*");
-		}
+    /**
+     * 亚盘盘口转换
+     *
+     * @param handicap
+     * @return
+     */
+    public static String changeHandicap(String handicap) {
 
-		handicapF = Math.abs(handicapF);
-		float fractionalPart = handicapF - (int) handicapF;
+        if (TextUtils.isEmpty(handicap) || handicap.equals("-")) {
+            return "封";
+        }
+        StringBuffer result = new StringBuffer();
+        float handicapF = 0.0f;
+        try {
+            handicapF = Float.parseFloat(handicap);
+        } catch (NumberFormatException e) {
+            return "e";
+        }
 
-		if (fractionalPart == 0.25f || fractionalPart == 0.75f) {
-			float left = handicapF - 0.25f;
-			float right = handicapF + 0.25f;
+        if (handicapF < 0) {
+            result.append("*");
+        }
 
-			numToBall(left, result);
-			result.append("/");
-			numToBall(right, result);
+        handicapF = Math.abs(handicapF);
+        float fractionalPart = handicapF - (int) handicapF;
 
-		} else if (fractionalPart == 0.5f) {
-			if ((int) handicapF == 0) {
-				result.append("半球");
-			} else if ((int) handicapF == 1) {
-				result.append("球半");
-			} else {
-				result.append(numToCN((int) handicapF) + "球半");
-			}
-		} else if (fractionalPart == 0.0f) {
-			if ((int) handicapF == 0) {
-				result.append("平手");
-			} else {
-				result.append(numToCN((int) handicapF) + "球");
-			}
-		}
+        if (fractionalPart == 0.25f || fractionalPart == 0.75f) {
+            float left = handicapF - 0.25f;
+            float right = handicapF + 0.25f;
 
-		return result.toString();
-	}
+            numToBall(left, result);
+            result.append("/");
+            numToBall(right, result);
 
-	/**
-	 * 亚盘盘口转换
-	 *
-	 * @param handicap
-	 * @return
-	 */
-	public static String changeHandicap2(String handicap) {
+        } else if (fractionalPart == 0.5f) {
+            if ((int) handicapF == 0) {
+                result.append("0.5");  //半球
+            } else if ((int) handicapF == 1) {
+                result.append("1.5");  //球半
+            } else {
+                result.append(String.valueOf(numToCN((int) handicapF) + 0.5)); //球半
+            }
+        } else if (fractionalPart == 0.0f) {
+            if ((int) handicapF == 0) {
+                result.append("0");  //平手
+            } else {
+                result.append(String.valueOf((int) numToCN((int) handicapF)));  //球
+            }
+        }
 
-		if(TextUtils.isEmpty(handicap)){
-			return "-";
-		}
-		StringBuffer result = new StringBuffer();
-		float handicapF;
-		try{
-			handicapF = Float.parseFloat(handicap);
-		}catch(NumberFormatException e){
-			return "-";
-		}
-		if (handicapF < 0) {
-			result.append("*");
-		}
-		handicapF = Math.abs(handicapF);
-		float fractionalPart = handicapF - (int) handicapF;
+        return result.toString();
+    }
 
-		if (fractionalPart == 0.25f || fractionalPart == 0.75f) {
-			float left = handicapF - 0.25f;
-			float right = handicapF + 0.25f;
+    private static float numToCN(int num) {
+        String st = PreferenceUtil.getString("language", "rCN");
+        if ("rTW".equals(st)) {
+            return numTWs[num];
+        } else {
+            return numCNs[num];
+        }
 
-			numToBall(left, result);
-			result.append("/");
-			numToBall(right, result);
+    }
 
-		} else if (fractionalPart == 0.5f) {
-			if ((int) handicapF == 0) {
-				result.append("半球");
-			} else if ((int) handicapF == 1) {
-				result.append("球半");
-			} else {
-				result.append(numToCN((int) handicapF) + "球半");
-			}
-		} else if (fractionalPart == 0.0f) {
-			if ((int) handicapF == 0) {
-				result.append("平手");
-			} else {
-				result.append(numToCN((int) handicapF) + "球");
-			}
-		}
+    private static StringBuffer numToBall(float handicapF, StringBuffer result) {
+        float fractionalPart = handicapF - (int) handicapF;
+        if (fractionalPart == 0.5f) {
+            if ((int) handicapF == 0) {
+                result.append("0.5");
+            } else if ((int) handicapF == 1) {
+                result.append("1.5");
+            } else {
+                result.append(String.valueOf(numToCN((int) handicapF) + 0.5));  //球半
 
-		return result.toString();
-	}
+            }
+        } else if (fractionalPart == 0.0f) {
+            if ((int) handicapF == 0) {
+                result.append("0");  //平
+            } else {
+                result.append(String.valueOf((int) numToCN((int) handicapF)));
+            }
+        }
+        return result;
+    }
 
-	private static char numToCN(int num) {
-		String st = PreferenceUtil.getString("language", "rCN");
-		if ("rTW".equals(st)) {
-			return numTWs[num];
-		} else {
-			return numCNs[num];
-		}
+    /**
+     * 大小球
+     *
+     * @param handicap 盘口
+     * @return
+     */
+    public static String changeHandicapByBigLittleBall(String handicap) {
+        if (handicap == null || handicap.equals("-"))
+            return "封";
+        float handicapF;
+        try {
+            handicapF = Float.parseFloat(handicap);
+        } catch (NumberFormatException e) {
 
-	}
+            return "e";
+        }
 
-	private static StringBuffer numToBall(float handicapF, StringBuffer result) {
-		float fractionalPart = handicapF - (int) handicapF;
-		if (fractionalPart == 0.5f) {
-			if ((int) handicapF == 0) {
-				result.append("半");
-			} else if ((int) handicapF == 1) {
-				result.append("球半");
-			} else {
-				result.append(numToCN((int) handicapF) + "球半");
+        float fractionalPart = handicapF - (int) handicapF;
 
-			}
-		} else if (fractionalPart == 0.0f) {
-			if ((int) handicapF == 0) {
-				result.append("平");
-			} else {
-				result.append(numToCN((int) handicapF));
-			}
-		}
-		return result;
-	}
+        if (fractionalPart == 0.25f || fractionalPart == 0.75f) {
+            float left = handicapF - 0.25f;
+            float right = handicapF + 0.25f;
+            String leftResult = left + "";
+            String rightResult = right + "";
 
-	/**
-	 * 大小球
-	 * 
-	 * @param handicap
-	 *            盘口
-	 * @return
-	 */
-	public static String changeHandicapByBigLittleBall(String handicap) {
-		float handicapF = 0.0f;
-		try{
-			handicapF = Float.parseFloat(handicap);
-		}catch(NumberFormatException e){
-			
-			return "-";
-		}
+            if (left - (int) left == 0.0f) {
+                leftResult = (int) left + "";
+            }
 
-		float fractionalPart = handicapF - (int) handicapF;
+            if (right - (int) right == 0.0f) {
+                rightResult = (int) right + "";
+            }
 
-		if (fractionalPart == 0.25f || fractionalPart == 0.75f) {
-			float left = handicapF - 0.25f;
-			float right = handicapF + 0.25f;
-			String leftResult = left + "";
-			String rightResult = right + "";
+            return leftResult + "/" + rightResult;
+        } else if (handicapF == (int) handicapF) {
+            return ((int) handicapF) + "";
+        } else {
+            handicap = handicap.substring(0, 3);
+        }
 
-			if (left - (int) left == 0.0f) {
-				leftResult = (int) left + "";
-			}
+        return handicap;
+    }
 
-			if (right - (int) right == 0.0f) {
-				rightResult = (int) right + "";
-			}
+    public static String[] interChangeHandicap(String handicap) {
+        String[] handicaps = new String[2];
 
-			return leftResult + "/" + rightResult;
-		} else if (handicapF == (int) handicapF) {
-			return ((int) handicapF) + "";
-		} else {
-			handicap = handicap.substring(0, 3);
-		}
+        float handicapF = 0.0f;
+        try {
+            handicapF = Float.parseFloat(handicap);
+        } catch (NumberFormatException e) {
+        }
 
-		return handicap;
-	}
-	
-	public static String[] interChangeHandicap(String handicap){
-		String[] handicaps = new String[2];
-		
-		float handicapF = 0.0f;
-		try{
-			handicapF = Float.parseFloat(handicap);
-		}catch(NumberFormatException e){
-		}
-		
-		if(handicapF>0){
-			handicapF = Math.abs(handicapF);
-			handicaps[0] = "-"+handicapF;
-			handicaps[1] = "+"+handicapF;
-		}else{
-			handicapF = Math.abs(handicapF);
-			handicaps[1] = "-"+handicapF;
-			handicaps[0] = "+"+handicapF;
-		}
-		
-		return handicaps;
-	}
+        if (handicapF > 0) {
+            handicapF = Math.abs(handicapF);
+            handicaps[0] = "-" + handicapF;
+            handicaps[1] = "+" + handicapF;
+        } else {
+            handicapF = Math.abs(handicapF);
+            handicaps[1] = "-" + handicapF;
+            handicaps[0] = "+" + handicapF;
+        }
 
-	public static void main(String[] args) {
-		float hand = 0.0f;
+        return handicaps;
+    }
 
-		for (int n = 0; n < 40; n++) {
+    public static void main(String[] args) {
+        float hand = 0.0f;
 
-			String re = changeHandicap(hand + "");
+        for (int n = 0; n < 40; n++) {
+
+            String re = changeHandicap(hand + "");
 //			System.out.println(re);
-			hand += 0.25f;
-		}
-	}
+            hand += 0.25f;
+        }
+    }
 
 }

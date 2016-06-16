@@ -425,7 +425,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     @Override
     public int compare(Match lhs, Match rhs) {
-        if (rhs.isTopData != 0 || lhs.isTopData != 0) {
+        if (rhs.isTopData > 0 || lhs.isTopData > 0) {
             return String.valueOf(rhs.isTopData).compareTo(String.valueOf(lhs
                     .isTopData));
         } else {
