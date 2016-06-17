@@ -363,10 +363,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupEventBus() {
-        if (null == eventBus) {
-            eventBus = new EventBus();
-            eventBus.register(this);
-        }
+        eventBus = new EventBus();
+        eventBus.register(this);
     }
 
     private void setupRecyclerView() {
