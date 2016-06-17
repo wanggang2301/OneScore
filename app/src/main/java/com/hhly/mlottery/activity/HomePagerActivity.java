@@ -190,11 +190,11 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         if (mBundle != null) {
             mPushType = mBundle.getString("pushType");
             mThirdId = mBundle.getString("thirdId");
-            mUrl = mBundle.getString("dataUrl");
-            mInfoTypeName = mBundle.getString("dataTitle");
-            imageUrl = mBundle.getString("imageUrl");
-            title = mBundle.getString("title");
-            subTitle = mBundle.getString("subTitle");
+//            mUrl = mBundle.getString("dataUrl");
+//            mInfoTypeName = mBundle.getString("dataTitle");
+//            imageUrl = mBundle.getString("imageUrl");
+//            title = mBundle.getString("title");
+//            subTitle = mBundle.getString("subTitle");
 
             try {
                 mDataType = mBundle.getString("dataType") == null ? 0 : Integer.parseInt(mBundle.getString("dataType"));
@@ -226,7 +226,10 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                         }
                         break;
                     case "dataInfo":// 资讯详情页面
-                        if (!TextUtils.isEmpty(mUrl)) {
+                        L.d("xxx", "推送，资讯详情..");
+                        // 资讯ID不为空，则请求接口相对应数据
+                        getInformationByThirdId(mThirdId);
+                        /*if (!TextUtils.isEmpty(mUrl)) {
                             Intent basketDataIntent = new Intent(mContext, WebActivity.class);
                             basketDataIntent.putExtra("thirdId", mThirdId);
                             basketDataIntent.putExtra("key", mUrl);
@@ -237,7 +240,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                             basketDataIntent.putExtra("subtitle", subTitle);
                             startActivity(basketDataIntent);
                             L.d("xxx", "mUrl: " + mUrl);
-                        }
+                        }*/
                         break;
                     case "basketball":// 篮球列表
                         startActivity(new Intent(mContext, BasketListActivity.class));
@@ -739,5 +742,43 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             }
         }
 
+    }
+
+    /**
+     * 通过资讯Id获取相关资讯信息
+     */
+    private void getInformationByThirdId(String thirdId) {
+       /* Map<String, String> map = new HashMap<>();
+        map.put("infoId", thirdId);// 赛事Id
+        map.put("version", version);
+        map.put("versionCode", versionCode);
+        map.put("channelNumber", channelNumber);
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_INFORMATION_BY_THIRDID, map, new VolleyContentFast.ResponseSuccessListener<InformationBean>() {
+            @Override
+            public synchronized void onResponse(final InformationBean info) {
+                if (info != null) {
+                    L.d("xxx", "推送资讯访问成功！");
+                    mInfoBean = info;
+//                    showDialogInfo();
+                    Intent intent = new Intent(HomePagerActivity.this, WebActivity.class);
+                    intent.putExtra("key", mInfoBean.getInfo().getInfoUrl());// URL
+                    intent.putExtra("imageurl", mInfoBean.getInfo().getPicUrl());// 图片URl
+                    intent.putExtra("infoTypeName", mInfoBean.getInfo().getInfoTypeName());// 资讯标题
+                    intent.putExtra("subtitle", mInfoBean.getInfo().getSummary());// 分享副标题
+                    intent.putExtra("type", mInfoBean.getInfo().getType());// 关系赛事类型
+                    intent.putExtra("thirdId", mInfoBean.getInfo().getThirdId());// 关系赛事Id
+                    intent.putExtra("title", mInfoBean.getInfo().getTitle());
+                    intent.putExtra("reqMethod", mInfoBean.getInfo().getRelateMatch());// 是否关联赛事
+                    startActivity(intent);
+                } else {
+                    L.d("xxx", "InformationBean==null>>>>");
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                L.d("xxx", "推送资讯访问ERROR！");
+            }
+        }, InformationBean.class);*/
     }
 }
