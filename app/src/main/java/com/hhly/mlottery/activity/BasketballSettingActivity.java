@@ -12,6 +12,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.hhly.mlottery.R;
@@ -25,7 +26,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
 /**
- * @ClassName: BasketballSettingActivity 
+ * @ClassName: BasketballSettingActivity
  * @Description: 篮球设置
  * @author yixq
  * @date 2015-12-29 下午4:09:32
@@ -37,19 +38,19 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	private RelativeLayout mEur;  //欧赔
 	private RelativeLayout mAsize;//大小球
 	private RelativeLayout mNoshow; // 无
-	
+
 	private RadioButton mRd_alet;
 	private RadioButton mRd_eur;
 	private RadioButton mRd_asize;
 	private RadioButton mRd_noshow;
-	
+
 	private SwitchCompat mTb_score; // 半全场总分
 	private SwitchCompat mTb_Point_spread; //总分差
 	private SwitchCompat mTb_single_score; //单节比分
 	private SwitchCompat mTb_ranking; //排名
-	
+
 	private ImageView mBack;
-	
+
 	String resultstring;
 	Intent intent;
 	private int mCurrentId;
@@ -59,13 +60,15 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.basketball_setting);
-		
+
 		initView();
 		initData();
 	}
-	
+
 	private void initView() {
-		
+		TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
+		public_txt_title.setText(R.string.basket_setting_tittle);
+
 		mAlet = (RelativeLayout) findViewById(R.id.rl_alet);
 		mAlet.setOnClickListener(this);
 		mEur = (RelativeLayout) findViewById(R.id.rl_eur);
@@ -74,12 +77,12 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		mAsize.setOnClickListener(this);
 		mNoshow = (RelativeLayout) findViewById(R.id.rl_noshow);
 		mNoshow.setOnClickListener(this);
-		
+
 		mRd_alet = (RadioButton) findViewById(R.id.rd_alet);
 		mRd_eur = (RadioButton) findViewById(R.id.rd_eur);
 		mRd_asize = (RadioButton) findViewById(R.id.rd_asize);
 		mRd_noshow = (RadioButton) findViewById(R.id.rd_noshow);
-		
+
 		mTb_score = (SwitchCompat) findViewById(R.id.tb_score);
 //		mTb_score.setOnClickListener(this);
 		mTb_score.setOnCheckedChangeListener(this);
@@ -90,10 +93,13 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		mTb_single_score.setOnCheckedChangeListener(this);
 		mTb_ranking = (SwitchCompat) findViewById(R.id.tb_ranking);
 		mTb_ranking.setOnCheckedChangeListener(this);
-		
-		mBack = (ImageView) findViewById(R.id.ib_back);
+
+		mBack = (ImageView) findViewById(R.id.public_img_back);
 		mBack.setOnClickListener(this);
-		
+
+		findViewById(R.id.public_btn_set).setVisibility(View.GONE); //隐藏设置按键
+		findViewById(R.id.public_btn_filter).setVisibility(View.GONE); //隐藏筛选按键
+
 	}
 
 	private void initData(){
@@ -147,89 +153,89 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.rl_alet:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_Alet");
-			mRd_alet.setChecked(true);
-			mRd_eur.setChecked(false);
-			mRd_asize.setChecked(false);
-			mRd_noshow.setChecked(false);
-			save();
-			break;
-		case R.id.rl_eur:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_Eur");
-			mRd_alet.setChecked(false);
-			mRd_eur.setChecked(true);
-			mRd_asize.setChecked(false);
-			mRd_noshow.setChecked(false);
-			save();
-			break;
-		case R.id.rl_asize:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_Asize");
-			mRd_alet.setChecked(false);
-			mRd_eur.setChecked(false);
-			mRd_asize.setChecked(true);
-			mRd_noshow.setChecked(false);
-			save();
-			break;
-		case R.id.rl_noshow:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_Noshow");
-			mRd_alet.setChecked(false);
-			mRd_eur.setChecked(false);
-			mRd_asize.setChecked(false);
-			mRd_noshow.setChecked(true);
-			save();
-			break;
+			case R.id.rl_alet:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_Alet");
+				mRd_alet.setChecked(true);
+				mRd_eur.setChecked(false);
+				mRd_asize.setChecked(false);
+				mRd_noshow.setChecked(false);
+				save();
+				break;
+			case R.id.rl_eur:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_Eur");
+				mRd_alet.setChecked(false);
+				mRd_eur.setChecked(true);
+				mRd_asize.setChecked(false);
+				mRd_noshow.setChecked(false);
+				save();
+				break;
+			case R.id.rl_asize:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_Asize");
+				mRd_alet.setChecked(false);
+				mRd_eur.setChecked(false);
+				mRd_asize.setChecked(true);
+				mRd_noshow.setChecked(false);
+				save();
+				break;
+			case R.id.rl_noshow:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_Noshow");
+				mRd_alet.setChecked(false);
+				mRd_eur.setChecked(false);
+				mRd_asize.setChecked(false);
+				mRd_noshow.setChecked(true);
+				save();
+				break;
 
-		case R.id.ib_back:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_Exit");
-			Intent intent = new Intent();
-			intent.putExtra("resultType", resultstring);
+			case R.id.public_img_back:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_Exit");
+				Intent intent = new Intent();
+				intent.putExtra("resultType", resultstring);
 
-			if (mCurrentId==0){
-				ImmedBasketballFragment.BasketImmedEventBus.post(mCurrentId);
-			}else if (mCurrentId==1){
-				ResultBasketballFragment.BasketResultEventBus.post(mCurrentId);
-			}else if (mCurrentId==2){
+				if (mCurrentId==0){
+					ImmedBasketballFragment.BasketImmedEventBus.post(mCurrentId);
+				}else if (mCurrentId==1){
+					ResultBasketballFragment.BasketResultEventBus.post(mCurrentId);
+				}else if (mCurrentId==2){
 //				L.i("102","赛程发送");
-				ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
-			}else if (mCurrentId==3){
-				FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
-			}
+					ScheduleBasketballFragment.BasketScheduleEventBus.post(mCurrentId);
+				}else if (mCurrentId==3){
+					FocusBasketballFragment.BasketFocusEventBus.post(mCurrentId);
+				}
 //			ImmedBasketballFragment.BasketImmedEventBus.post(0);
-			setResult(Activity.RESULT_OK,intent);
-			finish();
-			overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
-			break;
-		default:
-			break;
+				setResult(Activity.RESULT_OK,intent);
+				finish();
+				overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+				break;
+			default:
+				break;
 		}
 	}
 
 	@Override
 	public void onCheckedChanged(CompoundButton cb , boolean ischecked){
 		switch (cb.getId()) {
-		case R.id.tb_score:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_Score");
-			PreferenceUtil.commitBoolean(MyConstants.HALF_FULL_SCORE, mTb_score.isChecked());
-			break;
+			case R.id.tb_score:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_Score");
+				PreferenceUtil.commitBoolean(MyConstants.HALF_FULL_SCORE, mTb_score.isChecked());
+				break;
 
-		case R.id.tb_Point_spread:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_Spread");
-			PreferenceUtil.commitBoolean(MyConstants.SCORE_DIFFERENCE, mTb_Point_spread.isChecked());
-			break;
+			case R.id.tb_Point_spread:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_Spread");
+				PreferenceUtil.commitBoolean(MyConstants.SCORE_DIFFERENCE, mTb_Point_spread.isChecked());
+				break;
 
-		case R.id.tb_single_score:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_SingleScore");
-			PreferenceUtil.commitBoolean(MyConstants.SINGLE_SCORE, mTb_single_score.isChecked());
-			break;
+			case R.id.tb_single_score:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_SingleScore");
+				PreferenceUtil.commitBoolean(MyConstants.SINGLE_SCORE, mTb_single_score.isChecked());
+				break;
 
-		case R.id.tb_ranking:
-			MobclickAgent.onEvent(mContext,"Basketball_Setting_Ranking");
-			PreferenceUtil.commitBoolean(MyConstants.HOST_RANKING, mTb_ranking.isChecked());
-			break;
+			case R.id.tb_ranking:
+				MobclickAgent.onEvent(mContext,"Basketball_Setting_Ranking");
+				PreferenceUtil.commitBoolean(MyConstants.HOST_RANKING, mTb_ranking.isChecked());
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 
@@ -264,7 +270,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		PreferenceUtil.commitBoolean(MyConstants.BASKETBALL_RBOCOMPENSATE, mRd_eur.isChecked());//欧赔
 		PreferenceUtil.commitBoolean(MyConstants.BASKETBALL_rbSizeBall, mRd_asize.isChecked());//大小球
 		PreferenceUtil.commitBoolean(MyConstants.BASKETBALL_RBNOTSHOW, mRd_noshow.isChecked()); //不显示
-		
+
 		if (mRd_alet.isChecked()) {
 			resultstring = getResources().getString(string.set_asialet_txt);
 		}

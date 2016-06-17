@@ -7,38 +7,7 @@
     >
 
     <!-- 标题头 -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/header_height"
-        android:background="@color/colorPrimary"
-        android:gravity="center_vertical"
-        android:paddingTop="@dimen/x40">
-
-        <ImageButton
-            android:id="@+id/ib_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:background="#1581CC"
-            android:paddingLeft="@dimen/x20"
-            android:paddingRight="@dimen/x20"
-            android:scaleType="centerInside"
-            android:src="@mipmap/number_back_icon"/>
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:paddingLeft="@dimen/x20"
-            android:paddingRight="@dimen/x20"
-            android:text="@string/basket_setting_tittle"
-            android:textColor="#FFFFFFFF"
-            android:textSize="@dimen/text_size_20"/>
-    </RelativeLayout>
+    <include layout="@layout/layout_header" />
 
     <ScrollView
         android:layout_width="match_parent"
