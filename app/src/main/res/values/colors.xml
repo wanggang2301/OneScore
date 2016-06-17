@@ -579,4 +579,10 @@
     <color name="analyze_title">#3f5672</color>
     <color name="history_win">#333333</color>
     <color name="more_record">#0090ff</color>
+
+    <!-- 足球分析详情页面颜色-->
+    <color name="football_analyze_win_color">#DD2F1C</color>
+    <color name="football_analyze_lose_color">#21B11E</color>
+    <color name="football_analyze_draw_color">#00aaee</color>
+    <color name="football_analyze_default_color">#333333</color>
 </resources>

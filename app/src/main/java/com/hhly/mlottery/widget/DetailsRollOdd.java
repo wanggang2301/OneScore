@@ -58,33 +58,83 @@ public class DetailsRollOdd extends FrameLayout {
         tv_title.setText(title);
     }
 
+    public void updateOdds(BottomOddsItem bottomOddsItem) {
+        if (isNULLOrEmpty(bottomOddsItem.getLeft()) || isNULLOrEmpty(bottomOddsItem.getMiddle()) || isNULLOrEmpty(bottomOddsItem.getRight())) {
+            live_left.setText("");
+            live_middle.setText("封");
+            live_middle.setTextColor(mContext.getResources().getColor(R.color.white));
+            live_middle.setBackgroundResource(R.color.analyze_left);
+            live_right.setText("");
+        } else {
+            live_left.setText(bottomOddsItem.getLeft());
+
+            live_middle.setText(bottomOddsItem.getMiddle());
+
+            live_right.setText(bottomOddsItem.getRight());
+
+            setTextViewColor(live_left, 0, bottomOddsItem.getLeftUp());
+            setTextViewColor(live_middle, 1, bottomOddsItem.getMiddleUp());
+            setTextViewColor(live_right, 0, bottomOddsItem.getRightUp());
+        }
+    }
+
 
     public void setTableLayoutData(List<BottomOddsItem> bottomOddsItem) {
 
+        //初盘
         if (bottomOddsItem.get(0) != null) {
-            first_left.setText(bottomOddsItem.get(0).getLeft());
-            first_middle.setText(bottomOddsItem.get(0).getMiddle());
-            first_right.setText(bottomOddsItem.get(0).getRight());
-            setTextViewColor(first_left, 0, bottomOddsItem.get(0).getLeftUp());
-            setTextViewColor(first_middle, 1, bottomOddsItem.get(0).getMiddleUp());
-            setTextViewColor(first_right, 0, bottomOddsItem.get(0).getRightUp());
-
+            if (isNULLOrEmpty(bottomOddsItem.get(0).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(0).getMiddle()) || "-".equals(isNULLOrEmpty(bottomOddsItem.get(0).getRight()))) {
+                first_left.setText("-");
+                first_left.setText("-");
+                first_left.setTextColor(mContext.getResources().getColor(R.color.white));
+                first_middle.setBackgroundResource(R.color.analyze_left);
+                first_middle.setTextColor(mContext.getResources().getColor(R.color.white));
+                first_middle.setBackgroundResource(R.color.analyze_left);
+                first_right.setText("-");
+                first_right.setTextColor(mContext.getResources().getColor(R.color.white));
+                first_right.setBackgroundResource(R.color.analyze_left);
+            } else {
+                first_left.setText(bottomOddsItem.get(0).getLeft());
+                first_middle.setText(bottomOddsItem.get(0).getMiddle());
+                first_right.setText(bottomOddsItem.get(0).getRight());
+                setTextViewColor(first_left, 0, bottomOddsItem.get(0).getLeftUp());
+                setTextViewColor(first_middle, 1, bottomOddsItem.get(0).getMiddleUp());
+                setTextViewColor(first_right, 0, bottomOddsItem.get(0).getRightUp());
+            }
         }
 
+        //即盘
         if (bottomOddsItem.get(1) != null) {
-            live_left.setText(bottomOddsItem.get(1).getLeft());
 
-            live_middle.setText(bottomOddsItem.get(1).getMiddle());
+            if (isNULLOrEmpty(bottomOddsItem.get(1).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(1).getMiddle()) || isNULLOrEmpty(bottomOddsItem.get(1).getRight())) {
+                live_left.setText("");
+                live_middle.setText("封");
+                live_middle.setTextColor(mContext.getResources().getColor(R.color.white));
+                live_middle.setBackgroundResource(R.color.analyze_left);
+                live_right.setText("");
+            } else {
+                live_left.setText(bottomOddsItem.get(1).getLeft());
 
-            live_right.setText(bottomOddsItem.get(1).getRight());
+                live_middle.setText(bottomOddsItem.get(1).getMiddle());
 
-            setTextViewColor(live_left, 0, bottomOddsItem.get(1).getLeftUp());
-            setTextViewColor(live_middle, 1, bottomOddsItem.get(1).getMiddleUp());
-            setTextViewColor(live_right, 0, bottomOddsItem.get(1).getRightUp());
+                live_right.setText(bottomOddsItem.get(1).getRight());
+
+                setTextViewColor(live_left, 0, bottomOddsItem.get(1).getLeftUp());
+                setTextViewColor(live_middle, 1, bottomOddsItem.get(1).getMiddleUp());
+                setTextViewColor(live_right, 0, bottomOddsItem.get(1).getRightUp());
+            }
 
         }
+    }
 
 
+    private boolean isNULLOrEmpty(String s) {
+        if (s == null || "".equals(s) || "null".equals(s)) {
+            return true;
+        } else {
+            return false;
+
+        }
     }
 
     private void setTextViewColor(TextView textView, int flag, String b) {

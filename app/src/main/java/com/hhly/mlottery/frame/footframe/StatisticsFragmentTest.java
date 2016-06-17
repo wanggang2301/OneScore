@@ -114,13 +114,11 @@ public class StatisticsFragmentTest extends Fragment {
 
 
     private void loadData() {
-
-
         if ("-1".equals(type)) {
             getVolleyData();
             getVolleyDataStatic();
 
-        } else {
+        } else { //未完场
             initData(type);
             initJson(type);
         }
@@ -284,12 +282,6 @@ public class StatisticsFragmentTest extends Fragment {
 
         } else if ("1".equals(id)) {
 
-          /*  L.d("1111","mHomeCorners="+mHomeCorners.size()+"");
-            L.d("1111","mGuestCorners="+mGuestCorners.size()+"");
-            L.d("1111","mHomeDangers="+mHomeDangers.size()+"");
-            L.d("1111","mGuestDangers="+mGuestDangers.size()+"");
-*/
-
             showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
             showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
 
@@ -438,6 +430,74 @@ public class StatisticsFragmentTest extends Fragment {
         mMathchStatisInfo = m;
     }
 
+    //刷新测试
+    public void initJson2(String id) {
+
+        //未开赛
+        if ("0".equals(id)) {
+            prohome_team.setProgress(50);
+            prohome_trapping.setProgress(50);
+            prohome_foul.setProgress(50);
+            prohome_offside.setProgress(50);
+            prohome_freehit.setProgress(50);
+            prohome_lineout.setProgress(50);
+
+            guest_team_txt.setText("");
+            home_team_txt.setText("");
+
+            guest_trapping_txt.setText("");
+            home_trapping_txt.setText("");
+
+            guest_foul_txt.setText("");
+            home_foul_txt.setText("");
+
+            guest_offside_txt.setText("");
+            home_offside_txt.setText("");
+
+            guest_freehit_txt.setText("");
+            home_freehit_txt.setText("");
+
+            guest_lineout_txt.setText("");
+            home_lineout_txt.setText("");
+
+        } else if ("1".equals(id)) {//正在比赛
+
+            if (mMathchStatisInfo == null) {
+                return;
+            }
+
+
+            prohome_team.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_shoot_door(), mMathchStatisInfo.getGuest_shoot_door()));
+            prohome_trapping.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_rescue(), mMathchStatisInfo.getGuest_rescue()));
+            prohome_foul.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_foul(), mMathchStatisInfo.getGuest_foul()));
+            prohome_offside.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_away(), mMathchStatisInfo.getGuest_away()));
+            prohome_freehit.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_free_kick(), mMathchStatisInfo.getGuest_free_kick()));
+            prohome_lineout.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_lineOut(), mMathchStatisInfo.getGuest_lineOut()));
+
+
+            guest_team_txt.setText(mMathchStatisInfo.getGuest_shoot_door() + "");
+            home_team_txt.setText(mMathchStatisInfo.getHome_shoot_door() + "");
+
+            guest_trapping_txt.setText(mMathchStatisInfo.getGuest_rescue() + "");
+            home_trapping_txt.setText(mMathchStatisInfo.getHome_rescue() + "");
+
+            guest_foul_txt.setText(mMathchStatisInfo.getGuest_foul() + "");
+            home_foul_txt.setText(mMathchStatisInfo.getHome_foul() + "");
+
+            guest_offside_txt.setText(mMathchStatisInfo.getGuest_away() + "");
+            home_offside_txt.setText(mMathchStatisInfo.getHome_away() + "");
+
+            guest_freehit_txt.setText(mMathchStatisInfo.getGuest_free_kick() + "");
+            home_freehit_txt.setText(mMathchStatisInfo.getHome_free_kick() + "");
+
+            guest_lineout_txt.setText(mMathchStatisInfo.getGuest_lineOut() + "");
+            home_lineout_txt.setText(mMathchStatisInfo.getHome_lineOut() + "");
+
+        } else if ("-1".equals(id)) {//完场
+            // getVolleyDataStatic();
+        }
+    }
+
     /***
      * 初始化统计图数据
      *
@@ -453,6 +513,8 @@ public class StatisticsFragmentTest extends Fragment {
             prohome_offside.setProgress(50);
             prohome_freehit.setProgress(50);
             prohome_lineout.setProgress(50);
+
+
             guest_team_txt.setText("");
             home_team_txt.setText("");
 

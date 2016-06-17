@@ -28,8 +28,7 @@ public class NestedListView extends ListView implements OnTouchListener,
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
-		if (getAdapter() != null
-				&& getAdapter().getCount() > MAXIMUM_LIST_ITEMS_VIEWABLE) {
+		if (getAdapter() != null && getAdapter().getCount() > MAXIMUM_LIST_ITEMS_VIEWABLE) {
 			if (listViewTouchAction == MotionEvent.ACTION_MOVE) {
 				scrollBy(0, -1);
 			}
@@ -47,8 +46,7 @@ public class NestedListView extends ListView implements OnTouchListener,
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
-				MeasureSpec.AT_MOST);
+		int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
 		super.onMeasure(widthMeasureSpec, expandSpec);
 
 		int newHeight = 0;

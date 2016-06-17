@@ -25,7 +25,9 @@ import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 底部赔率弹窗
@@ -195,9 +197,14 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
             return;
         }
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
-        String url = "http://192.168.31.70:8080/mlottery/core/footballBallList.ballListDetail.do?thirdId=336820&lang=zh&oddType=1";
 
-        VolleyContentFast.requestJsonByGet(url, null,
+        Map<String, String> params = new HashMap<>();
+        params.put("thirdId", "332973");  //
+        params.put("oddType", "1");
+
+        String url = "http://192.168.31.70:8080/mlottery/core/footballBallList.ballListDetail.do";
+
+        VolleyContentFast.requestJsonByGet(url, params,
                 new VolleyContentFast.ResponseSuccessListener<BottomOddsDetails>() {
                     @Override
                     public void onResponse(BottomOddsDetails bottomOddsDetails) {

@@ -44,7 +44,7 @@
             android:gravity="center"
             android:text="皇马"
             android:singleLine="true"
-            android:textColor="@color/res_name_color"
+            android:textColor="@color/football_analyze_default_color"
             android:textSize="@dimen/text_size_10" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:text="巴萨"
-            android:textColor="@color/black_details_ball_textcolor"
+            android:textColor="@color/football_analyze_default_color"
             android:textSize="@dimen/text_size_10" />
 
         <TextView

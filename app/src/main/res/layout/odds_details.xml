@@ -80,7 +80,7 @@
             android:layout_weight="1.2"
             android:orientation="vertical">
 
-            <ListView
+            <com.hhly.mlottery.widget.NestedListView
                 android:id="@+id/odds_tetails_left_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

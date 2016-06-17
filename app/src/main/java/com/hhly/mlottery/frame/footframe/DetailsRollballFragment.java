@@ -14,26 +14,47 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.bean.footballDetails.BottomOdds;
+import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
+import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
+import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.DetailsRollOdd;
 
+import org.java_websocket.drafts.Draft_17;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author wang gang
  * @date 2016/6/3 14:17
  * @des ${TODO}
  */
-public class DetailsRollballFragment extends Fragment {
+public class DetailsRollballFragment extends Fragment implements HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
+
+    private final static String TAG = "DetailsRollballFragment";
 
     private final int ERROR = -1;//访问失败
     private final int SUCCESS = 0;// 访问成功
@@ -49,10 +70,6 @@ public class DetailsRollballFragment extends Fragment {
     private List<Integer> allMatchLiveMsgId;
     private int mViewType = 0;
 
-    public static final int ASIA = 0;
-    public static final int BIG_SMALL_BALL = 1;
-
-    public static final int EU = 2;
 
     private static final String DETAILSROLLBALL_PARAM = "DETAILSROLLBALL_PARAM";
     private static final String DETAILSROLLBALL_TYPE = "DETAILSROLLBALL_TYPE";
@@ -86,6 +103,10 @@ public class DetailsRollballFragment extends Fragment {
      * 完场
      **/
 
+    //亚盘
+    private static final int ALET = 1;
+    private static final int ASIZE = 3;
+    private static final int EUR = 2;
 
     //赛前view
     private TextView pre_dataTime_txt;//开赛时间
@@ -126,6 +147,17 @@ public class DetailsRollballFragment extends Fragment {
 
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
+
+    private HappySocketClient hSocketClient;
+    private URI hSocketUri = null;
+
+
+    //保存上次推送赔率
+    private BottomOddsItem aletBottomOddsItem;
+    private BottomOddsItem asizeBottomOddsItem;
+    private BottomOddsItem eurBottomOddsItem;
+
+
     public static DetailsRollballFragment newInstance(int fragmentType, MatchDetail matchDetail) {
         DetailsRollballFragment fragment = new DetailsRollballFragment();
         Bundle args = new Bundle();
@@ -139,6 +171,16 @@ public class DetailsRollballFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
+        try {
+
+            // hSocketUri = new URI(BaseURLs.WS_SERVICE);
+            hSocketUri = new URI("ws://192.168.10.242:61634/ws");
+
+
+            System.out.println(">>>>>" + hSocketUri);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @Nullable
@@ -158,12 +200,24 @@ public class DetailsRollballFragment extends Fragment {
                 mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
                 initLiveText();
                 initOdds();
+
+                startWebsocket();
+                computeWebSocket();
             }
         }
 
         return mView;
     }
 
+
+    public void activateMatch() {
+        mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
+        mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
+        if ("0".equals(mMatchDetail.getLiveStatus()) || "1".equals(mMatchDetail.getLiveStatus())) {
+            startWebsocket();
+            computeWebSocket();
+        }
+    }
 
     /**
      * 比赛赛中、赛后初始化数据
@@ -239,6 +293,17 @@ public class DetailsRollballFragment extends Fragment {
     }
 
 
+    public void refreshMatch(MatchDetail matchDetail, int type) {
+        this.mMatchDetail = matchDetail;
+        this.mViewType = type;
+        if (mViewType == DETAILSROLLBALL_TYPE_PRE) {
+            initPreData();
+        } else {
+            initLiveText();
+            initOdds();
+        }
+    }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -272,11 +337,11 @@ public class DetailsRollballFragment extends Fragment {
 
         L.d("ddd", "加载数据");
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
-        // Map<String, String> params = new HashMap<>();
-        //params.put("thirdId", mThirdId);
-        String url = "http://192.168.31.70:8080/mlottery/core/footballBallList.ballListOverview.do?thirdId=336621&lang=zh";
+        Map<String, String> params = new HashMap<>();
+        params.put("thirdId", "332973");
+        String url = "http://192.168.31.70:8080/mlottery/core/footballBallList.ballListOverview.do";
 
-        VolleyContentFast.requestJsonByGet(url, null,
+        VolleyContentFast.requestJsonByGet(url, params,
                 new VolleyContentFast.ResponseSuccessListener<BottomOdds>() {
                     @Override
                     public void onResponse(BottomOdds bottomOdds) {
@@ -300,31 +365,41 @@ public class DetailsRollballFragment extends Fragment {
         odd_asize.setTitle("大小球");
         odd_eur.setTitle("欧赔");
         odd_alet.setTableLayoutData(bottomOdds.getAsianlistOdd());
+
+
         odd_asize.setTableLayoutData(bottomOdds.getOverunderlistOdd());
         odd_eur.setTableLayoutData(bottomOdds.getEuropelistOdd());
 
-        //亚盘
+        aletBottomOddsItem = bottomOdds.getAsianlistOdd().get(1);
+        asizeBottomOddsItem = bottomOdds.getOverunderlistOdd().get(1);
+        eurBottomOddsItem = bottomOdds.getEuropelistOdd().get(1);
+
+
+        //亚盘1
         odd_alet.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), 0);
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
 
 
+        //大小球
         odd_asize.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getOverunderlistOdd().get(0), 1);
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getOverunderlistOdd().get(0), ASIZE);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
 
+
+        //欧赔
         odd_eur.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getEuropelistOdd().get(0), 2);
+                mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getEuropelistOdd().get(0), EUR);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
         });
@@ -363,7 +438,7 @@ public class DetailsRollballFragment extends Fragment {
         reLoading = (TextView) mView.findViewById(R.id.reLoading);
     }
 
-    public void initPreData() {
+    private void initPreData() {
         String startTime = mMatchDetail.getMatchInfo().getStartTime();
         if (pre_dataTime_txt == null) {
             return;
@@ -462,4 +537,228 @@ public class DetailsRollballFragment extends Fragment {
 
     }
 
+
+    /***
+     * 开始推送socket
+     */
+    private synchronized void startWebsocket() {
+
+        L.d(TAG, "开启推送");
+        if (hSocketClient != null) {
+            if (!hSocketClient.isClosed()) {
+                hSocketClient.close();
+            }
+
+            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+            hSocketClient.setSocketResponseMessageListener(this);
+            hSocketClient.setSocketResponseCloseListener(this);
+            hSocketClient.setSocketResponseErrorListener(this);
+            try {
+                hSocketClient.connect();
+            } catch (IllegalThreadStateException e) {
+                hSocketClient.close();
+            }
+        } else {
+            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+            hSocketClient.setSocketResponseMessageListener(this);
+            hSocketClient.setSocketResponseCloseListener(this);
+            hSocketClient.setSocketResponseErrorListener(this);
+            try {
+                hSocketClient.connect();
+            } catch (IllegalThreadStateException e) {
+                hSocketClient.close();
+            }
+        }
+    }
+
+    //事件推送
+
+    @Override
+    public void onMessage(String message) {
+        L.d("TAG", "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+
+        pushStartTime = System.currentTimeMillis(); // 记录起始时间
+        L.d("TAG", "心跳时间" + pushStartTime);
+        if (message.startsWith("CONNECTED")) {
+            String id = "android" + DeviceInfo.getDeviceId(mContext);
+            id = MD5Util.getMD5(id);
+            if (mContext == null) {
+                return;
+            }
+            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.scollodds." + "331959" + "\n\n");
+            L.d("TAG", "CONNECTED");
+            return;
+        } else if (message.startsWith("MESSAGE")) {
+
+            String[] msgs = message.split("\n");
+            String ws_json = msgs[msgs.length - 1];
+
+            try {
+                JSONObject jsonObject = new JSONObject(ws_json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            Message msg = Message.obtain();
+            msg.obj = ws_json;
+            mSocketHandler.sendMessage(msg);
+
+        }
+        hSocketClient.send("\n");
+
+    }
+
+
+    /**
+     * 直播时间推送，更新比赛即时时间和时间轴、文字直播
+     */
+    Handler mSocketHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //时间推送
+
+            String ws_json = (String) msg.obj;
+            WebSocketRollballOdd webSocketRollballOdd = null;
+            try {
+                webSocketRollballOdd = JSON.parseObject(ws_json, WebSocketRollballOdd.class);
+            } catch (Exception e) {
+                ws_json = ws_json.substring(0, ws_json.length() - 1);
+                webSocketRollballOdd = JSON.parseObject(ws_json, WebSocketRollballOdd.class);
+            }
+
+            L.d("TAG", "=======赔率推送=====" + ws_json);
+
+            //更新赔率
+
+            updateOdds(webSocketRollballOdd);
+
+        }
+    };
+
+
+    private void updateOdds(WebSocketRollballOdd webSocketRollballOdd) {
+
+        //红升绿降  1 升  -1降  0不变
+        //亚盘
+        if (ALET == Integer.parseInt(webSocketRollballOdd.getOddType())) {
+            odd_alet.updateOdds(setLiveOdds(aletBottomOddsItem, webSocketRollballOdd));
+        } else if (ASIZE == Integer.parseInt(webSocketRollballOdd.getOddType())) {
+            //大小球
+            odd_asize.updateOdds(setLiveOdds(asizeBottomOddsItem, webSocketRollballOdd));
+        } else if (EUR == Integer.parseInt(webSocketRollballOdd.getOddType())) {
+            //欧赔
+            odd_eur.updateOdds(setLiveOdds(eurBottomOddsItem, webSocketRollballOdd));
+        }
+    }
+
+
+    /**
+     * 对获取推送对象进行红升绿降处理
+     *
+     * @param b
+     * @param webodds
+     * @return
+     */
+    private BottomOddsItem setLiveOdds(BottomOddsItem b, WebSocketRollballOdd webodds) {
+        if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight())) {
+            b.setLeft(webodds.getLeft());
+            b.setMiddle(webodds.getMiddle());
+            b.setRight(webodds.getRight());
+        } else {
+            if (isNULLOrEmpty(b.getLeft()) || isNULLOrEmpty(b.getMiddle()) || isNULLOrEmpty(b.getRight())) {
+                b.setLeft(webodds.getLeft());
+                b.setLeftUp("0");
+                b.setMiddle(webodds.getMiddle());
+                b.setMiddle("0");
+                b.setRight(webodds.getRight());
+                b.setRight("0");
+            } else {
+                if (Float.parseFloat(b.getLeft()) > Float.parseFloat(webodds.getLeft())) {
+                    b.setLeftUp("-1");  //降
+                } else if (Float.parseFloat(b.getLeft()) < Float.parseFloat(webodds.getLeft())) {
+                    b.setLeftUp("1");
+                } else {
+                    b.setLeftUp("0");
+                }
+
+                if (Float.parseFloat(b.getMiddle()) > Float.parseFloat(webodds.getMiddle())) {
+                    b.setMiddleUp("-1");  //降
+                } else if (Float.parseFloat(b.getMiddle()) < Float.parseFloat(webodds.getMiddle())) {
+                    b.setMiddleUp("1");
+                } else {
+                    b.setMiddleUp("0");
+                }
+
+                if (Float.parseFloat(b.getRight()) > Float.parseFloat(webodds.getRight())) {
+                    b.setRightUp("-1");  //降
+                } else if (Float.parseFloat(b.getRight()) < Float.parseFloat(webodds.getRight())) {
+                    b.setRightUp("1");
+                } else {
+                    b.setRightUp("0");
+                }
+            }
+        }
+
+        return b;
+    }
+
+
+    //心跳时间
+    private long pushStartTime;
+
+    private Timer computeWebSocketConnTimer = new Timer();
+
+    /***
+     * 计算推送Socket断开重新连接
+     */
+
+    private void computeWebSocket() {
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                L.d("TAG", df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+                long pushEndTime = System.currentTimeMillis();
+                if ((pushEndTime - pushStartTime) >= 30000) {
+                    L.d("TAG", "重新启动socket");
+                    startWebsocket();
+                }
+            }
+        };
+        computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (computeWebSocketConnTimer != null) {
+            computeWebSocketConnTimer.cancel();
+        }
+
+        if (hSocketClient != null) {
+            hSocketClient.close();
+        }
+    }
+
+    @Override
+    public void onClose(String message) {
+
+    }
+
+    @Override
+    public void onError(Exception exception) {
+
+    }
+
+    private boolean isNULLOrEmpty(String s) {
+        if (s == null || "".equals(s) || "null".equals(s)) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
 }

@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.OddDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.OddsAdapter;
@@ -291,7 +290,13 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                 // 访问成功
                 if (jsonObject != null) {
                     mListOddEntity = jsonObject.getListOdd();
+
                     if (mListOddEntity != null && mListOddEntity.size() > 0) {
+
+                        mListOddEntity.addAll(mListOddEntity); //测试滑动listview
+                        mListOddEntity.addAll(mListOddEntity); //测试滑动listview
+                        mListOddEntity.addAll(mListOddEntity); //测试滑动listview
+
                         if ("1".equals(oddType)) {//亚盘
                             mOddsAdapter = new OddsAdapter(mContext, mListOddEntity, stKey);
                         } else if ("2".equals(oddType)) {//欧赔
