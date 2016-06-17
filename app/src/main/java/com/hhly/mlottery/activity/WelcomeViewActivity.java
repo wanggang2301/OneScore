@@ -1,6 +1,8 @@
 package com.hhly.mlottery.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -59,25 +61,33 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
         }
     }
 
-    private View.OnClickListener onClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.startBtn:
-                    //第一次启动保存为yes
-                    PreferenceUtil.commitString("isFirst", "YES");
-                    if (WelcomeActivity.mPackageInfo != null) {
-                        //第一次启动的时候保存版本号
-                        PreferenceUtil.commitString("versionName", WelcomeActivity.mPackageInfo.versionName);
-                    }
-                    startActivity(new Intent(WelcomeViewActivity.this, HomePagerActivity.class));
-                    finish();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
+
+	private View.OnClickListener onClick = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.startBtn:
+				//第一次启动保存为yes
+				PreferenceUtil.commitString("isFirst", "YES");
+				//第一次启动的时候保存版本号
+				try {
+					// 得到应用程序的包信息对象
+                    PackageManager packageManager = getPackageManager();
+                    PackageInfo packageInfo = packageManager.getPackageInfo(getApplicationContext().getPackageName(), 0);
+					PreferenceUtil.commitString("versionName", packageInfo.versionName);
+				} catch (PackageManager.NameNotFoundException e) {
+					e.printStackTrace();
+					// 此异常不会发生
+				}
+
+				startActivity(new Intent(WelcomeViewActivity.this, HomePagerActivity.class));
+				finish();
+				break;
+			default:
+				break;
+			}
+		}
+	};
 
     /**
      * 屏蔽返回键的方法

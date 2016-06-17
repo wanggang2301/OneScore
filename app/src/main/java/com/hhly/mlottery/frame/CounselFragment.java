@@ -234,6 +234,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         public_img_back.setOnClickListener(this);
         mViewPager = (ViewPager) mView.findViewById(R.id.counselfragment_viewpager);
         mTabLayout = (TabLayout) mView.findViewById(R.id.tabs);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.counselfragment_SwipeRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);

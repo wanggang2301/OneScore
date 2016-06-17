@@ -14,8 +14,6 @@ public class AppConstants {
 	public static final boolean fullORsimple = false;
 	/** 是否是测试连接，测试连接用于阶段测试使用 */
 	public static final boolean isTestLink = false;
-	/** 是否为测试消息推送。true为debug模式，false为生产模式 */
-	public static final boolean isDebugMode = true;
 	/**
 	 * 判断是否上传奔溃日志到友盟
 	 */
