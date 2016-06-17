@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.ToastTools;
 import com.sohu.cyan.android.sdk.entity.Comment;
 
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ public class CounselComentLvAdapter extends BaseAdapter {
     private String mString = "...";
     private String total;
     private List<Integer> mlist = new ArrayList<>();//用来存储SpannableString的点击
-
 
     public CounselComentLvAdapter(Activity activity) {
 
@@ -85,6 +85,8 @@ public class CounselComentLvAdapter extends BaseAdapter {
         //暂时写死游客
 //        holder.nickname.setText(R.string.user_name);
         holder.nickname.setText(mInfosList.get(position).passport.nickname);
+//        CyUtils.getUserInfo(CyanSdk.getInstance(mActivity));
+//        System.out.println("hhh99" + CyUtils.nickname);
         String time = DateUtil.transferLongToDate(mInfosList.get(position).create_time);
         holder.time.setText(time);
         if (mInfosList.get(position).content.length() > 50) {//字数大于50，则隐藏多于50的部分
@@ -133,7 +135,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
                         // TODO Auto-generated method stub
                         textView.setText(mInfosList.get(position).content);
                         mlist.add(position);
-//                        ToastTools.ShowQuickCenter(mActivity, "position="+position);
+                        ToastTools.ShowQuickCenter(mActivity, "position=" + position);
 
                     }
 

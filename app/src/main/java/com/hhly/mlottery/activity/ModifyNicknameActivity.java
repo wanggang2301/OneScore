@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -126,7 +127,10 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                         AppConstants.register.getData().getUser().setNickName(nickName);
                         CommonUtils.saveRegisterInfo(AppConstants.register);
                         finish();
-                    }else{
+                    }else if(bean.getResult() == AccountResultCode.USER_NOT_LOGIN){
+                        Intent intent= new Intent(ModifyNicknameActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    }else {
                         CommonUtils.handlerRequestResult(bean.getResult() , bean.getMsg());
                     }
                 }

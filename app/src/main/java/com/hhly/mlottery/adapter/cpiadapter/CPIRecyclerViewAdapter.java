@@ -3,6 +3,7 @@ package com.hhly.mlottery.adapter.cpiadapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -63,6 +64,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         LinearLayout cpi_item_layout;//比赛进行时候即时时间的layout
         TextView cpi_item_keepTime_txt;//即时时间textview
         TextView cpi_item_seconds_txt;//即时时间分钟的 “ ' ”
+        TextView tv_tag;
 
 
         public CPIViewHolder(final View itemView) {
@@ -81,9 +83,8 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             cpi_item_keepTime_txt = (TextView) itemView.findViewById(R.id.cpi_item_keepTime_txt);
             cpi_item_seconds_txt = (TextView) itemView.findViewById(R.id.cpi_item_seconds_txt);
 
+            tv_tag = (TextView) itemView.findViewById(R.id.tv_tag);
         }
-
-
     }
 
     @Override
@@ -111,7 +112,8 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         }
 
         final NewOddsInfo.AllInfoBean allInfoBean = mAllInfoBean.get(position);
-        NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = allInfoBean.getMatchInfo();
+        final NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = allInfoBean.getMatchInfo();
+        NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = matchInfo;
         //获得联赛名称
         cpiViewHolder.cpi_item_leagueName_txt.setText(allInfoBean.getLeagueName());
         cpiViewHolder.cpi_item_leagueName_txt.setTextColor(Color.parseColor(allInfoBean.getLeagueColor()));
@@ -121,6 +123,27 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         if (matchInfoBean.isShowTitle()) {
             cpiViewHolder.cpi_item_layout.setVisibility(View.VISIBLE);
             cpiViewHolder.cpi_item_keepTime_txt.setText(matchInfoBean.getKeepTime());
+
+            String maybeTime = matchInfoBean.getKeepTime();
+            if (maybeTime.indexOf("+") > 0) {
+                maybeTime = maybeTime.substring(0, maybeTime.length() - 1);
+            }
+
+            try {
+                int i = Integer.parseInt(maybeTime);
+                cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
+                        ContextCompat.getColor(context, R.color.colorPrimary));
+                cpiViewHolder.cpi_item_seconds_txt.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
+                        ContextCompat.getColor(context, R.color.analyze_left));
+                cpiViewHolder.cpi_item_seconds_txt.setVisibility(View.GONE);
+            }
+
+            cpiViewHolder.tv_tag.setVisibility(View.GONE);
+        } else {
+            cpiViewHolder.tv_tag.setVisibility(View.VISIBLE);
         }
         //比赛的主客队名称和比分
         if ("0".equals(matchInfoBean.getMatchState())) {
@@ -164,6 +187,30 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
         }
 
+        if ("0".equals(matchInfo.getMatchState())) {
+            cpiViewHolder.tv_tag.setTextColor(
+                    ContextCompat.getColor(context, R.color.textcolor_football_footer_normal));
+            cpiViewHolder.tv_tag.setText(R.string.not_start_txt);
+        } else if ("-1".equals(matchInfo.getMatchState())) {
+            cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
+            cpiViewHolder.tv_tag.setText(R.string.fragme_home_wanchang_text);
+        } else if ("-10".equals(matchInfo.getMatchState())) {
+            cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
+            cpiViewHolder.tv_tag.setText(R.string.fragme_home_quxiao_text);
+        } else if ("-11".equals(matchInfo.getMatchState())) {
+            cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
+            cpiViewHolder.tv_tag.setText(R.string.fragme_home_daiding_text);
+        } else if ("-12".equals(matchInfo.getMatchState())) {
+            cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
+            cpiViewHolder.tv_tag.setText(R.string.fragme_home_yaozhan_text);
+        } else if ("-13".equals(matchInfo.getMatchState())) {
+            cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
+            cpiViewHolder.tv_tag.setText(R.string.fragme_home_zhongduan_text);
+        } else if ("-14".equals(matchInfo.getMatchState())) {
+            cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
+            cpiViewHolder.tv_tag.setText(R.string.fragme_home_tuichi_text);
+        }
+
         cpiViewHolder.item_cpi_odds_listview.setDivider(context.getResources().getDrawable(R.color.homwe_grey));
         cpiViewHolder.item_cpi_odds_listview.setDividerHeight(1);
         cpiViewHolder.item_cpi_odds_listview.setAdapter(cardViewListAdapter);
@@ -178,7 +225,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                     Map<String, String> obMap = new HashMap<>();
                     obMap.put("id", allInfoBean.getComList().get(m).getComId());
                     obMap.put("name", allInfoBean.getComList().get(m).getComName());
-                    obMap.put("thirdid", allInfoBean.getMatchInfo().getMatchId());
+                    obMap.put("thirdid", matchInfo.getMatchId());
                     obList.add(obMap);
                 }
                 //点击指数页面，传值给详情界面
@@ -188,13 +235,13 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 intent.putExtra("positionNunber", positionNunber + "");
                 intent.putExtra("stType", stType);
                 //如果未开赛
-                if ("0".equals(allInfoBean.getMatchInfo().getMatchState())) {
-                    intent.putExtra("PKScore", allInfoBean.getMatchInfo().getMatchHomeName()
-                            + "\t" + "VS" + "\t" + allInfoBean.getMatchInfo().getMatchGuestName());
+                if ("0".equals(matchInfo.getMatchState())) {
+                    intent.putExtra("PKScore", matchInfo.getMatchHomeName()
+                            + "\t" + "VS" + "\t" + matchInfo.getMatchGuestName());
                 } else {
                     //否则开赛了
-                    intent.putExtra("PKScore", allInfoBean.getMatchInfo().getMatchHomeName()
-                            + "\t" + allInfoBean.getMatchInfo().getMatchResult() + "\t" + allInfoBean.getMatchInfo().getMatchGuestName());
+                    intent.putExtra("PKScore", matchInfo.getMatchHomeName()
+                            + "\t" + matchInfo.getMatchResult() + "\t" + matchInfo.getMatchGuestName());
                 }
                 context.startActivity(intent);
             }
@@ -204,7 +251,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", allInfoBean.getMatchInfo().getMatchId());
+                intent.putExtra("thirdId", matchInfo.getMatchId());
                 context.startActivity(intent);
             }
         });

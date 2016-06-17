@@ -58,8 +58,10 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            InputActivity.this.setResult(CyUtils.RESULT_CODE);
-            finish();
+            if (intent.getAction().equals("closeself")){
+                InputActivity.this.setResult(CyUtils.RESULT_CODE);
+                finish();
+            }
         }
     };
 
@@ -170,6 +172,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
         mEditText.setText("");
         issubmitFinish = true;
         setResult(CyUtils.RESULT_CODE);
+        ToastTools.ShowQuickCenter(this,getResources().getString(R.string.succed_send));
         finish();
 
     }
