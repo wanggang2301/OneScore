@@ -87,8 +87,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     TextView footballImmediateNoDataTv;
     @BindView(R.id.football_immediate_unfocus_ll)
     RelativeLayout footballImmediateUnfocusLl;
-    @BindView(R.id.network_exception_reload_btn)
-    TextView networkExceptionReloadBtn;
     @BindView(R.id.network_exception_layout)
     LinearLayout networkExceptionLayout;
     @BindView(R.id.swipe_refresh_layout)
@@ -162,7 +160,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             }
         });
 
-        networkExceptionReloadBtn.setOnClickListener(new View.OnClickListener() {
+        networkExceptionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 swipeRefreshLayout.setRefreshing(true);
@@ -365,10 +363,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupEventBus() {
-        if (null == eventBus) {
-            eventBus = new EventBus();
-            eventBus.register(this);
-        }
+        eventBus = new EventBus();
+        eventBus.register(this);
     }
 
     private void setupRecyclerView() {
@@ -635,6 +631,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                     case VIEW_STATUS_LOADING:
                         fragment.swipeRefreshLayout.setRefreshing(true);
+                        fragment.swipeRefreshLayout.setVisibility(View.VISIBLE);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
                         break;

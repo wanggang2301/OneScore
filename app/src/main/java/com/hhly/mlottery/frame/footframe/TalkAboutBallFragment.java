@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.InputActivity;
@@ -32,7 +33,6 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PullUpRefreshListView;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
@@ -98,7 +98,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ADDKEYGUEST = "guestAdd";
     private Context mContext;
     private int type;//1 籃球/0 足球
-    private String state="-1";
+    private String state = "-1";
 
 
     @Override
@@ -181,16 +181,16 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     }
 
     //请求点赞数据
-    public void requestLikeData(String addkey, String addcount,int type) {
+    public void requestLikeData(String addkey, String addcount, int type) {
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         params.put(addkey, addcount);
-        String url="";
-        if (type==0){
-            url= BaseURLs.URL_FOOTBALL_DETAIL_LIKE_INFO;
+        String url = "";
+        if (type == 0) {
+            url = BaseURLs.URL_FOOTBALL_DETAIL_LIKE_INFO;
 //            ToastTools.ShowQuickCenter(getActivity(),"足球");
-        }else if (type==1){
-            url= BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
+        } else if (type == 1) {
+            url = BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
 //            ToastTools.ShowQuickCenter(getActivity(),"籃球");
         }
         VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<MatchLike>() {
@@ -202,12 +202,12 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
                 talkballpro.setMax(homeLikeCount + guestLikeCount);
                 talkballpro.setProgress(homeLikeCount);
-                System.out.println("VolleyContentFast"+matchLike.getHomeLike());
+                System.out.println("VolleyContentFast" + matchLike.getHomeLike());
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                System.out.println("VolleyContentFast"+"onErrorResponse");
+                System.out.println("VolleyContentFast" + "onErrorResponse");
             }
         }, MatchLike.class);
     }
@@ -216,6 +216,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         sdk = CyanSdk.getInstance(mContext);
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+            System.out.println("fgg" + "NickName=" + AppConstants.register.getData().getUser().getNickName() + "UserId=" + AppConstants.register.getData().getUser().getUserId());
         }
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
@@ -249,12 +250,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
         }
         //以前的规则是-1不可点  现在延续
-        if (state!=null&&state.equals("-1")){
+        if (state != null && state.equals("-1")) {
             setClickableLikeBtn(false);
-        }else {
+        } else {
             setClickableLikeBtn(true);
         }
-        System.out.println("fggstate="+state);
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -279,6 +279,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
+                System.out.println("shuju====="+ JSON.toJSONString(topicLoadResp));
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
                 topicid = topicLoadResp.topic_id;//文章id
@@ -289,7 +290,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mNoData.setVisibility(View.VISIBLE);
                 } else {
-
                     mAdapter.setInfosList(mCommentArrayList);
                     mAdapter.notifyDataSetChanged();
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -397,6 +397,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mCurrentPager = 1;
         mLoadMore.setText(R.string.foot_loadmore);
         loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+        System.out.println("mThirdId" + mThirdId + "");
     }
 
     @Override
@@ -417,11 +418,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             switch (resultCode) {
                 case CyUtils.RESULT_OK:
                     if (CommonUtils.isLogin()) { //接收登录华海成功返回
+                        System.out.println("fggRESULT_OK" + "NickName=" + AppConstants.register.getData().getUser().getNickName() + "UserId=" + AppConstants.register.getData().getUser().getUserId());
                         CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                     }
                     break;
                 case CyUtils.RESULT_CODE://接收评论输入页面返回
-                    ToastTools.ShowQuickCenter(mContext,"刷新數據");
                     loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
                     mLinearLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
@@ -475,14 +476,24 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 ivHomeLike.setVisibility(View.VISIBLE);
                 ivHomeLike.startAnimation(mRiseHomeAnim);
 //                //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
-                requestLikeData(ADDKEYHOME, "1",type);
+                requestLikeData(ADDKEYHOME, "1", type);
                 break;
             case R.id.talkball_guest_like:
                 ivGuestLike.setVisibility(View.VISIBLE);
                 ivGuestLike.startAnimation(mRiseGuestAnim);
                 //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
-                requestLikeData(ADDKEYGUEST, "1",type);
+                requestLikeData(ADDKEYGUEST, "1", type);
                 break;
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        try {
+            sdk.logOut();
+        } catch (CyanException e) {
+            e.printStackTrace();
         }
     }
 }

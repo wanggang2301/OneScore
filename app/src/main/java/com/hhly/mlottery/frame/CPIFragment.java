@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
@@ -34,18 +35,14 @@ import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketTime;
-import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import org.java_websocket.drafts.Draft_17;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -156,8 +153,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread.start();
 //        }
         try {
-            hSocketUri = new URI(BaseURLs.URL_CPI_SOCKET);
-//            hSocketUri = new URI("ws://192.168.10.242:61634/topic");
+//            hSocketUri = new URI(BaseURLs.URL_CPI_SOCKET);
+            hSocketUri = new URI("ws://192.168.10.242:61634");
 //			hSocketUri = new URI("ws://m.1332255.com/ws/USER.topic.indexcenter");
 //            hSocketUri = new URI("ws://m.13322.com/ws");
         } catch (URISyntaxException e) {
@@ -260,28 +257,26 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     }
 
     public void onMessage(String message) {
+
         pushStartTime = System.currentTimeMillis(); // 记录起始时间
         if (message.startsWith("CONNECTED")) {
             String id = "android" + DeviceInfo.getDeviceId(getActivity());
             id = MD5Util.getMD5(id);
+            // USER.topic.indexcenter
             hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
         } else if (message.startsWith("MESSAGE")) {
-            String[] msgs = message.split("\n");
-            String ws_json = msgs[msgs.length - 1];
+            // 改为根据 { 和 } 将字符串切片，获取 {jsonObject}
+            String ws_json = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
             //赔率模拟数据
-            //String ws_json = "{'data':[{'comId':'38','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'337089','type':2}";
+//            ws_json = "{'data':[{'comId':'3','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'337551','type':2}  ";
             //时间模拟数据
-//            String ws_json = "{'data':{'keepTime':21,'statusOrigin':1},'thirdId':'337089','type':1} ";
+//            String ws_json = "{'data':{'keepTime':21,'statusOrigin':1},'thirdId':'337089','type':1}  ";
             //比分模拟推送
-//            String ws_json = "{'data':{'matchResult':'80:80'},'thirdId':'337089','type':3}";
+//            ws_json = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
 
-            int type = 0;
-            try {
-                JSONObject jsonObject = new JSONObject(ws_json);
-                type = jsonObject.getInt("type");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            JSONObject jsonObject = JSON.parseObject(ws_json);
+            int type = jsonObject.getInteger("type");
+
             if (type != 0) {
                 Message msg = Message.obtain();
                 msg.obj = ws_json;
@@ -305,7 +300,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String ws_json = (String) msg.obj;
-            ws_json = ws_json.substring(0, ws_json.length() - 1);
+
             if (msg.arg1 == 1) {
                 // 时间
                 upDateTime(ws_json);
@@ -323,14 +318,11 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
      * 时间推送
      */
     private void upDateTime(String json) {
-        try {
-            WebFootBallSocketTime webSocketOddsTime =
-                    JSON.parseObject(json, WebFootBallSocketTime.class);
-            for (Fragment fragment : fragments) {
-                ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsTime, "time");
-            }
-        } catch (Exception e) {
-            L.i(">>>", "ws_json1异常" + e);
+
+        WebFootBallSocketTime webSocketOddsTime =
+                JSON.parseObject(json, WebFootBallSocketTime.class);
+        for (Fragment fragment : fragments) {
+            ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsTime, "time");
         }
     }
 
@@ -338,25 +330,23 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
      * 赔率推送
      */
     public void upDateOdds(String json) {
-        try {
-            WebFootBallSocketOdds webSocketOdds =
-                    JSON.parseObject(json, WebFootBallSocketOdds.class);
-            for (int i = 0; i < webSocketOdds.getData().size(); i++) {
-                //如果是亚盘的
-                if ("1".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                    mCPIOddsFragment.upDateOdds(webSocketOdds, 1);
-                }
-                //如果是欧赔的
-                else if ("2".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                    mCPIOddsFragment3.upDateOdds(webSocketOdds, 2);
-                }
-                //如果是大小的
-                else if ("3".equals(webSocketOdds.getData().get(i).get("oddType"))) {
-                    mCPIOddsFragment2.upDateOdds(webSocketOdds, 3);
-                }
+
+        WebFootBallSocketOdds webSocketOdds =
+                JSON.parseObject(json, WebFootBallSocketOdds.class);
+
+        for (int i = 0; i < webSocketOdds.getData().size(); i++) {
+            //如果是亚盘的
+            if ("1".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+                mCPIOddsFragment.upDateOdds(webSocketOdds, 1);
             }
-        } catch (Exception e) {
-            L.i(">>>", "ws_json2异常" + e);
+            //如果是欧赔的
+            else if ("2".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+                mCPIOddsFragment3.upDateOdds(webSocketOdds, 2);
+            }
+            //如果是大小的
+            else if ("3".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+                mCPIOddsFragment2.upDateOdds(webSocketOdds, 3);
+            }
         }
     }
 
@@ -364,14 +354,11 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
      * 主客队比分推送
      */
     private void upDateScore(String json) {
-        try {
-            WebFootBallSocketTime webSocketOddsScore =
-                    JSON.parseObject(json, WebFootBallSocketTime.class);
-            for (Fragment fragment : fragments) {
-                ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsScore, "score");
-            }
-        } catch (Exception e) {
-            L.i(">>>", "ws_json3异常" + e);
+
+        WebFootBallSocketTime webSocketOddsScore =
+                JSON.parseObject(json, WebFootBallSocketTime.class);
+        for (Fragment fragment : fragments) {
+            ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsScore, "score");
         }
     }
 

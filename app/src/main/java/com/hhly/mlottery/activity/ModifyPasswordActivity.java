@@ -128,8 +128,11 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                                     L.d(TAG,"修改密码成功");
                                     setResult(RESULT_OK);
                                     finish();
-                                }else{
+                                }else if(reset.getResult() == AccountResultCode.USERNAME_PASS_ERROR){
                                     L.e(TAG,"成功请求，修改密码失败");
+                                    UiUtils.toast(MyApp.getInstance(), R.string.username_original_pass_error);
+                                  // CommonUtils.handlerRequestResult(reset.getResult() , reset.getMsg());
+                                }else{
                                     CommonUtils.handlerRequestResult(reset.getResult() , reset.getMsg());
                                 }
                             }
@@ -142,7 +145,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                             }
                         } , BaseBean.class);
 
-                    }else{
+                    } else {
                         UiUtils.toast(getApplicationContext() , R.string.pw_not_same);
                     }
 

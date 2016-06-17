@@ -691,6 +691,8 @@
     <string name="comment_contentnull">暂无评论内容</string>
     <string name="toatalvisiable">显示全部</string>
     <string name="chatball">聊球</string>
+    <string name="succed_send">发送成功</string>
+    <string name="succed_refresh">刷新成功</string>
 
 
     <!-- -->
@@ -747,6 +749,7 @@
     <string name="id_card_format_error">身份证格式错误</string>
     <string name="password_error">密码错误</string>
     <string name="username_pass_error">登录名或者密码错误</string>
+    <string name="username_original_pass_error">请输入正确的原始密码</string>
     <string name="logout_check">确认退出登录?</string>
 
     <!--1.1.2 begin-->

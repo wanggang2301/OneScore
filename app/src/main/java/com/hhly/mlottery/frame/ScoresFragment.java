@@ -189,6 +189,8 @@ public class ScoresFragment extends Fragment {
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
+
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -203,7 +205,7 @@ public class ScoresFragment extends Fragment {
                         case ROLLBALL_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
                             mSetImgBtn.setVisibility(View.INVISIBLE);
-                            ((RollBallFragment) fragments.get(position)).feedAdapter();
+//                            ((RollBallFragment) fragments.get(position)).feedAdapter();
                             break;
                         case IMMEDIA_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
@@ -402,13 +404,15 @@ public class ScoresFragment extends Fragment {
                     bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, true);
                     bundle.putInt("currentFragmentId", ROLLBALL_FRAGMENT);
                     LeagueCup[] allCups = null;
-                    if (rollBallFragment.getLeagueCupLists() != null) {
+                    if (rollBallFragment.getLeagueCupLists() != null && rollBallFragment.getLeagueCupLists().size() > 0) {
                         allCups = rollBallFragment.getLeagueCupLists().toArray(new LeagueCup[]{});
                     }
                     bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
-                    if (rollBallFragment.getLeagueCupChecked() != null) {
+
+                    LeagueCup[] leagueCups = rollBallFragment.getLeagueCupChecked();
+                    if (leagueCups != null && leagueCups.length > 0) {
                         bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
-                                rollBallFragment.getLeagueCupChecked());// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                                leagueCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
                     }
                     intent.putExtras(bundle);
                     startActivity(intent);

@@ -660,7 +660,7 @@
     </style>
 
     <!-- cardView 通用 -->
-    <dimen name="card_elevation">0.5dp</dimen>
+    <dimen name="card_elevation">0dp</dimen>
     <dimen name="card_corner_radius">3dp</dimen>
 
     <!--忘记密码 TextView-->
@@ -698,6 +698,7 @@
         <item name="android:layout_marginRight">15dp</item>
         <item name="android:layout_marginLeft">15dp</item>
         <item name="android:maxLength">15</item>
+        <item name="android:singleLine">true</item>
         <item name="android:background">@drawable/selector_loginbtn</item>
     </style>
 

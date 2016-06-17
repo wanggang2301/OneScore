@@ -360,6 +360,9 @@ public class CPIOddsFragment extends Fragment {
                     String keepTime = webSocketTimeAndScore.getData().get("keepTime");
                         /*0:未开, 1:上半场, 2:中场, 3:下半场, 4:加时, 5:点球
                        -1:完场, -10:取消, -11:待定, -12:腰斩, -13:中断, -14:推迟, -100:隐藏. */
+                    if (status < 0) {
+
+                    }
                     switch (status) {
                         case 0:
                             matchInfoBean.setIsShowTitle(false);
@@ -456,6 +459,7 @@ public class CPIOddsFragment extends Fragment {
         }
         //如果是欧赔的
         else if (oddType == 2) {
+            System.out.println("upDateOdds 2");
             filtrateSocket(webSKOdds, 2);
         }
         //如果是大小的
@@ -471,6 +475,7 @@ public class CPIOddsFragment extends Fragment {
      * @param webSocketOdds
      */
     private void filtrateSocket(WebFootBallSocketOdds webSocketOdds, int typeNum) {
+        System.out.println("socket 刷新数据");
         for (int h = 0; h < mShowInfoBeans.size(); h++) {
             //如果赛事里面id有推送过来的id
             if (mShowInfoBeans.get(h).getMatchInfo().getMatchId().equals(webSocketOdds.getThirdId())) {
