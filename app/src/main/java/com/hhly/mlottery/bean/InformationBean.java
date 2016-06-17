@@ -6,7 +6,7 @@ package com.hhly.mlottery.bean;
  * 时  间：2016/6/15
  * 描  述：单条资讯实体类
  */
-public class InformationBean {
+public class InformationBean{
 
     /**
      * result : 200
@@ -61,6 +61,15 @@ public class InformationBean {
         private String summary;
         private String relateMatch;
         private String infotype;
+        private String infoTypeName;
+
+        public String getInfoTypeName() {
+            return infoTypeName;
+        }
+
+        public void setInfoTypeName(String infoTypeName) {
+            this.infoTypeName = infoTypeName;
+        }
 
         public String getInfotype() {
             return infotype;

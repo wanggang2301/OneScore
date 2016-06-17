@@ -21,6 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.DefaultRetryPolicy;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
 import com.hhly.mlottery.bean.InformationBean;
@@ -50,6 +52,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,12 +85,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
 
     private String mPushType;// 推送类型
     private String mThirdId;// id
-    private Integer mDataType;// 资讯类型 1、篮球  2、足球
-    private String mUrl;// 资讯中转URL
-    private String mInfoTypeName;// 资讯标题
-    private String imageUrl;// 资讯分享图片Url
-    private String title;// 资讯分享标题
-    private String subTitle;// 资讯分享摘要
 
     private String version;// 当前版本Name
     private String versionCode;// 当前版本Code
@@ -96,6 +93,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     private final int MIN_CLICK_DELAY_TIME = 2000;// 控件点击间隔时间
     private long lastClickTime = 0;
     private int clickCount = 0;// 点击次数
+
+    private InformationBean mInfoBean;// 通过资讯推送ID查询资讯对象
 
     /**
      * 跳转其他Activity 的requestcode
@@ -118,19 +117,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         L.d("xxx", "version:" + version);
         L.d("xxx", "versionCode:" + versionCode);
         L.d("xxx", "channelNumber:" + channelNumber);
-
-        /**---推送资讯测试代码---*/
-        /*InformationBean info = new InformationBean();
-        info.setTitle("马刺 VS 雷霆");
-        info.setThirdId("338055");
-        info.setType(2);
-        info.setPicUrl("http://tp.1332255.com/infohead/eda2b030-e896-4075-bc15-04e53e95d22f.png");
-        info.setSubTitle("模服务化之前，应用");
-        info.setInfoUrl("http://tp.1332255.com/html/604e81af-3db1-4783-a8f0-84fe8f03e04c.html");
-        info.setSummary("恩波利本赛季在意甲联赛中表现尚可，意甲3");
-        info.setRelateMatch("true");
-        showDialogInfo(info);*/
-        /**---推送资讯测试代码---end-*/
     }
 
     /**
@@ -192,30 +178,22 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
 
         // 使用友盟统计分析Android 4.6.3 对Fragment统计，开发者需要：来禁止默认的Activity页面统计方式。首先在程序入口处调用
 //        MobclickAgent.openActivityDurationTrack(false);
-        String device_token = UmengRegistrar.getRegistrationId(mContext);
-        L.d("xxx","device_token是: " + device_token);
-        L.d("xxx"," mPushAgent.isEnabled(): " + mPushAgent.isEnabled());
+       /* String device_token = UmengRegistrar.getRegistrationId(mContext);
+        L.d("xxx", "device_token是: " + device_token);
+        L.d("xxx", " mPushAgent.isEnabled(): " + mPushAgent.isEnabled());*/
     }
 
     /**
      * 处理推送消息和跳转处理
      */
     private void pushMessageSkip() {
+        L.d("xxx", "pushMessageSkip:>>>");
         Bundle mBundle = getIntent().getExtras();// 获取推送key value
         if (mBundle != null) {
             mPushType = mBundle.getString("pushType");
             mThirdId = mBundle.getString("thirdId");
-           /* mUrl = mBundle.getString("dataUrl");
-            mInfoTypeName = mBundle.getString("dataTitle");
-            imageUrl = mBundle.getString("imageUrl");
-            title = mBundle.getString("title");
-            subTitle = mBundle.getString("subTitle");*/
-
-            try {
-                mDataType = mBundle.getString("dataType") == null ? 0 : Integer.parseInt(mBundle.getString("dataType"));
-            } catch (NumberFormatException e) {
-                L.d(e.getMessage());
-            }
+            L.d("xxx", "mPushType:>>>" + mPushType);
+            L.d("xxx", "mThirdId:>>>" + mThirdId);
             if (!TextUtils.isEmpty(mPushType)) {
                 switch (mPushType) {
                     case "lottery":// 彩票列表
@@ -245,16 +223,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                             L.d("xxx", "推送，资讯详情..");
                             // 资讯ID不为空，则请求接口相对应数据
                             getInformationByThirdId(mThirdId);
-
-                            /*Intent basketDataIntent = new Intent(mContext, WebActivity.class);
-                            basketDataIntent.putExtra("thirdId", mThirdId);
-                            basketDataIntent.putExtra("key", mUrl);
-                            basketDataIntent.putExtra("type", mDataType);
-                            basketDataIntent.putExtra("infoTypeName", mInfoTypeName);
-                            basketDataIntent.putExtra("imageurl", imageUrl);
-                            basketDataIntent.putExtra("title", title);
-                            basketDataIntent.putExtra("subtitle", subTitle);
-                            startActivity(basketDataIntent);*/
                         }
                         break;
                     case "basketball":// 篮球列表
@@ -269,7 +237,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                         break;
                 }
                 if (!isTaskRoot()) {// 如果当前界面启动了在跳转后把当前界面关掉，避免返回两次，启动了isTaskRoot（）=false
-                    this.finish();
+                    finish();
                 }
             }
         }
@@ -772,16 +740,27 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             @Override
             public synchronized void onResponse(final InformationBean info) {
                 if (info != null) {
-                    L.d("xxx","推送资讯访问成功！");
-                    showDialogInfo(info);
-                }else{
-                    L.d("xxx","InformationBean==null>>>>");
+                    L.d("xxx", "推送资讯访问成功！");
+                    mInfoBean = info;
+//                    showDialogInfo();
+                    Intent intent = new Intent(HomePagerActivity.this, WebActivity.class);
+                    intent.putExtra("key", mInfoBean.getInfo().getInfoUrl());// URL
+                    intent.putExtra("imageurl", mInfoBean.getInfo().getPicUrl());// 图片URl
+                    intent.putExtra("infoTypeName", mInfoBean.getInfo().getInfoTypeName());// 资讯标题
+                    intent.putExtra("subtitle", mInfoBean.getInfo().getSummary());// 分享副标题
+                    intent.putExtra("type", mInfoBean.getInfo().getType());// 关系赛事类型
+                    intent.putExtra("thirdId", mInfoBean.getInfo().getThirdId());// 关系赛事Id
+                    intent.putExtra("title", mInfoBean.getInfo().getTitle());
+                    intent.putExtra("reqMethod", mInfoBean.getInfo().getRelateMatch());// 是否关联赛事
+                    startActivity(intent);
+                } else {
+                    L.d("xxx", "InformationBean==null>>>>");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                L.d("xxx","推送资讯访问ERROR！");
+                L.d("xxx", "推送资讯访问ERROR！");
             }
         }, InformationBean.class);
     }
@@ -789,36 +768,38 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     /**
      * 用户选择是否查看推送框
      */
-    private void showDialogInfo(final InformationBean info) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);
-        builder.setCancelable(false);// 设置对话框以外不可点击
-        builder.setTitle(info.getInfo().getTitle());// 提示标题
-        builder.setMessage(info.getInfo().getSummary());// 提示内容
-        builder.setPositiveButton("查看", new DialogInterface.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                // 跳转到H5显示相关内容
-                Intent intent = new Intent(HomePagerActivity.this,WebActivity.class);
-                intent.putExtra("key",info.getInfo().getInfoUrl());// URL
-                intent.putExtra("imageurl",info.getInfo().getPicUrl());// 图片URl
-                intent.putExtra("infoTypeName",info.getInfo().getInfotype());// 资讯标题
-                intent.putExtra("subtitle",info.getInfo().getSummary());// 分享副标题
-                intent.putExtra("type",info.getInfo().getType());// 关系赛事类型
-                intent.putExtra("thirdId",info.getInfo().getThirdId());// 关系赛事Id
-                intent.putExtra("title",info.getInfo().getTitle());
-                intent.putExtra("reqMethod",info.getInfo().getRelateMatch());// 是否关联赛事
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+    private void showDialogInfo() {
+        if (mInfoBean != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);
+            builder.setCancelable(false);// 设置对话框以外不可点击
+            builder.setTitle(mInfoBean.getInfo().getTitle());// 提示标题
+            builder.setMessage(mInfoBean.getInfo().getSummary());// 提示内容
+            builder.setPositiveButton("查看", new DialogInterface.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    // 跳转到H5显示相关内容
+                    Intent intent = new Intent(HomePagerActivity.this, WebActivity.class);
+                    intent.putExtra("key", mInfoBean.getInfo().getInfoUrl());// URL
+                    intent.putExtra("imageurl", mInfoBean.getInfo().getPicUrl());// 图片URl
+                    intent.putExtra("infoTypeName", mInfoBean.getInfo().getInfoTypeName());// 资讯标题
+                    intent.putExtra("subtitle", mInfoBean.getInfo().getSummary());// 分享副标题
+                    intent.putExtra("type", mInfoBean.getInfo().getType());// 关系赛事类型
+                    intent.putExtra("thirdId", mInfoBean.getInfo().getThirdId());// 关系赛事Id
+                    intent.putExtra("title", mInfoBean.getInfo().getTitle());
+                    intent.putExtra("reqMethod", mInfoBean.getInfo().getRelateMatch());// 是否关联赛事
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton("忽略", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
     }
 }
