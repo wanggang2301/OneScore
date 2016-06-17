@@ -30,6 +30,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
+import com.hhly.mlottery.bean.InformationBean;
 import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeMenusEntity;
@@ -47,6 +48,7 @@ import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,12 +82,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
 
     private String mPushType;// 推送类型
     private String mThirdId;// id
-    private Integer mDataType;// 资讯类型 1、篮球  2、足球
-    private String mUrl;// 资讯中转URL
-    private String mInfoTypeName;// 资讯标题
-    private String imageUrl;// 资讯分享图片Url
-    private String title;// 资讯分享标题
-    private String subTitle;// 资讯分享摘要
 
     private String version;// 当前版本Name
     private String versionCode;// 当前版本Code
@@ -190,17 +186,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         if (mBundle != null) {
             mPushType = mBundle.getString("pushType");
             mThirdId = mBundle.getString("thirdId");
-//            mUrl = mBundle.getString("dataUrl");
-//            mInfoTypeName = mBundle.getString("dataTitle");
-//            imageUrl = mBundle.getString("imageUrl");
-//            title = mBundle.getString("title");
-//            subTitle = mBundle.getString("subTitle");
-
-            try {
-                mDataType = mBundle.getString("dataType") == null ? 0 : Integer.parseInt(mBundle.getString("dataType"));
-            } catch (NumberFormatException e) {
-                L.d(e.getMessage());
-            }
+            L.d("xxx", "mPushType:" + mPushType);
+            L.d("xxx", "mThirdId:" + mThirdId);
             if (!TextUtils.isEmpty(mPushType)) {
                 switch (mPushType) {
                     case "lottery":// 彩票列表
@@ -226,24 +213,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                         }
                         break;
                     case "dataInfo":// 资讯详情页面
-                        L.d("xxx", "推送，资讯详情..");
-                        // 资讯ID不为空，则请求接口相对应数据
-                        getInformationByThirdId(mThirdId);
-                        /*if (!TextUtils.isEmpty(mUrl)) {
-                            Intent basketDataIntent = new Intent(mContext, WebActivity.class);
-                            basketDataIntent.putExtra("thirdId", mThirdId);
-                            basketDataIntent.putExtra("key", mUrl);
-                            basketDataIntent.putExtra("type", mDataType);
-                            basketDataIntent.putExtra("infoTypeName", mInfoTypeName);
-                            basketDataIntent.putExtra("imageurl", imageUrl);
-                            basketDataIntent.putExtra("title", title);
-                            basketDataIntent.putExtra("subtitle", subTitle);
-                            startActivity(basketDataIntent);
-                            L.d("xxx", "mUrl: " + mUrl);
-                        }*/
+                        if (!TextUtils.isEmpty(mThirdId)) {
+                            getInformationByThirdId(mThirdId);// 资讯ID不为空，则请求接口相对应数据
+                        }
                         break;
                     case "basketball":// 篮球列表
-                        startActivity(new Intent(mContext, BasketListActivity.class));
+                        Intent intent = new Intent(mContext, FootballActivity.class);
+                        intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+                        mContext.startActivity(intent);
                         break;
                     case "basketballInfo":// 篮球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {
@@ -269,9 +246,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             public void onClick(View v) {
                 startActivity(new Intent(HomePagerActivity.this, HomeUserOptionsActivity.class));
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
-//                ChatSdkRequest request = new ChatSdkRequest(v.getContext());
-//                request.setCompanyCode("13322");
-//                request.sendToTarget();
             }
         });
         if (AppConstants.isTestEnv) {
@@ -619,8 +593,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     request.setMimeType("application/vnd.android.package-archive");
                     L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                    String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"),mUpdateInfo.getUrl().length());
-                    L.d("xxx","mAppName:>>" + mAppName);
+                    String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"), mUpdateInfo.getUrl().length());
+                    L.d("xxx", "mAppName:>>" + mAppName);
                     request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), mAppName);
                     // 设置为可被媒体扫描器找到
                     request.allowScanningByMediaScanner();
@@ -748,7 +722,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      * 通过资讯Id获取相关资讯信息
      */
     private void getInformationByThirdId(String thirdId) {
-       /* Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         map.put("infoId", thirdId);// 赛事Id
         map.put("version", version);
         map.put("versionCode", versionCode);
@@ -757,19 +731,19 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             @Override
             public synchronized void onResponse(final InformationBean info) {
                 if (info != null) {
-                    L.d("xxx", "推送资讯访问成功！");
-                    mInfoBean = info;
-//                    showDialogInfo();
-                    Intent intent = new Intent(HomePagerActivity.this, WebActivity.class);
-                    intent.putExtra("key", mInfoBean.getInfo().getInfoUrl());// URL
-                    intent.putExtra("imageurl", mInfoBean.getInfo().getPicUrl());// 图片URl
-                    intent.putExtra("infoTypeName", mInfoBean.getInfo().getInfoTypeName());// 资讯标题
-                    intent.putExtra("subtitle", mInfoBean.getInfo().getSummary());// 分享副标题
-                    intent.putExtra("type", mInfoBean.getInfo().getType());// 关系赛事类型
-                    intent.putExtra("thirdId", mInfoBean.getInfo().getThirdId());// 关系赛事Id
-                    intent.putExtra("title", mInfoBean.getInfo().getTitle());
-                    intent.putExtra("reqMethod", mInfoBean.getInfo().getRelateMatch());// 是否关联赛事
-                    startActivity(intent);
+                    if (info.getInfo() != null) {
+                        L.d("xxx", "推送资讯访问成功！");
+                        Intent intent = new Intent(HomePagerActivity.this, WebActivity.class);
+                        intent.putExtra("key", info.getInfo().getInfoUrl());// URL
+                        intent.putExtra("imageurl", info.getInfo().getPicUrl());// 图片URl
+                        intent.putExtra("infoTypeName", info.getInfo().getInfoTypeName());// 资讯标题
+                        intent.putExtra("subtitle", info.getInfo().getSummary());// 分享副标题
+                        intent.putExtra("type", info.getInfo().getType());// 关系赛事类型
+                        intent.putExtra("thirdId", info.getInfo().getThirdId());// 关系赛事Id
+                        intent.putExtra("title", info.getInfo().getTitle());
+                        intent.putExtra("reqMethod", info.getInfo().getRelateMatch());// 是否关联赛事
+                        startActivity(intent);
+                    }
                 } else {
                     L.d("xxx", "InformationBean==null>>>>");
                 }
@@ -779,6 +753,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 L.d("xxx", "推送资讯访问ERROR！");
             }
-        }, InformationBean.class);*/
+        }, InformationBean.class);
     }
 }
