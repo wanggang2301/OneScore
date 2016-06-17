@@ -1,27 +1,7 @@
-<!--
-  Copyright 2014 Soichiro Kashima
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black_title"
-    >
-
-
-
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <ImageView
         android:id="@+id/image_background"
         android:layout_width="match_parent"
@@ -29,14 +9,6 @@
         android:scaleType="centerCrop"
         android:background="@color/black_title"
         />
-
-
-
-    <View
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/flexible_space_image_height"
-        android:background="@color/black_title" />
     <RelativeLayout
         android:id="@+id/basket_title_rl"
         android:layout_width="match_parent"
@@ -152,17 +124,17 @@
                 />
 
             <!--<TextView-->
-                <!--android:id="@+id/basket_half_score"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_horizontal"-->
-                <!--android:text="完场"-->
-                <!--android:textColor="#ffffff"-->
-                <!--android:textSize="@dimen/text_size_12"-->
-                <!--android:layout_below="@+id/basket_score"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:visibility="invisible"-->
-                <!--android:paddingTop="10dp"/>-->
+            <!--android:id="@+id/basket_half_score"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:text="完场"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="@dimen/text_size_12"-->
+            <!--android:layout_below="@+id/basket_score"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:visibility="invisible"-->
+            <!--android:paddingTop="10dp"/>-->
             <LinearLayout
                 android:id="@+id/basket_details_times"
                 android:layout_width="wrap_content"
@@ -179,8 +151,8 @@
                     android:textSize="@dimen/text_size_12"
                     />
                 <!--<View-->
-                    <!--android:layout_width="10dp"-->
-                    <!--android:layout_height="0dp"/>-->
+                <!--android:layout_width="10dp"-->
+                <!--android:layout_height="0dp"/>-->
                 <TextView
                     android:id="@+id/basket_details_remain_time"
                     android:layout_width="wrap_content"
@@ -198,7 +170,7 @@
                     android:textSize="@dimen/text_size_12"
                     android:paddingLeft="3dp"
                     android:visibility="gone"
-                     />
+                    />
 
             </LinearLayout>
 
@@ -428,7 +400,6 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/rl_iv2"
             android:layout_width="wrap_content"
@@ -484,49 +455,4 @@
         </LinearLayout>
 
     </RelativeLayout>
-    <FrameLayout
-        android:id="@+id/pager_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        >
-
-        <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/pager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
-    </FrameLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!--<TextView-->
-            <!--android:id="@+id/title"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/title_height"-->
-            <!--android:ellipsize="end"-->
-            <!--android:gravity="center"-->
-            <!--android:maxLines="1"-->
-            <!--android:text="love you forever"-->
-            <!--android:minHeight="?attr/actionBarSize"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:textSize="20sp" />-->
-        <include layout="@layout/basket_details_header" />
-        <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/flexible_space_image_height"-->
-            <!--android:layout_marginLeft="@dimen/margin_standard"-->
-            <!--android:layout_marginRight="@dimen/margin_standard"-->
-            <!--android:background="@android:color/transparent" />-->
-
-    </LinearLayout>
-
-    <com.hhly.mlottery.view.SlidingTabLayout
-        android:id="@+id/sliding_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/tab_height"
-        android:background="@android:color/transparent"
-        />
-
 </FrameLayout>
