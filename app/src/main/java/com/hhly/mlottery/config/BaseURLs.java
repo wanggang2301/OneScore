@@ -277,6 +277,7 @@ public class BaseURLs {
     private final static String URL_FOOTBALL_DETAIL = "footBallMatch.queryMatchInfos.do";
     //赛场——点赞
     private final static String URL_FOOTBALL_DETAIL_LIKE = "footBallMatch.updLike.do";
+    private final static String URL_BASKETBALLBALL_DETAIL_LIKE = "basketballDetail.updLike.do";
 
     //直播加载更多
 
@@ -473,10 +474,12 @@ public class BaseURLs {
     //即时(增加队徽请求字段)
     private final static String URL_IMMEDIATE = "androidMatchResults.findImmediateMatchs.do";
 
+    // 滚球
+    private final static String URL_ROLLBALL = "matchResults.findBallList.do";
+
 
     // 热门和焦点
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
-
 
 
     // 赛果
@@ -508,6 +511,8 @@ public class BaseURLs {
 
     public final static String URL_ImmediateMatchs = URL_API_HOST + URL_IMMEDIATE;
 
+    public final static String URL_Rollball = URL_API_HOST + URL_ROLLBALL;
+
     public final static String URL_ResultMatchs = URL_API_HOST + URL_RESULT;
 
     public final static String URL_CeaselessMatchs = URL_API_HOST + URL_CEASELESS;
@@ -522,6 +527,7 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL;
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
+    public final static String URL_BASKETBALLBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_BASKETBALLBALL_DETAIL_LIKE;
 
     //直播加载更多
     public final static String URL_FOOTBALL_LIVE_TEXT_INFO = URL_API_HOST + URL_FOOTBALL_LIVE_TEXT;
@@ -648,10 +654,12 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfo.do";
 
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
-    /**新版指数*/
+    /**
+     * 新版指数
+     */
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
     /**指数推送*/
-    public final static String URL_CPI_SOCKET = WS_SERVICE + "/topic/USER.topic.indexcenter";
+    public final static String URL_CPI_SOCKET = WS_SERVICE;
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
@@ -670,7 +678,6 @@ public class BaseURLs {
     public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
     /**修改密码*/
     public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
-
 
 
 }

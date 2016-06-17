@@ -82,7 +82,7 @@
             android:layout_below="@id/football_immediate_unfocus_coffee"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="@string/unfocus"
+            android:text="@string/immediate_no_match"
             android:textColor="@color/unfocus_text"
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>

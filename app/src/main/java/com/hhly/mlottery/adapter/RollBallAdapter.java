@@ -1,9 +1,12 @@
 package com.hhly.mlottery.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -42,7 +45,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
     public static final int VIEW_TYPE_DEFAULT = 1;
 
-    private int topDataCount = 1;
+    private int topDataCount = Integer.MAX_VALUE;
     private boolean notify_locked_tag;
     private int handicap;
     private Map<Match, Boolean> isTopDataCacheMaps = new HashMap<>();
@@ -51,10 +54,14 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     private Context context;
     private boolean resetColor;
     private Subscription subscription;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     public RollBallAdapter(Context context) {
         super();
         this.context = context;
+        sharedPreferences = context.getSharedPreferences("ROLLBALL_ADAPTER",Activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
 
     public void setList(List list) {
@@ -62,12 +69,20 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (list == null) return;
         for (int i = list.size() - 1; i >= 0; i--) {
             Match data = (Match) list.get(i);
-            boolean isTopData = PreferenceUtil.getBoolean(data.getThirdId(), false);
-            if (isTopData) data.setIsTopData(topDataCount++);
+            boolean isTopData = false;
+            if(isTopDataCacheMaps.containsKey(data)) {
+                isTopData = isTopDataCacheMaps.get(data);
+            }
             isTopDataCacheMaps.put(data, isTopData);
+            int topDataCount = sharedPreferences.getInt(data.getThirdId(), 0);
+            data.setIsTopData(topDataCount);
         }
         Collections.sort(list, new Match());
         getList().addAll(list);
+    }
+
+    public SharedPreferences getSharedPreperences() {
+        return sharedPreferences;
     }
 
     @Override
@@ -128,6 +143,8 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (TextUtils.isEmpty(data.getKeepTime())) data.setKeepTime("0");
         this.setVisiableStateOfThisViews(container, rlHalfContainer, tvHomeScore, tvGuestScore);
         this.initializedTextColor(tvKeepTime, tvGuestScore, tvHomeScore, tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
+        tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_name_color));
+        tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_name_color));
 
         // 置顶
         if (data.getIsTopData() > 0 || isTopDataCacheMaps.get(data)) {
@@ -182,6 +199,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
                 } else tvKeepTime.setText(data.getKeepTime());
                 this.startShuffleAnimation(keepTimeShuffle);
+                rlHalfContainer.setVisibility(View.GONE);
                 break;
             case "2": // 中场
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_midfield), R.color.football_keeptime, false);
@@ -200,6 +218,8 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 break;
             case "-1": // 完场
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_end), R.color.red, false);
+                tvHomeScore.setTextColor(context.getResources().getColor(R.color.red));
+                tvGuestScore.setTextColor(context.getResources().getColor(R.color.red));
                 break;
             case "-10": // 取消
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_cancel), R.color.red, false);
@@ -248,9 +268,15 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 主队名称
         tvHomeTeam.setText(data.getHometeam());
         // 主队黄牌数
-        tvHomeYellowCard.setText(data.getHome_yc());
+        if (!data.getHome_yc().equals("0")) {
+            tvHomeYellowCard.setVisibility(View.VISIBLE);
+            tvHomeYellowCard.setText(data.getHome_yc());
+        } else tvHomeYellowCard.setVisibility(View.INVISIBLE);
         // 主队红牌数
-        tvHomeRedCard.setText(data.getHome_rc());
+        if (!data.getHome_rc().equals("0")) {
+            tvHomeRedCard.setVisibility(View.VISIBLE);
+            tvHomeRedCard.setText(data.getHome_rc());
+        } else tvHomeRedCard.setVisibility(View.INVISIBLE);
         // 半场主队得分数
         tvHomeHalfScore.setText(data.getHomeHalfScore());
         // 半场客服的分数
@@ -258,37 +284,43 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 客队名称
         tvGuestTeam.setText(data.getGuestteam());
         // 客队黄牌数
-        tvGuestYelloCard.setText(data.getGuest_yc());
+        if (!data.getGuest_yc().equals("0")) {
+            tvGuestYelloCard.setVisibility(View.VISIBLE);
+            tvGuestYelloCard.setText(data.getGuest_yc());
+        } else tvGuestYelloCard.setVisibility(View.INVISIBLE);
         // 客队红牌数
-        tvGuestRedCard.setText(data.getGuest_rc());
+        if (!data.getGuest_rc().equals("0")) {
+            tvGuestRedCard.setVisibility(View.VISIBLE);
+            tvGuestRedCard.setText(data.getGuest_rc());
+        } else tvGuestRedCard.setVisibility(View.INVISIBLE);
         // 亚盘赔率
-        tvLeftOdds_YA.setText(asiaLet != null ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue()) : "-");
-        tvHandicapValue_YA_BLACK.setText(asiaLet != null ? asiaLet.getLeftOdds() : "-");
-        tvRightOdds_YA.setText(asiaLet != null ? asiaLet.getRightOdds() : "-");
+        tvLeftOdds_YA.setText(asiaLet != null  && Integer.parseInt(data.getKeepTime()) < 89? HandicapUtils.changeHandicap(asiaLet.getHandicapValue()) : " ");
+        tvHandicapValue_YA_BLACK.setText(asiaLet != null  && Integer.parseInt(data.getKeepTime()) < 89? asiaLet.getLeftOdds() : "封");
+        tvRightOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89? asiaLet.getRightOdds() : " ");
         // 大小盘赔率
-        tvLeftOdds_DA.setText(asiaSize != null ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()) : "-");
-        tvHandicapValue_DA_BLACK.setText(asiaSize != null? asiaSize.getLeftOdds() : "-");
-        tvRightOdds_DA.setText(asiaSize != null ? asiaSize.getRightOdds() : "-");
+        tvLeftOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue()) : " ");
+        tvHandicapValue_DA_BLACK.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? asiaSize.getLeftOdds() : "封");
+        tvRightOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89? asiaSize.getRightOdds() : " ");
         // 欧盘赔率
-        tvLeftOdds_EU.setText(euro != null ? euro.getMediumOdds() : "-");
-        tvMediumOdds_EU.setText(euro != null ? euro.getLeftOdds() : "-");
-        tvRightOdds_EU.setText(euro != null ? euro.getRightOdds() : "-");
+        tvLeftOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getMediumOdds() : " ");
+        tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getLeftOdds() : "封");
+        if (tvMediumOdds_EU.getText().equals("封")) tvLeftOdds_EU.setTextColor(context.getResources().getColor(R.color.res_name_color));
+        tvRightOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89? euro.getRightOdds() : " ");
 
         // 控制器
         itemPositionControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isTopData = PreferenceUtil.getBoolean(data.getThirdId(), false);
-                if (isTopData) {
+                if (data.getIsTopData() > 0) {
+                    editor.putInt(data.getThirdId(), 0);
                     data.setIsTopData(0);
-                    PreferenceUtil.commitBoolean(data.getThirdId(), false);
                     if (isTopDataCacheMaps.containsKey(data)) isTopDataCacheMaps.put(data, false);
                 } else {
-                    data.setIsTopData(topDataCount);
-                    PreferenceUtil.commitBoolean(data.getThirdId(), true);
+                    editor.putInt(data.getThirdId(), topDataCount--);
+                    data.setIsTopData(topDataCount--);
                     if (isTopDataCacheMaps.containsKey(data)) isTopDataCacheMaps.put(data, true);
-                    topDataCount++;
                 }
+                editor.commit();
                 RollBallAdapter.this.transformMapper(position);
             }
         });
@@ -462,7 +494,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             notifyItemChanged(position);
         }
 
-        // 界面1分钟后销毁
+        // 界面1分钟后置于列表底部
         if (target[0] != null) {
             /** -10：取消，1分钟后清除,-12：腰斩，1分钟后清除,-14：推迟，1分钟后清除 */
             if ("-1".equals(target[0].getStatusOrigin()) || "-10".equals(target[0].getStatusOrigin()) || "-12".equals(target[0].getStatusOrigin()) || "-14".equals(target[0].getStatusOrigin())) {
@@ -476,6 +508,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (match.getThirdId().equals(webSocketMatchOdd.getThirdId())) {
             final List<Map<String, String>> matchOddDataLists = webSocketMatchOdd.getData();
             for (Map<String, String> oddDataMaps : matchOddDataLists) {
+                Log.e("HILO", oddDataMaps.toString() + "::::");
                 // 亚赔
                 if (oddDataMaps.get("handicap").equals("asiaLet")) {
                     handicap = 1;
@@ -509,7 +542,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             getList().set(position, match);
             notifyItemChanged(position);
 
-            Observable.timer(5000, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Long>() {
+            Observable.timer(5, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Long>() {
                 @Override
                 public void call(Long aLong) {
                     resetColor = true;
@@ -650,14 +683,20 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (!resetColor) {
             if (data.getMidOddTextColorId() != 0) {
                 leftOdds.setBackgroundResource(data.getMidOddTextColorId());
+                if (data.getMidOddTextColorId() != R.color.white) // 不是平 一定是红升绿降
+                    leftOdds.setTextColor(context.getResources().getColor(R.color.white));
                 data.setMidOddTextColorId(0);
             }
             if (data.getRightOddTextColorId() != 0) {
                 rightOdds.setBackgroundResource(data.getRightOddTextColorId());
+                if (data.getRightOddTextColorId() != R.color.white)
+                    rightOdds.setTextColor(context.getResources().getColor(R.color.white));
                 data.setRightOddTextColorId(0);
             }
             if (data.getLeftOddTextColorId() != 0) {
                 midOdds.setBackgroundResource(data.getLeftOddTextColorId());
+                if (data.getLeftOddTextColorId() != R.color.white)
+                    midOdds.setTextColor(context.getResources().getColor(R.color.white));
                 data.setLeftOddTextColorId(0);
             }
         } else {
@@ -674,6 +713,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         guestScore.setTextColor(context.getResources().getColor(R.color.text_about_color));
         for (TextView tv : textViews) {
             tv.setBackgroundColor(context.getResources().getColor(R.color.white));
+            tv.setTextColor(context.getResources().getColor(R.color.res_pl_color));
         }
     }
 

@@ -32,6 +32,7 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PullUpRefreshListView;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
@@ -96,6 +97,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ADDKEYHOME = "homeAdd";
     private static final String ADDKEYGUEST = "guestAdd";
     private Context mContext;
+    private int type;//1 籃球/0 足球
+    private String state="-1";
+
 
     @Override
     public void onAttach(Context context) {
@@ -109,6 +113,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //        L.d(TAG, "______________onCreate");
         if (getArguments() != null) {
             mThirdId = getArguments().getString(ARG_PARAM1);
+            type = getArguments().getInt("type", -1);
+            state = getArguments().getString("state");
+
         }
     }
 
@@ -116,10 +123,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_talkaboutball, null);
         initView();
-        requestLikeData(ADDKEYHOME, "0");
+        requestLikeData(ADDKEYHOME, "0", type);
         initAnim();
         pullUpLoad();//上拉加载更多
         return mView;
+
     }
 
     /**
@@ -173,11 +181,19 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     }
 
     //请求点赞数据
-    public void requestLikeData(String addkey, String addcount) {
+    public void requestLikeData(String addkey, String addcount,int type) {
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         params.put(addkey, addcount);
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_LIKE_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchLike>() {
+        String url="";
+        if (type==0){
+            url= BaseURLs.URL_FOOTBALL_DETAIL_LIKE_INFO;
+//            ToastTools.ShowQuickCenter(getActivity(),"足球");
+        }else if (type==1){
+            url= BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
+//            ToastTools.ShowQuickCenter(getActivity(),"籃球");
+        }
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<MatchLike>() {
             @Override
             public void onResponse(MatchLike matchLike) {
                 tvHomeLikeCount.setText(matchLike.getHomeLike());
@@ -186,11 +202,12 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
                 talkballpro.setMax(homeLikeCount + guestLikeCount);
                 talkballpro.setProgress(homeLikeCount);
+                System.out.println("VolleyContentFast"+matchLike.getHomeLike());
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+                System.out.println("VolleyContentFast"+"onErrorResponse");
             }
         }, MatchLike.class);
     }
@@ -211,7 +228,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mGuestLike.setOnClickListener(this);
         ivHomeLike.setVisibility(View.INVISIBLE);
         ivGuestLike.setVisibility(View.INVISIBLE);
-        setClickableLikeBtn(true);
         //评论相关
         mNoData = (TextView) mView.findViewById(R.id.nodata);
         mListView = (PullUpRefreshListView) mView.findViewById(R.id.comment_lv);
@@ -232,6 +248,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (!TextUtils.isEmpty(mThirdId)) {
             loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
         }
+        //以前的规则是-1不可点  现在延续
+        if (state!=null&&state.equals("-1")){
+            setClickableLikeBtn(false);
+        }else {
+            setClickableLikeBtn(true);
+        }
+        System.out.println("fggstate="+state);
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -398,6 +421,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     }
                     break;
                 case CyUtils.RESULT_CODE://接收评论输入页面返回
+                    ToastTools.ShowQuickCenter(mContext,"刷新數據");
                     loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
                     mLinearLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
@@ -405,19 +429,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     mSwipeRefreshLayout.requestLayout();
                     break;
             }
-//            if (resultCode == CyUtils.RESULT_OK) { //接收登录华海成功返回
-//                if (CommonUtils.isLogin()) {
-//                    CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
-//                }
-//
-//            }
-//            if (resultCode == CyUtils.RESULT_CODE) { //接收评论输入页面返回
-//                loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
-//                mLinearLayout.setVisibility(View.VISIBLE);
-//                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
-//                lp.setMargins(0, 0, 0, 0);
-//                mSwipeRefreshLayout.requestLayout();
-//            }
         }
     }
 
@@ -464,13 +475,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 ivHomeLike.setVisibility(View.VISIBLE);
                 ivHomeLike.startAnimation(mRiseHomeAnim);
 //                //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
-                requestLikeData(ADDKEYHOME, "1");
+                requestLikeData(ADDKEYHOME, "1",type);
                 break;
             case R.id.talkball_guest_like:
                 ivGuestLike.setVisibility(View.VISIBLE);
                 ivGuestLike.startAnimation(mRiseGuestAnim);
                 //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
-                requestLikeData(ADDKEYGUEST, "1");
+                requestLikeData(ADDKEYGUEST, "1",type);
                 break;
         }
     }

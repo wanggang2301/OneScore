@@ -169,7 +169,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      * 接收推送消息
      */
     private void pushData() {
-        MobclickAgent.setDebugMode(AppConstants.isDebugMode);//测试的时候的数据需要设置debug模式
+        MobclickAgent.setDebugMode(AppConstants.isTestEnv);//测试的时候的数据需要设置debug模式
         PushAgent mPushAgent = PushAgent.getInstance(mContext);
         mPushAgent.enable();// 开启推送
         mPushAgent.onAppStart();// 统计应用启动
@@ -266,9 +266,9 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             public void onClick(View v) {
                 startActivity(new Intent(HomePagerActivity.this, HomeUserOptionsActivity.class));
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
-//                    ChatSdkRequest request = new ChatSdkRequest(v.getContext());
-//                    request.setCompanyCode("13322");
-//                    request.sendToTarget();
+//                ChatSdkRequest request = new ChatSdkRequest(v.getContext());
+//                request.setCompanyCode("13322");
+//                request.sendToTarget();
             }
         });
         if (AppConstants.isTestEnv) {

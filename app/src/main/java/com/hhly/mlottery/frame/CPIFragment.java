@@ -156,7 +156,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread.start();
 //        }
         try {
-            System.out.println(BaseURLs.URL_CPI_SOCKET);
             hSocketUri = new URI(BaseURLs.URL_CPI_SOCKET);
 //            hSocketUri = new URI("ws://192.168.10.242:61634/topic");
 //			hSocketUri = new URI("ws://m.1332255.com/ws/USER.topic.indexcenter");
@@ -260,9 +259,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         }
     }
 
-
     public void onMessage(String message) {
-        // TODO Auto-generated method stub
         pushStartTime = System.currentTimeMillis(); // 记录起始时间
         if (message.startsWith("CONNECTED")) {
             String id = "android" + DeviceInfo.getDeviceId(getActivity());
