@@ -135,7 +135,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
                         // TODO Auto-generated method stub
                         textView.setText(mInfosList.get(position).content);
                         mlist.add(position);
-                        ToastTools.ShowQuickCenter(mActivity, "position=" + position);
+//                        ToastTools.ShowQuickCenter(mActivity, "position=" + position);
 
                     }
 
