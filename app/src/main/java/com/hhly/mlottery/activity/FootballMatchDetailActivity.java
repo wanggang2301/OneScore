@@ -675,7 +675,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         bundle.putString("param1", mThirdId);//"1072757"
         bundle.putInt("type", 0);//1 籃球/0 足球
         bundle.putString("state", mPreStatus);//直播状态  用来做完成不能点赞的限制
-        System.out.println("fggstate=" + mPreStatus);
         mTalkAboutBallFragment.setArguments(bundle);
 
         fragments.add(mOddsFragment);

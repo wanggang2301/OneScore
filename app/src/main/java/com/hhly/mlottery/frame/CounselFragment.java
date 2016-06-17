@@ -197,6 +197,11 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
 
 
     private void setupViewPager() {
+        if (mHeadName.size()>4){
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }else {
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }
         for (int i = 0; i < mHeadName.size(); i++) {
             mTabLayout.addTab(mTabLayout.newTab().setText(mHeadName.get(i)));
         }
@@ -234,7 +239,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         public_img_back.setOnClickListener(this);
         mViewPager = (ViewPager) mView.findViewById(R.id.counselfragment_viewpager);
         mTabLayout = (TabLayout) mView.findViewById(R.id.tabs);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.counselfragment_SwipeRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);

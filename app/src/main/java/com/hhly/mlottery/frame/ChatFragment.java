@@ -115,6 +115,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 //        单点登录   nickname可以相同  用户id不能相同
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+            System.out.println("fgg" + "NickName=" + AppConstants.register.getData().getUser().getNickName() + "UserId=" + AppConstants.register.getData().getUser().getUserId());
+//            ToastTools.ShowQuickCenter(getActivity(),"NickName="+AppConstants.register.getData().getUser().getNickName()+"UserId="+AppConstants.register.getData().getUser().getUserId());
         }
     }
 
@@ -241,7 +243,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     }
 
 
-
     //分页查询文章怕评论数据 无需登录
     public void getTopicComments(int page) {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -274,6 +275,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
             }
         });
     }
+
     private void initScrollView() {
         //解决adjustresize和透明状态栏的冲突
         final View decview = getActivity().getWindow().getDecorView();
@@ -284,6 +286,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
             }
         });
     }
+
     //在某个view里重新布局某个view
     public void reLayout(View decview, View scrollview) {
         Rect r = new Rect();
@@ -294,8 +297,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 //                Log.e("lzfr.bottom", r.bottom + "");
 //                Log.e("lzfscreenheight", screenheight + "");
         if (h > 300) {//软键盘显示
-//                    ToastTools.ShowQuickCenter(WebActivity.this, "软件盘显示");
-//                    Log.e("lzf", "软件盘显示");
             mSend.setVisibility(View.VISIBLE);
             mCommentCount.setVisibility(View.GONE);
             mEditText.setHint("");
@@ -475,6 +476,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         //接收登录华海成功返回
         if (requestCode == 3) {
             if (resultCode == CyUtils.RESULT_OK) {
+//                ToastTools.ShowQuickCenter(getActivity(),"接收登录华海成功返回");
                 if (CommonUtils.isLogin()) {
                     CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                 }
@@ -488,6 +490,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     public void onRequestSucceeded(SubmitResp submitResp) {
         issubmitFinish = true;
         mEditText.setText("");
+        ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.succed_send));
         //刷新界面
         loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
     }
@@ -524,6 +527,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         super.onDestroyView();
         try {
             sdk.logOut();
+            System.out.println("fgglogOutchatfg" + "NickName=" + AppConstants.register.getData().getUser().getNickName() + "UserId=" + AppConstants.register.getData().getUser().getUserId());
         } catch (CyanException e) {
             e.printStackTrace();
         }

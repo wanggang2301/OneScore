@@ -214,9 +214,9 @@ public class BasketTalkAboutBallFragment extends BasketDetailsBaseFragment<Obser
         paddingView.setClickable(true);
 
         //标题
-        View viewTitle = View.inflate(getActivity(), R.layout.fragment_talkaboutball_title,null);
+        View viewTitle = View.inflate(getActivity(), R.layout.fragment_talkaboutball_title, null);
         //欧赔亚盘大小球标题设置
-        talkballpro= (ProgressBar) viewTitle.findViewById(R.id.talkball_pro);
+        talkballpro = (ProgressBar) viewTitle.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) viewTitle.findViewById(R.id.talkball_like_anim_img);
         tvHomeLikeCount = (TextView) viewTitle.findViewById(R.id.talkball_like_count);
         ivGuestLike = (ImageView) viewTitle.findViewById(R.id.talkbail_guest_like_anim_img);

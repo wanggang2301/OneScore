@@ -691,6 +691,8 @@
     <string name="comment_contentnull">暂无评论内容</string>
     <string name="toatalvisiable">显示全部</string>
     <string name="chatball">聊球</string>
+    <string name="succed_send">发送成功</string>
+    <string name="succed_refresh">刷新成功</string>
 
 
     <!-- -->
