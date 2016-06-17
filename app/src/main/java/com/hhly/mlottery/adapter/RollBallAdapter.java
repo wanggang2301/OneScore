@@ -294,48 +294,62 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             tvGuestRedCard.setText(data.getGuest_rc());
         } else tvGuestRedCard.setVisibility(View.INVISIBLE);
 
-        // 亚盘赔率
-        tvLeftOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue())
-                : "--"); // 中
-        tvHandicapValue_YA_BLACK.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? asiaLet.getLeftOdds().equals("-") ? " " : asiaLet.getLeftOdds()
-                : "封"); // 上
-        tvRightOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? asiaLet.getRightOdds().equals("-") ? " " : asiaLet.getRightOdds()
-                : "--"); // 下
+        if (asiaLet != null) {
+            // 亚盘赔率
+            tvLeftOdds_YA.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue())
+                    : "--"); // 中
+
+            tvHandicapValue_YA_BLACK.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? asiaLet.getLeftOdds().equals("-") ? " " : asiaLet.getLeftOdds()
+                    : "封"); // 上
+
+            tvRightOdds_YA.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? asiaLet.getRightOdds().equals("-") ? " " : asiaLet.getRightOdds()
+                    : "--"); // 下
+        } else {
+            this.setText(tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
+        }
         if (tvHandicapValue_YA_BLACK.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
             tvHandicapValue_YA_BLACK.setBackgroundColor(context.getResources().getColor(R.color.item_background));
             tvHandicapValue_YA_BLACK.setTextColor(context.getResources().getColor(R.color.white));
             tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_pl_color));
         }
 
-        // 大小盘赔率
-        tvLeftOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue())
-                : "--"); // 中
-        tvHandicapValue_DA_BLACK.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? asiaSize.getLeftOdds().equals("-") ? " " : asiaSize.getLeftOdds()
-                : "封"); // 上
-        tvRightOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? asiaSize.getRightOdds().equals("-") ? " " : asiaSize.getRightOdds()
-                : "--"); // 下
+        if (asiaSize != null) {
+            // 大小盘赔率
+            tvLeftOdds_DA.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue())
+                    : "--"); // 中
+            tvHandicapValue_DA_BLACK.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? asiaSize.getLeftOdds().equals("-") ? " " : asiaSize.getLeftOdds()
+                    : "封"); // 上
+            tvRightOdds_DA.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? asiaSize.getRightOdds().equals("-") ? " " : asiaSize.getRightOdds()
+                    : "--"); // 下
+        } else {
+            this.setText(tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
+        }
         if (tvHandicapValue_DA_BLACK.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
             tvHandicapValue_DA_BLACK.setBackgroundColor(context.getResources().getColor(R.color.item_background));
             tvHandicapValue_DA_BLACK.setTextColor(context.getResources().getColor(R.color.white));
             tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_pl_color));
         }
 
-        // 欧盘赔率
-        tvLeftOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? euro.getMediumOdds().equals("-") ? " " : euro.getMediumOdds()
-                : "--"); // 中
-        tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? euro.getLeftOdds().equals("-") ? " " : euro.getLeftOdds()
-                : "封"); // 上
-        tvRightOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
-                ? euro.getRightOdds().equals("-") ? " " : euro.getRightOdds()
-                : "--"); // 下
+        if (euro != null) {
+            // 欧盘赔率
+            tvLeftOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? euro.getMediumOdds().equals("-") ? " " : euro.getMediumOdds()
+                    : "--"); // 中
+            tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
+                    ? euro.getLeftOdds().equals("-") ? " " : euro.getLeftOdds()
+                    : "封"); // 上
+            tvRightOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
+                    ? euro.getRightOdds().equals("-") ? " " : euro.getRightOdds()
+                    : "--"); // 下
+        } else {
+            this.setText(tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
+        }
         if (tvMediumOdds_EU.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
             tvMediumOdds_EU.setBackgroundColor(context.getResources().getColor(R.color.item_background));
             tvMediumOdds_EU.setTextColor(context.getResources().getColor(R.color.white));
@@ -360,17 +374,18 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         });
 
         subscription = RxBus.getDefault().toObserverable().subscribe(new Action1<Object>() {
-            @Override
-            public void call(Object o) {
-                if (o == null) {
-                    notify_locked_tag = false;
-                    if (cacheWebSocketPushData != null && cacheWebSocketPushData.size() > 0) {
-                        updateItemFromWebSocket(cacheWebSocketPushData.get(0));
-                        cacheWebSocketPushData.remove(0);
-                    }
-                }
-            }
-        });
+                                                                         @Override
+                                                                         public void call(Object o) {
+                                                                             if (o == null) {
+                                                                                 notify_locked_tag = false;
+                                                                                 if (cacheWebSocketPushData != null && cacheWebSocketPushData.size() > 0) {
+                                                                                     updateItemFromWebSocket(cacheWebSocketPushData.get(0));
+                                                                                     cacheWebSocketPushData.remove(0);
+                                                                                 }
+                                                                             }
+                                                                         }
+                                                                     }
+        );
     }
 
     private void startShuffleAnimation(final TextView keepTimeShuffle) {
@@ -416,6 +431,12 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             }
         });
         keepTimeShuffle.startAnimation(alphaAnimation1);
+    }
+
+    private void setText(TextView... textViews) {
+        for (TextView textView : textViews) {
+            textView.setText(" ");
+        }
     }
 
     public Subscription getSubscription() {
