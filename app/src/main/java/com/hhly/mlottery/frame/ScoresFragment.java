@@ -189,6 +189,8 @@ public class ScoresFragment extends Fragment {
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
+
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
