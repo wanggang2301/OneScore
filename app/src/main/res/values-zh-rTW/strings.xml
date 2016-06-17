@@ -700,6 +700,7 @@
     <string name="id_card_format_error">身份證格式錯誤</string>
     <string name="password_error">密碼錯誤</string>
     <string name="username_pass_error">登錄名或者密碼錯誤</string>
+    <string name="username_original_pass_error">請輸入正確的原始密碼</string>
     <string name="logout_check">確認退出登錄?</string>
 
 
