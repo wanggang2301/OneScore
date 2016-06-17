@@ -2,7 +2,6 @@
 <resources>
 
 
-
     <color name="selected_bg">#eeeeee</color>
     <!--足球二期颜色-->
     <color name="foot_integal_se">#ff5400</color>
@@ -13,7 +12,8 @@
     <color name="live_text4">#ff0000</color>
 
     <color name="plate_title_bg">#fffef1</color>
-
+    <color name="odds_details">#ff6600</color>
+    <color name="odds_left">#00DB1A</color>
 
 
     <!-- 主题颜色 -->
@@ -26,9 +26,10 @@
     <color name="progress_home">#eec72c</color>
     <color name="progress_guest">#3aa611</color>
     <color name="tabhost">#0eae7e</color>
+    <color name="timeviewcolor">#0e7f45</color>
     <color name="tabhost__selected_text">#fff</color>
     <color name="tabhost_unselected_text">#333</color>
-    <color name="timeLineColor">#cccccc</color>
+    <color name="timeLineColor">#585858</color>
 
     <color name="live_text_ot">#f67f27</color>
     <color name="live_text_finish">#ff0000</color>
@@ -570,8 +571,9 @@
     <color name="cpi_grid_selected">#DEDEDE</color>
 
 
-
     <color name="yellow_verify_code">#FFB51A</color>
+
+    <color name="fall_color">#00DB1A</color>
     <color name="item_selectable_pressed">@color/res_time_color</color>
 
     <!-- ODDS -->
@@ -579,5 +581,8 @@
     <color name="odds_down_bg">#00DB1A</color>
     <color name="background_layout">#EAEEF4</color>
 
-
+    <!--足球改版分析界面颜色-->
+    <color name="analyze_title">#3f5672</color>
+    <color name="history_win">#333333</color>
+    <color name="more_record">#0090ff</color>
 </resources>

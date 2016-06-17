@@ -80,6 +80,7 @@ public class DebugConfigActivity extends BaseActivity{
                     PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, WS_82);
                 }
 
+//                startActivity(new Intent(DebugConfigActivity.this, TestActivity.class));
                 startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
                 System.exit(0);
 

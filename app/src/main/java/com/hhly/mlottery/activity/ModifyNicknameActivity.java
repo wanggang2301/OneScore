@@ -2,13 +2,16 @@ package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
@@ -40,8 +43,8 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //
         setContentView(R.layout.activity_modify_nickname);
-
         initView();
     }
 
@@ -81,6 +84,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
         public_btn_save.setTextColor(getResources().getColor(R.color.content_txt_light_grad));
 
         findViewById(R.id.public_img_back).setOnClickListener(this);
+
         et_nickname = (EditText) findViewById(R.id.et_nickname);
         et_nickname.addTextChangedListener(this);
     }
@@ -123,7 +127,10 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                         AppConstants.register.getData().getUser().setNickName(nickName);
                         CommonUtils.saveRegisterInfo(AppConstants.register);
                         finish();
-                    }else{
+                    }else if(bean.getResult() == AccountResultCode.USER_NOT_LOGIN){
+                        Intent intent= new Intent(ModifyNicknameActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    }else {
                         CommonUtils.handlerRequestResult(bean.getResult() , bean.getMsg());
                     }
                 }

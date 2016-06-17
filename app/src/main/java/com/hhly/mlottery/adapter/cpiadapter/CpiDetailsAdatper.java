@@ -1,22 +1,18 @@
 package com.hhly.mlottery.adapter.cpiadapter;
 
 import android.content.Context;
-import android.text.Html;
+import android.support.v4.content.ContextCompat;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
@@ -31,16 +27,16 @@ import java.util.List;
 public class CpiDetailsAdatper extends BaseExpandableListAdapter implements PinnedHeaderExpandableListView.HeaderAdapter {
 
     private List<String> mGroupDataList;//父类view 数据
-    List<List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity>> mChildrenDataList=new ArrayList<>();//子view数据
+    List<List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity>> mChildrenDataList = new ArrayList<>();//子view数据
     private Context mContext;
     private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
     private String stKey;
     private TableRow.LayoutParams params;
-    private List<OddsDetailsDataInfo.DetailsEntity> groupListDetailsEntity=new ArrayList<>();
+    private List<OddsDetailsDataInfo.DetailsEntity> groupListDetailsEntity = new ArrayList<>();
 
     public CpiDetailsAdatper(List<List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity>> childrenDataList, List<String> groupDataList
-            , Context mContext, PinnedHeaderExpandableListView listView,String stKey,List<OddsDetailsDataInfo.DetailsEntity> groupListDetailsEntity) {
+            , Context mContext, PinnedHeaderExpandableListView listView, String stKey, List<OddsDetailsDataInfo.DetailsEntity> groupListDetailsEntity) {
         this.mGroupDataList = groupDataList;
         this.mChildrenDataList = childrenDataList;
         this.mContext = mContext;
@@ -98,13 +94,13 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
             //手动设置宽高
             params = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
             params.weight = 3;
-            params.rightMargin=1;
+            params.rightMargin = 1;
             holder.odds_details_timeAndscore_child_txt.setLayoutParams(params);
 
 
             TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
             params1.weight = 4;
-            params1.rightMargin=1;
+            params1.rightMargin = 1;
             holder.odds_details_dish_layout.setLayoutParams(params1);
             convertView.setTag(holder);
 
@@ -114,10 +110,10 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
 
         final OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity model = mChildrenDataList.get(groupPosition).get(childPosition);
 
-        if("tag".equals(model.getSelectTag())){
+        if ("tag".equals(model.getSelectTag())) {
             //如果拿到的标识是tag给第一条设置初盘字样
             holder.odds_details_timeAndscore_child_txt.setText(R.string.frame_cpi_chupan_txt);
-        }else {
+        } else {
             //否则直接获取服务器数据
             String str = mGroupDataList.get(groupPosition);
             //截取年月日的后五位数
@@ -127,22 +123,22 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
 
         //判断是主队的数据
 
-        holder.odds_details_home_child_txt.setText(String.format("%.2f",model.getHomeOdd()));
+        holder.odds_details_home_child_txt.setText(String.format("%.2f", model.getHomeOdd()));
         if ("green".equals(model.getHomeColor())) {
-            holder.odds_details_home_child_txt.setTextColor(mContext.getResources().getColor(R.color.tabhost));
+            holder.odds_details_home_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.fall_color));
         } else if ("red".equals(model.getHomeColor())) {
-            holder.odds_details_home_child_txt.setTextColor(mContext.getResources().getColor(R.color.homwe_lhc_red));
+            holder.odds_details_home_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.analyze_left));
         } else if ("black".equals(model.getHomeColor())) {
-            holder.odds_details_home_child_txt.setTextColor(mContext.getResources().getColor(R.color.content_txt_dark_grad));
+            holder.odds_details_home_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
         }
         //客队
-        holder.odds_details_guest_child_txt.setText(String.format("%.2f",model.getGuestOdd()));
+        holder.odds_details_guest_child_txt.setText(String.format("%.2f", model.getGuestOdd()));
         if ("green".equals(model.getGuestColor())) {
-            holder.odds_details_guest_child_txt.setTextColor(mContext.getResources().getColor(R.color.tabhost));
+            holder.odds_details_guest_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.fall_color));
         } else if ("red".equals(model.getGuestColor())) {
-            holder.odds_details_guest_child_txt.setTextColor(mContext.getResources().getColor(R.color.homwe_lhc_red));
+            holder.odds_details_guest_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.analyze_left));
         } else if ("black".equals(model.getGuestColor())) {
-            holder.odds_details_guest_child_txt.setTextColor(mContext.getResources().getColor(R.color.content_txt_dark_grad));
+            holder.odds_details_guest_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
         }
 
         //盘口
@@ -151,26 +147,27 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
             //转换盘口
             holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicap(String.format("%.2f", model.getHand())));
 //            holder.odds_details_dish_child_txt.setWidth(160);
-            selectColor(model,holder);
+            selectColor(model, holder);
         } else if ("three".equals(stKey)) {//欧赔
             if ("green".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.tabhost));
+                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.fall_color));
             } else if ("red".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.homwe_lhc_red));
+                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.analyze_left));
             } else if ("black".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.content_txt_dark_grad));
+                holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
             }
             //不用变
-            holder.odds_details_dish_child_txt.setText(String.format("%.2f",model.getHand()));
+            holder.odds_details_dish_child_txt.setText(String.format("%.2f", model.getHand()));
 
         } else if ("two".equals(stKey)) {//大小球
             //转为大小球
             holder.odds_details_dish_child_txt.setText(HandicapUtils.changeHandicapByBigLittleBall(model.getHand() + ""));
-            selectColor(model,holder);
+            selectColor(model, holder);
         }
 
         return convertView;
     }
+
     /**
      * 子类的holder
      */
@@ -245,7 +242,7 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
         LinearLayout parentLayout = (LinearLayout) View.inflate(mContext, R.layout.item_odds_header, null);
         TextView live_item_day_tx = (TextView) parentLayout.findViewById(R.id.odds_details_data_txt);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
-        params.weight=0;
+        params.weight = 0;
         live_item_day_tx.setLayoutParams(params);
         live_item_day_tx.setText(mGroupDataList.get(groupPosition));
         return parentLayout;
@@ -329,15 +326,16 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
         mChildrenDataList.clear();
         notifyDataSetChanged();
     }
-    private void selectColor(OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity model,Holder holder){
+
+    private void selectColor(OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity model, Holder holder) {
         if ("green".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.odds_details_dish_child_txt.setBackgroundResource(R.color.tabhost);
+            holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            holder.odds_details_dish_child_txt.setBackgroundResource(R.color.fall_color);
         } else if ("red".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.odds_details_dish_child_txt.setBackgroundResource(R.color.homwe_lhc_red);
+            holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            holder.odds_details_dish_child_txt.setBackgroundResource(R.color.analyze_left);
         } else if ("black".equals(model.getDishColor())) {
-            holder.odds_details_dish_child_txt.setTextColor(mContext.getResources().getColor(R.color.content_txt_dark_grad));
+            holder.odds_details_dish_child_txt.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
             holder.odds_details_dish_child_txt.setBackgroundResource(R.color.white);
         }
     }

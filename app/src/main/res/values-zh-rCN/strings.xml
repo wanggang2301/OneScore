@@ -667,11 +667,14 @@
     <string name="user_name">游客</string>
     <string name="warn_nullcontent">请先输入内容</string>
     <string name="warn_submitfail">发送失败，请重试</string>
-    <string name="hint_content">我来评论</string>
+    <string name="hint_content">我来聊两句</string>
     <string name="comment_send">发送</string>
     <string name="comment_title">全部留言</string>
     <string name="comment_contentnull">暂无评论内容</string>
     <string name="toatalvisiable">显示全部</string>
+    <string name="chatball">聊球</string>
+    <string name="succed_send">发送成功</string>
+    <string name="succed_refresh">刷新成功</string>
 <!---->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">请输入留言内容</string>
@@ -690,7 +693,7 @@
     <string name="logining">正在登录...</string>
     <string name="login_succ">登录成功</string>
     <string name="login_fail">登录失败</string>
-    <string name="pwd_format">密码格式为6-16位字母数字下划线</string>
+    <string name="pwd_format">密码格式为6-16位数字和字符组成</string>
     <string name="pwd_format_hint">6-16位字符,区分大小写</string>
     <string name="pwd_empty">请输入密码</string>
     <string name="phone_empty">请输入手机号码</string>
@@ -725,6 +728,7 @@
     <string name="id_card_format_error">身份证格式错误</string>
     <string name="password_error">密码错误</string>
     <string name="username_pass_error">登录名或者密码错误</string>
+    <string name="username_original_pass_error">请输入正确的原始密码</string>
     <string name="logout_check">确认退出登录?</string>
 
     <!--1.1.2 begin-->
@@ -747,8 +751,8 @@
     <string name="modify_password_succ">修改密码成功</string>
     <string name="modify_password_fail">修改密码失败</string>
     <string name="input_password_old">请输入旧密码</string>
-    <string name="input_password_new">请输入新密码</string>
-    <string name="input_password_confirm">请输入确认密码</string>
+    <string name="input_password_new">请输入新密码(由6-16位数字和字符组成)</string>
+    <string name="input_password_confirm">请保持和新密码一致</string>
     <string name="show_password">显示密码</string>
     <string name="old_pw">旧</string>
     <string name="new_pw">新</string>
@@ -756,6 +760,8 @@
     <string name="pw_not_same">新密码与确认密码不一致</string>
     <string name="account">账号</string>
     <string name="pwd_format_just_length">密码长度为6-16位</string>
+    <string name="verify_time_limit">两次发送间隔不得小于60秒</string>
+    <string name="nickname_sensitive">昵称包含敏感词语</string>
     <!--1.1.2 end-->
 
 

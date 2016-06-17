@@ -2,8 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -44,9 +43,9 @@ import java.util.TimerTask;
  */
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
-    private EditText et_username , et_password ,et_verifycode;
-    private TextView tv_register , tv_verycode;
-    private ImageView iv_eye , iv_delete;
+    private EditText et_username, et_password, et_verifycode;
+    private TextView tv_register, tv_verycode;
+    private ImageView iv_eye, iv_delete;
 
     /**
      * 倒计时 默认60s , 间隔1s
@@ -60,7 +59,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        
+
         initView();
         initData();
     }
@@ -92,6 +91,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         /**友盟页面统计*/
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd("RegisterActivity");
+
     }
 
     private void initView() {
@@ -102,7 +102,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.register);
+        ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.register);
         iv_delete = (ImageView) findViewById(R.id.iv_delete);
         iv_delete.setOnClickListener(this);
 
@@ -132,12 +132,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onTick(long millisUntilFinished) {
-                if (tv_verycode != null){
+                if (tv_verycode != null) {
                     if (tv_verycode.isClickable())
                         tv_verycode.setClickable(false);
 
-                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒");
-                    tv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒");
+                    L.d(TAG, millisUntilFinished / CountDown.TIMEOUT_INTERVEL + "秒");
+                    tv_verycode.setText(millisUntilFinished / CountDown.TIMEOUT_INTERVEL + "秒");
                 }
             }
         });
@@ -148,7 +148,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 重新获取验证码
      */
     private void enableVeryCode() {
-        if (tv_verycode != null){
+        if (tv_verycode != null) {
             tv_verycode.setText(R.string.resend);
             tv_verycode.setClickable(true);
         }
@@ -156,7 +156,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.public_img_back: // 返回
                 MobclickAgent.onEvent(mContext, "RegisterActivity_Exit");
                 finish();
@@ -167,12 +167,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String passWord = et_password.getText().toString();
                 String verifyCode = et_verifycode.getText().toString();
 
-                if (UiUtils.isMobileNO(this ,userName)){
-                    if (UiUtils.checkVerifyCode(this , verifyCode)){
-                        if (UiUtils.checkPassword(this , passWord)){
+                if (UiUtils.isMobileNO(this, userName)) {
+                    if (UiUtils.checkVerifyCode(this, verifyCode)) {
+                        if (UiUtils.checkPassword(this, passWord)) {
                             // 登录
 //                            UiUtils.toast(this,"register");
-                            register(userName , verifyCode , passWord);
+                            register(userName, verifyCode, passWord);
                         }
                     }
                 }
@@ -185,10 +185,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.iv_eye:  // 显示密码
                 MobclickAgent.onEvent(mContext, "RegisterActivity_PassWord_isHide");
                 int inputType = et_password.getInputType();
-                if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD){
-                    et_password.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                    et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     iv_eye.setImageResource(R.mipmap.close_eye);
-                }else{
+                } else {
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     iv_eye.setImageResource(R.mipmap.open_eye);
                 }
@@ -208,16 +208,18 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            if (progressBar.isShowing()){
-                L.d(TAG , " progressBar.isShowing() , return false");
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (progressBar.isShowing()) {
+                L.d(TAG, " progressBar.isShowing() , return false");
                 return false;
             }
         }
         return super.onKeyDown(keyCode, event);
     }
+
     /**
      * 注册
+     *
      * @param userName
      * @param verifyCode
      * @param passWord
@@ -226,87 +228,52 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         tv_register.setClickable(false);
         progressBar.show();
-
-        String url = BaseURLs.URL_REGISTER;
-        Map<String, String> param = new HashMap<>();
-        param.put("account" , userName);
-        param.put("password" , MD5Util.getMD5(passWord));
-        param.put("registerType" , RegisterType.PHONE);
-        param.put("smsCode" , verifyCode);
-        param.put("deviceToken" , AppConstants.deviceToken);
-
-        VolleyContentFast.requestJsonByPost(url,param, new VolleyContentFast.ResponseSuccessListener<Register>() {
-            @Override
-            public void onResponse(Register register) {
-
-                tv_register.setClickable(true);
-                progressBar.dismiss();
-
-                if (register != null&& register.getResult() == AccountResultCode.SUCC){
-                    CommonUtils.saveRegisterInfo(register);
-                    UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
-
-                    //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
-                    sendUserInfoToServer(register);
-
-                    L.d(TAG,"注册成功");
-                    setResult(RESULT_OK);
-                    finish();
-                }else{
-                    L.e(TAG,"成功请求，注册失败");
-                    CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                progressBar.dismiss();
-                tv_register.setClickable(true);
-                L.e(TAG,"注册失败");
-                UiUtils.toast(RegisterActivity.this , R.string.immediate_unconection);
-            }
-        } , Register.class);
-    }
-
-    /**
-     * 给服务器发送注册成功后用户id和渠道id（用来统计留存率）
-     * @param register
+        Resources res = getResources();
+     /*
+     *
+     * 限制注册密码规则
+     *
      */
-    private void sendUserInfoToServer(Register register) {
+        if (UiUtils.checkPassword(RegisterActivity.this, passWord, false,
+                res.getString(R.string.input_password_new),
+                res.getString(R.string.new_pw) + res.getString(R.string.pwd_format))) {
 
-        String url = BaseURLs.USER_ACTION_ANALYSIS_URL;
-        Map<String,String> pramas = new HashMap<>();
-        pramas.put("appType","appRegist");
-        pramas.put("userid",register.getData().getUser().getUserId());
-        String CHANNEL_ID;
-        try {
-            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            String url = BaseURLs.URL_REGISTER;
+            Map<String, String> param = new HashMap<>();
+            param.put("account", userName);
+            param.put("password", MD5Util.getMD5(passWord));
+            param.put("registerType", RegisterType.PHONE);
+            param.put("smsCode", verifyCode);
+            param.put("deviceToken", AppConstants.deviceToken);
 
-            if (appInfo.metaData != null) {
-                CHANNEL_ID = appInfo.metaData.getString("UMENG_CHANNEL");
-                pramas.put("channel", CHANNEL_ID);
-            }else {
-                pramas.put("channel","vnp56ams");
-            }
+            VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                @Override
+                public void onResponse(Register register) {
 
-        } catch (PackageManager.NameNotFoundException e) {
-            pramas.put("channel","vnp56ams");
-            e.printStackTrace();
+                    tv_register.setClickable(true);
+                    progressBar.dismiss();
+
+                    if (register != null && register.getResult() == AccountResultCode.SUCC) {
+                        CommonUtils.saveRegisterInfo(register);
+                        UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
+                        L.d(TAG, "注册成功");
+                        setResult(RESULT_OK);
+                        finish();
+                    } else {
+                        L.e(TAG, "成功请求，注册失败");
+                        CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
+                    }
+                }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    progressBar.dismiss();
+                    tv_register.setClickable(true);
+                    L.e(TAG, "注册失败");
+                    UiUtils.toast(RegisterActivity.this, R.string.immediate_unconection);
+                }
+            }, Register.class);
         }
-
-        VolleyContentFast.requestStringByPost(url, pramas, new VolleyContentFast.ResponseSuccessListener<String>() {
-            @Override
-            public void onResponse(String jsonObject) {
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-            }
-        });
-
-
-
-
     }
 
     /**
@@ -327,7 +294,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
                         || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
                         || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                        ){
+                        ) {
                     countDown.cancel();
                     enableVeryCode();
                 }
@@ -344,20 +311,24 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (countDown != null){
+        if (countDown != null) {
             countDown.cancel();
         }
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
+
     @Override
     public void afterTextChanged(Editable s) {
-        if (TextUtils.isEmpty(s)){
+        if (TextUtils.isEmpty(s)) {
             iv_delete.setVisibility(View.GONE);
-        }else{
+        } else {
             iv_delete.setVisibility(View.VISIBLE);
         }
     }

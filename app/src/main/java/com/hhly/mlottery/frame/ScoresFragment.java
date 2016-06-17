@@ -141,7 +141,7 @@ public class ScoresFragment extends Fragment {
 //        mTitleTv.setText(R.string.football_frame_txt);
         //左边标题
             /*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
-                public_txt_left_title.setVisibility(View.VISIBLE);
+				public_txt_left_title.setVisibility(View.VISIBLE);
         public_txt_left_title.setText(R.string.football_frame_txt);*/
 
         mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
@@ -549,9 +549,9 @@ public class ScoresFragment extends Fragment {
         String focusIds = PreferenceUtil.getString("focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
         if ("".equals(focusIds) || arrayId.length == 0) {
-            mTabLayout.getTabAt(4).setText(getString(R.string.foot_guanzhu_txt));
+            mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getString(R.string.foot_guanzhu_txt));
         } else {
-            mTabLayout.getTabAt(4).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
         }
     }
 
