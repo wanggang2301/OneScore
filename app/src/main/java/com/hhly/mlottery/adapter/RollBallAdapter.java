@@ -199,7 +199,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
                 } else tvKeepTime.setText(data.getKeepTime());
                 this.startShuffleAnimation(keepTimeShuffle);
-                rlHalfContainer.setVisibility(View.GONE);
+                rlHalfContainer.setVisibility(View.INVISIBLE);
                 break;
             case "2": // 中场
                 this.setupKeepTimeStyle(tvKeepTime, keepTimeShuffle, context.getString(R.string.immediate_status_midfield), R.color.football_keeptime, false);
