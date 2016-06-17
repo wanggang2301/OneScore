@@ -297,52 +297,48 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         // 亚盘赔率
         tvLeftOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue())
-                : "封"); // 中
+                : "--"); // 中
         tvHandicapValue_YA_BLACK.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? asiaLet.getLeftOdds().equals("-") ? " " : asiaLet.getLeftOdds()
-                : " "); // 上
+                : "封"); // 上
         tvRightOdds_YA.setText(asiaLet != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? asiaLet.getRightOdds().equals("-") ? " " : asiaLet.getRightOdds()
-                : " "); // 下
-        if (tvLeftOdds_YA.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
-            tvLeftOdds_YA.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvHandicapValue_YA_BLACK.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvRightOdds_YA.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.white));
+                : "--"); // 下
+        if (tvHandicapValue_YA_BLACK.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
+            tvHandicapValue_YA_BLACK.setBackgroundColor(context.getResources().getColor(R.color.item_background));
+            tvHandicapValue_YA_BLACK.setTextColor(context.getResources().getColor(R.color.white));
+            tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_pl_color));
         }
 
         // 大小盘赔率
         tvLeftOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue())
-                : "封"); // 中
+                : "--"); // 中
         tvHandicapValue_DA_BLACK.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? asiaSize.getLeftOdds().equals("-") ? " " : asiaSize.getLeftOdds()
-                : " "); // 上
+                : "封"); // 上
         tvRightOdds_DA.setText(asiaSize != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? asiaSize.getRightOdds().equals("-") ? " " : asiaSize.getRightOdds()
-                : " "); // 下
-        if (tvLeftOdds_DA.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
-            tvLeftOdds_DA.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvHandicapValue_DA_BLACK.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvRightOdds_DA.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.white));
+                : "--"); // 下
+        if (tvHandicapValue_DA_BLACK.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
+            tvHandicapValue_DA_BLACK.setBackgroundColor(context.getResources().getColor(R.color.item_background));
+            tvHandicapValue_DA_BLACK.setTextColor(context.getResources().getColor(R.color.white));
+            tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_pl_color));
         }
 
         // 欧盘赔率
         tvLeftOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? euro.getMediumOdds().equals("-") ? " " : euro.getMediumOdds()
-                : "封"); // 中
+                : "--"); // 中
         tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? euro.getLeftOdds().equals("-") ? " " : euro.getLeftOdds()
-                : " "); // 上
+                : "封"); // 上
         tvRightOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
                 ? euro.getRightOdds().equals("-") ? " " : euro.getRightOdds()
-                : " "); // 下
-        if (tvLeftOdds_EU.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
-            tvLeftOdds_EU.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvMediumOdds_EU.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvRightOdds_EU.setBackgroundColor(context.getResources().getColor(R.color.text_about_color));
-            tvLeftOdds_EU.setTextColor(context.getResources().getColor(R.color.white));
+                : "--"); // 下
+        if (tvMediumOdds_EU.getText().equals("封")) { // 如果当前状态是封盘，那么改变条目的背景颜色及文字颜色
+            tvMediumOdds_EU.setBackgroundColor(context.getResources().getColor(R.color.item_background));
+            tvMediumOdds_EU.setTextColor(context.getResources().getColor(R.color.white));
         }
 
         // 控制器
