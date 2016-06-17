@@ -685,7 +685,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
 
         mViewPagerAdapter = new MatchDetailFragmentAdapter(getSupportFragmentManager(), fragments);
-        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
         mViewPager.setAdapter(mViewPagerAdapter);
 
 
