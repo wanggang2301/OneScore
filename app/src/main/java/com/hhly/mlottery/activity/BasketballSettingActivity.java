@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,10 +43,10 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	private RadioButton mRd_asize;
 	private RadioButton mRd_noshow;
 	
-	private ToggleButton mTb_score; // 半全场总分
-	private ToggleButton mTb_Point_spread; //总分差
-	private ToggleButton mTb_single_score; //单节比分
-	private ToggleButton mTb_ranking; //排名
+	private SwitchCompat mTb_score; // 半全场总分
+	private SwitchCompat mTb_Point_spread; //总分差
+	private SwitchCompat mTb_single_score; //单节比分
+	private SwitchCompat mTb_ranking; //排名
 	
 	private ImageView mBack;
 	
@@ -79,15 +80,15 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		mRd_asize = (RadioButton) findViewById(R.id.rd_asize);
 		mRd_noshow = (RadioButton) findViewById(R.id.rd_noshow);
 		
-		mTb_score = (ToggleButton) findViewById(R.id.tb_score);
+		mTb_score = (SwitchCompat) findViewById(R.id.tb_score);
 //		mTb_score.setOnClickListener(this);
 		mTb_score.setOnCheckedChangeListener(this);
 
-		mTb_Point_spread = (ToggleButton) findViewById(R.id.tb_Point_spread);
+		mTb_Point_spread = (SwitchCompat) findViewById(R.id.tb_Point_spread);
 		mTb_Point_spread.setOnCheckedChangeListener(this);
-		mTb_single_score = (ToggleButton) findViewById(R.id.tb_single_score);
+		mTb_single_score = (SwitchCompat) findViewById(R.id.tb_single_score);
 		mTb_single_score.setOnCheckedChangeListener(this);
-		mTb_ranking = (ToggleButton) findViewById(R.id.tb_ranking);
+		mTb_ranking = (SwitchCompat) findViewById(R.id.tb_ranking);
 		mTb_ranking.setOnCheckedChangeListener(this);
 		
 		mBack = (ImageView) findViewById(R.id.ib_back);
