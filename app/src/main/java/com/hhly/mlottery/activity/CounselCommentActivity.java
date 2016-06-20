@@ -31,7 +31,6 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         setContentView(R.layout.activity_counselcomment);
         initData();
         initView();
-        CyUtils.addComment(new ChatFragment(), url, title, true, true, getSupportFragmentManager(), R.id.scrollview);//添加评论碎片
     }
 
     private void initData() {
@@ -46,6 +45,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
         mPublic_txt_title.setText(R.string.comment_title);
         mPublic_img_back.setOnClickListener(this);
+        CyUtils.addComment(new ChatFragment(), url, title, true, true, getSupportFragmentManager(), R.id.scrollview);//添加评论碎片
     }
 
     @Override
