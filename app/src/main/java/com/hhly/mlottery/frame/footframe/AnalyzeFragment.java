@@ -409,7 +409,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.football_analyze_more_record:
                 Intent intent=new Intent(getActivity(),FootballAnalyzeDetailsActivity.class);
-                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID,"78235");
+                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID,mParam1);
                 startActivity(intent);
                 break;
             case R.id.football_analyze_integral_table:

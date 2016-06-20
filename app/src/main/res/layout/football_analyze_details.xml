@@ -186,14 +186,20 @@
                                 android:text="@string/basket_analyze_let_points"
                                 android:textSize="@dimen/text_size_10" />
                         </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginRight="@dimen/margin_standard"
+                            android:background="@color/basket_score_gray"/>
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginLeft="@dimen/margin_standard"
-                        android:layout_marginRight="@dimen/margin_standard"
-                        android:background="@color/basket_score_gray"/>
+                    <!--<View-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1px"-->
+                        <!--android:layout_marginLeft="@dimen/margin_standard"-->
+                        <!--android:layout_marginRight="@dimen/margin_standard"-->
+                        <!--android:background="@color/basket_score_gray"/>-->
 
                     <com.hhly.mlottery.widget.NestedListView
                         android:id="@+id/football_histroy_list"
@@ -323,14 +329,20 @@
                                 android:text="@string/basket_analyze_let_points"
                                 android:textSize="@dimen/text_size_10" />
                         </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginRight="@dimen/margin_standard"
+                            android:background="@color/basket_score_gray" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginLeft="@dimen/margin_standard"
-                        android:layout_marginRight="@dimen/margin_standard"
-                        android:background="@color/basket_score_gray" />
+                    <!--<View-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1px"-->
+                        <!--android:layout_marginLeft="@dimen/margin_standard"-->
+                        <!--android:layout_marginRight="@dimen/margin_standard"-->
+                        <!--android:background="@color/basket_score_gray" />-->
 
                     <com.hhly.mlottery.widget.NestedListView
                         android:id="@+id/football_recent_exploits_list_to"
@@ -430,14 +442,20 @@
                                 android:text="@string/basket_analyze_let_points"
                                 android:textSize="@dimen/text_size_10" />
                         </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginRight="@dimen/margin_standard"
+                            android:background="@color/basket_score_gray" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginLeft="@dimen/margin_standard"
-                        android:layout_marginRight="@dimen/margin_standard"
-                        android:background="@color/basket_score_gray" />
+                    <!--<View-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="1px"-->
+                        <!--android:layout_marginLeft="@dimen/margin_standard"-->
+                        <!--android:layout_marginRight="@dimen/margin_standard"-->
+                        <!--android:background="@color/basket_score_gray" />-->
 
                     <com.hhly.mlottery.widget.NestedListView
                         android:id="@+id/football_recent_exploits_list"
