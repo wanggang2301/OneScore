@@ -132,26 +132,21 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
                         ContextCompat.getColor(context, R.color.colorPrimary));
                 cpiViewHolder.cpi_item_seconds_txt.setVisibility(View.VISIBLE);
+                cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
+                        ContextCompat.getColor(context, R.color.colorPrimary));
             } catch (Exception e) {
                 e.printStackTrace();
                 cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
                         ContextCompat.getColor(context, R.color.analyze_left));
                 cpiViewHolder.cpi_item_seconds_txt.setVisibility(View.GONE);
             }
-
+            cpiViewHolder.cpi_item_time_txt.setVisibility(View.GONE);
             cpiViewHolder.tv_tag.setVisibility(View.GONE);
         } else {
             cpiViewHolder.tv_tag.setVisibility(View.VISIBLE);
+            cpiViewHolder.cpi_item_layout.setVisibility(View.GONE);
         }
-        //比赛的主客队名称和比分
-        if ("0".equals(matchInfo.getMatchState())) {
-            //未开赛
-            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
-                    "&nbsp;" + "VS" + "&nbsp;" + matchInfo.getMatchGuestName()));
-        } else { //开赛
-            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
-                    "<font color=#ff0000>&nbsp;" + matchInfo.getMatchResult() + "</font>&nbsp;" + matchInfo.getMatchGuestName()));
-        }
+
         //亚盘
         switch (stType) {
             case CPIFragment.TYPE_PLATE:
@@ -189,6 +184,15 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 break;
         }
 
+        //比赛的主客队名称和比分
+        if ("0".equals(matchInfo.getMatchState())) {
+            //未开赛
+            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
+                    "&nbsp;" + "VS" + "&nbsp;" + matchInfo.getMatchGuestName()));
+        } else { //开赛
+            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
+                    "<font color=#ff0000>&nbsp;" + matchInfo.getMatchResult() + "</font>&nbsp;" + matchInfo.getMatchGuestName()));
+        }
         if ("0".equals(matchInfo.getMatchState())) {
             cpiViewHolder.tv_tag.setTextColor(
                     ContextCompat.getColor(context, R.color.textcolor_football_footer_normal));
@@ -211,6 +215,19 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         } else if ("-14".equals(matchInfo.getMatchState())) {
             cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
             cpiViewHolder.tv_tag.setText(R.string.fragme_home_tuichi_text);
+        }
+        try {
+            int stateInt = Integer.parseInt(matchInfo.getMatchState());
+            if (stateInt > 0) {
+                cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() + "<font color=#0085e1>&nbsp;"
+                        + matchInfo.getMatchResult() + "</font>&nbsp;" + matchInfo.getMatchGuestName()));
+                cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                cpiViewHolder.cpi_item_time_txt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            } else {
+                cpiViewHolder.cpi_item_time_txt.setTextColor(ContextCompat.getColor(context, android.R.attr.textColorSecondary));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         cpiViewHolder.item_cpi_odds_listview.setDivider(ContextCompat.getDrawable(context, R.color.homwe_grey));

@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -268,10 +269,11 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         } else if (message.startsWith("MESSAGE")) {
             // 改为根据 { 和 } 将字符串切片，获取 {jsonObject}
             String ws_json = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
+            Log.d("ws_json", ws_json);
             //赔率模拟数据
-//            ws_json = "{'data':[{'comId':'3','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'337551','type':2}  ";
+//            ws_json = "{'data':[{'comId':'3','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'339608','type':2}  ";
             //时间模拟数据
-//            String ws_json = "{'data':{'keepTime':21,'statusOrigin':1},'thirdId':'337089','type':1}  ";
+//            ws_json = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'339608','type':1}  ";
             //比分模拟推送
 //            ws_json = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
 
