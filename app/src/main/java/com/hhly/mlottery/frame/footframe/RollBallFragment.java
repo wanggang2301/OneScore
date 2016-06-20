@@ -9,6 +9,7 @@ import android.support.percent.PercentRelativeLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -41,7 +42,6 @@ import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.nostra13.universalimageloader.utils.L;
 
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
@@ -169,62 +169,11 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
             }
         });
 
+        // 60秒后 重新请求数据 这样完场的数据 就会被排序到底部
         subscription = RxBus.getDefault().toObserverable(Match.class).delay(60, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Match>() {
             @Override
             public void call(final Match match) {
                 RollBallFragment.this.initData();
-                /*synchronized (leagueCupLists) {
-                    LeagueCup targetCup = null;
-                    for (LeagueCup cup : leagueCupLists) {
-                        if (match.getRaceId().equals(cup.getRaceId())) {
-                            targetCup = cup;
-                            break;
-                        }
-                    }
-                    if (targetCup != null) {
-                        if (targetCup.getCount() > 1) {
-                            targetCup.setCount(targetCup.getCount() - 1);
-                        } else {
-                            leagueCupLists.remove(targetCup);
-                        }
-                    }
-                }
-                synchronized (checkedLeagueCup) {
-                    LeagueCup targetCup = null;
-                    for (LeagueCup cup : checkedLeagueCup) {
-                        if (match.getRaceId().equals(cup.getRaceId())) {
-                            targetCup = cup;
-                        }
-                    }
-                    if (targetCup != null) {
-                        if (targetCup.getCount() > 1) {
-                            targetCup.setCount(targetCup.getCount() - 1);
-                        } else {
-
-                            List<LeagueCup> tempCups = new ArrayList<>();
-                            for (LeagueCup acup : leagueCupLists) {
-                                for (LeagueCup cup : checkedLeagueCup) {
-                                    if (acup.getRaceId().equals(cup.getRaceId())) {
-                                        tempCups.add(acup);
-                                        break;
-                                    }
-                                }
-                            }
-                            checkedLeagueCup = tempCups.toArray(new LeagueCup[]{});
-                        }
-                    }
-                }
-
-//                PreferenceUtil.commitBoolean(match.getThirdId()+match.getThirdId(), true); // 完场比赛要置于列表底部
-                RollBallFragment.this.feedAdapter(feedAdapterLists);
-
-                if (feedAdapterLists.size() == 0) {
-                    if (allDataLists.size() == feedAdapterLists.size()) {
-                        apiHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-                    } else {
-                        apiHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
-                    }
-                }*/
             }
         }, new Action1<Throwable>() {
             @Override
@@ -304,10 +253,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            if (!"".equals(type)) {
+                            if (!TextUtils.isEmpty(type)) {
                                 Message msg = Message.obtain();
                                 msg.obj = ws_json;
-                                L.i("hhlylog", "RollballFragment WebSocket Push Data [ " + ws_json + "]");
                                 msg.arg1 = Integer.parseInt(type);
                                 apiHandler.sendMessage(msg);
                             }
