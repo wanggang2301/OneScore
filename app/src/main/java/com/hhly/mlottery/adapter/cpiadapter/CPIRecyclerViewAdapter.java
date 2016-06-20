@@ -190,7 +190,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         if ("0".equals(matchInfo.getMatchState())) {
             cpiViewHolder.tv_tag.setTextColor(
                     ContextCompat.getColor(context, R.color.textcolor_football_footer_normal));
-            cpiViewHolder.tv_tag.setText(R.string.not_start_txt);
+            cpiViewHolder.tv_tag.setText(R.string.not_start_short_txt);
         } else if ("-1".equals(matchInfo.getMatchState())) {
             cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
             cpiViewHolder.tv_tag.setText(R.string.fragme_home_wanchang_text);
