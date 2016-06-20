@@ -20,8 +20,10 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketListActivity;
 import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
+import com.hhly.mlottery.activity.FootballInformationActivity;
 import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NestedListView;
@@ -117,9 +119,10 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private LinearLayout fl_firsPlayers_content;// 首发内容容器
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String mThirdId="1111";
     private String mParam2;
 
+    private NewAnalyzeBean mAnalyzeBean;
     public AnalyzeFragment() {
         // Required empty public constructor
     }
@@ -138,7 +141,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mThirdId = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         mOptions = new DisplayImageOptions.Builder()
@@ -159,7 +162,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_analyze_fragment, container, false);
-
+        mAnalyzeBean=new NewAnalyzeBean();
         initView();
         initData();
         setListener();
@@ -228,19 +231,20 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     private void initData() {
         Map<String ,String > params=new HashMap<>();
-        params.put("thirdId","337367");
-        VolleyContentFast.requestJsonByGet("http://192.168.10.242:8181/mlottery/core/footBallMatch.findAnalysisOverview.do",params,new VolleyContentFast.ResponseSuccessListener<NewAnalyzeBean>() {
+      //  params.put("thirdId","337367");
+        params.put("thirdId",mThirdId);
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_NEW_ANALYZE,params,new VolleyContentFast.ResponseSuccessListener<NewAnalyzeBean>() {
             @Override
             public void onResponse(NewAnalyzeBean analyzeBean) {
                 if (analyzeBean.getResult().equals("200")) {
-                    loadData(analyzeBean);
+                    mAnalyzeBean=analyzeBean;
+                    loadData(mAnalyzeBean);
                 }
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                Log.e("AAAAAAAA","zahuishia xiongdi");
             }
         }, NewAnalyzeBean.class);
 
@@ -271,8 +275,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             progress = homeWin * 100 / (guestWin+homeWin);
         }
         mProgressBar.setProgress(progress);
-        mProgressHomeWin.setText(homeWin + "胜");
-        mProgressGuestWin.setText(guestWin+"胜");
+        mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
+        mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
         //近期战绩
         List<Integer> homeRecent=analyzeBean.getBothRecord().getHome().getRecentRecord();
         List<Integer> guestRecent=analyzeBean.getBothRecord().getGuest().getRecentRecord();
@@ -293,11 +297,11 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             setRecent(mGuestRecent6,guestRecent.get(5));
         }
         //未来三场
-        mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+"天");
+        mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+getActivity().getResources().getString(R.string.number_hk_dd));
         mHomeFutureName.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getTeam());
         mImageLoader.displayImage(analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(), mHomeFutureLogo, mOptions);
 
-        mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + "天");
+        mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + getActivity().getResources().getString(R.string.number_hk_dd));
         mGuestFutureName.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getTeam());
         mImageLoader.displayImage(analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),mGuestFutureLogo,mOptions);
         //积分排名
@@ -316,7 +320,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
         mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
         //是否显示积分榜
-        if(analyzeBean.getFullScoreRank()==1){
+        if(analyzeBean.getFullScoreRank()==1){ //有完整积分榜
             mIntegralTable.setVisibility(View.VISIBLE);
         }else if(analyzeBean.getFullScoreRank()==0){
             mIntegralTable.setVisibility(View.GONE);
@@ -407,11 +411,14 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.football_analyze_more_record:
                 Intent intent=new Intent(getActivity(),FootballAnalyzeDetailsActivity.class);
-                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID,mParam1);
+                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID,mThirdId);
                 startActivity(intent);
                 break;
             case R.id.football_analyze_integral_table:
-
+                Intent intent1=new Intent(getActivity(), FootballInformationActivity.class);
+                intent1.putExtra("lid",mThirdId);
+                intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType());
+                startActivity(intent1);
                 break;
         }
     }

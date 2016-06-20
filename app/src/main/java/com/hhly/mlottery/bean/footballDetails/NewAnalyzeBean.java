@@ -10,7 +10,15 @@ public class NewAnalyzeBean {
 
     private String result;
     private int fullScoreRank;
+    private int leagueType;
 
+    public int getLeagueType() {
+        return leagueType;
+    }
+
+    public void setLeagueType(int leagueType) {
+        this.leagueType = leagueType;
+    }
 
     private AttackDefenseEntity attackDefense;
     private LineUpEntity lineUp;
