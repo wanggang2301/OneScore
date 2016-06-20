@@ -717,13 +717,13 @@
     <string name="profile">個人資料</string>
     <string name="modify_nickname">更改名字</string>
     <string name="modify_nickname_succ">修改昵稱成功</string>
-    <string name="nickname_format">昵稱格式爲1-15個字符，由中英文數字和字符_-組成,中文算兩個字符</string>
+    <string name="nickname_format">昵稱:格式爲1-15個字符(不超過七個中文),由中英文數字和字符組成</string>
     <string name="modify_password">修改密碼</string>
     <string name="modifying_password">正在修改密碼...</string>
     <string name="modify_password_succ">修改密碼成功</string>
     <string name="modify_password_fail">修改密碼失敗</string>
     <string name="input_password_old">請輸入舊密碼</string>
-    <string name="input_password_new">請輸入新密碼(由6-16位數字和字符組成)</string>
+    <string name="input_password_new">請輸入新密碼（由６－１６位數字和字符組成）</string>
     <string name="input_password_confirm">請保持和新密碼壹致</string>
     <string name="show_password">顯示密碼</string>
     <string name="old_pw">舊</string>

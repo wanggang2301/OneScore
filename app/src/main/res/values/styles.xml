@@ -518,7 +518,8 @@
 
     <!--TextView 字体 13sp-->
     <style name="login_edittext_common">
-        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:background">@null</item>
     </style>

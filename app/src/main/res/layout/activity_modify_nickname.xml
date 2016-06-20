@@ -14,6 +14,7 @@
         android:id="@+id/et_nickname"
         style="@style/login_edittext_modify_nickname"
         android:hint="@string/input_nickname"
+        android:textSize="15sp"
         />
 
     <TextView

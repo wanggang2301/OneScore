@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
@@ -48,11 +49,12 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
 
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.my);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        findViewById(R.id.public_btn_set).setOnClickListener(this);
+        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         // 是否需要设置 设置按钮src
 //        public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.tv_logout).setOnClickListener(this);
+        findViewById(R.id.tv_login).setOnClickListener(this);
         tv_nickname = ((TextView)findViewById(R.id.tv_nickname));
     }
 
@@ -67,7 +69,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
                 showDialog();
                 break;
-            case R.id.public_btn_set: // 昵称头像栏
+            case R.id.tv_login: // 昵称头像栏
                 startActivity(new Intent(this , ProfileActivity.class));
                 break;
             default:

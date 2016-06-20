@@ -742,13 +742,13 @@
     <string name="profile">个人资料</string>
     <string name="modify_nickname">更改名字</string>
     <string name="modify_nickname_succ">修改昵称成功</string>
-    <string name="nickname_format">昵称格式为1-15个字符，由中英文数字和字符_-组成,中文算两个字符</string>
+    <string name="nickname_format">昵称:格式为1-15个字符(不超过七个中文),由中英文数字和字符组成</string>
     <string name="modify_password">修改密码</string>
     <string name="modifying_password">正在修改密码...</string>
     <string name="modify_password_succ">修改密码成功</string>
     <string name="modify_password_fail">修改密码失败</string>
     <string name="input_password_old">请输入旧密码</string>
-    <string name="input_password_new">请输入新密码(由6-16位数字和字符组成)</string>
+    <string name="input_password_new">请输入新密码（由６－１６位数字和字符组成）</string>
     <string name="input_password_confirm">请保持和新密码一致</string>
     <string name="show_password">显示密码</string>
     <string name="old_pw">旧</string>
