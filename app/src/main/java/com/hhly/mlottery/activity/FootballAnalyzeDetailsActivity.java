@@ -207,7 +207,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballAnalyzeDetailsBean>() {
             @Override
             public void onResponse(FootballAnalyzeDetailsBean json) {
-                if (json == null) {
+                if (json == null || !json.getResult().equals("200")) {
                     mSuccessLoad.setVisibility(View.GONE);
                     mErrorLoad.setVisibility(View.GONE);
                     mNodataTextview.setVisibility(View.VISIBLE);
