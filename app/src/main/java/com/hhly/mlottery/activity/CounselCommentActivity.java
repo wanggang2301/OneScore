@@ -29,13 +29,16 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counselcomment);
+        initData();
+        initView();
+        CyUtils.addComment(new ChatFragment(), url, title, true, true, getSupportFragmentManager(), R.id.scrollview);//添加评论碎片
+    }
+
+    private void initData() {
         Intent intent = getIntent();
         url = intent.getStringExtra(CyUtils.INTENT_PARAMS_SID);
         L.i("lzfsouceidurl" + url);
         title = intent.getStringExtra(CyUtils.INTENT_PARAMS_TITLE);
-        initView();
-
-        CyUtils.addComment(new ChatFragment(), url, title, true, true, getSupportFragmentManager(), R.id.scrollview);
     }
 
     private void initView() {
