@@ -10,6 +10,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,7 +97,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
 
     @Override
     public void onBindViewHolder(CPIViewHolder cpiViewHolder, final int position) {
-
+        startInfinateAnimation(cpiViewHolder.cpi_item_seconds_txt);
         if (CPIFragment.TYPE_PLATE.equals(stType)) {
             cpiViewHolder.cpi_item_home_txt.setText(R.string.odd_home_txt);
             cpiViewHolder.cpi_item_odds_txt.setText(R.string.odd_dish_txt);
@@ -132,6 +134,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
                         ContextCompat.getColor(context, R.color.colorPrimary));
                 cpiViewHolder.cpi_item_seconds_txt.setVisibility(View.VISIBLE);
+
                 cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
                         ContextCompat.getColor(context, R.color.colorPrimary));
             } catch (Exception e) {
@@ -296,6 +299,49 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         mAllInfoBean.clear();
         cardViewListAdapter.cardViewclearData();
         notifyDataSetChanged();
+    }
+
+    private void startInfinateAnimation(final View view) {
+        final AlphaAnimation alphaAnimation1 = new AlphaAnimation(1, 1);
+        alphaAnimation1.setDuration(500);
+        final AlphaAnimation alphaAnimation0 = new AlphaAnimation(0, 0);
+        alphaAnimation0.setDuration(500);
+        alphaAnimation1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.startAnimation(alphaAnimation0);
+            }
+        });
+
+        alphaAnimation0.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.startAnimation(alphaAnimation1);
+
+            }
+        });
+        view.startAnimation(alphaAnimation1);
     }
 
 }
