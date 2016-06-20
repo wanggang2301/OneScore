@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.InputActivity;
@@ -202,12 +201,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
                 talkballpro.setMax(homeLikeCount + guestLikeCount);
                 talkballpro.setProgress(homeLikeCount);
-                System.out.println("VolleyContentFast" + matchLike.getHomeLike());
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                System.out.println("VolleyContentFast" + "onErrorResponse");
             }
         }, MatchLike.class);
     }
@@ -216,7 +213,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         sdk = CyanSdk.getInstance(mContext);
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
-            System.out.println("fgg" + "NickName=" + AppConstants.register.getData().getUser().getNickName() + "UserId=" + AppConstants.register.getData().getUser().getUserId());
         }
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
@@ -279,7 +275,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
-                System.out.println("shuju====="+ JSON.toJSONString(topicLoadResp));
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
                 topicid = topicLoadResp.topic_id;//文章id
@@ -397,7 +392,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mCurrentPager = 1;
         mLoadMore.setText(R.string.foot_loadmore);
         loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
-        System.out.println("mThirdId" + mThirdId + "");
     }
 
     @Override
@@ -418,7 +412,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             switch (resultCode) {
                 case CyUtils.RESULT_OK:
                     if (CommonUtils.isLogin()) { //接收登录华海成功返回
-                        System.out.println("fggRESULT_OK" + "NickName=" + AppConstants.register.getData().getUser().getNickName() + "UserId=" + AppConstants.register.getData().getUser().getUserId());
                         CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                     }
                     break;
@@ -464,7 +457,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
                     getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     mLinearLayout.setVisibility(View.GONE);
-                    System.out.println("lzftalk跳" + topicid);
                     //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
                     RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
                     lp.setMargins(0, 0, 0, DisplayUtil.dip2px(mContext, 60));

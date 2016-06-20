@@ -81,11 +81,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
         } else {
             holder = (Holder) convertView.getTag();
         }
-        //暂时写死游客
-//        holder.nickname.setText(R.string.user_name);
         holder.nickname.setText(mInfosList.get(position).passport.nickname);
-//        CyUtils.getUserInfo(CyanSdk.getInstance(mActivity));
-//        System.out.println("hhh99" + CyUtils.nickname);
         String time = DateUtil.transferLongToDate(mInfosList.get(position).create_time);
         holder.time.setText(time);
         if (mInfosList.get(position).content.length() > 50) {//字数大于50，则隐藏多于50的部分

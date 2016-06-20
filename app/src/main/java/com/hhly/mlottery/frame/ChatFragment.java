@@ -115,8 +115,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 //        单点登录   nickname可以相同  用户id不能相同
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
-            System.out.println("fgg" + "NickName=" + AppConstants.register.getData().getUser().getNickName() + "UserId=" + AppConstants.register.getData().getUser().getUserId());
-//            ToastTools.ShowQuickCenter(getActivity(),"NickName="+AppConstants.register.getData().getUser().getNickName()+"UserId="+AppConstants.register.getData().getUser().getUserId());
         }
     }
 
@@ -527,7 +525,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         super.onDestroyView();
         try {
             sdk.logOut();
-            System.out.println("fgglogOutchatfg" + "NickName=" + AppConstants.register.getData().getUser().getNickName() + "UserId=" + AppConstants.register.getData().getUser().getUserId());
         } catch (CyanException e) {
             e.printStackTrace();
         }

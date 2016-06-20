@@ -135,8 +135,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
             @Override
             public void onSChanged(int l, int t, int oldl, int oldt) {
-                System.out.println("lzf+l=" + l + "t=" + t + "oldl=" + oldl + "oldt" + oldt);
-                System.out.println("lzf+getContentHeight=" + mWebView.getContentHeight() * mWebView.getScale() + "getHeight=" + (mWebView.getHeight() + mWebView.getScrollY()));
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
                 if (y < 3) {
 
@@ -190,7 +188,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             subtitle = intent.getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
-            System.out.println("lzf:" + "mType=" + mType + "mThird" + mThird);
             infoTypeName = intent.getStringExtra("infoTypeName");
             token = AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
@@ -237,7 +234,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 ChatFragment chatFragment = new ChatFragment();
                 CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
                 if (url.contains("comment=false")) {
-                  getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
+                    getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
                 }
                 if (url.contains("share=false")) {
                     public_btn_set.setVisibility(View.GONE);//隐藏分享
@@ -247,7 +244,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             }
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
-            Log.d("CommonUtils:" , "token=" + token + "reqMethod" + reqMethod + "url=" + url);
+            Log.d("CommonUtils:", "token=" + token + "reqMethod" + reqMethod + "url=" + url);
 
             mShareTencentCallBack = new ShareTencentCallBack() {
                 @Override
