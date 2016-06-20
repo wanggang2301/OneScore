@@ -733,6 +733,7 @@
     <string name="new_pw">新</string>
     <string name="comfirm_pw">確認</string>
     <string name="pw_not_same">新密碼與確認密碼不一致</string>
+    <string name="pw_same_same">不能與原昵稱相同</string>
     <string name="account">賬號</string>
     <string name="pwd_format_just_length">密碼長度爲6-16位</string>
     <string name="verify_time_limit">兩次發送間隔不得小于60秒</string>

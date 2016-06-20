@@ -364,7 +364,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                 //添加组下listview的数据
                 mRaceListBeans.add(mRaceListBeansall.get(i).getList());
             }
-            if (mExpandableAdapter == null) {
+            /*if (mExpandableAdapter == null) {
                 mExpandableAdapter = new FTRacePinnedHeaderExpandableAdapter(mgroupnameList, mRaceListBeans, mContext, mlay_agendafg_lv);
                 mlay_agendafg_lv.setAdapter(mExpandableAdapter);
 
@@ -372,7 +372,11 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                 mExpandableAdapter.setAllInfor(mgroupnameList, mRaceListBeans);
                 mExpandableAdapter.notifyDataSetChanged();
             }
+*/
+            mExpandableAdapter = new FTRacePinnedHeaderExpandableAdapter(mgroupnameList, mRaceListBeans, mContext, mlay_agendafg_lv);
+            mlay_agendafg_lv.setAdapter(mExpandableAdapter);
 
+            mExpandableAdapter.notifyDataSetChanged();
             for (int i = 0; i < mSize; i++) {
                 mlay_agendafg_lv.expandGroup(i); //设置 默认打开的 group
             }
