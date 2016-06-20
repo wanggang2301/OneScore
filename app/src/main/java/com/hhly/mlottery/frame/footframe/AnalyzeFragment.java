@@ -228,8 +228,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     private void initData() {
         Map<String ,String > params=new HashMap<>();
-        params.put("thirdId", "337367");
-        VolleyContentFast.requestJsonByGet("http://192.168.31.58:8080/mlottery/core/footBallMatch.findAnalysisOverview.do",params,new VolleyContentFast.ResponseSuccessListener<NewAnalyzeBean>() {
+        params.put("thirdId","337367");
+        VolleyContentFast.requestJsonByGet("http://192.168.10.242:8181/mlottery/core/footBallMatch.findAnalysisOverview.do",params,new VolleyContentFast.ResponseSuccessListener<NewAnalyzeBean>() {
             @Override
             public void onResponse(NewAnalyzeBean analyzeBean) {
                 if (analyzeBean.getResult().equals("200")) {
@@ -258,8 +258,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * 加载数据
      */
     private void loadData(NewAnalyzeBean analyzeBean){
-        Toast.makeText(getActivity(), analyzeBean.getAttackDefense().getGuestFieldGoal()+"", Toast.LENGTH_SHORT).show();
-        Log.e("wocao", analyzeBean.getAttackDefense().getGuestFieldGoal() + "");
         int progress;
         int homeWin=analyzeBean.getBothRecord().getHome().getHistoryWin();
         int guestWin=analyzeBean.getBothRecord().getGuest().getHistoryWin();
@@ -270,7 +268,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         } else if (guestWin == 0) {
             progress = 100;
         } else {
-            progress = homeWin * 100 / guestWin;
+            progress = homeWin * 100 / (guestWin+homeWin);
         }
         mProgressBar.setProgress(progress);
         mProgressHomeWin.setText(homeWin + "胜");
@@ -334,8 +332,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mHomeTeamName.setText(entity.getHome().getTeam());
         mGuestTeamName.setText(entity.getGuest().getTeam());
 
-        List<PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
-        List<PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
+        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
+        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
 
         if(getActivity()!=null){
             mContext=getActivity();
@@ -392,13 +390,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * @param recent
      */
     private void setRecent(ImageView mImage, int recent) {
-        if(recent==0){
+        if(recent==0){ //平
             mImage.setBackgroundResource(R.mipmap.basket_draw);
         }
-        if (recent == 2) {
+        if (recent == 2) { //输
             mImage.setBackgroundResource(R.mipmap.basket_lose);
         }
-        if (recent == 1) {
+        if (recent == 1) { //赢
             mImage.setBackgroundResource(R.mipmap.basket_win);
         }
 
@@ -409,7 +407,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.football_analyze_more_record:
                 Intent intent=new Intent(getActivity(),FootballAnalyzeDetailsActivity.class);
-                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID,"78235");
+                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID,mParam1);
                 startActivity(intent);
                 break;
             case R.id.football_analyze_integral_table:
