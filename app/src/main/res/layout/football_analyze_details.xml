@@ -105,7 +105,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/basket_score_gray" />
+                        android:background="@color/linecolor" />
                     <LinearLayout
                         android:id="@+id/football_analyze_details_history"
                         android:layout_width="match_parent"
@@ -191,7 +191,7 @@
                             android:layout_height="1px"
                             android:layout_marginLeft="@dimen/margin_standard"
                             android:layout_marginRight="@dimen/margin_standard"
-                            android:background="@color/basket_score_gray"/>
+                            android:background="@color/linecolor"/>
                     </LinearLayout>
 
                     <!--<View-->
@@ -246,7 +246,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/basket_score_gray" />
+                        android:background="@color/linecolor" />
 
                     <LinearLayout
                         android:id="@+id/football_analyze_details_recent_guest"
@@ -334,7 +334,7 @@
                             android:layout_height="1px"
                             android:layout_marginLeft="@dimen/margin_standard"
                             android:layout_marginRight="@dimen/margin_standard"
-                            android:background="@color/basket_score_gray" />
+                            android:background="@color/linecolor" />
                     </LinearLayout>
 
                     <!--<View-->
@@ -447,7 +447,7 @@
                             android:layout_height="1px"
                             android:layout_marginLeft="@dimen/margin_standard"
                             android:layout_marginRight="@dimen/margin_standard"
-                            android:background="@color/basket_score_gray" />
+                            android:background="@color/linecolor" />
                     </LinearLayout>
 
                     <!--<View-->
@@ -493,7 +493,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/basket_score_gray" />
+                        android:background="@color/linecolor" />
 
                     <LinearLayout
                         android:id="@+id/football_analyze_details_future_guest"
@@ -562,7 +562,7 @@
                             android:layout_height="1px"
                             android:layout_marginLeft="@dimen/margin_standard"
                             android:layout_marginRight="@dimen/margin_standard"
-                            android:background="@color/basket_score_gray" />
+                            android:background="@color/linecolor" />
 
                         <com.hhly.mlottery.widget.NestedListView
                             android:id="@+id/football_future_exploits_list"
@@ -652,7 +652,7 @@
                             android:layout_height="1px"
                             android:layout_marginLeft="@dimen/margin_standard"
                             android:layout_marginRight="@dimen/margin_standard"
-                            android:background="@color/basket_score_gray" />
+                            android:background="@color/linecolor" />
 
                         <com.hhly.mlottery.widget.NestedListView
                             android:id="@+id/football_future_exploits_list_to"
