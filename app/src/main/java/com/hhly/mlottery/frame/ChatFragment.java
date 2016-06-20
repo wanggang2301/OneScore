@@ -87,17 +87,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
         initListView();
-        //获取评论的一切信息
-        if (!TextUtils.isEmpty(souceid)) {
-            if (isShowComment) {
-                loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
-            } else {
-                loadTopic(souceid, title, 0);
-            }
-
-        }
         pullUpLoad();//上拉加载更多
-        model = DeviceInfo.getModel().replace(" ", "");
         return mView;
     }
 
@@ -116,6 +106,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
+        model = DeviceInfo.getModel().replace(" ", "");
     }
 
     private void initListView() {
@@ -198,6 +189,15 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
 
         });
+        //获取评论的一切信息
+        if (!TextUtils.isEmpty(souceid)) {
+            if (isShowComment) {
+                loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
+            } else {
+                loadTopic(souceid, title, 0);
+            }
+
+        }
     }
 
     //上拉加载
@@ -291,9 +291,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         decview.getWindowVisibleDisplayFrame(r);
         int screenheight = decview.getRootView().getHeight();
         int h = screenheight - r.bottom;
-//                Log.e("lzfh", h + "");
-//                Log.e("lzfr.bottom", r.bottom + "");
-//                Log.e("lzfscreenheight", screenheight + "");
         if (h > 300) {//软键盘显示
             mSend.setVisibility(View.VISIBLE);
             mCommentCount.setVisibility(View.GONE);
@@ -340,11 +337,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 ScrollView.LayoutParams lp = (ScrollView.LayoutParams) scrollview.getLayoutParams();
                 lp.setMargins(0, 0, 0, h - def);
             }
-//            ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) scrollview.getLayoutParams();
-//            lp.setMargins(0, 0, 0, h - def);
-//            int x= DisplayUtil.px2dip(WebActivity.this, h - def);
-//            Log.e("lzfh - def", (h - def) + "");
-
             scrollview.requestLayout();
         }
     }
@@ -384,11 +376,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 MobclickAgent.onEvent(mContext, "Football_DataInfo_CommentCount");
                 Intent intent = new Intent(mContext, CounselCommentActivity.class);
                 intent.putExtra(CyUtils.INTENT_PARAMS_SID, souceid);
-                L.i("lzfsouceidfg" + souceid);
                 intent.putExtra(CyUtils.INTENT_PARAMS_TITLE, title);
                 startActivityForResult(intent, CyUtils.JUMP_QUESTCODE);
-//                startActivity(intent);
-
                 break;
         }
 
@@ -474,7 +463,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         //接收登录华海成功返回
         if (requestCode == 3) {
             if (resultCode == CyUtils.RESULT_OK) {
-//                ToastTools.ShowQuickCenter(getActivity(),"接收登录华海成功返回");
                 if (CommonUtils.isLogin()) {
                     CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                 }
