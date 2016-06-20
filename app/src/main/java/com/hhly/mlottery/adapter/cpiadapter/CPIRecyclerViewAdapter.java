@@ -90,8 +90,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
     @Override
     public CPIViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(context).inflate(R.layout.item_cpi_odds, viewGroup, false);
-        CPIViewHolder nvh = new CPIViewHolder(v);
-        return nvh;
+        return new CPIViewHolder(v);
     }
 
     @Override
@@ -113,18 +112,17 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
 
         final NewOddsInfo.AllInfoBean allInfoBean = mAllInfoBean.get(position);
         final NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = allInfoBean.getMatchInfo();
-        NewOddsInfo.AllInfoBean.MatchInfoBean matchInfoBean = matchInfo;
         //获得联赛名称
         cpiViewHolder.cpi_item_leagueName_txt.setText(allInfoBean.getLeagueName());
         cpiViewHolder.cpi_item_leagueName_txt.setTextColor(Color.parseColor(allInfoBean.getLeagueColor()));
         //比赛时间
-        cpiViewHolder.cpi_item_time_txt.setText(matchInfoBean.getOpenTime());
+        cpiViewHolder.cpi_item_time_txt.setText(matchInfo.getOpenTime());
         //如果推送即时比赛开赛了
-        if (matchInfoBean.isShowTitle()) {
+        if (matchInfo.isShowTitle()) {
             cpiViewHolder.cpi_item_layout.setVisibility(View.VISIBLE);
-            cpiViewHolder.cpi_item_keepTime_txt.setText(matchInfoBean.getKeepTime());
+            cpiViewHolder.cpi_item_keepTime_txt.setText(matchInfo.getKeepTime());
 
-            String maybeTime = matchInfoBean.getKeepTime();
+            String maybeTime = matchInfo.getKeepTime();
             if (maybeTime.indexOf("+") > 0) {
                 maybeTime = maybeTime.substring(0, maybeTime.length() - 1);
             }
@@ -146,45 +144,49 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             cpiViewHolder.tv_tag.setVisibility(View.VISIBLE);
         }
         //比赛的主客队名称和比分
-        if ("0".equals(matchInfoBean.getMatchState())) {
+        if ("0".equals(matchInfo.getMatchState())) {
             //未开赛
-            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
-                    "&nbsp;" + "VS" + "&nbsp;" + matchInfoBean.getMatchGuestName()));
+            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
+                    "&nbsp;" + "VS" + "&nbsp;" + matchInfo.getMatchGuestName()));
         } else { //开赛
-            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfoBean.getMatchHomeName() +
-                    "<font color=#ff0000>&nbsp;" + matchInfoBean.getMatchResult() + "</font>&nbsp;" + matchInfoBean.getMatchGuestName()));
+            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
+                    "<font color=#ff0000>&nbsp;" + matchInfo.getMatchResult() + "</font>&nbsp;" + matchInfo.getMatchGuestName()));
         }
         //亚盘
-        if (stType.equals(CPIFragment.TYPE_PLATE)) {
-            for (int i = 0; i < allInfoBean.getComList().size(); i++) {
-                //亚盘如果降
-                if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
-                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
+        switch (stType) {
+            case CPIFragment.TYPE_PLATE:
+                for (int i = 0; i < allInfoBean.getComList().size(); i++) {
+                    //亚盘如果降
+                    if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
+                        allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
+                    }
+                    //亚盘如果升
+                    else if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
+                        allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
+                    } else {
+                        allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
+                    }
                 }
-                //亚盘如果升
-                else if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
-                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
-                } else {
-                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
+                cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
+                break;
+            case CPIFragment.TYPE_BIG:
+                for (int i = 0; i < allInfoBean.getComList().size(); i++) {
+                    //大小球如果降
+                    if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
+                        allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
+                    }
+                    //大小球如果升
+                    else if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
+                        allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
+                    } else {
+                        allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
+                    }
                 }
-            }
-            cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
-        } else if (stType.equals(CPIFragment.TYPE_BIG)) {
-            for (int i = 0; i < allInfoBean.getComList().size(); i++) {
-                //大小球如果降
-                if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == -1) {
-                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("green");
-                }
-                //大小球如果升
-                else if (allInfoBean.getComList().get(i).getCurrLevel().getMiddleUp() == 1) {
-                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("red");
-                } else {
-                    allInfoBean.getComList().get(i).getCurrLevel().setCurrTextBgColor("black");
-                }
-            }
-            cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
-        } else {
-            cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
+                cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
+                break;
+            default:
+                cardViewListAdapter = new CardViewListAdapter(context, allInfoBean.getComList(), stType);
+                break;
         }
 
         if ("0".equals(matchInfo.getMatchState())) {
@@ -211,7 +213,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             cpiViewHolder.tv_tag.setText(R.string.fragme_home_tuichi_text);
         }
 
-        cpiViewHolder.item_cpi_odds_listview.setDivider(context.getResources().getDrawable(R.color.homwe_grey));
+        cpiViewHolder.item_cpi_odds_listview.setDivider(ContextCompat.getDrawable(context, R.color.homwe_grey));
         cpiViewHolder.item_cpi_odds_listview.setDividerHeight(1);
         cpiViewHolder.item_cpi_odds_listview.setAdapter(cardViewListAdapter);
         new CpiListView(context).setListViewHeightBasedOnChildren(cpiViewHolder.item_cpi_odds_listview);
