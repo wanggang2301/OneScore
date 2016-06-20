@@ -65,6 +65,7 @@
             android:layout_weight="2"
             android:gravity="center"
             android:text="巴萨"
+            android:singleLine="true"
             android:textColor="@color/football_analyze_default_color"
             android:textSize="@dimen/text_size_10" />
 
