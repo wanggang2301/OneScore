@@ -59,6 +59,7 @@
     <string name="nodata_txt">沒有更多數據!</string>
     <string name="loading_data_txt">正在加載中...</string>
     <string name="not_start_txt">未開</string>
+    <string name="not_start_short_txt">未</string>
     <string name="pause_txt">中場</string>
     <string name="finish_txt">完場</string>
     <string name="finished_txt">完場</string>

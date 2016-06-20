@@ -35,6 +35,7 @@ import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
 import com.hhly.mlottery.bean.websocket.WebFootBallSocketTime;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.UiUtils;
@@ -153,8 +154,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread.start();
 //        }
         try {
-//            hSocketUri = new URI(BaseURLs.URL_CPI_SOCKET);
-            hSocketUri = new URI("ws://192.168.10.242:61634");
+            hSocketUri = new URI(BaseURLs.URL_CPI_SOCKET);
+//            hSocketUri = new URI("ws://192.168.10.242:61634");
 //			hSocketUri = new URI("ws://m.1332255.com/ws/USER.topic.indexcenter");
 //            hSocketUri = new URI("ws://m.13322.com/ws");
         } catch (URISyntaxException e) {
