@@ -439,7 +439,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         mViewPager.setAdapter(mPagerAdapter);
         int currentIndex = (Integer.MAX_VALUE / 2) % adsurl.size() == 0 ? (Integer.MAX_VALUE / 2) : (Integer.MAX_VALUE / 2) - (Integer.MAX_VALUE / 2) % adsurl.size();
         mViewPager.setCurrentItem(currentIndex);// 设置当前轮播图下标
-        mTextView.setText(mAdsList
+        mTextView.      setText(mAdsList
                 .get(0).getTitle());
         // 绑定动作监听器
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
