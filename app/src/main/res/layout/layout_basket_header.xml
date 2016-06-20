@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/flexible_space_image_height"
         android:background="@android:color/transparent"
-        android:paddingTop="@dimen/basket_header_height"
+        android:paddingTop="?attr/actionBarSize"
         >
 
         <RelativeLayout

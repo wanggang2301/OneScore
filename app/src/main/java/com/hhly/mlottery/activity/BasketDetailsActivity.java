@@ -1417,10 +1417,11 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
 
         @Override
         protected Fragment createItem(int position) {
-            BasketDetailsBaseFragment f;
+            Fragment f;
             switch (position) {
                 case 0: {
-                    f = new BasketAnalyzeFragment();
+//                    f = new BasketAnalyzeFragment();
+                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
                     break;
                 }
                 case 1: {

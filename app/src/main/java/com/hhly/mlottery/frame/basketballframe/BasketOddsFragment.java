@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +15,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketOddsAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketOddsDetailsAdapter;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
@@ -28,6 +31,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.ObservableListView;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.hhly.mlottery.widget.NestedListView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -41,7 +45,7 @@ import java.util.Map;
  * <p/>
  * 描述：篮球 欧赔亚盘 大小球
  */
-public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableListView> implements SwipeRefreshLayout.OnRefreshListener ,View.OnClickListener{
+public class BasketOddsFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -60,7 +64,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
     private int mFooterHeight;
     private View mView;
     /**外层listview*/
-    private ObservableListView listView;
+    private ListView listView;
 
     /**
      * 异常界面
@@ -151,12 +155,12 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
                     mProgressBarLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.GONE);
 
-                    BasketDetailsActivity parentActivity =
-                            (BasketDetailsActivity) getActivity();
-                    if (parentActivity != null) {
-                        parentActivity.onScrollChanged(0, (ObservableListView) mView.findViewById(R.id.scroll)); //加上这句是防止刷新完数据后跳下来小头部没有隐藏
-                        //所以调用一下这个方法
-                    }
+//                    BasketDetailsActivityTest parentActivity =
+//                            (BasketDetailsActivityTest) getActivity();
+//                    if (parentActivity != null) {
+//                        parentActivity.onScrollChanged(0, (ObservableListView) mView.findViewById(R.id.scroll)); //加上这句是防止刷新完数据后跳下来小头部没有隐藏
+//                        //所以调用一下这个方法
+//                    }
 
                   //footer view's height is  the screen's  height - title's height(2*53)-item's count*53
                     if(listView.getFooterViewsCount()==1){ //从网络异常到加载成功。footerview的高度需要重新计算。所以先remove掉。再加。
@@ -223,7 +227,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
 
         //异常数据 处理
         mProgressBarLayout= (RelativeLayout) mView.findViewById(R.id.basket_odds_progressbar);
-        listView = (ObservableListView) mView.findViewById(R.id.scroll);
+        listView = (ListView) mView.findViewById(R.id.basket_odds_listview);
         //头部
         View paddingView = new View(getActivity());
         final int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
@@ -258,7 +262,7 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
             mTitleHomeWin.setText(getActivity().getResources().getString(R.string.odd_guest_big_txt));
         }
 
-        listView.addHeaderView(paddingView);
+//        listView.addHeaderView(paddingView);
         listView.addHeaderView(viewTitle);
 
         //无数据界面
@@ -277,20 +281,20 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
         //点击刷新
         errorView.findViewById(R.id.network_exception_reload_btn).setOnClickListener(BasketOddsFragment.this);
 
-        listView.setTouchInterceptionViewGroup((ViewGroup) mView.findViewById(R.id.basket_odds_root));
+//        listView.setTouchInterceptionViewGroup((ViewGroup) mView.findViewById(R.id.basket_odds_root));
 
-        listView.setScrollViewCallbacks(this);
+//        listView.setScrollViewCallbacks(this);
 
-        listView.setSelectionFromTop(0, 0);
-        updateFlexibleSpace(0, mView);
+      //  listView.setSelectionFromTop(0, 0);
+//        updateFlexibleSpace(0, mView);
 
-        mRefreshLayout= (ExactSwipeRefrashLayout) mView.findViewById(R.id.basket_euro_refreshlayout);
-        mRefreshLayout.setColorSchemeResources(R.color.tabhost);
-        mRefreshLayout.setOnRefreshListener(this);
+     //   mRefreshLayout= (ExactSwipeRefrashLayout) mView.findViewById(R.id.basket_euro_refreshlayout);
+     //   mRefreshLayout.setColorSchemeResources(R.color.tabhost);
+//        mRefreshLayout.setOnRefreshListener(this);
     }
 
-    @Override
     public void initData() {
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         Map<String, String> params = new HashMap<>();
         params.put("oddsType", mType);
         params.put("thirdId", mThirdId);
@@ -344,52 +348,52 @@ public class BasketOddsFragment extends BasketDetailsBaseFragment<ObservableList
 
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void setScrollY(int scrollY, int threshold) {
-        ObservableListView listView;
-        View view = getView();
-        if (view == null) {
-            return;
-        }
-            listView = (ObservableListView) view.findViewById(R.id.scroll);
-        if (listView == null) {
-            return;
-        }
-        View firstVisibleChild = listView.getChildAt(0);
-        if (firstVisibleChild != null) {
-            int offset = scrollY;
-            int position = 0;
-            listView.setSelectionFromTop(position, -offset);
-        }
-
-    }
-
-    @Override
-    protected void updateFlexibleSpace(int scrollY, View view) {
-
-        // Also pass this event to parent Activity
-        BasketDetailsActivity parentActivity =
-                (BasketDetailsActivity) getActivity();
-        if (parentActivity != null) {
-                parentActivity.onScrollChanged(scrollY, (ObservableListView) view.findViewById(R.id.scroll));
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshLayout.setRefreshing(false);
-                initData();
-                if (getActivity() != null) {
-                    BasketDetailsActivity basketDetailsActivity= (BasketDetailsActivity) getActivity();
-                    basketDetailsActivity.refreshData();
-                }
-            }
-        }, 1000);
-    }
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    @Override
+//    public void setScrollY(int scrollY, int threshold) {
+//        ObservableListView listView;
+//        View view = getView();
+//        if (view == null) {
+//            return;
+//        }
+//            listView = (ObservableListView) view.findViewById(R.id.scroll);
+//        if (listView == null) {
+//            return;
+//        }
+//        View firstVisibleChild = listView.getChildAt(0);
+//        if (firstVisibleChild != null) {
+//            int offset = scrollY;
+//            int position = 0;
+//            listView.setSelectionFromTop(position, -offset);
+//        }
+//
+//    }
+//
+//    @Override
+//    protected void updateFlexibleSpace(int scrollY, View view) {
+//
+//        // Also pass this event to parent Activity
+//        BasketDetailsActivity parentActivity =
+//                (BasketDetailsActivity) getActivity();
+//        if (parentActivity != null) {
+//                parentActivity.onScrollChanged(scrollY, (ObservableListView) view.findViewById(R.id.scroll));
+//        }
+//    }
+//
+//    @Override
+//    public void onRefresh() {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mRefreshLayout.setRefreshing(false);
+//                initData();
+//                if (getActivity() != null) {
+//                    BasketDetailsActivity basketDetailsActivity= (BasketDetailsActivity) getActivity();
+//                    basketDetailsActivity.refreshData();
+//                }
+//            }
+//        }, 1000);
+//    }
 
     @Override
     public void onResume() {

@@ -191,7 +191,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mHomeFutureLogo= (ImageView) mView.findViewById(R.id.football_home_future_logo);
         mGuestFutureDate= (TextView) mView.findViewById(R.id.football_guest_future_date);
         mGuestFutureName= (TextView) mView.findViewById(R.id.football_guest_future_name);
-        mHomeFutureLogo= (ImageView) mView.findViewById(R.id.football_guest_future_logo);
+        mGuestFutureLogo= (ImageView) mView.findViewById(R.id.football_guest_future_logo);
         //更多战绩
         mTextMoreGame= (TextView) mView.findViewById(R.id.football_analyze_more_record);
         //积分榜
@@ -228,8 +228,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     private void initData() {
         Map<String ,String > params=new HashMap<>();
-        params.put("", "");
-        VolleyContentFast.requestJsonByGet("http://192.168.31.58:8080/mlottery/core/footBallMatch.findAnalysisOverview.do?lang=zh&thirdId=78235",new VolleyContentFast.ResponseSuccessListener<NewAnalyzeBean>() {
+        params.put("thirdId", "337367");
+        VolleyContentFast.requestJsonByGet("http://192.168.31.58:8080/mlottery/core/footBallMatch.findAnalysisOverview.do",params,new VolleyContentFast.ResponseSuccessListener<NewAnalyzeBean>() {
             @Override
             public void onResponse(NewAnalyzeBean analyzeBean) {
                 if (analyzeBean.getResult().equals("200")) {
@@ -240,7 +240,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+                Log.e("AAAAAAAA","zahuishia xiongdi");
             }
         }, NewAnalyzeBean.class);
 
@@ -397,7 +397,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
         if (recent == 2) {
             mImage.setBackgroundResource(R.mipmap.basket_lose);
-        } else if (recent == 1) {
+        }
+        if (recent == 1) {
             mImage.setBackgroundResource(R.mipmap.basket_win);
         }
 

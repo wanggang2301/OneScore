@@ -36,6 +36,7 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
+import com.hhly.mlottery.frame.footframe.TestFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -45,6 +46,7 @@ import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.view.ScrollUtils;
 import com.hhly.mlottery.view.Scrollable;
 import com.hhly.mlottery.view.SlidingTabLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -72,7 +74,7 @@ import java.util.TimerTask;
  * @author yixq
  * Created by A on 2016/3/21.
  */
-public class BasketDetailsActivityTest extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener,View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
+public class BasketDetailsActivityTest extends AppCompatActivity implements ExactSwipeRefrashLayout.OnRefreshListener,AppBarLayout.OnOffsetChangedListener,View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     public final static String BASKET_THIRD_ID = "thirdId";
     //    0:未开赛,1:一节,2:二节,5:1'OT，以此类推
@@ -105,10 +107,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements AppB
     public final static String ODDS_SIZE = "asiaSize";
     private String mThirdId = "936707";
 
-    BasketDetailsBaseFragment mAnalyzeFragment= new BasketAnalyzeFragment();
-    BasketDetailsBaseFragment mOddsEuro=BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
-    BasketDetailsBaseFragment mOddsLet=BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
-    BasketDetailsBaseFragment mOddsSize=BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
+    BasketAnalyzeFragment mAnalyzeFragment= new BasketAnalyzeFragment();
+    BasketOddsFragment mOddsEuro=BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
+    BasketOddsFragment mOddsLet=BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
+    BasketOddsFragment mOddsSize=BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
 
 
 
@@ -198,6 +200,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements AppB
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
 
+    private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,13 +239,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements AppB
             e.printStackTrace();
         }
 
-        try {
             initView();
             setListener();
             loadData();
-        } catch (Exception e) {
-            L.e(e.getMessage());
-        }
+
     }
 
     /**
@@ -332,24 +333,30 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements AppB
         TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_eur),
               getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof)};
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mViewPager = (ViewPager) findViewById(R.id.basket_details_view_pager);
+        appBarLayout = (AppBarLayout) findViewById(R.id.basket_details_appbar);
+        mTabLayout = (TabLayout) findViewById(R.id.basket_details_tab_layout);
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
-        mTabsAdapter.addFragments(mAnalyzeFragment, mOddsEuro, mOddsLet, mOddsSize);
+        mTabsAdapter.setTitles(TITLES);
+        TestFragment test1=TestFragment.newInstance("","");
+        TestFragment test2=TestFragment.newInstance("","");
+        TestFragment test3=TestFragment.newInstance("","");
+        TestFragment test4=TestFragment.newInstance("", "");
+
+
+//        mTabsAdapter.addFragments(test1, test2, test3, test4);
+        mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
         appBarLayout.addOnOffsetChangedListener(this);
 
-        //底部ViewPager(滚球、指数等)
-        mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
-        mTabsAdapter.setTitles(TITLES);
+
 
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -435,6 +442,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements AppB
             }
         });
 
+        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.basket_details_refresh_layout);
+        mRefreshLayout.setColorSchemeResources(R.color.tabhost);
+        mRefreshLayout.setOnRefreshListener(this);
+
         mLeagueName = (TextView) this.findViewById(R.id.basket_details_matches_name);
         mHomeTeam = (TextView) this.findViewById(R.id.basket_details_home_name);
         mGuestTeam = (TextView) this.findViewById(R.id.basket_details_guest_name);
@@ -452,7 +463,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements AppB
         mHomeOt1 = (TextView) this.findViewById(R.id.basket_details_home_ot1);
         mHomeOt2 = (TextView) this.findViewById(R.id.basket_details_home_ot2);
         mHomeOt3 = (TextView) this.findViewById(R.id.basket_details_home_ot3);
-//        mSmallHomeScore = (TextView) this.findViewById(R.id.basket_details_home_small_total);
+        mSmallHomeScore = (TextView) this.findViewById(R.id.basket_details_home_small_total);
 
         mGuest1 = (TextView) this.findViewById(R.id.basket_details_guest_first);
         mGuest2 = (TextView) this.findViewById(R.id.basket_details_guest_second);
@@ -461,17 +472,16 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements AppB
         mGuestOt1 = (TextView) this.findViewById(R.id.basket_details_guest_ot1);
         mGuestOt2 = (TextView) this.findViewById(R.id.basket_details_guest_ot2);
         mGuestOt3 = (TextView) this.findViewById(R.id.basket_details_guest_ot3);
-//        mSmallGuestScore = (TextView) this.findViewById(R.id.basket_details_guest_small_total);
+        mSmallGuestScore = (TextView) this.findViewById(R.id.basket_details_guest_small_total);
 
         mHomeIcon = (ImageView) this.findViewById(R.id.basket_details_home_icon);
         mGuestIcon = (ImageView) this.findViewById(R.id.basket_details_guest_icon);
 
-//        mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
-//        mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
-//        mTitleVS = (TextView) this.findViewById(R.id.title_vs);
+        mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
+        mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
+        mTitleVS = (TextView) this.findViewById(R.id.title_vs);
 
         mHeadImage = (ImageView) this.findViewById(R.id.image_background);
-        // mHeadBlack= (LinearLayout) this.findViewById(R.id.backet_head_black);
 
         mLayoutOt1 = (LinearLayout) this.findViewById(R.id.basket_details_llot1);
         mLayoutOt2 = (LinearLayout) this.findViewById(R.id.basket_details_llot2);
@@ -1281,6 +1291,25 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements AppB
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
+        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < flexibleSpaceImageHeight ) {
+            mRefreshLayout.setEnabled(false);
+        } else {
+            // mRefreshLayout.setEnabled(true);
+            mRefreshLayout.setEnabled(true);
 
+        }
+
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(false);
+                // if (mMatchDetail != null && !"-1".equals(mMatchDetail.getLiveStatus())) {
+            }
+        }, 1000);
     }
 }
