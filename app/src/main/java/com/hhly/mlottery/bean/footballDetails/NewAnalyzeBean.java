@@ -121,6 +121,7 @@ public class NewAnalyzeBean {
     }
 
     public static class LineUpEntity {
+        private String result;
         private List<PlayerInfo> homeLineUp;
         private List<PlayerInfo> guestLineUp;
 
@@ -139,7 +140,17 @@ public class NewAnalyzeBean {
         public List<PlayerInfo> getGuestLineUp() {
             return guestLineUp;
         }
+       public static class PlayerInfo{
+            private String name;
 
+           public String getName() {
+               return name;
+           }
+
+           public void setName(String name) {
+               this.name = name;
+           }
+       }
     }
 
     public static class ScoreRankEntity {

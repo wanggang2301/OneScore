@@ -263,21 +263,21 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
         }
 
 //        listView.addHeaderView(paddingView);
-        listView.addHeaderView(viewTitle);
+   //     listView.addHeaderView(viewTitle);
 
         //无数据界面
         View noDataView =View.inflate(getActivity(), R.layout.basket_odds_nodata,null);
         mNodataLayout= (LinearLayout) noDataView.findViewById(R.id.odds_nodata_container);
         mNodataLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
         mNodataLayout.setVisibility(View.GONE);
-        listView.addHeaderView(noDataView);
-
+//        listView.addHeaderView(noDataView);
+//
         //网络异常的
         View errorView=View.inflate(getActivity(), R.layout.basket_odds_new_error,null);
         mExceptionLayout= (LinearLayout) errorView.findViewById(R.id.basket_odds_net_error);
         mExceptionLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
         mExceptionLayout.setVisibility(View.GONE);
-        listView.addHeaderView(errorView);
+//        listView.addHeaderView(errorView);
         //点击刷新
         errorView.findViewById(R.id.network_exception_reload_btn).setOnClickListener(BasketOddsFragment.this);
 
