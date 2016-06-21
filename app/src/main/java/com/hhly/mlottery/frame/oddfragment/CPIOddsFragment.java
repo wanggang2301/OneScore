@@ -358,11 +358,14 @@ public class CPIOddsFragment extends Fragment {
                     String statusOrigin = webSocketTimeAndScore.getData().get("statusOrigin");
                     int status = Integer.parseInt(statusOrigin);
                     String keepTime = webSocketTimeAndScore.getData().get("keepTime");
+                    matchInfoBean.setMatchState(statusOrigin);
+                    matchInfoBean.setOpenTime(keepTime);
                         /*0:未开, 1:上半场, 2:中场, 3:下半场, 4:加时, 5:点球
                        -1:完场, -10:取消, -11:待定, -12:腰斩, -13:中断, -14:推迟, -100:隐藏. */
-                    if (status < 0) {
+                    /*if (status < 0) {
 
                     }
+                    matchInfoBean.setMatchState(statusOrigin);
                     switch (status) {
                         case 0:
                             matchInfoBean.setIsShowTitle(false);
@@ -423,7 +426,7 @@ public class CPIOddsFragment extends Fragment {
                             break;
                         default:
                             break;
-                    }
+                    }*/
                 } else if ("score".equals(oddType)) {
                     //如果是主客队比分的
                     String matchResult = webSocketTimeAndScore.getData().get("matchResult");

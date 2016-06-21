@@ -10,6 +10,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,7 +97,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
 
     @Override
     public void onBindViewHolder(CPIViewHolder cpiViewHolder, final int position) {
-
+        startInfinateAnimation(cpiViewHolder.cpi_item_seconds_txt);
         if (CPIFragment.TYPE_PLATE.equals(stType)) {
             cpiViewHolder.cpi_item_home_txt.setText(R.string.odd_home_txt);
             cpiViewHolder.cpi_item_odds_txt.setText(R.string.odd_dish_txt);
@@ -132,26 +134,22 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
                         ContextCompat.getColor(context, R.color.colorPrimary));
                 cpiViewHolder.cpi_item_seconds_txt.setVisibility(View.VISIBLE);
+
+                cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
+                        ContextCompat.getColor(context, R.color.colorPrimary));
             } catch (Exception e) {
                 e.printStackTrace();
                 cpiViewHolder.cpi_item_keepTime_txt.setTextColor(
                         ContextCompat.getColor(context, R.color.analyze_left));
                 cpiViewHolder.cpi_item_seconds_txt.setVisibility(View.GONE);
             }
-
+            cpiViewHolder.cpi_item_time_txt.setVisibility(View.GONE);
             cpiViewHolder.tv_tag.setVisibility(View.GONE);
         } else {
-            cpiViewHolder.tv_tag.setVisibility(View.VISIBLE);
+            cpiViewHolder.tv_tag.setVisibility(View.GONE);
+            cpiViewHolder.cpi_item_layout.setVisibility(View.GONE);
         }
-        //比赛的主客队名称和比分
-        if ("0".equals(matchInfo.getMatchState())) {
-            //未开赛
-            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
-                    "&nbsp;" + "VS" + "&nbsp;" + matchInfo.getMatchGuestName()));
-        } else { //开赛
-            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
-                    "<font color=#ff0000>&nbsp;" + matchInfo.getMatchResult() + "</font>&nbsp;" + matchInfo.getMatchGuestName()));
-        }
+
         //亚盘
         switch (stType) {
             case CPIFragment.TYPE_PLATE:
@@ -189,6 +187,15 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 break;
         }
 
+        //比赛的主客队名称和比分
+        if ("0".equals(matchInfo.getMatchState())) {
+            //未开赛
+            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
+                    "&nbsp;" + "VS" + "&nbsp;" + matchInfo.getMatchGuestName()));
+        } else { //开赛
+            cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() +
+                    "<font color=#ff0000>&nbsp;" + matchInfo.getMatchResult() + "</font>&nbsp;" + matchInfo.getMatchGuestName()));
+        }
         if ("0".equals(matchInfo.getMatchState())) {
             cpiViewHolder.tv_tag.setTextColor(
                     ContextCompat.getColor(context, R.color.textcolor_football_footer_normal));
@@ -211,6 +218,19 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         } else if ("-14".equals(matchInfo.getMatchState())) {
             cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.analyze_left));
             cpiViewHolder.tv_tag.setText(R.string.fragme_home_tuichi_text);
+        }
+        try {
+            int stateInt = Integer.parseInt(matchInfo.getMatchState());
+            if (stateInt > 0) {
+                cpiViewHolder.cpi_scoreAndName_txt.setText(Html.fromHtml(matchInfo.getMatchHomeName() + "<font color=#0085e1>&nbsp;"
+                        + matchInfo.getMatchResult() + "</font>&nbsp;" + matchInfo.getMatchGuestName()));
+                cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                cpiViewHolder.cpi_item_time_txt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            } else {
+//                cpiViewHolder.cpi_item_time_txt.setTextColor(ContextCompat.getColor(context, android.R.attr.textColorSecondary));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         cpiViewHolder.item_cpi_odds_listview.setDivider(ContextCompat.getDrawable(context, R.color.homwe_grey));
@@ -279,6 +299,49 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         mAllInfoBean.clear();
         cardViewListAdapter.cardViewclearData();
         notifyDataSetChanged();
+    }
+
+    private void startInfinateAnimation(final View view) {
+        final AlphaAnimation alphaAnimation1 = new AlphaAnimation(1, 1);
+        alphaAnimation1.setDuration(500);
+        final AlphaAnimation alphaAnimation0 = new AlphaAnimation(0, 0);
+        alphaAnimation0.setDuration(500);
+        alphaAnimation1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.startAnimation(alphaAnimation0);
+            }
+        });
+
+        alphaAnimation0.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.startAnimation(alphaAnimation1);
+
+            }
+        });
+        view.startAnimation(alphaAnimation1);
     }
 
 }

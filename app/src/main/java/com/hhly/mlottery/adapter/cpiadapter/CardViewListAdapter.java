@@ -58,7 +58,7 @@ public class CardViewListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ListViewItem item;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_cpi_odds_list, null);
+            convertView = mInflater.inflate(R.layout.item_cpi_odds_list, parent, false);
             item = new ListViewItem(convertView);
             convertView.setTag(item);
         } else {
