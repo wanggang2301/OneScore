@@ -120,7 +120,7 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private boolean isNULLOrEmpty(String s) {
-        if (s == null || "".equals(s) || "null".equals(s)) {
+        if (s == null || "".equals(s)) {
             return true;
         } else {
             return false;

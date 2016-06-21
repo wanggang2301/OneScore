@@ -599,7 +599,7 @@
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
     </style>
     <!-- 业务选择弹框activity样式 -->
-    <style name="MyDialogStyleTop" parent="android:Theme.Dialog" >
+    <style name="MyDialogStyleTop" parent="android:Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/AnimTop2</item>
         <item name="android:windowFrame">@null</item>边框
         <item name="android:windowIsFloating">true</item>是否浮现在activity之上
@@ -608,4 +608,6 @@
         <item name="android:windowBackground">@android:color/transparent</item>背景透明
         <item name="android:backgroundDimEnabled">false</item>false不模糊
     </style>
+
+
 </resources>

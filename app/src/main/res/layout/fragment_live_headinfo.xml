@@ -7,45 +7,30 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layout_match_header_team_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:gravity="center">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/home_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="主队"
-                android:textColor="@color/white"
-                android:textSize="15dp" />
-        </RelativeLayout>
+        android:layout_marginTop="3dp">
 
         <LinearLayout
             android:id="@+id/ll_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp">
+            android:paddingRight="25dp">
 
             <TextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:gravity="center"
+                android:text="-:-"
                 android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:textSize="16sp" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -72,20 +57,31 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/guest_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="客队"
-                android:textColor="@color/white"
-                android:textSize="15dp" />
-        </RelativeLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/home_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/ll_score"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_toLeftOf="@id/ll_score"
+            android:text="主队"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/guest_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/ll_score"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_toRightOf="@id/ll_score"
+            android:text="客队"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15" />
+    </RelativeLayout>
 
 
     <LinearLayout
@@ -274,6 +270,7 @@
             mdy:mdymargin="@dimen/x20"
             mdy:midwidth_proportion="30" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -301,7 +298,7 @@
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="0"
-                    android:textColor="@color/white"
+                    android:textColor="@color/linecolor"
                     android:textSize="@dimen/text_size_10" />
 
                 <TextView
@@ -311,7 +308,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/shoot"
-                    android:textColor="@color/white"
+                    android:textColor="@color/content_txt_light_grad"
                     android:textSize="@dimen/text_size_10" />
 
                 <TextView
@@ -321,7 +318,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="0"
-                    android:textColor="@color/white"
+                    android:textColor="@color/linecolor"
                     android:textSize="@dimen/text_size_10" />
             </LinearLayout>
 
@@ -329,7 +326,7 @@
                 android:id="@+id/pb_shoot"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="5dp"
+                android:layout_height="3dp"
                 android:max="100"
                 android:progress="50"
                 android:progressDrawable="@drawable/pro" />
@@ -355,7 +352,7 @@
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="0"
-                    android:textColor="@color/white"
+                    android:textColor="@color/linecolor"
                     android:textSize="@dimen/text_size_10" />
 
                 <TextView
@@ -365,7 +362,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/danger_attack_txt"
-                    android:textColor="@color/white"
+                    android:textColor="@color/content_txt_light_grad"
                     android:textSize="@dimen/text_size_10" />
 
                 <TextView
@@ -376,7 +373,7 @@
                     android:gravity="right"
                     android:text="0"
 
-                    android:textColor="@color/white"
+                    android:textColor="@color/linecolor"
                     android:textSize="@dimen/text_size_10" />
             </LinearLayout>
 
@@ -384,9 +381,9 @@
                 android:id="@+id/pb_danger_attack"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="5dp"
+                android:layout_height="3dp"
                 android:max="100"
-                android:progress="25"
+                android:progress="50"
                 android:progressDrawable="@drawable/pro" />
 
 
@@ -397,10 +394,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -421,7 +418,7 @@
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="0"
-                    android:textColor="@color/white"
+                    android:textColor="@color/linecolor"
                     android:textSize="@dimen/text_size_10" />
 
                 <TextView
@@ -431,7 +428,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/shoot_correct_txt"
-                    android:textColor="@color/white"
+                    android:textColor="@color/content_txt_light_grad"
                     android:textSize="@dimen/text_size_10" />
 
                 <TextView
@@ -441,7 +438,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="0"
-                    android:textColor="@color/white"
+                    android:textColor="@color/linecolor"
 
                     android:textSize="@dimen/text_size_10" />
             </LinearLayout>
@@ -450,9 +447,9 @@
                 android:id="@+id/pb_shoot_correct"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="5dp"
+                android:layout_height="3dp"
                 android:max="100"
-                android:progress="66"
+                android:progress="50"
                 android:progressDrawable="@drawable/pro" />
 
 
@@ -479,7 +476,7 @@
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="0"
-                    android:textColor="@color/white"
+                    android:textColor="@color/linecolor"
                     android:textSize="@dimen/text_size_10" />
 
                 <TextView
@@ -489,7 +486,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/shoot_miss_txt"
-                    android:textColor="@color/white"
+                    android:textColor="@color/content_txt_light_grad"
                     android:textSize="@dimen/text_size_10" />
 
                 <TextView
@@ -499,7 +496,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="0"
-                    android:textColor="@color/white"
+                    android:textColor="@color/linecolor"
                     android:textSize="@dimen/text_size_10" />
             </LinearLayout>
 
@@ -507,7 +504,7 @@
                 android:id="@+id/pb_shoot_miss"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="5dp"
+                android:layout_height="3dp"
                 android:max="100"
                 android:progress="50"
                 android:progressDrawable="@drawable/pro" />

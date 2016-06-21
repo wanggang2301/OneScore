@@ -36,7 +36,7 @@ public class BaseURLs {
             }
         }
 
-		return  "m.13322.com";
+        return "m.13322.com";
 
     }
 
@@ -306,6 +306,15 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_URL_MATCHVIDEO_DATA = URL_API_HOST + URL_MATCHVIDEO_DATA;
     // 二期改版首页接口
     private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidMainRsts.do";
+
+
+    //足球内页改版滚球赔率接口和详情接口
+
+    private final static String URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW = "footballBallList.ballListOverview.do";
+
+    private final static String URL_FOOTBALL_DETAIL_BALLLISTDETAIL = "footballBallList.ballListDetail.do";
+
+
     /**
      * 彩票开奖
      */
@@ -477,7 +486,6 @@ public class BaseURLs {
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
 
 
-
     // 赛果
     //  private final static String URL_RESULT = "appMatchResults.findResultOfBallMatch.do";//
 
@@ -545,6 +553,12 @@ public class BaseURLs {
     public final static String URL_HOME_PAGER_INFO = URL_API_HOST + URL_HOME_PAGER_DATA;
 
     // 版本更新"http://192.168.10.66:8080/mlottery/core/apkDownload.apkUpdate.do";
+
+
+    //足球内页滚球赔率
+    public final static String URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW;
+
+    public final static String URL_FOOTBALL_DETAIL_BALLLISTDETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_BALLLISTDETAIL;
 
 
     // 首页数据测试URL
@@ -644,21 +658,30 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfo.do";
 
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
-    /**新版指数*/
+    /**
+     * 新版指数
+     */
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
     public final static String URL_STARTPIC = URL_API_HOST + STARTPIC;
-    /**发送验证码*/
+    /**
+     * 发送验证码
+     */
     public final static String URL_SENDSMSCODE = URL_API_HOST + "androidUserCenter.sendSmsCode.do";
-    /**注册*/
+    /**
+     * 注册
+     */
     public final static String URL_REGISTER = URL_API_HOST + "androidUserCenter.register.do";
-    /**登录*/
+    /**
+     * 登录
+     */
     public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
-    /**登出*/
+    /**
+     * 登出
+     */
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
-
 
 
 }
