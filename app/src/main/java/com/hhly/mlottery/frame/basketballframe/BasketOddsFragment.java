@@ -144,6 +144,7 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
                     mExceptionLayout.setVisibility(View.GONE);
                     mProgressBarLayout.setVisibility(View.VISIBLE);
                     mNodataLayout.setVisibility(View.GONE);
+                    listView.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_SUCCESS:
 
@@ -164,6 +165,7 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
                     mNodataLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.VISIBLE);
                     mNodataLayout.setVisibility(View.GONE);
+                    listView.setVisibility(View.GONE);
                     break;
             }
         }
