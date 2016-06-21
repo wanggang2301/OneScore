@@ -10,7 +10,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,7 +25,6 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ShareConstants;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
@@ -72,18 +70,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         initView();
         initData();
         initEvent();
-    }
-
-    int x = 0;
-
-    public void initAnimosion(int endy) {
-        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, x, x + endy);
-        translateAnimation.setDuration(0);
-        translateAnimation.setFillAfter(true);
-        mTv_check_info.startAnimation(translateAnimation);
-        x -= endy;
-        ToastTools.ShowQuickCenter(WebActivity.this, x + "");
-
     }
 
     private void initEvent() {
