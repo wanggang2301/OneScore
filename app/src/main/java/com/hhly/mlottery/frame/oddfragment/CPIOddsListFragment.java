@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.oddfragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -15,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerListAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.config.BaseURLs;
@@ -99,13 +101,25 @@ public class CPIOddsListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        // attach 的时候获取父 Fragment
         parentFragment = (CPINewFragment) getParentFragment();
     }
 
+    /**
+     * 初始化 RecyclerView
+     */
     private void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         datas = new ArrayList<>();
         mAdapter = new CPIRecyclerListAdapter(datas, type);
+        mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(NewOddsInfo.AllInfoBean item) {
+                Intent intent = new Intent(getContext(), FootballMatchDetailActivity.class);
+                intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
+                getContext().startActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 

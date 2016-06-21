@@ -25,9 +25,15 @@ import java.util.List;
  */
 public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerListAdapter.ViewHolder> {
 
-    private String type;
+    private String type; // 类型
 
-    private List<NewOddsInfo.AllInfoBean> items;
+    private List<NewOddsInfo.AllInfoBean> items; // 数据源
+
+    private OnItemClickListener onItemClickListener; // 监听器
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public CPIRecyclerListAdapter(@NonNull List<NewOddsInfo.AllInfoBean> items,
                                   @CPIOddsListFragment.Type String type) {
@@ -43,9 +49,18 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         // 直接调用 holder 的 绑定数据方法
         holder.bindData(items.get(position));
+        // 设置点击监听
+        if (onItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(items.get(holder.getAdapterPosition()));
+                }
+            });
+        }
     }
 
     @Override
@@ -230,5 +245,9 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
                 redColor = ContextCompat.getColor(mContext, R.color.analyze_left);
             }
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(NewOddsInfo.AllInfoBean item);
     }
 }
