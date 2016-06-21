@@ -8,11 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsListFragment;
+import com.hhly.mlottery.widget.CpiOddsItemView;
 
 import java.util.List;
 
@@ -68,6 +70,8 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
         TextView mCenterOddsTitle; // 中标题
         TextView mRightOddsTitle; // 右标题
 
+        LinearLayout mContainer; // 赔率信息容器
+
         int defaultTextColor;
         int primaryColor;
         int redColor;
@@ -88,6 +92,9 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
             mLeftOddsTitle = (TextView) itemView.findViewById(R.id.cpi_item_home_txt);
             mCenterOddsTitle = (TextView) itemView.findViewById(R.id.cpi_item_odds_txt);
             mRightOddsTitle = (TextView) itemView.findViewById(R.id.cpi_item_guest_txt);
+
+            mContainer = (LinearLayout) itemView.findViewById(R.id.odds_container);
+
             setTitleText();
         }
 
@@ -132,6 +139,27 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
             }
 
             setStatusText(intState);
+            bindOdds(data);
+        }
+
+        /**
+         * 绑定赔率信息
+         *
+         * @param data data
+         */
+        private void bindOdds(NewOddsInfo.AllInfoBean data) {
+            mContainer.removeAllViews();
+            List<NewOddsInfo.AllInfoBean.ComListBean> comList = data.getComList();
+            for (NewOddsInfo.AllInfoBean.ComListBean item : comList) {
+                CpiOddsItemView cpiOddsItemView = new CpiOddsItemView(mContext);
+                cpiOddsItemView.bindData(item, type);
+                mContainer.addView(cpiOddsItemView);
+                if (comList.indexOf(item) != comList.size() - 1) {
+                    cpiOddsItemView.showDivider();
+                } else {
+                    cpiOddsItemView.hideDivider();
+                }
+            }
         }
 
         /**
