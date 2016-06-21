@@ -147,13 +147,17 @@ public class CPIOddsListFragment extends Fragment {
                 new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
                     @Override
                     public void onResponse(NewOddsInfo jsonObject) {
-                        // 获取当前日期并返回给 CPINewFragment
-                        String currentDate = jsonObject.getCurrDate().trim();
-                        parentFragment.setCurrentDate(currentDate);
+
                         datas.clear();
                         datas.addAll(jsonObject.getAllInfo());
                         mAdapter.notifyDataSetChanged();
-                        parentFragment.setRefreshing(false);
+                        // 只有当前的 Fragment 刷新成功才可以停止刷新行为
+                        if (parentFragment.getCurrentFragment() == CPIOddsListFragment.this) {
+                            // 获取当前日期并返回给 CPINewFragment
+                            String currentDate = jsonObject.getCurrDate().trim();
+                            parentFragment.setCurrentDate(currentDate);
+                            parentFragment.setRefreshing(false);
+                        }
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override

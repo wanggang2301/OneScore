@@ -149,6 +149,15 @@ public class CPINewFragment extends Fragment {
         mRefreshLayout.setRefreshing(b);
     }
 
+    /**
+     * 获取当前前台显示的 ViewPager 中的 Fragment
+     *
+     * @return CPIOddsListFragment
+     */
+    public CPIOddsListFragment getCurrentFragment() {
+        return mFragments.get(mViewPager.getCurrentItem());
+    }
+
     public void refreshAllChildFragments() {
         for (CPIOddsListFragment fragment : mFragments) {
             // 第一次刷新的时候 currentDate 为 null，之后都不会为 null
