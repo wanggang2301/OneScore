@@ -74,7 +74,7 @@ import java.util.TimerTask;
 import de.greenrobot.event.EventBus;
 
 /**
- * 篮球比分fragment
+ * 篮球比分fragment （即时）
  * Created by yixq on 2015/12/30.
  */
 public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
@@ -120,13 +120,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     private LinearLayout mErrorLayout;
     private TextView mReloadTvBtn;// 刷新 控件
 
-    //    private ImageView mIb_back;//返回按钮
-    //    private TextView mTittle; //标题头
-//    private ImageView mFilterImgBtn = BasketScoresFragment.getmFilterImgBtn();// 筛选
-//    private ImageView mSetting = BasketScoresFragment.getmSetting();//设置按钮
-
-
-
     private Intent mIntent;
 
     private boolean isScroll = false; //是否处于划定状态
@@ -164,10 +157,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * 关注事件EventBus
      */
     public static EventBus BasketImmedEventBus;
-//    public static EventBus BasketResultEventBus;
-//    public static EventBus BasketScheduleEventBus;
-//    public static EventBus BasketFocusEventBus;
-
 
     /**
      * 切换后更新显示的fragment
@@ -202,25 +191,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         }
         BasketImmedEventBus=new EventBus();
         BasketImmedEventBus.register(this);
-
-//        switch (mBasketballType){
-//            case TYPE_IMMEDIATE:
-//                BasketImmedEventBus=new EventBus();
-//                BasketImmedEventBus.register(this);
-//                break;
-//            case TYPE_RESULT:
-//                BasketResultEventBus = new EventBus();
-//                BasketResultEventBus.register(this);
-//                break;
-//            case TYPE_SCHEDULE:
-//                BasketScheduleEventBus = new EventBus();
-//                BasketScheduleEventBus.register(this);
-//                break;
-//            case TYPE_FOCUS:
-//                BasketFocusEventBus = new EventBus();
-//                BasketFocusEventBus.register(this);
-//                break;
-//        }
     }
 
     /**
