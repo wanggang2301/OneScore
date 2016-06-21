@@ -279,12 +279,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             //比分模拟推送
 //            ws_json = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
 
-
-            if (isFirstTime) {
-                ws_json = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'338231','type':1}  ";
-            } else {
-                ws_json = "{'data':{'keepTime':49,'statusOrigin':0},'thirdId':'338231','type':1}  ";
-            }
             JSONObject jsonObject = JSON.parseObject(ws_json);
             int type = jsonObject.getInteger("type");
 
@@ -528,6 +522,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.d("currentDate", currentDate);
                 if (isVisible) {
                     for (Fragment fragment : fragments) {
                         ((CPIOddsFragment) fragment).switchd("", 0);
@@ -582,6 +577,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     selectPosition = position;
                     //点击之后给date赋值
                     currentDate = mMapList.get(position).get("date");
+                    Log.d("currentDate", "changedTo: " + currentDate);
                     //设置标题时间
                     public_txt_date.setText(currentDate);
 

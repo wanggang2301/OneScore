@@ -146,7 +146,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
             cpiViewHolder.cpi_item_time_txt.setVisibility(View.GONE);
             cpiViewHolder.tv_tag.setVisibility(View.GONE);
         } else {
-            cpiViewHolder.tv_tag.setVisibility(View.VISIBLE);
+            cpiViewHolder.tv_tag.setVisibility(View.GONE);
             cpiViewHolder.cpi_item_layout.setVisibility(View.GONE);
         }
 
