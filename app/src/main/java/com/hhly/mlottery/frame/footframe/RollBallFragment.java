@@ -109,7 +109,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private List<Match> allDataLists; // 所有数据
     private List<Match> feedAdapterLists; // 要展示的数据
 
-
     public static RollBallFragment newInstance(int index) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
@@ -209,8 +208,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public void onDestroyView() {
         super.onDestroyView();
         eventBus.unregister(this);
-        if (adapter != null && adapter.getSubscription() != null)
-            if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();
+        /*if (adapter != null && adapter.getSubscription() != null)
+            if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();*/
         if (subscription.isUnsubscribed()) subscription.unsubscribe();
         if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
         if (adapter != null) adapter.getSharedPreperences().edit().clear().commit();

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -29,7 +28,6 @@ import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -37,23 +35,23 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
+     /*private boolean notify_locked_tag;
+    private Subscription subscription;
+    private List<Object> cacheWebSocketPushData = new ArrayList<>();*/
+
     public static final int VIEW_TYPE_DEFAULT = 1;
 
     private int topDataCount = Integer.MAX_VALUE;
-    private boolean notify_locked_tag;
     private int handicap;
     private Map<Match, Boolean> isTopDataCacheMaps = new HashMap<>();
-    private List<Object> cacheWebSocketPushData = new ArrayList<>();
 
     private Context context;
     private boolean resetColor;
-    private Subscription subscription;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -110,7 +108,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         final Match data = getItemByPosition(position);
         if (data == null) return;
 
-        notify_locked_tag = true;
+//        notify_locked_tag = true;
         final CardView container = viewHolder.findViewById(R.id.container);
         RelativeLayout rlHalfContainer = viewHolder.findViewById(R.id.rlHalfContainer);
         TextView tvRaceName = viewHolder.findViewById(R.id.tvRaceName);
@@ -372,11 +370,12 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 RollBallAdapter.this.transformMapper(position);
             }
         });
-
+/*
         subscription = RxBus.getDefault().toObserverable().subscribe(new Action1<Object>() {
                                                                          @Override
                                                                          public void call(Object o) {
                                                                              if (o == null) {
+                                                                                 Log.e("HILO","cacheWebSocketPushData.size() = " + cacheWebSocketPushData.size());
                                                                                  notify_locked_tag = false;
                                                                                  if (cacheWebSocketPushData != null && cacheWebSocketPushData.size() > 0) {
                                                                                      updateItemFromWebSocket(cacheWebSocketPushData.get(0));
@@ -385,7 +384,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                                                                              }
                                                                          }
                                                                      }
-        );
+        );*/
     }
 
     private void startShuffleAnimation(final TextView keepTimeShuffle) {
@@ -439,9 +438,9 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    public Subscription getSubscription() {
+    /*public Subscription getSubscription() {
         return subscription;
-    }
+    }*/
 
     private void setupKeepTimeStyle(TextView keepTime, TextView keepTimeShuffle, String text, int color, boolean isShowShuffle) {
         if (isShowShuffle) {
@@ -498,24 +497,24 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     // WebSocket推送消息分发处理
     public void updateItemFromWebSocket(Object o) {
         List<Match> matchList = getList();
-        if (!notify_locked_tag) {
-            for (int i = 0; i < matchList.size(); i++) {
-                Match match = matchList.get(i);
-                if (o instanceof WebSocketMatchStatus) {
-                    this.updateTypeStatus(match, i, (WebSocketMatchStatus) o);
-                } else if (o instanceof WebSocketMatchOdd) {
-                    this.updateTypeOdds(match, i, (WebSocketMatchOdd) o);
-                } else if (o instanceof WebSocketMatchEvent) {
-                    this.updateTypeEvent(match, i, (WebSocketMatchEvent) o);
-                } else if (o instanceof WebSocketMatchChange) {
-                    this.updateTypeMatchChange(match, i, (WebSocketMatchChange) o);
-                }
+        /*if (!notify_locked_tag) {*/
+        for (int i = 0; i < matchList.size(); i++) {
+            Match match = matchList.get(i);
+            if (o instanceof WebSocketMatchStatus) {
+                this.updateTypeStatus(match, i, (WebSocketMatchStatus) o);
+            } else if (o instanceof WebSocketMatchOdd) {
+                this.updateTypeOdds(match, i, (WebSocketMatchOdd) o);
+            } else if (o instanceof WebSocketMatchEvent) {
+                this.updateTypeEvent(match, i, (WebSocketMatchEvent) o);
+            } else if (o instanceof WebSocketMatchChange) {
+                this.updateTypeMatchChange(match, i, (WebSocketMatchChange) o);
             }
-        } else {
-            cacheWebSocketPushData.add(o);
-            RxBus.getDefault().post(null);
         }
-    }
+    }/* else {
+            cacheWebSocketPushData.add(o);
+            Log.e("HILO","cacheWebSocketPushData.size() = " + cacheWebSocketPushData.size());
+            RxBus.getDefault().post(null);
+        }*/
 
     // 状态推送
     private void updateTypeStatus(Match match, int position, WebSocketMatchStatus webSocketMatchStatus) {
@@ -563,7 +562,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (match.getThirdId().equals(webSocketMatchOdd.getThirdId())) {
             final List<Map<String, String>> matchOddDataLists = webSocketMatchOdd.getData();
             for (Map<String, String> oddDataMaps : matchOddDataLists) {
-                Log.e("HILO", oddDataMaps.toString() + "::::");
                 // 亚赔
                 if (oddDataMaps.get("handicap").equals("asiaLet")) {
                     handicap = 1;
