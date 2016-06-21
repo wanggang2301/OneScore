@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.bean.footballDetails.BottomOdds;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
@@ -201,8 +200,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 initLiveText();
                 initOdds();
 
-                startWebsocket();
-                computeWebSocket();
+
             }
         }
 
@@ -215,7 +213,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
         if ("0".equals(mMatchDetail.getLiveStatus()) || "1".equals(mMatchDetail.getLiveStatus())) {
             startWebsocket();
-            computeWebSocket();
+            //computeWebSocket();
         }
     }
 
@@ -338,8 +336,11 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         L.d("ddd", "加载数据");
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         Map<String, String> params = new HashMap<>();
-        params.put("thirdId", "332973");
-        String url = "http://192.168.31.70:8080/mlottery/core/footballBallList.ballListOverview.do";
+        params.put("thirdId", "337438");
+        String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListOverview.do";
+
+        //  VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW_INFO, params,
+
 
         VolleyContentFast.requestJsonByGet(url, params,
                 new VolleyContentFast.ResponseSuccessListener<BottomOdds>() {
@@ -350,6 +351,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                         }
 
                         initItemOdd(bottomOdds);
+
+                        startWebsocket();
+                        // computeWebSocket();
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
@@ -364,14 +368,20 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         odd_alet.setTitle("亚盘");
         odd_asize.setTitle("大小球");
         odd_eur.setTitle("欧赔");
+
+
+        //  "-"表示没有数据   null 表封盘
+
         odd_alet.setTableLayoutData(bottomOdds.getAsianlistOdd());
+
+        aletBottomOddsItem = bottomOdds.getAsianlistOdd().get(1);  //获取即时赔率
 
 
         odd_asize.setTableLayoutData(bottomOdds.getOverunderlistOdd());
-        odd_eur.setTableLayoutData(bottomOdds.getEuropelistOdd());
-
-        aletBottomOddsItem = bottomOdds.getAsianlistOdd().get(1);
         asizeBottomOddsItem = bottomOdds.getOverunderlistOdd().get(1);
+
+
+        odd_eur.setTableLayoutData(bottomOdds.getEuropelistOdd());
         eurBottomOddsItem = bottomOdds.getEuropelistOdd().get(1);
 
 
@@ -575,18 +585,18 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     @Override
     public void onMessage(String message) {
-        L.d("TAG", "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+        // L.d(TAG, "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
 
         pushStartTime = System.currentTimeMillis(); // 记录起始时间
-        L.d("TAG", "心跳时间" + pushStartTime);
+        L.d(TAG, "心跳时间" + pushStartTime);
         if (message.startsWith("CONNECTED")) {
             String id = "android" + DeviceInfo.getDeviceId(mContext);
             id = MD5Util.getMD5(id);
             if (mContext == null) {
                 return;
             }
-            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.scollodds." + "331959" + "\n\n");
-            L.d("TAG", "CONNECTED");
+            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.scollodds." + "337438" + "\n\n");
+            L.d(TAG, "CONNECTED");
             return;
         } else if (message.startsWith("MESSAGE")) {
 
@@ -598,15 +608,12 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
             Message msg = Message.obtain();
             msg.obj = ws_json;
             mSocketHandler.sendMessage(msg);
 
         }
         hSocketClient.send("\n");
-
     }
 
 
@@ -628,11 +635,12 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 webSocketRollballOdd = JSON.parseObject(ws_json, WebSocketRollballOdd.class);
             }
 
-            L.d("TAG", "=======赔率推送=====" + ws_json);
+            L.d(TAG, "=======赔率推送=====" + ws_json);
+            L.d(TAG, "=======赔率推送=====" + webSocketRollballOdd.getLeft() + "==" + webSocketRollballOdd.getOddType());
 
             //更新赔率
 
-            updateOdds(webSocketRollballOdd);
+          //  updateOdds(webSocketRollballOdd);
 
         }
     };
@@ -661,45 +669,60 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
      * @param webodds
      * @return
      */
-    private BottomOddsItem setLiveOdds(BottomOddsItem b, WebSocketRollballOdd webodds) {
-        if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight())) {
+    private synchronized BottomOddsItem setLiveOdds(BottomOddsItem b, WebSocketRollballOdd webodds) {
+
+        L.d(TAG, webodds.getLeft() + "-" + webodds.getMiddle() + "-" + webodds.getRight() + "-" + webodds.getOddType());
+        L.d(TAG, b.getLeft() + "-" + b.getMiddle() + "-" + b.getRight());
+
+
+        if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight()) || isNULLOrEmpty(b.getLeft()) || isNULLOrEmpty(b.getMiddle()) || isNULLOrEmpty(b.getRight())) {
             b.setLeft(webodds.getLeft());
+            b.setLeftUp("0");
             b.setMiddle(webodds.getMiddle());
+            b.setMiddleUp("0");
             b.setRight(webodds.getRight());
+            b.setRightUp("0");
         } else {
-            if (isNULLOrEmpty(b.getLeft()) || isNULLOrEmpty(b.getMiddle()) || isNULLOrEmpty(b.getRight())) {
-                b.setLeft(webodds.getLeft());
-                b.setLeftUp("0");
-                b.setMiddle(webodds.getMiddle());
-                b.setMiddle("0");
-                b.setRight(webodds.getRight());
-                b.setRight("0");
+
+            if (Float.parseFloat(b.getLeft()) > Float.parseFloat(webodds.getLeft())) {
+                L.d(TAG, "b大于推送");
+
+
+                b.setLeftUp("-1");  //降
+
+            } else if (Float.parseFloat(b.getLeft()) < Float.parseFloat(webodds.getLeft())) {
+                b.setLeftUp("1");
             } else {
-                if (Float.parseFloat(b.getLeft()) > Float.parseFloat(webodds.getLeft())) {
-                    b.setLeftUp("-1");  //降
-                } else if (Float.parseFloat(b.getLeft()) < Float.parseFloat(webodds.getLeft())) {
-                    b.setLeftUp("1");
-                } else {
-                    b.setLeftUp("0");
-                }
-
-                if (Float.parseFloat(b.getMiddle()) > Float.parseFloat(webodds.getMiddle())) {
-                    b.setMiddleUp("-1");  //降
-                } else if (Float.parseFloat(b.getMiddle()) < Float.parseFloat(webodds.getMiddle())) {
-                    b.setMiddleUp("1");
-                } else {
-                    b.setMiddleUp("0");
-                }
-
-                if (Float.parseFloat(b.getRight()) > Float.parseFloat(webodds.getRight())) {
-                    b.setRightUp("-1");  //降
-                } else if (Float.parseFloat(b.getRight()) < Float.parseFloat(webodds.getRight())) {
-                    b.setRightUp("1");
-                } else {
-                    b.setRightUp("0");
-                }
+                b.setLeftUp("0");
             }
+
+            b.setLeft(webodds.getLeft());
+
+            if (Float.parseFloat(b.getMiddle()) > Float.parseFloat(webodds.getMiddle())) {
+                b.setMiddleUp("-1");  //降
+            } else if (Float.parseFloat(b.getMiddle()) < Float.parseFloat(webodds.getMiddle())) {
+                b.setMiddleUp("1");
+            } else {
+                b.setMiddleUp("0");
+            }
+
+            b.setMiddle(webodds.getMiddle());
+
+            if (Float.parseFloat(b.getRight()) > Float.parseFloat(webodds.getRight())) {
+                b.setRightUp("-1");  //降
+            } else if (Float.parseFloat(b.getRight()) < Float.parseFloat(webodds.getRight())) {
+                b.setRightUp("1");
+            } else {
+                b.setRightUp("0");
+            }
+
+            b.setRight(webodds.getRight());
+
         }
+
+        //  L.d(TAG, "b=" + b.getLeft() + "-" + b.getMiddle() + "-" + b.getRight());
+        L.d(TAG, "b=" + b.getLeftUp() + "-" + b.getMiddleUp() + "-" + b.getRightUp());
+
 
         return b;
     }
@@ -719,10 +742,10 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             @Override
             public void run() {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                L.d("TAG", df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+                L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
                 long pushEndTime = System.currentTimeMillis();
                 if ((pushEndTime - pushStartTime) >= 30000) {
-                    L.d("TAG", "重新启动socket");
+                    L.d(TAG, "重新启动socket");
                     startWebsocket();
                 }
             }
@@ -754,7 +777,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
     private boolean isNULLOrEmpty(String s) {
-        if (s == null || "".equals(s) || "null".equals(s)) {
+        if (s == null || "".equals(s) || "-".equals(s)) {
             return true;
         } else {
             return false;

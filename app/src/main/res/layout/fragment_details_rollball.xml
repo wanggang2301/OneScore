@@ -59,24 +59,41 @@
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_12" />
 
-                <TextView
-                    android:id="@+id/live_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/live_time"
-                    android:text="实况直播敬请关注"
-                    android:textColor="#666666"
-                    android:textSize="@dimen/text_size_11" />
-
-                <ImageView
-                    android:id="@+id/live_infos"
-                    android:layout_width="30dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/details" />
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@+id/live_time">
+
+                    <TextView
+                        android:id="@+id/live_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="8"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:text="实况直播敬请关注"
+                        android:textColor="#666666"
+                        android:textSize="@dimen/text_size_11" />
+
+                    <ImageView
+                        android:id="@+id/live_infos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:padding="5dp"
+                        android:src="@mipmap/details" />
+                </LinearLayout>
+
+
             </RelativeLayout>
 
 

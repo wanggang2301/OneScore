@@ -27,77 +27,95 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <android.support.v4.view.ViewPager
+                <com.hhly.mlottery.widget.CustomViewpager
                     android:id="@+id/headviewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"></android.support.v4.view.ViewPager>
+                    android:layout_height="200dp">
+
+                </com.hhly.mlottery.widget.CustomViewpager>
+
+                <me.relex.circleindicator.CircleIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    app:ci_animator="@animator/indicator_animator"
+                    app:ci_animator_reverse="@animator/indicator_animator_reverse"
+                    app:ci_drawable="@color/white"
+                    app:ci_height="2dp"
+                    app:ci_width="8dp" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="center_horizontal"
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:popupTheme="@style/AppTheme.PopupOverlay">
 
                     <FrameLayout
+                        android:id="@+id/layout_match_header_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <ImageView
                             android:id="@+id/iv_back"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="left"
+                            android:paddingRight="@dimen/x20"
+                            android:scaleType="centerInside"
                             android:src="@mipmap/back" />
 
                         <RelativeLayout
+                            android:id="@+id/layout_match_header_team_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center">
+                            android:layout_height="match_parent">
 
                             <TextView
                                 android:id="@+id/head_score"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp"
-                                android:text="--:--"
+                                android:text="VS"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/text_size_15" />
 
                             <TextView
                                 android:id="@+id/head_home_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignBaseline="@id/head_score"
+                                android:layout_marginRight="@dimen/x30"
                                 android:layout_toLeftOf="@id/head_score"
                                 android:text="主队"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/text_size_15" />
-
 
                             <TextView
                                 android:id="@+id/head_guest_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignBaseline="@id/head_score"
+                                android:layout_marginLeft="@dimen/x30"
                                 android:layout_toRightOf="@id/head_score"
                                 android:text="客队"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/text_size_15" />
-
-
                         </RelativeLayout>
 
                         <ImageView
                             android:id="@+id/iv_setting"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="right"
-                            android:layout_marginRight="10dp"
-                            android:paddingBottom="5dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="5dp"
+                            android:paddingLeft="@dimen/x24"
+                            android:paddingRight="@dimen/x24"
+                            android:scaleType="centerInside"
                             android:src="@mipmap/head_details" />
-
                     </FrameLayout>
 
 

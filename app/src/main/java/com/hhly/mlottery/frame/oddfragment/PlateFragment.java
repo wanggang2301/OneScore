@@ -254,6 +254,11 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                 return false;
             }
         });
+
+
+
+
+
         // 访问失败，点击刷新
         plate_reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
