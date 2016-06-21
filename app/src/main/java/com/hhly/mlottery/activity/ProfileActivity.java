@@ -50,7 +50,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.rl_nickname: // 昵称栏
-                startActivity(new Intent(this , ModifyNicknameActivity.class));
+               // startActivity(new Intent(this, ModifyNicknameActivity.class));
+                Intent intent = new Intent(ProfileActivity.this, ModifyNicknameActivity.class);
+                intent.putExtra("nickname", tv_nickname.getText().toString());//传递联赛ID
+                startActivity(intent);
                 break;
             case R.id.rl_modifypass: // 修改密码
                 startActivity(new Intent(this , ModifyPasswordActivity.class));

@@ -2,6 +2,7 @@ package com.hhly.mlottery.widget;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class BallSelectArrayAdapter extends ArrayAdapter<String> {
         //此处text1是Spinner默认的用来显示文字的TextView
         TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
         tv.setText(mStringArray[position]);
-        tv.setTextSize(18f);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         tv.setTextColor(Color.BLACK);
 
         return convertView;
@@ -52,7 +53,7 @@ public class BallSelectArrayAdapter extends ArrayAdapter<String> {
         //此处text1是Spinner默认的用来显示文字的TextView
         TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
         tv.setText(mStringArray[position]);
-        tv.setTextSize(18f);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         tv.setTextColor(Color.WHITE);
         return convertView;
     }
