@@ -126,11 +126,11 @@ public class CPIOddsFragment extends Fragment {
         mHandler.sendEmptyMessage(STARTLOADING);
         Map<String, String> map = new HashMap<>();
 
-        if (type.equals(CPIFragment.TYPE_PLATE)) {
+        if (CPIFragment.TYPE_PLATE.equals(type)) {
             map.put("type", "1");
-        } else if (type.equals(CPIFragment.TYPE_BIG)) {
+        } else if (CPIFragment.TYPE_BIG.equals(type)) {
             map.put("type", "3");
-        } else if (type.equals(CPIFragment.TYPE_OP)) {
+        } else if (CPIFragment.TYPE_OP.equals(type)) {
             map.put("type", "2");
         }
         if (!"".equals(date)) {
