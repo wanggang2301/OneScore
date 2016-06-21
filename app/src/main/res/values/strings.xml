@@ -728,6 +728,7 @@
     <string name="get_qq_info_fail">获取qq用户信息失败</string>
     <string name="GET_WEIBO_INFO_FAIL">获取微博用户信息失败</string>
     <string name="system_error">系统错误</string>
+    <string name="backstage_error">后台错误</string>
     <string name="password_digits">_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
     <string name="realname_error">真实姓名错误</string>
     <string name="id_card_format_error">身份证格式错误</string>
