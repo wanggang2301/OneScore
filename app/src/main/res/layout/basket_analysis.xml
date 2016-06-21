@@ -9,6 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
+            android:background="@color/black_grounding"
             android:scrollbars="none">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -758,10 +759,10 @@
                         android:background="@color/black_grounding"
                         android:visibility="gone"
                         />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/basket_analyze_hight_nodata"
-                        android:background="@color/black_grounding" />
+                    <!--<View-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="@dimen/basket_analyze_hight_nodata"-->
+                        <!--android:background="@color/black_grounding" />-->
                 </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

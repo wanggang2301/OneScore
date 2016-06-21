@@ -204,24 +204,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         BasketImmedEventBus=new EventBus();
         BasketImmedEventBus.register(this);
 
-//        switch (mBasketballType){
-//            case TYPE_IMMEDIATE:
-//                BasketImmedEventBus=new EventBus();
-//                BasketImmedEventBus.register(this);
-//                break;
-//            case TYPE_RESULT:
-//                BasketResultEventBus = new EventBus();
-//                BasketResultEventBus.register(this);
-//                break;
-//            case TYPE_SCHEDULE:
-//                BasketScheduleEventBus = new EventBus();
-//                BasketScheduleEventBus.register(this);
-//                break;
-//            case TYPE_FOCUS:
-//                BasketFocusEventBus = new EventBus();
-//                BasketFocusEventBus.register(this);
-//                break;
-//        }
     }
 
     /**
