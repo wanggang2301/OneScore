@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketAnalyzeMoreRecordActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeContentBean;
@@ -46,7 +49,7 @@ import java.util.Map;
  * @Description: 篮球分析的 fragment
  * @author yixq
  */
-public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableScrollView> implements SwipeRefreshLayout.OnRefreshListener {
+public class BasketAnalyzeFragment extends Fragment  {
 
     //    public static final int REQUEST_MORERECORD = 0x80;
     private View mView;
@@ -97,7 +100,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private TextView mHomeScoreLoseSix;
 
     private TextView mBasketAnalyzeMoreRecord;
-    private ObservableScrollView scrollView;
+    private NestedScrollView scrollView;
 
     Handler mHandler = new Handler();
     private DisplayImageOptions options; //
@@ -105,7 +108,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private String mThirdId;
     private TextView mScoreWin;
     private TextView mScoreLose;
-    private ExactSwipeRefrashLayout mRefresh;//下拉刷新
+//    private ExactSwipeRefrashLayout mRefresh;//下拉刷新
 
 //    private NestedListView mListView1;
 //    private NestedListView mListView2;
@@ -128,28 +131,28 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mThirdId = ((BasketDetailsActivity) getActivity()).getmThirdId();
+        mThirdId = ((BasketDetailsActivityTest) getActivity()).getmThirdId();
         L.d("mThirdId ==AAAAA===", mThirdId + "");
 
         mView = inflater.inflate(R.layout.basket_analysis, container, false);
-        scrollView = (ObservableScrollView) mView.findViewById(R.id.scroll);
+        scrollView = (NestedScrollView) mView.findViewById(R.id.scroll);
 
-        scrollView.setTouchInterceptionViewGroup((ViewGroup) mView.findViewById(R.id.fragment_root));
+//        scrollView.setTouchInterceptionViewGroup((ViewGroup) mView.findViewById(R.id.fragment_root));
 
         Bundle args = getArguments();
-        if (args != null && args.containsKey(ARG_SCROLL_Y)) {
-            final int scrollY = args.getInt(ARG_SCROLL_Y, 0);
-            ScrollUtils.addOnGlobalLayoutListener(scrollView, new Runnable() {
-                @Override
-                public void run() {
-                    scrollView.scrollTo(0, scrollY);
-                }
-            });
-            updateFlexibleSpace(scrollY, mView);
-        } else {
-            updateFlexibleSpace(0, mView);
-        }
-        scrollView.setScrollViewCallbacks(this);
+//        if (args != null && args.containsKey(ARG_SCROLL_Y)) {
+//            final int scrollY = args.getInt(ARG_SCROLL_Y, 0);
+//            ScrollUtils.addOnGlobalLayoutListener(scrollView, new Runnable() {
+//                @Override
+//                public void run() {
+//                    scrollView.scrollTo(0, scrollY);
+//                }
+//            });
+//            updateFlexibleSpace(scrollY, mView);
+//        } else {
+//            updateFlexibleSpace(0, mView);
+//        }
+//        scrollView.setScrollViewCallbacks(this);
 
 
         try {
@@ -263,9 +266,9 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             }
         });
 
-        mRefresh = (ExactSwipeRefrashLayout) mView.findViewById(R.id.basket_analyze_refresh);
-        mRefresh.setColorSchemeResources(R.color.tabhost);
-        mRefresh.setOnRefreshListener(this);
+//        mRefresh = (ExactSwipeRefrashLayout) mView.findViewById(R.id.basket_analyze_refresh);
+//        mRefresh.setColorSchemeResources(R.color.tabhost);
+      //  mRefresh.setOnRefreshListener(this);
 
 //        mListView1 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_guest);
 //        mListView2 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_home);
@@ -297,7 +300,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private FutureAdapter mAdapter1;
     private FutureAdapter mAdapter2;
 
-    @Override
     public void initData() {
 
 //        String url = "http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysis.do";
@@ -963,44 +965,44 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         }
     }
 
-    @Override
-    public void updateFlexibleSpace(int scrollY) {
-        Scrollable s = getScrollable();
-        s.scrollVerticallyTo(scrollY);
-
-        updateFlexibleSpace(scrollY, getView());
-    }
-
-    @Override
-    protected void updateFlexibleSpace(int scrollY, View view) {
-        ObservableScrollView scrollView = (ObservableScrollView) view.findViewById(R.id.scroll);
-
-        BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
-        if (parentActivity != null) {
-            parentActivity.onScrollChanged(scrollY, scrollView);
-        }
-    }
+//    @Override
+//    public void updateFlexibleSpace(int scrollY) {
+//        Scrollable s = getScrollable();
+//        s.scrollVerticallyTo(scrollY);
+//
+//        updateFlexibleSpace(scrollY, getView());
+//    }
+//
+//    @Override
+//    protected void updateFlexibleSpace(int scrollY, View view) {
+//        ObservableScrollView scrollView = (ObservableScrollView) view.findViewById(R.id.scroll);
+////
+////        BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
+////        if (parentActivity != null) {
+////            parentActivity.onScrollChanged(scrollY, scrollView);
+////        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRefresh.setRefreshing(false);
-                initData();
-                BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
-                if (parentActivity != null) {
-                    parentActivity.analyzeRefreshData();
-                }
-            }
-        }, 500);
-
-    }
+//    @Override
+//    public void onRefresh() {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mRefresh.setRefreshing(false);
+//                initData();
+//                BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
+//                if (parentActivity != null) {
+//                    parentActivity.analyzeRefreshData();
+//                }
+//            }
+//        }, 500);
+//
+//    }
 
     class FutureAdapter extends CommonAdapter<BasketAnalyzeFutureMatchBean> {
 

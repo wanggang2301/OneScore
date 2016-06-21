@@ -34,10 +34,34 @@ public class FootballAnalyzeAdapter extends CommonAdapter<FootballAnaylzeHistory
 
         holder.setText(R.id.football_details_team_name ,historyBean.getMatchType());
         holder.setText(R.id.football_details_data , historyBean.getTime());
-        holder.setText(R.id.football_details_home_name , historyBean.getHome());
-        holder.setText(R.id.football_details_guest_name , historyBean.getGuest());
-        holder.setText(R.id.football_details_score , historyBean.getHomeScore() + "-" + historyBean.getGuestScore());
 
+        if (historyBean.isHomeGround()) {
+            if (historyBean.getResult() == 1) {
+                holder.setTextColorRes(R.id.football_details_home_name , R.color.football_analyze_win_color);
+            }else if (historyBean.getResult() == 0) {
+                holder.setTextColorRes(R.id.football_details_home_name , R.color.football_analyze_draw_color);
+            }else if (historyBean.getResult() == -1) {
+                holder.setTextColorRes(R.id.football_details_home_name , R.color.football_analyze_lose_color);
+            }
+            holder.setText(R.id.football_details_home_name , historyBean.getHome());
+
+            holder.setTextColorRes(R.id.football_details_guest_name, R.color.football_analyze_default_color);
+            holder.setText(R.id.football_details_guest_name, historyBean.getGuest());
+        }else{
+            if (historyBean.getResult() == 1) {
+                holder.setTextColorRes(R.id.football_details_guest_name , R.color.football_analyze_win_color);
+            }else if (historyBean.getResult() == 0) {
+                holder.setTextColorRes(R.id.football_details_guest_name , R.color.football_analyze_draw_color);
+            }else if (historyBean.getResult() == -1) {
+                holder.setTextColorRes(R.id.football_details_guest_name , R.color.football_analyze_lose_color);
+            }
+            holder.setText(R.id.football_details_guest_name , historyBean.getGuest());
+
+            holder.setTextColorRes(R.id.football_details_home_name , R.color.football_analyze_default_color);
+            holder.setText(R.id.football_details_home_name , historyBean.getHome());
+        }
+
+        holder.setText(R.id.football_details_score , historyBean.getHomeScore() + "-" + historyBean.getGuestScore());
 
         if (historyBean.getCtotScore() == null) {
             holder.setText(R.id.football_details_big_small , "--");

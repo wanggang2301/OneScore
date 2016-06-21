@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<FrameLayout
     android:id="@+id/basket_odds_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-        <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
-            android:id="@+id/basket_euro_refreshlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-                <com.hhly.mlottery.view.ObservableListView
-                    android:id="@+id/scroll"
+
+                <ListView
+                    android:id="@+id/basket_odds_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scrollbars="none"
@@ -16,7 +17,6 @@
                     android:overScrollMode="never"
                     android:dividerHeight="0.5dp"
                     android:divider="@color/basket_odds_divider"/>
-        </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
 
 
     <RelativeLayout
@@ -34,3 +34,4 @@
     </RelativeLayout>
 
 </FrameLayout>
+</android.support.v4.widget.NestedScrollView>

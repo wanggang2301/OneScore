@@ -29,7 +29,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:textColor="@color/line_football_footer"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_football_footer"
             />
         <!--近期战绩-->
         <LinearLayout
@@ -213,7 +214,7 @@
                     android:id="@+id/football_home_future_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1天"
+                    android:text="--"
                     android:textSize="@dimen/text_size_10"
                     android:textColor="@color/content_txt_light_grad"
                     android:layout_centerVertical="true"
@@ -231,7 +232,7 @@
                     android:id="@+id/football_home_future_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="步行者"
+                    android:text="--"
                     android:textColor="@color/history_win"
                     android:textSize="@dimen/text_size_13"
                     android:gravity="right"
@@ -265,7 +266,7 @@
                     android:id="@+id/football_guest_future_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1天"
+                    android:text="--"
                     android:layout_alignParentRight="true"
                     android:textSize="@dimen/text_size_10"
                     android:textColor="@color/content_txt_light_grad"
@@ -275,7 +276,7 @@
                     android:id="@+id/football_guest_future_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="步行者"
+                    android:text="--"
                     android:singleLine="true"
                     android:textColor="@color/history_win"
                     android:textSize="@dimen/text_size_13"
@@ -320,8 +321,8 @@
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:textColor="@color/line_football_footer"
+            android:layout_height="1dp"
+            android:background="@color/line_football_footer"
             />
     <LinearLayout
         android:id="@+id/basket_analyze_runking"
@@ -358,31 +359,31 @@
                 android:gravity="center"
                 android:textSize="@dimen/text_size_10"
                 android:textColor="@color/content_txt_light_grad"
-                android:text="胜/平/负"/>
+                android:text="@string/football_win_draw_lose"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_12"
+                android:textSize="@dimen/text_size_10"
                 android:textColor="@color/content_txt_light_grad"
-                android:text="得/失球"/>
+                android:text="@string/new_analyze_goal_lose"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_12"
+                android:textSize="@dimen/text_size_10"
                 android:textColor="@color/content_txt_light_grad"
-                android:text="净胜球"/>
+                android:text="@string/new_analyze_goal_differ"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_12"
+                android:textSize="@dimen/text_size_10"
                 android:textColor="@color/content_txt_light_grad"
-                android:text="积分"/>
+                android:text="@string/new_analyze_integral"/>
         </LinearLayout>
 
         <LinearLayout
@@ -515,7 +516,8 @@
             android:layout_gravity="center"
             android:textSize="@dimen/text_size_13"
             android:textColor="@color/more_record"
-            android:text="完整积分榜 >>"/>
+            android:visibility="gone"
+            android:text="@string/new_analyze_complete_table"/>
 
      </LinearLayout>
         <View
@@ -533,7 +535,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="@dimen/text_size_13"
-                android:text="攻防对比"
+                android:text="@string/new_analyze_attack_defense"
                 android:textColor="@color/analyze_title"
                 />
             <!--大小盘口-->
@@ -543,7 +545,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_13"
                 android:textColor="@color/odds_details"
-                android:text="2/2.5"
+                android:text="--"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:paddingRight="8dp"
@@ -554,7 +556,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="@dimen/text_size_13"
-                android:text="大小盘口:"
+                android:text="@string/new_analyze_bet"
                 android:textColor="@color/history_win"
                 android:layout_toLeftOf="@id/football_analyze_size_of_bet"
                 android:layout_marginRight="5dp"
@@ -562,8 +564,8 @@
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:textColor="@color/line_football_footer"
+            android:layout_height="1dp"
+            android:background="@color/line_football_footer"
             />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -576,7 +578,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_11"
                     android:textColor="@color/history_win"
-                    android:text="主队"
+                    android:text="@string/odd_home_txt"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     />
@@ -585,7 +587,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_11"
                     android:textColor="@color/history_win"
-                    android:text="客队"
+                    android:text="@string/odd_guest_txt"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     />
@@ -619,19 +621,18 @@
                     android:id="@+id/home_goal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1.24"
+                    android:text="--"
                     android:textColor="@color/odds_details"
                     android:textSize="@dimen/text_size_25"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="场均进球"
+                    android:text="@string/goal"
                     android:textSize="@dimen/text_size_10"
                     android:textColor="@color/content_txt_light_grad"
                     android:layout_below="@id/home_goal"
-                    android:layout_alignRight="@id/home_goal"
-                    android:layout_alignEnd="@id/home_goal" />
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -640,7 +641,7 @@
                     android:textSize="@dimen/text_size_10"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@id/home_goal"
-                    android:layout_toEndOf="@id/home_goal" />
+                     />
             </RelativeLayout>
 
                 <View
@@ -660,19 +661,18 @@
                         android:id="@+id/guest_goal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1.24"
+                        android:text="--"
                         android:textColor="@color/more_record"
                         android:textSize="@dimen/text_size_25"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="场均进球"
+                        android:text="@string/goal"
                         android:textSize="@dimen/text_size_10"
                         android:textColor="@color/content_txt_light_grad"
                         android:layout_below="@id/guest_goal"
-                        android:layout_alignRight="@+id/guest_goal"
-                        android:layout_alignEnd="@id/guest_goal" />
+                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -705,19 +705,18 @@
                         android:id="@+id/home_lose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1.24"
+                        android:text="--"
                         android:textColor="@color/odds_details"
                         android:textSize="@dimen/text_size_25"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="场均失球"
+                        android:text="@string/losspergame"
                         android:textSize="@dimen/text_size_10"
                         android:textColor="@color/content_txt_light_grad"
                         android:layout_below="@id/home_lose"
-                        android:layout_alignRight="@id/home_lose"
-                        android:layout_alignEnd="@id/home_lose" />
+                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -726,7 +725,7 @@
                         android:textSize="@dimen/text_size_10"
                         android:layout_alignParentTop="true"
                         android:layout_toRightOf="@id/home_lose"
-                        android:layout_toEndOf="@id/home_lose" />
+                         />
                 </RelativeLayout>
 
                 <View
@@ -746,19 +745,17 @@
                         android:id="@+id/guest_lose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1.24"
+                        android:text="--"
                         android:textColor="@color/more_record"
                         android:textSize="@dimen/text_size_25"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="场均失球"
+                        android:text="@string/losspergame"
                         android:textSize="@dimen/text_size_10"
                         android:textColor="@color/content_txt_light_grad"
-                        android:layout_below="@id/guest_lose"
-                        android:layout_alignRight="@id/guest_lose"
-                        android:layout_alignEnd="@id/guest_lose" />
+                        android:layout_below="@id/guest_lose" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -787,15 +784,15 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="@dimen/text_size_13"
-                android:text="球员信息"
+                android:text="@string/new_analyze_player_info"
                 android:textColor="@color/analyze_title"
                 />
 
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:textColor="@color/line_football_footer"
+            android:layout_height="1dp"
+            android:background="@color/line_football_footer"
             />
         <RelativeLayout
             android:layout_width="match_parent"
@@ -810,7 +807,7 @@
                 android:id="@+id/lineup_home_team"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="巴萨"
+                android:text="--"
                 android:textColor="@color/odds_details"
                 android:textSize="@dimen/text_size_15"
                 />
@@ -826,7 +823,7 @@
                 android:id="@+id/lineup_guest_team"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="皇马"
+                android:text="--"
                 android:textColor="@color/more_record"
                 android:textSize="@dimen/text_size_15"
                 android:layout_alignParentRight="true"

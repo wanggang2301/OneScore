@@ -6,9 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
@@ -32,16 +36,17 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
+import com.hhly.mlottery.frame.footframe.TestFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
-import com.hhly.mlottery.view.CacheFragmentStatePagerAdapter;
 import com.hhly.mlottery.view.ScrollUtils;
 import com.hhly.mlottery.view.Scrollable;
 import com.hhly.mlottery.view.SlidingTabLayout;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -69,7 +74,7 @@ import java.util.TimerTask;
  * @author yixq
  * Created by A on 2016/3/21.
  */
-public class BasketDetailsActivity extends BasketBaseActivity implements View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
+public class BasketDetailsActivityTest extends AppCompatActivity implements ExactSwipeRefrashLayout.OnRefreshListener,AppBarLayout.OnOffsetChangedListener,View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     public final static String BASKET_THIRD_ID = "thirdId";
     //    0:未开赛,1:一节,2:二节,5:1'OT，以此类推
@@ -100,20 +105,31 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
      * 大小球
      */
     public final static String ODDS_SIZE = "asiaSize";
-
-
     private String mThirdId = "936707";
+
+    BasketAnalyzeFragment mAnalyzeFragment= new BasketAnalyzeFragment();
+    BasketOddsFragment mOddsEuro=BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
+    BasketOddsFragment mOddsLet=BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
+    BasketOddsFragment mOddsSize=BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
+
+
+
     private HappySocketClient mSocketClient;//客户端  socket;
     private URI mSocketUri = null;
 
     private String TAG = BasketDetailsActivity.class.getName();
 
-    private ViewPager mPager;
-    private NavigationAdapter mPagerAdapter;
-    private SlidingTabLayout mSlidingTabLayout;
-    private int mFlexibleSpaceHeight;
-    private int mTabHeight;
-    private int mHeight;//整个头部 高度240减去title栏（header）的44再减去paddingtop的24=172
+    private ViewPager mViewPager;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
+    private TabLayout mTabLayout;
+    private TabsAdapter mTabsAdapter;
+    private Toolbar toolbar;
+
+    private String[] TITLES ;
+
+
+
 
     private DisplayImageOptions mOptions;
     private DisplayImageOptions mOptionsHead;
@@ -184,27 +200,25 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
 
+    private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.basket_detailsactivity_activity);
+        setContentView(R.layout.activity_basket_details_activity_test);
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
         }
-
-
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-              //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
+                        //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
                 .showImageForEmptyUri(R.mipmap.basket_default)
                 .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
                 .build();
-
-
         mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
@@ -225,13 +239,10 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             e.printStackTrace();
         }
 
-        try {
             initView();
             setListener();
             loadData();
-        } catch (Exception e) {
-            L.e(e.getMessage());
-        }
+
     }
 
     /**
@@ -319,25 +330,36 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
      * 初始化界面
      */
     private void initView() {
-        mPagerAdapter = new NavigationAdapter(getSupportFragmentManager(), mThirdId);
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setPadding(0, getResources().getDimensionPixelSize(R.dimen.tab_height), 0, 0);//设置pager的上边距（pager下移一个tab的高度）
-        mPager.setAdapter(mPagerAdapter);
-        mPager.setOffscreenPageLimit(3);//不要改动。必须全加载出来。
-        mFlexibleSpaceHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
-        mTabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
-        mHeight = getResources().getDimensionPixelSize(R.dimen.mheight);
-//        Log.e("AAA",mFlexibleSpaceHeight+"");
-//        Log.e("AA",mTabHeight+"");
+        TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_eur),
+              getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof)};
+
+        toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
+        setSupportActionBar(toolbar);
+
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mViewPager = (ViewPager) findViewById(R.id.basket_details_view_pager);
+        appBarLayout = (AppBarLayout) findViewById(R.id.basket_details_appbar);
+        mTabLayout = (TabLayout) findViewById(R.id.basket_details_tab_layout);
+        mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
+        mTabsAdapter.setTitles(TITLES);
+        TestFragment test1=TestFragment.newInstance("","");
+        TestFragment test2=TestFragment.newInstance("","");
+        TestFragment test3=TestFragment.newInstance("","");
+        TestFragment test4=TestFragment.newInstance("", "");
 
 
-        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setBackgroundColor(getResources().getColor(R.color.tabtitle));//
-        mSlidingTabLayout.setCustomTabView(R.layout.basket_tab_indicator, android.R.id.text1); //自定义样式
-        mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.basket_text_color));//设置下划线颜色
-        mSlidingTabLayout.setDistributeEvenly(true);
-        mSlidingTabLayout.setViewPager(mPager);
-        mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//        mTabsAdapter.addFragments(test1, test2, test3, test4);
+        mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet);
+        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+        mViewPager.setAdapter(mTabsAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+        appBarLayout.addOnOffsetChangedListener(this);
+
+
+
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -371,46 +393,46 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
                         isFragment3 = true;
                         break;
                 }
-                if(is0){
+                if (is0) {
                     MobclickAgent.onPageEnd("BasketBall_Info_FX");
                     is0 = false;
-                    L.d("xxx","分析隐藏");
+                    L.d("xxx", "分析隐藏");
                 }
-                if(is1){
+                if (is1) {
                     MobclickAgent.onPageEnd("BasketBall_Info_OP");
                     is1 = false;
-                    L.d("xxx","欧赔隐藏");
+                    L.d("xxx", "欧赔隐藏");
                 }
-                if(is2){
+                if (is2) {
                     MobclickAgent.onPageEnd("BasketBall_Info_YP");
                     is2 = false;
-                    L.d("xxx","亚盘隐藏");
+                    L.d("xxx", "亚盘隐藏");
                 }
-                if(is3){
+                if (is3) {
                     MobclickAgent.onPageEnd("BasketBall_Info_DX");
                     is3 = false;
-                    L.d("xxx","大小隐藏");
+                    L.d("xxx", "大小隐藏");
                 }
 
                 if (isFragment0) {
                     MobclickAgent.onPageStart("BasketBall_Info_FX");
                     is0 = true;
-                    L.d("xxx","分析显示");
+                    L.d("xxx", "分析显示");
                 }
                 if (isFragment1) {
                     MobclickAgent.onPageStart("BasketBall_Info_OP");
                     is1 = true;
-                    L.d("xxx","欧赔显示");
+                    L.d("xxx", "欧赔显示");
                 }
                 if (isFragment2) {
                     MobclickAgent.onPageStart("BasketBall_Info_YP");
                     is2 = true;
-                    L.d("xxx","亚盘显示");
+                    L.d("xxx", "亚盘显示");
                 }
                 if (isFragment3) {
                     MobclickAgent.onPageStart("BasketBall_Info_DX");
                     is3 = true;
-                    L.d("xxx","大小显示");
+                    L.d("xxx", "大小显示");
                 }
             }
 
@@ -420,14 +442,9 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             }
         });
 
-        // Initialize the first Fragment's state when layout is completed.
-        ScrollUtils.addOnGlobalLayoutListener(mSlidingTabLayout, new Runnable() {
-            @Override
-            public void run() {
-                translateTab(0, false);
-            }
-        });
-
+        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.basket_details_refresh_layout);
+        mRefreshLayout.setColorSchemeResources(R.color.tabhost);
+        mRefreshLayout.setOnRefreshListener(this);
 
         mLeagueName = (TextView) this.findViewById(R.id.basket_details_matches_name);
         mHomeTeam = (TextView) this.findViewById(R.id.basket_details_home_name);
@@ -465,7 +482,6 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         mTitleVS = (TextView) this.findViewById(R.id.title_vs);
 
         mHeadImage = (ImageView) this.findViewById(R.id.image_background);
-        // mHeadBlack= (LinearLayout) this.findViewById(R.id.backet_head_black);
 
         mLayoutOt1 = (LinearLayout) this.findViewById(R.id.basket_details_llot1);
         mLayoutOt2 = (LinearLayout) this.findViewById(R.id.basket_details_llot2);
@@ -631,152 +647,7 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
             }
         }, BasketballDetailsBean.class);
     }
-    /**
-     * 判断当前是哪个fragment
-     * 设置可以滑动的幅度
-     *
-     * @param scrollY
-     * @param s
-     */
-    public void onScrollChanged(int scrollY, Scrollable s) {
-        BasketDetailsBaseFragment fragment = (BasketDetailsBaseFragment) mPagerAdapter.getItemAt(mPager.getCurrentItem());
-        if (fragment == null) {
-            return;
-        }
-        View view = fragment.getView();
-        if (view == null) {
-            return;
-        }
-        Scrollable scrollable;
 
-        scrollable = (Scrollable) view.findViewById(R.id.scroll);
-
-        if (scrollable == null) {
-            return;
-        }
-        if (scrollable == s) {
-            int adjustedScrollY = Math.min(scrollY, mHeight);//可收缩的最大高度
-            translateTab(adjustedScrollY, false);
-            propagateScroll(adjustedScrollY);
-        }
-    }
-    /**
-     * 滑动tab栏
-     *
-     * @param scrollY
-     * @param animated
-     */
-    private void translateTab(int scrollY, boolean animated) {
-        int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
-        int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
-
-        View imageView = findViewById(R.id.image_background);
-        View overlayView = findViewById(R.id.overlay);
-        headLayout = (LinearLayout) findViewById(R.id.basket_details_header_layout);
-        RelativeLayout mRl = (RelativeLayout) findViewById(R.id.basket_title_rl);
-
-        // Translate overlay and image
-        float flexibleRange = flexibleSpaceImageHeight - getActionBarSize();
-        int minOverlayTransitionY = tabHeight - overlayView.getHeight();
-        ViewHelper.setTranslationY(overlayView, ScrollUtils.getFloat(-scrollY, minOverlayTransitionY, 0));
-        ViewHelper.setTranslationY(imageView, ScrollUtils.getFloat(-scrollY / 2, minOverlayTransitionY, 0));
-        ViewHelper.setTranslationY(mRl, ScrollUtils.getFloat(-scrollY / 2, minOverlayTransitionY, 0));
-
-        // Change alpha of overlay
-        ViewHelper.setAlpha(overlayView, ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
-        ViewHelper.setAlpha(mRl, ScrollUtils.getFloat((float) scrollY / flexibleRange, 1, 1));
-
-        ViewPropertyAnimator.animate(mSlidingTabLayout).cancel();
-        // Tabs will move between the top of the screen to the bottom of the image.
-        float translationY = ScrollUtils.getFloat(-scrollY + mFlexibleSpaceHeight, 0, mFlexibleSpaceHeight); //设置tab 的位置 translationY是头两个参数中的大的再给第三个参数比。取小的
-
-        int position[] = new int[2];
-        mSlidingTabLayout.getLocationInWindow(position);
-        int paddingtop = getResources().getDimensionPixelOffset(R.dimen.paddingtop);
-        if (position[1] == paddingtop) {//tablayout到达顶部时显示黑色背景
-            mTitleScore.setVisibility(View.VISIBLE);
-            headLayout.setBackgroundColor(getResources().getColor(R.color.black));
-        } else {
-            mTitleScore.setVisibility(View.INVISIBLE);
-            headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
-        }
-        if (animated) {
-            // Animation will be invoked only when the current tab is changed.
-            ViewPropertyAnimator.animate(mSlidingTabLayout)
-                    .translationY(translationY)
-                    .setDuration(200)
-                    .start();
-        } else {
-            // When Fragments' scroll, translate tabs immediately (without animation).
-            ViewHelper.setTranslationY(mSlidingTabLayout, translationY);
-        }
-    }
-
-    /**
-     * 设置每个viewpager里面的对应的listview或者scrollview移动后的位置
-     *
-     * @param scrollY 移动的距离
-     */
-    private void propagateScroll(int scrollY) {
-        // Set scrollY for the fragments that are not created yet
-        mPagerAdapter.setScrollY(scrollY);
-
-        // Set scrollY for the active fragments
-        for (int i = 0; i < mPagerAdapter.getCount(); i++) {
-            // Skip current item
-            if (i == mPager.getCurrentItem()) {
-                continue;
-            }
-
-            // Skip destroyed or not created item
-            BasketDetailsBaseFragment f =
-                    (BasketDetailsBaseFragment) mPagerAdapter.getItemAt(i);
-            if (f == null) {
-                continue;
-            }
-
-            View view = f.getView();
-            if (view == null) {
-                continue;
-            }
-            f.setScrollY(scrollY, mFlexibleSpaceHeight);//具体都fragmen里面移动
-            f.updateFlexibleSpace(scrollY);
-        }
-    }
-
-    /**
-     * 刷新这4个fragment界面的数据（initdata）
-     */
-    public void refreshData() {
-        loadData();
-        for (int i = 0; i < mPagerAdapter.getCount(); i++) {
-            // Skip current item
-            if (i == mPager.getCurrentItem()) { //当前界面已经在自己的Fragment中调用了刷新方法。所以
-                continue;
-            }
-
-            // Skip destroyed or not created item
-            BasketDetailsBaseFragment f =
-                    (BasketDetailsBaseFragment) mPagerAdapter.getItemAt(i);
-            if (f == null) {
-                continue;
-            }
-
-            View view = f.getView();
-            if (view == null) {
-                continue;
-            }
-            f.initData();
-        }
-    }
-
-    /**
-     * 本来是可以跟另外三个一起刷新的。但是Observable ListView会展开头部，Observable ScrollView 不会
-     * 在修复大小头部的bug时，无法同样处理。所以。方法分开了。
-     */
-    public void analyzeRefreshData() {
-        loadData();
-    }
 
     @Override
     public void onClick(View v) {
@@ -1393,71 +1264,12 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
     }
 
 
-    /**
-     * This adapter provides three types of fragments as an example.
-     * {@linkplain #createItem(int)} should be modified if you use this example for your app.
-     */
-    private class NavigationAdapter extends CacheFragmentStatePagerAdapter {
 
-        //        private static final String[] TITLES = new String[]{"Applepie", "Butter Cookie", "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "KitKat", "Lollipop"};
-        private String[] TITLES = new String[]{BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze), BasketDetailsActivity.this.getResources().getString(R.string.basket_eur),
-                BasketDetailsActivity.this.getResources().getString(R.string.basket_alet), BasketDetailsActivity.this.getResources().getString(R.string.basket_analyze_sizeof)};
-
-        private int mScrollY;
-        private String mThirdId;
-
-        public NavigationAdapter(FragmentManager fm, String mThirdId) {
-            super(fm);
-            this.mThirdId = mThirdId;
-        }
-
-        public void setScrollY(int scrollY) {
-            mScrollY = scrollY;
-        }
-
-        @Override
-        protected Fragment createItem(int position) {
-            Fragment f;
-            switch (position) {
-                case 0: {
-//                    f = new BasketAnalyzeFragment();
-                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
-                    break;
-                }
-                case 1: {
-                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
-
-                    break;
-                }
-                case 2: {
-                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
-                    break;
-                }
-                case 3:
-                default: {
-                    f = BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
-                    break;
-                }
-            }
-            //   f.setArguments(mScrollY);
-            return f;
-        }
-
-        @Override
-        public int getCount() {
-            return TITLES.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return TITLES[position];
-        }
-    }
 
     private void eventBusPost() {
-            if (ImmedBasketballFragment.BasketImmedEventBus != null) {
-                ImmedBasketballFragment.BasketImmedEventBus.post("");
-            }
+        if (ImmedBasketballFragment.BasketImmedEventBus != null) {
+            ImmedBasketballFragment.BasketImmedEventBus.post("");
+        }
         if (mCurrentId == IMMEDIA_FRAGMENT) {
             if (ImmedBasketballFragment.BasketImmedEventBus != null) {
                 ImmedBasketballFragment.BasketImmedEventBus.post("");
@@ -1477,4 +1289,27 @@ public class BasketDetailsActivity extends BasketBaseActivity implements View.On
         }
     }
 
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
+        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < flexibleSpaceImageHeight ) {
+            mRefreshLayout.setEnabled(false);
+        } else {
+            // mRefreshLayout.setEnabled(true);
+            mRefreshLayout.setEnabled(true);
+
+        }
+
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(false);
+                // if (mMatchDetail != null && !"-1".equals(mMatchDetail.getLiveStatus())) {
+            }
+        }, 1000);
+    }
 }

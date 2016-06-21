@@ -662,6 +662,8 @@ public class BaseURLs {
      * 新版指数
      */
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
+    /**新版足球分析接口*/
+    public final static String URL_NEW_ANALYZE=URL_API_HOST+"footBallMatch.findAnalysisOverview.do";
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";

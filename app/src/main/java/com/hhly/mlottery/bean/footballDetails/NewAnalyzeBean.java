@@ -10,7 +10,15 @@ public class NewAnalyzeBean {
 
     private String result;
     private int fullScoreRank;
+    private int leagueType;
 
+    public int getLeagueType() {
+        return leagueType;
+    }
+
+    public void setLeagueType(int leagueType) {
+        this.leagueType = leagueType;
+    }
 
     private AttackDefenseEntity attackDefense;
     private LineUpEntity lineUp;
@@ -121,6 +129,7 @@ public class NewAnalyzeBean {
     }
 
     public static class LineUpEntity {
+        private String result;
         private List<PlayerInfo> homeLineUp;
         private List<PlayerInfo> guestLineUp;
 
@@ -139,7 +148,17 @@ public class NewAnalyzeBean {
         public List<PlayerInfo> getGuestLineUp() {
             return guestLineUp;
         }
+       public static class PlayerInfo{
+            private String name;
 
+           public String getName() {
+               return name;
+           }
+
+           public void setName(String name) {
+               this.name = name;
+           }
+       }
     }
 
     public static class ScoreRankEntity {
