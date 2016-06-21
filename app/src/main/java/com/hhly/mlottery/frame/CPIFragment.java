@@ -169,8 +169,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     @Override
     public void onResume() {
         super.onResume();
-//        startWebSocket();
-//        computeWebSocket();
+        startWebSocket();
+        computeWebSocket();
 //        MyT myT = new MyT();
 //        myT.start();
     }
