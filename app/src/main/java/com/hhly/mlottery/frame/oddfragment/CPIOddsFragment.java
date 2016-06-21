@@ -363,6 +363,7 @@ public class CPIOddsFragment extends Fragment {
                     if (status < 0) {
 
                     }
+                    matchInfoBean.setMatchState(statusOrigin);
                     switch (status) {
                         case 0:
                             matchInfoBean.setIsShowTitle(false);

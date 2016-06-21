@@ -227,7 +227,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
                 cpiViewHolder.tv_tag.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 cpiViewHolder.cpi_item_time_txt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
             } else {
-                cpiViewHolder.cpi_item_time_txt.setTextColor(ContextCompat.getColor(context, android.R.attr.textColorSecondary));
+//                cpiViewHolder.cpi_item_time_txt.setTextColor(ContextCompat.getColor(context, android.R.attr.textColorSecondary));
             }
         } catch (Exception e) {
             e.printStackTrace();

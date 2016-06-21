@@ -169,8 +169,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     @Override
     public void onResume() {
         super.onResume();
-        startWebSocket();
-        computeWebSocket();
+//        startWebSocket();
+//        computeWebSocket();
 //        MyT myT = new MyT();
 //        myT.start();
     }
@@ -258,6 +258,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         }
     }
 
+    boolean isFirstTime = true;
+
     public void onMessage(String message) {
 
         pushStartTime = System.currentTimeMillis(); // 记录起始时间
@@ -277,6 +279,12 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             //比分模拟推送
 //            ws_json = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
 
+
+            if (isFirstTime) {
+                ws_json = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'338231','type':1}  ";
+            } else {
+                ws_json = "{'data':{'keepTime':49,'statusOrigin':0},'thirdId':'338231','type':1}  ";
+            }
             JSONObject jsonObject = JSON.parseObject(ws_json);
             int type = jsonObject.getInteger("type");
 
