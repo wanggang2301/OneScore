@@ -3,13 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:visibility="gone"
+    android:background="@color/black_title"
     >
     <LinearLayout
         android:id="@+id/odds_nodata_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:visibility="gone"
         android:paddingTop="@dimen/basket_no_data_height"
         >
         <TextView

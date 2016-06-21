@@ -179,7 +179,7 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
 
         //无数据界面
         mNodataLayout= (LinearLayout) mView.findViewById(R.id.odds_nodata_container);
-        mNodataLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
+//        mNodataLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
         //网络异常的
         mExceptionLayout= (LinearLayout) mView.findViewById(R.id.basket_odds_net_error);
         mExceptionLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
@@ -209,8 +209,7 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
             mTitleHomeWin.setText(getActivity().getResources().getString(R.string.odd_guest_big_txt));
         }
 
-        mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
-        listView.setAdapter(mOddsAdapter);
+
     }
 
     public void initData() {
@@ -236,8 +235,9 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
      */
     private void loadData(BasketDetailOddsBean oddsBean) {
         if(getActivity()!=null){
-            mOddsCompanyList.addAll(oddsBean.getCompanyOdds());
-            mOddsAdapter.notifyDataSetChanged();
+            mOddsCompanyList=oddsBean.getCompanyOdds();
+            mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
+            listView.setAdapter(mOddsAdapter);
             mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
         }
 
