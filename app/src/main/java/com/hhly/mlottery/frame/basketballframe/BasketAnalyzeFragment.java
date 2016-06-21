@@ -137,24 +137,6 @@ public class BasketAnalyzeFragment extends Fragment  {
         mView = inflater.inflate(R.layout.basket_analysis, container, false);
         scrollView = (NestedScrollView) mView.findViewById(R.id.scroll);
 
-//        scrollView.setTouchInterceptionViewGroup((ViewGroup) mView.findViewById(R.id.fragment_root));
-
-        Bundle args = getArguments();
-//        if (args != null && args.containsKey(ARG_SCROLL_Y)) {
-//            final int scrollY = args.getInt(ARG_SCROLL_Y, 0);
-//            ScrollUtils.addOnGlobalLayoutListener(scrollView, new Runnable() {
-//                @Override
-//                public void run() {
-//                    scrollView.scrollTo(0, scrollY);
-//                }
-//            });
-//            updateFlexibleSpace(scrollY, mView);
-//        } else {
-//            updateFlexibleSpace(0, mView);
-//        }
-//        scrollView.setScrollViewCallbacks(this);
-
-
         try {
             initView();
             mHandler.postDelayed(mRun, 500); // 加载数据
@@ -266,12 +248,6 @@ public class BasketAnalyzeFragment extends Fragment  {
             }
         });
 
-//        mRefresh = (ExactSwipeRefrashLayout) mView.findViewById(R.id.basket_analyze_refresh);
-//        mRefresh.setColorSchemeResources(R.color.tabhost);
-      //  mRefresh.setOnRefreshListener(this);
-
-//        mListView1 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_guest);
-//        mListView2 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_home);
         //分割线
         mTextLine = (TextView) mView.findViewById(R.id.basket_analyze_line);
 
@@ -364,15 +340,6 @@ public class BasketAnalyzeFragment extends Fragment  {
                     mFutureLinearLayout.setVisibility(View.GONE);
                     mFutureNodata.setVisibility(View.VISIBLE);
                 } else {
-//                    if (guestNum >= homeNum) {
-//                        setLineHeight(guestNum);
-//                    }else{
-//                        setLineHeight(homeNum);
-//                    }
-//                    mAdapter1 = new FutureAdapter(getContext() , guestFuture , R.layout.basket_analyze_guest_frture_item);
-//                    mListView1.setAdapter(mAdapter1);
-//                    mAdapter2 = new FutureAdapter(getContext() , homeFuture , R.layout.basket_analyze_home_frture_item);
-//                    mListView2.setAdapter(mAdapter2);
 
                     //未来比赛
                     mFutureLinearLayout.setVisibility(View.VISIBLE);
@@ -541,20 +508,6 @@ public class BasketAnalyzeFragment extends Fragment  {
         mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
         mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
 
-//        setRecent(mRecentGuestImg1, -1);
-//        setRecent(mRecentGuestImg2, -1);
-//        setRecent(mRecentGuestImg3, -1);
-//        setRecent(mRecentGuestImg4, -1);
-//        setRecent(mRecentGuestImg5, -1);
-//        setRecent(mRecentGuestImg6, -1);
-//
-//        setRecent(mRecentHomeImg1, -1);
-//        setRecent(mRecentHomeImg2, -1);
-//        setRecent(mRecentHomeImg3, -1);
-//        setRecent(mRecentHomeImg4, -1);
-//        setRecent(mRecentHomeImg5, -1);
-//        setRecent(mRecentHomeImg6, -1);
-
         //未来比赛
         mFutureLinearLayout.setVisibility(View.GONE);
         mFutureNodata.setVisibility(View.VISIBLE);
@@ -565,32 +518,6 @@ public class BasketAnalyzeFragment extends Fragment  {
         mRecentLinearLayout.setVisibility(View.GONE);
         mRecentNodata.setVisibility(View.VISIBLE);
 
-//        setFutureMatch(mFutureGuestDate1, mFutureGuestName1, mFutureGuestImg1, null, false);
-//        setFutureMatch(mFutureGuestDate2, mFutureGuestName2, mFutureGuestImg2, null, false);
-//        setFutureMatch(mFutureGuestDate3, mFutureGuestName3, mFutureGuestImg3, null, false);
-//        setFutureMatch(mFutureHomeDate1, mFutureHomeName1, mFutureHomeImg1, null, false);
-//        setFutureMatch(mFutureHomeDate2 , mFutureHomeName2 , mFutureHomeImg2 , null , false);
-//        setFutureMatch(mFutureHomeDate3 , mFutureHomeName3 , mFutureHomeImg3 , null , false);
-//
-//        mRankingGuestName.setText("--");
-//        mRankingHomeName.setText("--");
-//        //已赛
-//        mRankingGuestOverGame.setText("--");
-//        mRankingHomeOverGame.setText("--");
-//        //胜负
-//        mRankingGuestResult.setText("--");
-//        mRankingHomeResult.setText("--");
-//        //胜率
-//        mRankingGuestWinRate.setText("--");
-//        mRankingHomeWinRate.setText("--");
-//
-//        mGuestScoreWinSix.setText("--");
-//        mGuestScoreLoseSix.setText("--");
-//        mHomeScoreWinSix.setText("--");
-//        mHomeScoreLoseSix.setText("--");
-//
-//        mScoreWin.setText("");
-//        mScoreLose.setText("");
     }
 
     /**
@@ -635,8 +562,6 @@ public class BasketAnalyzeFragment extends Fragment  {
          * 过滤主客队历史交锋1-0 或 0-1 时 X胜显示位置会居中问题
          */
         if (guestWins != 0 && homeWins == 0) {
-//            mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin*10));
-//            mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
             mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 15));
             mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0));
         } else if (guestWins == 0 && homeWins != 0) {
@@ -965,44 +890,10 @@ public class BasketAnalyzeFragment extends Fragment  {
         }
     }
 
-//    @Override
-//    public void updateFlexibleSpace(int scrollY) {
-//        Scrollable s = getScrollable();
-//        s.scrollVerticallyTo(scrollY);
-//
-//        updateFlexibleSpace(scrollY, getView());
-//    }
-//
-//    @Override
-//    protected void updateFlexibleSpace(int scrollY, View view) {
-//        ObservableScrollView scrollView = (ObservableScrollView) view.findViewById(R.id.scroll);
-////
-////        BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
-////        if (parentActivity != null) {
-////            parentActivity.onScrollChanged(scrollY, scrollView);
-////        }
-//    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-//    @Override
-//    public void onRefresh() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mRefresh.setRefreshing(false);
-//                initData();
-//                BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
-//                if (parentActivity != null) {
-//                    parentActivity.analyzeRefreshData();
-//                }
-//            }
-//        }, 500);
-//
-//    }
 
     class FutureAdapter extends CommonAdapter<BasketAnalyzeFutureMatchBean> {
 

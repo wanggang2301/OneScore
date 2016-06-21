@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -56,12 +57,6 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
 
     private String mThirdId="100";
     private String mType="euro";
-    private int mItemCount;//listview Item的数量
-    private int itemHeight; //一个listview的item的高度。
-    private int h;//屏幕的绝对高度
-    private View paddingviewButtom;//footer view
-
-    private int mFooterHeight;
     private View mView;
     /**外层listview*/
     private ListView listView;
@@ -74,14 +69,14 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
      * 无数据的界面
      */
     private LinearLayout mNodataLayout;
-
-
     /**
-     * 刷新
+     * 点击刷新
      */
-    private RelativeLayout mProgressBarLayout;
-    /**下拉刷新界面*/
-    private ExactSwipeRefrashLayout mRefreshLayout;
+    private TextView mBtnRefresh;
+    /**
+     * 加载中
+     */
+    private FrameLayout mProgressBarLayout;
 
     /**
      * 客胜
@@ -148,39 +143,18 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
                 case VIEW_STATUS_LOADING:
                     mExceptionLayout.setVisibility(View.GONE);
                     mProgressBarLayout.setVisibility(View.VISIBLE);
-
+                    mNodataLayout.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_SUCCESS:
 
                     mProgressBarLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.GONE);
-
-//                    BasketDetailsActivityTest parentActivity =
-//                            (BasketDetailsActivityTest) getActivity();
-//                    if (parentActivity != null) {
-//                        parentActivity.onScrollChanged(0, (ObservableListView) mView.findViewById(R.id.scroll)); //加上这句是防止刷新完数据后跳下来小头部没有隐藏
-//                        //所以调用一下这个方法
-//                    }
-
-                  //footer view's height is  the screen's  height - title's height(2*53)-item's count*53
-                    if(listView.getFooterViewsCount()==1){ //从网络异常到加载成功。footerview的高度需要重新计算。所以先remove掉。再加。
-                        listView.removeFooterView(paddingviewButtom);
-                    }
-                    if(listView.getFooterViewsCount()==0&&getActivity()!=null){//防止刷新的时候不停的加  防止getActivity() 为null
-                        paddingviewButtom=new View(getActivity());
-                        AbsListView.LayoutParams lp1 = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,mFooterHeight);
-
-                        paddingviewButtom.setLayoutParams(lp1);
-                        paddingviewButtom.setBackgroundColor(getResources().getColor(R.color.black_title));
-                        listView.addFooterView(paddingviewButtom);
-                    }
-
-                    listView.setAdapter(mOddsAdapter);
-                    mOddsAdapter.notifyDataSetChanged();
-
-                    if(mOddsCompanyList.size()!=0&&getActivity()!=null){//有数据则显示分割线
-                        listView.setDivider(getActivity().getResources().getDrawable(R.color.basket_odds_divider));
-                        listView.setDividerHeight(1);
+                    if(mOddsCompanyList.size()==0){
+                        mNodataLayout.setVisibility(View.VISIBLE);
+                        listView.setVisibility(View.GONE);
+                    }else{
+                        mNodataLayout.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
                     }
 
                     break;
@@ -189,30 +163,7 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
                     mProgressBarLayout.setVisibility(View.GONE);
                     mNodataLayout.setVisibility(View.GONE);
                     mExceptionLayout.setVisibility(View.VISIBLE);
-
-                    if(listView.getFooterViewsCount()==1){   // 从有数据到网络异常   footerview的高度需要重新计算。所以先remove掉。再加。
-                        listView.removeFooterView(paddingviewButtom);
-                    }
-                    if(listView.getFooterViewsCount()==0&&getActivity()!=null){//防止刷新的时候不停的加
-
-                        paddingviewButtom=new View(getActivity());
-
-                        AbsListView.LayoutParams lp1 = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,mFooterHeight);
-
-                        paddingviewButtom.setLayoutParams(lp1);
-                        paddingviewButtom.setBackgroundColor(getResources().getColor(R.color.black_title));
-                        listView.addFooterView(paddingviewButtom);
-                    }
-                    listView.setAdapter(mOddsAdapter);
-
-                    if(!mOddsCompanyList.isEmpty()){
-                          mOddsCompanyList.clear();
-                        mOddsAdapter.notifyDataSetChanged();
-                    }
-                    if(getActivity()!=null){
-                        listView.setDivider(getActivity().getResources().getDrawable(R.color.black_title));//设置灰色分割线
-                        listView.setDividerHeight(1);
-                    }
+                    mNodataLayout.setVisibility(View.GONE);
                     break;
             }
         }
@@ -221,30 +172,26 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
 
-         itemHeight=getResources().getDimensionPixelSize(R.dimen.item_height);//53dp
-         WindowManager wm= (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
-         h=wm.getDefaultDisplay().getHeight();
+        listView = (ListView) mView.findViewById(R.id.basket_odds_listview);
 
         //异常数据 处理
-        mProgressBarLayout= (RelativeLayout) mView.findViewById(R.id.basket_odds_progressbar);
-        listView = (ListView) mView.findViewById(R.id.basket_odds_listview);
-        //头部
-        View paddingView = new View(getActivity());
-        final int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                flexibleSpaceImageHeight);
-        paddingView.setLayoutParams(lp);
+        mProgressBarLayout= (FrameLayout) mView.findViewById(R.id.basket_odds_progressbar);
 
-        // This is required to disable header's list selector effect
-        paddingView.setClickable(true);
-       //标题
-        View viewTitle = View.inflate(getActivity(), R.layout.basket_odds_title,null);
-        //欧赔亚盘大小球标题设置
-        mTitleHandicap= (TextView) viewTitle.findViewById(R.id.basket_odds_handicap);
+        //无数据界面
+        mNodataLayout= (LinearLayout) mView.findViewById(R.id.odds_nodata_container);
+        mNodataLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
+        //网络异常的
+        mExceptionLayout= (LinearLayout) mView.findViewById(R.id.basket_odds_net_error);
+        mExceptionLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
+        mBtnRefresh= (TextView) mView.findViewById(R.id.network_exception_reload_btn);
+        mBtnRefresh.setOnClickListener(this);
 
-        mTitleGuestWin= (TextView) viewTitle.findViewById(R.id.basket_odds_guest_win);
+        //不同界面对应不同的标题
+        mTitleHandicap= (TextView) mView.findViewById(R.id.basket_odds_handicap);
 
-        mTitleHomeWin= (TextView) viewTitle.findViewById(R.id.basket_odds_home_win);
+        mTitleGuestWin= (TextView) mView.findViewById(R.id.basket_odds_guest_win);
+
+        mTitleHomeWin= (TextView) mView.findViewById(R.id.basket_odds_home_win);
 
         if(mType.equals(BasketDetailsActivity.ODDS_EURO)){
             mTitleHandicap.setVisibility(View.GONE);
@@ -262,35 +209,8 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
             mTitleHomeWin.setText(getActivity().getResources().getString(R.string.odd_guest_big_txt));
         }
 
-//        listView.addHeaderView(paddingView);
-   //     listView.addHeaderView(viewTitle);
-
-        //无数据界面
-        View noDataView =View.inflate(getActivity(), R.layout.basket_odds_nodata,null);
-        mNodataLayout= (LinearLayout) noDataView.findViewById(R.id.odds_nodata_container);
-        mNodataLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
-        mNodataLayout.setVisibility(View.GONE);
-//        listView.addHeaderView(noDataView);
-//
-        //网络异常的
-        View errorView=View.inflate(getActivity(), R.layout.basket_odds_new_error,null);
-        mExceptionLayout= (LinearLayout) errorView.findViewById(R.id.basket_odds_net_error);
-        mExceptionLayout.setBackgroundColor(getResources().getColor(R.color.black_title));
-        mExceptionLayout.setVisibility(View.GONE);
-//        listView.addHeaderView(errorView);
-        //点击刷新
-        errorView.findViewById(R.id.network_exception_reload_btn).setOnClickListener(BasketOddsFragment.this);
-
-//        listView.setTouchInterceptionViewGroup((ViewGroup) mView.findViewById(R.id.basket_odds_root));
-
-//        listView.setScrollViewCallbacks(this);
-
-      //  listView.setSelectionFromTop(0, 0);
-//        updateFlexibleSpace(0, mView);
-
-     //   mRefreshLayout= (ExactSwipeRefrashLayout) mView.findViewById(R.id.basket_euro_refreshlayout);
-     //   mRefreshLayout.setColorSchemeResources(R.color.tabhost);
-//        mRefreshLayout.setOnRefreshListener(this);
+        mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
+        listView.setAdapter(mOddsAdapter);
     }
 
     public void initData() {
@@ -306,7 +226,6 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                mFooterHeight=h-(2+3)*itemHeight;//网络异常界面的高度等于3个item
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
             }
         }, BasketDetailOddsBean.class);
@@ -317,17 +236,8 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
      */
     private void loadData(BasketDetailOddsBean oddsBean) {
         if(getActivity()!=null){
-            mOddsCompanyList=oddsBean.getCompanyOdds();
-            mItemCount=mOddsCompanyList.size();
-            mFooterHeight=h-(2+mItemCount)*itemHeight;
-            mOddsAdapter = new BasketOddsAdapter(getActivity(), mOddsCompanyList,mType);//欧赔
-            //显示无数据界面
-            if(mOddsCompanyList.size()==0){
-                mNodataLayout.setVisibility(View.VISIBLE);
-                listView.setDivider(getActivity().getResources().getDrawable(R.color.black_title));
-                listView.setDividerHeight(1);
-                mFooterHeight=h-(2+3)*itemHeight;//没数据的界面的高度等于3个item
-            }
+            mOddsCompanyList.addAll(oddsBean.getCompanyOdds());
+            mOddsAdapter.notifyDataSetChanged();
             mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
         }
 
@@ -338,62 +248,12 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.network_exception_reload_btn:
-                MobclickAgent.onEvent(MyApp.getContext(),"BasketOddsFragment_NotNet");
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketOddsFragment_NotNet");
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 initData();
-
-                BasketDetailsActivity basketDetailsActivity= (BasketDetailsActivity) getActivity();
-                basketDetailsActivity.refreshData();
         }
 
     }
-
-//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//    @Override
-//    public void setScrollY(int scrollY, int threshold) {
-//        ObservableListView listView;
-//        View view = getView();
-//        if (view == null) {
-//            return;
-//        }
-//            listView = (ObservableListView) view.findViewById(R.id.scroll);
-//        if (listView == null) {
-//            return;
-//        }
-//        View firstVisibleChild = listView.getChildAt(0);
-//        if (firstVisibleChild != null) {
-//            int offset = scrollY;
-//            int position = 0;
-//            listView.setSelectionFromTop(position, -offset);
-//        }
-//
-//    }
-//
-//    @Override
-//    protected void updateFlexibleSpace(int scrollY, View view) {
-//
-//        // Also pass this event to parent Activity
-//        BasketDetailsActivity parentActivity =
-//                (BasketDetailsActivity) getActivity();
-//        if (parentActivity != null) {
-//                parentActivity.onScrollChanged(scrollY, (ObservableListView) view.findViewById(R.id.scroll));
-//        }
-//    }
-//
-//    @Override
-//    public void onRefresh() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mRefreshLayout.setRefreshing(false);
-//                initData();
-//                if (getActivity() != null) {
-//                    BasketDetailsActivity basketDetailsActivity= (BasketDetailsActivity) getActivity();
-//                    basketDetailsActivity.refreshData();
-//                }
-//            }
-//        }, 1000);
-//    }
 
     @Override
     public void onResume() {

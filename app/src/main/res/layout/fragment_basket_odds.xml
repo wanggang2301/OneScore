@@ -2,36 +2,51 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_title"
     >
 <FrameLayout
     android:id="@+id/basket_odds_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
 
-                <ListView
-                    android:id="@+id/basket_odds_listview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="none"
-                    android:listSelector="#00000000"
-                    android:overScrollMode="never"
-                    android:dividerHeight="0.5dp"
-                    android:divider="@color/basket_odds_divider"/>
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <include layout="@layout/basket_odds_title"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/basket_odds_divider"
+            />
+        <com.hhly.mlottery.widget.NoScrollListView
+            android:id="@+id/basket_odds_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="#00000000"
+            android:dividerHeight="0.5dp"
+            android:divider="@color/basket_odds_divider"/>
 
+    </LinearLayout>
 
-    <RelativeLayout
+    <!--内容加载进度条_正在加载中-->
+    <FrameLayout
         android:id="@+id/basket_odds_progressbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
         android:visibility="gone">
 
         <ProgressBar
-            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-
-    </RelativeLayout>
-
+            android:layout_gravity="center" />
+    </FrameLayout>
+    <include layout="@layout/basket_odds_nodata"/>
+    <include layout="@layout/basket_odds_new_error" />
 </FrameLayout>
 </android.support.v4.widget.NestedScrollView>
