@@ -64,9 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center|start"
-                        android:text="&apos;"
-                        android:textColor="@color/colorPrimary"
-                        android:visibility="invisible"/>
+                        android:textColor="@color/colorPrimary"/>
 
                     <TextView
                         android:id="@+id/tv_tag"

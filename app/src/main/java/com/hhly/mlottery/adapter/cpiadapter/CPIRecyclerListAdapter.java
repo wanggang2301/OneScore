@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -64,6 +66,13 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
     }
 
     @Override
+    public void onViewAttachedToWindow(ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        // 由于动画会在 viewholder 回收的时候取消，所以在 attachedToWindow 中需要重新显示
+        holder.setSecondAnim();
+    }
+
+    @Override
     public int getItemCount() {
         return items.size();
     }
@@ -113,6 +122,34 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
             setTitleText();
         }
 
+        /**
+         * 设置分钟动画效果
+         */
+        private void setSecondAnim() {
+            final AlphaAnimation hideAnim = new AlphaAnimation(0, 0);
+            hideAnim.setDuration(500);
+            final AlphaAnimation showAnim = new AlphaAnimation(1, 1);
+            showAnim.setDuration(500);
+            hideAnim.setAnimationListener(new AnimationListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mSecond.startAnimation(showAnim);
+                }
+            });
+            showAnim.setAnimationListener(new AnimationListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mSecond.startAnimation(hideAnim);
+                }
+            });
+            mSecond.startAnimation(hideAnim);
+        }
+
+        /**
+         * 绑定数据
+         *
+         * @param data data
+         */
         public void bindData(NewOddsInfo.AllInfoBean data) {
             maybeInitColors();
 
@@ -131,14 +168,14 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
                 // 比分、时间改为蓝色，显示分钟标记，隐藏状态文字
                 mTime.setTextColor(primaryColor);
                 mScore.setTextColor(primaryColor);
-                mSecond.setVisibility(View.VISIBLE);
+                mSecond.setText("\'");
                 mStatus.setVisibility(View.GONE);
 
                 mScore.setText(matchInfo.getMatchResult());
             } else {
                 // 时间改为默认颜色
                 mTime.setTextColor(defaultTextColor);
-                mSecond.setVisibility(View.INVISIBLE);
+                mSecond.setText("");
                 mStatus.setVisibility(View.VISIBLE);
                 if (intState == 0) {
                     // 未开，显示默认灰色
@@ -249,5 +286,23 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
 
     public interface OnItemClickListener {
         void onItemClick(NewOddsInfo.AllInfoBean item);
+    }
+
+    abstract class AnimationListenerAdapter implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
     }
 }
