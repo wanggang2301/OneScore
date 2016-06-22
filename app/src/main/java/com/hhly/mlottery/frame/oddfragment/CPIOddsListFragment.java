@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerListAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
@@ -26,6 +27,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPINewFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ import java.util.Map;
 
 /**
  * 赔率列表 Fragment
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/21.
  */
 public class CPIOddsListFragment extends Fragment {
@@ -125,11 +127,27 @@ public class CPIOddsListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         datas = new ArrayList<>();
         mAdapter = new CPIRecyclerListAdapter(datas, type);
+        // RecyclerView Item 单击
         mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(NewOddsInfo.AllInfoBean item) {
                 Intent intent = new Intent(getContext(), FootballMatchDetailActivity.class);
                 intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
+                getContext().startActivity(intent);
+            }
+        });
+        // 每个 Item 内部一条赔率的单击
+        mAdapter.setOnOddsClickListener(new CPIRecyclerListAdapter.OnOddsClickListener() {
+            @Override
+            public void onOddsClick(NewOddsInfo.AllInfoBean item,
+                                    NewOddsInfo.AllInfoBean.ComListBean odds) {
+                List<Map<String, String>> obList = item.toListViewParamList();
+                //点击指数页面，传值给详情界面
+                Intent intent = new Intent(getContext(), CpiDetailsActivity.class);
+                intent.putExtra("obListEntity", (Serializable) obList);
+                intent.putExtra("comId", odds.getComId());
+                intent.putExtra("positionNunber", item.getComList().indexOf(odds) + "");
+                intent.putExtra("stType", type);
                 getContext().startActivity(intent);
             }
         });

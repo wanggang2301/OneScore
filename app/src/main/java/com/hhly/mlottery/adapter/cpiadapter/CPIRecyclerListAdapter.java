@@ -32,6 +32,11 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
     private List<NewOddsInfo.AllInfoBean> items; // 数据源
 
     private OnItemClickListener onItemClickListener; // 监听器
+    private OnOddsClickListener onOddsClickListener; // 赔率点击监听
+
+    public void setOnOddsClickListener(OnOddsClickListener onOddsClickListener) {
+        this.onOddsClickListener = onOddsClickListener;
+    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -199,12 +204,20 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
          *
          * @param data data
          */
-        private void bindOdds(NewOddsInfo.AllInfoBean data) {
+        private void bindOdds(final NewOddsInfo.AllInfoBean data) {
             mContainer.removeAllViews();
             List<NewOddsInfo.AllInfoBean.ComListBean> comList = data.getComList();
-            for (NewOddsInfo.AllInfoBean.ComListBean item : comList) {
+            for (final NewOddsInfo.AllInfoBean.ComListBean item : comList) {
                 CpiOddsItemView cpiOddsItemView = new CpiOddsItemView(mContext);
                 cpiOddsItemView.bindData(item, type);
+                if (onOddsClickListener != null) {
+                    cpiOddsItemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onOddsClickListener.onOddsClick(data, item);
+                        }
+                    });
+                }
                 mContainer.addView(cpiOddsItemView);
                 if (comList.indexOf(item) != comList.size() - 1) {
                     cpiOddsItemView.showDivider();
@@ -286,6 +299,10 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
 
     public interface OnItemClickListener {
         void onItemClick(NewOddsInfo.AllInfoBean item);
+    }
+
+    public interface OnOddsClickListener {
+        void onOddsClick(NewOddsInfo.AllInfoBean item, NewOddsInfo.AllInfoBean.ComListBean odds);
     }
 
     abstract class AnimationListenerAdapter implements Animation.AnimationListener {

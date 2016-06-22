@@ -1,7 +1,10 @@
 package com.hhly.mlottery.bean.oddsbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 103TJL on 2016/5/3.
@@ -10,7 +13,7 @@ import java.util.List;
 public class NewOddsInfo {
 
     private String currDate;
-    private int code; 
+    private int code;
     private List<String> focusLeagueIds;
     /**
      * leagueId : 250
@@ -187,6 +190,23 @@ public class NewOddsInfo {
          */
 
         private List<ComListBean> comList;
+
+        /**
+         * 转化为 Odds 需要的数据规格
+         *
+         * @return ArrayList
+         */
+        public ArrayList<Map<String, String>> toListViewParamList() {
+            ArrayList<Map<String, String>> obList = new ArrayList<>();
+            for (int m = 0; m < this.getComList().size(); m++) {
+                Map<String, String> obMap = new HashMap<>();
+                obMap.put("id", this.getComList().get(m).getComId());
+                obMap.put("name", this.getComList().get(m).getComName());
+                obMap.put("thirdid", matchInfo.getMatchId());
+                obList.add(obMap);
+            }
+            return obList;
+        }
 
         public String getLeagueName() {
             return leagueName;
