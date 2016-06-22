@@ -38,6 +38,7 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
+import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.frame.footframe.TestFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -111,6 +112,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private String mThirdId = "936707";
 
     BasketAnalyzeFragment mAnalyzeFragment= new BasketAnalyzeFragment();
+    TalkAboutBallFragment mTalkAboutBallFragment;
 
     BasketOddsFragment mOddsEuro;
     BasketOddsFragment mOddsLet;
@@ -216,6 +218,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             mOddsEuro=BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
             mOddsLet=BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
             mOddsSize=BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
+            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId , "" , 1);
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
         }
@@ -333,13 +336,15 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private boolean is2 = false;
     private boolean isFragment3 = false;
     private boolean is3 = false;
+    private boolean isFragment4 = false;
+    private boolean is4 = false;
 
     /**
      * 初始化界面
      */
     private void initView() {
         TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_eur),
-              getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof)};
+              getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof) , "聊球"};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
@@ -356,7 +361,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         MDStatusBarCompat.setCollapsingToolbar(this,mCoordinatorLayout,appBarLayout,mBasketLayoutHeader,toolbar);
 
 
-        mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet);
+        mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet , mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -381,24 +386,35 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                         isFragment1 = false;
                         isFragment2 = false;
                         isFragment3 = false;
+                        isFragment4 = false;
                         break;
                     case 1:// 欧赔
                         isFragment0 = false;
                         isFragment1 = true;
                         isFragment2 = false;
                         isFragment3 = false;
+                        isFragment4 = false;
                         break;
                     case 2:// 亚盘
                         isFragment0 = false;
                         isFragment1 = false;
                         isFragment2 = true;
                         isFragment3 = false;
+                        isFragment4 = false;
                         break;
                     case 3:// 大小
                         isFragment0 = false;
                         isFragment1 = false;
                         isFragment2 = false;
                         isFragment3 = true;
+                        isFragment4 = false;
+                        break;
+                    case 4:// 大小
+                        isFragment0 = false;
+                        isFragment1 = false;
+                        isFragment2 = false;
+                        isFragment3 = false;
+                        isFragment4 = true;
                         break;
                 }
                 if (is0) {
@@ -421,6 +437,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                     is3 = false;
                     L.d("xxx", "大小隐藏");
                 }
+                if (is4) {
+                    is4 = false;
+                }
 
                 if (isFragment0) {
                     MobclickAgent.onPageStart("BasketBall_Info_FX");
@@ -441,6 +460,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                     MobclickAgent.onPageStart("BasketBall_Info_DX");
                     is3 = true;
                     L.d("xxx", "大小显示");
+                }
+                if (isFragment4) {
+                    is4 = true;
                 }
             }
 
@@ -540,6 +562,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             is3 = true;
             L.d("xxx","大小显示");
         }
+        if (isFragment4) {
+            is4 = true;
+        }
     }
 
     @Override
@@ -564,6 +589,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             MobclickAgent.onPageEnd("BasketBall_Info_DX");
             is3 = false;
             L.d("xxx","大小 隐藏");
+        }
+        if (is4) {
+            is4 = false;
         }
     }
 
