@@ -476,7 +476,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public void onEventMainThread(Map<String, Object> map) {
         String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(
                 new String[]{});
-        FiltrateCupsMap.immediateCups = checkedIds;
+        FiltrateCupsMap.rollballCups = checkedIds;
         feedAdapterLists.clear();
         for (Match match : allDataLists) {
             boolean isExistId = false;
