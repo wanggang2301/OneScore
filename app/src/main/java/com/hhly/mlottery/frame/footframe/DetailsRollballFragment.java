@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.bean.footballDetails.BottomOdds;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
@@ -309,7 +311,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
             switch (msg.what) {
                 case STARTLOADING:// 正在加载中
-                   // L.d("456789","loading");
+                    // L.d("456789","loading");
 
                     fl_odds_loading.setVisibility(View.VISIBLE);
                     fl_odds_net_error.setVisibility(View.GONE);
@@ -340,13 +342,10 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
 
         Map<String, String> params = new HashMap<>();
-        params.put("thirdId", "337438");
-        String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListOverview.do";
+        params.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+        //String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListOverview.do";
 
-        //  VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW_INFO, params,
-
-
-        VolleyContentFast.requestJsonByGet(url, params,
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW_INFO, params,
                 new VolleyContentFast.ResponseSuccessListener<BottomOdds>() {
                     @Override
                     public void onResponse(BottomOdds bottomOdds) {

@@ -130,11 +130,9 @@ public class PreHeadInfoFrament extends Fragment {
         universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
         universalImageLoader.init(config);
 
-
-        int random = new Random().nextInt(20);
+      /*  int random = new Random().nextInt(20);
         String url = baseUrl + random + ".png";
-        universalImageLoader.displayImage(url, iv_bg, options);
-
+        universalImageLoader.displayImage(url, iv_bg, options);*/
     }
 
 
@@ -205,7 +203,6 @@ public class PreHeadInfoFrament extends Fragment {
     public void setScoreClolor(int id) {
         score.setTextColor(id);
     }
-
 
 
 }

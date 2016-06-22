@@ -112,7 +112,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private FrameLayout fl_odds_loading;
 
-    private FrameLayout fl_odds_net_error;
+    private FrameLayout fl_odds_net_error_details;
 
 
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
@@ -263,6 +263,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
      */
     private int mReloadPeriod = PERIOD_20;
 
+    private boolean isRquestSuccess = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,7 +291,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
         mHeadviewpager.setCurrentItem(0);
 
-        mHandler.sendEmptyMessage(STARTLOADING);
+        //  mHandler.sendEmptyMessage(ERROR);
 
         mHeadviewpager.setIsScrollable(false);
         mIndicator.setVisibility(View.GONE);
@@ -311,7 +312,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         setSupportActionBar(toolbar);
 
 
-        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout);
+        mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
 
@@ -340,9 +341,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mTabsAdapter.setTitles(titles);
 
 
-        fl_odds_loading = (FrameLayout) findViewById(R.id.fl_odds_loading);
-        fl_odds_net_error = (FrameLayout) findViewById(R.id.fl_odds_networkError);
-        reLoading = (TextView) findViewById(R.id.reLoading);
+        fl_odds_loading = (FrameLayout) findViewById(R.id.fl_odds_loading_details);
+        fl_odds_net_error_details = (FrameLayout) findViewById(R.id.fl_odds_networkError_details);
+        reLoading = (TextView) findViewById(R.id.reLoading_details);
         reLoading.setOnClickListener(this);
 
         head_score = (TextView) findViewById(R.id.head_score);
@@ -355,6 +356,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         iv_setting.setOnClickListener(this);
 
         setScroller();
+
 
     }
 
@@ -371,15 +373,22 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }
 
         if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
-            mRefreshLayout.setEnabled(false);
+            mRefreshLayout.setEnabled(false);   //收缩
         } else {
-            mRefreshLayout.setEnabled(true);
+
+            if (isRquestSuccess) {
+                mRefreshLayout.setEnabled(true); //展开
+            } else {
+                mRefreshLayout.setEnabled(false); //展开
+
+            }
         }
     }
 
 
     @Override
     public void onRefresh() {
+        L.d("10299", "下拉刷新");
 
         L.d(TAG, "下拉刷新");
         new Handler().postDelayed(new Runnable() {
@@ -421,12 +430,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private void loadData() {
 
-
+        mHandler.sendEmptyMessage(STARTLOADING);
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
             @Override
             public void onResponse(MatchDetail matchDetail) {
+                L.d("10299", matchDetail.getResult());
 
                 if (!"200".equals(matchDetail.getResult())) {
                     mHandler.sendEmptyMessage(ERROR);
@@ -2173,30 +2183,43 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             switch (msg.what) {
                 case STARTLOADING:// 正在加载中
+                    //  mRefreshLayout.setRefreshing(false);
+                    isRquestSuccess = false;
                     fl_odds_loading.setVisibility(View.VISIBLE);
-                    fl_odds_net_error.setVisibility(View.GONE);
+                    fl_odds_net_error_details.setVisibility(View.GONE);
                     mViewPager.setVisibility(View.GONE);
+                    mRefreshLayout.setEnabled(false);
                     break;
                 case SUCCESS:// 加载成功
-                    mRefreshLayout.setVisibility(View.VISIBLE);
 
+                    isRquestSuccess = true;
                     fl_odds_loading.setVisibility(View.GONE);
-                    fl_odds_net_error.setVisibility(View.GONE);
+                    fl_odds_net_error_details.setVisibility(View.GONE);
                     mViewPager.setVisibility(View.VISIBLE);
+                    mRefreshLayout.setEnabled(true);
 
                     break;
                 case ERROR:// 加载失败
                     if (isInitedViewPager) {
                         Toast.makeText(getApplicationContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                     } else {
-                        mRefreshLayout.setVisibility(View.GONE);
+
+                        L.d("10299", "错误");
+                        // mRefreshLayout.setVisibility(View.GONE);
+
+                        isRquestSuccess = false;
+
                         fl_odds_loading.setVisibility(View.GONE);
-                        fl_odds_net_error.setVisibility(View.VISIBLE);
+                        fl_odds_net_error_details.setVisibility(View.VISIBLE);
                         mViewPager.setVisibility(View.GONE);
+
+                        mRefreshLayout.setEnabled(false);
                     }
 
-
                     // isHttpData = false;
+                    break;
+
+                default:
                     break;
             }
         }
@@ -2216,7 +2239,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             case R.id.iv_setting:  //关注、分享
                 popWindow(iv_setting);
                 break;
-            case R.id.reLoading:
+            case R.id.reLoading_details:
                 loadData();
                 break;
             default:

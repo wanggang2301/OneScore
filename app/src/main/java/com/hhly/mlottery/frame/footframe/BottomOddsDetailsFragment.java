@@ -19,10 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.football.BottomOddsAdapter;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -234,14 +236,13 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
 
         Map<String, String> params = new HashMap<>();
-        params.put("thirdId", "339608");  //
-        params.put("oddType", "1");
+        params.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+        //
+        params.put("oddType", mType + "");
 
-        String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListDetail.do";
+        //String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListDetail.do";
 
-        //  VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTDETAIL_INFO, params,
-
-        VolleyContentFast.requestJsonByGet(url, params,
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTDETAIL_INFO, params,
                 new VolleyContentFast.ResponseSuccessListener<BottomOddsDetails>() {
                     @Override
                     public void onResponse(BottomOddsDetails bottomOddsDetails) {
@@ -250,7 +251,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
                         }
 
                         if (bottomOddsDetails.getMatchoddlist() == null || bottomOddsDetails.getMatchoddlist().size() <= 0) {
-                            L.d("ffffff","无数据");
+                            L.d("ffffff", "无数据");
                             mHandler.sendEmptyMessage(NODATA);
                             return;
                         }
@@ -263,7 +264,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        L.d("ffffff","错误");
+                        L.d("ffffff", "错误");
 
                         mHandler.sendEmptyMessage(ERROR);
                     }
