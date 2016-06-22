@@ -25,6 +25,7 @@
             >
 
             <EditText
+                android:textSize="@dimen/text_size_13"
                 style="@style/login_edittext_phonenumber"
                 android:id="@+id/et_username"
                 android:layout_width="0dp"
@@ -77,6 +78,7 @@
         >
 
         <EditText
+            android:textSize="@dimen/text_size_13"
             android:id="@+id/et_password"
             style="@style/login_edittext_password"
             android:layout_width="0dp"
