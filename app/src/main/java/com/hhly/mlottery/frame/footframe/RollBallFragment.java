@@ -394,9 +394,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                     hotList = hotFocusLeagueCup.getHotLeagueIds();
                                 }
 
-                                if (FiltrateCupsMap.immediateCups.length != 0) {// 判断是否已经筛选过
+                                if (FiltrateCupsMap.rollballCups.length != 0) {// 判断是否已经筛选过
                                     for (Match m : allDataLists) {// 已选择的
-                                        for (String checkedId : FiltrateCupsMap.immediateCups) {
+                                        for (String checkedId : FiltrateCupsMap.rollballCups) {
                                             if (m.getRaceId().equals(checkedId)) {
                                                 feedAdapterLists.add(m);
                                                 break;
@@ -425,9 +425,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                     }
                                 } else {
                                     List<LeagueCup> tempHotCups = new ArrayList<>();
-                                    if (FiltrateCupsMap.immediateCups.length != 0) {
+                                    if (FiltrateCupsMap.rollballCups.length != 0) {
                                         for (LeagueCup cup : leagueCupLists) {
-                                            for (String checkedId : FiltrateCupsMap.immediateCups) {
+                                            for (String checkedId : FiltrateCupsMap.rollballCups) {
                                                 if (cup.getRaceId().equals(checkedId)) {
                                                     tempHotCups.add(cup);
                                                     break;
