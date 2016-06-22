@@ -682,6 +682,7 @@
     <string name="resend">重發</string>
     <string name="register_fail">注冊失敗</string>
     <string name="register_succ">注冊成功</string>
+    <string name="send_register_succ">驗證碼已發送請注意查收</string>
     <string name="mail_format_error">郵箱格式錯誤</string>
     <string name="mail_already_register">該郵箱已注冊</string>
     <string name="verify_code_error">驗證碼錯誤</string>
