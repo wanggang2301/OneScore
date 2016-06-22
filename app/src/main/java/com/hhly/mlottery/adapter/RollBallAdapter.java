@@ -143,6 +143,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         this.initializedTextColor(tvKeepTime, tvGuestScore, tvHomeScore, tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
         tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_name_color));
         tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_name_color));
+        keepTimeShuffle.setTextColor(context.getResources().getColor(R.color.text_about_color));
 
         // 置顶
         if (data.getIsTopData() > 0 || isTopDataCacheMaps.get(data)) {
@@ -189,7 +190,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
 
         // 赔率的颜色变化状态
-        if (Integer.parseInt(data.getKeepTime()) < 89) {
+        if (Integer.parseInt(data.getKeepTime()) < 89) { // 手动操控封盘状态，时间如果大于89 则不显示颜色变化，防止在“--”状态下，后台推送的数据并非“--”，而显示颜色变化
             switch (handicap) {
                 case 1: // 亚盘
                     if (!asiaLet.getLeftOdds().equals("-"))
@@ -456,6 +457,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
         keepTime.setText(text);
         keepTime.setTextColor(context.getResources().getColor(color));
+        keepTimeShuffle.setTextColor(context.getResources().getColor(color));
     }
 
     private void setupEventAnimator(Match match, TextView homeScore, TextView guestScore) {
