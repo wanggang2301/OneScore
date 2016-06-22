@@ -256,16 +256,17 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mLinearLayout = (LinearLayout) mView.findViewById(R.id.comment_inputcontainer);
         mTextView.setOnClickListener(this);
         mCommentCount.setVisibility(View.VISIBLE);
-        //获取评论的一切信息
-        if (!TextUtils.isEmpty(mThirdId)) {
-            loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
-        }
         //以前的规则是-1不可点  现在延续
         if (state != null && state.equals("-1")) {
             setClickableLikeBtn(false);
         } else {
             setClickableLikeBtn(true);
         }
+        //获取评论的一切信息
+        if (!TextUtils.isEmpty(mThirdId)) {
+            loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+        }
+
     }
 
     public void setClickableLikeBtn(boolean clickable) {
