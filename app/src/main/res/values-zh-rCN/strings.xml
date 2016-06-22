@@ -757,6 +757,7 @@
     <string name="comfirm_pw">确认</string>
     <string name="pw_not_same">新密码与确认密码不一致</string>
     <string name="pw_same_same">不能与原昵称相同</string>
+    <string name="name_invalid">登录失效,请重新登录</string>
     <string name="account">账号</string>
     <string name="pwd_format_just_length">密码长度为6-16位</string>
     <string name="verify_time_limit">两次发送间隔不得小于60秒</string>
