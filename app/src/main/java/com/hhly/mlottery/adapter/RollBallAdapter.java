@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -29,7 +28,6 @@ import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RxBus;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -37,23 +35,23 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
+     /*private boolean notify_locked_tag;
+    private Subscription subscription;
+    private List<Object> cacheWebSocketPushData = new ArrayList<>();*/
+
     public static final int VIEW_TYPE_DEFAULT = 1;
 
     private int topDataCount = Integer.MAX_VALUE;
-    private boolean notify_locked_tag;
     private int handicap;
     private Map<Match, Boolean> isTopDataCacheMaps = new HashMap<>();
-    private List<Object> cacheWebSocketPushData = new ArrayList<>();
 
     private Context context;
     private boolean resetColor;
-    private Subscription subscription;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -110,7 +108,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         final Match data = getItemByPosition(position);
         if (data == null) return;
 
-        notify_locked_tag = true;
+//        notify_locked_tag = true;
         final CardView container = viewHolder.findViewById(R.id.container);
         RelativeLayout rlHalfContainer = viewHolder.findViewById(R.id.rlHalfContainer);
         TextView tvRaceName = viewHolder.findViewById(R.id.tvRaceName);
@@ -145,6 +143,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         this.initializedTextColor(tvKeepTime, tvGuestScore, tvHomeScore, tvHandicapValue_DA_BLACK, tvHandicapValue_YA_BLACK, tvLeftOdds_DA, tvLeftOdds_YA, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_DA, tvRightOdds_YA, tvRightOdds_EU);
         tvLeftOdds_DA.setTextColor(context.getResources().getColor(R.color.res_name_color));
         tvLeftOdds_YA.setTextColor(context.getResources().getColor(R.color.res_name_color));
+        keepTimeShuffle.setTextColor(context.getResources().getColor(R.color.text_about_color));
 
         // 置顶
         if (data.getIsTopData() > 0 || isTopDataCacheMaps.get(data)) {
@@ -171,17 +170,41 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             }
         }
 
+        // 赔率
+        Map<String, MatchOdd> matchOddMap = data.getMatchOdds();
+        MatchOdd asiaSize = null, euro = null, asiaLet = null;
+        if (matchOddMap != null && matchOddMap.size() > 0) {
+            for (Map.Entry<String, MatchOdd> matchOdd : matchOddMap.entrySet()) {
+                switch (matchOdd.getKey()) {
+                    case "asiaSize":// 大小盘数据
+                        asiaSize = matchOddMap.get("asiaSize");
+                        break;
+                    case "euro":// 欧赔数据
+                        euro = matchOddMap.get("euro");
+                        break;
+                    case "asiaLet":// 亚赔数据
+                        asiaLet = matchOddMap.get("asiaLet");
+                        break;
+                }
+            }
+        }
+
         // 赔率的颜色变化状态
-        switch (handicap) {
-            case 1: // 亚盘
-                setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
-                break;
-            case 2: // 大小球
-                setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
-                break;
-            case 3: // 欧赔
-                setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
-                break;
+        if (Integer.parseInt(data.getKeepTime()) < 89) { // 手动操控封盘状态，时间如果大于89 则不显示颜色变化，防止在“--”状态下，后台推送的数据并非“--”，而显示颜色变化
+            switch (handicap) {
+                case 1: // 亚盘
+                    if (!asiaLet.getLeftOdds().equals("-"))
+                        setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
+                    break;
+                case 2: // 大小球
+                    if (!asiaSize.getLeftOdds().equals("-"))
+                        setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
+                    break;
+                case 3: // 欧赔
+                    if (!euro.getLeftOdds().equals("-"))
+                        setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
+                    break;
+            }
         }
 
         // 比赛状态
@@ -238,25 +261,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 break;
         }
 
-        // 赔率
-        Map<String, MatchOdd> matchOddMap = data.getMatchOdds();
-        MatchOdd asiaSize = null, euro = null, asiaLet = null;
-        if (matchOddMap != null && matchOddMap.size() > 0) {
-            for (Map.Entry<String, MatchOdd> matchOdd : matchOddMap.entrySet()) {
-                switch (matchOdd.getKey()) {
-                    case "asiaSize":// 大小盘数据
-                        asiaSize = matchOddMap.get("asiaSize");
-                        break;
-                    case "euro":// 欧赔数据
-                        euro = matchOddMap.get("euro");
-                        break;
-                    case "asiaLet":// 亚赔数据
-                        asiaLet = matchOddMap.get("asiaLet");
-                        break;
-                }
-            }
-        }
-
         // 杯赛名称
         tvRaceName.setText(data.getRacename());
         // 主队分数
@@ -297,15 +301,15 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (asiaLet != null) {
             // 亚盘赔率
             tvLeftOdds_YA.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue())
+                    ? asiaLet.getHandicapValue().equals("-") ? "--" : HandicapUtils.changeHandicap(asiaLet.getHandicapValue())
                     : "--"); // 中
 
             tvHandicapValue_YA_BLACK.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaLet.getLeftOdds().equals("-") ? " " : asiaLet.getLeftOdds()
+                    ? asiaLet.getLeftOdds().equals("-") ? "封" : asiaLet.getLeftOdds()
                     : "封"); // 上
 
             tvRightOdds_YA.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaLet.getRightOdds().equals("-") ? " " : asiaLet.getRightOdds()
+                    ? asiaLet.getRightOdds().equals("-") ? "--" : asiaLet.getRightOdds()
                     : "--"); // 下
         } else {
             this.setText(tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
@@ -319,13 +323,13 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (asiaSize != null) {
             // 大小盘赔率
             tvLeftOdds_DA.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue())
+                    ? asiaSize.getHandicapValue().equals("-") ? "--" : HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue())
                     : "--"); // 中
             tvHandicapValue_DA_BLACK.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaSize.getLeftOdds().equals("-") ? " " : asiaSize.getLeftOdds()
+                    ? asiaSize.getLeftOdds().equals("-") ? "封" : asiaSize.getLeftOdds()
                     : "封"); // 上
             tvRightOdds_DA.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaSize.getRightOdds().equals("-") ? " " : asiaSize.getRightOdds()
+                    ? asiaSize.getRightOdds().equals("-") ? "--" : asiaSize.getRightOdds()
                     : "--"); // 下
         } else {
             this.setText(tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
@@ -339,13 +343,13 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (euro != null) {
             // 欧盘赔率
             tvLeftOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? euro.getMediumOdds().equals("-") ? " " : euro.getMediumOdds()
+                    ? euro.getMediumOdds().equals("-") ? "--" : euro.getMediumOdds()
                     : "--"); // 中
-            tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
-                    ? euro.getLeftOdds().equals("-") ? " " : euro.getLeftOdds()
+            tvMediumOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? euro.getLeftOdds().equals("-") ? "封" : euro.getLeftOdds()
                     : "封"); // 上
-            tvRightOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
-                    ? euro.getRightOdds().equals("-") ? " " : euro.getRightOdds()
+            tvRightOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? euro.getRightOdds().equals("-") ? "--" : euro.getRightOdds()
                     : "--"); // 下
         } else {
             this.setText(tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
@@ -372,11 +376,12 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 RollBallAdapter.this.transformMapper(position);
             }
         });
-
+/*
         subscription = RxBus.getDefault().toObserverable().subscribe(new Action1<Object>() {
                                                                          @Override
                                                                          public void call(Object o) {
                                                                              if (o == null) {
+                                                                                 Log.e("HILO","cacheWebSocketPushData.size() = " + cacheWebSocketPushData.size());
                                                                                  notify_locked_tag = false;
                                                                                  if (cacheWebSocketPushData != null && cacheWebSocketPushData.size() > 0) {
                                                                                      updateItemFromWebSocket(cacheWebSocketPushData.get(0));
@@ -385,7 +390,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                                                                              }
                                                                          }
                                                                      }
-        );
+        );*/
     }
 
     private void startShuffleAnimation(final TextView keepTimeShuffle) {
@@ -439,9 +444,9 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    public Subscription getSubscription() {
+    /*public Subscription getSubscription() {
         return subscription;
-    }
+    }*/
 
     private void setupKeepTimeStyle(TextView keepTime, TextView keepTimeShuffle, String text, int color, boolean isShowShuffle) {
         if (isShowShuffle) {
@@ -452,6 +457,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         }
         keepTime.setText(text);
         keepTime.setTextColor(context.getResources().getColor(color));
+        keepTimeShuffle.setTextColor(context.getResources().getColor(color));
     }
 
     private void setupEventAnimator(Match match, TextView homeScore, TextView guestScore) {
@@ -498,24 +504,24 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     // WebSocket推送消息分发处理
     public void updateItemFromWebSocket(Object o) {
         List<Match> matchList = getList();
-        if (!notify_locked_tag) {
-            for (int i = 0; i < matchList.size(); i++) {
-                Match match = matchList.get(i);
-                if (o instanceof WebSocketMatchStatus) {
-                    this.updateTypeStatus(match, i, (WebSocketMatchStatus) o);
-                } else if (o instanceof WebSocketMatchOdd) {
-                    this.updateTypeOdds(match, i, (WebSocketMatchOdd) o);
-                } else if (o instanceof WebSocketMatchEvent) {
-                    this.updateTypeEvent(match, i, (WebSocketMatchEvent) o);
-                } else if (o instanceof WebSocketMatchChange) {
-                    this.updateTypeMatchChange(match, i, (WebSocketMatchChange) o);
-                }
+        /*if (!notify_locked_tag) {*/
+        for (int i = 0; i < matchList.size(); i++) {
+            Match match = matchList.get(i);
+            if (o instanceof WebSocketMatchStatus) {
+                this.updateTypeStatus(match, i, (WebSocketMatchStatus) o);
+            } else if (o instanceof WebSocketMatchOdd) {
+                this.updateTypeOdds(match, i, (WebSocketMatchOdd) o);
+            } else if (o instanceof WebSocketMatchEvent) {
+                this.updateTypeEvent(match, i, (WebSocketMatchEvent) o);
+            } else if (o instanceof WebSocketMatchChange) {
+                this.updateTypeMatchChange(match, i, (WebSocketMatchChange) o);
             }
-        } else {
-            cacheWebSocketPushData.add(o);
-            RxBus.getDefault().post(null);
         }
-    }
+    }/* else {
+            cacheWebSocketPushData.add(o);
+            Log.e("HILO","cacheWebSocketPushData.size() = " + cacheWebSocketPushData.size());
+            RxBus.getDefault().post(null);
+        }*/
 
     // 状态推送
     private void updateTypeStatus(Match match, int position, WebSocketMatchStatus webSocketMatchStatus) {
@@ -563,7 +569,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (match.getThirdId().equals(webSocketMatchOdd.getThirdId())) {
             final List<Map<String, String>> matchOddDataLists = webSocketMatchOdd.getData();
             for (Map<String, String> oddDataMaps : matchOddDataLists) {
-                Log.e("HILO", oddDataMaps.toString() + "::::");
                 // 亚赔
                 if (oddDataMaps.get("handicap").equals("asiaLet")) {
                     handicap = 1;
