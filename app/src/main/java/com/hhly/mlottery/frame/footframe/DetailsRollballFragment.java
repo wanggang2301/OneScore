@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -131,7 +132,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     private DetailsRollOdd odd_eur; //欧赔
 
-    private ImageView live_infos;
+    private RelativeLayout live_infos;
 
 
     private FrameLayout fl_odds_loading;
@@ -308,6 +309,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
             switch (msg.what) {
                 case STARTLOADING:// 正在加载中
+                   // L.d("456789","loading");
+
                     fl_odds_loading.setVisibility(View.VISIBLE);
                     fl_odds_net_error.setVisibility(View.GONE);
                     ll_odds.setVisibility(View.GONE);
@@ -335,6 +338,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
         L.d("ddd", "加载数据");
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
+
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", "337438");
         String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListOverview.do";
@@ -386,7 +390,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
 
         //亚盘1
-        odd_alet.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
+        odd_alet.findViewById(R.id.tl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
@@ -396,7 +400,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
 
         //大小球
-        odd_asize.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
+        odd_asize.findViewById(R.id.tl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getOverunderlistOdd().get(0), ASIZE);
@@ -406,7 +410,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
 
         //欧赔
-        odd_eur.findViewById(R.id.odd_infos).setOnClickListener(new View.OnClickListener() {
+        odd_eur.findViewById(R.id.tl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getEuropelistOdd().get(0), EUR);
@@ -438,9 +442,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         odd_alet = (DetailsRollOdd) mView.findViewById(R.id.odd_alet);
         odd_asize = (DetailsRollOdd) mView.findViewById(R.id.odd_asize);
         odd_eur = (DetailsRollOdd) mView.findViewById(R.id.odd_eur);
-        live_infos = (ImageView) mView.findViewById(R.id.live_infos);
+        live_infos = (RelativeLayout) mView.findViewById(R.id.rl_live);
 
-        fl_odds_loading = (FrameLayout) mView.findViewById(R.id.fl_odds_loading);
+        fl_odds_loading = (FrameLayout) mView.findViewById(R.id.fl_odd_loading);
         fl_odds_net_error = (FrameLayout) mView.findViewById(R.id.fl_odds_networkError);
 
         ll_odds = (LinearLayout) mView.findViewById(R.id.ll_0dds);
@@ -640,7 +644,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
             //更新赔率
 
-          //  updateOdds(webSocketRollballOdd);
+            updateOdds(webSocketRollballOdd);
 
         }
     };
@@ -671,11 +675,13 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
      */
     private synchronized BottomOddsItem setLiveOdds(BottomOddsItem b, WebSocketRollballOdd webodds) {
 
-        L.d(TAG, webodds.getLeft() + "-" + webodds.getMiddle() + "-" + webodds.getRight() + "-" + webodds.getOddType());
-        L.d(TAG, b.getLeft() + "-" + b.getMiddle() + "-" + b.getRight());
+        L.d(TAG, "webodds=" + webodds.getLeft() + "-" + webodds.getMiddle() + "-" + webodds.getRight() + "-" + webodds.getOddType());
+        L.d(TAG, "aletBottomOddsItem=" + b.getLeft() + "-" + b.getMiddle() + "-" + b.getRight());
 
 
         if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight()) || isNULLOrEmpty(b.getLeft()) || isNULLOrEmpty(b.getMiddle()) || isNULLOrEmpty(b.getRight())) {
+
+            L.d(TAG, "设置aletBottomOddsItem");
             b.setLeft(webodds.getLeft());
             b.setLeftUp("0");
             b.setMiddle(webodds.getMiddle());
@@ -721,7 +727,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         }
 
         //  L.d(TAG, "b=" + b.getLeft() + "-" + b.getMiddle() + "-" + b.getRight());
-        L.d(TAG, "b=" + b.getLeftUp() + "-" + b.getMiddleUp() + "-" + b.getRightUp());
+        L.d(TAG, "b=" + b.getLeft() + "-" + b.getMiddle() + "-" + b.getRight());
 
 
         return b;

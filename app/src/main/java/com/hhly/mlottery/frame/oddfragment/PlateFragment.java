@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,6 +39,10 @@ import java.util.Map;
  * Created by 103TJL on 2016/3/4.
  */
 public class PlateFragment extends Fragment implements View.OnClickListener {
+
+
+    private NestedScrollView mNestedScrollView;
+    private NestedScrollView mNestedScrollView2;
 
     private View mView;
     private Context mContext;
@@ -164,6 +169,12 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
         plate_linearlayout = (LinearLayout) mView.findViewById(R.id.plate_linearlayout);
         //指数博彩数据
         mListView = (ListView) mView.findViewById(R.id.plate_frame_listview);
+
+
+        mNestedScrollView = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view);
+        mNestedScrollView2 = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view2);
+
+
         //指数界面listview跳转
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -192,22 +203,41 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
         //指数详细称标题布局
         odds_details_layout = (LinearLayout) mView.findViewById(R.id.odds_details_layout);
         mRight_listview.setChildDivider(getResources().getDrawable(R.color.line_football_footer));
+
+        mNestedScrollView2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
         //解决与下拉刷新的冲突
         mRight_listview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+
+                        mNestedScrollView2.stopNestedScroll();
+                        mRight_listview.setNestedScrollingEnabled(true);
+
+                        break;
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
                         if (mRight_listview.getFirstVisiblePosition() != 0) {
-                           // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
+                            // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
                         }
+
+
                         break;
 
                     case MotionEvent.ACTION_UP:
+                        mNestedScrollView2.stopNestedScroll();
+                        mRight_listview.setNestedScrollingEnabled(true);
+                        break;
                     case MotionEvent.ACTION_CANCEL:
-                       // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
+                        // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
+
                         break;
                 }
                 return false;
@@ -221,14 +251,14 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
                         if (mListView.getFirstVisiblePosition() != 0) {
-                          //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
+                            //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
                         }
 
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                       // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
+                        // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
                         break;
                 }
                 return false;
@@ -241,22 +271,19 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
-                        if (mLeft_listview.getFirstVisiblePosition() != 0) {
+                     /*   if (mLeft_listview.getFirstVisiblePosition() != 0) {
                           //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
-                        }
+                        }*/
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                       // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
+                        // ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
                         break;
                 }
                 return false;
             }
         });
-
-
-
 
 
         // 访问失败，点击刷新
@@ -340,7 +367,8 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
 
     private void LeftData(final List<Map<String, String>> list, String idPosition, int positionNum) {
         //指数页面gone
-        mListView.setVisibility(View.GONE);
+        //  mListView.setVisibility(View.GONE);
+        mNestedScrollView.setVisibility(View.GONE);
         //指数布局gone
         plate_linearlayout.setVisibility(View.GONE);
         //指数详情界面visible
@@ -568,7 +596,8 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.odds_back_txt://返回
                 //指数页面显示
-                mListView.setVisibility(View.VISIBLE);
+                // mListView.setVisibility(View.VISIBLE);
+                mNestedScrollView.setVisibility(View.VISIBLE);
                 //指数布局显示
                 plate_linearlayout.setVisibility(View.VISIBLE);
                 //指数详情界面隐藏

@@ -43,7 +43,8 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         hold.item_score.setText(list.get(position).getScore());
 
-        if (isNULLOrEmpty(list.get(position).getOdd().getLeft()) || isNULLOrEmpty(list.get(position).getOdd().getMiddle()) || isNULLOrEmpty(list.get(position).getOdd().getRight())) {
+        if ("-".equals(list.get(position).getOdd().getLeft()) || "-".equals(list.get(position).getOdd().getMiddle()) || "-".equals(list.get(position).getOdd().getRight())) {
+
             hold.item_home.setText("");
 
             hold.item_handicap.setText("封");
@@ -52,6 +53,20 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             hold.item_guest.setText("");
 
+
+        }else if (isNULLOrEmpty(list.get(position).getOdd().getLeft()) || isNULLOrEmpty(list.get(position).getOdd().getMiddle()) || isNULLOrEmpty(list.get(position).getOdd().getRight())) {
+            hold.item_home.setText("-");
+            hold.item_home.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            hold.item_home.setBackgroundResource(R.color.white);
+
+            hold.item_handicap.setText("-");
+            hold.item_handicap.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            hold.item_handicap.setBackgroundResource(R.color.white);
+
+
+            hold.item_guest.setText("-");
+            hold.item_guest.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            hold.item_guest.setBackgroundResource(R.color.white);
 
         } else {
             hold.item_home.setText(list.get(position).getOdd().getLeft());

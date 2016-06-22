@@ -63,12 +63,26 @@ public class DetailsRollOdd extends FrameLayout {
 
         L.d("改变DetailsRollballFragment", "bottomOddsItem=" + bottomOddsItem.getLeftUp() + "-" + bottomOddsItem.getMiddleUp() + "-" + bottomOddsItem.getRightUp());
 
-        if (isNULLOrEmpty(bottomOddsItem.getLeft()) || isNULLOrEmpty(bottomOddsItem.getMiddle()) || isNULLOrEmpty(bottomOddsItem.getRight())) {
+        if ("-".equals(bottomOddsItem.getLeft()) || "-".equals(bottomOddsItem.getMiddle()) || "-".equals(bottomOddsItem.getRight())) {
+
             live_left.setText("");
             live_middle.setText("封");
             live_middle.setTextColor(mContext.getResources().getColor(R.color.white));
             live_middle.setBackgroundResource(R.color.analyze_left);
             live_right.setText("");
+
+        } else if (isNULLOrEmpty(bottomOddsItem.getLeft()) || isNULLOrEmpty(bottomOddsItem.getMiddle()) || isNULLOrEmpty(bottomOddsItem.getRight())) {
+            live_left.setText("-");
+            live_left.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            live_left.setBackgroundResource(R.color.white);
+
+            live_middle.setText("-");
+            live_middle.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            live_middle.setBackgroundResource(R.color.white);
+
+            live_right.setText("-");
+            live_right.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            live_right.setBackgroundResource(R.color.white);
         } else {
             live_left.setText(bottomOddsItem.getLeft());
 
@@ -89,14 +103,13 @@ public class DetailsRollOdd extends FrameLayout {
         //初盘
         if (isNULLOrEmpty(bottomOddsItem.get(0).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(0).getMiddle()) || "-".equals(isNULLOrEmpty(bottomOddsItem.get(0).getRight()))) {
             first_left.setText("-");
-            first_left.setText("-");
             first_left.setTextColor(mContext.getResources().getColor(R.color.white));
-            first_middle.setBackgroundResource(R.color.analyze_left);
+
+            first_middle.setText("-");
             first_middle.setTextColor(mContext.getResources().getColor(R.color.white));
-            first_middle.setBackgroundResource(R.color.analyze_left);
+
             first_right.setText("-");
             first_right.setTextColor(mContext.getResources().getColor(R.color.white));
-            first_right.setBackgroundResource(R.color.analyze_left);
         } else {
             first_left.setText(bottomOddsItem.get(0).getLeft());
             first_middle.setText(bottomOddsItem.get(0).getMiddle());
@@ -109,12 +122,25 @@ public class DetailsRollOdd extends FrameLayout {
 
         //即盘
 
-        if (isNULLOrEmpty(bottomOddsItem.get(1).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(1).getMiddle()) || isNULLOrEmpty(bottomOddsItem.get(1).getRight())) {
+        if ("-".equals(bottomOddsItem.get(1).getLeft()) || "-".equals(bottomOddsItem.get(1).getMiddle()) || "-".equals(bottomOddsItem.get(1).getRight())) {
             live_left.setText("");
+
             live_middle.setText("封");
             live_middle.setTextColor(mContext.getResources().getColor(R.color.white));
             live_middle.setBackgroundResource(R.color.analyze_left);
+
             live_right.setText("");
+        } else if (isNULLOrEmpty(bottomOddsItem.get(1).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(1).getMiddle()) || isNULLOrEmpty(bottomOddsItem.get(1).getRight())) {
+
+            L.d("DetailsRollballFragment","即盘为空");
+            live_left.setText("-");
+            live_left.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+
+            live_middle.setText("-");
+            live_middle.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+
+            live_right.setText("-");
+            live_right.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
         } else {
             live_left.setText(bottomOddsItem.get(1).getLeft());
 
@@ -126,8 +152,6 @@ public class DetailsRollOdd extends FrameLayout {
             setTextViewColor(live_middle, 1, bottomOddsItem.get(1).getMiddleUp());
             setTextViewColor(live_right, 0, bottomOddsItem.get(1).getRightUp());
         }
-
-
     }
 
 

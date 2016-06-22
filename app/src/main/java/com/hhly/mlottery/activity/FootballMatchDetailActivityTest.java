@@ -932,6 +932,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 case "2078": //客队界外球
                     mathchStatisInfo.setGuest_lineOut(mathchStatisInfo.getGuest_lineOut() + 1);
                     break;
+                case "1024": //主队进攻
+                    mathchStatisInfo.setHome_attack(mathchStatisInfo.getHome_attack() + 1);
+                    break;
+                case "2048": //主队进攻
+                    mathchStatisInfo.setGuest_attack(mathchStatisInfo.getGuest_attack() + 1);
+                    break;
                 default:
                     break;
             }
@@ -1372,6 +1378,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
 
                 break;
+
             case "1029": //主队进球
 
                 if ("".equals(matchTextLiveBean.getHomeScore()) || "".equals(matchTextLiveBean.getGuestScore())) {
@@ -1719,6 +1726,17 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
                     mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
                 }
+                break;
+
+
+            case "1024":
+                mathchStatisInfo.setHome_attack(mathchStatisInfo.getHome_attack() + 1);
+                mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
+                break;
+
+            case "2048":
+                mathchStatisInfo.setGuest_attack(mathchStatisInfo.getGuest_attack() + 1);
+                mLiveHeadInfoFragment.initMatchNowData(mathchStatisInfo);
                 break;
 
             case "2063":  //客队射正球门

@@ -47,18 +47,18 @@
             android:text="@string/asiasize"
             android:textSize="@dimen/text_size_13" />
     </LinearLayout>
-
+<!--
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
         <FrameLayout
             android:id="@+id/odd_content_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </android.support.v4.widget.NestedScrollView>
+  <!--  </android.support.v4.widget.NestedScrollView>-->
 </LinearLayout>

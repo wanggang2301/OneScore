@@ -65,6 +65,14 @@ public class StadiumUtils {
         if ("0".equals(h) && "0".equals(g)) {
             return 50;
         }
+
+        if (h == null && g == null) {
+            return 50;
+        }
+
+        if ("".equals(h) && "".equals(g)) {
+            return 50;
+        }
         double home = Double.valueOf(h);
         double guest = Double.valueOf(g);
         return home / (home + guest) * 100;

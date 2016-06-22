@@ -273,7 +273,7 @@ public class BaseURLs {
     private final static String URL_TJSSCNextAndNew = "detailedLotteryResults.findTJSSCNextAndNewResults.do";
 
     //赛场
-    private final static String URL_FOOTBALL_DETAIL = "footBallMatch.queryMatchInfos.do";
+    private final static String URL_FOOTBALL_DETAIL = "footBallMatch.queryAndroidMatchInfos.do";
     //赛场——点赞
     private final static String URL_FOOTBALL_DETAIL_LIKE = "footBallMatch.updLike.do";
 

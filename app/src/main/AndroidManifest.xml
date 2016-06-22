@@ -107,7 +107,7 @@
         <activity
             android:name=".activity.FootballMatchDetailActivityTest"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" />
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
         <activity
             android:name=".activity.LiveChannelActivity"
             android:screenOrientation="portrait" />
