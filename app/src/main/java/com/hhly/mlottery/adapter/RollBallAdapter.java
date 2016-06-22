@@ -169,17 +169,41 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
             }
         }
 
+        // 赔率
+        Map<String, MatchOdd> matchOddMap = data.getMatchOdds();
+        MatchOdd asiaSize = null, euro = null, asiaLet = null;
+        if (matchOddMap != null && matchOddMap.size() > 0) {
+            for (Map.Entry<String, MatchOdd> matchOdd : matchOddMap.entrySet()) {
+                switch (matchOdd.getKey()) {
+                    case "asiaSize":// 大小盘数据
+                        asiaSize = matchOddMap.get("asiaSize");
+                        break;
+                    case "euro":// 欧赔数据
+                        euro = matchOddMap.get("euro");
+                        break;
+                    case "asiaLet":// 亚赔数据
+                        asiaLet = matchOddMap.get("asiaLet");
+                        break;
+                }
+            }
+        }
+
         // 赔率的颜色变化状态
-        switch (handicap) {
-            case 1: // 亚盘
-                setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
-                break;
-            case 2: // 大小球
-                setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
-                break;
-            case 3: // 欧赔
-                setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
-                break;
+        if (Integer.parseInt(data.getKeepTime()) < 89) {
+            switch (handicap) {
+                case 1: // 亚盘
+                    if (!asiaLet.getLeftOdds().equals("-"))
+                        setupOddTextColor(data, tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
+                    break;
+                case 2: // 大小球
+                    if (!asiaSize.getLeftOdds().equals("-"))
+                        setupOddTextColor(data, tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
+                    break;
+                case 3: // 欧赔
+                    if (!euro.getLeftOdds().equals("-"))
+                        setupOddTextColor(data, tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
+                    break;
+            }
         }
 
         // 比赛状态
@@ -236,25 +260,6 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
                 break;
         }
 
-        // 赔率
-        Map<String, MatchOdd> matchOddMap = data.getMatchOdds();
-        MatchOdd asiaSize = null, euro = null, asiaLet = null;
-        if (matchOddMap != null && matchOddMap.size() > 0) {
-            for (Map.Entry<String, MatchOdd> matchOdd : matchOddMap.entrySet()) {
-                switch (matchOdd.getKey()) {
-                    case "asiaSize":// 大小盘数据
-                        asiaSize = matchOddMap.get("asiaSize");
-                        break;
-                    case "euro":// 欧赔数据
-                        euro = matchOddMap.get("euro");
-                        break;
-                    case "asiaLet":// 亚赔数据
-                        asiaLet = matchOddMap.get("asiaLet");
-                        break;
-                }
-            }
-        }
-
         // 杯赛名称
         tvRaceName.setText(data.getRacename());
         // 主队分数
@@ -295,15 +300,15 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (asiaLet != null) {
             // 亚盘赔率
             tvLeftOdds_YA.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? HandicapUtils.changeHandicap(asiaLet.getHandicapValue())
+                    ? asiaLet.getHandicapValue().equals("-") ? "--" : HandicapUtils.changeHandicap(asiaLet.getHandicapValue())
                     : "--"); // 中
 
             tvHandicapValue_YA_BLACK.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaLet.getLeftOdds().equals("-") ? " " : asiaLet.getLeftOdds()
+                    ? asiaLet.getLeftOdds().equals("-") ? "封" : asiaLet.getLeftOdds()
                     : "封"); // 上
 
             tvRightOdds_YA.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaLet.getRightOdds().equals("-") ? " " : asiaLet.getRightOdds()
+                    ? asiaLet.getRightOdds().equals("-") ? "--" : asiaLet.getRightOdds()
                     : "--"); // 下
         } else {
             this.setText(tvLeftOdds_YA, tvHandicapValue_YA_BLACK, tvRightOdds_YA);
@@ -317,13 +322,13 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (asiaSize != null) {
             // 大小盘赔率
             tvLeftOdds_DA.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue())
+                    ? asiaSize.getHandicapValue().equals("-") ? "--" : HandicapUtils.changeHandicapByBigLittleBall(asiaSize.getHandicapValue())
                     : "--"); // 中
             tvHandicapValue_DA_BLACK.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaSize.getLeftOdds().equals("-") ? " " : asiaSize.getLeftOdds()
+                    ? asiaSize.getLeftOdds().equals("-") ? "封" : asiaSize.getLeftOdds()
                     : "封"); // 上
             tvRightOdds_DA.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? asiaSize.getRightOdds().equals("-") ? " " : asiaSize.getRightOdds()
+                    ? asiaSize.getRightOdds().equals("-") ? "--" : asiaSize.getRightOdds()
                     : "--"); // 下
         } else {
             this.setText(tvLeftOdds_DA, tvHandicapValue_DA_BLACK, tvRightOdds_DA);
@@ -337,13 +342,13 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
         if (euro != null) {
             // 欧盘赔率
             tvLeftOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
-                    ? euro.getMediumOdds().equals("-") ? " " : euro.getMediumOdds()
+                    ? euro.getMediumOdds().equals("-") ? "--" : euro.getMediumOdds()
                     : "--"); // 中
-            tvMediumOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
-                    ? euro.getLeftOdds().equals("-") ? " " : euro.getLeftOdds()
+            tvMediumOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? euro.getLeftOdds().equals("-") ? "封" : euro.getLeftOdds()
                     : "封"); // 上
-            tvRightOdds_EU.setText(euro != null && Integer.parseInt(data.getKeepTime()) < 89
-                    ? euro.getRightOdds().equals("-") ? " " : euro.getRightOdds()
+            tvRightOdds_EU.setText(Integer.parseInt(data.getKeepTime()) < 89
+                    ? euro.getRightOdds().equals("-") ? "--" : euro.getRightOdds()
                     : "--"); // 下
         } else {
             this.setText(tvLeftOdds_EU, tvMediumOdds_EU, tvRightOdds_EU);
