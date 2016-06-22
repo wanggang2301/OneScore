@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -26,6 +27,7 @@ import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.sohu.cyan.android.sdk.http.CyanRequestListener;
 import com.sohu.cyan.android.sdk.http.response.SubmitResp;
+import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -41,6 +43,8 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     private CyanSdk sdk;
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
     private boolean issubmitFinish = true;//是否提交评论结束
+    public String mThirdId;
+    public LinearLayout comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +52,10 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
         setContentView(R.layout.activity_input);
         initWindow();
         initView();
-        topicid = getIntent().getLongExtra(CyUtils.INTENT_PARAMS_SID, 0);
+        mThirdId = getIntent().getStringExtra(CyUtils.INTENT_PARAMS_SID);
+        loadTopic(mThirdId,"",0);
         IntentFilter intentFilter = new IntentFilter("closeself");
         registerReceiver(mBroadcastReceiver, intentFilter);
-
     }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -83,6 +87,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     private void initView() {
         sdk = CyanSdk.getInstance(this);
         mEditText = (EditText) findViewById(R.id.et_comment);
+        comment = (LinearLayout) findViewById(R.id.comment);
         mEditText.requestFocus();
         mEditText.setSelected(true);
         mSend = (TextView) findViewById(R.id.iv_send);
@@ -138,9 +143,11 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
                             if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
                                 issubmitFinish = false;
                                 CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
+                                System.out.println("lzftopicid"+topicid);
                             }
                         } else {//未登录
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
+                            System.out.println("lzf未登录");
                             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                         }
                         CyUtils.hideKeyBoard(this);
@@ -181,6 +188,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void onRequestFailed(CyanException e) {
         issubmitFinish = true;
         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
+        System.out.println("lzfonRequestFailed");
     }
 
     @Override
@@ -199,6 +207,19 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void finish() {
         super.finish();
         overridePendingTransition(0, android.R.anim.fade_out);
+    }
+    //获取评论的一切消息  无需登录  并刷新listview
+    public void loadTopic(String url, String title, int pagenum) {
+
+        sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+            @Override
+            public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
+                topicid = topicLoadResp.topic_id;//文章id
+            }
+            @Override
+            public void onRequestFailed(CyanException e) {
+            }
+        });
     }
 }
 

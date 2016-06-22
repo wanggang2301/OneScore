@@ -102,11 +102,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private int type;//1 籃球/0 足球
     private String state = "-1";
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        System.out.println("lzfonAttach");
     }
 
     @Override
@@ -117,8 +117,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
+            System.out.println("lzfmThirdId" + mThirdId);
 //            L.d("state+++++++++++",state);
         }
+        System.out.println("lzfononCreate");
     }
 
     @Override
@@ -129,12 +131,14 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         initAnim();
         pullUpLoad();//上拉加载更多
         registerBroadCast();
+        System.out.println("lzfonCreateView");
         return mView;
 
     }
-//    type = getArguments().getInt("type", -1);
+
+    //    type = getArguments().getInt("type", -1);
 //    state = getArguments().getString("state");
-    public static TalkAboutBallFragment newInstance(String param1 , String param2 , int param3) {
+    public static TalkAboutBallFragment newInstance(String param1, String param2, int param3) {
         TalkAboutBallFragment fragment = new TalkAboutBallFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -143,6 +147,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         fragment.setArguments(args);
         return fragment;
     }
+
     /**
      * bn
      * 初始化动画
@@ -222,15 +227,17 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             }
         }, MatchLike.class);
     }
-    BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
+
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
-            ToastTools.ShowQuickCenter(getActivity(),"shoudaoguangbo");
+            loadTopic(mThirdId, "", CyUtils.SINGLE_PAGE_COMMENT);
+            ToastTools.ShowQuickCenter(getActivity(), "shoudaoguangbo");
         }
     };
+
     public void registerBroadCast() {
-        IntentFilter intentFilter=new IntentFilter("loadingdata");
+        IntentFilter intentFilter = new IntentFilter("loadingdata");
         getActivity().registerReceiver(broadcastReceiver, intentFilter);
 
     }
@@ -277,7 +284,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (!TextUtils.isEmpty(mThirdId)) {
             loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
         }
-
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -305,6 +311,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
                 topicid = topicLoadResp.topic_id;//文章id
+                System.out.println("lzffgtopic_id" + topicid);
                 cmt_sum = topicLoadResp.cmt_sum;//评论总数
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
@@ -378,7 +385,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         });
 
     }
-
     //分页查询文章怕评论数据 无需登录
     public void getTopicComments(int page) {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -462,10 +468,12 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
         } else {
             Intent intent2 = new Intent(mContext, InputActivity.class);
-            intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
-            startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
-            getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            intent2.putExtra(CyUtils.INTENT_PARAMS_SID, mThirdId);
+//            startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
+//            startActivity(intent2);
+//            getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
+        System.out.println("lzfsetUserVisibleHint");
     }
 
     /**
