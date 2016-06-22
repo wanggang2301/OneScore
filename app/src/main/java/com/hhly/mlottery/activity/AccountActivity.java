@@ -78,7 +78,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showDialog(){
-        AlertDialog dialog = new AlertDialog.Builder(AccountActivity.this)
+       /* AlertDialog dialog = new AlertDialog.Builder(AccountActivity.this)
                 .setMessage(getResources().getString(R.string.logout_check))
                 .setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
                     @Override
@@ -92,7 +92,27 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                     }
                 })
                 .create();
-        dialog.show();
+        dialog.show();*/
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+        builder.setCancelable(false);// 设置对话框以外不可点击
+        builder.setMessage(R.string.logout_check);// 提示内容
+        builder.setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
+            //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                logout();
+            }
+        });
+        builder.setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
     /**

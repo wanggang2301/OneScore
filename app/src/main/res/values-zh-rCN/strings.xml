@@ -704,6 +704,7 @@
     <string name="resend">重发</string>
     <string name="register_fail">注册失败</string>
     <string name="register_succ">注册成功</string>
+    <string name="send_register_succ">验证码已发送请注意查收</string>
     <string name="mail_format_error">邮箱格式错误</string>
     <string name="mail_already_register">该邮箱已注册</string>
     <string name="verify_code_error">验证码错误</string>
