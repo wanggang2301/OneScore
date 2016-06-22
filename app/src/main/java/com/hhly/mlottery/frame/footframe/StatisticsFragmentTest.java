@@ -87,6 +87,17 @@ public class StatisticsFragmentTest extends Fragment {
     private MathchStatisInfo mMathchStatisInfo;
 
 
+
+
+    public static StatisticsFragmentTest newInstance() {
+
+
+        StatisticsFragmentTest fragment = new StatisticsFragmentTest();
+
+        return fragment;
+    }
+
+
     public static StatisticsFragmentTest newInstance(String type) {
 
         Bundle args = new Bundle();
@@ -656,4 +667,27 @@ public class StatisticsFragmentTest extends Fragment {
 
     }
 
+
+   /* public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isCreated && getUserVisibleHint() && mInfos.size() == 0) {
+            Log.i("lzf", "可见" + index);
+            onVisible();
+
+        }
+        if (!isCreated) {
+            return;
+        }
+    }
+
+    *//**
+     * 可见
+     *//*
+    protected void onVisible() {
+//        Log.i("lzf", "可见" + index);
+       *//* if (index != 0) {
+            //发起网络请求数据
+            loadNewsData(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
+        }*//*
+    }*/
 }

@@ -159,6 +159,14 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     private BottomOddsItem asizeBottomOddsItem;
     private BottomOddsItem eurBottomOddsItem;
 
+    private boolean isCreated = false;
+
+
+    public static DetailsRollballFragment newInstance() {
+        DetailsRollballFragment fragment = new DetailsRollballFragment();
+        return fragment;
+    }
+
 
     public static DetailsRollballFragment newInstance(int fragmentType, MatchDetail matchDetail) {
         DetailsRollballFragment fragment = new DetailsRollballFragment();
@@ -169,10 +177,33 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         return fragment;
     }
 
+
+    public void setMatchData(int type, MatchDetail mMatchDetail) {
+        this.mViewType = type;
+        this.mMatchDetail = mMatchDetail;
+
+        if (mViewType == DETAILSROLLBALL_TYPE_PRE) {//赛前
+            mView.findViewById(R.id.prestadium_layout).setVisibility(View.VISIBLE);
+            mView.findViewById(R.id.stadium_layout).setVisibility(View.GONE);
+            initPreData();
+        } else {  //赛后活赛中
+            mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
+            mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
+            initLiveText();
+            initOdds();
+        }
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        L.d(TAG, "onCreate");
+
         mContext = getActivity();
+
         try {
 
             // hSocketUri = new URI(BaseURLs.WS_SERVICE);
@@ -190,22 +221,15 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_details_rollball, container, false);
         initView();
-        if (getArguments() != null) {
-            mMatchDetail = getArguments().getParcelable(DETAILSROLLBALL_PARAM);
-            mViewType = getArguments().getInt(DETAILSROLLBALL_TYPE);
-            if (mViewType == DETAILSROLLBALL_TYPE_PRE) {//赛前
-                mView.findViewById(R.id.prestadium_layout).setVisibility(View.VISIBLE);
-                mView.findViewById(R.id.stadium_layout).setVisibility(View.GONE);
-                initPreData();
-            } else {
-                mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
-                mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
-                initLiveText();
-                initOdds();
+        // if (getArguments() != null) {
+        // mMatchDetail = getArguments().getParcelable(DETAILSROLLBALL_PARAM);
+        // mViewType = getArguments().getInt(DETAILSROLLBALL_TYPE);
+
+        L.d(TAG, "mViewType" + mViewType + "DETAILSROLLBALL_TYPE_PRE=" + DETAILSROLLBALL_TYPE_PRE);
+        isCreated = true;
 
 
-            }
-        }
+        // }
 
         return mView;
     }
@@ -786,6 +810,18 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             return true;
         } else {
             return false;
+
+        }
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isCreated && getUserVisibleHint()) {  //可以加载数据
+            // Log.i("lzf", "可见" + index);
+            //onVisible();
 
         }
     }

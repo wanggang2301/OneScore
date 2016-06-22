@@ -291,10 +291,28 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
         mHeadviewpager.setCurrentItem(0);
 
-        //  mHandler.sendEmptyMessage(ERROR);
-
         mHeadviewpager.setIsScrollable(false);
         mIndicator.setVisibility(View.GONE);
+
+        mDetailsRollballFragment = DetailsRollballFragment.newInstance();
+        mTalkAboutBallFragment = new TalkAboutBallFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("param1", mThirdId);
+        mTalkAboutBallFragment.setArguments(bundle);
+        //分析
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "");
+        //指数
+        mOddsFragment = OddsFragment.newInstance("", "");
+
+        //统计
+        mStatisticsFragment = StatisticsFragmentTest.newInstance();
+
+        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
+        mViewPager.setOffscreenPageLimit(1);//设置预加载页面的个数。
+        mViewPager.setAdapter(mTabsAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+
         loadData();
 
         try {
@@ -303,7 +321,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-//        startActivity(new Intent(this, InputActivity.class));
     }
 
     private void initView() {
@@ -436,7 +453,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
             @Override
             public void onResponse(MatchDetail matchDetail) {
-                L.d("10299", matchDetail.getResult());
+                //  L.d("10299", matchDetail.getResult());
 
                 if (!"200".equals(matchDetail.getResult())) {
                     mHandler.sendEmptyMessage(ERROR);
@@ -646,7 +663,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             head_score.setText("VS");
 
 
-            mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
+            //  mDetailsRollballFragment.setType(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
+            mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
+
+            // mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
 
 
         } else {
@@ -752,10 +772,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             }, BANNER_PLAY_TIME);
             //赛后赛中下面赔率显示
-            mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
+
+            mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
+
         }
 
-
+/*
         //聊球
         mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
@@ -771,12 +793,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mStatisticsFragment = StatisticsFragmentTest.newInstance(mMatchDetail.getLiveStatus());
 
         mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
-        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setupWithViewPager(mViewPager);*/
         isInitedViewPager = true;
 
-
+/*
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -791,6 +813,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (positionOffsetPixels == 0) {
+
+                    L.d(TAG, "onPageScrolled=" + position);
                     switch (position) {
                         case 4:
 
@@ -809,7 +833,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     }
                 }
             }
-        });
+        });*/
 
     }
 
