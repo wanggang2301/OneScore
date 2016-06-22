@@ -724,6 +724,7 @@
     <string name="get_qq_info_fail">获取qq用户信息失败</string>
     <string name="GET_WEIBO_INFO_FAIL">获取微博用户信息失败</string>
     <string name="system_error">系统错误</string>
+    <string name="backstage_error">后台错误</string>
     <string name="password_digits">_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
     <string name="realname_error">真实姓名错误</string>
     <string name="id_card_format_error">身份证格式错误</string>
@@ -760,6 +761,7 @@
     <string name="comfirm_pw">确认</string>
     <string name="pw_not_same">新密码与确认密码不一致</string>
     <string name="pw_same_same">不能与原昵称相同</string>
+    <string name="name_invalid">登录失效,请重新登录</string>
     <string name="account">账号</string>
     <string name="pwd_format_just_length">密码长度为6-16位</string>
     <string name="verify_time_limit">两次发送间隔不得小于60秒</string>

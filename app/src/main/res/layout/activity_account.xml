@@ -10,6 +10,7 @@
     <include layout="@layout/layout_header"/>
 
     <RelativeLayout
+        android:id="@+id/tv_login"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/white"
@@ -39,15 +40,12 @@
 
 
         <ImageView
-            android:id="@+id/tv_login"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:paddingTop="30dp"
-            android:paddingBottom="30dp"
-            android:paddingLeft="60dp"
             android:src="@mipmap/plate_icon"/>
     </RelativeLayout>
 
