@@ -520,13 +520,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     break;
                 case VERSION_UPDATA_SUCCESS:// 检查版本更新
                     try {
-                        boolean isNewVersion = true;
+//                        boolean isNewVersion = true;
                         int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
                         int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
                         L.d("xxx", "serverVersion:" + serverVersion);
                         L.d("xxx", "currentVersion:" + currentVersion);
                         if (currentVersion < serverVersion) {// 有更新
-                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);// 获取本地忽略版本
+                            promptVersionUp();
+                            /*String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);// 获取本地忽略版本
                             L.d("xxx", "versionIgnore:" + versionIgnore);
                             if (versionIgnore != null) {
                                 if (versionIgnore.contains("#")) {
@@ -547,7 +548,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                                 }
                             } else {
                                 promptVersionUp();
-                            }
+                            }*/
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
