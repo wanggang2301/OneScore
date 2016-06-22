@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,6 +41,7 @@ import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TestFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -108,12 +111,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private String mThirdId = "936707";
 
     BasketAnalyzeFragment mAnalyzeFragment= new BasketAnalyzeFragment();
-    BasketOddsFragment mOddsEuro=BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
-    BasketOddsFragment mOddsLet=BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
-    BasketOddsFragment mOddsSize=BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
 
-
-
+    BasketOddsFragment mOddsEuro;
+    BasketOddsFragment mOddsLet;
+    BasketOddsFragment mOddsSize;
     private HappySocketClient mSocketClient;//客户端  socket;
     private URI mSocketUri = null;
 
@@ -125,6 +126,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
+    private FrameLayout mBasketLayoutHeader;
+    private CoordinatorLayout mCoordinatorLayout;
+
 
     private String[] TITLES ;
 
@@ -209,6 +213,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         setContentView(R.layout.activity_basket_details_activity_test);
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
+            mOddsEuro=BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
+            mOddsLet=BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
+            mOddsSize=BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
+
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
         }
         mOptions = new DisplayImageOptions.Builder()
@@ -336,19 +344,18 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
 
+        mBasketLayoutHeader= (FrameLayout) findViewById(R.id.basket_layout_header);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        mCoordinatorLayout= (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         mViewPager = (ViewPager) findViewById(R.id.basket_details_view_pager);
         appBarLayout = (AppBarLayout) findViewById(R.id.basket_details_appbar);
         mTabLayout = (TabLayout) findViewById(R.id.basket_details_tab_layout);
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(TITLES);
-        TestFragment test1=TestFragment.newInstance("","");
-        TestFragment test2=TestFragment.newInstance("","");
-        TestFragment test3=TestFragment.newInstance("","");
-        TestFragment test4=TestFragment.newInstance("", "");
+
+        MDStatusBarCompat.setCollapsingToolbar(this,mCoordinatorLayout,appBarLayout,mBasketLayoutHeader,toolbar);
 
 
-//        mTabsAdapter.addFragments(test1, test2, test3, test4);
         mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
@@ -358,6 +365,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
 
 
+        headLayout = (LinearLayout) findViewById(R.id.basket_details_header_layout);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -1299,6 +1307,13 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             mRefreshLayout.setEnabled(true);
 
         }
+        if((-verticalOffset) == appBarLayout.getTotalScrollRange()){
+            mTitleScore.setVisibility(View.VISIBLE);
+            headLayout.setBackgroundColor(getResources().getColor(R.color.black));
+        }else {
+            mTitleScore.setVisibility(View.INVISIBLE);
+            headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
+        }
 
     }
 
@@ -1308,7 +1323,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(false);
-                // if (mMatchDetail != null && !"-1".equals(mMatchDetail.getLiveStatus())) {
+                mAnalyzeFragment.initData();
+                mOddsEuro.initData();
+                mOddsLet.initData();
+                mOddsSize.initData();
             }
         }, 1000);
     }
