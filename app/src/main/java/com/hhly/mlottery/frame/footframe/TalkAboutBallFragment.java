@@ -420,6 +420,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
+        } else {
+
+            startActivity(new Intent(getActivity(),InputActivity.class));
         }
     }
 
@@ -465,4 +468,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 break;
         }
     }
+
+
 }

@@ -242,7 +242,7 @@
             android:name=".activity.InputActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleTop"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 消息推送服务 -->
         <service android:name=".service.umengPushService" />
         <!-- 版本更新广播 -->
