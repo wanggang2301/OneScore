@@ -105,11 +105,9 @@
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/comment_swiperefreshlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/comment_inputcontainer"
-            android:layout_below="@+id/talkball_head"
+            android:layout_height="401dp"
+            android:background="#ff00"
             >
-
             <com.hhly.mlottery.view.PullUpRefreshListView
                 android:id="@+id/comment_lv"
                 android:layout_width="match_parent"

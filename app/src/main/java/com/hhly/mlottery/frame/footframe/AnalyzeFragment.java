@@ -28,6 +28,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -345,8 +346,16 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             mSizeOfBet.setText(analyzeBean.getAttackDefense().getSizeHandicap());
         }
 
-        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
-        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
+//        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
+//        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
+        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=new ArrayList<>();//主队队员
+        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=new ArrayList<>();//客队队员
+        for(int i=0;i<11;i++){
+            homeLineUpList.add(new NewAnalyzeBean.LineUpEntity.PlayerInfo("梅西"+i));
+        }
+        for(int i=0;i<11;i++){
+            guestLineUpList.add(new NewAnalyzeBean.LineUpEntity.PlayerInfo("C罗"+i));
+        }
 
         if(getActivity()!=null){
             mContext=getActivity();
