@@ -304,6 +304,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupSwipeRefresh() {
+        swipeRefreshLayout.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
