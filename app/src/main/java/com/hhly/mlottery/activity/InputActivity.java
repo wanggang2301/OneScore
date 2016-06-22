@@ -49,7 +49,6 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
         initWindow();
         initView();
         topicid = getIntent().getLongExtra(CyUtils.INTENT_PARAMS_SID, 0);
-        System.out.println("lzfinputonCreatetopicid" + topicid);
         IntentFilter intentFilter = new IntentFilter("closeself");
         registerReceiver(mBroadcastReceiver, intentFilter);
 
@@ -58,8 +57,10 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            InputActivity.this.setResult(CyUtils.RESULT_CODE);
-            finish();
+            if (intent.getAction().equals("closeself")){
+                InputActivity.this.setResult(CyUtils.RESULT_CODE);
+                finish();
+            }
         }
     };
 
@@ -137,7 +138,6 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
                             if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
                                 issubmitFinish = false;
                                 CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                                System.out.println("lzfinputonsubmitCommenttopicid" + topicid);
                             }
                         } else {//未登录
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
@@ -170,6 +170,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
         mEditText.setText("");
         issubmitFinish = true;
         setResult(CyUtils.RESULT_CODE);
+//        ToastTools.ShowQuickCenter(this,getResources().getString(R.string.succed_send));
         finish();
 
     }
