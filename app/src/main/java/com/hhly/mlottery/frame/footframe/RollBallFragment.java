@@ -126,9 +126,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     protected void initViews(View self, Bundle savedInstanceState) {
         if (null == apiHandler) apiHandler = new ApiHandler(this);
         this.setupEventBus();
-        this.setupSwipeRefresh();
         this.setupRecyclerView();
         this.setupAdapter();
+        this.setupSwipeRefresh();
     }
 
     @Override
@@ -240,7 +240,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                     public void onMessage(String message) {
                         if (message.startsWith("CONNECTED")) {
                             socketClient.send("SUBSCRIBE\nid:" + MD5Util.getMD5(
-                                    "android" + DeviceInfo.getDeviceId(getActivity())) + "\ndestination:/topic/USER.topic.android\n\n");
+                                    "android" + DeviceInfo.getDeviceId(getActivity())) + "\ndestination:/topic/USER.topic.app\n\n");
                             return;
                         } else if (message.startsWith("MESSAGE")) {
                             String[] msgs = message.split("\n");
@@ -264,14 +264,18 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                     @Override
                     public void onError(Exception exception) {
+                        socketClient.close();
+                        socketClient = null;
                         websocketConnectionIsError = true;
                         RollBallFragment.this.reConnectionWebSocket();
                     }
 
                     @Override
                     public void onClose(String message) {
-                        if (!websocketConnectionIsError)
+                        if (!websocketConnectionIsError) {
+                            socketClient = null;
                             RollBallFragment.this.reConnectionWebSocket();
+                        }
                     }
                 });
 
@@ -281,7 +285,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 e.printStackTrace();
             }
 
-            if (websocketConnectionIsError) this.initData();
+            // 当websocket出现错误后，会一直发送消息，为了避免循环调用initData()，判断当前网络layout显示状态
+            if (websocketConnectionIsError && networkExceptionLayout.getVisibility() != View.VISIBLE)
+                this.initData();
             websocketConnectionIsError = false;
         }
     }
