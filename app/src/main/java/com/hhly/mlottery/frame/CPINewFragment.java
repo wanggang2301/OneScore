@@ -159,11 +159,11 @@ public class CPINewFragment extends Fragment {
     }
 
     public void refreshAllChildFragments() {
-        mFragments.get(mViewPager.getCurrentItem()).refreshData(currentDate);
-//        for (CPIOddsListFragment fragment : mFragments) {
-//            // 第一次刷新的时候 currentDate 为 null，之后都不会为 null
-//            fragment.refreshData(currentDate);
-//        }
+//        mFragments.get(mViewPager.getCurrentItem()).refreshData(currentDate);
+        for (CPIOddsListFragment fragment : mFragments) {
+            // 第一次刷新的时候 currentDate 为 null，之后都不会为 null
+            fragment.refreshData(currentDate);
+        }
     }
 
     /**

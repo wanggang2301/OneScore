@@ -3,6 +3,7 @@ package com.hhly.mlottery.frame.oddfragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerListAdapter;
@@ -42,10 +45,13 @@ public class CPIOddsListFragment extends Fragment {
     public static final String TYPE_OP = "op"; // 欧赔
 
     private static final int ERROR = -1; // 访问失败
-    private static final int SUCCESS = 0; // 访问成功
-    private static final int STARTLOADING = 1; // 数据加载中
-    private static final int NODATA = 400; // 暂无数据
-    private static final int NODATA_CHILD = 500; // 里面内容暂无数据
+    private static final int SUCCESS = 1; // 访问成功
+    private static final int NODATA = 0; // 暂无数据
+
+    @IntDef({ERROR, SUCCESS, NODATA})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Status {
+    }
 
     private static final String KEY_TYPE = "type"; // 类型
 
@@ -96,6 +102,13 @@ public class CPIOddsListFragment extends Fragment {
         mRefreshTextView = (TextView) view.findViewById(R.id.cpi_plate_reLoading);
 
         initRecyclerView();
+        mRefreshTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentFragment.setRefreshing(true);
+                parentFragment.refreshAllChildFragments();
+            }
+        });
     }
 
     @Override
@@ -147,25 +160,71 @@ public class CPIOddsListFragment extends Fragment {
                 new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
                     @Override
                     public void onResponse(NewOddsInfo jsonObject) {
+                        if (jsonObject.getCode() == 500) {
+                            setStatus(ERROR);
+                            Toast.makeText(getContext(),
+                                    "服务器内部错误", Toast.LENGTH_SHORT).show();
+                            refreshOver();
+                            return;
+                        }
+                        List<NewOddsInfo.AllInfoBean> allInfo = jsonObject.getAllInfo();
+                        if (allInfo.size() == 0) {
+                            // 无数据
+                            setStatus(NODATA);
+                            refreshOver();
+                            return;
+                        }
 
                         datas.clear();
-                        datas.addAll(jsonObject.getAllInfo());
+                        datas.addAll(allInfo);
+                        setStatus(SUCCESS);
                         mAdapter.notifyDataSetChanged();
                         // 只有当前的 Fragment 刷新成功才可以停止刷新行为
-                        if (parentFragment.getCurrentFragment() == CPIOddsListFragment.this) {
-                            // 获取当前日期并返回给 CPINewFragment
-                            String currentDate = jsonObject.getCurrDate().trim();
-                            parentFragment.setCurrentDate(currentDate);
-                            parentFragment.setRefreshing(false);
-                        }
+                        refreshOverWithDate(jsonObject.getCurrDate().trim());
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        exception.getVolleyError().printStackTrace();
-                        parentFragment.setRefreshing(false);
+                        setStatus(ERROR);
+                        VolleyError volleyError = exception.getVolleyError();
+                        Toast.makeText(getContext(),
+                                volleyError.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        volleyError.printStackTrace();
+                        refreshOver();
                     }
                 }, NewOddsInfo.class);
+    }
+
+    /**
+     * 设置状态
+     *
+     * @param status status
+     */
+    public void setStatus(@Status int status) {
+        mFailedLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
+        mNoDataLayout.setVisibility(status == NODATA ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 当前显示的 Fragment 刷新成功时调用 parentFragment 停止刷新并传递日期
+     *
+     * @param currentDate 日期
+     */
+    private void refreshOverWithDate(String currentDate) {
+        if (parentFragment.getCurrentFragment() == CPIOddsListFragment.this) {
+            // 获取当前日期并返回给 CPINewFragment
+            parentFragment.setCurrentDate(currentDate);
+            parentFragment.setRefreshing(false);
+        }
+    }
+
+    /**
+     * 当前显示的 Fragment 刷新成功时调用 parentFragment 停止刷新
+     */
+    private void refreshOver() {
+        if (parentFragment.getCurrentFragment() == CPIOddsListFragment.this) {
+            parentFragment.setRefreshing(false);
+        }
     }
 
     /**
