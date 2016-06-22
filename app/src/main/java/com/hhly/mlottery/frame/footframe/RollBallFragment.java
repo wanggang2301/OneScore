@@ -240,7 +240,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                     public void onMessage(String message) {
                         if (message.startsWith("CONNECTED")) {
                             socketClient.send("SUBSCRIBE\nid:" + MD5Util.getMD5(
-                                    "android" + DeviceInfo.getDeviceId(getActivity())) + "\ndestination:/topic/USER.topic.app\n\n");
+                                    "android" + DeviceInfo.getDeviceId(getActivity())) + "\ndestination:/topic/USER.topic.android\n\n");
                             return;
                         } else if (message.startsWith("MESSAGE")) {
                             String[] msgs = message.split("\n");
@@ -304,7 +304,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupSwipeRefresh() {
-        swipeRefreshLayout.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
