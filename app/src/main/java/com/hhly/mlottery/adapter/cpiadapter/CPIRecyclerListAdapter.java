@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * 足球指数 - 指数列表适配器
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/21.
  */
 public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerListAdapter.ViewHolder> {

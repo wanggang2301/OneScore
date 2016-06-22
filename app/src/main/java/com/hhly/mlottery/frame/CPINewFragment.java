@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +18,34 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.websocket.WebFootBallSocketTime;
+import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsListFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
+import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.cipher.MD5Util;
+import com.hhly.mlottery.util.websocket.HappySocketClient;
 
+import org.java_websocket.drafts.Draft_17;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 重构版 CPIFragment
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/21.
  */
-public class CPINewFragment extends Fragment {
+public class CPINewFragment extends Fragment implements
+        HappySocketClient.SocketResponseCloseListener,
+        HappySocketClient.SocketResponseErrorListener,
+        HappySocketClient.SocketResponseMessageListener {
 
     TextView mLeftTitle; // 左侧标题
 
@@ -49,6 +65,9 @@ public class CPINewFragment extends Fragment {
 
     private String currentDate; // 当前日期
     private String choosenDate; // 选中日期
+
+    private URI socketUri;
+    private HappySocketClient socketClient; // WebSocket 客户端
 
     @Nullable
     @Override
@@ -132,6 +151,30 @@ public class CPINewFragment extends Fragment {
                 refreshAllChildFragments();
             }
         });
+
+        startWebSocket();
+    }
+
+    @Override
+    public void onDestroy() {
+        socketClient.close();
+        super.onDestroy();
+    }
+
+    /**
+     * 开启 webSocket
+     */
+    private void startWebSocket() {
+        try {
+            socketUri = new URI(BaseURLs.URL_CPI_SOCKET);
+            socketClient = new HappySocketClient(socketUri, new Draft_17());
+            socketClient.setSocketResponseCloseListener(this);
+            socketClient.setSocketResponseErrorListener(this);
+            socketClient.setSocketResponseMessageListener(this);
+            socketClient.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showDateChooseDialog() {
@@ -219,6 +262,84 @@ public class CPINewFragment extends Fragment {
 
     public static CPINewFragment newInstance() {
         return new CPINewFragment();
+    }
+
+    @Override
+    public void onMessage(String message) {
+        System.out.println(message);
+        if (message.startsWith("CONNECTED")) {
+            String id = "android" + DeviceInfo.getDeviceId(getActivity());
+            id = MD5Util.getMD5(id);
+            // USER.topic.indexcenter
+            socketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
+        } else if (message.startsWith("MESSAGE")) {
+            String jsonString = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
+            Log.d("CPINewFragment", jsonString);
+            //赔率模拟数据
+//            jsonString = "{'data':[{'comId':'3','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'339608','type':2}  ";
+            //时间模拟数据
+//            jsonString = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'339608','type':1}  ";
+            //比分模拟推送
+//            jsonString = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
+            handleMessage(jsonString);
+        }
+    }
+
+    /**
+     * 处理 websocket 传来的数据
+     *
+     * @param jsonString jsonString
+     */
+    private void handleMessage(String jsonString) {
+        WebSocketCPIResult jsonObject = JSON.parseObject(jsonString, WebSocketCPIResult.class);
+        int type = jsonObject.getType();
+        // 根据 type 判断推送数据类型，1 - 时间和状态，2 - 赔率数据，3 - 比分
+        if (type == 1) {
+            updateTimeAndStatus(jsonString);
+        } else if (type == 2) {
+            updateOdds(jsonString);
+        } else if (type == 3) {
+            updateScore(jsonString);
+        }
+    }
+
+    /**
+     * 更新比分数据
+     *
+     * @param jsonString jsonString
+     */
+    private void updateScore(String jsonString) {
+
+    }
+
+    /**
+     * 更新赔率数据
+     *
+     * @param jsonString jsonString
+     */
+    private void updateOdds(String jsonString) {
+        WebFootBallSocketTime webSocketOddsTime =
+                JSON.parseObject(jsonString, WebFootBallSocketTime.class);
+    }
+
+    /**
+     * 更新时间和状态
+     *
+     * @param jsonString jsonString
+     */
+    private void updateTimeAndStatus(String jsonString) {
+
+    }
+
+    @Override
+    public void onError(Exception exception) {
+        exception.printStackTrace();
+    }
+
+    @Override
+    public void onClose(String message) {
+        Log.d("CPINewFragment", "webSocket has been closed!");
+        Log.d("CPINewFragment", message);
     }
 
     /**
