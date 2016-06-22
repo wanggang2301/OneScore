@@ -37,6 +37,7 @@
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="scroll|enterAlways"
                     android:background="@color/transparency"
+                    app:contentInsetStart="0dp"
                     app:popupTheme="@style/AppTheme.PopupOverlay" >
 
                     <include layout="@layout/basket_details_header" />

@@ -253,7 +253,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.BasketDetailsActivityTest"></activity>
+        <activity android:name=".activity.BasketDetailsActivityTest"
+            android:theme="@style/AppTheme.BlackStatusBar"
+            >
+
+        </activity>
     </application>
 
 </manifest>
