@@ -81,6 +81,7 @@ import java.util.TimerTask;
 public class BasketDetailsActivityTest extends AppCompatActivity implements ExactSwipeRefrashLayout.OnRefreshListener,AppBarLayout.OnOffsetChangedListener,View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     public final static String BASKET_THIRD_ID = "thirdId";
+    public final static String BASKET_MATCH_STATUS = "MatchStatus";
     //    0:未开赛,1:一节,2:二节,5:1'OT，以此类推
 //            -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
     private final static int PRE_MATCH = 0;//赛前
@@ -110,6 +111,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
      */
     public final static String ODDS_SIZE = "asiaSize";
     private String mThirdId = "936707";
+    private String mMatchStatus;
 
     BasketAnalyzeFragment mAnalyzeFragment= new BasketAnalyzeFragment();
     TalkAboutBallFragment mTalkAboutBallFragment;
@@ -215,12 +217,16 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         setContentView(R.layout.activity_basket_details_activity_test);
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
+            mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+
             mOddsEuro=BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
             mOddsLet=BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
             mOddsSize=BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
-            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId , "" , 1);
+            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1);
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
+
+            L.d("BASKET_MATCH_STATUS>>>>>>", mMatchStatus);
         }
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
