@@ -126,9 +126,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     protected void initViews(View self, Bundle savedInstanceState) {
         if (null == apiHandler) apiHandler = new ApiHandler(this);
         this.setupEventBus();
-        this.setupSwipeRefresh();
         this.setupRecyclerView();
         this.setupAdapter();
+        this.setupSwipeRefresh();
     }
 
     @Override
@@ -264,14 +264,18 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                     @Override
                     public void onError(Exception exception) {
+                        socketClient.close();
+                        socketClient = null;
                         websocketConnectionIsError = true;
                         RollBallFragment.this.reConnectionWebSocket();
                     }
 
                     @Override
                     public void onClose(String message) {
-                        if (!websocketConnectionIsError)
+                        if (!websocketConnectionIsError) {
+                            socketClient = null;
                             RollBallFragment.this.reConnectionWebSocket();
+                        }
                     }
                 });
 
@@ -281,7 +285,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 e.printStackTrace();
             }
 
-            if (websocketConnectionIsError) this.initData();
+            // 当websocket出现错误后，会一直发送消息，为了避免循环调用initData()，判断当前网络layout显示状态
+            if (websocketConnectionIsError && networkExceptionLayout.getVisibility() != View.VISIBLE)
+                this.initData();
             websocketConnectionIsError = false;
         }
     }
@@ -304,7 +310,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupSwipeRefresh() {
-        swipeRefreshLayout.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
