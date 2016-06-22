@@ -1323,6 +1323,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(false);
+                loadData();
                 mAnalyzeFragment.initData();
                 mOddsEuro.initData();
                 mOddsLet.initData();

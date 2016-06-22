@@ -293,28 +293,42 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             setRecent(mGuestRecent6,guestRecent.get(5));
         }
         //未来三场
-        mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+getActivity().getResources().getString(R.string.number_hk_dd));
-        mHomeFutureName.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getTeam());
-        mImageLoader.displayImage(analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(), mHomeFutureLogo, mOptions);
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null){
+            mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+getActivity().getResources().getString(R.string.number_hk_dd));
+            mHomeFutureName.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getTeam());
+            mImageLoader.displayImage(analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(), mHomeFutureLogo, mOptions);
+        }
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null){
+            mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + getActivity().getResources().getString(R.string.number_hk_dd));
+            mGuestFutureName.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getTeam());
+            mImageLoader.displayImage(analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),mGuestFutureLogo,mOptions);
+        }
 
-        mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + getActivity().getResources().getString(R.string.number_hk_dd));
-        mGuestFutureName.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getTeam());
-        mImageLoader.displayImage(analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),mGuestFutureLogo,mOptions);
         //积分排名
-        NewAnalyzeBean.ScoreRankEntity entity=analyzeBean.getScoreRank();
-        mHomeRank.setText(entity.getHome().getRank()+entity.getHome().getTeam());
-        mHomeHasGame.setText(entity.getHome().getVsCount()+"");
-        mHomeWinOrLose.setText(entity.getHome().getWin()+"/"+entity.getHome().getDraw()+"/"+entity.getHome().getLose());
-        mHomeGoalOrLose.setText(entity.getHome().getGoal()+"/"+entity.getHome().getMiss());
-        mHomeGoalDifference.setText(entity.getHome().getGoalDiff()+"");
-        mHomeIntegral.setText(entity.getHome().getIntegral() + "");
+        if(analyzeBean.getScoreRank()!=null){
+            NewAnalyzeBean.ScoreRankEntity entity=analyzeBean.getScoreRank();
+            if(entity.getHome()!=null){
+                mHomeRank.setText(entity.getHome().getRank()+entity.getHome().getTeam());
+                mHomeHasGame.setText(entity.getHome().getVsCount()+"");
+                mHomeWinOrLose.setText(entity.getHome().getWin()+"/"+entity.getHome().getDraw()+"/"+entity.getHome().getLose());
+                mHomeGoalOrLose.setText(entity.getHome().getGoal()+"/"+entity.getHome().getMiss());
+                mHomeGoalDifference.setText(entity.getHome().getGoalDiff()+"");
+                mHomeIntegral.setText(entity.getHome().getIntegral() + "");
+            }
+            if(entity.getGuest()!=null){
+                mGuestRank.setText(entity.getGuest().getRank()+entity.getGuest().getTeam());
+                mGuestHasGame.setText(entity.getGuest().getVsCount()+"");
+                mGuestWinOrLose.setText(entity.getGuest().getWin()+"/"+entity.getGuest().getDraw()+"/"+entity.getGuest().getLose());
+                mGuestGoalOrLose.setText(entity.getGuest().getGoal()+"/"+entity.getGuest().getMiss());
+                mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
+                mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
+            }
+            //球员信息
+            mHomeTeamName.setText(entity.getHome().getTeam());
+            mGuestTeamName.setText(entity.getGuest().getTeam());
+        }
 
-        mGuestRank.setText(entity.getGuest().getRank()+entity.getGuest().getTeam());
-        mGuestHasGame.setText(entity.getGuest().getVsCount()+"");
-        mGuestWinOrLose.setText(entity.getGuest().getWin()+"/"+entity.getGuest().getDraw()+"/"+entity.getGuest().getLose());
-        mGuestGoalOrLose.setText(entity.getGuest().getGoal()+"/"+entity.getGuest().getMiss());
-        mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
-        mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
+
         //是否显示积分榜
         if(analyzeBean.getFullScoreRank()==1){ //有完整积分榜
             mIntegralTable.setVisibility(View.VISIBLE);
@@ -323,14 +337,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
 
         //攻防对比
-        mHomeGoal.setText(analyzeBean.getAttackDefense().getHomeFieldGoal());
-        mHomeLose.setText(analyzeBean.getAttackDefense().getHomeFieldLose());
-        mGuestGoal.setText(analyzeBean.getAttackDefense().getGuestFieldGoal());
-        mGuestLose.setText(analyzeBean.getAttackDefense().getGuestFieldLose());
-        mSizeOfBet.setText(analyzeBean.getAttackDefense().getSizeHandicap());
-        //球员信息
-        mHomeTeamName.setText(entity.getHome().getTeam());
-        mGuestTeamName.setText(entity.getGuest().getTeam());
+        if(analyzeBean.getAttackDefense()!=null){
+            mHomeGoal.setText(analyzeBean.getAttackDefense().getHomeFieldGoal());
+            mHomeLose.setText(analyzeBean.getAttackDefense().getHomeFieldLose());
+            mGuestGoal.setText(analyzeBean.getAttackDefense().getGuestFieldGoal());
+            mGuestLose.setText(analyzeBean.getAttackDefense().getGuestFieldLose());
+            mSizeOfBet.setText(analyzeBean.getAttackDefense().getSizeHandicap());
+        }
 
         List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
         List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
