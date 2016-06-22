@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsListFragment;
+import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class CPINewFragment extends Fragment {
     ViewPager mViewPager; // viewPage
 
     private List<CPIOddsListFragment> mFragments; // Fragments
+    private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
 
     private String currentDate; // 当前日期
     private String choosenDate; // 选中日期
@@ -84,6 +86,12 @@ public class CPINewFragment extends Fragment {
         // 显示时间的布局和 TextView
         mDateLayout = (LinearLayout) view.findViewById(R.id.public_date_layout);
         mDateTextView = (TextView) view.findViewById(R.id.public_txt_date);
+        mDateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateChooseDialog();
+            }
+        });
 
         // 右上角公司和联赛筛选
         mCompanyButton = (ImageView) view.findViewById(R.id.public_img_company);
@@ -126,6 +134,28 @@ public class CPINewFragment extends Fragment {
         });
     }
 
+    private void showDateChooseDialog() {
+        maybeInitDateChooseDialog();
+        mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
+    }
+
+    /**
+     * 日期选择 Fragment 初始化
+     */
+    private void maybeInitDateChooseDialog() {
+        if (mDateChooseDialogFragment != null) return;
+        mDateChooseDialogFragment = DateChooseDialogFragment.newInstance(currentDate,
+                new DateChooseDialogFragment.OnDateChooseListener() {
+                    @Override
+                    public void onDateChoose(String date) {
+                        choosenDate = date;
+                        mDateTextView.setText(date);
+                        setRefreshing(true);
+                        refreshAllChildFragments();
+                    }
+                });
+    }
+
     /**
      * 设置当前日期
      *
@@ -161,8 +191,9 @@ public class CPINewFragment extends Fragment {
     public void refreshAllChildFragments() {
 //        mFragments.get(mViewPager.getCurrentItem()).refreshData(currentDate);
         for (CPIOddsListFragment fragment : mFragments) {
-            // 第一次刷新的时候 currentDate 为 null，之后都不会为 null
-            fragment.refreshData(currentDate);
+            // 未选日期的时候 choosenDate 为null，则请求当天数据
+            // 选择日期之后 choosenDate 为选择的日期，请求选择日期的数据
+            fragment.refreshData(choosenDate);
         }
     }
 
