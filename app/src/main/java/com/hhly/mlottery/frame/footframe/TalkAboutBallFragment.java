@@ -132,6 +132,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         pullUpLoad();//上拉加载更多
         registerBroadCast();
         System.out.println("lzfonCreateView");
+//        CyUtils.addComment(new ChatFragment(),mThirdId,"",false,true);
         return mView;
 
     }

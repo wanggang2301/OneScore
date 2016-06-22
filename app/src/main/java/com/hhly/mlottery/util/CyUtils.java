@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.fastjson.JSON;
-import com.hhly.mlottery.frame.ChatFragment;
 import com.sohu.cyan.android.sdk.api.CallBack;
 import com.sohu.cyan.android.sdk.api.Config;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
