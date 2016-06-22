@@ -380,7 +380,7 @@ public class ScoresFragment extends Fragment {
         });
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
 
