@@ -117,7 +117,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
-            L.d("state+++++++++++",state);
+//            L.d("state+++++++++++",state);
         }
     }
 
