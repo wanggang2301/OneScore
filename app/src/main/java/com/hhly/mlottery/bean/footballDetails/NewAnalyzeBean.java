@@ -11,6 +11,15 @@ public class NewAnalyzeBean {
     private String result;
     private int fullScoreRank;
     private int leagueType;
+    private int leagueId;
+
+    public int getLeagueId() {
+        return leagueId;
+    }
+
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
+    }
 
     public int getLeagueType() {
         return leagueType;
