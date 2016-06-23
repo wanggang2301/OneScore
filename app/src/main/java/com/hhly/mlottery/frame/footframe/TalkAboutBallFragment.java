@@ -26,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
@@ -39,7 +38,7 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.view.PullUpRefreshListView;
+import com.hhly.mlottery.view.ChatBallListView;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.Comment;
 import com.sohu.cyan.android.sdk.exception.CyanException;
@@ -88,7 +87,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private EditText mEditText;//输入评论
     private TextView mNoData;//暂无评论
     private TextView mSend;//发送评论
-    private PullUpRefreshListView mListView;
+    private ChatBallListView mListView;
     private TextView mLoadMore;//加载更多
     private ProgressBar mProgressBar;//上拉加载的进度条
     private ArrayList<Comment> mCommentArrayList;//最新评论数据
@@ -246,8 +245,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         }
         model = DeviceInfo.getModel().replace(" ", "");
         mNoData = (TextView) mView.findViewById(R.id.nodata);
-        www= (RelativeLayout) mView.findViewById(R.id.www);
-        mListView = (PullUpRefreshListView) mView.findViewById(R.id.comment_lv);
+        www = (RelativeLayout) mView.findViewById(R.id.www);
+        mListView = (ChatBallListView) mView.findViewById(R.id.comment_lv);
         mListView.setItemsCanFocus(true);
         mAdapter = new CounselComentLvAdapter(getActivity());
         mListView.setAdapter(mAdapter);
@@ -341,6 +340,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 } else {
                     mAdapter.setInfosList(mCommentArrayList);
                     mAdapter.notifyDataSetChanged();
+
                     mListView.setVisibility(View.VISIBLE);
                     mNoData.setVisibility(View.GONE);
                     mListView.setSelection(0);
@@ -397,21 +397,20 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mProgressBar = (ProgressBar) view.findViewById(R.id.pull_to_refresh_progress);
         mLoadMore.setText(R.string.foot_loadmore);
         mListView.initBottomView(view);
-        mListView.setMyPullUpListViewCallBack(new PullUpRefreshListView.MyPullUpListViewCallBack() {
-            @Override
-            public void scrollBottomState() {
-                //上拉加载的逻辑
-                //index代表当前的页面
-                if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
-                    mCurrentPager++;
-                    //请求下一页数据
-                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
-                        getTopicComments(mCurrentPager);
-                    }
-
-                }
-            }
-        });
+//        mListView.setMyPullUpListViewCallBack(new ChatBallListView.MyPullUpListViewCallBack() {
+//            @Override
+//            public void scrollBottomState() {
+//                //index代表当前的页面
+//                if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
+//                    mCurrentPager++;
+//                    //请求下一页数据
+//                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
+//                        getTopicComments(mCurrentPager);
+//                    }
+//
+//                }
+//            }
+//        });
 
     }
 
@@ -495,9 +494,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         super.setUserVisibleHint(isVisibleToUser);
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
-            MyApp.getContext().sendBroadcast(new Intent("closeself"));
+//            MyApp.getContext().sendBroadcast(new Intent("closeself"));
+//            CyUtils.hideKeyBoard(MyApp.getContext());
         }
     }
+
     /**
      * Called when a view has been clicked.
      *
@@ -507,24 +508,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_commentcount:
-                break;
-            case R.id.et_comment:
-//                if (!CommonUtils.isLogin()) {
-//                    //跳转登录界面
-//                    Intent intent1 = new Intent(mContext, LoginActivity.class);
-//                    startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
-//                } else {//跳转输入评论页面
-//                    Intent intent2 = new Intent(mContext, InputActivity.class);
-//                    intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
-//                    startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
-//                    getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-//                    mLinearLayout.setVisibility(View.GONE);
-//                    //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
-////                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
-////                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(mContext, 60));
-////                    mSwipeRefreshLayout.requestLayout();
-//
-//                }
                 break;
             case R.id.iv_send://发送评论
                 MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");

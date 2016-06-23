@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-public class PullUpRefreshListView extends ListView implements AbsListView.OnScrollListener {
+public class ChatBallListView extends ListView implements AbsListView.OnScrollListener {
 
     /**
      * 底部显示正在加载的页面
@@ -29,13 +29,13 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
     int upY;
     private boolean isBottom = false;
 
-    public PullUpRefreshListView(Context context) {
+    public ChatBallListView(Context context) {
         super(context);
         this.context = context;
         initListView();
     }
 
-    public PullUpRefreshListView(Context context, AttributeSet attrs) {
+    public ChatBallListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         initListView();
@@ -64,7 +64,9 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
     }
 
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+        if (scrollState==OnScrollListener.SCROLL_STATE_IDLE){
+            System.out.println("lzfscrollState==OnScrollListener.SCROLL_STATE_IDLE");
+        }
 
     }
 
@@ -73,15 +75,21 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
 
         if (footerView != null) {
             //判断可视Item是否能在当前页面完全显示
-            if (visibleItemCount == totalItemCount) {
-                // removeFooterView(footerView);
-                footerView.setVisibility(View.GONE);//隐藏底部布局
-            } else {
-                // addFooterView(footerView);
+            if (visibleItemCount>5){
                 footerView.setVisibility(View.VISIBLE);//显示底部布局
+            }else {
+                footerView.setVisibility(View.GONE);//隐藏底部布局
             }
+//            if (visibleItemCount == totalItemCount) {
+//                // removeFooterView(footerView);
+//                footerView.setVisibility(View.GONE);//隐藏底部布局
+//            } else {
+//                // addFooterView(footerView);
+//                footerView.setVisibility(View.VISIBLE);//显示底部布局
+//            }
             if (firstVisibleItem + visibleItemCount == totalItemCount) {
                 isBottom = true;
+//                myPullUpListViewCallBack.scrollBottomState();
             } else {
                 isBottom = false;
             }
@@ -120,5 +128,11 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
 
         }
         return super.onTouchEvent(ev);
+    }
+
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, expandSpec);
     }
 }

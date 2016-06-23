@@ -107,7 +107,7 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <com.hhly.mlottery.view.PullUpRefreshListView
+            <com.hhly.mlottery.view.ChatBallListView
                 android:id="@+id/comment_lv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -135,7 +135,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         >
-
         <include layout="@layout/inputcomment_layout"/>
     </RelativeLayout>
 </RelativeLayout>
