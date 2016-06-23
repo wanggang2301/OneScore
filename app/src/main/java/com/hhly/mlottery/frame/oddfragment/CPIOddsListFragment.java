@@ -23,6 +23,7 @@ import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerListAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPINewFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -37,7 +38,7 @@ import java.util.Map;
 
 /**
  * 赔率列表 Fragment
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/21.
  */
 public class CPIOddsListFragment extends Fragment {
@@ -59,6 +60,7 @@ public class CPIOddsListFragment extends Fragment {
 
     private String type; // 该 Fragment 的类型
     private List<NewOddsInfo.AllInfoBean> datas; // 列表数据源
+    private List<NewOddsInfo.CompanyBean> companyList; // 公司数据源
     private CPIRecyclerListAdapter mAdapter; // 适配器
 
     RecyclerView mRecyclerView;
@@ -126,6 +128,7 @@ public class CPIOddsListFragment extends Fragment {
     private void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         datas = new ArrayList<>();
+        companyList = new ArrayList<>();
         mAdapter = new CPIRecyclerListAdapter(datas, type);
         // RecyclerView Item 单击
         mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
@@ -193,6 +196,10 @@ public class CPIOddsListFragment extends Fragment {
                             return;
                         }
 
+                        // 公司数据
+                        companyList.clear();
+                        companyList.addAll(jsonObject.getCompany());
+
                         datas.clear();
                         datas.addAll(allInfo);
                         setStatus(SUCCESS);
@@ -211,6 +218,68 @@ public class CPIOddsListFragment extends Fragment {
                         refreshOver();
                     }
                 }, NewOddsInfo.class);
+    }
+
+    /**
+     * 更新赔率
+     *
+     * @param result 数据
+     */
+    public void updateOdds(WebSocketCPIResult<List<WebSocketCPIResult.UpdateOdds>> result) {
+        // 1. 先找到当前 fragment 类型的 赔率数据
+        List<WebSocketCPIResult.UpdateOdds> data = result.getData();
+        for (WebSocketCPIResult.UpdateOdds odds : data) {
+            if (odds.getOddType().equals(type)) {
+                // 2. 遍历数据源更新数据
+                for (NewOddsInfo.AllInfoBean item : datas) {
+                    NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
+                    // 找到赛事 ID 相等的赛事
+                    if (matchInfo.getMatchId().equals(result.getThirdId())) {
+                        for (NewOddsInfo.AllInfoBean.ComListBean comListBean : item.getComList()) {
+                            if (comListBean.getComId().equals(odds.getComId())) {
+                                comListBean.updateCurrLevel(odds);
+                                mAdapter.notifyItemChanged(datas.indexOf(item));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 更新时间和状态
+     *
+     * @param result 数据
+     */
+    public void updateTimeAndStatus(WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result) {
+        for (NewOddsInfo.AllInfoBean item : datas) {
+            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
+            // 找到赛事 ID 相等的更新时间和状态
+            if (matchInfo.getMatchId().equals(result.getThirdId())) {
+                WebSocketCPIResult.UpdateTimeAndStatus data = result.getData();
+                matchInfo.setOpenTime(data.getKeepTime() + "");
+                matchInfo.setMatchState(data.getStatusOrigin() + "");
+                mAdapter.notifyItemChanged(datas.indexOf(item));
+            }
+        }
+    }
+
+    /**
+     * 更新比分
+     *
+     * @param result result
+     */
+    public void updateScore(WebSocketCPIResult<WebSocketCPIResult.UpdateScore> result) {
+        for (NewOddsInfo.AllInfoBean item : datas) {
+            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
+            // 找到赛事 ID 相等的更新比分
+            if (matchInfo.getMatchId().equals(result.getThirdId())) {
+                WebSocketCPIResult.UpdateScore data = result.getData();
+                matchInfo.setMatchResult(data.getMatchResult());
+                mAdapter.notifyItemChanged(datas.indexOf(item));
+            }
+        }
     }
 
     /**

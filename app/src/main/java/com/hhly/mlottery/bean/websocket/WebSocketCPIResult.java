@@ -1,5 +1,10 @@
 package com.hhly.mlottery.bean.websocket;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+
+import java.util.List;
+
 /**
  * 指数
  * <p/>
@@ -37,6 +42,48 @@ public class WebSocketCPIResult<T> {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    /**
+     * 从 Json 字符串转化 data 为 UpdateTimeAndStatus 的对象
+     *
+     * @param jsonString 字符串
+     * @return 实例
+     */
+    public static WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus>
+    getTimeAndStatusFromJson(String jsonString) {
+        TypeReference<WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus>> typeReference =
+                new TypeReference<WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus>>() {
+                };
+        return JSON.parseObject(jsonString, typeReference);
+    }
+
+    /**
+     * 从 Json 字符串转化 data 为 UpdateScore 的对象
+     *
+     * @param jsonString 字符串
+     * @return 实例
+     */
+    public static WebSocketCPIResult<UpdateScore>
+    getScoreFromJson(String jsonString) {
+        TypeReference<WebSocketCPIResult<UpdateScore>> typeReference =
+                new TypeReference<WebSocketCPIResult<UpdateScore>>() {
+                };
+        return JSON.parseObject(jsonString, typeReference);
+    }
+
+    /**
+     * 从 Json 字符串转化 data 为 List<UpdateOdds> 的对象
+     *
+     * @param jsonString 字符串
+     * @return 实例
+     */
+    public static WebSocketCPIResult<List<UpdateOdds>>
+    getOddsFromJson(String jsonString) {
+        TypeReference<WebSocketCPIResult<List<UpdateOdds>>> typeReference =
+                new TypeReference<WebSocketCPIResult<List<UpdateOdds>>>() {
+                };
+        return JSON.parseObject(jsonString, typeReference);
     }
 
     public static class UpdateOdds {

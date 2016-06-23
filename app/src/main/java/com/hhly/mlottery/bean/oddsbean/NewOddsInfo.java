@@ -1,5 +1,10 @@
 package com.hhly.mlottery.bean.oddsbean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,10 +142,11 @@ public class NewOddsInfo {
         }
     }
 
-    public static class CompanyBean {
+    public static class CompanyBean implements Parcelable {
         private String comId;
         private String comName;
         private boolean isChecked;
+
 
         public String getComId() {
             return comId;
@@ -165,6 +171,39 @@ public class NewOddsInfo {
         public void setIsChecked(boolean isChecked) {
             this.isChecked = isChecked;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.comId);
+            dest.writeString(this.comName);
+            dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+        }
+
+        public CompanyBean() {
+        }
+
+        protected CompanyBean(Parcel in) {
+            this.comId = in.readString();
+            this.comName = in.readString();
+            this.isChecked = in.readByte() != 0;
+        }
+
+        public static final Parcelable.Creator<CompanyBean> CREATOR = new Parcelable.Creator<CompanyBean>() {
+            @Override
+            public CompanyBean createFromParcel(Parcel source) {
+                return new CompanyBean(source);
+            }
+
+            @Override
+            public CompanyBean[] newArray(int size) {
+                return new CompanyBean[size];
+            }
+        };
     }
 
     public static class AllInfoBean {
@@ -336,14 +375,6 @@ public class NewOddsInfo {
             private String comName;
             private boolean isShow;
 
-            public boolean isShow() {
-                return isShow;
-            }
-
-            public void setIsShow(boolean isShow) {
-                this.isShow = isShow;
-            }
-
             /**
              * left : 1.02
              * middle : -0.25
@@ -362,6 +393,53 @@ public class NewOddsInfo {
              */
 
             private PreLevelBean preLevel;
+
+            /**
+             * 更新当前赔率信息
+             *
+             * @param odds 推送赔率信息
+             */
+            public void updateCurrLevel(WebSocketCPIResult.UpdateOdds odds) {
+                currLevel.left = odds.getLeftOdds();
+                currLevel.middle = odds.getMediumOdds();
+                currLevel.right = odds.getRightOdds();
+
+                currLevel.leftUp = compare(currLevel.left, preLevel.left);
+                currLevel.middleUp = compare(currLevel.middle, preLevel.middle);
+                currLevel.rightUp = compare(currLevel.right, preLevel.right);
+            }
+
+            /**
+             * 赔率比较
+             *
+             * @param now    当前赔率
+             * @param before 之前赔率
+             * @return -1 下降， 0 不变， 1  上升， -2 异常
+             */
+            private int compare(String now, String before) {
+                try {
+                    double nowVal = Double.parseDouble(now);
+                    double beforeVal = Double.parseDouble(before);
+                    if (nowVal > beforeVal) {
+                        return 1;
+                    } else if (nowVal == beforeVal) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return -2; // 出异常了
+            }
+
+            public boolean isShow() {
+                return isShow;
+            }
+
+            public void setIsShow(boolean isShow) {
+                this.isShow = isShow;
+            }
 
             public String getComId() {
                 return comId;

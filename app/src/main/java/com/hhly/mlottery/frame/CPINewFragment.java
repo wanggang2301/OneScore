@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.websocket.WebFootBallSocketTime;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsListFragment;
@@ -119,6 +118,7 @@ public class CPINewFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 // TODO : 公司筛选
+                socketClient.close();
             }
         });
         mFilterButton = (ImageView) view.findViewById(R.id.public_img_filter);
@@ -127,6 +127,7 @@ public class CPINewFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 // TODO : 联赛筛选
+                socketClient.connect();
             }
         });
 
@@ -153,12 +154,6 @@ public class CPINewFragment extends Fragment implements
         });
 
         startWebSocket();
-    }
-
-    @Override
-    public void onDestroy() {
-        socketClient.close();
-        super.onDestroy();
     }
 
     /**
@@ -266,22 +261,21 @@ public class CPINewFragment extends Fragment implements
 
     @Override
     public void onMessage(String message) {
-        System.out.println(message);
+
         if (message.startsWith("CONNECTED")) {
             String id = "android" + DeviceInfo.getDeviceId(getActivity());
             id = MD5Util.getMD5(id);
             // USER.topic.indexcenter
             socketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
         } else if (message.startsWith("MESSAGE")) {
-            String jsonString = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
+            final String jsonString = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
             Log.d("CPINewFragment", jsonString);
-            //赔率模拟数据
-//            jsonString = "{'data':[{'comId':'3','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'339608','type':2}  ";
-            //时间模拟数据
-//            jsonString = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'339608','type':1}  ";
-            //比分模拟推送
-//            jsonString = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
-            handleMessage(jsonString);
+            mTabLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    handleMessage(jsonString);
+                }
+            });
         }
     }
 
@@ -291,14 +285,14 @@ public class CPINewFragment extends Fragment implements
      * @param jsonString jsonString
      */
     private void handleMessage(String jsonString) {
-        WebSocketCPIResult jsonObject = JSON.parseObject(jsonString, WebSocketCPIResult.class);
-        int type = jsonObject.getType();
+        JSONObject jsonObject = JSON.parseObject(jsonString);
+        int type = jsonObject.getIntValue("type");
         // 根据 type 判断推送数据类型，1 - 时间和状态，2 - 赔率数据，3 - 比分
-        if (type == 1) {
+        if (type == WebSocketCPIResult.TYPE_TIME_STATUS) {
             updateTimeAndStatus(jsonString);
-        } else if (type == 2) {
+        } else if (type == WebSocketCPIResult.TYPE_ODDS) {
             updateOdds(jsonString);
-        } else if (type == 3) {
+        } else if (type == WebSocketCPIResult.TYPE_SCORE) {
             updateScore(jsonString);
         }
     }
@@ -309,7 +303,14 @@ public class CPINewFragment extends Fragment implements
      * @param jsonString jsonString
      */
     private void updateScore(String jsonString) {
-
+        //比分模拟推送
+//            jsonString = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
+        WebSocketCPIResult<WebSocketCPIResult.UpdateScore> result =
+                WebSocketCPIResult.getScoreFromJson(jsonString);
+        // 更新三个 Fragment 中对应的 List 中的对应 thirdId 的比赛的数据
+        for (CPIOddsListFragment fragment : mFragments) {
+            fragment.updateScore(result);
+        }
     }
 
     /**
@@ -318,8 +319,14 @@ public class CPINewFragment extends Fragment implements
      * @param jsonString jsonString
      */
     private void updateOdds(String jsonString) {
-        WebFootBallSocketTime webSocketOddsTime =
-                JSON.parseObject(jsonString, WebFootBallSocketTime.class);
+        //赔率模拟数据
+//            jsonString = "{'data':[{'comId':'3','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'339608','type':2}  ";
+        WebSocketCPIResult<List<WebSocketCPIResult.UpdateOdds>> result =
+                WebSocketCPIResult.getOddsFromJson(jsonString);
+        // 更新三个 Fragment 中对应的 List 中的对应 thirdId 的比赛的数据
+        for (CPIOddsListFragment fragment : mFragments) {
+            fragment.updateOdds(result);
+        }
     }
 
     /**
@@ -328,7 +335,14 @@ public class CPINewFragment extends Fragment implements
      * @param jsonString jsonString
      */
     private void updateTimeAndStatus(String jsonString) {
-
+        //时间模拟数据
+//            jsonString = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'338827','type':1}  ";
+        WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result =
+                WebSocketCPIResult.getTimeAndStatusFromJson(jsonString);
+        // 更新三个 Fragment 中对应的 List 中的对应 thirdId 的比赛的数据
+        for (CPIOddsListFragment fragment : mFragments) {
+            fragment.updateTimeAndStatus(result);
+        }
     }
 
     @Override
@@ -340,6 +354,7 @@ public class CPINewFragment extends Fragment implements
     public void onClose(String message) {
         Log.d("CPINewFragment", "webSocket has been closed!");
         Log.d("CPINewFragment", message);
+        startWebSocket();
     }
 
     /**

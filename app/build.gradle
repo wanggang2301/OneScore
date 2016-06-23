@@ -67,7 +67,7 @@ android {
         compile 'com.android.support:recyclerview-v7:23.4.0'
         compile 'com.android.support:design:23.4.0'
         compile 'com.android.support:cardview-v7:23.4.0'
-        compile 'com.alibaba:fastjson:1.2.7'
+        compile 'com.alibaba:fastjson:1.2.12'
         compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
         compile 'com.jiechic.library:xUtils:2.6.14'
         compile 'com.code-troopers.betterpickers:library:2.5.2'
