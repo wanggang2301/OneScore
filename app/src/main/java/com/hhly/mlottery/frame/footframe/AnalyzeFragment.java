@@ -315,6 +315,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mHomeGoalOrLose.setText(entity.getHome().getGoal()+"/"+entity.getHome().getMiss());
                 mHomeGoalDifference.setText(entity.getHome().getGoalDiff()+"");
                 mHomeIntegral.setText(entity.getHome().getIntegral() + "");
+                //球员信息
+                mHomeTeamName.setText(entity.getHome().getTeam());
             }
             if(entity.getGuest()!=null){
                 mGuestRank.setText(entity.getGuest().getRank()+entity.getGuest().getTeam());
@@ -323,10 +325,11 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mGuestGoalOrLose.setText(entity.getGuest().getGoal()+"/"+entity.getGuest().getMiss());
                 mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
                 mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
+
+                mGuestTeamName.setText(entity.getGuest().getTeam());
             }
-            //球员信息
-            mHomeTeamName.setText(entity.getHome().getTeam());
-            mGuestTeamName.setText(entity.getGuest().getTeam());
+
+
         }
 
 
@@ -435,7 +438,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             case R.id.football_analyze_integral_table:
                 Intent intent1=new Intent(getActivity(), FootballInformationActivity.class);
                 intent1.putExtra("lid",mThirdId);
-                intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType());
+                intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType()+"");
                 startActivity(intent1);
                 break;
         }
