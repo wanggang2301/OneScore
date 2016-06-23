@@ -5,13 +5,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckedTextView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 
 /**
  * 公司选择
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/23.
  */
 public class CompanyChooseDialogFragment extends DialogFragment {
@@ -35,6 +37,11 @@ public class CompanyChooseDialogFragment extends DialogFragment {
     Button mOkButton;
 
     private ArrayList<NewOddsInfo.CompanyBean> companyList;
+
+    private OnFinishSelectionListener listener;
+
+    public CompanyChooseDialogFragment() {
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,43 +71,85 @@ public class CompanyChooseDialogFragment extends DialogFragment {
         mTitleTextView = (TextView) view.findViewById(R.id.titleView);
         mTitleTextView.setText(R.string.odd_company_txt);
 
-        mListView = (ListView) view.findViewById(R.id.listdate);
-
         // 确认按钮
         mOkButton = (Button) view.findViewById(R.id.cpi_btn_ok);
         mOkButton.setVisibility(View.VISIBLE);
+        mOkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onFinishSelection();
+                }
+                dismiss();
+            }
+        });
         view.findViewById(R.id.cpi_view_id).setVisibility(View.VISIBLE);
 
-        CpiCompanyAdapter adapter = new CpiCompanyAdapter(getContext(), companyList);
+        mListView = (ListView) view.findViewById(R.id.listdate);
+        initListView();
+    }
+
+    /**
+     * 初始化 ListView
+     */
+    private void initListView() {
+        CpiCompanyAdapter adapter = new CpiCompanyAdapter(companyList);
         mListView.setAdapter(adapter);
-        // 设置 listView 的 item 不能被获取焦点,焦点由 listView 里的控件获得
-        mListView.setItemsCanFocus(false);
-        //设置多选
+        // 设置多选模式
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View arg1, final int position, long arg3) {
-                CheckedTextView checkedTextView = (CheckedTextView)
-                        parent.getChildAt(position).findViewById(R.id.item_checkedTextView);
-                ImageView itemImageView = (ImageView)
-                        parent.getChildAt(position).findViewById(R.id.item_img_checked);
-                checkedTextView.setChecked(!checkedTextView.isChecked());
-                // 如果是选中
-                if (checkedTextView.isChecked()) {
-                    itemImageView.setBackgroundResource(R.mipmap.cpi_img_select_true);
-                } else {
-                    itemImageView.setBackgroundResource(R.mipmap.cpi_img_select);
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewOddsInfo.CompanyBean company = companyList.get(position);
+                company.setIsChecked(!company.isChecked());
+                View selectedView = view.findViewById(R.id.item_img_checked);
+                selectedView.setSelected(!selectedView.isSelected());
             }
         });
     }
 
-    public static CompanyChooseDialogFragment newInstance(ArrayList<NewOddsInfo.CompanyBean> companyList) {
-
+    public static CompanyChooseDialogFragment newInstance(ArrayList<NewOddsInfo.CompanyBean> companyList,
+                                                          OnFinishSelectionListener listener) {
         Bundle args = new Bundle();
         args.putParcelableArrayList(KEY_COMPANY_LIST, companyList);
         CompanyChooseDialogFragment fragment = new CompanyChooseDialogFragment();
+        fragment.listener = listener;
         fragment.setArguments(args);
         return fragment;
+    }
+
+    /**
+     * 多选监听适配器
+     */
+    abstract class MultiChoiceModeListenerAdapter implements AbsListView.MultiChoiceModeListener {
+
+        @Override
+        public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+        }
+    }
+
+    public interface OnFinishSelectionListener {
+        void onFinishSelection();
     }
 }

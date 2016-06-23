@@ -21,9 +21,11 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsListFragment;
+import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -60,7 +62,10 @@ public class CPINewFragment extends Fragment implements
     ViewPager mViewPager; // viewPage
 
     private List<CPIOddsListFragment> mFragments; // Fragments
+    private ArrayList<NewOddsInfo.CompanyBean> companyList; // 公司数据源
+
     private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
+    private CompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
 
     private String currentDate; // 当前日期
     private String choosenDate; // 选中日期
@@ -78,6 +83,10 @@ public class CPINewFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // 创建公司 List
+        companyList = new ArrayList<>();
+
         // 隐藏中间标题
         hideView(view, R.id.public_txt_title);
         // 隐藏 筛选、设置、热门隐藏
@@ -117,8 +126,7 @@ public class CPINewFragment extends Fragment implements
         mCompanyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO : 公司筛选
-                socketClient.close();
+                showCompanyChooseDialog();
             }
         });
         mFilterButton = (ImageView) view.findViewById(R.id.public_img_filter);
@@ -175,6 +183,10 @@ public class CPINewFragment extends Fragment implements
     private void showDateChooseDialog() {
         maybeInitDateChooseDialog();
         mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
+    }
+
+    public ArrayList<NewOddsInfo.CompanyBean> getCompanyList() {
+        return companyList;
     }
 
     /**
@@ -255,6 +267,28 @@ public class CPINewFragment extends Fragment implements
         view.findViewById(idRes).setVisibility(View.GONE);
     }
 
+    /**
+     * 显示公司选择
+     */
+    public void showCompanyChooseDialog() {
+        maybeInitCompanyChooseDialog();
+        mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+    }
+
+    private void maybeInitCompanyChooseDialog() {
+        if (mCompanyChooseDialogFragment == null) {
+            mCompanyChooseDialogFragment = CompanyChooseDialogFragment.newInstance(companyList,
+                    new CompanyChooseDialogFragment.OnFinishSelectionListener() {
+                        @Override
+                        public void onFinishSelection() {
+                            for (CPIOddsListFragment fragment : mFragments) {
+                                fragment.notifyRefresh();
+                            }
+                        }
+                    });
+        }
+    }
+
     public static CPINewFragment newInstance() {
         return new CPINewFragment();
     }
@@ -263,7 +297,7 @@ public class CPINewFragment extends Fragment implements
     public void onMessage(String message) {
 
         if (message.startsWith("CONNECTED")) {
-            String id = "android" + DeviceInfo.getDeviceId(getActivity());
+            String id = "android" + DeviceInfo.getDeviceId(getContext());
             id = MD5Util.getMD5(id);
             // USER.topic.indexcenter
             socketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");

@@ -594,7 +594,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         } else {
             //否则就是公司
             titleView.setText(R.string.odd_company_txt);
-            cpiCompanyAdapter = new CpiCompanyAdapter(mContext, companys);
+            cpiCompanyAdapter = new CpiCompanyAdapter(companys);
             dialog_list.setAdapter(cpiCompanyAdapter);
             //设置你的listview的item不能被获取焦点,焦点由listview里的控件获得
             dialog_list.setItemsCanFocus(false);

@@ -30,6 +30,7 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
     private String type; // 类型
 
     private List<NewOddsInfo.AllInfoBean> items; // 数据源
+    private List<NewOddsInfo.CompanyBean> companies; // 过滤的公司
 
     private OnItemClickListener onItemClickListener; // 监听器
     private OnOddsClickListener onOddsClickListener; // 赔率点击监听
@@ -43,8 +44,10 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
     }
 
     public CPIRecyclerListAdapter(@NonNull List<NewOddsInfo.AllInfoBean> items,
+                                  @NonNull List<NewOddsInfo.CompanyBean> companies,
                                   @CPIOddsListFragment.Type String type) {
         this.items = items;
+        this.companies = companies;
         this.type = type;
     }
 
@@ -206,24 +209,33 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
          */
         private void bindOdds(final NewOddsInfo.AllInfoBean data) {
             mContainer.removeAllViews();
+            CpiOddsItemView cpiOddsItemView = null;
             List<NewOddsInfo.AllInfoBean.ComListBean> comList = data.getComList();
             for (final NewOddsInfo.AllInfoBean.ComListBean item : comList) {
-                CpiOddsItemView cpiOddsItemView = new CpiOddsItemView(mContext);
-                cpiOddsItemView.bindData(item, type);
-                if (onOddsClickListener != null) {
-                    cpiOddsItemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onOddsClickListener.onOddsClick(data, item);
-                        }
-                    });
+                if (item.belongToShow(companies)) {
+                    cpiOddsItemView = new CpiOddsItemView(mContext);
+                    cpiOddsItemView.bindData(item, type);
+                    if (onOddsClickListener != null) {
+                        cpiOddsItemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onOddsClickListener.onOddsClick(data, item);
+                            }
+                        });
+                    }
+                    mContainer.addView(cpiOddsItemView);
                 }
-                mContainer.addView(cpiOddsItemView);
-                if (comList.indexOf(item) != comList.size() - 1) {
-                    cpiOddsItemView.showDivider();
-                } else {
-                    cpiOddsItemView.hideDivider();
-                }
+            }
+            // 最后一个隐藏底部分割线
+            if (cpiOddsItemView != null) {
+                cpiOddsItemView.hideDivider();
+            }
+
+            // 如果一个子 View 都没得，那就去死吧
+            if (mContainer.getChildCount() == 0) {
+                itemView.setVisibility(View.GONE);
+            } else {
+                itemView.setVisibility(View.VISIBLE);
             }
         }
 

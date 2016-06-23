@@ -38,7 +38,7 @@ import java.util.Map;
 
 /**
  * 赔率列表 Fragment
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/21.
  */
 public class CPIOddsListFragment extends Fragment {
@@ -60,7 +60,6 @@ public class CPIOddsListFragment extends Fragment {
 
     private String type; // 该 Fragment 的类型
     private List<NewOddsInfo.AllInfoBean> datas; // 列表数据源
-    private List<NewOddsInfo.CompanyBean> companyList; // 公司数据源
     private CPIRecyclerListAdapter mAdapter; // 适配器
 
     RecyclerView mRecyclerView;
@@ -70,6 +69,7 @@ public class CPIOddsListFragment extends Fragment {
     TextView mRefreshTextView; // 刷新
 
     private CPINewFragment parentFragment;
+    private CompanyChooseDialogFragment mCompanyChooseDialogFragment;
 
     /**
      * 定义注解限制类型
@@ -128,8 +128,7 @@ public class CPIOddsListFragment extends Fragment {
     private void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         datas = new ArrayList<>();
-        companyList = new ArrayList<>();
-        mAdapter = new CPIRecyclerListAdapter(datas, type);
+        mAdapter = new CPIRecyclerListAdapter(datas, parentFragment.getCompanyList(), type);
         // RecyclerView Item 单击
         mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
             @Override
@@ -155,6 +154,13 @@ public class CPIOddsListFragment extends Fragment {
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    /**
+     * 通知刷新
+     */
+    public void notifyRefresh() {
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -197,8 +203,7 @@ public class CPIOddsListFragment extends Fragment {
                         }
 
                         // 公司数据
-                        companyList.clear();
-                        companyList.addAll(jsonObject.getCompany());
+                        handleCompany(jsonObject.getCompany());
 
                         datas.clear();
                         datas.addAll(allInfo);
@@ -218,6 +223,29 @@ public class CPIOddsListFragment extends Fragment {
                         refreshOver();
                     }
                 }, NewOddsInfo.class);
+    }
+
+    /**
+     * 处理公司数据
+     *
+     * @param company company
+     */
+    private void handleCompany(List<NewOddsInfo.CompanyBean> company) {
+        ArrayList<NewOddsInfo.CompanyBean> companyList =
+                parentFragment.getCompanyList();
+        if (parentFragment.getCurrentFragment() == CPIOddsListFragment.this) {
+            // 获取当前公司并设置给 CPINewFragment
+            if (companyList.isEmpty()) {
+                // 默认选中头两个公司
+                int size = company.size();
+                if (size <= 2) {
+                    for (int i = 0; i < size; i++) {
+                        company.get(i).setIsChecked(true);
+                    }
+                }
+                companyList.addAll(company);
+            }
+        }
     }
 
     /**

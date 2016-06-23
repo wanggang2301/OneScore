@@ -143,10 +143,10 @@ public class NewOddsInfo {
     }
 
     public static class CompanyBean implements Parcelable {
+
         private String comId;
         private String comName;
         private boolean isChecked;
-
 
         public String getComId() {
             return comId;
@@ -407,6 +407,52 @@ public class NewOddsInfo {
                 currLevel.leftUp = compare(currLevel.left, preLevel.left);
                 currLevel.middleUp = compare(currLevel.middle, preLevel.middle);
                 currLevel.rightUp = compare(currLevel.right, preLevel.right);
+            }
+
+            /**
+             * 属于公司
+             *
+             * @param company 公司
+             * @return 是否属于公司
+             */
+            public boolean belongTo(CompanyBean company) {
+                return this.comId.equals(company.comId);
+            }
+
+            /**
+             * 存在公司列表中
+             *
+             * @param companies 公司列表
+             * @return 是否属于公司列表
+             */
+            public boolean belongTo(List<CompanyBean> companies) {
+                // 遍历
+                for (CompanyBean company : companies) {
+                    // 属于其中一家公司即可
+                    if (this.belongTo(company)) return true;
+                }
+                // 都不属于则不属于
+                return false;
+            }
+
+            /**
+             * 属于并且可显示
+             *
+             * @param company 公司
+             * @return 属于可显示的公司
+             */
+            public boolean belongToShow(CompanyBean company) {
+                return this.comId.equals(company.comId) && company.isChecked;
+            }
+
+            public boolean belongToShow(List<CompanyBean> companies) {
+                // 遍历
+                for (CompanyBean company : companies) {
+                    // 属于其中一家公司即可
+                    if (this.belongToShow(company)) return true;
+                }
+                // 都不属于则不属于
+                return false;
             }
 
             /**
