@@ -668,9 +668,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mHeadviewpager.setIsScrollable(false);
             mIndicator.setVisibility(View.GONE);
 
-
-            L.d("99999", "賽前");
-
             mPreHeadInfoFrament.initData(matchDetail, false);
             mPreHeadInfoFrament.setScoreText("VS");
 
