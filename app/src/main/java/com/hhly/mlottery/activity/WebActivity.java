@@ -3,9 +3,11 @@ package com.hhly.mlottery.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,7 +22,7 @@ import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -60,18 +62,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         initEvent();
     }
 
-    int x = 0;
-
-    public void initAnimosion(int endy) {
-        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, x, x + endy);
-        translateAnimation.setDuration(0);
-        translateAnimation.setFillAfter(true);
-        mTv_check_info.startAnimation(translateAnimation);
-        x -= endy;
-        ToastTools.ShowQuickCenter(WebActivity.this, x + "");
-
-    }
-
     private void initEvent() {
         // 跳转关联赛事详情
         if (mType != 0 && !TextUtils.isEmpty(mThird)) {
@@ -106,7 +96,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         public_btn_filter.setVisibility(View.GONE);
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setImageResource(R.mipmap.share);
-        public_btn_set.setVisibility(View.GONE);
+        public_btn_set.setVisibility(View.VISIBLE);
 
         public_btn_set.setOnClickListener(this);
 
@@ -120,10 +110,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
             @Override
             public void onSChanged(int l, int t, int oldl, int oldt) {
-                System.out.println("lzf+l=" + l + "t=" + t + "oldl=" + oldl + "oldt" + oldt);
-                System.out.println("lzf+getContentHeight=" + mWebView.getContentHeight() * mWebView.getScale() + "getHeight=" + (mWebView.getHeight() + mWebView.getScrollY()));
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
-                if (y < 10) {
+                if (y < 3) {
 
                     //已经处于底端
 //                    mTv_check_info.setVisibility(View.VISIBLE);
@@ -149,8 +137,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         });
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setAppCacheEnabled(false);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setJavaScriptEnabled(true);
@@ -176,7 +164,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
             infoTypeName = intent.getStringExtra("infoTypeName");
-            token = intent.getStringExtra("token");
+            token = AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
@@ -188,16 +176,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                ChatFragment chatFragment = new ChatFragment();
 //                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
 //            }
-            if (url != null && url.contains("comment")) {
-                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                ChatFragment chatFragment = new ChatFragment();
-                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
-            }
-            if (url != null && url.contains("share")) {
-                public_btn_set.setVisibility(View.VISIBLE);
-            } else {
-                public_btn_set.setVisibility(View.VISIBLE);
-            }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -218,17 +196,30 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                    }
 //                }
             });
-            //其他页传过来的reqMethod为post时，提交token  否则不提交
-            if (reqMethod != null && token != null && reqMethod.equals("post")) {
-
-//                mWebView.postUrl(url, token.getBytes("utf-8"));
-//                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
+//            //其他页传过来的reqMethod为post时，提交token  否则不提交
+//            if (reqMethod != null && token != null && reqMethod.equals("post")) {
+//
+////                mWebView.postUrl(url, token.getBytes("utf-8"));
+////                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
+//                url = url.replace("{loginToken}", token);
+//                url = url.replace("{deviceToken}", deviceId);
+//            }
+            if (url != null) {
+                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+                ChatFragment chatFragment = new ChatFragment();
+                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                if (url.contains("comment=false")) {
+                    getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
+                }
+                if (url.contains("share=false")) {
+                    public_btn_set.setVisibility(View.GONE);//隐藏分享
+                }
                 url = url.replace("{loginToken}", token);
                 url = url.replace("{deviceToken}", deviceId);
             }
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
-            L.d("CommonUtils:" + "token=" + token + "reqMethod" + reqMethod + "url=" + url);
+            Log.d("CommonUtils:", "token=" + token + "reqMethod" + reqMethod + "url=" + url);
 
 
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);

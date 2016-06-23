@@ -83,7 +83,25 @@ public class MatchOdd {
 		return "MatchOdd [relateThirdId=" + relateThirdId + ", handicap=" + handicap + ", handicapValue=" + handicapValue + ", seal=" + seal + ", leftOddsState=" + leftOddsState
 				+ ", mediumValueState=" + mediumValueState + ", rightOddsState=" + rightOddsState + ", leftOdds=" + leftOdds + ", mediumOdds=" + mediumOdds + ", rightOdds=" + rightOdds + "]";
 	}
-	
-	
+
+	public MatchOdd(){}
+	public MatchOdd(String handicap, String handicapValue, String rightOddsState, String leftOdds) {
+		this.setHandicap(handicap);
+		this.setHandicapValue(handicapValue);
+		this.setRightOdds(rightOddsState);
+		this.setLeftOdds(leftOdds);
+	}
+
+	public void setTypeOddds(String handicapValue, String rightOddsState, String leftOdds) {
+		this.setHandicapValue(handicapValue);
+		this.setRightOdds(rightOddsState);
+		this.setLeftOdds(leftOdds);
+	}
+
+	public void setEuroTypeOdds(String mediumOdds, String rightOddsState, String leftOdds) {
+		this.setMediumOdds(mediumOdds);
+		this.setRightOdds(rightOddsState);
+		this.setLeftOdds(leftOdds);
+	}
 
 }

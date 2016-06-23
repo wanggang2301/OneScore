@@ -29,13 +29,15 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counselcomment);
+        initData();
+        initView();
+    }
+
+    private void initData() {
         Intent intent = getIntent();
         url = intent.getStringExtra(CyUtils.INTENT_PARAMS_SID);
         L.i("lzfsouceidurl" + url);
         title = intent.getStringExtra(CyUtils.INTENT_PARAMS_TITLE);
-        initView();
-
-        CyUtils.addComment(new ChatFragment(), url, title, true, true, getSupportFragmentManager(), R.id.scrollview);
     }
 
     private void initView() {
@@ -43,6 +45,7 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
         mPublic_txt_title.setText(R.string.comment_title);
         mPublic_img_back.setOnClickListener(this);
+        CyUtils.addComment(new ChatFragment(), url, title, true, true, getSupportFragmentManager(), R.id.scrollview);//添加评论碎片
     }
 
     @Override

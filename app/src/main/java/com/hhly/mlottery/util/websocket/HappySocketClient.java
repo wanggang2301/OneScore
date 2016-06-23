@@ -16,23 +16,33 @@ public class HappySocketClient extends WebSocketClient {
 	private final static String SERVER_NAME = "happywin";
 	private final static String SERVER_PASSWORD = "happywin";
 
+	private Callback webSocketCallback;
+
 	public HappySocketClient(URI serverUri, Draft draft) {
 		super(serverUri, draft);
+	}
+
+	public HappySocketClient(URI serverUri, Draft draft, Callback callback) {
+		super(serverUri, draft);
+		if (callback == null) throw new NullPointerException("HappySocketClient.Callback must be not null");
+		this.webSocketCallback = callback;
+
 	}
 
 	@Override
 	public void onClose(int arg0, String arg1, boolean arg2) {
 		L.i(TAG, "websocket close..");
-		
+
+		if(webSocketCallback != null) webSocketCallback.onClose(arg1);
 		if(socketResponseCloseListener!=null){
 			socketResponseCloseListener.onClose(arg1);
 		}
 	}
-	
 
 	@Override
 	public void onError(Exception exception) {
 		L.i(TAG, "___onError____");
+		if(webSocketCallback != null) webSocketCallback.onError(exception);
 		if (socketResponseErrorListener != null) {
 			socketResponseErrorListener.onError(exception);
 		}
@@ -41,10 +51,11 @@ public class HappySocketClient extends WebSocketClient {
 	@Override
 	public void onMessage(String message) {
 		L.i(TAG, "___onMessage___");
+			if(webSocketCallback != null) webSocketCallback.onMessage(message);
 		if (socketResponseMessageListener != null) {
 			socketResponseMessageListener.onMessage(message);
 		} else {
-			Log.e(TAG, "socketResponseMessageListener is null");
+			Log.e(TAG, "socketResponseMessageListener is null and RollballFragment callback is [[" + webSocketCallback + "]]");
 		}
 
 	}
@@ -90,7 +101,9 @@ public class HappySocketClient extends WebSocketClient {
 		this.socketResponseCloseListener = socketResponseCloseListener;
 	}
 	
-	
-	
-	
+	public interface Callback {
+		void onMessage(String message);
+		void onError(Exception exception);
+		void onClose(String message);
+	}
 }

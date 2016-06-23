@@ -1,161 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y160"
+    android:layout_height="wrap_content"
     android:background="#fff"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal">
     <!--七星彩彩票开奖条目-->
-    <ImageView
-        android:id="@+id/iv_number_qxc_home"
-        android:layout_width="@dimen/x140"
-        android:layout_height="@dimen/x140"
-        android:layout_gravity="center_vertical"
-        android:src="@mipmap/home_number_item_icon_def"
-        android:paddingLeft="@dimen/x25" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/y20"
-        android:paddingLeft="@dimen/x20"
-        android:paddingTop="@dimen/y30">
+        android:layout_height="@dimen/y220"
+        android:orientation="horizontal">
 
-        <!--第一行-->
+        <ImageView
+            android:id="@+id/iv_number_qxc_home"
+            android:layout_width="@dimen/x140"
+            android:layout_height="@dimen/x140"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/x25"
+            android:src="@mipmap/home_number_item_icon_def" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <!--彩种name-->
-            <TextView
-                android:id="@+id/tv_number_qxc_name_home"
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/y20"
+            android:paddingLeft="@dimen/x20"
+            android:paddingTop="@dimen/y30">
+
+            <!--第一行-->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/number_cz_qxc"
-                android:textColor="@color/content_txt_black"
-                android:textSize="@dimen/home_pager_title" />
+                android:orientation="horizontal">
+                <!--彩种name-->
+                <TextView
+                    android:id="@+id/tv_number_qxc_name_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_cz_qxc"
+                    android:textColor="@color/content_txt_black"
+                    android:textSize="@dimen/home_pager_title" />
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/x20"
+                    android:text="@string/number_code_di"
+                    android:textColor="@color/content_txt_light_grad"
+                    android:textSize="@dimen/number_desc" />
+                <!--开奖期号-->
+                <TextView
+                    android:id="@+id/tv_number_issue_qxc_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textColor="@color/content_txt_light_grad"
+                    android:textSize="@dimen/number_desc" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_code_qi"
+                    android:textColor="@color/content_txt_light_grad"
+                    android:textSize="@dimen/number_desc" />
+            </LinearLayout>
+            <!--第二行-->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/x20"
-                android:text="@string/number_code_di"
-                android:textColor="@color/content_txt_light_grad"
-                android:textSize="@dimen/number_desc" />
-            <!--开奖期号-->
-            <TextView
-                android:id="@+id/tv_number_issue_qxc_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="—"
-                android:textColor="@color/content_txt_light_grad"
-                android:textSize="@dimen/number_desc" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/number_code_qi"
-                android:textColor="@color/content_txt_light_grad"
-                android:textSize="@dimen/number_desc" />
-        </LinearLayout>
-        <!--第二行-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_number_qxc01_home"
+                    android:layout_width="@dimen/x55"
+                    android:layout_height="@dimen/y55"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="@mipmap/number_bg_hk_not"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/numberinfo_text_color"
+                    android:textSize="@dimen/home_pager_title" />
 
-            <TextView
-                android:id="@+id/tv_number_qxc01_home"
-                android:layout_width="@dimen/x55"
-                android:layout_height="@dimen/y55"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginTop="@dimen/y10"
-                android:background="@mipmap/number_bg_hk_not"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/numberinfo_text_color"
-                android:textSize="@dimen/home_pager_title" />
+                <TextView
+                    android:id="@+id/tv_number_qxc02_home"
+                    android:layout_width="@dimen/x55"
+                    android:layout_height="@dimen/y55"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="@mipmap/number_bg_hk_not"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/numberinfo_text_color"
+                    android:textSize="@dimen/home_pager_title" />
 
-            <TextView
-                android:id="@+id/tv_number_qxc02_home"
-                android:layout_width="@dimen/x55"
-                android:layout_height="@dimen/y55"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginTop="@dimen/y10"
-                android:background="@mipmap/number_bg_hk_not"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/numberinfo_text_color"
-                android:textSize="@dimen/home_pager_title" />
+                <TextView
+                    android:id="@+id/tv_number_qxc03_home"
+                    android:layout_width="@dimen/x55"
+                    android:layout_height="@dimen/y55"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="@mipmap/number_bg_hk_not"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/numberinfo_text_color"
+                    android:textSize="@dimen/home_pager_title" />
 
-            <TextView
-                android:id="@+id/tv_number_qxc03_home"
-                android:layout_width="@dimen/x55"
-                android:layout_height="@dimen/y55"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginTop="@dimen/y10"
-                android:background="@mipmap/number_bg_hk_not"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/numberinfo_text_color"
-                android:textSize="@dimen/home_pager_title" />
+                <TextView
+                    android:id="@+id/tv_number_qxc04_home"
+                    android:layout_width="@dimen/x55"
+                    android:layout_height="@dimen/y55"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="@mipmap/number_bg_hk_not"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/numberinfo_text_color"
+                    android:textSize="@dimen/home_pager_title" />
 
-            <TextView
-                android:id="@+id/tv_number_qxc04_home"
-                android:layout_width="@dimen/x55"
-                android:layout_height="@dimen/y55"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginTop="@dimen/y10"
-                android:background="@mipmap/number_bg_hk_not"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/numberinfo_text_color"
-                android:textSize="@dimen/home_pager_title" />
+                <TextView
+                    android:id="@+id/tv_number_qxc05_home"
+                    android:layout_width="@dimen/x55"
+                    android:layout_height="@dimen/y55"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="@mipmap/number_bg_hk_not"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/numberinfo_text_color"
+                    android:textSize="@dimen/home_pager_title" />
 
-            <TextView
-                android:id="@+id/tv_number_qxc05_home"
-                android:layout_width="@dimen/x55"
-                android:layout_height="@dimen/y55"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginTop="@dimen/y10"
-                android:background="@mipmap/number_bg_hk_not"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/numberinfo_text_color"
-                android:textSize="@dimen/home_pager_title" />
+                <TextView
+                    android:id="@+id/tv_number_qxc06_home"
+                    android:layout_width="@dimen/x55"
+                    android:layout_height="@dimen/y55"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="@mipmap/number_bg_hk_not"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/numberinfo_text_color"
+                    android:textSize="@dimen/home_pager_title" />
 
-            <TextView
-                android:id="@+id/tv_number_qxc06_home"
-                android:layout_width="@dimen/x55"
-                android:layout_height="@dimen/y55"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginTop="@dimen/y10"
-                android:background="@mipmap/number_bg_hk_not"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/numberinfo_text_color"
-                android:textSize="@dimen/home_pager_title" />
+                <TextView
+                    android:id="@+id/tv_number_qxc07_home"
+                    android:layout_width="@dimen/x55"
+                    android:layout_height="@dimen/y55"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="@mipmap/number_bg_hk_not"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/numberinfo_text_color"
+                    android:textSize="@dimen/home_pager_title" />
 
-            <TextView
-                android:id="@+id/tv_number_qxc07_home"
-                android:layout_width="@dimen/x55"
-                android:layout_height="@dimen/y55"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginTop="@dimen/y10"
-                android:background="@mipmap/number_bg_hk_not"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/numberinfo_text_color"
-                android:textSize="@dimen/home_pager_title" />
-
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/whitesmoke"
+    >
+
+
+    <include layout="@layout/layout_header" />
+
+    <EditText
+        android:layout_marginTop="15dp"
+        android:id="@+id/et_nickname"
+        style="@style/login_edittext_modify_nickname"
+        android:hint="@string/input_nickname"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        style="@style/login_textview_modify_nickname_hint"
+        android:text="@string/nickname_hint"
+        />
+
+</LinearLayout>

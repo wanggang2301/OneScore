@@ -79,7 +79,7 @@
         android:layout_alignParentBottom="true"
         >
 
-        <LinearLayout
+      <!--  <LinearLayout
             android:id="@+id/wheeldata_fail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                     android:textSize="@dimen/text_size_14"/>
             </LinearLayout>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <RelativeLayout
             android:id="@+id/bottom_lay_round"

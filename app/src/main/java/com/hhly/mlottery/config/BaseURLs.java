@@ -25,6 +25,7 @@ public class BaseURLs {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
+//            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
                 return "m.1332255.com";
             } else if (url_config == DebugConfigActivity.URL_242) {
@@ -36,7 +37,7 @@ public class BaseURLs {
             }
         }
 
-        return "m.13322.com";
+		return  "m.13322.com";
 
     }
 
@@ -276,6 +277,7 @@ public class BaseURLs {
     private final static String URL_FOOTBALL_DETAIL = "footBallMatch.queryAndroidMatchInfos.do";
     //赛场——点赞
     private final static String URL_FOOTBALL_DETAIL_LIKE = "footBallMatch.updLike.do";
+    private final static String URL_BASKETBALLBALL_DETAIL_LIKE = "basketballDetail.updLike.do";
 
     //直播加载更多
 
@@ -481,6 +483,9 @@ public class BaseURLs {
     //即时(增加队徽请求字段)
     private final static String URL_IMMEDIATE = "androidMatchResults.findImmediateMatchs.do";
 
+    // 滚球
+    private final static String URL_ROLLBALL = "matchResults.findBallList.do";
+
 
     // 热门和焦点
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
@@ -515,6 +520,8 @@ public class BaseURLs {
 
     public final static String URL_ImmediateMatchs = URL_API_HOST + URL_IMMEDIATE;
 
+    public final static String URL_Rollball = URL_API_HOST + URL_ROLLBALL;
+
     public final static String URL_ResultMatchs = URL_API_HOST + URL_RESULT;
 
     public final static String URL_CeaselessMatchs = URL_API_HOST + URL_CEASELESS;
@@ -529,6 +536,7 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL;
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
+    public final static String URL_BASKETBALLBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_BASKETBALLBALL_DETAIL_LIKE;
 
     //直播加载更多
     public final static String URL_FOOTBALL_LIVE_TEXT_INFO = URL_API_HOST + URL_FOOTBALL_LIVE_TEXT;
@@ -587,6 +595,9 @@ public class BaseURLs {
      */
 //	public final static String UMENG_CHANNEL_URL = "http://192.168.10.242:8083/traffic/api";
     public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";
+
+    //用户留存率分析
+    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";
 
     //指数详情
     public final static String URL_FOOTBALL_MATCHODD_DETAILS = URL_API_HOST + FOOTBALLMATCH_MATCHODD_DETAILS;
@@ -671,28 +682,31 @@ public class BaseURLs {
      * 新版指数
      */
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
+    /**指数推送*/
+    public final static String URL_CPI_SOCKET = WS_SERVICE;
     /**新版足球分析接口*/
     public final static String URL_NEW_ANALYZE=URL_API_HOST+"footBallMatch.findAnalysisOverview.do";
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
     public final static String URL_STARTPIC = URL_API_HOST + STARTPIC;
-    /**
-     * 发送验证码
-     */
+    /**发送验证码*/
     public final static String URL_SENDSMSCODE = URL_API_HOST + "androidUserCenter.sendSmsCode.do";
-    /**
-     * 注册
-     */
+    /**注册*/
     public final static String URL_REGISTER = URL_API_HOST + "androidUserCenter.register.do";
-    /**
-     * 登录
-     */
+    /**登录*/
     public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
-    /**
-     * 登出
-     */
+    /**登出*/
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
+    /**重置密码*/
+    public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
+    /**修改昵称*/
+    public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
+    /**修改密码*/
+    public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
+
+    /**资讯Id查询*/
+    public final static String URL_INFORMATION_BY_THIRDID = URL_API_HOST + "info.findSingleInfo.do";
 
 
 }

@@ -209,7 +209,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
         if ("0".equals(mMatchDetail.getLiveStatus()) || "1".equals(mMatchDetail.getLiveStatus())) {
             startWebsocket();
-            //computeWebSocket();
+            computeWebSocket();
         }
     }
 
@@ -367,7 +367,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
                         initItemOdd(bottomOdds);
                         startWebsocket();
-                        // computeWebSocket();
+                        computeWebSocket();
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override

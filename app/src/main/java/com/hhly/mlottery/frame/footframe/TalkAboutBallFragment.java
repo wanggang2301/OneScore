@@ -199,20 +199,20 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         String url = "";
         if (type == 0) {
             url = BaseURLs.URL_FOOTBALL_DETAIL_LIKE_INFO;
-//            ToastTools.ShowQuickCenter(getActivity(),"足球");
         } else if (type == 1) {
-//            url = BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
-//            ToastTools.ShowQuickCenter(getActivity(),"籃球");
+            url = BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
         }
         VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<MatchLike>() {
             @Override
             public void onResponse(MatchLike matchLike) {
                 tvHomeLikeCount.setText(matchLike.getHomeLike());
                 tvGuestLikeCount.setText(matchLike.getGuestLike());
-                int homeLikeCount = Integer.parseInt(matchLike.getHomeLike());
-                int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
-                talkballpro.setMax(homeLikeCount + guestLikeCount);
-                talkballpro.setProgress(homeLikeCount);
+                if (matchLike.getHomeLike() != null && matchLike.getGuestLike() != null) {
+                    int homeLikeCount = Integer.parseInt(matchLike.getHomeLike());
+                    int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
+                    talkballpro.setMax(homeLikeCount + guestLikeCount);
+                    talkballpro.setProgress(homeLikeCount);
+                }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -234,11 +234,12 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         ivHomeLike.setVisibility(View.INVISIBLE);
         ivGuestLike.setVisibility(View.INVISIBLE);
         //以前的规则是-1不可点  现在延续
-        if (state != null && state.equals("-1")) {
-            setClickableLikeBtn(false);
-        } else {
-            setClickableLikeBtn(true);
-        }
+//        if (state != null && state.equals("-1")) {
+//            setClickableLikeBtn(false);
+//        } else {
+//            setClickableLikeBtn(true);
+//        }
+        setClickableLikeBtn(false);
         //评论相关
         sdk = CyanSdk.getInstance(mContext);
         if (CommonUtils.isLogin()) {

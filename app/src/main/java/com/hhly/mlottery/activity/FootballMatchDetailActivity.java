@@ -513,11 +513,10 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
                 //数据加载成功后显示分享
                 mShare.setVisibility(View.VISIBLE);
-
+                mPreStatus = matchDetail.getLiveStatus();
 
                 if (!isInitedViewPager) {//如果ViewPager未初始化
                     initViewPager(matchDetail);
-                    mPreStatus = matchDetail.getLiveStatus();
                 } else {
 
                     //下拉刷新
@@ -676,7 +675,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         //聊球
         mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("param1", mThirdId);
+        bundle.putString("param1", mThirdId);//"1072757"
+        bundle.putInt("type", 0);//1 籃球/0 足球
+        bundle.putString("state", mPreStatus);//直播状态  用来做完成不能点赞的限制
         mTalkAboutBallFragment.setArguments(bundle);
 
         fragments.add(mOddsFragment);
@@ -926,7 +927,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 // setResult(Activity.RESULT_OK);
                 sendBroadcast(new Intent("closeself"));
                 finish();
-                overridePendingTransition(0, android.R.anim.fade_out);
                 break;
             case R.id.layout_match_header_focus_img:
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");

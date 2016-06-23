@@ -5,13 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.StrictMode;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,30 +27,44 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
-import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDateAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.bean.websocket.WebFootBallSocketOdds;
+import com.hhly.mlottery.bean.websocket.WebFootBallSocketTime;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.cipher.MD5Util;
+import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
+import org.java_websocket.drafts.Draft_17;
+
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Tenney on 2016/4/6.
  * 新版指数
  */
-public class CPIFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
-
+public class CPIFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseMessageListener {
 
     public final static String TYPE_BIG = "big";
     public final static String TYPE_PLATE = "plate";
@@ -73,7 +89,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 切换Viewpager的标签
      */
-    private TextView mTab1, mTab2, mTab3;
+    private TabLayout mTabLayout;
     //记录是否完成viewpager初始化
     private boolean isInitViewPager = false;
     private ViewPager mViewPager;
@@ -92,7 +108,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     //dialoglistview
     private ListView dialog_list;
     private List<Map<String, String>> mMapList;
-    private Map<String, String> mMap;
     /*dialog控件 end*/
     //日期
     private CpiDateAdapter cpiDateAdapter;
@@ -102,33 +117,30 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     public String currentDate = "";
     //判断是否选中选择热门
 //    public static boolean isHot = true;
-    public  List<NewOddsInfo.CompanyBean> companys = new ArrayList<>();
-    public static List<String> companysName = new ArrayList<>();
+    public List<NewOddsInfo.CompanyBean> companys = new ArrayList<>();
+    public List<String> companysName = new ArrayList<>();
     private CPIOddsFragment mCPIOddsFragment, mCPIOddsFragment2, mCPIOddsFragment3;
-    public List<Map<String, String>> mMapDayList;
+    public List<Map<String, String>> mMapDayList = new ArrayList<>();
     //判断是否是日期选择
     private boolean isFirst = false;
     //默认选择当天，当点击item后改变选中的position
-    public int selectPosition = 6;
+    public int selectPosition;
     //判断是否需要一分钟刷新一次
 //    private boolean isTrue;
     //定时刷新线程
 //    private MyThread myThread;
-    private String mDate;
+    public boolean isVisible = false;
+    //推送
+    private HappySocketClient hSocketClient;
+    private URI hSocketUri = null;
+    //心跳时间
+    private long pushStartTime;
+    private Timer computeWebSocketConnTimer = new Timer();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads().detectDiskWrites().detectNetwork()
-                .penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath()
-                .build());
-        mContext = getActivity();
-        //初始化的时候给date赋值
-        mDate=UiUtils.requestByGetDay(0);
-        mMapDayList = getDate();
+        mContext = getContext();
     }
 
     @Nullable
@@ -142,9 +154,219 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 //            myThread=new MyThread();
 //            myThread.start();
 //        }
+        try {
+            hSocketUri = new URI(BaseURLs.URL_CPI_SOCKET);
+//            hSocketUri = new URI("ws://192.168.10.242:61634");
+//			hSocketUri = new URI("ws://m.1332255.com/ws/USER.topic.indexcenter");
+//            hSocketUri = new URI("ws://m.13322.com/ws");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
         return mView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        startWebSocket();
+        computeWebSocket();
+//        MyT myT = new MyT();
+//        myT.start();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        computeWebSocketConnTimer.cancel();
+
+        if (hSocketClient != null) {
+            hSocketClient.close();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        computeWebSocketConnTimer.cancel();
+
+        if (hSocketClient != null) {
+            hSocketClient.close();
+        }
+    }
+
+    class MyT extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(10000);//休眠5s
+                } catch (InterruptedException e) {
+                    return;
+                }
+                onMessage("MESSAGE");
+
+            }
+        }
+    }
+
+    private void computeWebSocket() {
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                // 设置日期格式
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+                System.out.println(df.format(new Date()) + "---监听socket连接状态:Open=" +
+                        hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() +
+                        ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+                long pushEndTime = System.currentTimeMillis();
+                if ((pushEndTime - pushStartTime) >= 5000) {
+                    System.out.println("重新启动socket");
+                    startWebSocket();
+                }
+            }
+        };
+        computeWebSocketConnTimer.schedule(tt, 5000, 5000);
+    }
+
+    private synchronized void startWebSocket() {
+        if (hSocketClient != null) {
+            if (!hSocketClient.isClosed()) {
+                hSocketClient.close();
+            }
+
+            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+            hSocketClient.setSocketResponseMessageListener(this);
+            hSocketClient.setSocketResponseCloseListener(this);
+            hSocketClient.setSocketResponseErrorListener(this);
+            try {
+                hSocketClient.connect();
+            } catch (IllegalThreadStateException e) {
+                hSocketClient.close();
+            }
+        } else {
+            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+            hSocketClient.setSocketResponseMessageListener(this);
+            hSocketClient.setSocketResponseCloseListener(this);
+            hSocketClient.setSocketResponseErrorListener(this);
+            try {
+                hSocketClient.connect();
+            } catch (IllegalThreadStateException e) {
+                hSocketClient.close();
+            }
+        }
+    }
+
+    boolean isFirstTime = true;
+
+    public void onMessage(String message) {
+
+        pushStartTime = System.currentTimeMillis(); // 记录起始时间
+        if (message.startsWith("CONNECTED")) {
+            String id = "android" + DeviceInfo.getDeviceId(getActivity());
+            id = MD5Util.getMD5(id);
+            // USER.topic.indexcenter
+            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
+        } else if (message.startsWith("MESSAGE")) {
+            // 改为根据 { 和 } 将字符串切片，获取 {jsonObject}
+            String ws_json = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
+            Log.d("ws_json", ws_json);
+            //赔率模拟数据
+//            ws_json = "{'data':[{\"comId\":\"45\",\"leftOdds\":\"0.73\",\"mediumOdds\":\"0.75\",\"oddType\":\"1\",\"rightOdds\":\"1.07\",\"uptime\":\"22:14\"},{\"comId\":\"45\",\"leftOdds\":\"1.52\",\"mediumOdds\":\"2.95\",\"oddType\":\"2\",\"rightOdds\":\"9.27\",\"uptime\":\"22:14\"},{\"comId\":\"44\",\"leftOdds\":\"0.73\",\"mediumOdds\":\"0.75\",\"oddType\":\"1\",\"rightOdds\":\"1.07\",\"uptime\":\"22:14\"},{\"comId\":\"44\",\"leftOdds\":\"1.52\",\"mediumOdds\":\"2.95\",\"oddType\":\"2\",\"rightOdds\":\"9.27\",\"uptime\":\"22:14\"},{\"comId\":\"44\",\"leftOdds\":\"0.92\",\"mediumOdds\":\"3.50\",\"oddType\":\"3\",\"rightOdds\":\"0.88\",\"uptime\":\"22:14\"}],'thirdId':'338740','type':2}  ";
+            //时间模拟数据
+//            ws_json = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'338740','type':1}";
+            //比分模拟推送
+//            ws_json = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
+
+            JSONObject jsonObject = JSON.parseObject(ws_json);
+            int type = jsonObject.getInteger("type");
+
+            if (type != 0) {
+                Message msg = Message.obtain();
+                msg.obj = ws_json;
+                msg.arg1 = type;
+                mSocketHandler.sendMessage(msg);
+            }
+
+        }
+    }
+
+    public void onError(Exception exception) {
+        exception.printStackTrace();
+    }
+
+    public void onClose(String message) {
+        System.out.println(">>>onClose");
+    }
+
+    Handler mSocketHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String ws_json = (String) msg.obj;
+
+            if (msg.arg1 == 1) {
+                // 时间
+                upDateTime(ws_json);
+            } else if (msg.arg1 == 2) {
+                // 赔率
+                upDateOdds(ws_json);
+            } else if (msg.arg1 == 3) {
+                // 主客队得分
+                upDateScore(ws_json);
+            }
+        }
+    };
+
+    /**
+     * 时间推送
+     */
+    private synchronized void upDateTime(String json) {
+
+        WebFootBallSocketTime webSocketOddsTime =
+                JSON.parseObject(json, WebFootBallSocketTime.class);
+        for (Fragment fragment : fragments) {
+            ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsTime, "time");
+        }
+    }
+
+    /**
+     * 赔率推送
+     */
+    public synchronized void upDateOdds(String json) {
+
+        WebFootBallSocketOdds webSocketOdds =
+                JSON.parseObject(json, WebFootBallSocketOdds.class);
+
+        for (int i = 0; i < webSocketOdds.getData().size(); i++) {
+            Map<String, String> stringStringMap = webSocketOdds.getData().get(i);
+            //如果是亚盘的
+            if ("1".equals(stringStringMap.get("oddType"))) {
+                mCPIOddsFragment.upDateOdds(webSocketOdds, 1);
+            }
+            //如果是欧赔的
+            else if ("2".equals(stringStringMap.get("oddType"))) {
+                mCPIOddsFragment3.upDateOdds(webSocketOdds, 2);
+            }
+            //如果是大小的
+            else if ("3".equals(stringStringMap.get("oddType"))) {
+                mCPIOddsFragment2.upDateOdds(webSocketOdds, 3);
+            }
+        }
+    }
+
+    /**
+     * 主客队比分推送
+     */
+    private synchronized void upDateScore(String json) {
+
+        WebFootBallSocketTime webSocketOddsScore =
+                JSON.parseObject(json, WebFootBallSocketTime.class);
+        for (Fragment fragment : fragments) {
+            ((CPIOddsFragment) fragment).upDateTimeAndScore(webSocketOddsScore, "score");
+        }
+    }
 
     private void initView() {
         mRefreshLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.cpi_refresh_layout);
@@ -172,7 +394,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public_date_layout = (LinearLayout) mView.findViewById(R.id.public_date_layout);
         //显示时间的textview
         public_txt_date = (TextView) mView.findViewById(R.id.public_txt_date);
-        public_txt_date.setText(mDate);
 
         public_txt_date.setOnClickListener(this);
         //热门，公司，筛选
@@ -187,16 +408,12 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         public_img_filter = (ImageView) mView.findViewById(R.id.public_img_filter);
         public_img_filter.setOnClickListener(this);
         public_img_filter.setVisibility(View.INVISIBLE);
+
+        mTabLayout = (TabLayout) mView.findViewById(R.id.tabs);
     }
 
     //初始化viewPager
     private void initViewPager() {
-        mTab1 = (TextView) mView.findViewById(R.id.cpi_match_detail_tab1);
-        mTab2 = (TextView) mView.findViewById(R.id.cpi_match_detail_tab2);
-        mTab3 = (TextView) mView.findViewById(R.id.cpi_match_detail_tab3);
-        mTab1.setOnClickListener(this);
-        mTab2.setOnClickListener(this);
-        mTab3.setOnClickListener(this);
         mViewPager = (ViewPager) mView.findViewById(R.id.cpi_viewpager);
         fragments = new ArrayList<>();
         //亚盘
@@ -215,58 +432,20 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         mCPIOddsFragment3 = CPIOddsFragment.newInstance(TYPE_OP, "");
         fragments.add(mCPIOddsFragment3);
 
-
         mCPIViewPagerAdapter = new CPIFragmentAdapter(getChildFragmentManager(), fragments);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mCPIViewPagerAdapter);
-        final LinearLayout tabLine = (LinearLayout) mView.findViewById(R.id.cpi_match_detail_tabline);
-        final LinearLayout tabLineLayout = (LinearLayout) mView.findViewById(R.id.cpi_match_detail_tabline_layout);
-        int displayWidth = DeviceInfo.getDisplayWidth(mContext);
-        tabLine.setLayoutParams(new LinearLayout.LayoutParams(displayWidth / 3, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                int lineWidth = tabLine.getWidth();
-                int marginLeft = (int) (lineWidth * (position + positionOffset));
-                tabLineLayout.setPadding(marginLeft, 0, 0, 0);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mTab1.setTextColor(getResources().getColor(R.color.white));
-                mTab2.setTextColor(getResources().getColor(R.color.white));
-                mTab3.setTextColor(getResources().getColor(R.color.white));
-
-                switch (position) {
-                    case 0:
-                        mTab1.setTextColor(getResources().getColor(R.color.white));
-                        mRefreshLayout.setEnabled(true);
-                        mTab2.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        mTab3.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        break;
-                    case 1:
-                        mTab2.setTextColor(getResources().getColor(R.color.white));
-                        mRefreshLayout.setEnabled(true);
-                        mTab1.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        mTab3.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        break;
-                    case 2:
-                        mTab3.setTextColor(getResources().getColor(R.color.white));
-                        mRefreshLayout.setEnabled(true);
-                        mTab2.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        mTab1.setTextColor(getResources().getColor(R.color.line_football_footer));
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
         //标记是否初始化
         isInitViewPager = true;
+        mTabLayout.setupWithViewPager(mViewPager);
 
+    }
+
+    /**
+     * 推送比赛信息
+     */
+    public void startSocket() {
 
     }
 
@@ -276,23 +455,13 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         switch (view.getId()) {
             case R.id.public_img_back:
                 if (getActivity() == null) return;
-                ((FootballActivity) getActivity()).finish();
-                break;
-            case R.id.cpi_match_detail_tab1:
-                mViewPager.setCurrentItem(0);
-                break;
-            case R.id.cpi_match_detail_tab2:
-                mViewPager.setCurrentItem(1);
-                break;
-            case R.id.cpi_match_detail_tab3:
-                mViewPager.setCurrentItem(2);
-
+                getActivity().finish();
                 break;
             case R.id.public_txt_date://点击日期的textview
-                if(mMapDayList.size()==14){
+                if (mMapDayList.size() == 14) {
                     setDialog(0);//代表日期
-                }else{
-                    UiUtils.toast(mContext,R.string.loading_txt);
+                } else {
+                    UiUtils.toast(mContext, R.string.loading_txt);
                 }
 
                 break;
@@ -321,12 +490,12 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                 break;
             default:
                 break;
-
         }
     }
 
-    LinkedList<String> ddList = new LinkedList();
+    LinkedList<String> ddList = new LinkedList<>();
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -334,7 +503,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         if (requestCode == 10086) {
             switch (resultCode) {
                 case 0:
-                    ArrayList<String> checkedIdExtra = (ArrayList<String>) data.getSerializableExtra("key");
+                    ArrayList<String> checkedIdExtra = (ArrayList<String>)
+                            data.getSerializableExtra("key");
                     ddList.clear();
                     ddList.addAll(checkedIdExtra);
                     filtrateDate();
@@ -353,18 +523,18 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mCPIOddsFragment.cpi_fl_plate_networkError.getVisibility() == View.VISIBLE) {
-                    mMapDayList = getDate();
-                    public_txt_date.setText(UiUtils.requestByGetDay(0));
-                    selectPosition = 6;
+                Log.d("currentDate", currentDate);
+                if (isVisible) {
                     for (Fragment fragment : fragments) {
-                        ((CPIOddsFragment) fragment).switchd("", false);
+                        ((CPIOddsFragment) fragment).switchd("", 0);
                     }
                 } else {
-                    filtrateDate();
-                    mCPIOddsFragment.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_PLATE);
-                    mCPIOddsFragment2.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_BIG);
-                    mCPIOddsFragment3.selectCompany(companysName, CpiFiltrateActivity.mCheckedIds, TYPE_OP);
+                    //设置标题时间
+                    for (Fragment fragment : fragments) {
+                        //代表刷新
+                        ((CPIOddsFragment) fragment).switchd(currentDate, 2);
+                    }
+                    public_txt_date.setText(currentDate);
                 }
                 mRefreshLayout.setRefreshing(false);
             }
@@ -375,9 +545,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 初始化 设置 dialog 弹窗
      *
-     * @dateAndcompanyNumber 0代表日期，1代表公司
+     * @param dateAndCompanyNumber 0代表日期，1代表公司
      */
-    public void setDialog(int dateAndcompanyNumber) {
+    public void setDialog(int dateAndCompanyNumber) {
         // Dialog 设置
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext, R.style.AlertDialog);
         View view = View.inflate(mContext, R.layout.alertdialog, null);
@@ -389,7 +559,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         mAlertDialog.setCancelable(true);
         mAlertDialog.setCanceledOnTouchOutside(true);
         //如果选择的是日期
-        if (dateAndcompanyNumber == 0) {
+        if (dateAndCompanyNumber == 0) {
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 1000);
             dialog_list.setLayoutParams(params);
@@ -407,13 +577,14 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
                     // 记录点击的 item 位置
                     selectPosition = position;
                     //点击之后给date赋值
-                    mDate =mMapList.get(position).get("date");
+                    currentDate = mMapList.get(position).get("date");
+                    Log.d("currentDate", "changedTo: " + currentDate);
                     //设置标题时间
-                    public_txt_date.setText(mDate);
+                    public_txt_date.setText(currentDate);
 
                     for (Fragment fragment : fragments) {
                         //代表日期
-                        ((CPIOddsFragment) fragment).switchd(mDate, true);
+                        ((CPIOddsFragment) fragment).switchd(currentDate, 1);
                     }
                     isFirst = true;
                     // 关闭 dialog弹窗
@@ -495,6 +666,12 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
 
     }
 
+    private void addDate(int offset) {
+        Map<String, String> map = new HashMap<>();
+        map.put("date", UiUtils.getDate(currentDate, offset));
+        mMapList.add(map);
+    }
+
     /**
      * 获取日期列表
      *
@@ -502,66 +679,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
      */
     public List<Map<String, String>> getDate() {
         mMapList = new ArrayList<>();
-        new Thread() {
-            @Override
-            public void run() {
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-6));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-5));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-4));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-3));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-2));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(-1));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(0));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(1));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(2));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(3));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(4));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(5));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(6));
-                mMapList.add(mMap);
-
-                mMap = new HashMap<>();
-                mMap.put("date", UiUtils.requestByGetDay(7));
-                mMapList.add(mMap);
-            }
-        }.start();
+        for (int i = -6; i < 8; i++) {
+            addDate(i);
+        }
         return mMapList;
     }
 
@@ -577,38 +697,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         }
     }
 
-    /**
-     * 60秒请求一次数据
-     */
-//  class MyThread extends Thread{
-//      @Override
-//      public void run() {
-//          while (isTrue){
-//                  try {
-//                      Thread.sleep(60000);//休眠一分钟
-//                  } catch (InterruptedException e) {
-//                      return;
-//                  }
-//                 CpiFiltrateActivity.isDefualHot = true;
-//                  mCPIOddsFragment.InitData(mDate,TYPE_PLATE,true);
-//                  mCPIOddsFragment2.InitData(mDate,TYPE_BIG,true);
-//                  mCPIOddsFragment3.InitData(mDate,TYPE_OP,true);
-//
-//          }
-//      }
-//
-//  }
-
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        isTrue=false;
-//        myThread.interrupt();
-//        myThread=null;
-//    }
-
-    private class CPIFragmentAdapter extends FragmentPagerAdapter {
-
+    class CPIFragmentAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> mFragmentList;
 
@@ -616,7 +705,6 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             super(fragmentManager);
             this.mFragmentList = fragmentList;
         }
-
 
         @Override
         public Fragment getItem(int position) {
@@ -626,6 +714,20 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
         @Override
         public int getCount() {
             return mFragmentList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getString(R.string.odd_plate_rb_txt);
+                case 1:
+                    return getString(R.string.asiasize);
+                case 2:
+                    return getString(R.string.odd_op_rb_txt);
+                default:
+                    return getString(R.string.odd_plate_rb_txt);
+            }
         }
     }
 }

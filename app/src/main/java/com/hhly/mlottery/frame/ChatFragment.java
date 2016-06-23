@@ -476,7 +476,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     public void onRequestSucceeded(SubmitResp submitResp) {
         issubmitFinish = true;
         mEditText.setText("");
-//        ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.succed_send));
+        ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.succed_send));
         //刷新界面
         loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
     }

@@ -30,8 +30,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
     private Activity mActivity;
     private String mString = "...";
     private String total;
-    private List<Integer> mlist = new ArrayList<>();//用来存储SpannableString的点击
-
+    private List<String> mStringList = new ArrayList<>();
 
     public CounselComentLvAdapter(Activity activity) {
 
@@ -82,23 +81,19 @@ public class CounselComentLvAdapter extends BaseAdapter {
         } else {
             holder = (Holder) convertView.getTag();
         }
-        //暂时写死游客
-//        holder.nickname.setText(R.string.user_name);
         holder.nickname.setText(mInfosList.get(position).passport.nickname);
         String time = DateUtil.transferLongToDate(mInfosList.get(position).create_time);
         holder.time.setText(time);
         if (mInfosList.get(position).content.length() > 50) {//字数大于50，则隐藏多于50的部分
-            if (mlist.contains(position)) {//全部显示过   就让他一直保持全部显示
+            if (mStringList.size() != 0 && mStringList.contains(holder.time.getText())) {
                 holder.content.setText(mInfosList.get(position).content);
-            } else {//没有全部显示过  就收起来
+            } else {
                 holder.content.setText(mInfosList.get(position).content.substring(0, 49));
                 SpanText(holder.content, position);
             }
         } else {
             holder.content.setText(mInfosList.get(position).content);
         }
-
-
         return convertView;
     }
 
@@ -132,8 +127,8 @@ public class CounselComentLvAdapter extends BaseAdapter {
                     public void onClick(View arg0) {
                         // TODO Auto-generated method stub
                         textView.setText(mInfosList.get(position).content);
-                        mlist.add(position);
-//                        ToastTools.ShowQuickCenter(mActivity, "position="+position);
+                        mStringList.add(DateUtil.transferLongToDate(mInfosList.get(position).create_time));
+//                        ToastTools.ShowQuickCenter(mActivity, "position=" + position);
 
                     }
 
