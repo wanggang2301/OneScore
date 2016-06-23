@@ -87,8 +87,6 @@ public class StatisticsFragmentTest extends Fragment {
     private MathchStatisInfo mMathchStatisInfo;
 
 
-
-
     public static StatisticsFragmentTest newInstance() {
 
 
@@ -113,14 +111,21 @@ public class StatisticsFragmentTest extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_statistics, container, false);
         mContext = getActivity();
-        Bundle args = getArguments();
+       /* Bundle args = getArguments();
         if (args != null) {
             type = args.getString(STA_PARM);
-        }
+        }*/
         initView();
+        //  loadData();
+        return mView;
+    }
+
+
+    public void setType(String type) {
+        this.type = type;
         loadData();
         initEvent();
-        return mView;
+
     }
 
 
@@ -667,27 +672,4 @@ public class StatisticsFragmentTest extends Fragment {
 
     }
 
-
-   /* public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isCreated && getUserVisibleHint() && mInfos.size() == 0) {
-            Log.i("lzf", "可见" + index);
-            onVisible();
-
-        }
-        if (!isCreated) {
-            return;
-        }
-    }
-
-    *//**
-     * 可见
-     *//*
-    protected void onVisible() {
-//        Log.i("lzf", "可见" + index);
-       *//* if (index != 0) {
-            //发起网络请求数据
-            loadNewsData(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
-        }*//*
-    }*/
 }

@@ -162,6 +162,7 @@ public class NewAnalyzeBean {
            public PlayerInfo(String name) {
                this.name = name;
            }
+           public PlayerInfo(){}
        }
     }
 

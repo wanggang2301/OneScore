@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
-import com.hhly.mlottery.util.L;
 
 import java.util.List;
 
@@ -61,7 +60,6 @@ public class DetailsRollOdd extends FrameLayout {
 
     public void updateOdds(BottomOddsItem bottomOddsItem) {
 
-        L.d("改变DetailsRollballFragment", "bottomOddsItem=" + bottomOddsItem.getLeftUp() + "-" + bottomOddsItem.getMiddleUp() + "-" + bottomOddsItem.getRightUp());
 
         if ("-".equals(bottomOddsItem.getLeft()) || "-".equals(bottomOddsItem.getMiddle()) || "-".equals(bottomOddsItem.getRight())) {
 
@@ -132,7 +130,6 @@ public class DetailsRollOdd extends FrameLayout {
             live_right.setText("");
         } else if (isNULLOrEmpty(bottomOddsItem.get(1).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(1).getMiddle()) || isNULLOrEmpty(bottomOddsItem.get(1).getRight())) {
 
-            L.d("DetailsRollballFragment","即盘为空");
             live_left.setText("-");
             live_left.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
 
