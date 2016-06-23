@@ -4,14 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class PullUpRefreshListView extends ListView implements AbsListView.OnScrollListener {
-    private int listViewTouchAction;
-    private static final int MAXIMUM_LIST_ITEMS_VIEWABLE = 99;
+
     /** 底部显示正在加载的页面 */
     private View footerView = null;
     /** 存储上下文 */
@@ -39,7 +36,7 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
      * 初始化ListView
      */
     private void initListView() {
-        listViewTouchAction = -1;
+
         // 为ListView设置滑动监听
         setOnScrollListener(this);
         // 去掉底部分割线
@@ -53,6 +50,7 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
         footerView=mfooterView;
         if (footerView != null) {
             addFooterView(footerView);
+            System.out.println("lzf添加进来了");
         }
 
     }
@@ -70,14 +68,18 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
             if (visibleItemCount == totalItemCount) {
                 // removeFooterView(footerView);
                 footerView.setVisibility(View.GONE);//隐藏底部布局
+                System.out.println("lzf隐藏底部布局");
             } else {
                 // addFooterView(footerView);
                 footerView.setVisibility(View.VISIBLE);//显示底部布局
+                System.out.println("lzf显示底部布局");
             }
             if (firstVisibleItem+visibleItemCount==totalItemCount){
                 isBottom=true;
+                System.out.println("lzftrue");
             }else {
                 isBottom=false;
+                System.out.println("lzffalse");
             }
         }
 
@@ -105,58 +107,22 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
             case MotionEvent.ACTION_UP :
                 upY= (int) ev.getY();
                 if ((upY-downY)<0 && upY!=0){//向上滑动而且松手
+                    System.out.println("lzf向上滑动而且松手");
                     if (isBottom){
                         myPullUpListViewCallBack.scrollBottomState();
+                        System.out.println("lzfscrollBottomState");
                     }
 
                 }
+                System.out.println("lzf"+upY+"="+(upY-downY)+"downY"+downY);
                 break;
 
-        }
-        if (getAdapter() != null
-                && getAdapter().getCount() > MAXIMUM_LIST_ITEMS_VIEWABLE) {
-            if (listViewTouchAction == MotionEvent.ACTION_MOVE) {
-                scrollBy(0, 1);
-            }
-            return  false;
         }
         return super.onTouchEvent(ev);
     }
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        int newHeight = 0;
-        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        if (heightMode != MeasureSpec.EXACTLY) {
-            ListAdapter listAdapter = getAdapter();
-            if (listAdapter != null && !listAdapter.isEmpty()) {
-                int listPosition = 0;
-                for (listPosition = 0; listPosition < listAdapter.getCount()
-                        && listPosition < MAXIMUM_LIST_ITEMS_VIEWABLE; listPosition++) {
-                    View listItem = listAdapter.getView(listPosition, null,
-                            this);
-                    // now it will not throw a NPE if listItem is a ViewGroup
-                    // instance
-                    if (listItem instanceof ViewGroup) {
-                        listItem.setLayoutParams(new LayoutParams(
-                                LayoutParams.WRAP_CONTENT,
-                                LayoutParams.WRAP_CONTENT));
-                    }
-                    listItem.measure(widthMeasureSpec, heightMeasureSpec);
-                    newHeight += listItem.getMeasuredHeight();
-                }
-                newHeight += getDividerHeight() * listPosition;
-            }
-            if ((heightMode == MeasureSpec.AT_MOST) && (newHeight > heightSize)) {
-                if (newHeight > heightSize) {
-                    newHeight = heightSize;
-                }
-            }
-        } else {
-            newHeight = getMeasuredHeight();
-        }
-        setMeasuredDimension(getMeasuredWidth(), newHeight);
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, expandSpec);
     }
 }
