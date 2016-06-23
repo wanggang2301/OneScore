@@ -1,7 +1,9 @@
 package com.hhly.mlottery.frame.footframe;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,6 +34,7 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PullUpRefreshListView;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
@@ -114,7 +117,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
-
+//            L.d("state+++++++++++",state);
         }
     }
 
@@ -125,10 +128,21 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         requestLikeData(ADDKEYHOME, "0", type);
         initAnim();
         pullUpLoad();//上拉加载更多
+        registerBroadCast();
         return mView;
 
     }
-
+//    type = getArguments().getInt("type", -1);
+//    state = getArguments().getString("state");
+    public static TalkAboutBallFragment newInstance(String param1 , String param2 , int param3) {
+        TalkAboutBallFragment fragment = new TalkAboutBallFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString("state", param2);
+        args.putInt("type", param3);
+        fragment.setArguments(args);
+        return fragment;
+    }
     /**
      * bn
      * 初始化动画
@@ -189,7 +203,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             url = BaseURLs.URL_FOOTBALL_DETAIL_LIKE_INFO;
 //            ToastTools.ShowQuickCenter(getActivity(),"足球");
         } else if (type == 1) {
-            url = BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
+//            url = BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
 //            ToastTools.ShowQuickCenter(getActivity(),"籃球");
         }
         VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<MatchLike>() {
@@ -207,6 +221,18 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
             }
         }, MatchLike.class);
+    }
+    BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+            ToastTools.ShowQuickCenter(getActivity(),"shoudaoguangbo");
+        }
+    };
+    public void registerBroadCast() {
+        IntentFilter intentFilter=new IntentFilter("loadingdata");
+        getActivity().registerReceiver(broadcastReceiver, intentFilter);
+
     }
 
     private void initView() {
@@ -241,16 +267,17 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mLinearLayout = (LinearLayout) mView.findViewById(R.id.comment_inputcontainer);
         mTextView.setOnClickListener(this);
         mCommentCount.setVisibility(View.VISIBLE);
-        //获取评论的一切信息
-        if (!TextUtils.isEmpty(mThirdId)) {
-            loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
-        }
         //以前的规则是-1不可点  现在延续
         if (state != null && state.equals("-1")) {
             setClickableLikeBtn(false);
         } else {
             setClickableLikeBtn(true);
         }
+        //获取评论的一切信息
+        if (!TextUtils.isEmpty(mThirdId)) {
+            loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+        }
+
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -415,13 +442,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                         CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                     }
                     break;
-                case CyUtils.RESULT_CODE://接收评论输入页面返回
-                    loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
-                    mLinearLayout.setVisibility(View.VISIBLE);
-                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
-                    lp.setMargins(0, 0, 0, 0);
-                    mSwipeRefreshLayout.requestLayout();
-                    break;
+//                case CyUtils.RESULT_CODE://接收评论输入页面返回
+//                    loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+//                    mLinearLayout.setVisibility(View.VISIBLE);
+//                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
+//                    lp.setMargins(0, 0, 0, 0);
+//                    mSwipeRefreshLayout.requestLayout();
+//                    break;
             }
         }
     }
@@ -433,6 +460,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
+        } else {
+            Intent intent2 = new Intent(mContext, InputActivity.class);
+            intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+            startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
+            getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 
@@ -482,6 +514,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        getActivity().unregisterReceiver(broadcastReceiver);
         try {
             sdk.logOut();
         } catch (CyanException e) {

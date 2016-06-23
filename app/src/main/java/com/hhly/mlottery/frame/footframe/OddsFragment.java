@@ -79,7 +79,6 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.odd_content_fragment, mPlateFragment).commit();
         odd_plate_btn.setClickable(false);// 默认让’亚盘‘不可点
-
     }
 
     @Override

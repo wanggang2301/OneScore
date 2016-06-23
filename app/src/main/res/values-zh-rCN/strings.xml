@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--足球内页改版(滚球等)-->
+    <string name="foot_details_roolball">滚球</string>
+    <string name="foot_details_talkball">聊球</string>
+    <string name="foot_details_analyze">分析</string>
+    <string name="foot_details_odds">指数</string>
+    <string name="foot_details_statistics">统计</string>
+
+    <string name="foot_details_time">时间</string>
+    <string name="foot_details_score">比分</string>
+    <string name="foot_details_home">主队</string>
+    <string name="foot_details_ball">让球</string>
+    <string name="foot_details_guest">客队</string>
+
+    <string name="foot_details_livetitle">实况直播</string>
+    <string name="jipan">即盘</string>
+    <string name="chupan">初盘</string>
+    <string name="alet_first">亚盘初盘:</string>
+    <string name="asize_first">大小球初盘:</string>
+    <string name="eu_first">欧赔初盘:</string>
+    <string name="foot_details_live_tesxt">文字直播:</string>
+    <string name="shoot">进攻</string>
+    <string name="foot_details_live_msg">实况直播敬请关注!</string>
+    <string name="foot_details_focus">关注</string>
+    <string name="foot_details_focused">已关注</string>
+    <string name="foot_details_share">分享</string>
+
+
     <!--分享-->
     <string name="errcode_success">发送成功</string>
     <string name="errcode_cancel">发送取消</string>
@@ -577,6 +604,7 @@
     <string name="basket_undata">暂无比赛</string>
 
     <!--篮球详情-->
+    <string name="basket_details_talkable">聊球</string>
     <!--分析-->
     <string name="basket_analyze_sides">双方战绩</string>
     <string name="basket_analyze_history">历史交锋</string>
@@ -589,6 +617,8 @@
     <string name="basket_analyze_win_lost">胜/负</string>
     <string name="basket_analyze_winodds">胜率</string>
     <string name="basket_analyze_recent_performance">最近表现</string>
+    <!--足球分析补充-->
+    <string name="football_win_draw_lose">胜/平/负</string>
 
     <string name="basket_analyze_fruture_competition">未来比赛</string>
     <string name="basket_analyze_event">赛事</string>
