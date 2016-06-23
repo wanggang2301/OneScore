@@ -466,17 +466,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
             @Override
             public void onResponse(MatchDetail matchDetail) {
-                //  L.d("10299", matchDetail.getResult());
-
-               /* if ("200".equals(matchDetail.getResult())) {
-                    mHandler.sendEmptyMessage(ERROR);
-
-                    return;
-                }*/
 
                 if (!"200".equals(matchDetail.getResult())) {
                     mHandler.sendEmptyMessage(ERROR);
-
                     return;
                 }
 
@@ -497,9 +489,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                     //下拉刷新
                     if ("0".equals(mPreStatus) && "0".equals(matchDetail.getLiveStatus()) && !isFinishing()) { //赛前
-                        L.d("99999","刷新賽前");
 
-                        mPreHeadInfoFrament.initData(matchDetail,true);
+                        mPreHeadInfoFrament.initData(matchDetail, true);
                         mPreHeadInfoFrament.setScoreText("VS");
 
                         head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
@@ -513,9 +504,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                         //头部Viewpager赛中和赛后头初始化数据
 
                         L.d(TAG, "头部刷新");
-                        L.d("99999","刷新賽後");
 
-                        mPreHeadInfoFrament.initData(matchDetail,true);
+                        mPreHeadInfoFrament.initData(matchDetail, true);
                         mLiveHeadInfoFragment.initData(matchDetail);
 
                         matchLive = mMatchDetail.getMatchInfo().getMatchLive();
@@ -679,10 +669,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mIndicator.setVisibility(View.GONE);
 
 
-            L.d("99999","賽前");
-/*
+            L.d("99999", "賽前");
 
-            mPreHeadInfoFrament.initData(matchDetail,false);
+            mPreHeadInfoFrament.initData(matchDetail, false);
             mPreHeadInfoFrament.setScoreText("VS");
 
             head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
@@ -691,8 +680,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
-*/
-
 
 
         } else {
@@ -704,9 +691,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             //头部Viewpager赛中和赛后头初始化数据
 
-            L.d("99999","賽后");
+            L.d("99999", "賽后");
 
-            mPreHeadInfoFrament.initData(matchDetail,true);
+            mPreHeadInfoFrament.initData(matchDetail, true);
             mLiveHeadInfoFragment.initData(matchDetail);
 
 
