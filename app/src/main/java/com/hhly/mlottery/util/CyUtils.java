@@ -39,6 +39,7 @@ public class CyUtils {
     public static final String ISSHOWCOMMENT = "isShowComment";
     public static final String INTENT_PARAMS_SID = "sourceid";
     public static final String INTENT_PARAMS_TITLE = "title";
+    public static  String nickname = "";
 
     //初始化畅言
     public static void initCy(Context context) {
@@ -132,6 +133,7 @@ public class CyUtils {
                 public void onRequestSucceeded(UserInfoResp userInfoResp) {
                     System.out.println("lzf" + JSON.toJSONString(userInfoResp));
                     System.out.println(userInfoResp.user_id);
+                    nickname=userInfoResp.nickname;
 
                 }
 
