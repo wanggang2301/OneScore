@@ -368,7 +368,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
 
         mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet , mTalkAboutBallFragment);
-        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
