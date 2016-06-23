@@ -40,7 +40,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/laba"
-                    android:text="@string/live_title"
+                    android:text="@string/foot_details_livetitle"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_13" />
 
@@ -63,8 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:gravity="center_vertical"
-                    android:layout_toRightOf="@+id/live_time">
+                    android:layout_toRightOf="@+id/live_time"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/live_text"

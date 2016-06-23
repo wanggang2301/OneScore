@@ -39,7 +39,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
-                android:text="关注"
+                android:text="@string/foot_details_focus"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -74,7 +74,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
-                android:text="分享"
+                android:text="@string/foot_details_share"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </LinearLayout>

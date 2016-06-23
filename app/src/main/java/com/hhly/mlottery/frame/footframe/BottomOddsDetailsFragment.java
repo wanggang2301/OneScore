@@ -50,8 +50,8 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
 
     private static final String PARAM_TYPE = "type";
 
-    public static final int ASIA = 0;
-    public static final int BIG_SMALL_BALL = 1;
+    public static final int ASIA = 1;
+    public static final int BIG_SMALL_BALL = 3;
 
     public static final int EU = 2;
 

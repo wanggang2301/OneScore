@@ -64,7 +64,7 @@ public class DetailsRollOdd extends FrameLayout {
         if ("-".equals(bottomOddsItem.getLeft()) || "-".equals(bottomOddsItem.getMiddle()) || "-".equals(bottomOddsItem.getRight())) {
 
             live_left.setText("");
-            live_middle.setText("封");
+            live_middle.setText(mContext.getResources().getString(R.string.fragme_home_fengpan_text));
             live_middle.setTextColor(mContext.getResources().getColor(R.color.white));
             live_middle.setBackgroundResource(R.color.analyze_left);
             live_right.setText("");
@@ -123,7 +123,7 @@ public class DetailsRollOdd extends FrameLayout {
         if ("-".equals(bottomOddsItem.get(1).getLeft()) || "-".equals(bottomOddsItem.get(1).getMiddle()) || "-".equals(bottomOddsItem.get(1).getRight())) {
             live_left.setText("");
 
-            live_middle.setText("封");
+            live_middle.setText(mContext.getResources().getString(R.string.fragme_home_fengpan_text));
             live_middle.setTextColor(mContext.getResources().getColor(R.color.white));
             live_middle.setBackgroundResource(R.color.analyze_left);
 

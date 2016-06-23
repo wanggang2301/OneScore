@@ -187,44 +187,14 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-
-    <!--有数据的layout-->
-   <!-- <LinearLayout
-        android:id="@+id/ll_plate_main"
+    <LinearLayout
+        android:id="@+id/odds_details_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible">-->
+        android:visibility="gone">
 
-      <!--  <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/nested_scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:visibility="visible"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <include layout="@layout/odds_details" />
 
-            <com.hhly.mlottery.widget.NestedListView
-                android:id="@+id/plate_frame_listview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@color/transparency"
-                android:dividerHeight="0.5dp"
-                android:listSelector="@color/transparency"
-                android:visibility="visible">
-
-            </com.hhly.mlottery.widget.NestedListView>
-        </android.support.v4.widget.NestedScrollView>
--->
-        <LinearLayout
-            android:id="@+id/odds_details_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <include layout="@layout/odds_details" />
-
-        </LinearLayout>
-  <!--  </LinearLayout>-->
+    </LinearLayout>
+    <!--  </LinearLayout>-->
 </LinearLayout>

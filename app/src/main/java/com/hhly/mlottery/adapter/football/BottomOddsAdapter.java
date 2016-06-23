@@ -47,14 +47,14 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             hold.item_home.setText("");
 
-            hold.item_handicap.setText("封");
+            hold.item_handicap.setText(mContext.getResources().getString(R.string.fragme_home_fengpan_text));
             hold.item_handicap.setTextColor(mContext.getResources().getColor(R.color.white));
             hold.item_handicap.setBackgroundResource(R.color.analyze_left);
 
             hold.item_guest.setText("");
 
 
-        }else if (isNULLOrEmpty(list.get(position).getOdd().getLeft()) || isNULLOrEmpty(list.get(position).getOdd().getMiddle()) || isNULLOrEmpty(list.get(position).getOdd().getRight())) {
+        } else if (isNULLOrEmpty(list.get(position).getOdd().getLeft()) || isNULLOrEmpty(list.get(position).getOdd().getMiddle()) || isNULLOrEmpty(list.get(position).getOdd().getRight())) {
             hold.item_home.setText("-");
             hold.item_home.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
             hold.item_home.setBackgroundResource(R.color.white);

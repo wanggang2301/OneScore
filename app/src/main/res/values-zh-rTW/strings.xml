@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--足球内页改版(滚球等)-->
+    <string name="foot_details_roolball">滾球</string>
+    <string name="foot_details_talkball">聊球</string>
+    <string name="foot_details_analyze">分析</string>
+    <string name="foot_details_odds">指數</string>
+    <string name="foot_details_statistics">統計</string>
+
+    <string name="foot_details_time">時間</string>
+    <string name="foot_details_score">比分</string>
+    <string name="foot_details_home">主隊</string>
+    <string name="foot_details_ball">讓球</string>
+    <string name="foot_details_guest">客隊</string>
+
+
+    <string name="foot_details_livetitle">實況直播</string>
+    <string name="jipan">即盤</string>
+    <string name="chupan">初盤</string>
+    <string name="alet_first">亞盤初盤:</string>
+    <string name="asize_first">大小球初盤:</string>
+    <string name="eu_first">歐賠初盤:</string>
+    <string name="foot_details_live_tesxt">文字直播:</string>
+    <string name="shoot">進攻</string>
+    <string name="foot_details_live_msg">實況直播敬請關注!</string>
+    <string name="foot_details_focus">關注</string>
+    <string name="foot_details_unfocus">已關注</string>
+    <string name="foot_details_share">分享</string>
+
+
     <!--分享-->
     <string name="errcode_success">發送成功</string>
     <string name="errcode_cancel">發送取消</string>
@@ -22,6 +50,7 @@
     <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
     <string name="share_recommend">推薦</string>
     <string name="share_summary_default">壹比分,專業的足球比分直播平台</string>
+
 
 
     <!--指数-->
