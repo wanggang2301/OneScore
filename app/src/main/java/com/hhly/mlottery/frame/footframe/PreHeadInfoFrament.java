@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -117,7 +116,7 @@ public class PreHeadInfoFrament extends Fragment {
         mMatchType2 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype2);
 
 
-        options = new DisplayImageOptions.Builder()
+     /*   options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
@@ -126,8 +125,17 @@ public class PreHeadInfoFrament extends Fragment {
                 .showImageOnFail(R.mipmap.home_pager_score_football02_bg)// 加载失败显示的图片
                 .displayer(new FadeInBitmapDisplayer(5000))
                 .resetViewBeforeLoading(true)
-                .build();
+                .build();*/
 
+
+        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.color.colorPrimary)
+                .showImageForEmptyUri(R.color.colorPrimary)
+                .showImageOnFail(R.color.colorPrimary)// 加载失败显示的图片
+                .displayer(new FadeInBitmapDisplayer(2000))
+                .build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
         universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
