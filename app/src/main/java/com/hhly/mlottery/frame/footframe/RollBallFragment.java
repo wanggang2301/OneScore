@@ -103,7 +103,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private Subscription subscription;
     private boolean resestTheLifeCycle;
     private boolean loadingMoreData;
-    private static long checkoutWebsocketIsConnectedNow, onNewMessageCount, onOldMessageCount;
+    private long checkoutWebsocketIsConnectedNow;
+    private static long onNewMessageCount, onOldMessageCount;
     public LeagueCup[] checkedLeagueCup; // 记录筛选过的联赛
     public List<LeagueCup> leagueCupLists; // 全部联赛
     private List<Match> allDataLists; // 所有数据
