@@ -203,7 +203,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                         break;
                     case "footballInfo":// 足球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {
-                            Intent footIntent = new Intent(mContext, FootballMatchDetailActivity.class);
+                            Intent footIntent = new Intent(mContext, FootballMatchDetailActivityTest.class);
                             footIntent.putExtra("currentFragmentId", -1);
                             footIntent.putExtra("thirdId", mThirdId);
                             startActivity(footIntent);

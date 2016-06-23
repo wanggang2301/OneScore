@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.widget.CpiListView;
@@ -272,7 +272,7 @@ public class CPIRecyclerViewAdapter extends RecyclerView.Adapter<CPIRecyclerView
         cpiViewHolder.cpi_item_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, FootballMatchDetailActivity.class);
+                Intent intent = new Intent(context, FootballMatchDetailActivityTest.class);
                 intent.putExtra("thirdId", matchInfo.getMatchId());
                 context.startActivity(intent);
             }
