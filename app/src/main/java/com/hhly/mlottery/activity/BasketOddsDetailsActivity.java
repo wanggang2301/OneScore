@@ -64,6 +64,8 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
     private ExactSwipeRefrashLayout mRefresh;
     private LinearLayout mEerrorll;
     private TextView mErrorBtn;
+    private TextView mOddsLeft;
+    private TextView mOddsRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +111,8 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         mListView1 = (ListView) findViewById(R.id.basket_odds_listview1);
         mListView2 = (ListView) findViewById(R.id.basket_odds_listview2);
         mTveuro = (TextView)findViewById(R.id.basket_odds_details_iseuro);
+        mOddsLeft = (TextView)findViewById(R.id.basket_odds_details_left);
+        mOddsRight = (TextView)findViewById(R.id.basket_odds_details_right);
         if (mOddsType.equals(BasketDetailsActivity.ODDS_EURO)) {
             mTveuro.setVisibility(View.GONE);
         }else{
@@ -125,10 +129,16 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         mTittle = (TextView) findViewById(R.id.basket_odds_details_title);
         if (mOddsType.equals("euro")) {
             mTittle.setText(getResources().getText(R.string.basket_odds_euro_details));
+            mOddsLeft.setText(getResources().getText(R.string.basket_analyze_guest_win));
+            mOddsRight.setText(getResources().getText(R.string.basket_analyze_home_win));
         }else if(mOddsType.equals("asiaLet")){
             mTittle.setText(getResources().getText(R.string.basket_odds_asiaLet_details));
+            mOddsLeft.setText(getResources().getText(R.string.basket_analyze_guest_win));
+            mOddsRight.setText(getResources().getText(R.string.basket_analyze_home_win));
         }else if(mOddsType.equals("asiaSize")){
             mTittle.setText(getResources().getText(R.string.basket_odds_asiaSize_details));
+            mOddsLeft.setText(getResources().getText(R.string.odd_home_big_txt));
+            mOddsRight.setText(getResources().getText(R.string.odd_guest_big_txt));
         }
         mListView1.setOnItemClickListener(new ItemClick());
 

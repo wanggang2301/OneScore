@@ -21,7 +21,6 @@ import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +54,13 @@ public class StatisticsFragment extends Fragment {
     private int dataSize;
     private ScrollView stadium_scrollview_id;//统计数据滑动的scrollview
     private RelativeLayout layout_match_bottom;//统计数据layout
+
+    public static StatisticsFragment newInstance() {
+        StatisticsFragment fragment = new StatisticsFragment();
+
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.statis_trend, container, false);
@@ -131,6 +137,8 @@ public class StatisticsFragment extends Fragment {
      */
     public void initData() {
         boolean mStart = StadiumFragment.isStart;// 判断是否完场
+
+
         //正在比赛中
         if (!mStart) {
             // 显示统计数据
@@ -153,12 +161,16 @@ public class StatisticsFragment extends Fragment {
      * @return
      */
     public void getVolleyData() {
+
+        L.d("456","总计");
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载中
         Map<String, String> map = new HashMap<>();
         if (getActivity() == null) {
             return;
         } else {
             map.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
+
+            L.i("dddffdfd");
 
             VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO, map, new VolleyContentFast.ResponseSuccessListener<DataStatisInfo>() {
                 @Override
@@ -537,15 +549,6 @@ public class StatisticsFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (!hidden) {// 显示
-            initData();
 
-        } else {// 隐藏
-
-        }
-        super.onHiddenChanged(hidden);
-    }
 
 }

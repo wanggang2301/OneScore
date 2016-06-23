@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.animation.ObjectAnimator;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,13 +36,14 @@ import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footframe.OldAnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.StadiumFragment;
+import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -76,14 +78,15 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
 
     private final static int PERIOD_test = 1000 * 6;//刷新周期测试
-    private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
-    private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
 
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
+
+    private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
+    private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
     /**
      * 赛前轮询周期
@@ -99,6 +102,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     private TextView mTab1;
     private TextView mTab2;
     private TextView mTab3;
+    private TextView mTab4;
 
     /**
      * 主队名
@@ -177,8 +181,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     private String mPreStatus;
 
     private StadiumFragment mStadiumFragment;
-    private AnalyzeFragment mAnalyzeFragment;
+    private OldAnalyzeFragment mOldAnalyzeFragment;
     private OddsFragment mOddsFragment;
+    private TalkAboutBallFragment mTalkAboutBallFragment;
 
     /**
      * 判断ViewPager是否已经初始化过
@@ -223,13 +228,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         L.e(TAG, "mThirdId = " + mThirdId);
         //mThirdId = "244752";
 
-        findViewById(R.id.football_match_detail_test_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer.valueOf("");
-            }
-        });
-
 
         initAnim();
         initContainer();
@@ -239,12 +237,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.football_match_detail_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
-//        mRefreshLayout.setProgressViewEndTarget(false, DisplayUtil.dip2px(getApplicationContext(), 140));
 
-
-//        progressDialog = new ProgressDialog(this, R.style.ProgressDialog);
-//        progressDialog.setCancelable(false);
-//        progressDialog.setCanceledOnTouchOutside(false);
 
         mProgressBarLayout = (RelativeLayout) findViewById(R.id.football_match_detail_progressbar);
 
@@ -252,7 +245,11 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
         TextView reloadBtn = (TextView) findViewById(R.id.network_exception_reload_btn);
         reloadBtn.setOnClickListener(this);
+
+
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+
+
         loadData();
 //        loadImage();
 
@@ -292,6 +289,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     mTab1.setClickable(false);
                     mTab2.setClickable(false);
                     mTab3.setClickable(false);
+                    mTab4.setClickable(false);
                     break;
                 case VIEW_STATUS_SUCCESS:
 //                    mRefreshLayout.setRefreshing(false);
@@ -301,6 +299,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     mTab1.setClickable(true);
                     mTab2.setClickable(true);
                     mTab3.setClickable(true);
+                    mTab4.setClickable(true);
                     mExceptionLayout.setVisibility(View.GONE);
                     mRefreshLayout.setVisibility(View.VISIBLE);
                     break;
@@ -311,6 +310,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                         mTab1.setClickable(false);
                         mTab2.setClickable(false);
                         mTab3.setClickable(false);
+                        mTab4.setClickable(false);
 //                        mRefreshLayout.setEnabled(true);
                         mRefreshLayout.setVisibility(View.GONE);
                         mExceptionLayout.setVisibility(View.VISIBLE);
@@ -513,12 +513,13 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
                 //数据加载成功后显示分享
                 mShare.setVisibility(View.VISIBLE);
-
+                mPreStatus = matchDetail.getLiveStatus();
 
                 if (!isInitedViewPager) {//如果ViewPager未初始化
                     initViewPager(matchDetail);
-                    mPreStatus = matchDetail.getLiveStatus();
                 } else {
+
+                    //下拉刷新
                     if ("0".equals(mPreStatus) && "0".equals(matchDetail.getLiveStatus()) && !isFinishing()) {//如果上一个状态是赛前，目前状态也是赛前，更新页面数据即可
                         mStadiumFragment.setMatchDetail(matchDetail);
                         mStadiumFragment.initPreData();
@@ -530,6 +531,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                         mStadiumFragment.refreshStadiumData(matchDetail);
                     }
                 }
+
+
+
 
                 mHomeNameText.setText(matchDetail.getHomeTeamInfo().getName());
                 mHomeLikeCount.setText(matchDetail.getHomeTeamInfo().getGas());
@@ -563,6 +567,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 mTab1.setClickable(true);
                 mTab2.setClickable(true);
                 mTab3.setClickable(true);
+                mTab4.setClickable(true);
 
                 if ("0".equals(matchDetail.getLiveStatus())) {//Viewpager为初始化和赛前状态，需要开启定时器
                     String serverTime = matchDetail.getMatchInfo().getServerTime();
@@ -579,7 +584,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     }
 
 
-                    if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时
+                    if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时  比赛开始时间-服务器时间大于1小时，20分钟轮训一次
                         mReloadPeriod = PERIOD_20;
                     } else {
                         if (mReloadPeriod == PERIOD_20) {//如果之前的频率是20分钟，转到5分钟，则需要关闭之前的定时器，从新开启
@@ -622,7 +627,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 }
             };
             mReloadTimer = new Timer();
-//            mReloadTimer.schedule(reloadTimerTask, 2000, PERIOD_test);
             mReloadTimer.schedule(reloadTimerTask, 2000, mReloadPeriod);
             isStartTimer = true;
         }
@@ -633,9 +637,11 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mTab1 = (TextView) findViewById(R.id.football_match_detail_tab1);
         mTab2 = (TextView) findViewById(R.id.football_match_detail_tab2);
         mTab3 = (TextView) findViewById(R.id.football_match_detail_tab3);
+        mTab4 = (TextView) findViewById(R.id.football_match_detail_tab4);
         findViewById(R.id.football_match_detail_tab1).setOnClickListener(this);
         findViewById(R.id.football_match_detail_tab2).setOnClickListener(this);
         findViewById(R.id.football_match_detail_tab3).setOnClickListener(this);
+        findViewById(R.id.football_match_detail_tab4).setOnClickListener(this);
     }
 
     /**
@@ -661,25 +667,34 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         fragments.add(mStadiumFragment);
 
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
-        //  mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId,"ni","hao");
+        mOldAnalyzeFragment = OldAnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
+        //  mOldAnalyzeFragment = OldAnalyzeFragment.newInstance(mThirdId,"ni","hao");
         //指数
         mOddsFragment = OddsFragment.newInstance("", "");
 
+        //聊球
+        mTalkAboutBallFragment = new TalkAboutBallFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("param1", mThirdId);//"1072757"
+        bundle.putInt("type", 0);//1 籃球/0 足球
+        bundle.putString("state", mPreStatus);//直播状态  用来做完成不能点赞的限制
+        mTalkAboutBallFragment.setArguments(bundle);
 
         fragments.add(mOddsFragment);
-        fragments.add(mAnalyzeFragment);
+        fragments.add(mOldAnalyzeFragment);
+//        fragments.add(mChatFragment);
+        fragments.add(mTalkAboutBallFragment);
 
 
         mViewPagerAdapter = new MatchDetailFragmentAdapter(getSupportFragmentManager(), fragments);
-        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
         mViewPager.setAdapter(mViewPagerAdapter);
 
 
         final LinearLayout tabLine = (LinearLayout) findViewById(R.id.football_match_detail_tabline);
         final LinearLayout tabLineLayout = (LinearLayout) findViewById(R.id.football_match_detail_tabline_layout);
         int displayWidth = DeviceInfo.getDisplayWidth(getApplicationContext());
-        tabLine.setLayoutParams(new LinearLayout.LayoutParams(displayWidth / 3, LinearLayout.LayoutParams.WRAP_CONTENT));
+        tabLine.setLayoutParams(new LinearLayout.LayoutParams(displayWidth / 4, LinearLayout.LayoutParams.WRAP_CONTENT));
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -694,6 +709,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 mTab1.setTextColor(getResources().getColor(R.color.content_txt_black));
                 mTab2.setTextColor(getResources().getColor(R.color.content_txt_black));
                 mTab3.setTextColor(getResources().getColor(R.color.content_txt_black));
+                mTab4.setTextColor(getResources().getColor(R.color.content_txt_black));
+
 
                 switch (position) {
                     case 0:
@@ -715,6 +732,13 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                         isOddsFragment = false;
                         isAnalyzeFragment = true;
                         mTab3.setTextColor(getResources().getColor(R.color.tab_text));
+                        mRefreshLayout.setEnabled(false);
+                        break;
+                    case 3:
+                        isStadiumFragment = false;
+                        isOddsFragment = false;
+                        isAnalyzeFragment = true;
+                        mTab4.setTextColor(getResources().getColor(R.color.tab_text));
                         mRefreshLayout.setEnabled(false);
                         break;
                 }
@@ -772,22 +796,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
         isInitedViewPager = true;
 
-        /*mViewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        //mRefreshLayout.setEnabled(false);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        //mRefreshLayout.setEnabled(true);
-                        break;
-                }
-                return false;
-            }
-        });*/
     }
 
     @Override
@@ -908,11 +916,16 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_AnalysisTab");
                 mViewPager.setCurrentItem(2);
                 break;
+            case R.id.football_match_detail_tab4:
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_AnalysisTab");
+                mViewPager.setCurrentItem(3);
+                break;
             case R.id.layout_match_header_back:
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
 
                 // setResult(Activity.RESULT_OK);
+                sendBroadcast(new Intent("closeself"));
                 finish();
                 break;
             case R.id.layout_match_header_focus_img:
@@ -1061,7 +1074,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh() {  //下拉刷新
 
         new Handler().postDelayed(new Runnable() {
             @Override

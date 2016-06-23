@@ -3,41 +3,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#f5f5f5"
-              android:orientation="vertical">
+              android:orientation="vertical"
+    >
 
     <!-- 标题头 -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x120"
-        android:background="#1581CC"
-        android:gravity="center_vertical"
-        android:paddingTop="@dimen/x40">
-
-        <ImageButton
-            android:id="@+id/ib_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:background="#1581CC"
-            android:paddingLeft="@dimen/x20"
-            android:paddingRight="@dimen/x20"
-            android:scaleType="centerInside"
-            android:src="@mipmap/number_back_icon"/>
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:paddingLeft="@dimen/x20"
-            android:paddingRight="@dimen/x20"
-            android:text="@string/basket_setting_tittle"
-            android:textColor="#FFFFFFFF"
-            android:textSize="@dimen/text_size_20"/>
-    </RelativeLayout>
+    <include layout="@layout/layout_header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -243,20 +213,29 @@
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_15"/>
 
-                <ToggleButton
+                <!--<ToggleButton-->
+                    <!--android:id="@+id/tb_score"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="-18dp"-->
+                    <!--android:background="#00000000"-->
+                    <!--android:button="@drawable/basketball_setting_switch_bg"-->
+
+                    <!--android:checked="true"-->
+                    <!--android:text=""-->
+                    <!--android:textOff=""-->
+                    <!--android:textOn=""/>-->
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/tb_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="-18dp"
-                    android:background="#00000000"
-                    android:button="@drawable/basketball_setting_switch_bg"
-
+                    android:layout_marginRight="15dp"
                     android:checked="true"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn=""/>
+                    />
             </RelativeLayout>
 
             <View
@@ -279,19 +258,28 @@
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_15"/>
 
-                <ToggleButton
+                <!--<ToggleButton-->
+                    <!--android:id="@+id/tb_Point_spread"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="-18dp"-->
+                    <!--android:background="#00000000"-->
+                    <!--android:button="@drawable/basketball_setting_switch_bg"-->
+                    <!--android:checked="true"-->
+                    <!--android:text=""-->
+                    <!--android:textOff=""-->
+                    <!--android:textOn=""/>-->
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/tb_Point_spread"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="-18dp"
-                    android:background="#00000000"
-                    android:button="@drawable/basketball_setting_switch_bg"
+                    android:layout_marginRight="15dp"
                     android:checked="true"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn=""/>
+                    />
             </RelativeLayout>
 
             <View
@@ -314,19 +302,28 @@
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_15"/>
 
-                <ToggleButton
+                <!--<ToggleButton-->
+                    <!--android:id="@+id/tb_single_score"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="-18dp"-->
+                    <!--android:background="#00000000"-->
+                    <!--android:button="@drawable/basketball_setting_switch_bg"-->
+                    <!--android:checked="true"-->
+                    <!--android:text=""-->
+                    <!--android:textOff=""-->
+                    <!--android:textOn=""/>-->
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/tb_single_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="-18dp"
-                    android:background="#00000000"
-                    android:button="@drawable/basketball_setting_switch_bg"
+                    android:layout_marginRight="15dp"
                     android:checked="true"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn=""/>
+                    />
             </RelativeLayout>
 
             <View
@@ -349,19 +346,28 @@
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_15"/>
 
-                <ToggleButton
+                <!--<ToggleButton-->
+                    <!--android:id="@+id/tb_ranking"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="-18dp"-->
+                    <!--android:background="#00000000"-->
+                    <!--android:button="@drawable/basketball_setting_switch_bg"-->
+                    <!--android:checked="true"-->
+                    <!--android:text=""-->
+                    <!--android:textOff=""-->
+                    <!--android:textOn=""/>-->
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/tb_ranking"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="-18dp"
-                    android:background="#00000000"
-                    android:button="@drawable/basketball_setting_switch_bg"
+                    android:layout_marginRight="15dp"
                     android:checked="true"
-                    android:text=""
-                    android:textOff=""
-                    android:textOn=""/>
+                    />
             </RelativeLayout>
 
 

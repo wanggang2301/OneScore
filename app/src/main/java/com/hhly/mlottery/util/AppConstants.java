@@ -14,8 +14,6 @@ public class AppConstants {
 	public static final boolean fullORsimple = false;
 	/** 是否是测试连接，测试连接用于阶段测试使用 */
 	public static final boolean isTestLink = false;
-	/** 是否为测试消息推送。true为debug模式，false为生产模式 */
-	public static final boolean isDebugMode = true;
 	/**
 	 * 判断是否上传奔溃日志到友盟
 	 */
@@ -184,6 +182,7 @@ public class AppConstants {
 	// 首页跳转key_value
 	public static final String FOTTBALL_KEY = "football";// 足球界面跳转Key
 	public static final int FOTTBALL_SCORE_VALUE = 0;// 足球比分跳转value
+	public static final int BASKETBALL_SCORE_VALUE = 5;// 篮球比分跳转value
 	public static final int FOTTBALL_INFORMATION_VALUE = 1;// 足球资讯跳转value
 	public static final int FOTTBALL_DATA_VALUE = 2;// 足球数据跳转value
 	public static final int FOTTBALL_VIDEO_VALUE = 3;// 足球视频跳转value

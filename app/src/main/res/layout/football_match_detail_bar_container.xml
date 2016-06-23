@@ -57,7 +57,8 @@
             android:id="@+id/football_match_detail_home_like"
             style="@style/MatchDetailLike"
             android:layout_below="@id/football_match_detail_home_name_layout"
-            android:src="@mipmap/like_red" />
+            android:src="@mipmap/like_red"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/football_match_detail_home_like_anim_img"
@@ -70,7 +71,7 @@
             android:paddingRight="10dp"
             android:paddingTop="7dp"
             android:src="@mipmap/like_anim_left"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/football_match_detail_home_like_count"
@@ -81,6 +82,7 @@
             android:layout_marginBottom="4dp"
             android:text=" "
             android:textColor="@color/white"
+            android:visibility="gone"
             android:textSize="10sp" />
 
     </RelativeLayout>
@@ -98,6 +100,7 @@
             android:layout_height="wrap_content"
             android:text="VS"
             android:textColor="@color/vs_grad"
+            android:layout_marginTop="15dp"
             android:textSize="18sp" />
 
 
@@ -183,6 +186,7 @@
             android:id="@+id/football_match_detail_guest_like"
             style="@style/MatchDetailLike"
             android:layout_below="@id/football_match_detail_guest_layout"
+            android:visibility="gone"
             android:src="@mipmap/like_blue" />
 
         <ImageView
@@ -193,7 +197,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="7dp"
             android:src="@mipmap/like_anim_right"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -205,6 +209,7 @@
             android:layout_marginBottom="5dp"
             android:text=" "
             android:textColor="@color/white"
+            android:visibility="gone"
             android:textSize="10sp" />
 
     </RelativeLayout>

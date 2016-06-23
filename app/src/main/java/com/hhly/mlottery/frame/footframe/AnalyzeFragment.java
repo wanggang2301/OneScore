@@ -1,178 +1,135 @@
 package com.hhly.mlottery.frame.footframe;
 
-import android.net.Uri;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.AnalyzeMatchAdapter;
-import com.hhly.mlottery.adapter.AnalyzeRankAdapter;
-import com.hhly.mlottery.bean.footballDetails.AnalyzeBean;
+import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
+import com.hhly.mlottery.activity.FootballInformationActivity;
+import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.AnalyzeTitle;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.umeng.analytics.MobclickAgent;
+import com.hhly.mlottery.widget.NestedListView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 分析Fragment
+ *  足球分析界面
+ *  Created by madongyun 155
+ *  date :2016-06-13
  */
-public class AnalyzeFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class AnalyzeFragment extends Fragment implements View.OnClickListener{
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_PARAM3 = "param3";
-    private static final java.lang.String TAG = "AnalyzeFragment";
+    private DisplayImageOptions mOptions;
+    private ImageLoader mImageLoader;
 
-    private final static int VIEW_STATUS_LOADING = 1;
-    private final static int VIEW_STATUS_SUCCESS = 3;
-    private final static int VIEW_STATUS_NET_ERROR = 4;
-
-    private String mThirdId;
-    private String mHomeName;
-    private String mGustName;
-
-    private OnFragmentInteractionListener mListener;
-
-    /**
-     * 异常界面
-     */
-    private LinearLayout mExceptionLayout;
-    /**
-     * 刷新
-     */
-    private RelativeLayout mProgressBarLayout;
-    /**
-     * 无历史对战
-     */
-    private LinearLayout mNoHistoryBattel;
-    /**
-     * 正常的历史对战布局
-     */
-    private LinearLayout mHistoryBattel;
-
-    /**
-     * 无主队近况
-     */
-    private LinearLayout mNoHomeRecentBattel;
-
-    /**
-     * 正常的主队近况
-     */
-    private LinearLayout mHomeRecentBattel;
-    /**
-     * 无客队近况
-     */
-    private LinearLayout mNoGuestRecentBattel;
-
-    /**
-     * 正常的客队近况
-     */
-    private LinearLayout mGuestRecentBattel;
-
-    private View view;
-    /**
-     * 积分排行的listView
-     */
-    private ListView mRankListview;
-    /**
-     * 得失球的listView
-     */
-    private ListView mGoalAndLossListview;
-    /**
-     * 历史对战的listview
-     */
-    private ListView mHistoryListview;
-    /**
-     * 主队近况的listview
-     */
-    private ListView mHomeRecentListview;
-    /**
-     * 客队近况的listview
-     */
-    private ListView mGuestRecentListview;
+    private View mView;
+    private Context mContext;// 上下文对象
 
 
     /**
-     * 积分排行adapter
+     * 历史交锋
      */
-    private AnalyzeRankAdapter mRankAdapter;
-
-    private AnalyzeRankAdapter mGoalAdapter;//得失球
-
-    private AnalyzeMatchAdapter mHistoryAdapter;//历史对战
-
-    private AnalyzeMatchAdapter mHomeAdapter;//主队近况
-
-    private AnalyzeMatchAdapter mGuestAdapter;//客队近况
-
-
+    private ProgressBar mProgressBar;
+    private TextView mProgressHomeWin;
+    private TextView mProgressGuestWin;
     /**
-     * 积分排行数据
+     * 近期战绩
      */
-    private List<AnalyzeBean.ScoreRankEntity> mRankList;
-    /**
-     * 得失球
-     */
-    private List<AnalyzeBean.GoalAndLossEntity> mGoalList;
-    /**
-     * 历史对战数据
-     */
-    private List<AnalyzeBean.BattleHistoryEntity.BattlesEntity> mHistoryBattlesList;
-    /**
-     * 主队近况数据
-     */
-    private List<AnalyzeBean.TeamRecentEntity.HomeEntity.BattlesEntity> mHomeRecentList;
-    /**
-     * 客队近况数据
-     */
-    private List<AnalyzeBean.TeamRecentEntity.GuestEntity.BattlesEntity> mGuestRecentList;
-    //五个模块
-    private AnalyzeTitle mTitleRank;
-    private AnalyzeTitle mTitleGoal;
-    private AnalyzeTitle mTitleHistory;
-    private AnalyzeTitle mTitleHomeRecently;
-    private AnalyzeTitle mTitleGuestRecently;
-    /**
-     * 历史对战的文字概括
-     */
-    private TextView mHistoryText;
-    /**
-     * 主队近况的文字概括
-     */
-    private TextView mHomeText;
-    /**
-     * 客队近况的文字概括
-     */
-    private TextView mGuestText;
+    private ImageView mHomeRecent1;
+    private ImageView mHomeRecent2;
+    private ImageView mHomeRecent3;
+    private ImageView mHomeRecent4;
+    private ImageView mHomeRecent5;
+    private ImageView mHomeRecent6;
 
-    private ExactSwipeRefrashLayout mRefreshLayout;//下拉刷新页面
+    private ImageView mGuestRecent1;
+    private ImageView mGuestRecent2;
+    private ImageView mGuestRecent3;
+    private ImageView mGuestRecent4;
+    private ImageView mGuestRecent5;
+    private ImageView mGuestRecent6;
+    //未来比赛
+    /**主队未来比赛距离天数*/
+    private TextView mHomeFutureDate;
+    private TextView mHomeFutureName;
+    private ImageView mHomeFutureLogo;
 
+    private TextView mGuestFutureDate;
+    private TextView mGuestFutureName;
+    private ImageView mGuestFutureLogo;
+    /**更多战绩*/
+    private TextView mTextMoreGame;
+
+    //积分排名
+    private TextView mHomeRank;
+    private TextView mHomeHasGame;
+    private TextView mHomeWinOrLose;
+    private TextView mHomeGoalOrLose;
+    private TextView mHomeGoalDifference;
+    private TextView mHomeIntegral;//积分
+
+    private TextView mGuestRank;
+    private TextView mGuestHasGame;
+    private TextView mGuestWinOrLose;
+    private TextView mGuestGoalOrLose;
+    private TextView mGuestGoalDifference;
+    private TextView mGuestIntegral;//积分
+    //完整积分榜
+    private TextView mIntegralTable;
+
+    //攻防对比
+    private TextView mHomeGoal;
+    private TextView mHomeLose;
+    private TextView mGuestGoal;
+    private TextView mGuestLose;
+    private TextView mSizeOfBet;
+    //球员信息
+    private TextView mHomeTeamName;
+    private TextView mGuestTeamName;
+    private NestedListView mListView;
+    private LinearLayout ll_rosters_homeTeam;// 主队名单容器
+    private LinearLayout ll_rosters_visitingTeam;// 客队名单容器
+    private FrameLayout fl_firsPlayers_not;// 暂无首发容器
+    private LinearLayout fl_firsPlayers_content;// 首发内容容器
+
+    // TODO: Rename and change types of parameters
+    private String mThirdId="1111";
+    private String mParam2;
+
+    private NewAnalyzeBean mAnalyzeBean;
     public AnalyzeFragment() {
+        // Required empty public constructor
     }
 
-    public static AnalyzeFragment newInstance(String param1, String param2, String param3) {
+
+    public static AnalyzeFragment newInstance(String param1, String param2) {
         AnalyzeFragment fragment = new AnalyzeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
-        args.putString(ARG_PARAM3, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -180,326 +137,309 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener, S
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        L.d(TAG, "______________onCreate");
         if (getArguments() != null) {
             mThirdId = getArguments().getString(ARG_PARAM1);
-            mHomeName = getArguments().getString(ARG_PARAM2);
-            mGustName = getArguments().getString(ARG_PARAM3);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                        //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
+                .showImageForEmptyUri(R.mipmap.basket_default)
+                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity()).build();
+        mImageLoader = ImageLoader.getInstance(); //初始化
+        mImageLoader.init(config);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_analyze, container, false);
-        initItem();
+        mView=inflater.inflate(R.layout.fragment_analyze_fragment, container, false);
+        mAnalyzeBean=new NewAnalyzeBean();
+        initView();
         initData();
-        return view;
-    }
+        setListener();
 
-    private Handler mViewHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case VIEW_STATUS_LOADING:
+        return mView;
+}
 
-                    mExceptionLayout.setVisibility(View.GONE);
-
-                    mRefreshLayout.setVisibility(View.GONE);
-                    mProgressBarLayout.setVisibility(View.VISIBLE);
-
-                    break;
-                case VIEW_STATUS_SUCCESS:
-
-                    mProgressBarLayout.setVisibility(View.GONE);
-                    mExceptionLayout.setVisibility(View.GONE);
-                    mRefreshLayout.setVisibility(View.VISIBLE);
-                    break;
-                case VIEW_STATUS_NET_ERROR:
-
-                    mExceptionLayout.setVisibility(View.VISIBLE);
-
-                    mProgressBarLayout.setVisibility(View.GONE);
-                    mRefreshLayout.setVisibility(View.GONE);
-                    break;
-            }
-        }
-    };
-
-
-    /**
-     * 初始化界面的6大模块
-     */
-    private void initItem() {
-        mTitleRank = (AnalyzeTitle) view.findViewById(R.id.analyze_title_rank);
-        mTitleGoal = (AnalyzeTitle) view.findViewById(R.id.analyze_title_goal);
-        mTitleHistory = (AnalyzeTitle) view.findViewById(R.id.analyze_title_history);
-        mTitleHomeRecently = (AnalyzeTitle) view.findViewById(R.id.analyze_title_home_recently);
-        mTitleGuestRecently = (AnalyzeTitle) view.findViewById(R.id.analyze_title_guest_recently);
-
-        mTitleRank.setTitle(getActivity().getString(R.string.ranking));
-        mTitleGoal.setTitle(getActivity().getString(R.string.goal_and_loss));
-        mTitleHistory.setTitle(getActivity().getString(R.string.history_battle));
-        mTitleHomeRecently.setTitle(getActivity().getString(R.string.home_recent));
-        mTitleGuestRecently.setTitle(getActivity().getString(R.string.guest_recent));
-
-        //网络异常及正在加载的控件，
-        mProgressBarLayout = (RelativeLayout) view.findViewById(R.id.analyze_progressbar);
-        mExceptionLayout = (LinearLayout) view.findViewById(R.id.network_exception_layout);
-        TextView reloadBtn = (TextView) view.findViewById(R.id.network_exception_reload_btn);
-        reloadBtn.setOnClickListener(this);
-
-        mRefreshLayout = (ExactSwipeRefrashLayout) view.findViewById(R.id.analyze_rereshlayout);
-        mRefreshLayout.setColorSchemeResources(R.color.tabhost);
-        mRefreshLayout.setOnRefreshListener(this);
-
-
-    }
-
-    /**
-     * 初始化视图
-     */
     private void initView() {
-        mRankListview = (ListView) view.findViewById(R.id.analyze_rank_listview);
-        mGoalAndLossListview = (ListView) view.findViewById(R.id.analyze_goal_listview);
-        mHistoryListview = (ListView) view.findViewById(R.id.analyze_history_listview);
-        mHomeRecentListview = (ListView) view.findViewById(R.id.analyze_homerecently_listview);
-        mGuestRecentListview = (ListView) view.findViewById(R.id.analyze_guestrecently_listview);
+        mProgressBar = (ProgressBar) mView.findViewById(R.id.football_analyze__progressbar);
+        mProgressHomeWin= (TextView) mView.findViewById(R.id.football_progressbar_home);
+        mProgressGuestWin= (TextView) mView.findViewById(R.id.football_progressbar_guest);
+        //近期比赛
+        mHomeRecent1= (ImageView) mView.findViewById(R.id.football_img_recent_home1);
+        mHomeRecent2= (ImageView) mView.findViewById(R.id.football_img_recent_home2);
+        mHomeRecent3= (ImageView) mView.findViewById(R.id.football_img_recent_home3);
+        mHomeRecent4= (ImageView) mView.findViewById(R.id.football_img_recent_home4);
+        mHomeRecent5= (ImageView) mView.findViewById(R.id.football_img_recent_home5);
+        mHomeRecent6= (ImageView) mView.findViewById(R.id.football_img_recent_home6);
 
-        mRankListview.setDivider(MyApp.getContext().getResources().getDrawable(R.color.transparency));
-        mGoalAndLossListview.setDivider(MyApp.getContext().getResources().getDrawable(R.color.transparency));
-        mHistoryListview.setDivider(MyApp.getContext().getResources().getDrawable(R.color.transparency));
-        mHomeRecentListview.setDivider(MyApp.getContext().getResources().getDrawable(R.color.transparency));
-        mGuestRecentListview.setDivider(MyApp.getContext().getResources().getDrawable(R.color.transparency));
+        mGuestRecent1= (ImageView) mView.findViewById(R.id.football_img_recent_guest1);
+        mGuestRecent2= (ImageView) mView.findViewById(R.id.football_img_recent_guest2);
+        mGuestRecent3= (ImageView) mView.findViewById(R.id.football_img_recent_guest3);
+        mGuestRecent4= (ImageView) mView.findViewById(R.id.football_img_recent_guest4);
+        mGuestRecent5= (ImageView) mView.findViewById(R.id.football_img_recent_guest5);
+        mGuestRecent6= (ImageView) mView.findViewById(R.id.football_img_recent_guest6);
+        //未来比赛
+        mHomeFutureDate= (TextView) mView.findViewById(R.id.football_home_future_date);
+        mHomeFutureName= (TextView) mView.findViewById(R.id.football_home_future_name);
+        mHomeFutureLogo= (ImageView) mView.findViewById(R.id.football_home_future_logo);
+        mGuestFutureDate= (TextView) mView.findViewById(R.id.football_guest_future_date);
+        mGuestFutureName= (TextView) mView.findViewById(R.id.football_guest_future_name);
+        mGuestFutureLogo= (ImageView) mView.findViewById(R.id.football_guest_future_logo);
+        //更多战绩
+        mTextMoreGame= (TextView) mView.findViewById(R.id.football_analyze_more_record);
+        //积分榜
+        mHomeRank= (TextView) mView.findViewById(R.id.football_analyze__home_rank);
+        mHomeHasGame= (TextView) mView.findViewById(R.id.football_analyze_home_hadgame);
+        mHomeWinOrLose= (TextView) mView.findViewById(R.id.football_analyze_home_win_or_lose);
+        mHomeGoalOrLose= (TextView) mView.findViewById(R.id.football_analyze_home_goal_or_lose);
+        mHomeGoalDifference= (TextView) mView.findViewById(R.id.football_analyze_home_goal_difference);
+        mHomeIntegral= (TextView) mView.findViewById(R.id.football_analyze_home_integral);
 
-        mHistoryText = (TextView) view.findViewById(R.id.analyze_history_text);
-        mHomeText = (TextView) view.findViewById(R.id.analyze_homerecently_text);
-        mGuestText = (TextView) view.findViewById(R.id.analyze_guestrecently_text);
-
-        //有无历史对战
-        mNoHistoryBattel = (LinearLayout) view.findViewById(R.id.history_nodata);
-        mHistoryBattel = (LinearLayout) view.findViewById(R.id.layout_history);
-
-        //有无主队近况
-        mNoHomeRecentBattel= (LinearLayout) view.findViewById(R.id.homeRecent_nodata);
-        mHomeRecentBattel= (LinearLayout) view.findViewById(R.id.layout_home_recent);
-
-        //有无客队近况
-        mNoGuestRecentBattel= (LinearLayout) view.findViewById(R.id.guest_recent_nodata);
-        mGuestRecentBattel= (LinearLayout) view.findViewById(R.id.layout_guest_recent);
+        mGuestRank= (TextView) mView.findViewById(R.id.football_analyze__guest_rank);
+        mGuestHasGame= (TextView) mView.findViewById(R.id.football_analyze_guest_hadgame);
+        mGuestWinOrLose= (TextView) mView.findViewById(R.id.football_analyze_guest_win_or_lose);
+        mGuestGoalOrLose= (TextView) mView.findViewById(R.id.football_analyze_guest_goal_or_lose);
+        mGuestGoalDifference= (TextView) mView.findViewById(R.id.football_analyze_guest_goal_difference);
+        mGuestIntegral= (TextView) mView.findViewById(R.id.football_analyze_guest_integral);
+        //完整积分榜
+        mIntegralTable= (TextView) mView.findViewById(R.id.football_analyze_integral_table);
+        //攻防对比
+        mHomeGoal= (TextView) mView.findViewById(R.id.home_goal);
+        mHomeLose= (TextView) mView.findViewById(R.id.home_lose);
+        mGuestGoal= (TextView) mView.findViewById(R.id.guest_goal);
+        mGuestLose= (TextView) mView.findViewById(R.id.guest_lose);
+        mSizeOfBet= (TextView) mView.findViewById(R.id.football_analyze_size_of_bet);
+        //球员信息
+        mHomeTeamName= (TextView) mView.findViewById(R.id.lineup_home_team);
+        mGuestTeamName= (TextView) mView.findViewById(R.id.lineup_guest_team);
+//        mListView= (NestedListView) mView.findViewById(R.id.listview_player_message);
+        ll_rosters_homeTeam = (LinearLayout) mView.findViewById(R.id.ll_rosters_homeTeam);
+        ll_rosters_visitingTeam = (LinearLayout) mView.findViewById(R.id.ll_rosters_visitingTeam);
+        fl_firsPlayers_not = (FrameLayout) mView.findViewById(R.id.fl_firsPlayers_not);
+        fl_firsPlayers_content = (LinearLayout) mView.findViewById(R.id.fl_firsPlayers_content);
     }
 
-    /**
-     * 初始化数据
-     */
     public void initData() {
-        Map<String, String> params = new HashMap<>();
-        params.put("thirdId", mThirdId);
-        //  http://192.168.10.242:8181/mlottery/core/footBallMatch.matchAnalysis.do?thirdId=278222&lang=zh
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_ANALYSIS_INFO, params,
-                new VolleyContentFast.ResponseSuccessListener<AnalyzeBean>() {
-                    @Override
-                    public void onResponse(AnalyzeBean analyzeBean) {
+        Map<String ,String > params=new HashMap<>();
+      //  params.put("thirdId","337367");
+        params.put("thirdId",mThirdId);
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_NEW_ANALYZE,params,new VolleyContentFast.ResponseSuccessListener<NewAnalyzeBean>() {
+            @Override
+            public void onResponse(NewAnalyzeBean analyzeBean) {
+                if (analyzeBean.getResult().equals("200")) {
+                    mAnalyzeBean=analyzeBean;
+                    loadData(mAnalyzeBean);
+                }
 
-                        if (!analyzeBean.getResult().equals("200")) {
-
-                                mTitleRank.addLayout(R.layout.analyze_nodata);
-                                mTitleGoal.addLayout(R.layout.analyze_nodata);
-                                mTitleHistory.addLayout(R.layout.analyze_nodata);
-                                mTitleHomeRecently.addLayout(R.layout.analyze_nodata);
-                                mTitleGuestRecently.addLayout(R.layout.analyze_nodata);
-
-                            return;
-                        }
-                        initItemData(analyzeBean);
-                    }
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
-                    }
-                }, AnalyzeBean.class
-        );
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        }, NewAnalyzeBean.class);
 
     }
+    /**
+     * 设置监听事件
+     */
+    private void setListener() {
+        mTextMoreGame.setOnClickListener(this);
+        mIntegralTable.setOnClickListener(this);
+    }
+
 
     /**
-     * 请求到数据之后的操作
+     * 加载数据
      */
-    private void initItemData(AnalyzeBean analyzeBean) {
-
-        mTitleRank.addLayout(R.layout.fragment_analyze_rank);
-        mTitleGoal.addLayout(R.layout.fragment_analyze_goal);
-        mTitleHistory.addLayout(R.layout.fragment_analyze_history);
-        mTitleHomeRecently.addLayout(R.layout.fragment_analyze_homerecently);
-        mTitleGuestRecently.addLayout(R.layout.fragment_analyze_guestrecently);
-
-        initView();//初始化加载的布局的listview等
-
-        if (analyzeBean.getBattleHistory() == null) {
-            mNoHistoryBattel.setVisibility(View.VISIBLE);
-            mHistoryBattel.setVisibility(View.GONE);
-        } else {    ////历史对战
-            mHistoryBattlesList = analyzeBean.getBattleHistory().getBattles();
-            if(getActivity()==null){
-                return;
-            }
-            mHistoryAdapter = new AnalyzeMatchAdapter(getActivity(), mHistoryBattlesList);
-            mHistoryListview.setAdapter(mHistoryAdapter);
-            mNoHistoryBattel.setVisibility(View.GONE);
-            mHistoryBattel.setVisibility(View.VISIBLE);
-
-            AnalyzeBean.BattleHistoryEntity historyBattle = analyzeBean.getBattleHistory();
-
-            mHistoryText.setText(Html.fromHtml(setHistoryText(historyBattle)));//不同字不同颜色
+    private void loadData(NewAnalyzeBean analyzeBean){
+        int progress;
+        int homeWin=analyzeBean.getBothRecord().getHome().getHistoryWin();
+        int guestWin=analyzeBean.getBothRecord().getGuest().getHistoryWin();
+        if (homeWin == 0 && guestWin == 0) {
+            progress = 50;
+        } else if (homeWin == 0) {
+            progress = 0;
+        } else if (guestWin == 0) {
+            progress = 100;
+        } else {
+            progress = homeWin * 100 / (guestWin+homeWin);
         }
-
-        if(analyzeBean.getTeamRecent().getHome()==null){ //无主队近况
-            mNoHomeRecentBattel.setVisibility(View.VISIBLE);
-            mHomeRecentBattel.setVisibility(View.GONE);
-        }else{
-
-            mHomeRecentList = analyzeBean.getTeamRecent().getHome().getBattles();
-            if(getActivity()==null){
-                return;
-            }
-            mHomeAdapter = new AnalyzeMatchAdapter(getActivity(), mHomeRecentList);
-            mHomeRecentListview.setAdapter(mHomeAdapter);
-            mNoHomeRecentBattel.setVisibility(View.GONE);
-            mHomeRecentBattel.setVisibility(View.VISIBLE);
-
-            AnalyzeBean.TeamRecentEntity.HomeEntity homeRecent = analyzeBean.getTeamRecent().getHome();
-
-            mHomeText.setText(Html.fromHtml(setHomeRecentText(homeRecent)));
+        mProgressBar.setProgress(progress);
+        mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
+        mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
+        //近期战绩
+        List<Integer> homeRecent=analyzeBean.getBothRecord().getHome().getRecentRecord();
+        List<Integer> guestRecent=analyzeBean.getBothRecord().getGuest().getRecentRecord();
+        if(homeRecent.size()!=0){
+            setRecent(mHomeRecent1,homeRecent.get(0));
+            setRecent(mHomeRecent2,homeRecent.get(1));
+            setRecent(mHomeRecent3,homeRecent.get(2));
+            setRecent(mHomeRecent4,homeRecent.get(3));
+            setRecent(mHomeRecent5,homeRecent.get(4));
+            setRecent(mHomeRecent6,homeRecent.get(5));
         }
-
-        //客队近况无比赛
-
-        if(analyzeBean.getTeamRecent().getGuest()==null){
-            mGuestRecentBattel.setVisibility(View.GONE);
-            mNoGuestRecentBattel.setVisibility(View.VISIBLE);
-        }else{
-            //客队近况
-            mGuestRecentList = analyzeBean.getTeamRecent().getGuest().getBattles();
-            if(getActivity()==null){
-                return;
-            }
-            mGuestAdapter = new AnalyzeMatchAdapter(getActivity(), mGuestRecentList);
-            mGuestRecentListview.setAdapter(mGuestAdapter);
-
-            mGuestRecentBattel.setVisibility(View.VISIBLE);
-            mNoGuestRecentBattel.setVisibility(View.GONE);
-
-            AnalyzeBean.TeamRecentEntity.GuestEntity guestRecent = analyzeBean.getTeamRecent().getGuest();
-
-            mGuestText.setText(Html.fromHtml(setGuestRecentText(guestRecent)));
+        if(guestRecent.size()!=0){
+            setRecent(mGuestRecent1,guestRecent.get(0));
+            setRecent(mGuestRecent2,guestRecent.get(1));
+            setRecent(mGuestRecent3,guestRecent.get(2));
+            setRecent(mGuestRecent4,guestRecent.get(3));
+            setRecent(mGuestRecent5,guestRecent.get(4));
+            setRecent(mGuestRecent6,guestRecent.get(5));
         }
-
+        //未来三场
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null){
+            mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+getActivity().getResources().getString(R.string.number_hk_dd));
+            mHomeFutureName.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getTeam());
+            mImageLoader.displayImage(analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(), mHomeFutureLogo, mOptions);
+        }
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null){
+            mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + getActivity().getResources().getString(R.string.number_hk_dd));
+            mGuestFutureName.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getTeam());
+            mImageLoader.displayImage(analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),mGuestFutureLogo,mOptions);
+        }
 
         //积分排名
-        mRankList = analyzeBean.getScoreRank();
-        mRankAdapter = new AnalyzeRankAdapter(getActivity(), mRankList);
-        mRankListview.setAdapter(mRankAdapter);
+        if(analyzeBean.getScoreRank()!=null){
+            NewAnalyzeBean.ScoreRankEntity entity=analyzeBean.getScoreRank();
+            if(entity.getHome()!=null){
+                mHomeRank.setText(entity.getHome().getRank()+entity.getHome().getTeam());
+                mHomeHasGame.setText(entity.getHome().getVsCount()+"");
+                mHomeWinOrLose.setText(entity.getHome().getWin()+"/"+entity.getHome().getDraw()+"/"+entity.getHome().getLose());
+                mHomeGoalOrLose.setText(entity.getHome().getGoal()+"/"+entity.getHome().getMiss());
+                mHomeGoalDifference.setText(entity.getHome().getGoalDiff()+"");
+                mHomeIntegral.setText(entity.getHome().getIntegral() + "");
+                //球员信息
+                mHomeTeamName.setText(entity.getHome().getTeam());
+            }
+            if(entity.getGuest()!=null){
+                mGuestRank.setText(entity.getGuest().getRank()+entity.getGuest().getTeam());
+                mGuestHasGame.setText(entity.getGuest().getVsCount()+"");
+                mGuestWinOrLose.setText(entity.getGuest().getWin()+"/"+entity.getGuest().getDraw()+"/"+entity.getGuest().getLose());
+                mGuestGoalOrLose.setText(entity.getGuest().getGoal()+"/"+entity.getGuest().getMiss());
+                mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
+                mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
 
-        //得失球
-        mGoalList = analyzeBean.getGoalAndLoss();
-        mGoalAdapter = new AnalyzeRankAdapter(getActivity(), mGoalList);
-        mGoalAndLossListview.setAdapter(mGoalAdapter);
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                mGuestTeamName.setText(entity.getGuest().getTeam());
+            }
 
-    }
+        }
 
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+        //是否显示积分榜
+        if(analyzeBean.getFullScoreRank()==1){ //有完整积分榜
+            mIntegralTable.setVisibility(View.VISIBLE);
+        }else if(analyzeBean.getFullScoreRank()==0){
+            mIntegralTable.setVisibility(View.GONE);
+        }
+
+        //攻防对比
+        if(analyzeBean.getAttackDefense()!=null){
+            mHomeGoal.setText(analyzeBean.getAttackDefense().getHomeFieldGoal());
+            mHomeLose.setText(analyzeBean.getAttackDefense().getHomeFieldLose());
+            mGuestGoal.setText(analyzeBean.getAttackDefense().getGuestFieldGoal());
+            mGuestLose.setText(analyzeBean.getAttackDefense().getGuestFieldLose());
+            mSizeOfBet.setText(analyzeBean.getAttackDefense().getSizeHandicap());
+        }
+
+        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
+        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
+//        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=new ArrayList<>();//主队队员
+//        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=new ArrayList<>();//客队队员
+//        for(int i=0;i<11;i++){
+//            homeLineUpList.add(new NewAnalyzeBean.LineUpEntity.PlayerInfo("梅西"+i));
+//        }
+//        for(int i=0;i<11;i++){
+//            guestLineUpList.add(new NewAnalyzeBean.LineUpEntity.PlayerInfo("C罗"+i));
+//        }
+
+        if(getActivity()!=null){
+            mContext=getActivity();
+            if (homeLineUpList != null && guestLineUpList != null) {
+                if (homeLineUpList.size() > 0) {
+                    // 显示首发内容
+                    fl_firsPlayers_not.setVisibility(View.GONE);
+                    fl_firsPlayers_content.setVisibility(View.VISIBLE);
+
+                    int dip5 = DisplayUtil.dip2px(mContext, 5);
+                    int dip10 = DisplayUtil.dip2px(mContext, 10);
+
+                    // 添加主队名单
+                    for (int i = 0, len = homeLineUpList.size(); i < len; i++) {
+                        TextView tv_homeTeams = new TextView(mContext);
+                        tv_homeTeams.setText(homeLineUpList.get(i).getName());
+                        if (i == 0) {
+                            tv_homeTeams.setPadding(dip5, 0, 0, dip10);
+                        } else {
+                            tv_homeTeams.setPadding(dip5, 0, 0, dip10);
+                        }
+                        tv_homeTeams.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+                        ll_rosters_homeTeam.addView(tv_homeTeams);
+                    }
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.gravity = Gravity.RIGHT;// 设置靠右对齐
+                    // 添加客队名单
+                    for (int i = 0, len = guestLineUpList.size(); i < len; i++) {
+                        TextView tv_visitingTeams = new TextView(mContext);
+                        tv_visitingTeams.setText(guestLineUpList.get(i).getName());
+                        tv_visitingTeams.setLayoutParams(params);
+                        if (i == 0) {
+                            tv_visitingTeams.setPadding(0, 0, dip5, dip10);
+                        } else {
+                            tv_visitingTeams.setPadding(0, 0, dip5, dip10);
+                        }
+                        tv_visitingTeams.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+                        ll_rosters_visitingTeam.addView(tv_visitingTeams);
+                    }
+                    return;
+                }
+            }
+            // 显示暂无首发提示
+            fl_firsPlayers_not.setVisibility(View.VISIBLE);
+            fl_firsPlayers_content.setVisibility(View.GONE);
+        }
+
     }
 
     /**
-     * 历史对战的文字概括设置
-     *
-     * @param battle
-     * @return
+     * 设置近期战绩图片  胜平负
+     * @param mImage
+     * @param recent
      */
+    private void setRecent(ImageView mImage, int recent) {
+        if(recent==0){ //平
+            mImage.setBackgroundResource(R.mipmap.basket_draw);
+        }
+        if (recent == 2) { //输
+            mImage.setBackgroundResource(R.mipmap.basket_lose);
+        }
+        if (recent == 1) { //赢
+            mImage.setBackgroundResource(R.mipmap.basket_win);
+        }
 
-    public String setHistoryText(AnalyzeBean.BattleHistoryEntity battle) {
-            String[] array;
-            array = battle.getBattleResult().split(";");
-            String win = array[0];
-            String equ = array[1];
-            String def = array[2];
-
-            return getActivity().getString(R.string.shuangfangjin) + battle.getBattleCount() + getActivity().getString(R.string.cijiaofeng) + mHomeName + "<font color='#ff0000'><b>" + win + getActivity().getString(R.string.analyze_win) + "、 " + "</b></font> "
-                    + "<font color='#0eae7e'><b>" + equ + getActivity().getString(R.string.analyze_equ) + "、 " + "</b></font> " + "<font color='#1756e5'><b>" + def + getActivity().getString(R.string.analyze_defeat) + "。 " + "</b></font> " + getActivity().getString(R.string.winpro)
-                    + "<font color='#ff0000'><b>" + battle.getWinPro() + "</b></font> " + ", "
-                    + getActivity().getString(R.string.jin) + "<font color='#ff0000'><b>" + battle.getGoal() + "</b></font>" + getActivity().getString(R.string.qiushi) + "<font color='#1756e5'><b>" + battle.getLoss() + "</b></font>" + getActivity().getString(R.string.ball);
-
-    }
-
-    /**
-     * 主队近况的文字概括
-     *
-     * @param battle
-     * @return
-     */
-    public String setHomeRecentText(AnalyzeBean.TeamRecentEntity.HomeEntity battle) {
-        String[] array = new String[3];
-        array = battle.getBattleResult().split(";");
-        String win = array[0];
-        String equ = array[1];
-        String def = array[2];
-
-        return getActivity().getString(R.string.zhuduijin) + battle.getBattleCount() + getActivity().getString(R.string.cijiaofeng) + "<font color='#ff0000'><b>" + win + getActivity().getString(R.string.analyze_win) + "、 " + "</b></font> "
-                + "<font color='#0eae7e'><b>" + equ + getActivity().getString(R.string.analyze_equ) + "、 " + "</b></font> " + "<font color='#1756e5'><b>" + def + getActivity().getString(R.string.analyze_defeat) + "。 " + "</b></font> " + getActivity().getString(R.string.winpro)
-                + "<font color='#ff0000'><b>" + battle.getWinPro() + "</b></font> " + ", "
-                + getActivity().getString(R.string.jin) + "<font color='#ff0000'><b>" + battle.getGoal() + "</b></font>" + getActivity().getString(R.string.qiushi) + "<font color='#1756e5'><b>" + battle.getLoss() + "</b></font>" + getActivity().getString(R.string.ball);
-    }
-
-    /**
-     * 客队近况的文字概括
-     *
-     * @param battle
-     * @return
-     */
-    public String setGuestRecentText(AnalyzeBean.TeamRecentEntity.GuestEntity battle) {
-        String[] array;
-        array = battle.getBattleResult().split(";");
-        String win = array[0];
-        String equ = array[1];
-        String def = array[2];
-
-        return getActivity().getString(R.string.keduijin) + battle.getBattleCount() + getActivity().getString(R.string.cijiaofeng)  + "<font color='#ff0000'><b>" + win + getActivity().getString(R.string.analyze_win) + "、 " + "</b></font> "
-                + "<font color='#0eae7e'><b>" + equ + getActivity().getString(R.string.analyze_equ) + "、 " + "</b></font> " + "<font color='#1756e5'><b>" + def + getActivity().getString(R.string.analyze_defeat) + "。 " + "</b></font> " + getActivity().getString(R.string.winpro)
-                + "<font color='#ff0000'><b>" + battle.getWinPro() + "</b></font> " + ", "
-                + getActivity().getString(R.string.jin) + "<font color='#ff0000'><b>" + battle.getGoal() + "</b></font>" + getActivity().getString(R.string.qiushi) + "<font color='#1756e5'><b>" + battle.getLoss() + "</b></font>" + getActivity().getString(R.string.ball);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.network_exception_reload_btn:
-                mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                initData();
+        switch (v.getId()){
+            case R.id.football_analyze_more_record:
+                Intent intent=new Intent(getActivity(),FootballAnalyzeDetailsActivity.class);
+                intent.putExtra(FootballAnalyzeDetailsActivity.FOOTBALL_ANALYZE_THIRD_ID,mThirdId);
+                startActivity(intent);
+                break;
+            case R.id.football_analyze_integral_table:
+                Intent intent1=new Intent(getActivity(), FootballInformationActivity.class);
+                intent1.putExtra("lid",mAnalyzeBean.getLeagueId()+"");
+                intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType()+"");
+                startActivity(intent1);
+                break;
         }
-
-    }
-
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshLayout.setRefreshing(false);
-                initData();
-            }
-        }, 1000);
-
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

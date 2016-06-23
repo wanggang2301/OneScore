@@ -177,8 +177,17 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             int currentapiVersion = android.os.Build.VERSION.SDK_INT;
             if (currentapiVersion == 16) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0,20,0,20);
+                params.setMargins(105,65,0,0);
                 holder.basket_half_score.setLayoutParams(params);
+
+                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+                params2.setMargins(120, 0, 10, 0);
+//                holder.basket_score.setGravity(1);
+                holder.basket_score.setLayoutParams(params2);
+
+                RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+                params3.setMargins(55, 0, 0, 0);
+                holder.basket_guest_all_score.setLayoutParams(params3);
             }
             holder.basket_leftOdds = (TextView) convertView.findViewById(R.id.basket_leftOdds);
             holder.basket_rightOdds = (TextView) convertView.findViewById(R.id.basket_rightOdds);
