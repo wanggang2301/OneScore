@@ -234,11 +234,12 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         ivHomeLike.setVisibility(View.INVISIBLE);
         ivGuestLike.setVisibility(View.INVISIBLE);
         //以前的规则是-1不可点  现在延续
-        if (state != null && state.equals("-1")) {
-            setClickableLikeBtn(false);
-        } else {
-            setClickableLikeBtn(true);
-        }
+//        if (state != null && state.equals("-1")) {
+//            setClickableLikeBtn(false);
+//        } else {
+//            setClickableLikeBtn(true);
+//        }
+        setClickableLikeBtn(false);
         //评论相关
         sdk = CyanSdk.getInstance(mContext);
         if (CommonUtils.isLogin()) {
