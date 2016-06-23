@@ -233,18 +233,16 @@ public class CPIOddsListFragment extends Fragment {
     private void handleCompany(List<NewOddsInfo.CompanyBean> company) {
         ArrayList<NewOddsInfo.CompanyBean> companyList =
                 parentFragment.getCompanyList();
-        if (parentFragment.getCurrentFragment() == CPIOddsListFragment.this) {
-            // 获取当前公司并设置给 CPINewFragment
-            if (companyList.isEmpty()) {
-                // 默认选中头两个公司
-                int size = company.size();
-                if (size <= 2) {
-                    for (int i = 0; i < size; i++) {
-                        company.get(i).setIsChecked(true);
-                    }
-                }
-                companyList.addAll(company);
+        if (companyList.isEmpty()
+                && parentFragment.getCurrentFragment() == CPIOddsListFragment.this) {
+
+            // 默认选中头两个公司
+            int size = company.size();
+            size = size <= 2 ? size : 2;
+            for (int i = 0; i < size; i++) {
+                company.get(i).setIsChecked(true);
             }
+            companyList.addAll(company);
         }
     }
 
