@@ -226,7 +226,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         fl_firsPlayers_content = (LinearLayout) mView.findViewById(R.id.fl_firsPlayers_content);
     }
 
-    private void initData() {
+    public void initData() {
         Map<String ,String > params=new HashMap<>();
       //  params.put("thirdId","337367");
         params.put("thirdId",mThirdId);
@@ -328,7 +328,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
                 mGuestTeamName.setText(entity.getGuest().getTeam());
             }
-
 
         }
 
@@ -437,7 +436,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.football_analyze_integral_table:
                 Intent intent1=new Intent(getActivity(), FootballInformationActivity.class);
-                intent1.putExtra("lid",mThirdId);
+                intent1.putExtra("lid",mAnalyzeBean.getLeagueId()+"");
                 intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType()+"");
                 startActivity(intent1);
                 break;

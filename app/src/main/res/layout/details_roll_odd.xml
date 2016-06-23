@@ -21,7 +21,7 @@
                 android:id="@+id/title"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.5"
-                android:text="亚盘"
+                android:text="@string/foot_details_livetitle"
                 android:textColor="@color/content_txt_light_grad" />
 
             <TextView

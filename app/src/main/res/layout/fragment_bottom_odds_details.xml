@@ -127,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="暂无数据" />
+            android:text="@string/nodata" />
     </FrameLayout>
 
 
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="时间"
+                android:text="@string/foot_details_time"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="比分"
+                android:text="@string/foot_details_score"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 
@@ -169,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="主队"
+                android:text="@string/foot_details_home"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 
@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="让球"
+                android:text="@string/foot_details_ball"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 
@@ -187,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="客队"
+                android:text="@string/foot_details_guest"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 

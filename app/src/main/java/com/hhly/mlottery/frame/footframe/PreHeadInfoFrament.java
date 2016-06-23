@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -115,6 +116,7 @@ public class PreHeadInfoFrament extends Fragment {
         mMatchType1 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype1);
         mMatchType2 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype2);
 
+
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -122,25 +124,26 @@ public class PreHeadInfoFrament extends Fragment {
                 .showImageOnLoading(R.mipmap.home_pager_score_football02_bg)   //默认图片
                 .showImageForEmptyUri(R.mipmap.home_pager_score_football02_bg)    //url爲空會显示该图片，自己放在drawable里面的
                 .showImageOnFail(R.mipmap.home_pager_score_football02_bg)// 加载失败显示的图片
-                .displayer(new FadeInBitmapDisplayer(2000))
+                .displayer(new FadeInBitmapDisplayer(5000))
                 .resetViewBeforeLoading(true)
                 .build();
+
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
         universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
         universalImageLoader.init(config);
 
-      /*  int random = new Random().nextInt(20);
-        String url = baseUrl + random + ".png";
-        universalImageLoader.displayImage(url, iv_bg, options);*/
     }
 
 
-    public void initData(MatchDetail mMatchDetail) {
+    public void initData(MatchDetail mMatchDetail, boolean flag) {
 
-        int random = new Random().nextInt(20);
-        String url = baseUrl + random + ".png";
-        universalImageLoader.displayImage(url, iv_bg, options);
+        if (flag) {
+            int random = new Random().nextInt(20);
+            String url = baseUrl + random + ".png";
+            universalImageLoader.displayImage(url, iv_bg, options);
+        }
+
 
         loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_home_icon);
         loadImage(mMatchDetail.getGuestTeamInfo().getUrl(), iv_guest_icon);

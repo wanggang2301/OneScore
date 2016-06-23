@@ -3,12 +3,28 @@
 
 
     <!--足球内页改版(滚球等)-->
-    <string name="live_title">实况直播</string>
+    <string name="foot_details_roolball">滚球</string>
+    <string name="foot_details_talkball">聊球</string>
+    <string name="foot_details_analyze">分析</string>
+    <string name="foot_details_odds">指数</string>
+    <string name="foot_details_statistics">统计</string>
+    <string name="foot_details_time">时间</string>
+    <string name="foot_details_score">比分</string>
+    <string name="foot_details_home">主队</string>
+    <string name="foot_details_ball">让球</string>
+    <string name="foot_details_guest">客队</string>
+
+    <string name="foot_details_livetitle">实况直播</string>
     <string name="jipan">即盘</string>
     <string name="chupan">初盘</string>
     <string name="alet_first">亚盘初盘:</string>
     <string name="asize_first">大小球初盘:</string>
     <string name="eu_first">欧赔初盘:</string>
+    <string name="foot_details_live_msg">实况直播敬请关注!</string>
+    <string name="foot_details_focus">关注</string>
+    <string name="foot_details_unfocus">已关注</string>
+    <string name="foot_details_share">分享</string>
+
 
 
     <!--分享-->

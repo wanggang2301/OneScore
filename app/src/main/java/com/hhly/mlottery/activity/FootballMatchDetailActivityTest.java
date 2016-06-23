@@ -218,7 +218,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     public final static String BUNDLE_PARAM_THIRDID = "thirdId";
 
-    private String[] titles = {"滚球", "聊球", "分析", "指数", "统计"};
 
     private boolean isMatchStart = false;  //判断比赛推送时间状态
 
@@ -329,6 +328,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private void initView() {
 
+        // String[] titles = mContext.getResourceName(R.attr.foot_details_tabs);
+
+
+        String[] titles = mContext.getResources().getStringArray(R.array.foot_details_tabs);
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -420,11 +425,15 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 if (mMatchDetail != null) {
                     L.d(TAG, "下拉刷新未开赛和正在比赛的");
                     loadData();
+
+                    mAnalyzeFragment.initData();//分析下拉刷新
+
                     mOddsFragment.oddPlateRefresh(); //指数刷新
+
                     //走势图
                     mStatisticsFragment.initData(mMatchDetail.getLiveStatus());
                     //统计图
-                    mStatisticsFragment.initJson2(mMatchDetail.getLiveStatus());
+                    mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
                 }
             }
         }, 1000);
@@ -457,12 +466,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
             @Override
             public void onResponse(MatchDetail matchDetail) {
-                //  L.d("10299", matchDetail.getResult());
-
 
                 if (!"200".equals(matchDetail.getResult())) {
                     mHandler.sendEmptyMessage(ERROR);
-
                     return;
                 }
 
@@ -483,7 +489,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                     //下拉刷新
                     if ("0".equals(mPreStatus) && "0".equals(matchDetail.getLiveStatus()) && !isFinishing()) { //赛前
-                        mPreHeadInfoFrament.initData(matchDetail);
+
+                        mPreHeadInfoFrament.initData(matchDetail, true);
                         mPreHeadInfoFrament.setScoreText("VS");
 
                         head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
@@ -498,7 +505,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                         L.d(TAG, "头部刷新");
 
-                        mPreHeadInfoFrament.initData(matchDetail);
+                        mPreHeadInfoFrament.initData(matchDetail, true);
                         mLiveHeadInfoFragment.initData(matchDetail);
 
                         matchLive = mMatchDetail.getMatchInfo().getMatchLive();
@@ -661,7 +668,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mHeadviewpager.setIsScrollable(false);
             mIndicator.setVisibility(View.GONE);
 
-            mPreHeadInfoFrament.initData(matchDetail);
+
+            L.d("99999", "賽前");
+
+            mPreHeadInfoFrament.initData(matchDetail, false);
             mPreHeadInfoFrament.setScoreText("VS");
 
             head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
@@ -669,10 +679,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             head_score.setText("VS");
 
 
-            //  mDetailsRollballFragment.setType(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
-
-            // mDetailsRollballFragment = DetailsRollballFragment.newInstance(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
 
 
         } else {
@@ -683,7 +690,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
             //头部Viewpager赛中和赛后头初始化数据
-            mPreHeadInfoFrament.initData(matchDetail);
+
+            L.d("99999", "賽后");
+
+            mPreHeadInfoFrament.initData(matchDetail, true);
             mLiveHeadInfoFragment.initData(matchDetail);
 
 
@@ -2290,11 +2300,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         if (isFocus) {
             ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_focus);
-            ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText("已关注");
+            ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText(getString(R.string.foot_details_focused));
 
         } else {
             ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_nomal);
-            ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText("关注");
+            ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText(getString(R.string.foot_details_focus));
         }
 
         final PopupWindow popupWindow = new PopupWindow(mView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -2313,12 +2323,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 if (FocusFragment.isFocusId(mThirdId)) {
                     FocusFragment.deleteFocusId(mThirdId);
                     ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_nomal);
-                    ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText("关注");
+                    ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText(getString(R.string.foot_details_focus));
 
                 } else {
                     FocusFragment.addFocusId(mThirdId);
                     ((ImageView) mView.findViewById(R.id.football_item_focus_iv)).setImageResource(R.mipmap.head_focus);
-                    ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText("已关注");
+                    ((TextView) mView.findViewById(R.id.football_item_focus_tv)).setText(getString(R.string.foot_details_focused));
 
                 }
             }
@@ -2338,7 +2348,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 ShareBean shareBean = new ShareBean();
                 String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
                 String summary = getString(R.string.share_summary);
-                shareBean.setTitle(title != null ? title : "一比分");
+                shareBean.setTitle(title != null ? title : getString(R.string.share_to_qq_app_name));
                 shareBean.setSummary(summary);
                 shareBean.setTarget_url(URL_DEFAULT);
                 shareBean.setImage_url(shareHomeIconUrl != null ? shareHomeIconUrl : "");
