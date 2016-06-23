@@ -623,6 +623,7 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
         intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, childrenDataList.get(groupPosition).get(childPosition).getThirdId());//跳转到详情
+        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, childrenDataList.get(groupPosition).get(childPosition).getMatchStatus());//跳转到详情
         //用getActivity().startActivityForResult();不走onActivityResult ;
 //        startActivityForResult(intent, REQUEST_DETAILSCODE);
         intent.putExtra("currentfragment", mBasketballType);

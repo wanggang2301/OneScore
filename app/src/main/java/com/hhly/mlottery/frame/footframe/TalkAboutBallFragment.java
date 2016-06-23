@@ -117,6 +117,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
+//            L.d("state+++++++++++",state);
         }
     }
 
@@ -131,7 +132,17 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         return mView;
 
     }
-
+//    type = getArguments().getInt("type", -1);
+//    state = getArguments().getString("state");
+    public static TalkAboutBallFragment newInstance(String param1 , String param2 , int param3) {
+        TalkAboutBallFragment fragment = new TalkAboutBallFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString("state", param2);
+        args.putInt("type", param3);
+        fragment.setArguments(args);
+        return fragment;
+    }
     /**
      * bn
      * 初始化动画
