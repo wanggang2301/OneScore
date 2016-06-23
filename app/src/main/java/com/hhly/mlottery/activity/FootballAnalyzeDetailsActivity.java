@@ -201,8 +201,8 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         }
 
 //        String url = "http://192.168.31.58:8080/mlottery/core/footBallMatch.findAnalysisDetail.do";  //?lang=zh&thirdId=78235  ?lang=zh&thirdId=78235
-        String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.findAnalysisDetail.do";
-//        String url = BaseURLs.URL_BASKET_ANALYZE_DETAILS;
+//        String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.findAnalysisDetail.do";
+        String url = BaseURLs.URL_FOOTBALL_ANALYZE_DETAILS;
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballAnalyzeDetailsBean>() {
             @Override

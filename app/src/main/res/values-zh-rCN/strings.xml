@@ -594,6 +594,7 @@
     <string name="basket_undata">暂无比赛</string>
 
     <!--篮球详情-->
+    <string name="basket_details_talkable">聊球</string>
     <!--分析-->
     <string name="basket_analyze_sides">双方战绩</string>
     <string name="basket_analyze_history">历史交锋</string>

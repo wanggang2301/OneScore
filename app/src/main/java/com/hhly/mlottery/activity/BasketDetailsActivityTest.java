@@ -350,7 +350,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
      */
     private void initView() {
         TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_eur),
-              getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof) , "聊球"};
+              getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof) , getResources().getString(R.string.basket_details_talkable)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
@@ -368,7 +368,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
 
         mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet , mTalkAboutBallFragment);
-        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
