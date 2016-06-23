@@ -561,6 +561,14 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_BALLLISTDETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_BALLLISTDETAIL;
 
 
+    //足球分析详情
+    public final static String URL_FOOTBALL_HTTP = "http://";
+    public final static String URL_FOOTBALL_PROJECT = "/mlottery/core/";
+    public final static String URL_FOOTBALL_FINDANALYSISDETAIL = "footBallMatch.findAnalysisDetail.do";
+
+    public final static String URL_FOOTBALL_ANALYZE_DETAILS = URL_FOOTBALL_HTTP + HOST + URL_FOOTBALL_PROJECT + URL_FOOTBALL_FINDANALYSISDETAIL;           // http://192.168.10.242:8181/mlottery/core/footBallMatch.findAnalysisDetail.do";
+
+
     // 首页数据测试URL
     public final static String URL_MAINDEMO = URL_API_HOST + "main.findMainResult.do";
 
@@ -632,6 +640,7 @@ public class BaseURLs {
     public final static String URL_BASKET_ANALYZE = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDANALYSIS; //"http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysis.do";
     //篮球分析详情
     public final static String URL_BASKET_ANALYZE_DETAILS = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDANALYSISDETAIL; //"http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysisDetail.do";
+
     //赔率详情
     public final static String URL_BASKET_ODDS_DETAILS = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDODDSDETAIL; //http://192.168.10.242:8181/mlottery/core/basketballDetail.findOddsDetail.do
 

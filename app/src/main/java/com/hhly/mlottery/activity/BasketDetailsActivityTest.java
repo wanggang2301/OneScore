@@ -350,7 +350,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
      */
     private void initView() {
         TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_eur),
-              getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof) , "聊球"};
+              getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof) , getResources().getString(R.string.basket_details_talkable)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
