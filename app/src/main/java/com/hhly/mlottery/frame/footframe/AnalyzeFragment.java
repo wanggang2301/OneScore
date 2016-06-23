@@ -346,16 +346,16 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             mSizeOfBet.setText(analyzeBean.getAttackDefense().getSizeHandicap());
         }
 
-//        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
-//        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
-        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=new ArrayList<>();//主队队员
-        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=new ArrayList<>();//客队队员
-        for(int i=0;i<11;i++){
-            homeLineUpList.add(new NewAnalyzeBean.LineUpEntity.PlayerInfo("梅西"+i));
-        }
-        for(int i=0;i<11;i++){
-            guestLineUpList.add(new NewAnalyzeBean.LineUpEntity.PlayerInfo("C罗"+i));
-        }
+        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
+        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=analyzeBean.getLineUp().getGuestLineUp();//客队队员
+//        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=new ArrayList<>();//主队队员
+//        List<NewAnalyzeBean.LineUpEntity.PlayerInfo> guestLineUpList=new ArrayList<>();//客队队员
+//        for(int i=0;i<11;i++){
+//            homeLineUpList.add(new NewAnalyzeBean.LineUpEntity.PlayerInfo("梅西"+i));
+//        }
+//        for(int i=0;i<11;i++){
+//            guestLineUpList.add(new NewAnalyzeBean.LineUpEntity.PlayerInfo("C罗"+i));
+//        }
 
         if(getActivity()!=null){
             mContext=getActivity();
@@ -373,7 +373,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                         TextView tv_homeTeams = new TextView(mContext);
                         tv_homeTeams.setText(homeLineUpList.get(i).getName());
                         if (i == 0) {
-                            tv_homeTeams.setPadding(dip5, dip10, 0, dip10);
+                            tv_homeTeams.setPadding(dip5, 0, 0, dip10);
                         } else {
                             tv_homeTeams.setPadding(dip5, 0, 0, dip10);
                         }
@@ -389,7 +389,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                         tv_visitingTeams.setText(guestLineUpList.get(i).getName());
                         tv_visitingTeams.setLayoutParams(params);
                         if (i == 0) {
-                            tv_visitingTeams.setPadding(0, dip10, dip5, dip10);
+                            tv_visitingTeams.setPadding(0, 0, dip5, dip10);
                         } else {
                             tv_visitingTeams.setPadding(0, 0, dip5, dip10);
                         }

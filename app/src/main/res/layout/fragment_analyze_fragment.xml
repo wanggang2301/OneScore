@@ -393,7 +393,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:text="@string/football_win_draw_lose"
                     android:textColor="@color/content_txt_light_grad"
@@ -457,7 +457,7 @@
                     android:id="@+id/football_analyze_home_win_or_lose"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:text="--"
                     android:textColor="@color/history_win"
@@ -524,7 +524,7 @@
                     android:id="@+id/football_analyze_guest_win_or_lose"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:text="--"
                     android:textColor="@color/history_win"
@@ -923,7 +923,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             >
 
             <ImageView
@@ -978,7 +978,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/x50"
-                        android:paddingTop="@dimen/y40">
+                        >
 
                     </LinearLayout>
                     <!--客队名单-->
@@ -990,7 +990,7 @@
                         android:gravity="right"
                         android:orientation="vertical"
                         android:paddingRight="@dimen/x50"
-                        android:paddingTop="@dimen/y40">
+                       >
 
                     </LinearLayout>
                 </LinearLayout>
