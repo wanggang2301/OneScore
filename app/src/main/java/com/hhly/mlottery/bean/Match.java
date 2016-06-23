@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class Match implements Parcelable, Cloneable, Comparator<Match> {
     private String thirdId;
+    private int sortId;
     private String racename;
     private String raceId;
     private String raceColor;
@@ -61,6 +62,15 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     public enum SOCKET_PUSH_TYPE {
         STATUS, ODDS, EVENT, MATCHCHANGE
+    }
+
+
+    public int getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(int sortId) {
+        this.sortId = sortId;
     }
 
     public SOCKET_PUSH_TYPE getSocketPushType() {
@@ -416,11 +426,11 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
     @Override
     public int compare(Match lhs, Match rhs) {
-        if (rhs.isTopData != 0 || lhs.isTopData != 0) {
+        if (rhs.isTopData > 0 || lhs.isTopData > 0) {
             return String.valueOf(rhs.isTopData).compareTo(String.valueOf(lhs
                     .isTopData));
         } else {
-            return lhs.time.compareTo(rhs.time);
+            return new Integer(lhs.sortId).compareTo(new Integer(rhs.sortId));
         }
 
     }

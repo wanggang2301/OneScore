@@ -177,7 +177,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             int currentapiVersion = android.os.Build.VERSION.SDK_INT;
             if (currentapiVersion == 16) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0,25,0,25);
+                params.setMargins(105,65,0,0);
                 holder.basket_half_score.setLayoutParams(params);
 
                 RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT , ViewGroup.LayoutParams.WRAP_CONTENT);

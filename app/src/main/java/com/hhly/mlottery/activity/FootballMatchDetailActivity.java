@@ -78,14 +78,15 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
 
     private final static int PERIOD_test = 1000 * 6;//刷新周期测试
-    private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
-    private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
 
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
+
+    private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
+    private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
     /**
      * 赛前轮询周期
@@ -512,11 +513,10 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
                 //数据加载成功后显示分享
                 mShare.setVisibility(View.VISIBLE);
-
+                mPreStatus = matchDetail.getLiveStatus();
 
                 if (!isInitedViewPager) {//如果ViewPager未初始化
                     initViewPager(matchDetail);
-                    mPreStatus = matchDetail.getLiveStatus();
                 } else {
 
                     //下拉刷新
@@ -531,6 +531,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                         mStadiumFragment.refreshStadiumData(matchDetail);
                     }
                 }
+
+
+
 
                 mHomeNameText.setText(matchDetail.getHomeTeamInfo().getName());
                 mHomeLikeCount.setText(matchDetail.getHomeTeamInfo().getGas());
@@ -581,7 +584,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     }
 
 
-                    if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时
+                    if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时  比赛开始时间-服务器时间大于1小时，20分钟轮训一次
                         mReloadPeriod = PERIOD_20;
                     } else {
                         if (mReloadPeriod == PERIOD_20) {//如果之前的频率是20分钟，转到5分钟，则需要关闭之前的定时器，从新开启
@@ -624,7 +627,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 }
             };
             mReloadTimer = new Timer();
-//            mReloadTimer.schedule(reloadTimerTask, 2000, PERIOD_test);
             mReloadTimer.schedule(reloadTimerTask, 2000, mReloadPeriod);
             isStartTimer = true;
         }
@@ -673,7 +675,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         //聊球
         mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("param1", mThirdId);
+        bundle.putString("param1", mThirdId);//"1072757"
+        bundle.putInt("type", 0);//1 籃球/0 足球
+        bundle.putString("state", mPreStatus);//直播状态  用来做完成不能点赞的限制
         mTalkAboutBallFragment.setArguments(bundle);
 
         fragments.add(mOddsFragment);

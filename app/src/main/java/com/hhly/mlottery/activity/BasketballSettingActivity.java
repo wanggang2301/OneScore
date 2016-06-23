@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +12,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.hhly.mlottery.R;
@@ -42,10 +44,10 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	private RadioButton mRd_asize;
 	private RadioButton mRd_noshow;
 	
-	private ToggleButton mTb_score; // 半全场总分
-	private ToggleButton mTb_Point_spread; //总分差
-	private ToggleButton mTb_single_score; //单节比分
-	private ToggleButton mTb_ranking; //排名
+	private SwitchCompat mTb_score; // 半全场总分
+	private SwitchCompat mTb_Point_spread; //总分差
+	private SwitchCompat mTb_single_score; //单节比分
+	private SwitchCompat mTb_ranking; //排名
 	
 	private ImageView mBack;
 	
@@ -64,6 +66,8 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	}
 	
 	private void initView() {
+		TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
+		public_txt_title.setText(R.string.basket_setting_tittle);
 		
 		mAlet = (RelativeLayout) findViewById(R.id.rl_alet);
 		mAlet.setOnClickListener(this);
@@ -79,19 +83,22 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		mRd_asize = (RadioButton) findViewById(R.id.rd_asize);
 		mRd_noshow = (RadioButton) findViewById(R.id.rd_noshow);
 		
-		mTb_score = (ToggleButton) findViewById(R.id.tb_score);
+		mTb_score = (SwitchCompat) findViewById(R.id.tb_score);
 //		mTb_score.setOnClickListener(this);
 		mTb_score.setOnCheckedChangeListener(this);
 
-		mTb_Point_spread = (ToggleButton) findViewById(R.id.tb_Point_spread);
+		mTb_Point_spread = (SwitchCompat) findViewById(R.id.tb_Point_spread);
 		mTb_Point_spread.setOnCheckedChangeListener(this);
-		mTb_single_score = (ToggleButton) findViewById(R.id.tb_single_score);
+		mTb_single_score = (SwitchCompat) findViewById(R.id.tb_single_score);
 		mTb_single_score.setOnCheckedChangeListener(this);
-		mTb_ranking = (ToggleButton) findViewById(R.id.tb_ranking);
+		mTb_ranking = (SwitchCompat) findViewById(R.id.tb_ranking);
 		mTb_ranking.setOnCheckedChangeListener(this);
 		
-		mBack = (ImageView) findViewById(R.id.ib_back);
+		mBack = (ImageView) findViewById(R.id.public_img_back);
 		mBack.setOnClickListener(this);
+
+		findViewById(R.id.public_btn_set).setVisibility(View.GONE); //隐藏设置按键
+		findViewById(R.id.public_btn_filter).setVisibility(View.GONE); //隐藏筛选按键
 		
 	}
 
@@ -179,7 +186,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			save();
 			break;
 
-		case R.id.ib_back:
+		case R.id.public_img_back:
 			MobclickAgent.onEvent(mContext,"Basketball_Setting_Exit");
 			Intent intent = new Intent();
 			intent.putExtra("resultType", resultstring);

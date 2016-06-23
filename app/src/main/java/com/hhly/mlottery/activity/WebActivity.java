@@ -1,40 +1,29 @@
 package com.hhly.mlottery.activity;
 
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
-import com.hhly.mlottery.callback.ShareTencentCallBack;
+import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.frame.ChatFragment;
+import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.ProgressWebView;
-import com.tencent.connect.share.QQShare;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 import com.umeng.analytics.MobclickAgent;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -58,11 +47,10 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     private String infoTypeName;// 资讯类型名
     private static final String INTENT_PARAMS_TITLE = "title";
     private ImageView public_btn_set;
-    private ShareTencentCallBack mShareTencentCallBack;
-    private ShareCopyLinkCallBack mShareCopyLinkCallBack;
-    private Tencent mTencent;
-    private SharePopupWindow sharePopupWindow;
+
     private float y;
+
+    private ShareFragment mShareFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +89,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                         }
                         case 2:// 足球
                         {
-                            Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                            Intent intent = new Intent(mContext, FootballMatchDetailActivityTest.class);
                             intent.putExtra("thirdId", mThird);
                             intent.putExtra("currentFragmentId", -1);
                             mContext.startActivity(intent);
@@ -119,7 +107,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         public_btn_filter.setVisibility(View.GONE);
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
         public_btn_set.setImageResource(R.mipmap.share);
-        public_btn_set.setVisibility(View.GONE);
+        public_btn_set.setVisibility(View.VISIBLE);
 
         public_btn_set.setOnClickListener(this);
 
@@ -133,8 +121,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
             @Override
             public void onSChanged(int l, int t, int oldl, int oldt) {
-                System.out.println("lzf+l=" + l + "t=" + t + "oldl=" + oldl + "oldt" + oldt);
-                System.out.println("lzf+getContentHeight=" + mWebView.getContentHeight() * mWebView.getScale() + "getHeight=" + (mWebView.getHeight() + mWebView.getScrollY()));
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
                 if (y < 3) {
 
@@ -188,7 +174,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             subtitle = intent.getStringExtra("subtitle");//轮播图没有副标题，所以为null  请知悉
             mType = intent.getIntExtra("type", 0);
             mThird = intent.getStringExtra("thirdId");
-            System.out.println("lzf:" + "mType=" + mType + "mThird" + mThird);
             infoTypeName = intent.getStringExtra("infoTypeName");
             token = AppConstants.register.getData().getLoginToken();
             String deviceId = AppConstants.deviceToken;
@@ -202,6 +187,16 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                ChatFragment chatFragment = new ChatFragment();
 //                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
 //            }
+            if (url != null && url.contains("comment")) {
+                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+                ChatFragment chatFragment = new ChatFragment();
+                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+            }
+            if (url != null && url.contains("share")) {
+                public_btn_set.setVisibility(View.VISIBLE);
+            } else {
+                public_btn_set.setVisibility(View.GONE);
+            }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -231,14 +226,13 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                url = url.replace("{deviceToken}", deviceId);
 //            }
             if (url != null) {
-                if (url.contains("comment")) {
-                    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                    ChatFragment chatFragment = new ChatFragment();
-                    CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+                ChatFragment chatFragment = new ChatFragment();
+                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                if (url.contains("comment=false")) {
+                    getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
                 }
-                if (url.contains("share")) {
-                    public_btn_set.setVisibility(View.VISIBLE);//显示分享
-                } else {
+                if (url.contains("share=false")) {
                     public_btn_set.setVisibility(View.GONE);//隐藏分享
                 }
                 url = url.replace("{loginToken}", token);
@@ -246,22 +240,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             }
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
-            L.d("CommonUtils:" + "token=" + token + "reqMethod" + reqMethod + "url=" + url);
+            Log.d("CommonUtils:", "token=" + token + "reqMethod" + reqMethod + "url=" + url);
 
-            mShareTencentCallBack = new ShareTencentCallBack() {
-                @Override
-                public void onClick(int flag) {
-                    shareQQ(flag);
-                }
-            };
-
-            mShareCopyLinkCallBack = new ShareCopyLinkCallBack() {
-                @Override
-                public void onClick() {
-                    ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                    cmb.setText(url);
-                }
-            };
 
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
         } catch (Exception e) {
@@ -304,78 +284,31 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 break;
             case R.id.public_btn_set: //分享
                 //  @style/AppTheme.BlackStatusBar.ColorGreen
+
+
+                MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
+
+                ShareBean shareBean = new ShareBean();
+
                 String summary = "";
                 if (subtitle == null || "".equals(subtitle)) {
                     summary = getString(R.string.share_summary_default);
                 } else {
                     summary = subtitle;
                 }
+                shareBean.setTitle(title != null ? title : mContext.getResources().getString(R.string.share_recommend));
+                shareBean.setSummary(summary);
+                shareBean.setTarget_url(url != null ? url : "http://m.13322.com");
+                shareBean.setImage_url(imageurl != null ? imageurl : "");
+                shareBean.setCopy(url);
 
-                MobclickAgent.onEvent(mContext, "Football_DataInfo_Share");
-                Map<String, String> map = new HashMap<String, String>();
-                map.put(ShareConstants.TITLE, title != null ? title : mContext.getResources().getString(R.string.share_recommend));
-                map.put(ShareConstants.SUMMARY, summary);
-                map.put(ShareConstants.TARGET_URL, url != null ? url : "http://m.13322.com");
-                map.put(ShareConstants.IMAGE_URL, imageurl != null ? imageurl : "");
-                sharePopupWindow = new SharePopupWindow(this, public_btn_set, map);
-                sharePopupWindow.setmShareTencentCallBack(mShareTencentCallBack);
-                sharePopupWindow.setmShareCopyLinkCallBack(mShareCopyLinkCallBack);
-                sharePopupWindow.popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        backgroundAlpha(1f);
-                    }
-                });
-
-                backgroundAlpha(0.5f);
+                mShareFragment = ShareFragment.newInstance(shareBean);
+                mShareFragment.show(getSupportFragmentManager(), "bottomShare");
         }
     }
 
-    public void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = bgAlpha; //0.0-1.0
-        getWindow().setAttributes(lp);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
-    }
 
-    private void shareQQ(int falg) {
-        mTencent = Tencent.createInstance(ShareConstants.QQ_APP_ID, this);
-        final Bundle bundle = new Bundle();
-        //这条分享消息被好友点击后的跳转URL。
-
-        String appname = getString(R.string.share_to_qq_app_name);
-
-        String summary = "";
-        if (subtitle == null || "".equals(subtitle)) {
-            summary = getString(R.string.share_summary_default);
-        } else {
-            summary = subtitle;
-        }
-
-        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
-        bundle.putString(QQShare.SHARE_TO_QQ_TITLE, title != null ? title : "");
-        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, summary);
-        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url != null ? url : "");
-        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageurl != null ? imageurl : "");
-        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
-        bundle.putInt(QQShare.SHARE_TO_QQ_EXT_INT, falg);
-        mTencent.shareToQQ(WebActivity.this, bundle, qqShareListener);
-    }
-
-    IUiListener qqShareListener = new IUiListener() {
-        @Override
-        public void onCancel() {
-        }
-
-        @Override
-        public void onComplete(Object response) {
-        }
-
-        @Override
-        public void onError(UiError e) {
-        }
-    };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

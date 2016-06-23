@@ -2,42 +2,52 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
               android:background="@color/whitesmoke"
+              android:orientation="vertical"
     >
 
 
-    <include layout="@layout/layout_header" />
+    <include layout="@layout/layout_header"/>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/tv_login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:layout_height="80dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/image_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="15dp"
-            android:src="@mipmap/portrait"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/bighead"
             />
 
 
         <TextView
             android:id="@+id/tv_nickname"
+            style="@style/login_edittext_common"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            style="@style/login_edittext_common"
-            android:src="@mipmap/person"
+            android:layout_toRightOf="@+id/image_photo"
             android:gravity="center_vertical"
+            android:src="@mipmap/person"
             />
 
 
-    </LinearLayout>
+        <ImageView
 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/plate_icon"/>
+    </RelativeLayout>
 
 
     <TextView

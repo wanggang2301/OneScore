@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,11 +127,11 @@ public class CPIOddsFragment extends Fragment {
         mHandler.sendEmptyMessage(STARTLOADING);
         Map<String, String> map = new HashMap<>();
 
-        if (type.equals(CPIFragment.TYPE_PLATE)) {
+        if (CPIFragment.TYPE_PLATE.equals(type)) {
             map.put("type", "1");
-        } else if (type.equals(CPIFragment.TYPE_BIG)) {
+        } else if (CPIFragment.TYPE_BIG.equals(type)) {
             map.put("type", "3");
-        } else if (type.equals(CPIFragment.TYPE_OP)) {
+        } else if (CPIFragment.TYPE_OP.equals(type)) {
             map.put("type", "2");
         }
         if (!"".equals(date)) {
@@ -358,8 +359,14 @@ public class CPIOddsFragment extends Fragment {
                     String statusOrigin = webSocketTimeAndScore.getData().get("statusOrigin");
                     int status = Integer.parseInt(statusOrigin);
                     String keepTime = webSocketTimeAndScore.getData().get("keepTime");
+                    matchInfoBean.setMatchState(statusOrigin);
+                    matchInfoBean.setOpenTime(keepTime);
                         /*0:未开, 1:上半场, 2:中场, 3:下半场, 4:加时, 5:点球
                        -1:完场, -10:取消, -11:待定, -12:腰斩, -13:中断, -14:推迟, -100:隐藏. */
+                    /*if (status < 0) {
+
+                    }
+                    matchInfoBean.setMatchState(statusOrigin);
                     switch (status) {
                         case 0:
                             matchInfoBean.setIsShowTitle(false);
@@ -420,7 +427,7 @@ public class CPIOddsFragment extends Fragment {
                             break;
                         default:
                             break;
-                    }
+                    }*/
                 } else if ("score".equals(oddType)) {
                     //如果是主客队比分的
                     String matchResult = webSocketTimeAndScore.getData().get("matchResult");
@@ -450,19 +457,7 @@ public class CPIOddsFragment extends Fragment {
      * 赔率推送赔率
      */
     public void upDateOdds(WebFootBallSocketOdds webSKOdds, int oddType) {
-        //如果是亚盘的
-        if (oddType == 1) {
-            filtrateSocket(webSKOdds, 1);
-        }
-        //如果是欧赔的
-        else if (oddType == 2) {
-            filtrateSocket(webSKOdds, 2);
-        }
-        //如果是大小的
-        else if (oddType == 3) {
-            filtrateSocket(webSKOdds, 3);
-        }
-
+        filtrateSocket(webSKOdds, oddType);
     }
 
     /**
@@ -471,6 +466,7 @@ public class CPIOddsFragment extends Fragment {
      * @param webSocketOdds
      */
     private void filtrateSocket(WebFootBallSocketOdds webSocketOdds, int typeNum) {
+        System.out.println("socket 刷新数据");
         for (int h = 0; h < mShowInfoBeans.size(); h++) {
             //如果赛事里面id有推送过来的id
             if (mShowInfoBeans.get(h).getMatchInfo().getMatchId().equals(webSocketOdds.getThirdId())) {
@@ -478,6 +474,11 @@ public class CPIOddsFragment extends Fragment {
                 if (!webSocketOdds.getData().isEmpty()) {
 
                     for (int e = 0; e < webSocketOdds.getData().size(); e++) {
+                        Map<String, String> stringStringMap = webSocketOdds.getData().get(e);
+                        if (!(typeNum + "").equals(stringStringMap.get("oddType"))) {
+                            continue;
+                        }
+
 
                         for (int j = 0; j < mShowInfoBeans.get(h).getComList().size(); j++) {
 

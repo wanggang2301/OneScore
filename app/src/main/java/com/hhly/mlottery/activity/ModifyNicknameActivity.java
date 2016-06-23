@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -38,12 +39,15 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
     private EditText et_nickname;
     private Button public_btn_save;
     private ProgressDialog progressBar;
+    private String mNickname;//传递过来的昵称
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //
         setContentView(R.layout.activity_modify_nickname);
+        Intent i = getIntent();
+        mNickname = i.getStringExtra("nickname");
         initView();
     }
 
@@ -108,38 +112,47 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
 
         final String nickName = et_nickname.getText().toString();
         if (UiUtils.checkNickname(this , nickName)) {
-            progressBar.show();
-            String url = BaseURLs.URL_EDITNICKNAME;
-            Map<String, String> param = new HashMap<>();
-            param.put("loginToken" , AppConstants.register.getData().getLoginToken());
-            param.put("deviceToken" , AppConstants.deviceToken);
-            param.put("nickname" , nickName);
 
-            VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
-                @Override
-                public void onResponse(BaseBean bean) {
+             if(!mNickname.equals(nickName)) {
+                 progressBar.show();
+                 String url = BaseURLs.URL_EDITNICKNAME;
+                 Map<String, String> param = new HashMap<>();
+                 param.put("loginToken", AppConstants.register.getData().getLoginToken());
+                 param.put("deviceToken", AppConstants.deviceToken);
+                 param.put("nickname", nickName);
 
-                    progressBar.dismiss();
+                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
+                     @Override
+                     public void onResponse(BaseBean bean) {
 
-                    if (bean.getResult() == AccountResultCode.SUCC){
-                        UiUtils.toast(MyApp.getInstance(), R.string.modify_nickname_succ);
-                        AppConstants.register.getData().getUser().setNickName(nickName);
-                        CommonUtils.saveRegisterInfo(AppConstants.register);
-                        finish();
-                    }else{
-                        CommonUtils.handlerRequestResult(bean.getResult() , bean.getMsg());
-                    }
-                }
-            }, new VolleyContentFast.ResponseErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                         progressBar.dismiss();
 
-                    progressBar.dismiss();
+                         if (bean.getResult() == AccountResultCode.SUCC) {
+                             UiUtils.toast(MyApp.getInstance(), R.string.modify_nickname_succ);
+                             AppConstants.register.getData().getUser().setNickName(nickName);
+                             CommonUtils.saveRegisterInfo(AppConstants.register);
+                             finish();
+                         } else if (bean.getResult() == AccountResultCode.USER_NOT_LOGIN) {
+                             UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
+                             Intent intent = new Intent(ModifyNicknameActivity.this, LoginActivity.class);
+                             startActivity(intent);
+                         } else {
+                             CommonUtils.handlerRequestResult(bean.getResult(), bean.getMsg());
+                         }
+                     }
+                 }, new VolleyContentFast.ResponseErrorListener() {
+                     @Override
+                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
-                    L.e(TAG , " 修改nickName失败");
-                    UiUtils.toast(ModifyNicknameActivity.this , R.string.immediate_unconection);
-                }
-            } , BaseBean.class);
+                         progressBar.dismiss();
+
+                         L.e(TAG, " 修改nickName失败");
+                         UiUtils.toast(ModifyNicknameActivity.this, R.string.immediate_unconection);
+                     }
+                 }, BaseBean.class);
+             }else{
+                 UiUtils.toast(getApplicationContext() ,R.string.pw_same_same);
+             }
         }
 
     }

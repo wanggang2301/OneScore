@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -311,7 +312,9 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
     public void onDestroy() {
         super.onDestroy();
 
-        computeWebSocketConnTimer.cancel();
+        if (computeWebSocketConnTimer != null) {
+            computeWebSocketConnTimer.cancel();
+        }
 
         if (hSocketClient != null) {
             hSocketClient.close();
@@ -332,9 +335,10 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
     //心跳时间
     private long pushStartTime;
 
-    private Timer computeWebSocketConnTimer = new Timer();
+    private Timer computeWebSocketConnTimer;
 
     private void computeWebSocket() {
+        computeWebSocketConnTimer = new Timer();
         TimerTask tt = new TimerTask() {
             @Override
             public void run() {
@@ -1070,7 +1074,9 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
 
         allMatchLiveMsgId = new ArrayList<>();
         for (MatchTextLiveBean ml : matchLive) {
-            allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
+            if (!TextUtils.isEmpty(ml.getMsgId())) {
+                allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
+            }
         }
 
         if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
@@ -1357,7 +1363,6 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
         super.onDestroyView();
 
         L.i("1029", "onDestroyView");
-        computeWebSocketConnTimer.cancel();
 
         if (hSocketClient != null) {
             hSocketClient.close();
@@ -1555,6 +1560,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 // 赛场后更新走势图数据
                 isStart = true;
                 trendFragment.initData();// 刷新攻防走势图
+
                 statisticsFragment.initData();// 刷新统计
 
                 //点赞不可点
@@ -1651,6 +1657,8 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 //事件放入并展示
                 // showFootballEvent();//显示事件
                 showFootballEventByState();
+
+
                 break;
 
             case "2054"://取消客队进球

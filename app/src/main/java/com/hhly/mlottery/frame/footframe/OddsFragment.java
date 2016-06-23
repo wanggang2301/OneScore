@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,7 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
         odd_big_btn.setOnClickListener(this);
 
         odd_plate_btn.setSelected(true);// 默认选中’亚盘‘
-        odd_plate_btn.setTextColor(getResources().getColor(R.color.tabhost__selected_text));//默认选中的颜色
+        odd_plate_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost__selected_text));//默认选中的颜色
         mPlateFragment = new PlateFragment();// 默认选中’亚盘‘
         Bundle bundle = new Bundle();
         bundle.putString("key1", "one");
@@ -78,7 +79,6 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.odd_content_fragment, mPlateFragment).commit();
         odd_plate_btn.setClickable(false);// 默认让’亚盘‘不可点
-
     }
 
     @Override
@@ -91,9 +91,9 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.odd_plate_btn://亚盘
                 MobclickAgent.onEvent(mContext, "Football_MatchData_OddPlateBtn");
-                odd_plate_btn.setTextColor(getResources().getColor(R.color.tabhost__selected_text));
-                odd_op_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
-                odd_big_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
+                odd_plate_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost__selected_text));
+                odd_op_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost_unselected_text));
+                odd_big_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost_unselected_text));
 
                 odd_plate_btn.setClickable(false);
                 odd_op_btn.setClickable(true);
@@ -105,9 +105,9 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.odd_op_btn://欧赔
                 MobclickAgent.onEvent(mContext, "Football_MatchData_OddOpBtn");
-                odd_plate_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
-                odd_op_btn.setTextColor(getResources().getColor(R.color.tabhost__selected_text));
-                odd_big_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
+                odd_plate_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost_unselected_text));
+                odd_op_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost__selected_text));
+                odd_big_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost_unselected_text));
 
                 odd_plate_btn.setClickable(true);
                 odd_op_btn.setClickable(false);
@@ -121,9 +121,9 @@ public class OddsFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.odd_big_btn://大小
                 MobclickAgent.onEvent(mContext, "Football_MatchData_OddBigBtn");
-                odd_plate_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
-                odd_op_btn.setTextColor(getResources().getColor(R.color.tabhost_unselected_text));
-                odd_big_btn.setTextColor(getResources().getColor(R.color.tabhost__selected_text));
+                odd_plate_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost_unselected_text));
+                odd_op_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost_unselected_text));
+                odd_big_btn.setTextColor(ContextCompat.getColor(mContext, R.color.tabhost__selected_text));
 
                 odd_plate_btn.setClickable(true);
                 odd_op_btn.setClickable(true);
