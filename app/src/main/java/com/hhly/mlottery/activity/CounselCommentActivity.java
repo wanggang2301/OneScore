@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.ChatFragment;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;

@@ -216,6 +216,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;//文章id
             }
+
             @Override
             public void onRequestFailed(CyanException e) {
             }
