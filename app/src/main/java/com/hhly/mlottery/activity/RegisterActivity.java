@@ -290,8 +290,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void onGetResponce(SendSmsCode code) {
+                L.e(TAG, "code>>>>>>>>>>>" + code.getResult());
+
 //              // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
-                if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
+                if (code.getResult() == AccountResultCode.SUCC) {
+                    UiUtils.toast(MyApp.getInstance(), R.string.send_register_succ);
+                } else if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
                         || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
                         || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
                         ) {

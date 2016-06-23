@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +13,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.Focus;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
-import com.hhly.mlottery.frame.oddfragment.BasketScoresFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;

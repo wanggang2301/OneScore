@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -48,7 +47,6 @@ import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -522,13 +520,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     break;
                 case VERSION_UPDATA_SUCCESS:// 检查版本更新
                     try {
-                        boolean isNewVersion = true;
+//                        boolean isNewVersion = true;
                         int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
                         int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
                         L.d("xxx", "serverVersion:" + serverVersion);
                         L.d("xxx", "currentVersion:" + currentVersion);
                         if (currentVersion < serverVersion) {// 有更新
-                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);// 获取本地忽略版本
+                            promptVersionUp();
+                            /*String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);// 获取本地忽略版本
                             L.d("xxx", "versionIgnore:" + versionIgnore);
                             if (versionIgnore != null) {
                                 if (versionIgnore.contains("#")) {
@@ -549,7 +548,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                                 }
                             } else {
                                 promptVersionUp();
-                            }
+                            }*/
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -575,7 +574,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 builder.setMessage(mMessage);// 提示内容
             }
             builder.setPositiveButton(mContext.getResources().getString(R.string.basket_analyze_update), new DialogInterface.OnClickListener() {
-                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -588,14 +587,19 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     //是否允许漫游状态下，执行下载操作
                     request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
                     //是否允许“计量式的网络连接”执行下载操作
-                    request.setAllowedOverMetered(false);// 默认是允许的。
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        request.setAllowedOverMetered(false);// 默认是允许的。
+                    }
+
                     //request.setTitle("一比分新版本下载");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     request.setMimeType("application/vnd.android.package-archive");
                     L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
                     String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"), mUpdateInfo.getUrl().length());
                     L.d("xxx", "mAppName:>>" + mAppName);
-                    request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), mAppName);
+//                    request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(),mAppName);
+                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mAppName);
                     // 设置为可被媒体扫描器找到
                     request.allowScanningByMediaScanner();
                     // 设置为可见和可管理
@@ -611,20 +615,20 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
                 }
             });
-            builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);
-                    if (versionIgnore != null) {
-                        versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
-                    } else {
-                        versionIgnore = String.valueOf(mUpdateInfo.getVersion());
-                    }
-                    PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
-                    L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
-                    dialog.cancel();
-                }
-            });
+//            builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);
+//                    if (versionIgnore != null) {
+//                        versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
+//                    } else {
+//                        versionIgnore = String.valueOf(mUpdateInfo.getVersion());
+//                    }
+//                    PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
+//                    L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
+//                    dialog.cancel();
+//                }
+//            });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         } catch (Resources.NotFoundException e) {

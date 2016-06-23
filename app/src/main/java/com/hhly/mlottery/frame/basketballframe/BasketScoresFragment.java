@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.oddfragment;
+package com.hhly.mlottery.frame.basketballframe;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -492,7 +492,7 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        L.d(TAG, "football Fragment resume..");
+        L.d(TAG, "basket Fragment resume..");
 
         if (isImmediateFragment) {
             isImmediate = true;
@@ -536,7 +536,6 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        L.d(TAG, "football Fragment destroy..");
     }
 
 

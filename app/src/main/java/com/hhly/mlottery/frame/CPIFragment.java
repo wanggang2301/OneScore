@@ -169,8 +169,8 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     @Override
     public void onResume() {
         super.onResume();
-//        startWebSocket();
-//        computeWebSocket();
+        startWebSocket();
+        computeWebSocket();
 //        MyT myT = new MyT();
 //        myT.start();
     }
@@ -273,9 +273,9 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
             String ws_json = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
             Log.d("ws_json", ws_json);
             //赔率模拟数据
-//            ws_json = "{'data':[{'comId':'3','leftOdds':'0.25','mediumOdds':'1.75','oddType':'2','rightOdds':'0.25','uptime':'18:40'}],'thirdId':'339608','type':2}  ";
+//            ws_json = "{'data':[{\"comId\":\"45\",\"leftOdds\":\"0.73\",\"mediumOdds\":\"0.75\",\"oddType\":\"1\",\"rightOdds\":\"1.07\",\"uptime\":\"22:14\"},{\"comId\":\"45\",\"leftOdds\":\"1.52\",\"mediumOdds\":\"2.95\",\"oddType\":\"2\",\"rightOdds\":\"9.27\",\"uptime\":\"22:14\"},{\"comId\":\"44\",\"leftOdds\":\"0.73\",\"mediumOdds\":\"0.75\",\"oddType\":\"1\",\"rightOdds\":\"1.07\",\"uptime\":\"22:14\"},{\"comId\":\"44\",\"leftOdds\":\"1.52\",\"mediumOdds\":\"2.95\",\"oddType\":\"2\",\"rightOdds\":\"9.27\",\"uptime\":\"22:14\"},{\"comId\":\"44\",\"leftOdds\":\"0.92\",\"mediumOdds\":\"3.50\",\"oddType\":\"3\",\"rightOdds\":\"0.88\",\"uptime\":\"22:14\"}],'thirdId':'338740','type':2}  ";
             //时间模拟数据
-//            ws_json = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'339608','type':1}  ";
+//            ws_json = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'338740','type':1}";
             //比分模拟推送
 //            ws_json = "{'data':{'matchResult':'80:80'},'thirdId':'337551','type':3}  ";
 
@@ -322,7 +322,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 时间推送
      */
-    private void upDateTime(String json) {
+    private synchronized void upDateTime(String json) {
 
         WebFootBallSocketTime webSocketOddsTime =
                 JSON.parseObject(json, WebFootBallSocketTime.class);
@@ -334,22 +334,23 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 赔率推送
      */
-    public void upDateOdds(String json) {
+    public synchronized void upDateOdds(String json) {
 
         WebFootBallSocketOdds webSocketOdds =
                 JSON.parseObject(json, WebFootBallSocketOdds.class);
 
         for (int i = 0; i < webSocketOdds.getData().size(); i++) {
+            Map<String, String> stringStringMap = webSocketOdds.getData().get(i);
             //如果是亚盘的
-            if ("1".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+            if ("1".equals(stringStringMap.get("oddType"))) {
                 mCPIOddsFragment.upDateOdds(webSocketOdds, 1);
             }
             //如果是欧赔的
-            else if ("2".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+            else if ("2".equals(stringStringMap.get("oddType"))) {
                 mCPIOddsFragment3.upDateOdds(webSocketOdds, 2);
             }
             //如果是大小的
-            else if ("3".equals(webSocketOdds.getData().get(i).get("oddType"))) {
+            else if ("3".equals(stringStringMap.get("oddType"))) {
                 mCPIOddsFragment2.upDateOdds(webSocketOdds, 3);
             }
         }
@@ -358,7 +359,7 @@ public class CPIFragment extends Fragment implements View.OnClickListener, Swipe
     /**
      * 主客队比分推送
      */
-    private void upDateScore(String json) {
+    private synchronized void upDateScore(String json) {
 
         WebFootBallSocketTime webSocketOddsScore =
                 JSON.parseObject(json, WebFootBallSocketTime.class);

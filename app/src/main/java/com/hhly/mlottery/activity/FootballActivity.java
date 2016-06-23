@@ -15,12 +15,12 @@ import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.frame.CounselFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.VideoFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.InformationFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
-import com.hhly.mlottery.frame.oddfragment.BasketScoresFragment;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.umeng.analytics.MobclickAgent;
 

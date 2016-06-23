@@ -31,7 +31,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
 import com.hhly.mlottery.adapter.ImmediateInternationalAdapter;
 import com.hhly.mlottery.bean.HotFocusLeagueCup;
@@ -109,7 +109,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     public static int mLoadDataStatus = LOAD_DATA_STATUS_INIT;// 加载数据状态
     public static boolean isNetSuccess = true;// 告诉筛选页面数据是否加载成功
 
-    // private SlideListView mListView;
+   // private SlideListView mListView;
 
 /*    private ImageView mBackImgBtn;// 返回菜单
     private ImageView mFilterImgBtn;// 筛选
@@ -177,6 +177,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
     public static EventBus imEventBus;
 
+
+
     private static final String FRAGMENT_INDEX = "fragment_index";
     private final int FIRST_FRAGMENT = 0;
     private final int SECOND_FRAGMENT = 1;
@@ -186,13 +188,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     private TextView mFragmentView;
 
     private int mCurIndex = -1;
-    /**
-     * 标志位，标志已经初始化完成
-     */
+    /** 标志位，标志已经初始化完成 */
     private boolean isPrepared;
-    /**
-     * 是否已被加载过一次，第二次就不再去请求数据了
-     */
+    /** 是否已被加载过一次，第二次就不再去请求数据了 */
     private boolean mHasLoadedOnce;
 
 
@@ -206,6 +204,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     private String teamLogoSuff;
 
 
+
+
     public static ImmediateFragment newInstance(String param1, String param2) {
         ImmediateFragment fragment = new ImmediateFragment();
         Bundle args = new Bundle();
@@ -214,6 +214,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         fragment.setArguments(args);
         return fragment;
     }
+
 
 
     public static ImmediateFragment newInstance(int index) {
@@ -232,7 +233,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        imEventBus = new EventBus();
+        imEventBus=new EventBus();
         imEventBus.register(this);
 
     }
@@ -260,8 +261,10 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         }*/
 
 
+
         mContext = getActivity();
         mView = inflater.inflate(R.layout.football_immediate, container, false);
+
 
 
         initMedia();
@@ -320,16 +323,16 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         //mSwipeRefreshLayout.setRefreshing(true);
 
         // 加载数据的listview
-        //  mListView = (SlideListView) mView.findViewById(R.id.immediate_listview);
-        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerview_immedia);
+      //  mListView = (SlideListView) mView.findViewById(R.id.immediate_listview);
+         mRecyclerView=(RecyclerView)mView.findViewById(R.id.recyclerview_immedia);
 
         mRecyclerView.setLayoutManager(layoutManager);
 
 
 //		if (AppConstants.isGOKeyboard) {
         //左划禁止 mod_forbid
-        //   mListView.initSlideMode(SlideListView.MOD_FORBID);
-        //  mListView.setSwipeRefreshLayout(mSwipeRefreshLayout);
+     //   mListView.initSlideMode(SlideListView.MOD_FORBID);
+      //  mListView.setSwipeRefreshLayout(mSwipeRefreshLayout);
 
 //		}
 
@@ -356,7 +359,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             public void onClick(View view, String third) {
 
 //				if (AppConstants.isGOKeyboard) {
-                //  mListView.slideBack();
+              //  mListView.slideBack();
 //				}
 
                 //String focusIds = PreferenceUtil.getString("focus_ids", "");
@@ -364,14 +367,14 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
                 if (!isCheck) {// 插入数据
                     FocusFragment.addFocusId(third);
-                    // ((TextView) view).setText(R.string.cancel_favourite);
-                    ((ImageView) view).setImageResource(R.mipmap.football_focus);
+                   // ((TextView) view).setText(R.string.cancel_favourite);
+                    ((ImageView)view).setImageResource(R.mipmap.football_focus);
 
                     view.setTag(true);
                 } else {// 删除
                     FocusFragment.deleteFocusId(third);
-                    //  ((TextView) view).setText(R.string.favourite);
-                    ((ImageView) view).setImageResource(R.mipmap.football_nomal);
+                  //  ((TextView) view).setText(R.string.favourite);
+                    ((ImageView)view).setImageResource(R.mipmap.football_nomal);
 
                     view.setTag(false);
                 }
@@ -381,6 +384,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
 
     }
+
+
 
 
     private final static int VIEW_STATUS_LOADING = 1;
@@ -485,6 +490,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                 teamLogoPre = jsonMatch.getTeamLogoPre();
                 teamLogoSuff = jsonMatch.getTeamLogoSuff();
 
+
                 HotFocusUtils hotFocusUtils = new HotFocusUtils();
                 hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
 
@@ -536,24 +542,24 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                     mInternationalAdapter.setFocusClickListener(mFocusClickListener);
                                     mListView.setAdapter(mInternationalAdapter);*//*
                                 } else {*/
-                                mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                                //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                                mAdapter.setmFocusMatchClickListener(mFocusClickListener);
-                                mRecyclerView.setAdapter(mAdapter);
+                                    mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                                    //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
+                                    mAdapter.setmFocusMatchClickListener(mFocusClickListener);
+                                    mRecyclerView.setAdapter(mAdapter);
 
 
-                                mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View view, String data) {
-                                        String thirdId = data;
-                                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                                        intent.putExtra("thirdId", thirdId);
-                                        intent.putExtra("currentFragmentId", 0);
+                                    mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, String data) {
+                                            String thirdId = data;
+                                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                                            intent.putExtra("thirdId", thirdId);
+                                            intent.putExtra("currentFragmentId", 0);
 
-                                        getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-                                    }
-                                });
-                                // }
+                                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                        }
+                                    });
+                               // }
 
                                 isLoadedData = true;
                                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
@@ -595,22 +601,22 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                             mInternationalAdapter.setFocusClickListener(mFocusClickListener);
                             mListView.setAdapter(mInternationalAdapter);*//*
                         } else {*/
-                        mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                        //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                        mAdapter.setmFocusMatchClickListener(mFocusClickListener);
-                        mRecyclerView.setAdapter(mAdapter);
+                            mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                            //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
+                            mAdapter.setmFocusMatchClickListener(mFocusClickListener);
+                            mRecyclerView.setAdapter(mAdapter);
 
 
-                        mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, String data) {
-                                String thirdId = data;
-                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
-                                intent.putExtra("thirdId", thirdId);
-                                getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-                            }
-                        });
-                        //  }
+                            mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, String data) {
+                                    String thirdId = data;
+                                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                                    intent.putExtra("thirdId", thirdId);
+                                    getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                }
+                            });
+                      //  }
 
                         isLoadedData = true;
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
@@ -664,13 +670,13 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-//            L.e(TAG, "__handleMessage__");
+            L.e(TAG, "__handleMessage__");
 
             L.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 1) {
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
-                WebSocketMatchStatus webSocketMatchStatus;
+                WebSocketMatchStatus webSocketMatchStatus = null;
                 try {
                     webSocketMatchStatus = JSON.parseObject(ws_json, WebSocketMatchStatus.class);
                 } catch (Exception e) {
@@ -684,7 +690,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             } else if (msg.arg1 == 2) {
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
-                WebSocketMatchOdd webSocketMatchOdd;
+                WebSocketMatchOdd webSocketMatchOdd = null;
                 try {
                     webSocketMatchOdd = JSON.parseObject(ws_json, WebSocketMatchOdd.class);
                 } catch (Exception e) {
@@ -713,7 +719,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             } else if (msg.arg1 == 3) {
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
-                WebSocketMatchEvent webSocketMatchEvent;
+                WebSocketMatchEvent webSocketMatchEvent = null;
                 try {
                     webSocketMatchEvent = JSON.parseObject(ws_json, WebSocketMatchEvent.class);
                 } catch (Exception e) {
@@ -725,7 +731,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             } else if (msg.arg1 == 5) {
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
-                WebSocketMatchChange webSocketMatchChange;
+                WebSocketMatchChange webSocketMatchChange = null;
                 try {
                     webSocketMatchChange = JSON.parseObject(ws_json, WebSocketMatchChange.class);
                 } catch (Exception e) {
@@ -1254,7 +1260,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     }
 
 
-    public void reLoadData() {
+    public void reLoadData(){
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         mLoadHandler.postDelayed(mLoadingDataThread, 0);
     }
@@ -1279,12 +1285,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     }
 
 
-    /**
-     * 刷选返回
+    /**刷选返回
      * 接受消息的页面实现
-     */
-    public void onEventMainThread(Map<String, Object> map) {
-        String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
+     * */
+    public void onEventMainThread(Map<String,Object> map) {
+        String[] checkedIds = (String[])((LinkedList)map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(new String[]{});
         FiltrateCupsMap.immediateCups = checkedIds;
         mMatchs.clear();
         for (Match match : mAllMatchs) {
@@ -1319,7 +1324,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
         updateAdapter();
 
-        isCheckedDefualt = (boolean) map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
+        isCheckedDefualt =(boolean)map.get(FiltrateMatchConfigActivity.CHECKED_DEFUALT);
 
         if (mMatchs.size() == 0) {// 没有比赛
             mViewHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
@@ -1356,7 +1361,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         }
     }
 
-    /**
+ /**
      * 比赛详情返回FootballMatchDetailActivity
      * 接受消息的页面实现
      */
@@ -1376,13 +1381,14 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             mInternationalAdapter.updateDatas(mMatchs);
             mInternationalAdapter.notifyDataSetChanged();
         } else {*/
-        if (mAdapter == null) {
-            return;
-        }
-        mAdapter.updateDatas(mMatchs);
-        mAdapter.notifyDataSetChanged();
-        //  }
+            if (mAdapter == null) {
+                return;
+            }
+            mAdapter.updateDatas(mMatchs);
+            mAdapter.notifyDataSetChanged();
+      //  }
     }
+
 
 
     @Override
@@ -1429,6 +1435,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     private boolean isDestroy = false;
 
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -1441,6 +1448,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         if (getActivity() != null && mNetStateReceiver != null) {
             getActivity().unregisterReceiver(mNetStateReceiver);
         }
+
 
 
     }
@@ -1487,7 +1495,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
     @Override
     public void onMessage(String message) {
-//        L.w(TAG, "message = " + message);
+        L.w(TAG, "message = " + message);
         // L.e(TAG, "websocket isClosed = " + client.isClosed());
         // L.e(TAG, "websocket isClosing = " + client.isClosing());
         // L.e(TAG, "websocket isConnecting = " + client.isConnecting());
@@ -1601,7 +1609,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //  EventBus.getDefault().unregister(this);
+      //  EventBus.getDefault().unregister(this);
         imEventBus.unregister(this);
 
         L.d("100", "onDestroyView");

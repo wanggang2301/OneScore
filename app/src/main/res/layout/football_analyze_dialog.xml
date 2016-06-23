@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alertdialog"
+    android:layout_width="337dp"
+    android:layout_height="240dp"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/screen_titleView"
+        android:layout_width="337dp"
+        android:layout_height="38dip"
+        android:background="@drawable/football_screen_title"
+        android:gravity="center"
+        android:text="@string/basket_analyze_screen"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/basket_analyze_dialog_site"
+        android:paddingTop="15dp"
+        android:paddingLeft="30dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/black_details_ball_textcolor"
+        android:background="@color/black_details_ball_textcolor2"
+        />
+
+    <RadioGroup
+        android:id="@+id/gendergroup1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:background="@color/black_details_ball_textcolor2"
+        >
+        <RadioButton
+            android:id="@+id/football_analyze_allsite"
+            android:layout_width="96dp"
+            android:layout_height="29dp"
+            android:text="@string/basket_analyze_dialog_allgame"
+            android:button="@null"
+            android:gravity="center"
+            android:checked="true"
+            android:textColor="@color/basket_screen_text_color"
+            android:background="@drawable/football_screen_left_selector"
+            />
+        <RadioButton
+            android:id="@+id/football_analyze_samesite"
+            android:layout_width="96dp"
+            android:layout_height="29dp"
+            android:text="@string/basket_analyze_dialog_samegame"
+            android:button="@null"
+            android:gravity="center"
+            android:textColor="@color/basket_screen_text_color"
+            android:background="@drawable/football_screen_right_selector"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/basket_analyze_dialog_num"
+        android:paddingTop="15dp"
+        android:paddingLeft="30dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/black_details_ball_textcolor"
+        android:background="@color/black_details_ball_textcolor2"
+        />
+
+    <RadioGroup
+        android:id="@+id/gendergroup2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:paddingBottom="20dp"
+        android:background="@color/black_details_ball_textcolor2"
+        >
+        <RadioButton
+            android:id="@+id/football_analyze_num_six"
+            android:layout_width="96dp"
+            android:layout_height="29dp"
+            android:text="@string/basket_analyze_dialog_six"
+            android:button="@null"
+            android:gravity="center"
+            android:textColor="@color/basket_screen_text_color"
+            android:checked="true"
+            android:background="@drawable/football_screen_left_selector"
+            />
+        <RadioButton
+            android:id="@+id/football_analyze_num_ten"
+            android:layout_width="96dp"
+            android:layout_height="29dp"
+            android:text="@string/basket_analyze_dialog_ten"
+            android:button="@null"
+            android:gravity="center"
+            android:textColor="@color/basket_screen_text_color"
+            android:background="@drawable/football_screen_middle_selector"
+            
+            />
+        <RadioButton
+            android:id="@+id/football_analyze_num_fifteen"
+            android:layout_width="96dp"
+            android:layout_height="29dp"
+            android:text="@string/basket_analyze_dialog_fifteen"
+            android:button="@null"
+            android:gravity="center"
+            android:textColor="@color/basket_screen_text_color"
+            android:background="@drawable/football_screen_right_selector"/>
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/selected_bg" />
+
+    <!--<RadioGroup-->
+        <!--android:id="@+id/gendergroup3"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:background="@color/black_grounding"-->
+        <!-->-->
+        <!--<RadioButton-->
+            <!--android:id="@+id/basket_analyze_cancle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:text="取消"-->
+            <!--android:button="@null"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/basket_screen_checked_text_color"/>-->
+        <!--<RadioButton-->
+            <!--android:id="@+id/basket_analyze_confirm"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:text="确认"-->
+            <!--android:button="@null"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/basket_screen_checked_text_color"-->
+            <!--android:checked="true"-->
+            <!--/>-->
+    <!--</RadioGroup>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/black_details_ball_textcolor2"
+        >
+        <Button
+            android:id="@+id/football_analyze_cancle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:text="@string/basket_analyze_dialog_cancle"
+            android:gravity="center"
+            android:textColor="@color/football_screen_checked_text_color"
+            android:background="@color/black_details_ball_textcolor2"
+            />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/selected_bg" />
+        <Button
+            android:id="@+id/football_analyze_confirm"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:text="@string/basket_analyze_dialog_ok"
+            android:gravity="center"
+            android:textColor="@color/football_screen_checked_text_color"
+            android:background="@color/black_details_ball_textcolor2"
+            />
+    </LinearLayout>
+
+
+
+    <!--<ListView-->
+        <!--android:id="@+id/listdate"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/date_last"-->
+      <!-- -->
+        <!--android:gravity="center" />-->
+
+</LinearLayout>

@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
             <!--角球折线图走势-->
             <RelativeLayout
                 android:id="@+id/rl_cornerTrend_data"

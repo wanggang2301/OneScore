@@ -109,7 +109,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private List<Match> allDataLists; // 所有数据
     private List<Match> feedAdapterLists; // 要展示的数据
 
-
     public static RollBallFragment newInstance(int index) {
         Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, index);
@@ -127,9 +126,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     protected void initViews(View self, Bundle savedInstanceState) {
         if (null == apiHandler) apiHandler = new ApiHandler(this);
         this.setupEventBus();
-        this.setupSwipeRefresh();
         this.setupRecyclerView();
         this.setupAdapter();
+        this.setupSwipeRefresh();
     }
 
     @Override
@@ -209,8 +208,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public void onDestroyView() {
         super.onDestroyView();
         eventBus.unregister(this);
-        if (adapter != null && adapter.getSubscription() != null)
-            if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();
+        /*if (adapter != null && adapter.getSubscription() != null)
+            if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();*/
         if (subscription.isUnsubscribed()) subscription.unsubscribe();
         if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
         if (adapter != null) adapter.getSharedPreperences().edit().clear().commit();
@@ -265,14 +264,18 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                     @Override
                     public void onError(Exception exception) {
+                        socketClient.close();
+                        socketClient = null;
                         websocketConnectionIsError = true;
                         RollBallFragment.this.reConnectionWebSocket();
                     }
 
                     @Override
                     public void onClose(String message) {
-                        if (!websocketConnectionIsError)
+                        if (!websocketConnectionIsError) {
+                            socketClient = null;
                             RollBallFragment.this.reConnectionWebSocket();
+                        }
                     }
                 });
 
@@ -282,7 +285,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 e.printStackTrace();
             }
 
-            if (websocketConnectionIsError) this.initData();
+            // 当websocket出现错误后，会一直发送消息，为了避免循环调用initData()，判断当前网络layout显示状态
+            if (websocketConnectionIsError && networkExceptionLayout.getVisibility() != View.VISIBLE)
+                this.initData();
             websocketConnectionIsError = false;
         }
     }
@@ -305,6 +310,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void setupSwipeRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), 40));
@@ -395,9 +401,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                     hotList = hotFocusLeagueCup.getHotLeagueIds();
                                 }
 
-                                if (FiltrateCupsMap.immediateCups.length != 0) {// 判断是否已经筛选过
+                                if (FiltrateCupsMap.rollballCups.length != 0) {// 判断是否已经筛选过
                                     for (Match m : allDataLists) {// 已选择的
-                                        for (String checkedId : FiltrateCupsMap.immediateCups) {
+                                        for (String checkedId : FiltrateCupsMap.rollballCups) {
                                             if (m.getRaceId().equals(checkedId)) {
                                                 feedAdapterLists.add(m);
                                                 break;
@@ -426,9 +432,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                     }
                                 } else {
                                     List<LeagueCup> tempHotCups = new ArrayList<>();
-                                    if (FiltrateCupsMap.immediateCups.length != 0) {
+                                    if (FiltrateCupsMap.rollballCups.length != 0) {
                                         for (LeagueCup cup : leagueCupLists) {
-                                            for (String checkedId : FiltrateCupsMap.immediateCups) {
+                                            for (String checkedId : FiltrateCupsMap.rollballCups) {
                                                 if (cup.getRaceId().equals(checkedId)) {
                                                     tempHotCups.add(cup);
                                                     break;
@@ -477,7 +483,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public void onEventMainThread(Map<String, Object> map) {
         String[] checkedIds = (String[]) ((LinkedList) map.get(FiltrateMatchConfigActivity.RESULT_CHECKED_CUPS_IDS)).toArray(
                 new String[]{});
-        FiltrateCupsMap.immediateCups = checkedIds;
+        FiltrateCupsMap.rollballCups = checkedIds;
         feedAdapterLists.clear();
         for (Match match : allDataLists) {
             boolean isExistId = false;

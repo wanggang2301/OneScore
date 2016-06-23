@@ -1560,6 +1560,7 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 // 赛场后更新走势图数据
                 isStart = true;
                 trendFragment.initData();// 刷新攻防走势图
+
                 statisticsFragment.initData();// 刷新统计
 
                 //点赞不可点
@@ -1656,6 +1657,8 @@ public class StadiumFragment extends Fragment implements View.OnClickListener, H
                 //事件放入并展示
                 // showFootballEvent();//显示事件
                 showFootballEventByState();
+
+
                 break;
 
             case "2054"://取消客队进球

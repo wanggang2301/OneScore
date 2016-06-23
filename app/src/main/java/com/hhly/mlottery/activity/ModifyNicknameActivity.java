@@ -133,6 +133,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                              CommonUtils.saveRegisterInfo(AppConstants.register);
                              finish();
                          } else if (bean.getResult() == AccountResultCode.USER_NOT_LOGIN) {
+                             UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
                              Intent intent = new Intent(ModifyNicknameActivity.this, LoginActivity.class);
                              startActivity(intent);
                          } else {

@@ -51,7 +51,7 @@ public class HappySocketClient extends WebSocketClient {
 	@Override
 	public void onMessage(String message) {
 		L.i(TAG, "___onMessage___");
-		if(webSocketCallback != null) webSocketCallback.onMessage(message);
+			if(webSocketCallback != null) webSocketCallback.onMessage(message);
 		if (socketResponseMessageListener != null) {
 			socketResponseMessageListener.onMessage(message);
 		} else {

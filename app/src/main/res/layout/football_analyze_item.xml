@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/basket_details_ball6"
+    android:paddingTop="@dimen/basket_details_ball6"
+    android:paddingLeft="@dimen/basket_details_ball5"
+    android:paddingRight="@dimen/basket_details_ball5"
+    >
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingBottom="@dimen/basket_details_ball6"-->
+        <!--android:paddingTop="@dimen/basket_details_ball6">-->
+        <TextView
+            android:id="@+id/football_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="16-03-31"
+            android:textColor="@color/basket_vs"
+            android:textSize="@dimen/text_size_10" />
+
+        <TextView
+            android:id="@+id/football_team_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="NBA"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_11" />
+
+        <TextView
+            android:id="@+id/football_home_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="老鹰"
+            android:singleLine="true"
+            android:textColor="@color/res_name_color"
+            android:textSize="@dimen/text_size_11" />
+
+        <TextView
+            android:id="@+id/football_guest_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="鹈鹕"
+            android:textColor="@color/res_name_color"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_11" />
+
+        <TextView
+            android:id="@+id/football_space"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="间隔"
+            android:textColor="@color/res_name_color"
+            android:textSize="@dimen/text_size_11" />
+    <!--</LinearLayout>-->
+</LinearLayout>

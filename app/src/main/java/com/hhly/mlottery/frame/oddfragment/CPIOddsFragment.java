@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,11 +127,11 @@ public class CPIOddsFragment extends Fragment {
         mHandler.sendEmptyMessage(STARTLOADING);
         Map<String, String> map = new HashMap<>();
 
-        if (type.equals(CPIFragment.TYPE_PLATE)) {
+        if (CPIFragment.TYPE_PLATE.equals(type)) {
             map.put("type", "1");
-        } else if (type.equals(CPIFragment.TYPE_BIG)) {
+        } else if (CPIFragment.TYPE_BIG.equals(type)) {
             map.put("type", "3");
-        } else if (type.equals(CPIFragment.TYPE_OP)) {
+        } else if (CPIFragment.TYPE_OP.equals(type)) {
             map.put("type", "2");
         }
         if (!"".equals(date)) {
@@ -456,20 +457,7 @@ public class CPIOddsFragment extends Fragment {
      * 赔率推送赔率
      */
     public void upDateOdds(WebFootBallSocketOdds webSKOdds, int oddType) {
-        //如果是亚盘的
-        if (oddType == 1) {
-            filtrateSocket(webSKOdds, 1);
-        }
-        //如果是欧赔的
-        else if (oddType == 2) {
-            System.out.println("upDateOdds 2");
-            filtrateSocket(webSKOdds, 2);
-        }
-        //如果是大小的
-        else if (oddType == 3) {
-            filtrateSocket(webSKOdds, 3);
-        }
-
+        filtrateSocket(webSKOdds, oddType);
     }
 
     /**
@@ -486,6 +474,11 @@ public class CPIOddsFragment extends Fragment {
                 if (!webSocketOdds.getData().isEmpty()) {
 
                     for (int e = 0; e < webSocketOdds.getData().size(); e++) {
+                        Map<String, String> stringStringMap = webSocketOdds.getData().get(e);
+                        if (!(typeNum + "").equals(stringStringMap.get("oddType"))) {
+                            continue;
+                        }
+
 
                         for (int j = 0; j < mShowInfoBeans.get(h).getComList().size(); j++) {
 
