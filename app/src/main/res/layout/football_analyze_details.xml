@@ -116,7 +116,7 @@
                             android:id="@+id/football_analyze_history"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="嘻嘻嘻嘻嘻XII嘻嘻嘻嘻嘻嘻嘻嘻嘻i戏XII嘻嘻嘻嘻嘻嘻嘻个嘻嘻嘻嘻嘻嘻个嘻嘻嘻嘻嘻嘻"
+                            android:text=""
                             android:paddingTop="@dimen/basket_details_item"
                             android:paddingLeft="6dp"
                             android:paddingRight="3dp"
