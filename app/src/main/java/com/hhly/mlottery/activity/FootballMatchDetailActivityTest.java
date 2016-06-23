@@ -302,6 +302,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
         bundle.putString("param1", mThirdId);
+        bundle.putInt("type", 0);
+
         mTalkAboutBallFragment.setArguments(bundle);
         //分析
         mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "");
@@ -497,6 +499,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                         head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                         head_score.setText("VS");
                         mDetailsRollballFragment.refreshMatch(matchDetail, 0);
+                        mTalkAboutBallFragment.setClickableLikeBtn(true);
+
 
                     } else {
 
@@ -521,6 +525,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             head_score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
                             mLiveHeadInfoFragment.initMatchOverData(mMatchDetail);
                             mKeepTime = "5400000";//90分钟的毫秒数
+                            mTalkAboutBallFragment.setClickableLikeBtn(false);
 
 
                         } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
@@ -596,6 +601,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                                 mPreStatus = "1";
                             }
 
+                            mTalkAboutBallFragment.setClickableLikeBtn(true);
 
                             mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
@@ -678,6 +684,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
 
+            mTalkAboutBallFragment.setClickableLikeBtn(true);
+
 
         } else {
 
@@ -713,6 +721,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 //  toolbarTitle = mMatchDetail.getHomeTeamInfo().getName() + " " + mMatchDetail.getHomeTeamInfo().getScore() + "-" + mMatchDetail.getGuestTeamInfo().getScore() + " " + mMatchDetail.getGuestTeamInfo().getName();
                 mLiveHeadInfoFragment.initMatchOverData(mMatchDetail);
                 mKeepTime = "5400000";//90分钟的毫秒数
+
+                mTalkAboutBallFragment.setClickableLikeBtn(false);
+
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
 
 
@@ -775,6 +786,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 } else {
                     mLiveHeadInfoFragment.setKeepTime(StadiumUtils.convertStringToInt(mKeepTime) + "");
                 }
+
+                mTalkAboutBallFragment.setClickableLikeBtn(true);
+
 
                 mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
                 mStatisticsFragment.initData(mMatchDetail.getLiveStatus());
