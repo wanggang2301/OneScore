@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
@@ -495,7 +496,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
 //            MyApp.getContext().sendBroadcast(new Intent("closeself"));
-//            CyUtils.hideKeyBoard(MyApp.getContext());
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    CyUtils.hideKeyBoard(getActivity());
+                }
+            });
+//            CyUtils.hideKeyBoard(getActivity());
         }
     }
 

@@ -72,7 +72,7 @@ public class ChatBallListView extends ListView implements AbsListView.OnScrollLi
 
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
-
+        System.out.println("lzfvisibleItemCount=="+visibleItemCount+"totalItemCount=="+totalItemCount+"firstVisibleItem=="+firstVisibleItem);
         if (footerView != null) {
             //判断可视Item是否能在当前页面完全显示
             if (visibleItemCount>5){
