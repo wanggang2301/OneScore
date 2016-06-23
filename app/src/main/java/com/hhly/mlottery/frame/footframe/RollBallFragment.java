@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.RollBallAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.base.BaseFragment;
@@ -217,7 +217,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     public void onItemClick(View convertView, int position) {
-        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+        Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
         intent.putExtra("thirdId", feedAdapterLists.get(position).getThirdId());
         intent.putExtra("currentFragmentId", 0);
         getParentFragment().startActivity(intent);

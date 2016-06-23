@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysEntity;
@@ -161,7 +161,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                 case 2:// 内页
                                                 {
                                                     if ("13".equals(jumpAddr)) {// 足球内页13
-                                                        Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                                                        Intent intent = new Intent(mContext, FootballMatchDetailActivityTest.class);
                                                         intent.putExtra("thirdId", thirdId);
                                                         intent.putExtra("currentFragmentId", -1);
                                                         mContext.startActivity(intent);

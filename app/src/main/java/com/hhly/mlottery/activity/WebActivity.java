@@ -78,7 +78,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                         }
                         case 2:// 足球
                         {
-                            Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                            Intent intent = new Intent(mContext, FootballMatchDetailActivityTest.class);
                             intent.putExtra("thirdId", mThird);
                             intent.putExtra("currentFragmentId", -1);
                             mContext.startActivity(intent);
