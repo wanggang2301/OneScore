@@ -11,7 +11,7 @@ public class StadiumUtils {
     //半场比分是否显示
     public static boolean isHalfScoreVisible(String status) {
         //2中场    3  下半场   -1  完场
-        if ("2".equals(status) || "3".equals(status) || "-1".equals(status) ) {//中场 下半场 完场
+        if ("2".equals(status) || "3".equals(status) || "-1".equals(status)) {//中场 下半场 完场
             return true;
         }
 
@@ -62,6 +62,23 @@ public class StadiumUtils {
 
 
     public static double computeProgressbarPercent(String h, String g) {
+        if ("0".equals(h) && "0".equals(g)) {
+            return 50;
+        }
+
+        if (h == null && g == null) {
+            return 50;
+        }
+
+        if ("".equals(h) && "".equals(g)) {
+            return 50;
+        }
+        double home = Double.valueOf(h);
+        double guest = Double.valueOf(g);
+        return home / (home + guest) * 100;
+    }
+
+    public static double computeProgressbarPercent(int h, int g) {
         if ("0".equals(h) && "0".equals(g)) {
             return 50;
         }

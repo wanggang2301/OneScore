@@ -39,10 +39,10 @@ public class LiveHeadInfoFragment extends Fragment {
 
     private TextView mTvTime;
 
-    private TextView tv_home_corner, tv_home_rc, tv_home_yc, tv_home_danger, tv_home_shoot_correct, tv_home_shoot_miss;
-    private TextView tv_guest_corner, tv_guest_rc, tv_guest_yc, tv_guest_danger, tv_guest_shoot_correct, tv_guest_shoot_miss;
+    private TextView tv_home_corner, tv_home_rc, tv_home_yc, tv_home_danger, tv_home_shoot_correct, tv_home_shoot_miss, tv_home_attack;
+    private TextView tv_guest_corner, tv_guest_rc, tv_guest_yc, tv_guest_danger, tv_guest_shoot_correct, tv_guest_shoot_miss, tv_guest_attack;
     private TextView tv_frequency;
-    private ProgressBar pb_danger, pb_shoot_correct, pb_shoot_miss;
+    private ProgressBar pb_danger, pb_shoot_correct, pb_shoot_miss, pb_attack;
 
     private TextView score;
 
@@ -51,14 +51,20 @@ public class LiveHeadInfoFragment extends Fragment {
     private TextView guestname;
 
     private Context mContext;
-    /**赛事所有信息*/
+    /**
+     * 赛事所有信息
+     */
     private MatchDetail mMatchDetail;
 
-    /**所有直播的list*/
+    /**
+     * 所有直播的list
+     */
     private List<MatchTextLiveBean> matchLive;
 
-    /**时间轴的集合*/
-    private List<MatchTimeLiveBean> xMatchLive=new ArrayList<>();
+    /**
+     * 时间轴的集合
+     */
+    private List<MatchTimeLiveBean> xMatchLive = new ArrayList<>();
 
     //时间轴事件
     private static final String SCORE = "1029";//主队进球
@@ -102,7 +108,7 @@ public class LiveHeadInfoFragment extends Fragment {
     /**
      * 比赛时间
      */
-  //  private String mKeepTime;
+    //  private String mKeepTime;
 
     //时间轴的view
     private TimeView timeView;
@@ -144,6 +150,11 @@ public class LiveHeadInfoFragment extends Fragment {
         tv_guest_danger = (TextView) mView.findViewById(R.id.guest_danger_attack);
         tv_guest_shoot_correct = (TextView) mView.findViewById(R.id.guest_shoot_correct);
         tv_guest_shoot_miss = (TextView) mView.findViewById(R.id.guest_shoot_miss);
+        tv_home_attack = (TextView) mView.findViewById(R.id.home_attack);
+        tv_guest_attack = (TextView) mView.findViewById(R.id.guest_attack);
+
+        pb_attack = (ProgressBar) mView.findViewById(R.id.pb_attack);
+
         pb_danger = (ProgressBar) mView.findViewById(R.id.pb_danger_attack);
         pb_shoot_correct = (ProgressBar) mView.findViewById(R.id.pb_shoot_correct);
         pb_shoot_miss = (ProgressBar) mView.findViewById(R.id.pb_shoot_miss);
@@ -158,13 +169,14 @@ public class LiveHeadInfoFragment extends Fragment {
     }
 
 
-    public void initData(MatchDetail mMatchDetail){
+    public void initData(MatchDetail mMatchDetail) {
         homename.setText(mMatchDetail.getHomeTeamInfo().getName());
         guestname.setText(mMatchDetail.getGuestTeamInfo().getName());
     }
 
     /**
      * 设置比赛时间
+     *
      * @param keeptime
      */
     public void setKeepTime(String keeptime) {
@@ -177,6 +189,7 @@ public class LiveHeadInfoFragment extends Fragment {
 
     /**
      * 完场进行的处理
+     *
      * @param mMatchDetail 赛事总信息
      */
     public void initMatchOverData(MatchDetail mMatchDetail) {
@@ -203,9 +216,15 @@ public class LiveHeadInfoFragment extends Fragment {
         tv_guest_danger.setText(mMatchDetail.getGuestTeamInfo().getDanger());
         tv_guest_shoot_correct.setText(String.valueOf(Integer.parseInt(mMatchDetail.getGuestTeamInfo().getShot())));
         tv_guest_shoot_miss.setText(mMatchDetail.getGuestTeamInfo().getAside());
+        tv_home_attack.setText(mMatchDetail.getHomeTeamInfo().getAttackCount());
+        tv_guest_attack.setText(mMatchDetail.getGuestTeamInfo().getAttackCount());
+
+        pb_attack.setProgress((int) StadiumUtils.computeProgressbarPercent(mMatchDetail.getHomeTeamInfo().getAttackCount(), mMatchDetail.getGuestTeamInfo().getAttackCount()));
+
         pb_danger.setProgress((int) StadiumUtils.computeProgressbarPercent(mMatchDetail.getHomeTeamInfo().getDanger(), mMatchDetail.getGuestTeamInfo().getDanger()));
         pb_shoot_correct.setProgress((int) StadiumUtils.computeProgressbarPercent(mMatchDetail.getHomeTeamInfo().getShot(), mMatchDetail.getGuestTeamInfo().getShot()));
         pb_shoot_miss.setProgress((int) StadiumUtils.computeProgressbarPercent(mMatchDetail.getHomeTeamInfo().getAside(), mMatchDetail.getGuestTeamInfo().getAside()));
+
         mTvTime.setText(mContext.getResources().getString(R.string.finish_txt));
         tv_frequency.setText("");
         score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
@@ -215,15 +234,18 @@ public class LiveHeadInfoFragment extends Fragment {
 
     /**
      * 赛中的时间轴数据，从文字直播数据中筛选
+     *
      * @param mMatchDetail
      */
-    public void initFootBallEventData(MatchDetail mMatchDetail){
-        matchLive=mMatchDetail.getMatchInfo().getMatchLive();
+    public void initFootBallEventData(MatchDetail mMatchDetail) {
+        matchLive = mMatchDetail.getMatchInfo().getMatchLive();
         getTimeLive();
         showFootballEventByState();
     }
+
     /**
      * 比赛中的统计信息
+     *
      * @param mathchStatisInfo
      */
     public void initMatchNowData(MathchStatisInfo mathchStatisInfo) {
@@ -238,13 +260,22 @@ public class LiveHeadInfoFragment extends Fragment {
         tv_guest_rc.setText(String.valueOf(mathchStatisInfo.getGuest_rc()));
         tv_guest_yc.setText(String.valueOf(mathchStatisInfo.getGuest_yc()));
         score.setText(String.valueOf(mathchStatisInfo.getHome_score()) + ":" + String.valueOf(mathchStatisInfo.getGuest_score()));
+        tv_frequency.setText("'");
+
         tv_guest_danger.setText(String.valueOf(mathchStatisInfo.getGuest_danger()));
         tv_guest_shoot_correct.setText(String.valueOf(mathchStatisInfo.getGuest_shoot_correct()));
         tv_guest_shoot_miss.setText(String.valueOf(mathchStatisInfo.getGuest_shoot_miss()));
+
+        tv_home_attack.setText(String.valueOf(mathchStatisInfo.getHome_attack()));
+        tv_guest_attack.setText(String.valueOf(mathchStatisInfo.getGuest_attack()));
+
+        pb_attack.setProgress((int) StadiumUtils.computeProgressbarPercent(String.valueOf(mathchStatisInfo.getHome_attack()), String.valueOf(mathchStatisInfo.getGuest_attack())));
+
         pb_danger.setProgress((int) StadiumUtils.computeProgressbarPercent(String.valueOf(mathchStatisInfo.getHome_danger()), String.valueOf(mathchStatisInfo.getGuest_danger())));
         pb_shoot_correct.setProgress((int) StadiumUtils.computeProgressbarPercent(String.valueOf(mathchStatisInfo.getHome_shoot_correct()), String.valueOf(mathchStatisInfo.getGuest_shoot_correct())));
         pb_shoot_miss.setProgress((int) StadiumUtils.computeProgressbarPercent(String.valueOf(mathchStatisInfo.getHome_shoot_miss()), String.valueOf(mathchStatisInfo.getGuest_shoot_miss())));
     }
+
     /**
      * 完场将时间改为分钟
      *

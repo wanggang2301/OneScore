@@ -19,13 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.football.BottomOddsAdapter;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 底部赔率弹窗
@@ -38,14 +43,15 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
     private final int ERROR = -1;//访问失败
     private final int SUCCESS = 0;// 访问成功
     private final int STARTLOADING = 1;// 正在加载中
+    private final int NODATA = 2;// 正在加载中
 
 
     private static final String BOTTOODDS_PARM = "BOTTOODDS_PARM";
 
     private static final String PARAM_TYPE = "type";
 
-    public static final int ASIA = 0;
-    public static final int BIG_SMALL_BALL = 1;
+    public static final int ASIA = 1;
+    public static final int BIG_SMALL_BALL = 3;
 
     public static final int EU = 2;
 
@@ -77,10 +83,22 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
      */
     private FrameLayout fl_net_error;
 
+
+    /**
+     * 没有数据
+     */
+
+    private FrameLayout fl_no_data;
+
     /**
      * 内容部分
      */
     private LinearLayout ll_content;
+
+    private List<BottomOddsDetailsItem> mBottomOddsDetailsItemList;
+
+
+    private TextView reLoading;
 
     public static BottomOddsDetailsFragment newInstance(BottomOddsItem b, int type) {
         Bundle args = new Bundle();
@@ -162,16 +180,26 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
                     fl_loading.setVisibility(View.VISIBLE);
                     fl_net_error.setVisibility(View.GONE);
                     ll_content.setVisibility(View.GONE);
+                    fl_no_data.setVisibility(View.GONE);
                     break;
                 case SUCCESS:// 加载成功
                     fl_loading.setVisibility(View.GONE);
                     fl_net_error.setVisibility(View.GONE);
+                    fl_no_data.setVisibility(View.GONE);
                     ll_content.setVisibility(View.VISIBLE);
+                    break;
+
+                case NODATA:
+                    fl_loading.setVisibility(View.GONE);
+                    fl_net_error.setVisibility(View.GONE);
+                    ll_content.setVisibility(View.GONE);
+                    fl_no_data.setVisibility(View.VISIBLE);
                     break;
                 case ERROR:// 加载失败
                     fl_loading.setVisibility(View.GONE);
                     fl_net_error.setVisibility(View.VISIBLE);
                     ll_content.setVisibility(View.GONE);
+                    fl_no_data.setVisibility(View.GONE);
                     break;
             }
         }
@@ -184,7 +212,17 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         odd_title = (TextView) mView.findViewById(R.id.odd_title);
         fl_loading = (FrameLayout) mView.findViewById(R.id.fl_loading);
         fl_net_error = (FrameLayout) mView.findViewById(R.id.fl_networkError);
+        fl_no_data = (FrameLayout) mView.findViewById(R.id.fl_nodata);
         ll_content = (LinearLayout) mView.findViewById(R.id.ll_content);
+        reLoading = (TextView) mView.findViewById(R.id.reLoading);
+
+
+        reLoading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initOddsDetails();
+            }
+        });
     }
 
     /**
@@ -194,36 +232,62 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         if (getActivity() == null) {
             return;
         }
-        mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
-        String url = "http://192.168.31.70:8080/mlottery/core/footballBallList.ballListDetail.do?thirdId=336820&lang=zh&oddType=1";
 
-        VolleyContentFast.requestJsonByGet(url, null,
+        mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
+
+        Map<String, String> params = new HashMap<>();
+        params.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+        //
+        params.put("oddType", mType + "");
+
+        //String url = "http://192.168.10.242:8181/mlottery/core/footballBallList.ballListDetail.do";
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_BALLLISTDETAIL_INFO, params,
                 new VolleyContentFast.ResponseSuccessListener<BottomOddsDetails>() {
                     @Override
                     public void onResponse(BottomOddsDetails bottomOddsDetails) {
-                        if (!bottomOddsDetails.getResult().equals("200")) {
+                        if (!"200".equals(bottomOddsDetails.getResult())) {
                             return;
                         }
-                        loadData(bottomOddsDetails.getMatchoddlist());
+
+                        if (bottomOddsDetails.getMatchoddlist() == null || bottomOddsDetails.getMatchoddlist().size() <= 0) {
+                            L.d("ffffff", "无数据");
+                            mHandler.sendEmptyMessage(NODATA);
+                            return;
+                        }
+
+                        mBottomOddsDetailsItemList = bottomOddsDetails.getMatchoddlist();
+
+                        loadData();
+
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                        L.d("ffffff", "错误");
+
                         mHandler.sendEmptyMessage(ERROR);
                     }
                 }, BottomOddsDetails.class
         );
+
+
     }
 
     /**
      * 加载数据
      */
-    private void loadData(List<BottomOddsDetailsItem> bottomOddsDetailsList) {
-        mAdapter = new BottomOddsAdapter(context, bottomOddsDetailsList);
+    private void loadData() {
+        mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mHandler.sendEmptyMessage(SUCCESS);
 
+    }
+
+    public void updateAdapyter(BottomOddsDetailsItem bottomOddsDetailsItem) {
+        mBottomOddsDetailsItemList.add(0, bottomOddsDetailsItem);
+        mAdapter.notifyDataSetChanged();
     }
 
 

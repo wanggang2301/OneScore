@@ -5,6 +5,45 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/odd_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="亚盘初盘 : "
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13" />
+
+        <TextView
+            android:id="@+id/first_odd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0 0 0"
+            android:textColor="@color/odds_details"
+            android:textSize="@dimen/text_size_13" />
+
+        <ImageView
+            android:id="@+id/close_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/close_outline" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer" />
+
     <!--内容加载进度条_正在加载中-->
     <FrameLayout
         android:id="@+id/fl_loading"
@@ -75,44 +114,22 @@
     </FrameLayout>
 
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/fl_nodata"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="10dp">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/odd_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="亚盘初盘 : "
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13" />
+            android:layout_gravity="center"
+            android:text="@string/nodata" />
+    </FrameLayout>
 
-        <TextView
-            android:id="@+id/first_odd"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="0 0 0"
-            android:textColor="@color/odds_details"
-            android:textSize="@dimen/text_size_13" />
-
-        <ImageView
-            android:id="@+id/close_image"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/close_outline" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_football_footer" />
 
     <LinearLayout
         android:id="@+id/ll_content"
@@ -134,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="时间"
+                android:text="@string/foot_details_time"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 
@@ -143,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="比分"
+                android:text="@string/foot_details_score"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 
@@ -152,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="主队"
+                android:text="@string/foot_details_home"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 
@@ -161,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="让球"
+                android:text="@string/foot_details_ball"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 
@@ -170,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="客队"
+                android:text="@string/foot_details_guest"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_13" />
 

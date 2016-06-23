@@ -19,18 +19,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
-import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableResultAdapter;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableScheduleAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
@@ -45,7 +43,6 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.oddfragment.BasketScoresFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -66,7 +63,6 @@ import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -625,8 +621,9 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
      */
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        Intent intent = new Intent(getActivity(), BasketDetailsActivity.class);
-        intent.putExtra(BasketDetailsActivity.BASKET_THIRD_ID, childrenDataList.get(groupPosition).get(childPosition).getThirdId());//跳转到详情
+        Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
+        intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, childrenDataList.get(groupPosition).get(childPosition).getThirdId());//跳转到详情
+        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, childrenDataList.get(groupPosition).get(childPosition).getMatchStatus());//跳转到详情
         //用getActivity().startActivityForResult();不走onActivityResult ;
 //        startActivityForResult(intent, REQUEST_DETAILSCODE);
         intent.putExtra("currentfragment", mBasketballType);

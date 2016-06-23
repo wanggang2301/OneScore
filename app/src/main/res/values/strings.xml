@@ -3,12 +3,28 @@
 
 
     <!--足球内页改版(滚球等)-->
-    <string name="live_title">实况直播</string>
+    <string name="foot_details_roolball">滚球</string>
+    <string name="foot_details_talkball">聊球</string>
+    <string name="foot_details_analyze">分析</string>
+    <string name="foot_details_odds">指数</string>
+    <string name="foot_details_statistics">统计</string>
+    <string name="foot_details_time">时间</string>
+    <string name="foot_details_score">比分</string>
+    <string name="foot_details_home">主队</string>
+    <string name="foot_details_ball">让球</string>
+    <string name="foot_details_guest">客队</string>
+
+    <string name="foot_details_livetitle">实况直播</string>
     <string name="jipan">即盘</string>
     <string name="chupan">初盘</string>
     <string name="alet_first">亚盘初盘:</string>
     <string name="asize_first">大小球初盘:</string>
     <string name="eu_first">欧赔初盘:</string>
+    <string name="foot_details_live_msg">实况直播敬请关注!</string>
+    <string name="foot_details_focus">关注</string>
+    <string name="foot_details_unfocus">已关注</string>
+    <string name="foot_details_share">分享</string>
+
 
 
     <!--分享-->
@@ -593,6 +609,7 @@
 
 
     <!--篮球详情-->
+    <string name="basket_details_talkable">聊球</string>
     <!--分析-->
     <string name="basket_analyze_sides">双方战绩</string>
     <string name="basket_analyze_history">历史交锋</string>
@@ -605,6 +622,9 @@
     <string name="basket_analyze_win_lost">胜/负</string>
     <string name="basket_analyze_winodds">胜率</string>
     <string name="basket_analyze_recent_performance">最近表现</string>
+    <!--足球分析补充-->
+    <string name="football_win_draw_lose">胜/平/负</string>
+
 
     <string name="basket_analyze_fruture_competition">未来比赛</string>
     <string name="basket_analyze_event">赛事</string>
@@ -649,10 +669,15 @@
     <string name="basket_analyze_dialog_cancle">取消</string>
     <string name="basket_analyze_dialog_ok">确定</string>
 
-
     <string name="basket_odds_euro_details">欧赔详情</string>
     <string name="basket_odds_asiaLet_details">亚盘详情</string>
     <string name="basket_odds_asiaSize_details">大小球详情</string>
+
+    <!--足球分析详情-->
+    <string name="football_analyze_details">分析明细</string>
+    <string name="football_analyze_details_time">时间</string>
+    <string name="football_analyze_details_matchs">联赛</string>
+    <string name="football_analyze_details_game">比赛</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -750,4 +775,12 @@
 
     <string name="home_pager_version_update">忽略此版本</string>
     <string name="cpi_select_company">请选择公司</string>
+    <!--新版分析-->
+    <string name="new_analyze_goal_lose">得/失球</string>
+    <string name="new_analyze_goal_differ">净胜球</string>
+    <string name="new_analyze_integral">积分</string>
+    <string name="new_analyze_complete_table">完整积分榜>></string>
+    <string name="new_analyze_attack_defense">攻防对比</string>
+    <string name="new_analyze_bet">大小盘口:</string>
+    <string name="new_analyze_player_info">球员信息</string>
 </resources>

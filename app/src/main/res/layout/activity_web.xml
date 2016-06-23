@@ -42,7 +42,7 @@
             android:layout_marginBottom="@dimen/y24"
             android:layout_marginLeft="@dimen/x30"
             android:layout_marginRight="@dimen/x30"
-            android:layout_marginTop="@dimen/y24"
+              android:layout_marginTop="@dimen/y24"
             android:background="@drawable/number_custom_button_bg_ok"
             android:clickable="true"
             android:gravity="center_horizontal"

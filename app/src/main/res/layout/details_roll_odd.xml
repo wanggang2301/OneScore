@@ -21,7 +21,7 @@
                 android:id="@+id/title"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.5"
-                android:text="亚盘"
+                android:text="@string/foot_details_livetitle"
                 android:textColor="@color/content_txt_light_grad" />
 
             <TextView
@@ -34,9 +34,9 @@
 
             <ImageView
                 android:id="@+id/odd_infos"
-                android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
                 android:gravity="center"
                 android:src="@mipmap/details" />
         </TableRow>
@@ -62,7 +62,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="2.56"
+                android:text="-"
                 android:textColor="@color/content_txt_black" />
 
             <LinearLayout
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:text="-0/0.5"
+                    android:text="-"
                     android:textColor="@color/content_txt_black" />
 
             </LinearLayout>
@@ -85,7 +85,7 @@
                 android:id="@+id/live_right"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="0.39"
+                android:text="-"
                 android:textColor="@color/content_txt_black" />
 
             <ImageView
@@ -116,7 +116,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="2.56"
+                android:text="-"
                 android:textColor="@color/content_txt_black" />
 
             <LinearLayout
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:text="-0/0.5"
+                    android:text="-"
                     android:textColor="@color/content_txt_black" />
 
             </LinearLayout>
@@ -139,7 +139,7 @@
                 android:id="@+id/first_right"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="555"
+                android:text="-"
                 android:textColor="@color/content_txt_black" />
 
             <ImageView

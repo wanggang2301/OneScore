@@ -36,7 +36,7 @@ import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.callback.ShareCopyLinkCallBack;
 import com.hhly.mlottery.callback.ShareTencentCallBack;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footframe.OldAnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
@@ -78,14 +78,15 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
 
 
     private final static int PERIOD_test = 1000 * 6;//刷新周期测试
-    private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
-    private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
 
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
     private final int SCHEDULE_FRAGMENT = 2;
     private final int FOCUS_FRAGMENT = 3;
+
+    private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
+    private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
 
     /**
      * 赛前轮询周期
@@ -180,7 +181,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
     private String mPreStatus;
 
     private StadiumFragment mStadiumFragment;
-    private AnalyzeFragment mAnalyzeFragment;
+    private OldAnalyzeFragment mOldAnalyzeFragment;
     private OddsFragment mOddsFragment;
     private TalkAboutBallFragment mTalkAboutBallFragment;
 
@@ -532,6 +533,9 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     }
                 }
 
+
+
+
                 mHomeNameText.setText(matchDetail.getHomeTeamInfo().getName());
                 mHomeLikeCount.setText(matchDetail.getHomeTeamInfo().getGas());
                 mHeaderHomeNameText.setText(matchDetail.getHomeTeamInfo().getName());
@@ -581,7 +585,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                     }
 
 
-                    if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时
+                    if (startTimestamp - serverTimestamp > (1000 * 60 * 60)) {//大于一个小时  比赛开始时间-服务器时间大于1小时，20分钟轮训一次
                         mReloadPeriod = PERIOD_20;
                     } else {
                         if (mReloadPeriod == PERIOD_20) {//如果之前的频率是20分钟，转到5分钟，则需要关闭之前的定时器，从新开启
@@ -624,7 +628,6 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 }
             };
             mReloadTimer = new Timer();
-//            mReloadTimer.schedule(reloadTimerTask, 2000, PERIOD_test);
             mReloadTimer.schedule(reloadTimerTask, 2000, mReloadPeriod);
             isStartTimer = true;
         }
@@ -665,8 +668,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         fragments.add(mStadiumFragment);
 
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
-        //  mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId,"ni","hao");
+        mOldAnalyzeFragment = OldAnalyzeFragment.newInstance(mThirdId, matchDetail.getHomeTeamInfo().getName(), matchDetail.getGuestTeamInfo().getName());
+        //  mOldAnalyzeFragment = OldAnalyzeFragment.newInstance(mThirdId,"ni","hao");
         //指数
         mOddsFragment = OddsFragment.newInstance("", "");
 
@@ -677,7 +680,8 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
         mTalkAboutBallFragment.setArguments(bundle);
 
         fragments.add(mOddsFragment);
-        fragments.add(mAnalyzeFragment);
+        fragments.add(mOldAnalyzeFragment);
+//        fragments.add(mChatFragment);
         fragments.add(mTalkAboutBallFragment);
 
 
@@ -922,6 +926,7 @@ public class FootballMatchDetailActivity extends BaseActivity implements View.On
                 // setResult(Activity.RESULT_OK);
                 sendBroadcast(new Intent("closeself"));
                 finish();
+                overridePendingTransition(0, android.R.anim.fade_out);
                 break;
             case R.id.layout_match_header_focus_img:
                 MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");

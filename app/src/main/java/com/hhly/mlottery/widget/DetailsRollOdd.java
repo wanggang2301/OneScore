@@ -58,20 +58,87 @@ public class DetailsRollOdd extends FrameLayout {
         tv_title.setText(title);
     }
 
+    public void updateOdds(BottomOddsItem bottomOddsItem) {
+
+
+        if ("-".equals(bottomOddsItem.getLeft()) || "-".equals(bottomOddsItem.getMiddle()) || "-".equals(bottomOddsItem.getRight())) {
+
+            live_left.setText("");
+            live_middle.setText(mContext.getResources().getString(R.string.fragme_home_fengpan_text));
+            live_middle.setTextColor(mContext.getResources().getColor(R.color.white));
+            live_middle.setBackgroundResource(R.color.analyze_left);
+            live_right.setText("");
+
+        } else if (isNULLOrEmpty(bottomOddsItem.getLeft()) || isNULLOrEmpty(bottomOddsItem.getMiddle()) || isNULLOrEmpty(bottomOddsItem.getRight())) {
+            live_left.setText("-");
+            live_left.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            live_left.setBackgroundResource(R.color.white);
+
+            live_middle.setText("-");
+            live_middle.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            live_middle.setBackgroundResource(R.color.white);
+
+            live_right.setText("-");
+            live_right.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            live_right.setBackgroundResource(R.color.white);
+        } else {
+            live_left.setText(bottomOddsItem.getLeft());
+
+            live_middle.setText(bottomOddsItem.getMiddle());
+
+            live_right.setText(bottomOddsItem.getRight());
+
+            setTextViewColor(live_left, 0, bottomOddsItem.getLeftUp());
+            setTextViewColor(live_middle, 1, bottomOddsItem.getMiddleUp());
+            setTextViewColor(live_right, 0, bottomOddsItem.getRightUp());
+        }
+    }
+
 
     public void setTableLayoutData(List<BottomOddsItem> bottomOddsItem) {
 
-        if (bottomOddsItem.get(0) != null) {
+
+        //初盘
+        if (isNULLOrEmpty(bottomOddsItem.get(0).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(0).getMiddle()) || "-".equals(isNULLOrEmpty(bottomOddsItem.get(0).getRight()))) {
+            first_left.setText("-");
+            first_left.setTextColor(mContext.getResources().getColor(R.color.white));
+
+            first_middle.setText("-");
+            first_middle.setTextColor(mContext.getResources().getColor(R.color.white));
+
+            first_right.setText("-");
+            first_right.setTextColor(mContext.getResources().getColor(R.color.white));
+        } else {
             first_left.setText(bottomOddsItem.get(0).getLeft());
             first_middle.setText(bottomOddsItem.get(0).getMiddle());
             first_right.setText(bottomOddsItem.get(0).getRight());
             setTextViewColor(first_left, 0, bottomOddsItem.get(0).getLeftUp());
             setTextViewColor(first_middle, 1, bottomOddsItem.get(0).getMiddleUp());
             setTextViewColor(first_right, 0, bottomOddsItem.get(0).getRightUp());
-
         }
 
-        if (bottomOddsItem.get(1) != null) {
+
+        //即盘
+
+        if ("-".equals(bottomOddsItem.get(1).getLeft()) || "-".equals(bottomOddsItem.get(1).getMiddle()) || "-".equals(bottomOddsItem.get(1).getRight())) {
+            live_left.setText("");
+
+            live_middle.setText(mContext.getResources().getString(R.string.fragme_home_fengpan_text));
+            live_middle.setTextColor(mContext.getResources().getColor(R.color.white));
+            live_middle.setBackgroundResource(R.color.analyze_left);
+
+            live_right.setText("");
+        } else if (isNULLOrEmpty(bottomOddsItem.get(1).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(1).getMiddle()) || isNULLOrEmpty(bottomOddsItem.get(1).getRight())) {
+
+            live_left.setText("-");
+            live_left.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+
+            live_middle.setText("-");
+            live_middle.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+
+            live_right.setText("-");
+            live_right.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+        } else {
             live_left.setText(bottomOddsItem.get(1).getLeft());
 
             live_middle.setText(bottomOddsItem.get(1).getMiddle());
@@ -81,10 +148,17 @@ public class DetailsRollOdd extends FrameLayout {
             setTextViewColor(live_left, 0, bottomOddsItem.get(1).getLeftUp());
             setTextViewColor(live_middle, 1, bottomOddsItem.get(1).getMiddleUp());
             setTextViewColor(live_right, 0, bottomOddsItem.get(1).getRightUp());
+        }
+    }
+
+
+    private boolean isNULLOrEmpty(String s) {
+        if (s == null || "".equals(s)) {
+            return true;
+        } else {
+            return false;
 
         }
-
-
     }
 
     private void setTextViewColor(TextView textView, int flag, String b) {

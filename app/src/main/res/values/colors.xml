@@ -3,6 +3,7 @@
 
 
 
+
     <color name="selected_bg">#eeeeee</color>
     <!--足球二期颜色-->
     <color name="foot_integal_se">#ff5400</color>
@@ -15,6 +16,7 @@
     <color name="plate_title_bg">#fffef1</color>
     <color name="odds_details">#ff6600</color>
     <color name="odds_left">#00DB1A</color>
+    <color name="material_red">#F44336</color>
 
 
 
@@ -540,6 +542,7 @@
     <!--<color name="accent">#eeff41</color>-->
     <color name="basket_text_color">#FEFEFE</color>
     <color name="score_color_white">#fff</color>
+    <color name="unselected_tab_color">#9fff</color>
 
     <color name="black_title">#18181A</color>
     <color name="black_grounding">#242328</color>
@@ -574,5 +577,14 @@
 
     <color name="yellow_verify_code">#FFB51A</color>
 
+    <!--足球改版分析界面颜色-->
+    <color name="analyze_title">#3f5672</color>
+    <color name="history_win">#333333</color>
+    <color name="more_record">#0090ff</color>
 
+    <!-- 足球分析详情页面颜色-->
+    <color name="football_analyze_win_color">#DD2F1C</color>
+    <color name="football_analyze_lose_color">#21B11E</color>
+    <color name="football_analyze_draw_color">#00aaee</color>
+    <color name="football_analyze_default_color">#333333</color>
 </resources>

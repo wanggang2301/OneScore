@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:fillViewport="true">
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--指数-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y65"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/x24"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        <!--亚盘-->
+        <Button
+            android:id="@+id/odd_plate_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/odds_selected_plate"
+            android:gravity="center"
+            android:text="@string/odd_plate_rb_txt"
+            android:textSize="@dimen/text_size_13" />
+        <!--欧赔-->
+        <Button
+            android:id="@+id/odd_op_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/odds_selected_op"
+            android:gravity="center"
+            android:text="@string/odd_op_rb_txt"
+            android:textSize="@dimen/text_size_13" />
+        <!--大小-->
+        <Button
+            android:id="@+id/odd_big_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/odds_selected_big"
+            android:gravity="center"
+            android:text="@string/asiasize"
+            android:textSize="@dimen/text_size_13" />
+    </LinearLayout>
+<!--
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <!--指数-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y65"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/x24"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <!--亚盘-->
-            <Button
-                android:id="@+id/odd_plate_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/odds_selected_plate"
-                android:gravity="center"
-                android:text="@string/odd_plate_rb_txt"
-                android:textSize="@dimen/text_size_13" />
-            <!--欧赔-->
-            <Button
-                android:id="@+id/odd_op_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/odds_selected_op"
-                android:gravity="center"
-                android:text="@string/odd_op_rb_txt"
-                android:textSize="@dimen/text_size_13" />
-            <!--大小-->
-            <Button
-                android:id="@+id/odd_big_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/odds_selected_big"
-                android:gravity="center"
-                android:text="@string/asiasize"
-                android:textSize="@dimen/text_size_13" />
-        </LinearLayout>
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
         <FrameLayout
             android:id="@+id/odd_content_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+  <!--  </android.support.v4.widget.NestedScrollView>-->
+</LinearLayout>
