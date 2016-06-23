@@ -7,17 +7,17 @@ import com.hhly.mlottery.config.BaseURLs;
 
 public class AppConstants {
 	/** 是否是测试环境，true为测试，false为生产环境 */
-	public static final boolean isTestEnv = true;
+	public static final boolean isTestEnv = false;
 	/** true是国际版|false内地版 */
 	public static final boolean isGOKeyboard = false;
 	/** true是纯净版|false完整版 */
-	public static final boolean fullORsimple = false;
+	public static final boolean fullORsimple = true;
 	/** 是否是测试连接，测试连接用于阶段测试使用 */
 	public static final boolean isTestLink = false;
 	/**
 	 * 判断是否上传奔溃日志到友盟
 	 */
-	public static final boolean isUploadCrash = false;
+	public static final boolean isUploadCrash = true;
 
 	public static String ACCESS_LINK = "";// API
 	public static String USER_AGENT = "";
