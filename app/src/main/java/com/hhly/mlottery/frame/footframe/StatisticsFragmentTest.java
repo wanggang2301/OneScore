@@ -87,6 +87,15 @@ public class StatisticsFragmentTest extends Fragment {
     private MathchStatisInfo mMathchStatisInfo;
 
 
+    public static StatisticsFragmentTest newInstance() {
+
+
+        StatisticsFragmentTest fragment = new StatisticsFragmentTest();
+
+        return fragment;
+    }
+
+
     public static StatisticsFragmentTest newInstance(String type) {
 
         Bundle args = new Bundle();
@@ -102,14 +111,21 @@ public class StatisticsFragmentTest extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_statistics, container, false);
         mContext = getActivity();
-        Bundle args = getArguments();
+       /* Bundle args = getArguments();
         if (args != null) {
             type = args.getString(STA_PARM);
-        }
+        }*/
         initView();
+        //  loadData();
+        return mView;
+    }
+
+
+    public void setType(String type) {
+        this.type = type;
         loadData();
         initEvent();
-        return mView;
+
     }
 
 

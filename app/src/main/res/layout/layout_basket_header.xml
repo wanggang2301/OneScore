@@ -21,7 +21,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_iv"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x210"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x10"
             android:orientation="vertical"
@@ -33,9 +33,8 @@
                 android:layout_height="@dimen/x80"
                 android:layout_gravity="center"
                 android:src="@mipmap/basket_default"
-                android:layout_marginLeft="@dimen/x80"
-                android:layout_marginRight="@dimen/x80"
-                />
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -404,7 +403,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rl_iv2"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x210"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_alignParentTop="true"
@@ -416,9 +415,9 @@
                 android:layout_width="@dimen/x80"
                 android:layout_height="@dimen/x80"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/x76"
-                android:layout_marginRight="@dimen/x76"
                 android:src="@mipmap/basket_default"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 />
         </RelativeLayout>
 
