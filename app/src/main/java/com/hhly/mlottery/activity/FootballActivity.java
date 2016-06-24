@@ -69,7 +69,7 @@ public class FootballActivity extends BaseActivity {
         fragments.add(new CounselFragment());
         fragments.add(new InformationFragment());
         fragments.add(new VideoFragment());
-        fragments.add(new CPIFragment());
+        fragments.add(CPIFragment.newInstance());
         fragments.add(new BasketScoresFragment());
     }
 

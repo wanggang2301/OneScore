@@ -15,7 +15,7 @@ public class DeviceInfo {
  	 */
 
 	public static String getDeviceId(Context context) {
-		TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+		TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		String imei = TelephonyMgr.getDeviceId();
 		return imei;
 	}
@@ -24,7 +24,7 @@ public class DeviceInfo {
 	 * 获取设备imsi
  	 */
 	public static String getSubscriberId(Context context) {
-		TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+		TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		String imsi = TelephonyMgr.getSubscriberId();
 		return imsi;
 	}

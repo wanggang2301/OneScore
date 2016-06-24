@@ -1,7 +1,15 @@
 package com.hhly.mlottery.bean.oddsbean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 103TJL on 2016/5/3.
@@ -10,7 +18,7 @@ import java.util.List;
 public class NewOddsInfo {
 
     private String currDate;
-    private int code; 
+    private int code;
     private List<String> focusLeagueIds;
     /**
      * leagueId : 250
@@ -134,7 +142,8 @@ public class NewOddsInfo {
         }
     }
 
-    public static class CompanyBean {
+    public static class CompanyBean implements Parcelable {
+
         private String comId;
         private String comName;
         private boolean isChecked;
@@ -162,9 +171,42 @@ public class NewOddsInfo {
         public void setIsChecked(boolean isChecked) {
             this.isChecked = isChecked;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.comId);
+            dest.writeString(this.comName);
+            dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+        }
+
+        public CompanyBean() {
+        }
+
+        protected CompanyBean(Parcel in) {
+            this.comId = in.readString();
+            this.comName = in.readString();
+            this.isChecked = in.readByte() != 0;
+        }
+
+        public static final Parcelable.Creator<CompanyBean> CREATOR = new Parcelable.Creator<CompanyBean>() {
+            @Override
+            public CompanyBean createFromParcel(Parcel source) {
+                return new CompanyBean(source);
+            }
+
+            @Override
+            public CompanyBean[] newArray(int size) {
+                return new CompanyBean[size];
+            }
+        };
     }
 
-    public static class AllInfoBean {
+    public static class AllInfoBean implements Cloneable {
         private String leagueName;
         private String leagueId;
         private String leagueColor;
@@ -187,6 +229,40 @@ public class NewOddsInfo {
          */
 
         private List<ComListBean> comList;
+
+        /**
+         * 转化为 Odds 需要的数据规格
+         *
+         * @return ArrayList
+         */
+        public ArrayList<Map<String, String>> toListViewParamList() {
+            ArrayList<Map<String, String>> obList = new ArrayList<>();
+            for (int m = 0; m < this.getComList().size(); m++) {
+                Map<String, String> obMap = new HashMap<>();
+                obMap.put("id", this.getComList().get(m).getComId());
+                obMap.put("name", this.getComList().get(m).getComName());
+                obMap.put("thirdid", matchInfo.getMatchId());
+                obList.add(obMap);
+            }
+            return obList;
+        }
+
+        @Override
+        public AllInfoBean clone() {
+            try {
+                AllInfoBean allInfoBean = (AllInfoBean) super.clone();
+                List<ComListBean> list = new ArrayList<>();
+                List<ComListBean> comList = allInfoBean.getComList();
+                for (ComListBean comListBean : comList) {
+                    list.add(comListBean.clone());
+                }
+                allInfoBean.setComList(list);
+                return allInfoBean;
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 
         public String getLeagueName() {
             return leagueName;
@@ -311,18 +387,10 @@ public class NewOddsInfo {
             }
         }
 
-        public static class ComListBean {
+        public static class ComListBean implements Cloneable {
             private String comId;
             private String comName;
             private boolean isShow;
-
-            public boolean isShow() {
-                return isShow;
-            }
-
-            public void setIsShow(boolean isShow) {
-                this.isShow = isShow;
-            }
 
             /**
              * left : 1.02
@@ -342,6 +410,108 @@ public class NewOddsInfo {
              */
 
             private PreLevelBean preLevel;
+
+            /**
+             * 更新当前赔率信息
+             *
+             * @param odds 推送赔率信息
+             */
+            public void updateCurrLevel(WebSocketCPIResult.UpdateOdds odds) {
+                currLevel.left = odds.getLeftOdds();
+                currLevel.middle = odds.getMediumOdds();
+                currLevel.right = odds.getRightOdds();
+
+                currLevel.leftUp = compare(currLevel.left, preLevel.left);
+                currLevel.middleUp = compare(currLevel.middle, preLevel.middle);
+                currLevel.rightUp = compare(currLevel.right, preLevel.right);
+            }
+
+            /**
+             * 属于公司
+             *
+             * @param company 公司
+             * @return 是否属于公司
+             */
+            public boolean belongTo(CompanyBean company) {
+                return this.comId.equals(company.comId);
+            }
+
+            /**
+             * 存在公司列表中
+             *
+             * @param companies 公司列表
+             * @return 是否属于公司列表
+             */
+            public boolean belongTo(List<CompanyBean> companies) {
+                // 遍历
+                for (CompanyBean company : companies) {
+                    // 属于其中一家公司即可
+                    if (this.belongTo(company)) return true;
+                }
+                // 都不属于则不属于
+                return false;
+            }
+
+            /**
+             * 属于并且可显示
+             *
+             * @param company 公司
+             * @return 属于可显示的公司
+             */
+            public boolean belongToShow(CompanyBean company) {
+                return this.comId.equals(company.comId) && company.isChecked;
+            }
+
+            public boolean belongToShow(List<CompanyBean> companies) {
+                // 遍历
+                for (CompanyBean company : companies) {
+                    // 属于其中一家公司即可
+                    if (this.belongToShow(company)) return true;
+                }
+                // 都不属于则不属于
+                return false;
+            }
+
+            /**
+             * 赔率比较
+             *
+             * @param now    当前赔率
+             * @param before 之前赔率
+             * @return -1 下降， 0 不变， 1  上升， -2 异常
+             */
+            private int compare(String now, String before) {
+                try {
+                    double nowVal = Double.parseDouble(now);
+                    double beforeVal = Double.parseDouble(before);
+                    if (nowVal > beforeVal) {
+                        return 1;
+                    } else if (nowVal == beforeVal) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return -2; // 出异常了
+            }
+
+            @Override
+            public ComListBean clone() {
+                try {
+                    return (ComListBean) super.clone();
+                } catch (CloneNotSupportedException e) {
+                    return null;
+                }
+            }
+
+            public boolean isShow() {
+                return isShow;
+            }
+
+            public void setIsShow(boolean isShow) {
+                this.isShow = isShow;
+            }
 
             public String getComId() {
                 return comId;
