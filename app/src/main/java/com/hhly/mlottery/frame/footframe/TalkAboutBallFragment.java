@@ -1,33 +1,26 @@
 package com.hhly.mlottery.frame.footframe;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.InputActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
@@ -35,19 +28,16 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
-import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.ChatBallListView;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.Comment;
 import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.sohu.cyan.android.sdk.http.CyanRequestListener;
-import com.sohu.cyan.android.sdk.http.response.SubmitResp;
 import com.sohu.cyan.android.sdk.http.response.TopicCommentsResp;
 import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +49,7 @@ import java.util.Map;
  * @Description: 聊球页面
  * @date 2016-6-2
  */
-public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, CyanRequestListener<SubmitResp> {
+public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private View mView;
     private ProgressBar talkballpro;//客队Vs主队点赞的比例
     private ImageView ivHomeLike;//点赞主队
@@ -67,6 +57,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private TextView tvGuestLikeCount;//点赞客队数
     private TextView tvHomeLikeCount;//点赞主队数
     private LinearLayout mLinearLayout;
+    private NestedScrollView nestedscrollview;
     /**
      * 主队点赞
      */
@@ -85,9 +76,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      * 评论相关
      */
     private TextView mCommentCount;//评论数
-    private EditText mEditText;//输入评论
+    private TextView mTextView;//输入评论
     private TextView mNoData;//暂无评论
-    private TextView mSend;//发送评论
     private ChatBallListView mListView;
     private TextView mLoadMore;//加载更多
     private ProgressBar mProgressBar;//上拉加载的进度条
@@ -96,7 +86,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private long topicid;//畅言分配的文章ID，通过loadTopic接口获取
     private int mCurrentPager = 1;//页数
     private boolean isRequestFinish = true;//是否加载评论结束
-    private boolean issubmitFinish = true;//是否提交评论结束
     private CounselComentLvAdapter mAdapter;
     private CyanSdk sdk;
     private static final String ARG_PARAM1 = "param1";
@@ -104,18 +93,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ARG_PARAM3 = "param3";
     private static final String ADDKEYHOME = "homeAdd";
     private static final String ADDKEYGUEST = "guestAdd";
-    private Context mContext;
     private int type;//1 籃球/0 足球
     private String state = "-1";
-    private String model;
-    private int def = 0;
-    private RelativeLayout www;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext = context;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -125,7 +104,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
-
         }
     }
 
@@ -135,10 +113,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         initView();
         requestLikeData(ADDKEYHOME, "0", type);
         initAnim();
-        initScrollView();
         pullUpLoad();//上拉加载更多
         return mView;
-
     }
 
     /**
@@ -197,9 +173,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         params.put("thirdId", mThirdId);
         params.put(addkey, addcount);
         String url = "";
-        if (type == 0) {
+        if (type == 0) {//足球点赞
             url = BaseURLs.URL_FOOTBALL_DETAIL_LIKE_INFO;
-        } else if (type == 1) {
+        } else if (type == 1) {//篮球点赞
             url = BaseURLs.URL_BASKETBALLBALL_DETAIL_LIKE_INFO;
         }
         VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<MatchLike>() {
@@ -212,6 +188,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
                     talkballpro.setMax(homeLikeCount + guestLikeCount);
                     talkballpro.setProgress(homeLikeCount);
+                } else {
+                    tvHomeLikeCount.setText("0");
+                    tvGuestLikeCount.setText("0");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -221,7 +200,21 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         }, MatchLike.class);
     }
 
+    public static TalkAboutBallFragment newInstance(String param1, String param2, int param3) {
+        TalkAboutBallFragment fragment = new TalkAboutBallFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString("state", param2);
+        args.putInt("type", param3);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     private void initView() {
+        sdk = CyanSdk.getInstance(getActivity());
+        if (CommonUtils.isLogin()) {
+            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+        }
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
         ivGuestLike = (ImageView) mView.findViewById(R.id.talkbail_guest_like_anim_img);
@@ -233,80 +226,24 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mGuestLike.setOnClickListener(this);
         ivHomeLike.setVisibility(View.INVISIBLE);
         ivGuestLike.setVisibility(View.INVISIBLE);
-        //以前的规则是-1不可点  现在延续
-//        if (state != null && state.equals("-1")) {
-//            setClickableLikeBtn(false);
-//        } else {
-//            setClickableLikeBtn(true);
-//        }
         setClickableLikeBtn(false);
         //评论相关
-        sdk = CyanSdk.getInstance(mContext);
-        if (CommonUtils.isLogin()) {
-            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
-        }
-        model = DeviceInfo.getModel().replace(" ", "");
         mNoData = (TextView) mView.findViewById(R.id.nodata);
-        www = (RelativeLayout) mView.findViewById(R.id.www);
         mListView = (ChatBallListView) mView.findViewById(R.id.comment_lv);
         mListView.setItemsCanFocus(true);
         mAdapter = new CounselComentLvAdapter(getActivity());
         mListView.setAdapter(mAdapter);
         mCommentCount = (TextView) mView.findViewById(R.id.tv_commentcount);
         mCommentCount.setOnClickListener(this);
+        mTextView = (TextView) mView.findViewById(R.id.et_comment);
+        mLinearLayout = (LinearLayout) mView.findViewById(R.id.comment_inputcontainer);
+        nestedscrollview = (NestedScrollView) mView.findViewById(R.id.nestedscrollview);
+        mTextView.setOnClickListener(this);
         mCommentCount.setVisibility(View.VISIBLE);
-        mEditText = (EditText) mView.findViewById(R.id.et_comment);
-        mEditText.setOnClickListener(this);
-//        mLinearLayout = (LinearLayout) mView.findViewById(R.id.comment_inputcontainer);
-        mSend = (TextView) mView.findViewById(R.id.iv_send);
-        mSend.setOnClickListener(this);
-        mSend.setVisibility(View.GONE);
         //获取评论的一切信息
         if (!TextUtils.isEmpty(mThirdId)) {
             loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
         }
-        mEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mSend.setVisibility(View.VISIBLE);
-                mCommentCount.setVisibility(View.GONE);
-                if (TextUtils.isEmpty(mEditText.getText())) {
-                    mSend.setSelected(false);
-                } else {
-                    mSend.setSelected(true);
-                }
-            }
-        });
-        mEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!CommonUtils.isLogin()) {
-                    //跳转登录界面
-                    Intent intent1 = new Intent(mContext, LoginActivity.class);
-                    startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
-                }
-            }
-        });
-        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-
-                mEditText.setSelected(hasFocus);
-
-
-            }
-
-
-        });
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -322,11 +259,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     }
 
     /*
-      以下是评论相关代码  上面是分享相关代码
+      以下是评论相关代码  上面是点赞相关代码
      */
     //获取评论的一切消息  无需登录  并刷新listview
     public void loadTopic(String url, String title, int pagenum) {
-
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
@@ -340,15 +276,14 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     mListView.setVisibility(View.GONE);
                     mNoData.setVisibility(View.VISIBLE);
                 } else {
+
                     mAdapter.setInfosList(mCommentArrayList);
                     mAdapter.notifyDataSetChanged();
-
                     mListView.setVisibility(View.VISIBLE);
                     mNoData.setVisibility(View.GONE);
                     mListView.setSelection(0);
                     L.i("lzfnotifyDataSetChanged==");
                 }
-
                 L.i("lzf最新列表=" + mCommentArrayList.size());
                 L.i("lzf最热列表=" + topicLoadResp.hots.size());
             }
@@ -365,16 +300,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 }
             }
         });
-    }
-
-    public static TalkAboutBallFragment newInstance(String param1, String param2, int param3) {
-        TalkAboutBallFragment fragment = new TalkAboutBallFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString("state", param2);
-        args.putInt("type", param3);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     //上拉加载
@@ -399,20 +324,21 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mProgressBar = (ProgressBar) view.findViewById(R.id.pull_to_refresh_progress);
         mLoadMore.setText(R.string.foot_loadmore);
         mListView.initBottomView(view);
-//        mListView.setMyPullUpListViewCallBack(new ChatBallListView.MyPullUpListViewCallBack() {
-//            @Override
-//            public void scrollBottomState() {
-//                //index代表当前的页面
-//                if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
-//                    mCurrentPager++;
-//                    //请求下一页数据
-//                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
-//                        getTopicComments(mCurrentPager);
-//                    }
-//
-//                }
-//            }
-//        });
+     /*   mListView.setMyPullUpListViewCallBack(new PullUpRefreshListView.MyPullUpListViewCallBack() {
+            @Override
+            public void scrollBottomState() {
+                //上拉加载的逻辑
+                //index代表当前的页面
+                if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
+                    mCurrentPager++;
+                    //请求下一页数据
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
+                        getTopicComments(mCurrentPager);
+                    }
+
+                }
+            }
+        });*/
 
     }
 
@@ -482,9 +408,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 case CyUtils.RESULT_CODE://接收评论输入页面返回
                     loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
                     mLinearLayout.setVisibility(View.VISIBLE);
-//                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
-//                    lp.setMargins(0, 0, 0, 0);
-//                    mSwipeRefreshLayout.requestLayout();
+                    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mListView.getLayoutParams();
+                    lp.setMargins(0, 0, 0, 0);
+                    mListView.requestLayout();
                     break;
             }
         }
@@ -496,14 +422,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         super.setUserVisibleHint(isVisibleToUser);
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
-//            MyApp.getContext().sendBroadcast(new Intent("closeself"));
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    CyUtils.hideKeyBoard(getActivity());
-                }
-            });
-//            CyUtils.hideKeyBoard(getActivity());
+            MyApp.getContext().sendBroadcast(new Intent("closeself"));
         }
     }
 
@@ -517,31 +436,24 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         switch (v.getId()) {
             case R.id.tv_commentcount:
                 break;
-            case R.id.iv_send://发送评论
-                MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");
-                mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
-                mLoadMore.setText(R.string.foot_loadmore);
-                if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
-                    ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_nullcontent));
-                } else {//有输入内容
-                    if (CommonUtils.isLogin()) {//已登录华海
-                        if (CyUtils.isLogin) {//已登录畅言
-                            L.i("lzf提交topicid=" + topicid);
-                            if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
-                                issubmitFinish = false;
-                                CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                            }
-                        } else {//未登录
-                            ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
-                            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
-                        }
-                        CyUtils.hideKeyBoard(getActivity());
-                        mEditText.clearFocus();
-                    } else {
-                        //跳转登录界面
-                        Intent intent1 = new Intent(mContext, LoginActivity.class);
-                        startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
-                    }
+            case R.id.et_comment:
+                if (!CommonUtils.isLogin()) {
+                    //跳转登录界面
+                    Intent intent1 = new Intent(getActivity(), LoginActivity.class);
+                    startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+                } else {//跳转输入评论页面
+                    Intent intent2 = new Intent(getActivity(), InputActivity.class);
+                    intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+                    startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
+                    mLinearLayout.setVisibility(View.GONE);
+                    System.out.println("lzftalk跳" + topicid);
+                    //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
+//                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mSwipeRefreshLayout.getLayoutParams();
+//                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(getActivity(), 60));
+//                    mSwipeRefreshLayout.requestLayout();
+                    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mListView.getLayoutParams();
+                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(getActivity(), 60));
+                    mListView.requestLayout();
 
                 }
                 break;
@@ -558,92 +470,5 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 requestLikeData(ADDKEYGUEST, "1", type);
                 break;
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        try {
-            sdk.logOut();
-        } catch (CyanException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //*************************************************
-    private void initScrollView() {
-        //解决adjustresize和透明状态栏的冲突
-        final View decview = getActivity().getWindow().getDecorView();
-        decview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                reLayout(decview, www);
-            }
-        });
-    }
-
-    //在某个view里重新布局某个view
-    public void reLayout(View decview, View scrollview) {
-        Rect r = new Rect();
-        decview.getWindowVisibleDisplayFrame(r);
-        int screenheight = decview.getRootView().getHeight();
-        int h = screenheight - r.bottom;
-        if (h > 300) {//软键盘显示
-            mSend.setVisibility(View.VISIBLE);
-            mCommentCount.setVisibility(View.GONE);
-            mEditText.setHint("");
-            if (model.equals("m2note")) {
-                h -= 145;
-            }
-
-        } else if (h < 300) {//软键盘隐藏
-            if (h != 0) {
-                def = h;//因为有的手机在键盘隐藏时   int h = screenheight - r.bottom;这两个的
-                // 差值h不是0，有一个差值，所以把这个差值保存起来，重新layout的时候，减去这个差值
-            }
-            if (TextUtils.isEmpty(mEditText.getText())) {
-
-                if (false) {
-                    mCommentCount.setVisibility(View.GONE);
-                    mSend.setVisibility(View.VISIBLE);
-                } else {
-                    mCommentCount.setVisibility(View.VISIBLE);
-                    mSend.setVisibility(View.GONE);
-                }
-
-            } else {
-                mSend.setVisibility(View.VISIBLE);
-                mCommentCount.setVisibility(View.GONE);
-            }
-            mEditText.setHint(R.string.hint_content);
-
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
-            if (true) {
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
-                lp.setMargins(0, 0, 0, h - def);
-            } else {
-                ScrollView.LayoutParams lp = (ScrollView.LayoutParams) scrollview.getLayoutParams();
-                lp.setMargins(0, 0, 0, h - def);
-            }
-            scrollview.requestLayout();
-        }
-    }
-
-    //评论提交成功回调接口
-    @Override
-    public void onRequestSucceeded(SubmitResp submitResp) {
-        issubmitFinish = true;
-        mEditText.setText("");
-//        ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.succed_send));
-        //刷新界面
-        loadTopic(mThirdId, "", CyUtils.SINGLE_PAGE_COMMENT);
-    }
-
-    //评论提交失败回调接口
-    @Override
-    public void onRequestFailed(CyanException e) {
-        issubmitFinish = true;
-        ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
     }
 }

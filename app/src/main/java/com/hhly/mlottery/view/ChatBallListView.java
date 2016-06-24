@@ -120,7 +120,7 @@ public class ChatBallListView extends ListView implements AbsListView.OnScrollLi
                 upY = (int) ev.getY();
                 if ((upY - downY) < 0 && upY != 0) {//向上滑动而且松手
                     if (isBottom) {
-                        myPullUpListViewCallBack.scrollBottomState();
+//                        myPullUpListViewCallBack.scrollBottomState();
                     }
 
                 }

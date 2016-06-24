@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -363,7 +364,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
 
         mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet , mTalkAboutBallFragment);
-        mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -691,6 +692,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         switch (v.getId()) {
             case R.id.basket_details_back:
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Exit");
+                MyApp.getContext().sendBroadcast(new Intent("closeself"));
                 setResult(Activity.RESULT_OK);
 
                 eventBusPost();
