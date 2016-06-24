@@ -52,7 +52,7 @@ import java.util.TimerTask;
 /**
  * @author wang gang
  * @date 2016/6/3 14:17
- * @des ${TODO}
+ * @des 足球内页聊球下部内容
  */
 public class DetailsRollballFragment extends Fragment implements HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
 
@@ -208,17 +208,13 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
 
-    public void activateMatch() {
+    public void activateMatch(MatchDetail matchDetail, int type) {
+        this.mMatchDetail = matchDetail;
+        this.mViewType = type;
         mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
         mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
-        if ("0".equals(mMatchDetail.getLiveStatus()) || "1".equals(mMatchDetail.getLiveStatus())) {
-
-            L.d(TAG, "activateMatch启动socket");
-
-            startWebsocket();
-
-
-            computeWebSocket();
+        if (mViewType == DETAILSROLLBALL_TYPE_ING) {
+            initOdds();
         }
     }
 
@@ -306,7 +302,6 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             initLiveText();
 
             L.d(TAG, "refreshMatch");
-
             initOdds();
         }
     }
@@ -343,8 +338,6 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
             switch (msg.what) {
                 case STARTLOADING:// 正在加载中
-                    // L.d("456789","loading");
-
                     fl_odds_loading.setVisibility(View.VISIBLE);
                     fl_odds_net_error.setVisibility(View.GONE);
                     ll_odds.setVisibility(View.GONE);
@@ -387,8 +380,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
                         initItemOdd(bottomOdds);
 
-                        L.d(TAG, "initOdds===socket");
-
+                        //赛中的时候开启socket推送
                         if (mViewType == DETAILSROLLBALL_TYPE_ING) {
                             if (isSocketStart) {
                                 startWebsocket();

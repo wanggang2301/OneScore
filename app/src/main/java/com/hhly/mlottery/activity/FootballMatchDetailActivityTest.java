@@ -595,7 +595,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             }
 
                             if ("0".equals(mPreStatus) && "1".equals(matchDetail.getLiveStatus()) && !isFinishing()) {
-                                mDetailsRollballFragment.activateMatch();
+                                mDetailsRollballFragment.activateMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
 
                                 //滑动
                                 mHeadviewpager.setIsScrollable(true);

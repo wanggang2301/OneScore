@@ -28,7 +28,7 @@ import java.util.Random;
 /**
  * @author wang gang
  * @date 2016/6/3 9:53
- * @des ${TODO}
+ * @des 足球内页改版头部Viewpager第一页
  */
 public class PreHeadInfoFrament extends Fragment {
 
