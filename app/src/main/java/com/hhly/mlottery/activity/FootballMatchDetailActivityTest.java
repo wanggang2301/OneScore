@@ -95,49 +95,22 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
     private final static String TAG = "FootballMatchDetailActivityTest";
-
     private final static String URL_DEFAULT = "http://m.13322.com";
 
-    private final int IMMEDIA_FRAGMENT = 0;
-    private final int RESULT_FRAGMENT = 1;
-    private final int SCHEDULE_FRAGMENT = 2;
-    private final int FOCUS_FRAGMENT = 3;
-
-
-    private final int BANNER_PLAY_TIME = 5000; //头部5秒轮播
-    private final int BANNER_ANIM_TIME = 1000; //轮播动画时间
-
-
-    private final int ERROR = -1;//访问失败
-    private final int SUCCESS = 0;// 访问成功
-    private final int STARTLOADING = 1;// 正在加载中
-
-    private FrameLayout fl_odds_loading;
-
-    private FrameLayout fl_odds_net_error_details;
-
-
-    public ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
-
-    private FragmentManager fragmentManager;
-    private CustomViewpager mHeadviewpager;
-    private ViewPager mViewPager;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
-    private FragmentAdapter fragmentAdapter;
-    private BasePagerAdapter basePagerAdapter;
-    private TabLayout mTabLayout;
-    private TabsAdapter mTabsAdapter;
-    private Toolbar toolbar;
-
-    private CircleIndicator mIndicator;
-
+    private final static int IMMEDIA_FRAGMENT = 0;
+    private final static int RESULT_FRAGMENT = 1;
+    private final static int SCHEDULE_FRAGMENT = 2;
+    private final static int FOCUS_FRAGMENT = 3;
+    private final static int BANNER_PLAY_TIME = 5000; //头部5秒轮播
+    private final static int BANNER_ANIM_TIME = 1000; //轮播动画时间
+    private final static int ERROR = -1;//访问失败
+    private final static int SUCCESS = 0;// 访问成功
+    private final static int STARTLOADING = 1;// 正在加载中
     //直播状态 liveStatus
-    private static final String BEFOURLIVE = "0";//直播前
-    private static final String ONLIVE = "1";//直播中
-    private static final String LIVEENDED = "-1";//直播结束
+    private final static String BEFOURLIVE = "0";//直播前
+    private final static String ONLIVE = "1";//直播中
+    private final static String LIVEENDED = "-1";//直播结束
 
-    //赛事进行状态。matchStatus
     /**
      * 未开
      */
@@ -160,14 +133,29 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private static final String MATCHFINISH = "-1";
 
 
-    private MathchStatisInfo mathchStatisInfo;
+    private FrameLayout fl_odds_loading;
+    private FrameLayout fl_odds_net_error_details;
 
+
+    public ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+
+    private FragmentManager fragmentManager;
+    private CustomViewpager mHeadviewpager;
+    private ViewPager mViewPager;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
+    private FragmentAdapter fragmentAdapter;
+    private BasePagerAdapter basePagerAdapter;
+    private TabLayout mTabLayout;
+    private TabsAdapter mTabsAdapter;
+    private Toolbar toolbar;
+
+    private CircleIndicator mIndicator;
 
     //  滑动到顶部显示的内容
     private String toolbarTitle;
 
     private Context mContext;
-
 
     /**
      * 赛事id
@@ -176,15 +164,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
     public int mtype = 0;
-
     private int currentFragmentId = 0;
 
     private MatchDetail mMatchDetail;
+    private MathchStatisInfo mathchStatisInfo;
 
     private List<MatchTextLiveBean> matchLive;
-
     private List<Integer> allMatchLiveMsgId;
-
     private List<MatchTimeLiveBean> xMatchLive;
 
 

@@ -27,7 +27,6 @@ import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.util.AccessTokenKeeper;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NoDoubleClickUtils;
 import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -64,7 +63,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/15 14:58
- * @des ${TODO}
+ * @des 社会化分享(QQ, 空间，微信、微信朋友圈、新浪微博)
  */
 public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHandler.Response {
 
