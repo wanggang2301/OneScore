@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,14 +44,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private EditText et_username , et_password;
     private ImageView iv_eye;
     private ProgressDialog progressBar;
-    private ImageView iv_delete;
 
     public static final int REQUESTCODE_FINDPW = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_login);
 
         initView();
@@ -92,29 +92,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         progressBar.setCancelable(false);
         progressBar.setMessage(getResources().getString(R.string.logining));
 
-        findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.login);
-        iv_delete = (ImageView) findViewById(R.id.iv_delete);
-        iv_delete.setOnClickListener(this);
 
         iv_eye = (ImageView) findViewById(R.id.iv_eye);
         iv_eye.setOnClickListener(this);
         findViewById(R.id.tv_login).setOnClickListener(this);
         findViewById(R.id.public_img_back).setOnClickListener(this);
-
-
+        findViewById(R.id.tv_login).getBackground().setAlpha(127);
+        findViewById(R.id.tv_register).getBackground().setAlpha(51);
+        findViewById(R.id.iv_delete).setOnClickListener(this);
         et_username = (EditText) findViewById(R.id.et_username);
 
         et_username.addTextChangedListener(this);
 
         et_password = (EditText) findViewById(R.id.et_password);
 
-
-        View tv_register = findViewById(R.id.tv_right);
+       findViewById(R.id.tv_register).setOnClickListener(this);
+     /*   View tv_register = findViewById(R.id.tv_right);
         tv_register.setVisibility(View.VISIBLE);
         tv_register.setOnClickListener(this);
-
+*/
         findViewById(R.id.tv_forgetpw).setOnClickListener(this);
     }
 
@@ -125,7 +121,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 MobclickAgent.onEvent(mContext, "LoginActivity_Exit");
                 finish();
                 break;
-            case R.id.tv_right: // 注册
+            case R.id.tv_register: // 注册
                 MobclickAgent.onEvent(mContext, "RegisterActivity_Start");
                 startActivityForResult(new Intent(this , RegisterActivity.class) , HomePagerActivity.REQUESTCODE_LOGIN);
                 break;
@@ -138,10 +134,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 int inputType = et_password.getInputType();
                 if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD){
                     et_password.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    iv_eye.setImageResource(R.mipmap.close_eye);
+                    iv_eye.setImageResource(R.mipmap.new_close_eye);
                 }else{
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    iv_eye.setImageResource(R.mipmap.open_eye);
+                    iv_eye.setImageResource(R.mipmap.new_open_eye);
                 }
 
                 // 光标移动到结尾
@@ -245,11 +241,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onTextChanged(CharSequence s, int start, int before, int count) {}
     @Override
     public void afterTextChanged(Editable s) {
-        if (TextUtils.isEmpty(s)){
+       /* if (TextUtils.isEmpty(s)){
             iv_delete.setVisibility(View.GONE);
         }else{
             iv_delete.setVisibility(View.VISIBLE);
-        }
+        }*/
     }
 }
 
