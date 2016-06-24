@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author wang gang
  * @date 2016/6/7 15:40
- * @des ${TODO}
+ * @des 足球内页改版聊球-赛中状态下文字直播详情
  */
 public class LiveTextFragmentTest extends BottomSheetDialogFragment {
     private static final String PARAM_TYPE = "type";
@@ -87,6 +87,7 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
 
                     }
                 }
+
                 @Override
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 }
