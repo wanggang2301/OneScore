@@ -52,7 +52,7 @@ import java.util.TimerTask;
 /**
  * @author wang gang
  * @date 2016/6/3 14:17
- * @des ${TODO}
+ * @des 足球内页聊球下部内容
  */
 public class DetailsRollballFragment extends Fragment implements HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
 
@@ -76,7 +76,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     private static final String DETAILSROLLBALL_PARAM = "DETAILSROLLBALL_PARAM";
     private static final String DETAILSROLLBALL_TYPE = "DETAILSROLLBALL_TYPE";
     public static final int DETAILSROLLBALL_TYPE_PRE = 0x01;//赛前
-    public static final int DETAILSROLLBALL_TYPE_ING = 0x10;//赛中赛后
+    public static final int DETAILSROLLBALL_TYPE_ING = 0x10;//赛中
+    public static final int DETAILSROLLBALL_TYPE_ED = 0x20;//赛后
 
     //直播状态 liveStatus
     private static final String BEFOURLIVE = "0";//直播前
@@ -160,6 +161,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     private BottomOddsItem eurBottomOddsItem;
 
 
+    private boolean isSocketStart = true;
+
+
     public static DetailsRollballFragment newInstance() {
         DetailsRollballFragment fragment = new DetailsRollballFragment();
         return fragment;
@@ -204,12 +208,13 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
 
-    public void activateMatch() {
+    public void activateMatch(MatchDetail matchDetail, int type) {
+        this.mMatchDetail = matchDetail;
+        this.mViewType = type;
         mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
         mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
-        if ("0".equals(mMatchDetail.getLiveStatus()) || "1".equals(mMatchDetail.getLiveStatus())) {
-            startWebsocket();
-            computeWebSocket();
+        if (mViewType == DETAILSROLLBALL_TYPE_ING) {
+            initOdds();
         }
     }
 
@@ -279,6 +284,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                L.d(TAG, "reLoading");
                 initOdds();
             }
         });
@@ -294,6 +300,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             initPreData();
         } else {
             initLiveText();
+
+            L.d(TAG, "refreshMatch");
             initOdds();
         }
     }
@@ -305,13 +313,20 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         L.d(TAG, "mViewType=" + mViewType + "-------DETAILSROLLBALL_TYPE_PRE=" + DETAILSROLLBALL_TYPE_PRE);
 
         if (mViewType == DETAILSROLLBALL_TYPE_PRE) {//赛前
+
+            L.d(TAG, "赛前");
             mView.findViewById(R.id.prestadium_layout).setVisibility(View.VISIBLE);
             mView.findViewById(R.id.stadium_layout).setVisibility(View.GONE);
             initPreData();
         } else {  //赛后活赛中
+
+
             mView.findViewById(R.id.prestadium_layout).setVisibility(View.GONE);
             mView.findViewById(R.id.stadium_layout).setVisibility(View.VISIBLE);
             initLiveText();
+
+            L.d(TAG, "赛后");
+
             initOdds();
         }
     }
@@ -323,8 +338,6 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
             switch (msg.what) {
                 case STARTLOADING:// 正在加载中
-                    // L.d("456789","loading");
-
                     fl_odds_loading.setVisibility(View.VISIBLE);
                     fl_odds_net_error.setVisibility(View.GONE);
                     ll_odds.setVisibility(View.GONE);
@@ -366,15 +379,30 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                         }
 
                         initItemOdd(bottomOdds);
-                        startWebsocket();
-                        computeWebSocket();
+
+                        //赛中的时候开启socket推送
+                        if (mViewType == DETAILSROLLBALL_TYPE_ING) {
+                            if (isSocketStart) {
+                                startWebsocket();
+                                computeWebSocket();
+                                isSocketStart = false;
+                            }
+                        }
+                        mHandler.sendEmptyMessage(SUCCESS);
+
                     }
-                }, new VolleyContentFast.ResponseErrorListener() {
+                }
+
+                , new VolleyContentFast.ResponseErrorListener()
+
+                {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         mHandler.sendEmptyMessage(ERROR);
                     }
-                }, BottomOdds.class
+                }
+
+                , BottomOdds.class
         );
     }
 
@@ -572,6 +600,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 hSocketClient.close();
             }
 
+            L.d(TAG, "hSocketClient=" + hSocketClient);
+
             hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
             hSocketClient.setSocketResponseMessageListener(this);
             hSocketClient.setSocketResponseCloseListener(this);
@@ -742,21 +772,26 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     /***
      * 计算推送Socket断开重新连接
      */
+    private boolean isStartTimer = false;
 
     private void computeWebSocket() {
-        TimerTask tt = new TimerTask() {
-            @Override
-            public void run() {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
-                long pushEndTime = System.currentTimeMillis();
-                if ((pushEndTime - pushStartTime) >= 30000) {
-                    L.d(TAG, "重新启动socket");
-                    startWebsocket();
+        if (!isStartTimer) {
+            TimerTask tt = new TimerTask() {
+                @Override
+                public void run() {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                    L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+                    long pushEndTime = System.currentTimeMillis();
+                    if ((pushEndTime - pushStartTime) >= 30000) {
+                        L.d(TAG, "重新启动socketvvvv");
+                        startWebsocket();
+                    }
                 }
-            }
-        };
-        computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+            };
+
+            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+            isStartTimer = true;
+        }
     }
 
     @Override

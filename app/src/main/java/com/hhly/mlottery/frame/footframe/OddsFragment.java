@@ -15,7 +15,7 @@ import com.hhly.mlottery.frame.oddfragment.PlateFragment;
 import com.umeng.analytics.MobclickAgent;
 
 /**
- * 指数fragment
+ * 足球内页改版指数fragment
  * tjl
  */
 public class OddsFragment extends Fragment implements View.OnClickListener {

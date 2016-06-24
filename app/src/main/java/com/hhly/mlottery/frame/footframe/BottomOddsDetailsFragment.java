@@ -35,7 +35,7 @@ import java.util.Map;
 /**
  * 底部赔率弹窗
  * <p/>
- * Created by Administrator on 2016/5/11.
+ * Created by wangg on 2016/5/11.
  */
 public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
 

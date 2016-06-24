@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/2 18:34
- * @des ${TODO}
+ * @des 足球内页改版头部viewpager第二页
  */
 public class LiveHeadInfoFragment extends Fragment {
 
