@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/8 9:31
- * @des ${TODO}
+ * @des 足球内页改版聊球-完场状态下文字直播详情
  */
 public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment implements AbsListView.OnScrollListener {
 
@@ -131,7 +131,6 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
                 }
             });
         }
-
 
         close_image.setOnClickListener(new View.OnClickListener() {
             @Override

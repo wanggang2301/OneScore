@@ -9,17 +9,26 @@ import android.widget.ListView;
 
 public class PullUpRefreshListView extends ListView implements AbsListView.OnScrollListener {
 
-    /** 底部显示正在加载的页面 */
+    /**
+     * 底部显示正在加载的页面
+     */
     private View footerView = null;
-    /** 存储上下文 */
+    /**
+     * 存储上下文
+     */
     private Context context;
-    /** 上拉刷新的ListView的回调监听 */
+    /**
+     * 上拉刷新的ListView的回调监听
+     */
     private MyPullUpListViewCallBack myPullUpListViewCallBack;
-    /** 记录第一行Item的数值 */
+    /**
+     * 记录第一行Item的数值
+     */
 //    private int firstVisibleItem;
     int downY;
     int upY;
-    private boolean isBottom=false;
+    private boolean isBottom = false;
+
     public PullUpRefreshListView(Context context) {
         super(context);
         this.context = context;
@@ -47,7 +56,7 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
      * 初始化话底部页面
      */
     public void initBottomView(View mfooterView) {
-        footerView=mfooterView;
+        footerView = mfooterView;
         if (footerView != null) {
             addFooterView(footerView);
         }
@@ -71,10 +80,10 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
                 // addFooterView(footerView);
                 footerView.setVisibility(View.VISIBLE);//显示底部布局
             }
-            if (firstVisibleItem+visibleItemCount==totalItemCount){
-                isBottom=true;
-            }else {
-                isBottom=false;
+            if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                isBottom = true;
+            } else {
+                isBottom = false;
             }
         }
 
@@ -87,22 +96,22 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
 
     /**
      * 上拉刷新的ListView的回调监听
-     *
      */
     public interface MyPullUpListViewCallBack {
 
         void scrollBottomState();
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN :
+            case MotionEvent.ACTION_DOWN:
                 downY = (int) ev.getY();
                 break;
-            case MotionEvent.ACTION_UP :
-                upY= (int) ev.getY();
-                if ((upY-downY)<0 && upY!=0){//向上滑动而且松手
-                    if (isBottom){
+            case MotionEvent.ACTION_UP:
+                upY = (int) ev.getY();
+                if ((upY - downY) < 0 && upY != 0) {//向上滑动而且松手
+                    if (isBottom) {
                         myPullUpListViewCallBack.scrollBottomState();
                     }
 
