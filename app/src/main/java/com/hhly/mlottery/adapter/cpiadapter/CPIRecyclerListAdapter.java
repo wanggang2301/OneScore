@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
-import com.hhly.mlottery.frame.oddfragment.CPIOddsListFragment;
+import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.widget.CpiOddsItemView;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
 
     public CPIRecyclerListAdapter(@NonNull List<NewOddsInfo.AllInfoBean> items,
                                   @NonNull List<NewOddsInfo.CompanyBean> companies,
-                                  @CPIOddsListFragment.Type String type) {
+                                  @CPIOddsFragment.Type String type) {
         this.items = items;
         this.companies = companies;
         this.type = type;
@@ -237,17 +237,17 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
          */
         private void setTitleText() {
             switch (type) {
-                case CPIOddsListFragment.TYPE_PLATE:
+                case CPIOddsFragment.TYPE_PLATE:
                     mLeftOddsTitle.setText(R.string.odd_home_txt);
                     mCenterOddsTitle.setText(R.string.odd_dish_txt);
                     mRightOddsTitle.setText(R.string.odd_guest_txt);
                     break;
-                case CPIOddsListFragment.TYPE_BIG:
+                case CPIOddsFragment.TYPE_BIG:
                     mLeftOddsTitle.setText(R.string.odd_home_big_txt);
                     mCenterOddsTitle.setText(R.string.odd_dish_txt);
                     mRightOddsTitle.setText(R.string.odd_guest_big_txt);
                     break;
-                case CPIOddsListFragment.TYPE_OP:
+                case CPIOddsFragment.TYPE_OP:
                     mLeftOddsTitle.setText(R.string.odd_home_op_txt);
                     mCenterOddsTitle.setText(R.string.odd_dish_op_txt);
                     mRightOddsTitle.setText(R.string.odd_guest_op_txt);
