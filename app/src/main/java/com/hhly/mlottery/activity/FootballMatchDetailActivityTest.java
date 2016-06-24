@@ -498,7 +498,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                         head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
                         head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                         head_score.setText("VS");
-                        mDetailsRollballFragment.refreshMatch(matchDetail, 0);
+                        mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
                         mTalkAboutBallFragment.setClickableLikeBtn(true);
 
 
@@ -525,6 +525,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             head_score.setText(mMatchDetail.getHomeTeamInfo().getScore() + ":" + mMatchDetail.getGuestTeamInfo().getScore());
                             mLiveHeadInfoFragment.initMatchOverData(mMatchDetail);
                             mKeepTime = "5400000";//90分钟的毫秒数
+
+                            mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
+
+
                             mTalkAboutBallFragment.setClickableLikeBtn(false);
 
 
@@ -601,15 +605,15 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                                 mPreStatus = "1";
                             }
 
+                            mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
+
+
                             mTalkAboutBallFragment.setClickableLikeBtn(true);
 
                             mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
 
                         }
-
-                        mDetailsRollballFragment.refreshMatch(matchDetail, 2);                        //2只代表不是未开赛
-
                     }
                 }
 
@@ -724,6 +728,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 mTalkAboutBallFragment.setClickableLikeBtn(false);
 
+                mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED, matchDetail);
+
+
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
 
 
@@ -787,6 +794,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     mLiveHeadInfoFragment.setKeepTime(StadiumUtils.convertStringToInt(mKeepTime) + "");
                 }
 
+                mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
+
+
                 mTalkAboutBallFragment.setClickableLikeBtn(true);
 
 
@@ -807,8 +817,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             }, BANNER_PLAY_TIME);
             //赛后赛中下面赔率显示
-
-            mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING, matchDetail);
 
 
         }
@@ -1233,23 +1241,28 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private Timer computeWebSocketConnTimer = new Timer();
 
+    private boolean isStarComputeTimer = false;
+
     /***
      * 计算推送Socket断开重新连接
      */
     private void computeWebSocket() {
-        TimerTask tt = new TimerTask() {
-            @Override
-            public void run() {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
-                long pushEndTime = System.currentTimeMillis();
-                if ((pushEndTime - pushStartTime) >= 30000) {
-                    L.d(TAG, "重新启动socket");
-                    startWebsocket();
+        if (!isStarComputeTimer) {
+            TimerTask tt = new TimerTask() {
+                @Override
+                public void run() {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                    L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+                    long pushEndTime = System.currentTimeMillis();
+                    if ((pushEndTime - pushStartTime) >= 30000) {
+                        L.d(TAG, "重新启动socket");
+                        startWebsocket();
+                    }
                 }
-            }
-        };
-        computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+            };
+            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+            isStarComputeTimer = true;
+        }
     }
 
 
