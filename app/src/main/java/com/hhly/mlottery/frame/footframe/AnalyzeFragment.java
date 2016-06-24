@@ -146,8 +146,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
                         //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
-                .showImageForEmptyUri(R.mipmap.basket_default)
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .showImageForEmptyUri(R.mipmap.football_analyze_default)
+                .showImageOnFail(R.mipmap.football_analyze_default)// 加载失败显示的图片
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity()).build();
         mImageLoader = ImageLoader.getInstance(); //初始化
