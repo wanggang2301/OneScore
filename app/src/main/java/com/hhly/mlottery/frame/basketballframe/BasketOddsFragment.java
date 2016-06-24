@@ -1,43 +1,31 @@
 package com.hhly.mlottery.frame.basketballframe;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketDetailsActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketOddsAdapter;
-import com.hhly.mlottery.adapter.basketball.BasketOddsDetailsAdapter;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.view.ObservableListView;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.hhly.mlottery.widget.NestedListView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -195,17 +183,17 @@ public class BasketOddsFragment extends Fragment implements View.OnClickListener
 
         mTitleHomeWin= (TextView) mView.findViewById(R.id.basket_odds_home_win);
 
-        if(mType.equals(BasketDetailsActivity.ODDS_EURO)){
+        if(mType.equals(BasketDetailsActivityTest.ODDS_EURO)){
             mTitleHandicap.setVisibility(View.GONE);
             mTitleGuestWin.setText(getActivity().getResources().getString(R.string.basket_analyze_guest_win));
             mTitleHomeWin.setText(getActivity().getResources().getString(R.string.basket_analyze_home_win));
         }
-        else if(mType.equals(BasketDetailsActivity.ODDS_LET)){
+        else if(mType.equals(BasketDetailsActivityTest.ODDS_LET)){
             mTitleHandicap.setVisibility(View.VISIBLE);
             mTitleGuestWin.setText(getActivity().getResources().getString(R.string.basket_analyze_guest_win));
             mTitleHomeWin.setText(getActivity().getResources().getString(R.string.basket_analyze_home_win));
         }
-        else if(mType.equals(BasketDetailsActivity.ODDS_SIZE)){
+        else if(mType.equals(BasketDetailsActivityTest.ODDS_SIZE)){
             mTitleHandicap.setVisibility(View.VISIBLE);
             mTitleGuestWin.setText(getActivity().getResources().getString(R.string.odd_home_big_txt));
             mTitleHomeWin.setText(getActivity().getResources().getString(R.string.odd_guest_big_txt));

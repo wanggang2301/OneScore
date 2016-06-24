@@ -115,7 +115,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private HappySocketClient mSocketClient;//客户端  socket;
     private URI mSocketUri = null;
 
-    private String TAG = BasketDetailsActivity.class.getName();
+    private String TAG = BasketDetailsActivityTest.class.getName();
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -801,8 +801,13 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 }
                 mApos.setVisibility(View.GONE);
                 mRemainTime.setText("");
+                if(mMatch.getMatchStatus()==PRE_MATCH){
+                    mTalkAboutBallFragment.setClickableLikeBtn(true);
+                }
                 break;
             case END://完场
+                mTalkAboutBallFragment.setClickableLikeBtn(false);
+
                 mGuestScore.setText(score.getGuestScore() + "");
                 mHomeScore.setText(score.getHomeScore() + "");
                 mMatchState.setText(R.string.finished_txt);
@@ -876,6 +881,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 mVS.setText(":");
                 mTitleVS.setText(":");
 
+                mTalkAboutBallFragment.setClickableLikeBtn(true); //聊球可点赞
 
                 //设置比赛时间及状态
                 if (mMatch.getMatchStatus() == FIRST_QUARTER) {
@@ -1114,9 +1120,11 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 }
                 mApos.setVisibility(View.GONE);
                 mRemainTime.setText("");
+                mTalkAboutBallFragment.setClickableLikeBtn(false);
                 break;
 
             case END://完场
+                mTalkAboutBallFragment.setClickableLikeBtn(false);
                 mApos.setVisibility(View.GONE);
                 mGuestScore.setText(score.getGuestScore() + "");
                 mGuestScore.setTextColor(getResources().getColor(R.color.score_color_white));
@@ -1217,7 +1225,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                     scoreAnimation(mHomeScore);
                     mHomeNum=score.getHomeScore();
                 }
-
+                mTalkAboutBallFragment.setClickableLikeBtn(true);//聊球可点赞
                 setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
 
                 L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());

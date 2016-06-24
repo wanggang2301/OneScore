@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketDetailsActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
