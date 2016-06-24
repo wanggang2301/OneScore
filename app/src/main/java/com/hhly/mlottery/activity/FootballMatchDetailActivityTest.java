@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -2291,7 +2292,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         switch (v.getId()) {
             case R.id.iv_back:  //返回
                 eventBusPost();
-
+                MyApp.getContext().sendBroadcast(new Intent("closeself"));
                 // setResult(Activity.RESULT_OK);
                 finish();
                 break;
