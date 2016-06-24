@@ -2,6 +2,7 @@ package com.hhly.mlottery.util.net;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;
@@ -111,9 +112,11 @@ public class VolleyContentFast {
                 }
             }
             L.i(TAG, "request method get url = [ " + tempUrl + " ]");
+            Log.i("URL", "************GET****************[ " + tempUrl + " ]**************GET**************");
         } else {
             appendMapLanguage(params);
             L.i(TAG, "request method post url = [ " + url + " ]");
+            Log.i("URL", "************POST****************[ " + url + " ]***************POST*************");
             if (params != null && params.size() != 0) {
                 for (String key : params.keySet()) {
                     L.d(TAG, "[ key = " + key + " ，param = " + params.get(key) + " ]");

@@ -3,6 +3,8 @@ package com.hhly.mlottery.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -170,7 +172,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             if (UiUtils.checkPassword_JustLength(this , passWord)){
                 // 登录
                 progressBar.show();
-                String url = BaseURLs.URL_LOGIN;
+                final String url = BaseURLs.URL_LOGIN;
                 Map<String, String> param = new HashMap<>();
                 param.put("account" , userName);
                 param.put("password" , MD5Util.getMD5(passWord));
@@ -186,6 +188,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                             CommonUtils.saveRegisterInfo(register);
                             setResult(RESULT_OK);
+                            //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
+                            sendUserInfoToServer(register);
                             finish();
                         }else{
                             CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
@@ -203,6 +207,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 } , Register.class);
             }
         }
+    }
+
+    private void sendUserInfoToServer(Register register) {
+        final String url = BaseURLs.USER_ACTION_ANALYSIS_URL;
+        final Map<String,String> params = new HashMap<>();
+        params.put("userid",register.getData().getUser().getUserId());
+        String CHANNEL_ID;
+        try {
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+
+            if (appInfo.metaData != null) {
+                CHANNEL_ID = appInfo.metaData.getString("UMENG_CHANNEL");
+                params.put("appType","appLogin");
+                params.put("channel", CHANNEL_ID);
+            }else {
+                //获取不到渠道号id的时候
+                params.put("appType","appLoginInfo");
+                //没有渠道号id的话，服务器指定要传这个“vnp56ams”参数
+                params.put("channel","vnp56ams");
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+            params.put("appType","appLoginInfo");
+            params.put("channel","vnp56ams");
+            e.printStackTrace();
+        }
+
+        VolleyContentFast.requestStringByPost(url, params, new VolleyContentFast.ResponseSuccessListener<String>() {
+            @Override
+            public void onResponse(String jsonObject) {
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        });
     }
 
     @Override

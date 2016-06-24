@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/y160"
         android:paddingTop="@dimen/y15"
         android:paddingBottom="@dimen/y15"
         android:gravity="center_vertical"
@@ -22,7 +22,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="2016-01-12"
+                android:text="2016-01-12-2diandsnfasl"
                 android:textColor="@color/analyze_date"
                 android:textSize="@dimen/text_size_10"
                 android:gravity="center_horizontal"

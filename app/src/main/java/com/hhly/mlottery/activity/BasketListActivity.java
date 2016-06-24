@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,15 +7,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
+import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description: 篮球比分列表页面的 Activity
@@ -33,7 +41,7 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
     private int mHomeType; //首次进入显示状态值
 
     // private View view;
-    FragmentManager fragmentManager;
+//    FragmentManager fragmentManager;
 //	Fragment fragment;
 
     Fragment mImmediateFragment;
@@ -59,10 +67,16 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
     public final int ISSCHEDULE = 3;
     public final int ISFOCUS = 4;
 
+    private BasketScoresFragment basketScoresFragment;
+    private FragmentManager fragmentManager;
+    private Fragment currentFragment;
+    private int currentPosition = 0;
+    private List<Fragment> fragments = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frage_basketball);
+        setContentView(R.layout.frage_basebasketball);
         /**
          * 获得首次进入时候的状态值
          */
@@ -71,8 +85,16 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
             L.d("BASKET_HOME_TYPE : ", mHomeType + "");
         }
 
-        initView();
-        focusCallback();// 加载关注数
+//        initView();
+//        focusCallback();// 加载关注数
+        basketScoresFragment = new BasketScoresFragment();
+        fragments.add(basketScoresFragment);
+
+        fragmentManager = getSupportFragmentManager();
+        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content_baseframe, currentFragment,
+                fragments.get(0).getClass(), null, false,
+                fragments.get(0).getClass().getSimpleName() + 0, false);
+
     }
 
     private void initView() {
@@ -317,51 +339,51 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        if (mImmediateBtn.isSelected()) {
-            MobclickAgent.onPageStart("Basketball_ImmediateFragment");
-            isImmediate = true;
-            L.d("zzz", "Basketball_ImmediateFragment:显示");
-        }
-        if (mResultBtn.isSelected()) {
-            MobclickAgent.onPageStart("Basketball_ResultFragment");
-            isResult = true;
-            L.d("zzz", "Basketball_ResultFragment:显示");
-        }
-        if (mScheduleBtn.isSelected()) {
-            MobclickAgent.onPageStart("Basketball_ScheduleFragment");
-            isSchedule = true;
-            L.d("zzz", "Basketball_ScheduleFragment:显示");
-        }
-        if (mFocusBtn.isSelected()) {
-            MobclickAgent.onPageStart("Basketball_FocusFragment");
-            isFocus = true;
-            L.d("zzz", "Basketball_FocusFragment:显示");
-        }
+//        if (mImmediateBtn.isSelected()) {
+//            MobclickAgent.onPageStart("Basketball_ImmediateFragment");
+//            isImmediate = true;
+//            L.d("zzz", "Basketball_ImmediateFragment:显示");
+//        }
+//        if (mResultBtn.isSelected()) {
+//            MobclickAgent.onPageStart("Basketball_ResultFragment");
+//            isResult = true;
+//            L.d("zzz", "Basketball_ResultFragment:显示");
+//        }
+//        if (mScheduleBtn.isSelected()) {
+//            MobclickAgent.onPageStart("Basketball_ScheduleFragment");
+//            isSchedule = true;
+//            L.d("zzz", "Basketball_ScheduleFragment:显示");
+//        }
+//        if (mFocusBtn.isSelected()) {
+//            MobclickAgent.onPageStart("Basketball_FocusFragment");
+//            isFocus = true;
+//            L.d("zzz", "Basketball_FocusFragment:显示");
+//        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mImmediateBtn.isSelected()) {
-            MobclickAgent.onPageEnd("Basketball_ImmediateFragment");
-            isImmediate = false;
-            L.d("zzz", "Basketball_ImmediateFragment:隐藏");
-        }
-        if (mResultBtn.isSelected()) {
-            MobclickAgent.onPageEnd("Basketball_ResultFragment");
-            isResult = false;
-            L.d("zzz", "Basketball_ResultFragment:隐藏");
-        }
-        if (mScheduleBtn.isSelected()) {
-            MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
-            isSchedule = false;
-            L.d("zzz", "Basketball_ScheduleFragment:隐藏");
-        }
-        if (mFocusBtn.isSelected()) {
-            MobclickAgent.onPageEnd("Basketball_FocusFragment");
-            isFocus = false;
-            L.d("zzz", "Basketball_FocusFragment:隐藏");
-        }
+//        if (mImmediateBtn.isSelected()) {
+//            MobclickAgent.onPageEnd("Basketball_ImmediateFragment");
+//            isImmediate = false;
+//            L.d("zzz", "Basketball_ImmediateFragment:隐藏");
+//        }
+//        if (mResultBtn.isSelected()) {
+//            MobclickAgent.onPageEnd("Basketball_ResultFragment");
+//            isResult = false;
+//            L.d("zzz", "Basketball_ResultFragment:隐藏");
+//        }
+//        if (mScheduleBtn.isSelected()) {
+//            MobclickAgent.onPageEnd("Basketball_ScheduleFragment");
+//            isSchedule = false;
+//            L.d("zzz", "Basketball_ScheduleFragment:隐藏");
+//        }
+//        if (mFocusBtn.isSelected()) {
+//            MobclickAgent.onPageEnd("Basketball_FocusFragment");
+//            isFocus = false;
+//            L.d("zzz", "Basketball_FocusFragment:隐藏");
+//        }
     }
 
     @Override
@@ -413,9 +435,36 @@ public class BasketListActivity extends FragmentActivity implements View.OnClick
         String focusIds = PreferenceUtil.getString("basket_focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
         if ("".equals(focusIds) || arrayId.length == 0) {
-            mRedPoint.setVisibility(View.GONE);
+//            mRedPoint.setVisibility(View.GONE);
         } else {
-            mRedPoint.setVisibility(View.VISIBLE);
+//            mRedPoint.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (ImmedBasketballFragment.BasketImmedEventBus != null) {
+            ImmedBasketballFragment.BasketImmedEventBus.unregister(ImmedBasketballFragment.class);
+//            ImmedBasketballFragment.BasketImmedEventBus.unregister(ImmedBasketballFragment.newInstance(ImmedBasketballFragment.TYPE_IMMEDIATE));
+        }
+        if (ResultBasketballFragment.BasketResultEventBus != null) {
+            ResultBasketballFragment.BasketResultEventBus.unregister(ResultBasketballFragment.class);
+        }
+        if (ScheduleBasketballFragment.BasketScheduleEventBus != null) {
+            ScheduleBasketballFragment.BasketScheduleEventBus.unregister(ScheduleBasketballFragment.class);
+        }
+        if (FocusBasketballFragment.BasketFocusEventBus != null) {
+//            FocusFragment.focusEventBus.unregister(FocusFragment.class);
+            FocusBasketballFragment.BasketFocusEventBus.unregister(FocusBasketballFragment.class);
+        }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +27,11 @@ import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
+import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.widget.BallSelectArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -35,20 +39,15 @@ import java.util.List;
 
 /**
  * @author Tenney
- * @ClassName: ScoresFragment
- * @Description: 足球比分
- * @date 2015-10-15 上午10:05:16
  */
 @SuppressLint("NewApi")
 public class ScoresFragment extends Fragment {
 
-    private final int IMMEDIA_FRAGMENT = 0;
-    private final int RESULT_FRAGMENT = 1;
-    private final int SCHEDULE_FRAGMENT = 2;
-    private final int FOCUS_FRAGMENT = 3;
-
-    private final int ROLL_FRAGMENT=4;
-
+    private final int ROLLBALL_FRAGMENT = 0;
+    private final int IMMEDIA_FRAGMENT = 1;
+    private final int RESULT_FRAGMENT = 2;
+    private final int SCHEDULE_FRAGMENT = 3;
+    private final int FOCUS_FRAGMENT = 4;
 
     private final static String TAG = "ScoresFragment";
     public static List<String> titles;
@@ -87,6 +86,10 @@ public class ScoresFragment extends Fragment {
     private TabLayout mTabLayout;
     private PureViewPagerAdapter pureViewPagerAdapter;
     private List<Fragment> fragments;
+    private Spinner mSpinner;
+    private String[] mItems;
+
+    private RollBallFragment rollBallFragment;
 
     @SuppressLint("ValidFragment")
     public ScoresFragment(Context context) {
@@ -97,7 +100,8 @@ public class ScoresFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         mContext = getActivity();
         view = View.inflate(mContext, R.layout.frage_football, null);
@@ -105,7 +109,25 @@ public class ScoresFragment extends Fragment {
         setupViewPager();
         focusCallback();// 加载关注数
         initData();
+        initEVent();
         return view;
+    }
+
+    private void initEVent() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (mContext.getResources().getString(R.string.basket_left).equals(mItems[position])) {// 选择篮球
+                    ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.GONE);
+                    ((FootballActivity) mContext).switchFragment(5);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -115,13 +137,20 @@ public class ScoresFragment extends Fragment {
 
         //中心标题
         mTitleTv = (TextView) view.findViewById(R.id.public_txt_title);
-        //mTitleTv.setVisibility(View.GONE);
-        mTitleTv.setText(R.string.football_frame_txt);
+        mTitleTv.setVisibility(View.GONE);
+//        mTitleTv.setText(R.string.football_frame_txt);
         //左边标题
-      /*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
-        public_txt_left_title.setVisibility(View.VISIBLE);
-        public_txt_left_title.setText(R.string.football_frame_txt);
-*/
+            /*  public_txt_left_title = (TextView) view.findViewById(R.id.public_txt_left_title);
+				public_txt_left_title.setVisibility(View.VISIBLE);
+        public_txt_left_title.setText(R.string.football_frame_txt);*/
+
+        mSpinner = (Spinner) view.findViewById(R.id.public_txt_left_spinner);
+        mSpinner.setVisibility(View.VISIBLE);
+        mItems = getResources().getStringArray(R.array.ball_select);
+        BallSelectArrayAdapter mAdapter = new BallSelectArrayAdapter(mContext, mItems);
+        mSpinner.setAdapter(mAdapter);
+        mSpinner.setSelection(0);
+
         // 筛选
         mFilterImgBtn = (ImageView) view.findViewById(R.id.public_btn_filter);
         mSetImgBtn = (ImageView) view.findViewById(R.id.public_btn_set);
@@ -131,7 +160,9 @@ public class ScoresFragment extends Fragment {
     /**
      * 判断四个Fragment切换显示或隐藏的状态
      */
-    private boolean isImmediateFragment = true;
+    private boolean isRollballFragment = true;
+    private boolean isRollball = false;
+    private boolean isImmediateFragment = false;
     private boolean isImmediate = false;
     private boolean isResultFragment = false;
     private boolean isResult = false;
@@ -143,44 +174,57 @@ public class ScoresFragment extends Fragment {
     private void setupViewPager() {
         mTabLayout = (TabLayout) view.findViewById(R.id.tabs);
         titles = new ArrayList<>();
+        titles.add(getString(R.string.foot_rollball_txt));
         titles.add(getString(R.string.foot_jishi_txt));
         titles.add(getString(R.string.foot_saiguo_txt));
         titles.add(getString(R.string.foot_saicheng_txt));
         titles.add(getString(R.string.foot_guanzhu_txt));
 
         fragments = new ArrayList<>();
+        rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT);
+        fragments.add(rollBallFragment);
         fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT));
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT));
-       // fragments.add(RollBallFragment.newInstance());
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
+
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                L.d(TAG, "onPageScrolled");
-                L.d(TAG, "position = " + position);
-                L.d(TAG, "positionOffset = " + positionOffset);
-                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
+//                L.d(TAG, "onPageScrolled");
+//                L.d(TAG, "position = " + position);
+//                L.d(TAG, "positionOffset = " + positionOffset);
+//                L.d(TAG, "positionOffsetPixels = " + positionOffsetPixels);
 
                 if (positionOffsetPixels == 0) {
                     switch (position) {
+                        case ROLLBALL_FRAGMENT:
+                            mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.INVISIBLE);
+//                            ((RollBallFragment) fragments.get(position)).feedAdapter();
+                            break;
                         case IMMEDIA_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ImmediateFragment) fragments.get(position)).reLoadData();
                             break;
                         case RESULT_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ResultFragment) fragments.get(position)).updateAdapter();
                             break;
                         case SCHEDULE_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((ScheduleFragment) fragments.get(position)).updateAdapter();
                             break;
                         case FOCUS_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.GONE);
+                            mSetImgBtn.setVisibility(View.VISIBLE);
                             ((FocusFragment) fragments.get(position)).reLoadData();
                             break;
                     }
@@ -192,30 +236,61 @@ public class ScoresFragment extends Fragment {
             public void onPageSelected(final int position) {
                 /**判断四个Fragment切换显示或隐藏的状态 */
                 switch (position) {
+                    case ROLLBALL_FRAGMENT:
+                        isRollballFragment = true;
+                        isImmediateFragment = false;
+                        isResultFragment = false;
+                        isScheduleFragment = false;
+                        isFocusFragment = false;
+                        break;
                     case IMMEDIA_FRAGMENT:
                         isImmediateFragment = true;
+                        isRollballFragment = false;
                         isResultFragment = false;
                         isScheduleFragment = false;
                         isFocusFragment = false;
                         break;
                     case RESULT_FRAGMENT:
                         isResultFragment = true;
+                        isRollballFragment = false;
                         isImmediateFragment = false;
                         isScheduleFragment = false;
                         isFocusFragment = false;
                         break;
                     case SCHEDULE_FRAGMENT:
                         isScheduleFragment = true;
+                        isRollballFragment = false;
                         isResultFragment = false;
                         isImmediateFragment = false;
                         isFocusFragment = false;
                         break;
                     case FOCUS_FRAGMENT:
                         isFocusFragment = true;
+                        isRollballFragment = false;
                         isScheduleFragment = false;
                         isResultFragment = false;
                         isImmediateFragment = false;
                         break;
+                }
+                if (isRollballFragment) {
+                    if (isRollball) {
+                        MobclickAgent.onPageEnd("Football_ResultFragment");
+                        isResult = false;
+                        L.d("xxx", "ResultFragment>>>隐藏");
+                    }
+                    if (isSchedule) {
+                        MobclickAgent.onPageEnd("Football_ScheduleFragment");
+                        isSchedule = false;
+                        L.d("xxx", "ScheduleFragment>>>隐藏");
+                    }
+                    if (isFocus) {
+                        MobclickAgent.onPageEnd("Football_FocusFragment");
+                        isFocus = false;
+                        L.d("xxx", "FocusFragment>>>隐藏");
+                    }
+                    MobclickAgent.onPageStart("Football_ImmediateFragment");
+                    isRollball = true;
+                    L.d("xxx", "ImmediateFragment>>>显示");
                 }
                 if (isImmediateFragment) {
                     if (isResult) {
@@ -305,7 +380,7 @@ public class ScoresFragment extends Fragment {
         });
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
 
@@ -313,7 +388,7 @@ public class ScoresFragment extends Fragment {
         mBackImgBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((FootballActivity) getActivity()).finish();
+                getActivity().finish();
                 MobclickAgent.onEvent(mContext, "Football_Exit");
             }
         });
@@ -323,7 +398,26 @@ public class ScoresFragment extends Fragment {
             public void onClick(View view) {
                 MobclickAgent.onEvent(mContext, "Football_Filtrate");
                 currentFragmentId = mViewPager.getCurrentItem();
-                if (currentFragmentId == IMMEDIA_FRAGMENT) {
+                if (currentFragmentId == ROLLBALL_FRAGMENT) {
+                    Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, true);
+                    bundle.putInt("currentFragmentId", ROLLBALL_FRAGMENT);
+                    LeagueCup[] allCups = null;
+                    if (rollBallFragment.getLeagueCupLists() != null && rollBallFragment.getLeagueCupLists().size() > 0) {
+                        allCups = rollBallFragment.getLeagueCupLists().toArray(new LeagueCup[]{});
+                    }
+                    bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
+
+                    LeagueCup[] leagueCups = rollBallFragment.getLeagueCupChecked();
+                    if (leagueCups != null && leagueCups.length > 0) {
+                        bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
+                                leagueCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                    }
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                } else if (currentFragmentId == IMMEDIA_FRAGMENT) {
                     switch (ImmediateFragment.mLoadDataStatus) {
                         case ImmediateFragment.LOAD_DATA_STATUS_ERROR:
                             Intent intent = new Intent(getActivity(), FiltrateMatchConfigActivity.class);
@@ -338,7 +432,8 @@ public class ScoresFragment extends Fragment {
                             bundle = new Bundle();
                             LeagueCup[] allCups = ImmediateFragment.mCups.toArray(new LeagueCup[]{});
                             bundle.putParcelableArray(FiltrateMatchConfigActivity.ALL_CUPS, allCups);// 传值到筛选页面的全部联赛，数据类型是LeagueCup[]
-                            bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS, ImmediateFragment.mCheckedCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
+                            bundle.putParcelableArray(FiltrateMatchConfigActivity.CHECKED_CUPS,
+                                    ImmediateFragment.mCheckedCups);// 传值到筛选页面的已经选择的联赛，数据类型是LeagueCup[]
                             bundle.putBoolean(FiltrateMatchConfigActivity.CHECKED_DEFUALT, ImmediateFragment.isCheckedDefualt);// 是否默认选择
                             bundle.putBoolean(FiltrateMatchConfigActivity.NET_STATUS, ImmediateFragment.isNetSuccess);
                             bundle.putInt("currentFragmentId", IMMEDIA_FRAGMENT);
@@ -454,9 +549,9 @@ public class ScoresFragment extends Fragment {
         String focusIds = PreferenceUtil.getString("focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
         if ("".equals(focusIds) || arrayId.length == 0) {
-            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt));
+            mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getString(R.string.foot_guanzhu_txt));
         } else {
-            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
         }
     }
 
@@ -467,6 +562,7 @@ public class ScoresFragment extends Fragment {
             onPause();
         } else {
             onResume();
+            mSpinner.setSelection(0);
         }
     }
 
@@ -500,42 +596,42 @@ public class ScoresFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-            if (isImmediate) {
-                MobclickAgent.onPageEnd("Football_ImmediateFragment");
-                isImmediate = false;
-//                L.d("xxx", "ImmediateFragment>>>隐藏");
-                L.d("xxx", "ImmediateFragment>>>隐藏");
-            }
-            if (isResult) {
-                MobclickAgent.onPageEnd("Football_ResultFragment");
-                isResult = false;
-//                L.d("xxx", "ResultFragment>>>隐藏");
-                L.d("xxx", "ResultFragment>>>隐藏");
-            }
-            if (isSchedule) {
-                MobclickAgent.onPageEnd("Football_ScheduleFragment");
-                isSchedule = false;
-//                L.d("xxx", "ScheduleFragment>>>隐藏");
+        if (isImmediate) {
+            MobclickAgent.onPageEnd("Football_ImmediateFragment");
+            isImmediate = false;
+            //                L.d("xxx", "ImmediateFragment>>>隐藏");
+            L.d("xxx", "ImmediateFragment>>>隐藏");
+        }
+        if (isResult) {
+            MobclickAgent.onPageEnd("Football_ResultFragment");
+            isResult = false;
+            //                L.d("xxx", "ResultFragment>>>隐藏");
+            L.d("xxx", "ResultFragment>>>隐藏");
+        }
+        if (isSchedule) {
+            MobclickAgent.onPageEnd("Football_ScheduleFragment");
+            isSchedule = false;
+            //                L.d("xxx", "ScheduleFragment>>>隐藏");
 
-                L.d("xxx", "ScheduleFragment>>>隐藏");
+            L.d("xxx", "ScheduleFragment>>>隐藏");
 
-            }
-            if (isFocus) {
-                MobclickAgent.onPageEnd("Football_FocusFragment");
-                isFocus = false;
+        }
+        if (isFocus) {
+            MobclickAgent.onPageEnd("Football_FocusFragment");
+            isFocus = false;
 
-//                L.d("xxx", "FocusFragment>>>隐藏");
+            //                L.d("xxx", "FocusFragment>>>隐藏");
 
-                L.d("xxx", "FocusFragment>>>隐藏");
+            L.d("xxx", "FocusFragment>>>隐藏");
 
-            }
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-//        L.d(TAG, "football Fragment destroy..");
+        //        L.d(TAG, "football Fragment destroy..");
 
         L.d(TAG, "football Fragment destroy..");
 
@@ -560,7 +656,7 @@ public class ScoresFragment extends Fragment {
 
 
 /*
-    @Override
+        @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             //   setResult(Activity.RESULT_OK);
@@ -569,7 +665,6 @@ public class ScoresFragment extends Fragment {
         }
         return super.onKeyDown(keyCode, event);
     }*/
-
 
 
 }

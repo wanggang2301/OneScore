@@ -7,7 +7,7 @@ public class MathchStatisInfo {
 
     private int home_score = 0;
 
-    private int home_half_score=0;
+    private int home_half_score = 0;
 
     private int home_rc = 0;
 
@@ -30,14 +30,14 @@ public class MathchStatisInfo {
 
     private int home_free_kick = 0; //任意球
 
-    private int home_foul=0; //犯规
+    private int home_foul = 0; //犯规
 
-    private int home_lineOut=0;
+    private int home_lineOut = 0;
 
 
     private int guest_score = 0;
 
-    private int guest_half_score=0;
+    private int guest_half_score = 0;
 
 
     private int guest_rc = 0;
@@ -64,10 +64,30 @@ public class MathchStatisInfo {
     private int guest_free_kick = 0; //任意球
 
 
-    private int guest_foul=0; //犯规
+    private int guest_foul = 0; //犯规
 
-    private int guest_lineOut=0; //界外球
+    private int guest_lineOut = 0; //界外球
 
+
+    private int home_attack = 0;
+
+    private int guest_attack = 0;
+
+    public int getHome_attack() {
+        return home_attack;
+    }
+
+    public void setHome_attack(int home_attack) {
+        this.home_attack = home_attack;
+    }
+
+    public int getGuest_attack() {
+        return guest_attack;
+    }
+
+    public void setGuest_attack(int guest_attack) {
+        this.guest_attack = guest_attack;
+    }
 
     public int getHome_score() {
         return home_score;

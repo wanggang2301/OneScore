@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysEntity;
@@ -161,7 +161,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                 case 2:// 内页
                                                 {
                                                     if ("13".equals(jumpAddr)) {// 足球内页13
-                                                        Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
+                                                        Intent intent = new Intent(mContext, FootballMatchDetailActivityTest.class);
                                                         intent.putExtra("thirdId", thirdId);
                                                         intent.putExtra("currentFragmentId", -1);
                                                         mContext.startActivity(intent);
@@ -191,7 +191,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
                                                     Intent intent = new Intent(mContext, WebActivity.class);
                                                     intent.putExtra("key", jumpAddr);
-                                                    intent.putExtra("imageurl",imageurl );
+                                                    intent.putExtra("imageurl", imageurl);
                                                     intent.putExtra("title", title);// 分享标题
                                                     intent.putExtra("subtitle", summary);
                                                     intent.putExtra("infoTypeName", infoTypeName);
@@ -477,9 +477,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private void init() {
         try {
-            ViewGroup.LayoutParams scoreParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dip2px(mContext, 120));
-            ViewGroup.LayoutParams lotteryHKParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dip2px(mContext, 105));
-            ViewGroup.LayoutParams lotteryOtherParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dip2px(mContext, 90));
+            //ViewGroup.LayoutParams scoreParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            // ViewGroup.LayoutParams lotteryHKParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            ViewGroup.LayoutParams lotteryOtherParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dip2px(mContext, 110));
             for (int i = 0, len = mHomePagerEntity.getOtherLists().size(); i < len; i++) {
                 int labType = mHomePagerEntity.getOtherLists().get(i).getContent().getLabType();// 获取类型
                 List<HomeBodysEntity> bodys = mHomePagerEntity.getOtherLists().get(i).getContent().getBodys();
@@ -610,7 +610,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             }
                             score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
 
-                            scoreView.setLayoutParams(scoreParams);
+                            // scoreView.setLayoutParams(scoreParams);
                             scoreViewList.add(scoreView);
                             View splitView = View.inflate(mContext, R.layout.split_view, null);
                             scoreSplitViewList.add(splitView);
@@ -643,61 +643,61 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             switch (homeBodysEntity.getName()) {
                                 case "1":// 香港彩
-                                    lotteryHKAddView(lotteryHKParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_hk));
+                                    lotteryHKAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_hk));
                                     break;
                                 case "6":// 七星彩
-                                    lotteryQXCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_qxc));
+                                    lotteryQXCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_qxc));
                                     break;
                                 case "15":// 北京赛车
-                                    lotteryBJSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_bj_sc));
+                                    lotteryBJSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_bj_sc));
                                     break;
                                 case "8":// 广东快乐十分
-                                    lotteryKLSFAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gd_klsf));
+                                    lotteryKLSFAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gd_klsf));
                                     break;
                                 case "11":// 湖南快乐十分
-                                    lotteryKLSFAddView(lotteryOtherParams, homeBodysEntity,mContext.getResources().getString(R.string.number_cz_hn_klsf) );
+                                    lotteryKLSFAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_hn_klsf));
                                     break;
                                 case "19":// 幸运农场
-                                    lotteryKLSFAddView(lotteryOtherParams, homeBodysEntity,mContext.getResources().getString(R.string.number_cz_xylc) );
+                                    lotteryKLSFAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_xylc));
                                     break;
                                 case "2":// 重庆时时彩
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_cq_ssc));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_cq_ssc));
                                     break;
                                 case "3":// 江西时时彩
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_jx_ssc));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_jx_ssc));
                                     break;
                                 case "4":// 新疆时时彩
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_xj_ssc));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_xj_ssc));
                                     break;
                                 case "5":// 云南时时彩
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_yn_ssc));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_yn_ssc));
                                     break;
                                 case "23":// 天津时时彩
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_tj_ssc));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_tj_ssc));
                                     break;
                                 case "7":// 广东十一选五
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gd_syxw));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gd_syxw));
                                     break;
                                 case "9":// 湖北十一选五
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_hb_syxw));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_hb_syxw));
                                     break;
                                 case "20":// 江苏十一选五
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_js_syxw));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_js_syxw));
                                     break;
                                 case "21":// 江西十一选五
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_jx_syxw));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_jx_syxw));
                                     break;
                                 case "22":// 山东十一选五
-                                    lotterySSCAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_sd_syxw));
+                                    lotterySSCAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_sd_syxw));
                                     break;
                                 case "10":// 安徽快3
-                                    lotteryKSAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_ah_ks));
+                                    lotteryKSAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_ah_ks));
                                     break;
                                 case "16":// 江苏快3
-                                    lotteryKSAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_js_ks));
+                                    lotteryKSAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_js_ks));
                                     break;
                                 case "18":// 广西快3
-                                    lotteryKSAddView(lotteryOtherParams, homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gx_ks));
+                                    lotteryKSAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_gx_ks));
                                     break;
                             }
                         }
@@ -743,11 +743,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 快三添加Item
      *
-     * @param lotteryOtherParams 参数设置
-     * @param homeBodysEntity    实体类对象
-     * @param lotteryName        彩种名称
+     * @param homeBodysEntity 实体类对象
+     * @param lotteryName     彩种名称
      */
-    private void lotteryKSAddView(ViewGroup.LayoutParams lotteryOtherParams, HomeBodysEntity homeBodysEntity, String lotteryName) {
+    private void lotteryKSAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryKSView();
         if (homeBodysEntity.getPicUrl() == null) {
             ks_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
@@ -762,7 +761,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 ks_numbers.get(k).setImageDrawable(mContext.getResources().getDrawable(AppConstants.numberKSNos[Integer.parseInt(numbers.get(k)) - 1]));
             }
         }
-        lotteryView.setLayoutParams(lotteryOtherParams);
         lotteryViewList.add(lotteryView);
         View splitView = View.inflate(mContext, R.layout.split_view, null);
         lotterySplitViewList.add(splitView);
@@ -771,11 +769,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 快乐十分添加Item
      *
-     * @param lotteryOtherParams 参数设置
-     * @param homeBodysEntity    实体类对象
-     * @param lotteryName        彩种名称
+     * @param homeBodysEntity 实体类对象
+     * @param lotteryName     彩种名称
      */
-    private void lotteryKLSFAddView(ViewGroup.LayoutParams lotteryOtherParams, HomeBodysEntity homeBodysEntity, String lotteryName) {
+    private void lotteryKLSFAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryKLSFView();
         if (homeBodysEntity.getPicUrl() == null) {
             klsf_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
@@ -804,7 +801,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 }
             }
         }
-        lotteryView.setLayoutParams(lotteryOtherParams);
         lotteryViewList.add(lotteryView);
         View splitView = View.inflate(mContext, R.layout.split_view, null);
         lotterySplitViewList.add(splitView);
@@ -813,11 +809,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 北京赛车添加Item
      *
-     * @param lotteryOtherParams 参数设置
-     * @param homeBodysEntity    实体类对象
-     * @param lotteryName        彩种名称
+     * @param homeBodysEntity 实体类对象
+     * @param lotteryName     彩种名称
      */
-    private void lotteryBJSCAddView(ViewGroup.LayoutParams lotteryOtherParams, HomeBodysEntity homeBodysEntity, String lotteryName) {
+    private void lotteryBJSCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryBJSCView();
         if (homeBodysEntity.getPicUrl() == null) {
             bjsc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
@@ -832,7 +827,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 bjsc_numbers.get(k).setImageDrawable(mContext.getResources().getDrawable(AppConstants.numberCarNos[Integer.parseInt(numbers.get(k)) - 1]));
             }
         }
-        lotteryView.setLayoutParams(lotteryOtherParams);
         lotteryViewList.add(lotteryView);
         View splitView = View.inflate(mContext, R.layout.split_view, null);
         lotterySplitViewList.add(splitView);
@@ -841,11 +835,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 七星彩添加Item
      *
-     * @param lotteryOtherParams 参数设置
-     * @param homeBodysEntity    实体类对象
-     * @param lotteryName        彩种名称
+     * @param homeBodysEntity 实体类对象
+     * @param lotteryName     彩种名称
      */
-    private void lotteryQXCAddView(ViewGroup.LayoutParams lotteryOtherParams, HomeBodysEntity homeBodysEntity, String lotteryName) {
+    private void lotteryQXCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryyQXCView();
         if (homeBodysEntity.getPicUrl() == null) {
             qxc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
@@ -867,7 +860,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 }
             }
         }
-        lotteryView.setLayoutParams(lotteryOtherParams);
         lotteryViewList.add(lotteryView);
         View splitView = View.inflate(mContext, R.layout.split_view, null);
         lotterySplitViewList.add(splitView);
@@ -876,11 +868,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 香港彩添加Item
      *
-     * @param lotteryHKParams 参数设置
      * @param homeBodysEntity 实体类对象
      * @param lotteryName     彩种名称
      */
-    private void lotteryHKAddView(ViewGroup.LayoutParams lotteryHKParams, HomeBodysEntity homeBodysEntity, String lotteryName) {
+    private void lotteryHKAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryHKView();
         if (homeBodysEntity.getPicUrl() == null) {
             hk_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
@@ -1003,7 +994,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 hk_zodiacs.get(k).setText(zod);
             }
         }
-        lotteryView.setLayoutParams(lotteryHKParams);
+        //lotteryView.setLayoutParams(lotteryHKParams);
         lotteryViewList.add(lotteryView);
         View splitView = View.inflate(mContext, R.layout.split_view, null);
         lotterySplitViewList.add(splitView);
@@ -1012,11 +1003,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
     /**
      * 时时彩|十一选五添加Item
      *
-     * @param lotteryOtherParams 参数设置
-     * @param homeBodysEntity    实体类对象
-     * @param lotteryName        彩种名称
+     * @param homeBodysEntity 实体类对象
+     * @param lotteryName     彩种名称
      */
-    private void lotterySSCAddView(ViewGroup.LayoutParams lotteryOtherParams, HomeBodysEntity homeBodysEntity, String lotteryName) {
+    private void lotterySSCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotterySSCView();
         if (homeBodysEntity.getPicUrl() == null) {
             ssc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
@@ -1033,7 +1023,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 ssc_numbers.get(k).setBackgroundResource(R.mipmap.number_bg_red);
             }
         }
-        lotteryView.setLayoutParams(lotteryOtherParams);
         lotteryViewList.add(lotteryView);
         View splitView = View.inflate(mContext, R.layout.split_view, null);
         lotterySplitViewList.add(splitView);

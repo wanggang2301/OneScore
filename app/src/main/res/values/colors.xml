@@ -3,6 +3,7 @@
 
 
 
+
     <color name="selected_bg">#eeeeee</color>
     <!--足球二期颜色-->
     <color name="foot_integal_se">#ff5400</color>
@@ -13,7 +14,9 @@
     <color name="live_text4">#ff0000</color>
 
     <color name="plate_title_bg">#fffef1</color>
-
+    <color name="odds_details">#ff6600</color>
+    <color name="odds_left">#00DB1A</color>
+    <color name="material_red">#F44336</color>
 
 
     <!-- 主题颜色 -->
@@ -28,9 +31,10 @@
     <color name="progress_home">#eec72c</color>
     <color name="progress_guest">#3aa611</color>
     <color name="tabhost">#0eae7e</color>
+    <color name="timeviewcolor">#0e7f45</color>
     <color name="tabhost__selected_text">#fff</color>
     <color name="tabhost_unselected_text">#333</color>
-    <color name="timeLineColor">#cccccc</color>
+    <color name="timeLineColor">#585858</color>
 
     <color name="live_text_ot">#f67f27</color>
     <color name="live_text_finish">#ff0000</color>
@@ -148,6 +152,7 @@
     <color name="yellow_card_color">#FF9900</color>
     <color name="transparent">#00000000</color>
     <color name="half_transparent">#88000000</color>
+    <color name="half_transparent2">#11000000</color>
 
     <!-- 筛选 -->
     <color name="filtrate_match_checkbox_defualt">#888</color>
@@ -235,12 +240,12 @@
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="search_bg">#007cc3</color>
     <color name="search_text_bg">#63c4eb</color>
+    <color name="item_background">#999999</color>
 
     <!-- 开奖详情第二列背景色 -->
     <color name="number_info_two_bg">#f5f5f5</color>
     <!-- 开奖列表开奖提示背景色 -->
     <color name="number_open_bg">#ffd75c</color>
-
     <!-- 白色 -->
     <color name="ivory">#FFFFF0</color>
     <!-- 象牙色 -->
@@ -542,6 +547,7 @@
     <!--<color name="accent">#eeff41</color>-->
     <color name="basket_text_color">#FEFEFE</color>
     <color name="score_color_white">#fff</color>
+    <color name="unselected_tab_color">#9fff</color>
 
     <color name="black_title">#18181A</color>
     <color name="black_grounding">#242328</color>
@@ -552,6 +558,7 @@
     <color name="basket_score_white">#FFFFFF</color>
     <color name="basket_win_color">#FF1F1F</color>
     <color name="basket_parting_line">#444</color>
+    <color name="ripple_design_blue">#00bcd4</color>
 
 
     <color name="radiobutton_normal">#fff</color>
@@ -573,8 +580,24 @@
     <color name="cpi_grid_selected">#DEDEDE</color>
 
 
-
     <color name="yellow_verify_code">#FFB51A</color>
 
+    <color name="fall_color">#00DB1A</color>
+    <color name="item_selectable_pressed">@color/res_time_color</color>
 
+    <!-- ODDS -->
+    <color name="odds_up_bg">#FF6A6A</color>
+    <color name="odds_down_bg">#00DB1A</color>
+    <color name="background_layout">#EAEEF4</color>
+
+    <!--足球改版分析界面颜色-->
+    <color name="analyze_title">#3f5672</color>
+    <color name="history_win">#333333</color>
+    <color name="more_record">#0090ff</color>
+
+    <!-- 足球分析详情页面颜色-->
+    <color name="football_analyze_win_color">#DD2F1C</color>
+    <color name="football_analyze_lose_color">#21B11E</color>
+    <color name="football_analyze_draw_color">#00aaee</color>
+    <color name="football_analyze_default_color">#333333</color>
 </resources>

@@ -26,28 +26,37 @@ public class TeamInfo implements Parcelable {
 
     private String corner;
 
-    private  String score;
+    private String score;
 
-    private  String halfScore;
+    private String halfScore;
 
-    private  String danger;
+    private String danger;
 
     private String shot;
 
-    private  String aside;
+    private String aside;
 
-    private  String trapping;
+    private String trapping;
 
-    private  String columnals;
+    private String columnals;
 
-    private  String foul;
+    private String foul;
 
-    private  String freeHit;
+    private String freeHit;
 
-    private  String lineOut;
+    private String lineOut;
+
+    private String attackCount;
+
+    public String getAttackCount() {
+        return attackCount;
+    }
+
+    public void setAttackCount(String attackCount) {
+        this.attackCount = attackCount;
+    }
 
     private List<PlayerInfo> lineup;
-
 
 
     public String getId() {
@@ -195,7 +204,6 @@ public class TeamInfo implements Parcelable {
     }
 
 
-
     public static final Creator<TeamInfo> CREATOR = new Creator<TeamInfo>() {
         @Override
         public TeamInfo createFromParcel(Parcel in) {
@@ -207,10 +215,12 @@ public class TeamInfo implements Parcelable {
             return new TeamInfo[size];
         }
     };
-    public TeamInfo(){
+
+    public TeamInfo() {
 
     }
-    public TeamInfo(Parcel in){
+
+    public TeamInfo(Parcel in) {
         id = in.readString();
         name = in.readString();
         url = in.readString();
@@ -228,10 +238,11 @@ public class TeamInfo implements Parcelable {
         foul = in.readString();
         freeHit = in.readString();
         lineOut = in.readString();
-        PlayerInfo[] lineupArray = (PlayerInfo[])in.readParcelableArray(TeamInfo.class.getClassLoader());
-        if(lineupArray==null){
+        attackCount = in.readString();
+        PlayerInfo[] lineupArray = (PlayerInfo[]) in.readParcelableArray(TeamInfo.class.getClassLoader());
+        if (lineupArray == null) {
             lineup = null;
-        }else{
+        } else {
             lineup = Arrays.asList(lineupArray);
         }
 
@@ -261,10 +272,11 @@ public class TeamInfo implements Parcelable {
         dest.writeString(foul);
         dest.writeString(freeHit);
         dest.writeString(lineOut);
-        if(lineup==null){
-            dest.writeParcelableArray(null,flags);
-        }else{
-            dest.writeParcelableArray(lineup.toArray(new PlayerInfo[lineup.size()]),flags);
+        dest.writeString(attackCount);
+        if (lineup == null) {
+            dest.writeParcelableArray(null, flags);
+        } else {
+            dest.writeParcelableArray(lineup.toArray(new PlayerInfo[lineup.size()]), flags);
         }
 
     }

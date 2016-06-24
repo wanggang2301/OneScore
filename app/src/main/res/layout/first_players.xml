@@ -148,6 +148,7 @@
                         android:paddingTop="@dimen/y40">
 
                         <TextView
+                            android:id="@+id/tv_homeTeam_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/firstPlayers_homeTeam_bg"
@@ -172,6 +173,7 @@
                         android:paddingTop="@dimen/y40">
 
                         <TextView
+                            android:id="@+id/tv_visitingTeam_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/firstPlayers_visitingTeam_bg"

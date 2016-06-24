@@ -26,6 +26,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
     <style name="AppTheme.BlackStatusBar.ColorGreen"></style>
 
     <style name="Widget" />
@@ -247,6 +254,21 @@
         <item name="android:max">240</item>
         <item name="android:background">@mipmap/line</item>
     </style>
+
+
+    <!-- 客队样式 -->
+    <style name="StyleProgressBarguest_statics" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">5dp</item>
+        <item name="android:progressDrawable">@drawable/pro</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">100</item>
+        <item name="android:progress">50</item>
+    </style>
+
+
     <!-- 主队样式 -->
     <style name="StyleProgressBarhome_team24" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:minHeight">4dip</item>
@@ -292,7 +314,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
-        <item name="android:background">@color/white</item>
 
     </style>
     <!-- 主队和客队的射门数 begin -->
@@ -311,6 +332,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/progress_score</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:text">0</item>
         <!-- 主队和客队的射门数 end -->
     </style>
 
@@ -507,8 +529,7 @@
     </style>
 
 
-    <!--登录信息背景 begin-->
-    <!-- 长条背景 默认白色-->
+    <!--登录信息背景-->
     <style name="login_item_bg">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginRight">15dp</item>
@@ -664,6 +685,63 @@
         <item name="android:layout_marginLeft">18dp</item>
     </style>
 
+    <!-- rollball style-->
+    <style name="item_rollball_linearlayout">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/home_item_bg</item>
+    </style>
+    <style name="item_rollball_textview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minWidth">60dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:text">-</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+    <style name="MW_White">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="WW_Width_0dp">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="item_rollball_MeasureSpec_EXACTLY">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxWidth">100dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/res_name_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
+
+    <style name="Md.Card" parent="CardView">
+        <item name="contentPadding">0dp</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+    </style>
+
+    <!-- cardView 通用 -->
+    <dimen name="card_elevation">0dp</dimen>
+    <dimen name="card_corner_radius">3dp</dimen>
+
     <!--忘记密码 TextView-->
     <style name="login_textview_forget_pw" parent="login_edittext_common">
         <item name="android:textColor">#CCCCCC</item>
@@ -716,9 +794,25 @@
 
 
 
+
     <!--AppDialog_Theme-->
     <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <!-- 业务选择弹框activity动画样式 -->
+    <style name="AnimTop2" parent="@android:style/Animation">
+        <!--<item name="android:windowEnterAnimation">@anim/push_bottom_in</item>-->
+    </style>
+    <!-- 业务选择弹框activity样式 -->
+    <style name="MyDialogStyleTop" parent="android:Theme.Dialog" >
+        <!--<item name="android:windowAnimationStyle">@style/AnimTop2</item>-->
+        <item name="android:windowFrame">@null</item>边框
+        <item name="android:windowIsFloating">true</item>是否浮现在activity之上
+        <item name="android:windowIsTranslucent">true</item>半透明
+        <item name="android:windowNoTitle">true</item>无标题
+        <item name="android:windowBackground">@android:color/transparent</item>背景透明
+        <item name="android:backgroundDimEnabled">false</item>false不模糊
+    </style>
+
 
 </resources>

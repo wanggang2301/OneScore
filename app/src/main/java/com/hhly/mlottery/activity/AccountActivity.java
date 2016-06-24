@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
@@ -47,7 +46,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         progressBar = new ProgressDialog(this);
         progressBar.setMessage(getResources().getString(R.string.logouting));
 
-        ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.my);
+        ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.my);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         // 是否需要设置 设置按钮src
@@ -55,12 +54,12 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.tv_logout).setOnClickListener(this);
         findViewById(R.id.tv_login).setOnClickListener(this);
-        tv_nickname = ((TextView)findViewById(R.id.tv_nickname));
+        tv_nickname = ((TextView) findViewById(R.id.tv_nickname));
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.public_img_back: // 返回
                 MobclickAgent.onEvent(mContext, "AccountActivity_Exit");
                 finish();
@@ -70,14 +69,14 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 showDialog();
                 break;
             case R.id.tv_login: // 昵称头像栏
-                startActivity(new Intent(this , ProfileActivity.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             default:
                 break;
         }
     }
 
-    private void showDialog(){
+    private void showDialog() {
        /* AlertDialog dialog = new AlertDialog.Builder(AccountActivity.this)
                 .setMessage(getResources().getString(R.string.logout_check))
                 .setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
@@ -93,8 +92,10 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 })
                 .create();
         dialog.show();*/
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
         builder.setCancelable(false);// 设置对话框以外不可点击
+        builder.setTitle("");// 提示标题
         builder.setMessage(R.string.logout_check);// 提示内容
         builder.setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
             //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -110,9 +111,8 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 dialog.cancel();
             }
         });
-        AlertDialog alertDialog = builder.create();
+        android.support.v7.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
-
     }
 
     /**
@@ -124,31 +124,31 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
 
         String url = BaseURLs.URL_LOGOUT;
         Map<String, String> param = new HashMap<>();
-        param.put("loginToken" , AppConstants.register.getData().getLoginToken());
-        param.put("deviceToken" , AppConstants.deviceToken);
-        param.put("userId" , AppConstants.register.getData().getUser().getUserId());
+        param.put("loginToken", AppConstants.register.getData().getLoginToken());
+        param.put("deviceToken", AppConstants.deviceToken);
+        param.put("userId", AppConstants.register.getData().getUser().getUserId());
         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
 
                 progressBar.dismiss();
-                if (register.getResult() == AccountResultCode.SUCC || register.getResult() == AccountResultCode.USER_NOT_LOGIN){
+                if (register.getResult() == AccountResultCode.SUCC || register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
                     CommonUtils.saveRegisterInfo(null);
                     UiUtils.toast(MyApp.getInstance(), R.string.logout_succ);
                     setResult(RESULT_OK);
                     finish();
-                }else{
-                    CommonUtils.handlerRequestResult(register.getResult() , register.getMsg());
+                } else {
+                    CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 progressBar.dismiss();
-                L.e(TAG , " 注销失败");
-                UiUtils.toast(MyApp.getInstance() , R.string.immediate_unconection);
+                L.e(TAG, " 注销失败");
+                UiUtils.toast(MyApp.getInstance(), R.string.immediate_unconection);
             }
-        } , Register.class);
+        }, Register.class);
     }
 
     @Override
