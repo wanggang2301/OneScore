@@ -230,13 +230,6 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
             if (cpiOddsItemView != null) {
                 cpiOddsItemView.hideDivider();
             }
-
-            // 如果一个子 View 都没得，那就去死吧
-            if (mContainer.getChildCount() == 0) {
-                itemView.setVisibility(View.GONE);
-            } else {
-                itemView.setVisibility(View.VISIBLE);
-            }
         }
 
         /**

@@ -34,6 +34,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 /**
@@ -59,7 +60,8 @@ public class CPIOddsListFragment extends Fragment {
     private static final String KEY_TYPE = "type"; // 类型
 
     private String type; // 该 Fragment 的类型
-    private List<NewOddsInfo.AllInfoBean> datas; // 列表数据源
+    private List<NewOddsInfo.AllInfoBean> defaultData; // 列表数据源
+    private List<NewOddsInfo.AllInfoBean> filterData; // 过滤后的数据源
     private CPIRecyclerListAdapter mAdapter; // 适配器
 
     RecyclerView mRecyclerView;
@@ -127,8 +129,9 @@ public class CPIOddsListFragment extends Fragment {
      */
     private void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        datas = new ArrayList<>();
-        mAdapter = new CPIRecyclerListAdapter(datas, parentFragment.getCompanyList(), type);
+        defaultData = new ArrayList<>();
+        filterData = new ArrayList<>();
+        mAdapter = new CPIRecyclerListAdapter(filterData, parentFragment.getCompanyList(), type);
         // RecyclerView Item 单击
         mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
             @Override
@@ -205,10 +208,13 @@ public class CPIOddsListFragment extends Fragment {
                         // 公司数据
                         handleCompany(jsonObject.getCompany());
 
-                        datas.clear();
-                        datas.addAll(allInfo);
+                        // 更新原始数据源
+                        defaultData.clear();
+                        defaultData.addAll(allInfo);
+
+                        // 更新过滤后的数据源
+                        updateFilterData();
                         setStatus(SUCCESS);
-                        mAdapter.notifyDataSetChanged();
                         // 只有当前的 Fragment 刷新成功才可以停止刷新行为
                         refreshOverWithDate(jsonObject.getCurrDate().trim());
                     }
@@ -223,6 +229,31 @@ public class CPIOddsListFragment extends Fragment {
                         refreshOver();
                     }
                 }, NewOddsInfo.class);
+    }
+
+    /**
+     * 更新过滤数据源（注意要过滤公司赔率信息）
+     */
+    public void updateFilterData() {
+        filterData.clear();
+        for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
+
+            NewOddsInfo.AllInfoBean clone = allInfo.clone();
+            List<NewOddsInfo.AllInfoBean.ComListBean> comList = clone.getComList();
+            ListIterator<NewOddsInfo.AllInfoBean.ComListBean> iterator = comList.listIterator();
+
+            // 不能直接粗暴的 remove，因为持有的是引用也会把 default 中的修改掉
+            while (iterator.hasNext()) {
+                NewOddsInfo.AllInfoBean.ComListBean next = iterator.next();
+                if (!isOddsShow(next)) {
+                    iterator.remove();
+                }
+            }
+            if (comList.size() > 0) {
+                filterData.add(clone);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -255,21 +286,9 @@ public class CPIOddsListFragment extends Fragment {
         // 1. 先找到当前 fragment 类型的 赔率数据
         List<WebSocketCPIResult.UpdateOdds> data = result.getData();
         for (WebSocketCPIResult.UpdateOdds odds : data) {
-            if (odds.getOddType().equals(type)) {
-                // 2. 遍历数据源更新数据
-                for (NewOddsInfo.AllInfoBean item : datas) {
-                    NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
-                    // 找到赛事 ID 相等的赛事
-                    if (matchInfo.getMatchId().equals(result.getThirdId())) {
-                        for (NewOddsInfo.AllInfoBean.ComListBean comListBean : item.getComList()) {
-                            if (comListBean.getComId().equals(odds.getComId())) {
-                                comListBean.updateCurrLevel(odds);
-                                mAdapter.notifyItemChanged(datas.indexOf(item));
-                            }
-                        }
-                    }
-                }
-            }
+            // 更新 DefaultData 和 FilterData
+            updateOddsIfRequire(odds, result.getThirdId(), true);
+            updateOddsIfRequire(odds, result.getThirdId(), false);
         }
     }
 
@@ -279,14 +298,15 @@ public class CPIOddsListFragment extends Fragment {
      * @param result 数据
      */
     public void updateTimeAndStatus(WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result) {
-        for (NewOddsInfo.AllInfoBean item : datas) {
+        for (NewOddsInfo.AllInfoBean item : defaultData) {
             NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
             // 找到赛事 ID 相等的更新时间和状态
             if (matchInfo.getMatchId().equals(result.getThirdId())) {
                 WebSocketCPIResult.UpdateTimeAndStatus data = result.getData();
+                int statusOrigin = data.getStatusOrigin();
                 matchInfo.setOpenTime(data.getKeepTime() + "");
-                matchInfo.setMatchState(data.getStatusOrigin() + "");
-                mAdapter.notifyItemChanged(datas.indexOf(item));
+                matchInfo.setMatchState(statusOrigin + "");
+                mAdapter.notifyItemChanged(defaultData.indexOf(item));
             }
         }
     }
@@ -297,13 +317,13 @@ public class CPIOddsListFragment extends Fragment {
      * @param result result
      */
     public void updateScore(WebSocketCPIResult<WebSocketCPIResult.UpdateScore> result) {
-        for (NewOddsInfo.AllInfoBean item : datas) {
+        for (NewOddsInfo.AllInfoBean item : defaultData) {
             NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
             // 找到赛事 ID 相等的更新比分
             if (matchInfo.getMatchId().equals(result.getThirdId())) {
                 WebSocketCPIResult.UpdateScore data = result.getData();
                 matchInfo.setMatchResult(data.getMatchResult());
-                mAdapter.notifyItemChanged(datas.indexOf(item));
+                mAdapter.notifyItemChanged(defaultData.indexOf(item));
             }
         }
     }
@@ -338,6 +358,72 @@ public class CPIOddsListFragment extends Fragment {
         if (parentFragment.getCurrentFragment() == CPIOddsListFragment.this) {
             parentFragment.setRefreshing(false);
         }
+    }
+
+    /**
+     * 把 1，2，3 转化为该 Fragment 对应的 TypeString
+     *
+     * @param oddType oddType
+     * @return type
+     */
+    private String convertTypeString(String oddType) {
+        // 1 - 亚盘，2 - 欧赔，3 - 大小球
+        if ("1".equals(oddType)) {
+            return TYPE_PLATE;
+        } else if ("2".equals(oddType)) {
+            return TYPE_OP;
+        } else {
+            return TYPE_BIG;
+        }
+    }
+
+    /**
+     * 需要更新的赔率更新
+     *
+     * @param odds 赔率
+     */
+    private void updateOddsIfRequire(WebSocketCPIResult.UpdateOdds odds,
+                                     String thirdId,
+                                     boolean isDefault) {
+        String oddTypeString = convertTypeString(odds.getOddType());
+        // 赔率类型和 Fragment 类型一致
+        if (oddTypeString.equals(type)) {
+            // 选择要更新的数据源
+            List<NewOddsInfo.AllInfoBean> items = isDefault ? defaultData : filterData;
+            // 2. 遍历数据源更新数据
+            for (NewOddsInfo.AllInfoBean item : items) {
+                NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
+                // 找到赛事 ID 相等的赛事
+                if (matchInfo.getMatchId().equals(thirdId)) {
+                    for (NewOddsInfo.AllInfoBean.ComListBean comListBean : item.getComList()) {
+                        String comId = comListBean.getComId();
+                        if (comId.equals(odds.getComId())) {
+                            comListBean.updateCurrLevel(odds);
+                            // 赔率是显示的才通知刷新
+                            if (!isDefault && isOddsShow(comListBean)) {
+                                mAdapter.notifyItemChanged(filterData.indexOf(item));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 是否是显示的赔率
+     *
+     * @param comListBean ComListBean
+     * @return 是否显示
+     */
+    private boolean isOddsShow(NewOddsInfo.AllInfoBean.ComListBean comListBean) {
+        boolean show = false;
+        for (NewOddsInfo.CompanyBean company : parentFragment.getCompanyList()) {
+            if (comListBean.getComId().equals(company.getComId()) && company.isChecked()) {
+                show = true;
+            }
+        }
+        return show;
     }
 
     /**

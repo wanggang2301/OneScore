@@ -282,7 +282,7 @@ public class CPINewFragment extends Fragment implements
                         @Override
                         public void onFinishSelection() {
                             for (CPIOddsListFragment fragment : mFragments) {
-                                fragment.notifyRefresh();
+                                fragment.updateFilterData();
                             }
                         }
                     });

@@ -206,7 +206,7 @@ public class NewOddsInfo {
         };
     }
 
-    public static class AllInfoBean {
+    public static class AllInfoBean implements Cloneable {
         private String leagueName;
         private String leagueId;
         private String leagueColor;
@@ -245,6 +245,23 @@ public class NewOddsInfo {
                 obList.add(obMap);
             }
             return obList;
+        }
+
+        @Override
+        public AllInfoBean clone() {
+            try {
+                AllInfoBean allInfoBean = (AllInfoBean) super.clone();
+                List<ComListBean> list = new ArrayList<>();
+                List<ComListBean> comList = allInfoBean.getComList();
+                for (ComListBean comListBean : comList) {
+                    list.add(comListBean.clone());
+                }
+                allInfoBean.setComList(list);
+                return allInfoBean;
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         public String getLeagueName() {
@@ -370,7 +387,7 @@ public class NewOddsInfo {
             }
         }
 
-        public static class ComListBean {
+        public static class ComListBean implements Cloneable {
             private String comId;
             private String comName;
             private boolean isShow;
@@ -477,6 +494,15 @@ public class NewOddsInfo {
                     e.printStackTrace();
                 }
                 return -2; // 出异常了
+            }
+
+            @Override
+            public ComListBean clone() {
+                try {
+                    return (ComListBean) super.clone();
+                } catch (CloneNotSupportedException e) {
+                    return null;
+                }
             }
 
             public boolean isShow() {
