@@ -25,7 +25,6 @@ import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HomeNumbersSplit;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.MyGridView;
@@ -36,6 +35,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 首页ListView数据适配器
@@ -71,6 +71,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
     private final int MIN_CLICK_DELAY_TIME = 1000;// 控件点击间隔时间
     private long lastClickTime = 0;
+
+    private Random random = new Random();
 
     /**
      * 构造
@@ -490,11 +492,14 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             View scoreView = getScoreView();
                             if ("13".equals(homeBodysEntity.getJumpAddr())) {// 足球比分
-                                if (j % 2 == 0) {
+                                // TODO
+                                int i1 = random.nextInt(AppConstants.homePageScoreBG.length - 1);
+                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreBG[i1]));// 设置背景图片
+                                /*if (j % 2 == 0) {
                                     score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_football01_bg));// 设置背景图片
                                 } else {
                                     score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_football02_bg));// 设置背景图片
-                                }
+                                }*/
                                 switch (homeBodysEntity.getStatusOrigin()) {
                                     case "-1":// 完场
                                         settingScoreItemData(homeBodysEntity, mContext.getResources().getColor(R.color.score_red), "—", mContext.getResources().getString(R.string.fragme_home_wanchang_text));
