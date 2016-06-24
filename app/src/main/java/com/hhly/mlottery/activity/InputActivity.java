@@ -169,6 +169,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void onRequestSucceeded(SubmitResp submitResp) {
         mEditText.setText("");
         issubmitFinish = true;
+        ToastTools.ShowQuickCenter(this, getResources().getString(R.string.succed_send));
         setResult(CyUtils.RESULT_CODE);
         finish();
 
