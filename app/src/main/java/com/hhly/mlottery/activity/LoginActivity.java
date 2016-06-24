@@ -99,8 +99,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         iv_eye.setOnClickListener(this);
         findViewById(R.id.tv_login).setOnClickListener(this);
         findViewById(R.id.public_img_back).setOnClickListener(this);
-        findViewById(R.id.tv_login).getBackground().setAlpha(127);
-        findViewById(R.id.tv_register).getBackground().setAlpha(51);
         findViewById(R.id.iv_delete).setOnClickListener(this);
         et_username = (EditText) findViewById(R.id.et_username);
 
