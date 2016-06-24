@@ -1,5 +1,7 @@
 package com.hhly.mlottery.frame;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
@@ -33,20 +36,24 @@ import com.hhly.mlottery.util.websocket.HappySocketClient;
 
 import org.java_websocket.drafts.Draft_17;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * 重构版 CPIFragment
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/21.
  */
 public class CPINewFragment extends Fragment implements
         HappySocketClient.SocketResponseCloseListener,
         HappySocketClient.SocketResponseErrorListener,
         HappySocketClient.SocketResponseMessageListener {
+
+    private static final int startFilterRequestCode = 10086;
 
     TextView mLeftTitle; // 左侧标题
 
@@ -63,6 +70,7 @@ public class CPINewFragment extends Fragment implements
 
     private List<CPIOddsListFragment> mFragments; // Fragments
     private ArrayList<NewOddsInfo.CompanyBean> companyList; // 公司数据源
+    private LinkedList<String> filterList; // 过滤信息数据源
 
     private DateChooseDialogFragment mDateChooseDialogFragment; // 日期选择
     private CompanyChooseDialogFragment mCompanyChooseDialogFragment; // 公司选择
@@ -86,6 +94,7 @@ public class CPINewFragment extends Fragment implements
 
         // 创建公司 List
         companyList = new ArrayList<>();
+        filterList = new LinkedList<>();
 
         // 隐藏中间标题
         hideView(view, R.id.public_txt_title);
@@ -134,8 +143,10 @@ public class CPINewFragment extends Fragment implements
         mFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO : 联赛筛选
-                socketClient.connect();
+                Intent intent = new Intent(getContext(), CpiFiltrateActivity.class);
+                intent.putExtra("fileterTags", (Serializable) getCurrentFragment().getFilterTagList());
+                intent.putExtra("linkedListChecked", filterList);
+                startActivityForResult(intent, startFilterRequestCode);
             }
         });
 
@@ -164,6 +175,24 @@ public class CPINewFragment extends Fragment implements
         startWebSocket();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("onActivityResult", requestCode + "-" + resultCode + "-" + data);
+        if (requestCode != startFilterRequestCode ||
+                resultCode != Activity.RESULT_CANCELED
+                || data == null) {
+            return;
+        }
+        ArrayList<String> checkedIdList = (ArrayList<String>) data.getSerializableExtra("key");
+        filterList.clear();
+        filterList.addAll(checkedIdList);
+        for (CPIOddsListFragment fragment : mFragments) {
+            fragment.updateFilterData();
+        }
+    }
+
     /**
      * 开启 webSocket
      */
@@ -180,13 +209,30 @@ public class CPINewFragment extends Fragment implements
         }
     }
 
+    /**
+     * 显示日期选择 dialog
+     */
     private void showDateChooseDialog() {
         maybeInitDateChooseDialog();
         mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
     }
 
+    /**
+     * 获取公司列表
+     *
+     * @return 公司列表
+     */
     public ArrayList<NewOddsInfo.CompanyBean> getCompanyList() {
         return companyList;
+    }
+
+    /**
+     * 获取过滤信息
+     *
+     * @return 过滤信息
+     */
+    public LinkedList<String> getFilterList() {
+        return filterList;
     }
 
     /**
@@ -238,6 +284,9 @@ public class CPINewFragment extends Fragment implements
         return mFragments.get(mViewPager.getCurrentItem());
     }
 
+    /**
+     * 刷新所有子 fragment
+     */
     public void refreshAllChildFragments() {
 //        mFragments.get(mViewPager.getCurrentItem()).refreshData(currentDate);
         for (CPIOddsListFragment fragment : mFragments) {
@@ -263,6 +312,12 @@ public class CPINewFragment extends Fragment implements
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
+    /**
+     * 隐藏 View
+     *
+     * @param view  view
+     * @param idRes id
+     */
     private void hideView(View view, @IdRes int idRes) {
         view.findViewById(idRes).setVisibility(View.GONE);
     }
@@ -275,6 +330,9 @@ public class CPINewFragment extends Fragment implements
         mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
     }
 
+    /**
+     * 初始化公司选择Dialog
+     */
     private void maybeInitCompanyChooseDialog() {
         if (mCompanyChooseDialogFragment == null) {
             mCompanyChooseDialogFragment = CompanyChooseDialogFragment.newInstance(companyList,
@@ -295,7 +353,6 @@ public class CPINewFragment extends Fragment implements
 
     @Override
     public void onMessage(String message) {
-
         if (message.startsWith("CONNECTED")) {
             String id = "android" + DeviceInfo.getDeviceId(getContext());
             id = MD5Util.getMD5(id);
@@ -311,6 +368,18 @@ public class CPINewFragment extends Fragment implements
                 }
             });
         }
+    }
+
+    @Override
+    public void onError(Exception exception) {
+        exception.printStackTrace();
+    }
+
+    @Override
+    public void onClose(String message) {
+        Log.d("CPINewFragment", "webSocket has been closed!");
+        Log.d("CPINewFragment", message);
+        startWebSocket();
     }
 
     /**
@@ -377,18 +446,6 @@ public class CPINewFragment extends Fragment implements
         for (CPIOddsListFragment fragment : mFragments) {
             fragment.updateTimeAndStatus(result);
         }
-    }
-
-    @Override
-    public void onError(Exception exception) {
-        exception.printStackTrace();
-    }
-
-    @Override
-    public void onClose(String message) {
-        Log.d("CPINewFragment", "webSocket has been closed!");
-        Log.d("CPINewFragment", message);
-        startWebSocket();
     }
 
     /**

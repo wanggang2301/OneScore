@@ -33,13 +33,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
 /**
  * 赔率列表 Fragment
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/21.
  */
 public class CPIOddsListFragment extends Fragment {
@@ -62,6 +63,7 @@ public class CPIOddsListFragment extends Fragment {
     private String type; // 该 Fragment 的类型
     private List<NewOddsInfo.AllInfoBean> defaultData; // 列表数据源
     private List<NewOddsInfo.AllInfoBean> filterData; // 过滤后的数据源
+    private List<NewOddsInfo.FileterTagsBean> filterTagList; // 过滤信息
     private CPIRecyclerListAdapter mAdapter; // 适配器
 
     RecyclerView mRecyclerView;
@@ -131,6 +133,7 @@ public class CPIOddsListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         defaultData = new ArrayList<>();
         filterData = new ArrayList<>();
+        filterTagList = new ArrayList<>();
         mAdapter = new CPIRecyclerListAdapter(filterData, parentFragment.getCompanyList(), type);
         // RecyclerView Item 单击
         mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
@@ -159,11 +162,8 @@ public class CPIOddsListFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    /**
-     * 通知刷新
-     */
-    public void notifyRefresh() {
-        mAdapter.notifyDataSetChanged();
+    public List<NewOddsInfo.FileterTagsBean> getFilterTagList() {
+        return filterTagList;
     }
 
     /**
@@ -212,6 +212,9 @@ public class CPIOddsListFragment extends Fragment {
                         defaultData.clear();
                         defaultData.addAll(allInfo);
 
+                        filterTagList.clear();
+                        filterTagList.addAll(jsonObject.getFileterTags());
+
                         // 更新过滤后的数据源
                         updateFilterData();
                         setStatus(SUCCESS);
@@ -236,24 +239,41 @@ public class CPIOddsListFragment extends Fragment {
      */
     public void updateFilterData() {
         filterData.clear();
+        LinkedList<String> filterList = parentFragment.getFilterList();
         for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
-
-            NewOddsInfo.AllInfoBean clone = allInfo.clone();
-            List<NewOddsInfo.AllInfoBean.ComListBean> comList = clone.getComList();
-            ListIterator<NewOddsInfo.AllInfoBean.ComListBean> iterator = comList.listIterator();
-
-            // 不能直接粗暴的 remove，因为持有的是引用也会把 default 中的修改掉
-            while (iterator.hasNext()) {
-                NewOddsInfo.AllInfoBean.ComListBean next = iterator.next();
-                if (!isOddsShow(next)) {
-                    iterator.remove();
+            if (filterList == null || filterList.isEmpty()) {
+                if (allInfo.isHot()) {
+                    filterAllInfo(allInfo);
                 }
-            }
-            if (comList.size() > 0) {
-                filterData.add(clone);
+            } else {
+                if (filterList.indexOf(allInfo.getLeagueId()) >= 0) {
+                    filterAllInfo(allInfo);
+                }
             }
         }
         mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 过滤单条信息
+     *
+     * @param allInfo allInfoBean
+     */
+    private void filterAllInfo(NewOddsInfo.AllInfoBean allInfo) {
+        NewOddsInfo.AllInfoBean clone = allInfo.clone();
+        List<NewOddsInfo.AllInfoBean.ComListBean> comList = clone.getComList();
+        ListIterator<NewOddsInfo.AllInfoBean.ComListBean> iterator = comList.listIterator();
+
+        // 不能直接粗暴的 remove，因为持有的是引用也会把 default 中的修改掉
+        while (iterator.hasNext()) {
+            NewOddsInfo.AllInfoBean.ComListBean next = iterator.next();
+            if (!isOddsShow(next)) {
+                iterator.remove();
+            }
+        }
+        if (comList.size() > 0) {
+            filterData.add(clone);
+        }
     }
 
     /**
