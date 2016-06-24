@@ -101,7 +101,8 @@
         <activity
             android:name=".activity.FootballMatchDetailActivityTest"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
+            android:windowSoftInputMode="adjustResize|stateHidden"
+             />
         <activity
             android:name=".activity.LiveChannelActivity"
             android:screenOrientation="portrait"/>
@@ -261,7 +262,7 @@
             android:name=".activity.InputActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyleTop"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 消息推送服务 -->
         <service android:name=".service.umengPushService" />
         <!-- 版本更新广播 -->

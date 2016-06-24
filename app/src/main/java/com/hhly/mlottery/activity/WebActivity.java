@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -21,7 +22,7 @@ import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -59,18 +60,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         initView();
         initData();
         initEvent();
-    }
-
-    int x = 0;
-
-    public void initAnimosion(int endy) {
-        TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, x, x + endy);
-        translateAnimation.setDuration(0);
-        translateAnimation.setFillAfter(true);
-        mTv_check_info.startAnimation(translateAnimation);
-        x -= endy;
-        ToastTools.ShowQuickCenter(WebActivity.this, x + "");
-
     }
 
     private void initEvent() {
@@ -187,16 +176,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                ChatFragment chatFragment = new ChatFragment();
 //                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
 //            }
-            if (url != null && url.contains("comment")) {
-                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                ChatFragment chatFragment = new ChatFragment();
-                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
-            }
-            if (url != null && url.contains("share")) {
-                public_btn_set.setVisibility(View.VISIBLE);
-            } else {
-                public_btn_set.setVisibility(View.GONE);
-            }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
