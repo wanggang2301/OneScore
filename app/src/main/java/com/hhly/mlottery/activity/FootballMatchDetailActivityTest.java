@@ -117,7 +117,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private FrameLayout fl_odds_net_error_details;
 
 
-    private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
+    public ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
     private FragmentManager fragmentManager;
     private CustomViewpager mHeadviewpager;

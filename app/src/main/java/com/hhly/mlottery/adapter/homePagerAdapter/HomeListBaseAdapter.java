@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
@@ -168,7 +168,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                         intent.putExtra("currentFragmentId", -1);
                                                         mContext.startActivity(intent);
                                                     } else if ("20".equals(jumpAddr)) {// 篮球内页20
-                                                        Intent intent = new Intent(mContext, BasketDetailsActivity.class);
+                                                        Intent intent = new Intent(mContext, BasketDetailsActivityTest.class);
                                                         intent.putExtra("thirdId", thirdId);
                                                         mContext.startActivity(intent);
                                                     }

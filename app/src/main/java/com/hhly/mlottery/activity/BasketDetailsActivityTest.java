@@ -115,7 +115,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private HappySocketClient mSocketClient;//客户端  socket;
     private URI mSocketUri = null;
 
-    private String TAG = BasketDetailsActivity.class.getName();
+    private String TAG = BasketDetailsActivityTest.class.getName();
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
