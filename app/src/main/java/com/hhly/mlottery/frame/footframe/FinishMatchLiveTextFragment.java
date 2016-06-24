@@ -132,7 +132,6 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
             });
         }
 
-
         close_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

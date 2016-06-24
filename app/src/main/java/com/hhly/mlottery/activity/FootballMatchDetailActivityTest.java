@@ -803,71 +803,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             }, BANNER_PLAY_TIME);
             //赛后赛中下面赔率显示
-
-
         }
 
         mStatisticsFragment.setType(matchDetail.getLiveStatus());
-
-
-/*
-        //聊球
-        mTalkAboutBallFragment = new TalkAboutBallFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("param1", mThirdId);
-        mTalkAboutBallFragment.setArguments(bundle);
-
-        //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "");
-        //指数
-        mOddsFragment = OddsFragment.newInstance("", "");
-
-        //统计
-        mStatisticsFragment = StatisticsFragmentTest.newInstance(mMatchDetail.getLiveStatus());
-
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
-        mViewPager.setOffscreenPageLimit(1);//设置预加载页面的个数。
-        mViewPager.setAdapter(mTabsAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);*/
         isInitedViewPager = true;
-
-/*
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (positionOffsetPixels == 0) {
-
-                    L.d(TAG, "onPageScrolled=" + position);
-                    switch (position) {
-                        case 4:
-
-
-                            //走势图
-                            mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
-                            mStatisticsFragment.initData(mMatchDetail.getLiveStatus());
-
-
-                            //统计图
-                            mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
-                            mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
-
-
-                            break;
-                    }
-                }
-            }
-        });*/
-
     }
 
     /**
