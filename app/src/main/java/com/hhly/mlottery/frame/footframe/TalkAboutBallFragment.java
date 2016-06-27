@@ -16,6 +16,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -98,6 +99,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private int type;//1 籃球/0 足球
     private String state = "-1";
     private View view;
+    private ProgressBar mProgressBarRefresh;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,7 +189,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             public void onResponse(MatchLike matchLike) {
                 tvHomeLikeCount.setText(matchLike.getHomeLike());
                 tvGuestLikeCount.setText(matchLike.getGuestLike());
-                System.out.println("lzfdianzan"+matchLike.getGuestLike()+matchLike.getHomeLike());
+                System.out.println("lzfdianzan" + matchLike.getGuestLike() + matchLike.getHomeLike());
                 if (matchLike.getHomeLike() != null && matchLike.getGuestLike() != null) {
                     int homeLikeCount = Integer.parseInt(matchLike.getHomeLike());
                     int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
@@ -216,7 +218,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void initView() {
-
+        mProgressBarRefresh = (ProgressBar) mView.findViewById(R.id.pull_to_refresh_progress);
+        mProgressBarRefresh.setVisibility(View.GONE);
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
         ivGuestLike = (ImageView) mView.findViewById(R.id.talkbail_guest_like_anim_img);
@@ -246,6 +249,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (!TextUtils.isEmpty(mThirdId)) {
             loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
         }
+
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -265,18 +269,20 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      */
     //获取评论的一切消息  无需登录  并刷新listview
     public void loadTopic(String url, String title, int pagenum) {
+        mProgressBarRefresh.setVisibility(View.VISIBLE);
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
+                mProgressBarRefresh.setVisibility(View.GONE);
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
                 topicid = topicLoadResp.topic_id;//文章id
                 cmt_sum = topicLoadResp.cmt_sum;//评论总数inf
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
-                if (mCommentArrayList!=null&&mCommentArrayList.size()>4){
+                if (mCommentArrayList != null && mCommentArrayList.size() > 4) {
                     view.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     view.setVisibility(View.GONE);
                 }
                 if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
@@ -301,6 +307,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
             @Override
             public void onRequestFailed(CyanException e) {
+                mProgressBarRefresh.setVisibility(View.GONE);
+
                 L.i("lzftopicid=" + e.toString());
                 L.i("lzfcmt_sum=" + e.toString());
                 if (mCommentArrayList != null && mCommentArrayList.size() != 0) {//已经有数据  说明不是第一次操作  既是下拉刷新的操作
@@ -443,7 +451,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 case CyUtils.RESULT_CODE://接收评论输入页面返回
                     loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
                     mLinearLayout.setVisibility(View.VISIBLE);
-                    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mRecyclerView.getLayoutParams();
+                    FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
                     lp.setMargins(0, 0, 0, 0);
                     mRecyclerView.requestLayout();
                     break;
@@ -483,7 +491,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     mLinearLayout.setVisibility(View.GONE);
                     System.out.println("lzftalk跳" + topicid);
                     //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
-                    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mRecyclerView.getLayoutParams();
+                    FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
                     lp.setMargins(0, 0, 0, DisplayUtil.dip2px(getActivity(), 60));
                     mRecyclerView.requestLayout();
 

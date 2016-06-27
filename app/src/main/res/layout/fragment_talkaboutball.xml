@@ -96,14 +96,26 @@
                 android:textSize="10sp"/>
         </RelativeLayout>
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comment_lv"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_weight="1">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </android.support.v7.widget.RecyclerView>
+        <ProgressBar
+            android:id="@+id/pull_to_refresh_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
     <!-- <android.support.v4.widget.NestedScrollView
          android:id="@+id/nestedscrollview"
          android:layout_width="match_parent"
@@ -225,7 +237,6 @@
              </android.support.v7.widget.RecyclerView>
          </LinearLayout>
      </android.support.v4.widget.NestedScrollView>-->
-
     <TextView
         android:id="@+id/nodata"
         android:layout_width="match_parent"
@@ -234,7 +245,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/comment_contentnull"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <!--   <RelativeLayout
            android:id="@+id/www"
