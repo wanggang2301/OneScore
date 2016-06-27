@@ -177,10 +177,11 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
                 mTime.setTextColor(primaryColor);
                 mScore.setTextColor(primaryColor);
                 mSecond.setText("\'");
-                if (intState == 1 || intState == 3) {
-                    mStatus.setVisibility(View.GONE);
-                } else {
+                // 显示中场状态，其它状态不显示
+                if (intState == 2) {
                     mStatus.setVisibility(View.VISIBLE);
+                } else {
+                    mStatus.setVisibility(View.GONE);
                 }
                 mStatus.setTextColor(primaryColor);
                 mScore.setText(matchInfo.getMatchResult());
