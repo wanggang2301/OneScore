@@ -312,9 +312,6 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     if (mListOddEntity != null && mListOddEntity.size() > 0) {
 
                         mListOddEntity.addAll(mListOddEntity); //测试滑动listview
-                        mListOddEntity.addAll(mListOddEntity); //测试滑动listview
-                        mListOddEntity.addAll(mListOddEntity); //测试滑动listview
-
                         if ("1".equals(oddType)) {//亚盘
                             mOddsAdapter = new OddsAdapter(mContext, mListOddEntity, stKey);
                         } else if ("2".equals(oddType)) {//欧赔
