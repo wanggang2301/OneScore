@@ -3,7 +3,7 @@ buildscript {
     repositories {
 
         jcenter()
-        maven{
+        maven {
             url "http://maven.oschina.net/content/groups/public"
         }
 
@@ -17,9 +17,10 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven{
+        maven {
             url "http://maven.oschina.net/content/groups/public"
         }
+        maven { url "https://jitpack.io" }
 
     }
 }

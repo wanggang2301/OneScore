@@ -64,7 +64,7 @@ public class ChatBallListView extends ListView implements AbsListView.OnScrollLi
     }
 
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (scrollState==OnScrollListener.SCROLL_STATE_IDLE){
+        if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
             System.out.println("lzfscrollState==OnScrollListener.SCROLL_STATE_IDLE");
         }
 
@@ -72,12 +72,12 @@ public class ChatBallListView extends ListView implements AbsListView.OnScrollLi
 
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
-        System.out.println("lzfvisibleItemCount=="+visibleItemCount+"totalItemCount=="+totalItemCount+"firstVisibleItem=="+firstVisibleItem);
+        System.out.println("lzfvisibleItemCount==" + visibleItemCount + "totalItemCount==" + totalItemCount + "firstVisibleItem==" + firstVisibleItem);
         if (footerView != null) {
             //判断可视Item是否能在当前页面完全显示
-            if (visibleItemCount>5){
+            if (visibleItemCount > 5) {
                 footerView.setVisibility(View.VISIBLE);//显示底部布局
-            }else {
+            } else {
                 footerView.setVisibility(View.GONE);//隐藏底部布局
             }
 //            if (visibleItemCount == totalItemCount) {
@@ -115,8 +115,14 @@ public class ChatBallListView extends ListView implements AbsListView.OnScrollLi
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downY = (int) ev.getY();
+                System.out.println("lzfACTION_DOWN");
                 break;
+            case MotionEvent.ACTION_MOVE:
+                System.out.println("lzfACTION_MOVE");
+                break;
+
             case MotionEvent.ACTION_UP:
+                System.out.println("lzfACTION_UP");
                 upY = (int) ev.getY();
                 if ((upY - downY) < 0 && upY != 0) {//向上滑动而且松手
                     if (isBottom) {
