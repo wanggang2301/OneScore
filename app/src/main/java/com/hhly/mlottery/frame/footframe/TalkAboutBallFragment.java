@@ -80,7 +80,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      */
     private TextView mCommentCount;//评论数
     private TextView mTextView;//输入评论
-    private TextView mNoData;//暂无评论
+    //    private TextView mNoData;//暂无评论
     private RecyclerView mRecyclerView;
     private TextView mLoadMore;//加载更多
     private ProgressBar mProgressBar;//上拉加载的进度条
@@ -99,7 +99,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private int type;//1 籃球/0 足球
     private String state = "-1";
     private View view;
+    private View emptyView;
     private ProgressBar mProgressBarRefresh;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,14 +116,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_talkaboutball, container, false);
-        initView();
+        initView(container);
         requestLikeData(ADDKEYHOME, "0", type);
         initAnim();
         initRecyclerView();
         pullUpLoad(container);//上拉加载更多
         return mView;
     }
-
 
     /**
      * bn
@@ -217,7 +218,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         return fragment;
     }
 
-    private void initView() {
+    private void initView(ViewGroup container) {
         mProgressBarRefresh = (ProgressBar) mView.findViewById(R.id.pull_to_refresh_progress);
         mProgressBarRefresh.setVisibility(View.GONE);
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
@@ -237,7 +238,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
-        mNoData = (TextView) mView.findViewById(R.id.nodata);
+        emptyView = getActivity().getLayoutInflater().inflate(R.layout.layout_nodata, container, false);
+//        mNoData = (TextView) mView.findViewById(R.id.nodata);
         mCommentCount = (TextView) mView.findViewById(R.id.tv_commentcount);
         mCommentCount.setOnClickListener(this);
         mTextView = (TextView) mView.findViewById(R.id.et_comment);
@@ -286,8 +288,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     view.setVisibility(View.GONE);
                 }
                 if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
-                    mRecyclerView.setVisibility(View.GONE);
-                    mNoData.setVisibility(View.VISIBLE);
+//                    mRecyclerView.setVisibility(View.VISIBLE);
+//                    mNoData.setVisibility(View.VISIBLE);
+                    mChatballAdapter.setEmptyView(emptyView);
                 } else {
 
 //                    mAdapter.setInfosList(mCommentArrayList);
@@ -295,9 +298,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     mChatballAdapter.getData().clear();
                     mChatballAdapter.addData(mCommentArrayList);
                     mChatballAdapter.notifyDataSetChanged();
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mNoData.setVisibility(View.GONE);
-//                    mRecyclerView.setSelection(0);
+//                    mRecyclerView.setVisibility(View.VISIBLE);
+//                    mNoData.setVisibility(View.GONE);
                     mRecyclerView.smoothScrollToPosition(0);
                     L.i("lzfnotifyDataSetChanged==");
                 }
@@ -312,10 +314,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 L.i("lzftopicid=" + e.toString());
                 L.i("lzfcmt_sum=" + e.toString());
                 if (mCommentArrayList != null && mCommentArrayList.size() != 0) {//已经有数据  说明不是第一次操作  既是下拉刷新的操作
-                    mRecyclerView.setVisibility(View.VISIBLE);
+//                    mRecyclerView.setVisibility(View.VISIBLE);
                 } else {//没有数据  说明是第一次操作
-                    mRecyclerView.setVisibility(View.GONE);
-                    mNoData.setVisibility(View.VISIBLE);
+//                    mRecyclerView.setVisibility(View.VISIBLE);
+//                    mNoData.setVisibility(View.VISIBLE);
+                    mChatballAdapter.setEmptyView(emptyView);
                 }
             }
         });
@@ -368,10 +371,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mProgressBar = (ProgressBar) view.findViewById(R.id.pull_to_refresh_progress);
         mLoadMore.setText(R.string.foot_loadmore);
         mChatballAdapter.addFooterView(view);
-    }
-
-    public void setNoDataView() {
-
     }
 
     public void pullUpLoadMore() {
