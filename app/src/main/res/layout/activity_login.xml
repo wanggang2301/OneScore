@@ -48,7 +48,7 @@
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
             android:background="#00000000"
-            android:hint="@string/pwd_empty"
+            android:hint="@string/login_username"
             android:inputType="phone"
             android:maxLength="11"
             android:textColor="@color/white"
