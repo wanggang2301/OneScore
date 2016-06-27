@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * 足球指数 - 指数列表适配器
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/21.
  */
 public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerListAdapter.ViewHolder> {
@@ -187,7 +187,7 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
                 mStatus.setVisibility(View.VISIBLE);
                 if (intState == 0) {
                     // 未开，显示默认灰色
-                    mScore.setText("VS");
+                    mScore.setText(R.string.basket_VS);
                     mScore.setTextColor(defaultTextColor);
                     mStatus.setTextColor(defaultTextColor);
                 } else {
@@ -198,7 +198,7 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
                 }
             }
 
-            setStatusText(intState);
+            setStatusText(matchInfo, intState);
             bindOdds(data);
         }
 
@@ -260,10 +260,31 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
          *
          * @param status status
          */
-        private void setStatusText(int status) {
+        private void setStatusText(NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo, int status) {
             switch (status) {
                 case 0:
                     mStatus.setText(R.string.not_start_short_txt);
+                    break;
+                case 1:
+                    // 上半场
+                case 2:
+                    // 中场
+                case 3:
+                    // 下半场
+                case 4:
+                    // 加时
+                case 5:
+                    try {
+                        int minute = Integer.parseInt(matchInfo.getOpenTime());
+                        if (minute > 45) {
+                            mTime.setText(R.string.forty_five_plus);
+                        } else if (minute > 90) {
+                            mTime.setText(R.string.ninety_plus);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 case -1:
                     mStatus.setText(R.string.fragme_home_wanchang_text);
