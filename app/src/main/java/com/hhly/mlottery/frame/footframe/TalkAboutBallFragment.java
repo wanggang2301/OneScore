@@ -97,7 +97,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ADDKEYGUEST = "guestAdd";
     private int type;//1 籃球/0 足球
     private String state = "-1";
-
+    private View view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,6 +187,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             public void onResponse(MatchLike matchLike) {
                 tvHomeLikeCount.setText(matchLike.getHomeLike());
                 tvGuestLikeCount.setText(matchLike.getGuestLike());
+                System.out.println("lzfdianzan"+matchLike.getGuestLike()+matchLike.getHomeLike());
                 if (matchLike.getHomeLike() != null && matchLike.getGuestLike() != null) {
                     int homeLikeCount = Integer.parseInt(matchLike.getHomeLike());
                     int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
@@ -273,6 +274,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 cmt_sum = topicLoadResp.cmt_sum;//评论总数inf
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
+                if (mCommentArrayList!=null&&mCommentArrayList.size()>4){
+                    view.setVisibility(View.VISIBLE);
+                }else {
+                    view.setVisibility(View.GONE);
+                }
                 if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
                     mRecyclerView.setVisibility(View.GONE);
                     mNoData.setVisibility(View.VISIBLE);
@@ -335,7 +341,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     //上拉加载
     public void pullUpLoad(ViewGroup container) {
         //listview上拉加载
-        View view = getActivity().getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
+        view = getActivity().getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
         mLoadMore = (TextView) view.findViewById(R.id.load_more);
         TextView bottomline = (TextView) view.findViewById(R.id.bottomline);
         bottomline.setVisibility(View.GONE);
