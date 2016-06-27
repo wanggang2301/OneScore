@@ -377,7 +377,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
+        if ((-verticalOffset) > appBarLayout.getTotalScrollRange() * 3 / 5) {
             head_home_name.setVisibility(View.VISIBLE);
             head_guest_name.setVisibility(View.VISIBLE);
             head_score.setVisibility(View.VISIBLE);
