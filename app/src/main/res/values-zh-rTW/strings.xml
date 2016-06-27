@@ -701,7 +701,7 @@
     <string name="login_succ">登錄成功</string>
     <string name="login_fail">登錄失敗</string>
     <string name="pwd_format">密碼格式爲6-16位數字和字符組成</string>
-    <string name="pwd_format_hint">６－１６位字符,區分大小寫</string>
+    <string name="pwd_format_hint">6-16位字符,區分大小寫</string>
     <string name="pwd_empty">請輸入密碼</string>
     <string name="phone_empty">請輸入手機號碼</string>
     <string name="phone_error">請輸入正確手機號碼</string>
