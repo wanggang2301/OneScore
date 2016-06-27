@@ -177,8 +177,12 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
                 mTime.setTextColor(primaryColor);
                 mScore.setTextColor(primaryColor);
                 mSecond.setText("\'");
-                mStatus.setVisibility(View.GONE);
-
+                if (intState == 1 || intState == 3) {
+                    mStatus.setVisibility(View.GONE);
+                } else {
+                    mStatus.setVisibility(View.VISIBLE);
+                }
+                mStatus.setTextColor(primaryColor);
                 mScore.setText(matchInfo.getMatchResult());
             } else {
                 // 时间改为默认颜色
@@ -261,30 +265,43 @@ public class CPIRecyclerListAdapter extends RecyclerView.Adapter<CPIRecyclerList
          * @param status status
          */
         private void setStatusText(NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo, int status) {
+            // 上半场 > 45 显示 45+
+            // 下班场 > 90 显示 90+
+            if (status > 0) {
+                try {
+                    int minute = Integer.parseInt(matchInfo.getOpenTime());
+                    if (minute > 45) {
+                        mTime.setText(R.string.forty_five_plus);
+                    } else if (minute > 90) {
+                        mTime.setText(R.string.ninety_plus);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             switch (status) {
                 case 0:
                     mStatus.setText(R.string.not_start_short_txt);
                     break;
                 case 1:
                     // 上半场
+                    mStatus.setText(R.string.fragme_home_shangbanchang_text);
+                    break;
                 case 2:
                     // 中场
+                    mStatus.setText(R.string.fragme_home_zhongchang_text);
+                    break;
                 case 3:
                     // 下半场
+                    mStatus.setText(R.string.fragme_home_xiabanchang_text);
+                    break;
                 case 4:
                     // 加时
+                    mStatus.setText(R.string.fragme_home_jiaqiu_text);
+                    break;
                 case 5:
-                    try {
-                        int minute = Integer.parseInt(matchInfo.getOpenTime());
-                        if (minute > 45) {
-                            mTime.setText(R.string.forty_five_plus);
-                        } else if (minute > 90) {
-                            mTime.setText(R.string.ninety_plus);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                    // 点球
+                    mStatus.setText(R.string.fragme_home_dianqiu_text);
                     break;
                 case -1:
                     mStatus.setText(R.string.fragme_home_wanchang_text);
