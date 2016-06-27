@@ -95,7 +95,7 @@ public class AppConstants {
 
     // 彩票种类名称
     /*public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_cq_ssc), // "重庆时时彩"
+            MyApp.getContext().getResources().getString(R.string.number_cz_cq_ssc), // "重庆时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_jx_ssc), // "江西时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_xj_ssc),// "新疆时时彩"
 			MyApp.getContext().getResources().getString(R.string.number_cz_yn_ssc), // "云南时时彩"
@@ -237,6 +237,9 @@ public class AppConstants {
     /**
      * 首页热门赛事足球背景图片
      */
-    public static int[] homePageScoreBG = {R.mipmap.home_pager_score_football01_bg, R.mipmap.home_pager_score_football02_bg, R.mipmap.home_pager_score_football03_bg, R.mipmap.home_pager_score_football04_bg, R.mipmap.home_pager_score_football05_bg, R.mipmap.home_pager_score_football06_bg, R.mipmap.home_pager_score_football07_bg};
-
+    public static int[] homePageScoreFootBG = {R.mipmap.home_pager_score_football01_bg, R.mipmap.home_pager_score_football02_bg, R.mipmap.home_pager_score_football03_bg, R.mipmap.home_pager_score_football04_bg, R.mipmap.home_pager_score_football05_bg, R.mipmap.home_pager_score_football06_bg, R.mipmap.home_pager_score_football07_bg};
+    /**
+     * 首页热门赛事篮球背景图片
+     */
+    public static int[] homePageScoreBasketBG = {R.mipmap.home_pager_score_basketball01_bg, R.mipmap.home_pager_score_basketball02_bg};
 }
