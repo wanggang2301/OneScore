@@ -271,6 +271,10 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         live_infos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (mBottomOddsDetailsFragment != null) {
+                    mBottomOddsDetailsFragment.dismiss();
+                }
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
                     finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
                     finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
@@ -406,6 +410,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         );
     }
 
+    private boolean isOpenOddsDetails = true;
+
     private void initItemOdd(final BottomOdds bottomOdds) {
         odd_alet.setTitle(getString(R.string.set_asialet_txt));
         odd_asize.setTitle(getString(R.string.set_asiasize_txt));
@@ -431,6 +437,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         odd_alet.findViewById(R.id.tl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                isRepeatShowDialog();
+
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
@@ -441,6 +450,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         odd_asize.findViewById(R.id.tl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                isRepeatShowDialog();
+
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getOverunderlistOdd().get(0), ASIZE);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
@@ -451,6 +463,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         odd_eur.findViewById(R.id.tl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isRepeatShowDialog();
+
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getEuropelistOdd().get(0), EUR);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
@@ -460,6 +474,20 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     }
 
+
+    private void isRepeatShowDialog() {
+        if (finishMatchLiveTextFragment != null) {
+            finishMatchLiveTextFragment.dismiss();
+        }
+
+        if (liveTextFragmentTest != null) {
+            liveTextFragmentTest.dismiss();
+        }
+
+        if (mBottomOddsDetailsFragment != null) {
+            mBottomOddsDetailsFragment.dismiss();
+        }
+    }
 
     private void initView() {
         pre_dataTime_txt = (TextView) mView.findViewById(R.id.pre_dataTime_txt);//开始时间
@@ -595,7 +623,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
      */
     private synchronized void startWebsocket() {
 
-        L.d(TAG,"滚球赔率");
+        L.d(TAG, "滚球赔率");
 
         if (hSocketClient != null) {
             if (!hSocketClient.isClosed()) {

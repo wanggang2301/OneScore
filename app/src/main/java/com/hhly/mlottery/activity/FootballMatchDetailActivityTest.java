@@ -340,7 +340,26 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position==1){
+                    appBarLayout.setExpanded(false);
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         appBarLayout.addOnOffsetChangedListener(this);

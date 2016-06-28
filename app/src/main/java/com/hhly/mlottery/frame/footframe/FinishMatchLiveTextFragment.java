@@ -10,7 +10,6 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -107,17 +106,20 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
         mView = View.inflate(mContext, R.layout.live_text, null);  //文字直播
         moreView = View.inflate(mContext, R.layout.load, null);
 
-
         initView();
-
         initData();
+
         dialog.setContentView(mView);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) mView.getParent()).getLayoutParams();
 
+
         final CoordinatorLayout.Behavior behavior = params.getBehavior();
+
+
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             bottomSheetBehavior = (BottomSheetBehavior) behavior;
             bottomSheetBehavior.setHideable(true);
+
 
             bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
@@ -129,12 +131,14 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
                     }
                     if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                         L.d(TAG, "BottomSheetBehavior.STATE_EXPANDED=" + "state=" + newState);
-                       // bottomSheetBehavior.setHideable(false);
+                        // bottomSheetBehavior.setHideable(false);
+                        //bottomSheetBehavior.setHideable(false);
 
                       /*  bottomSheet.setEnabled(false);
                         mListView.setEnabled(true);*/
 
                         //  bottomSheet.stopNestedScroll();
+                        //bottomSheet.setEnabled(false);
                     }
 
                     if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -179,16 +183,27 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
     }
 
     private void initData() {
-        mListView.setOnTouchListener(new View.OnTouchListener() {
+       /* mListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
-                        //只有文字直播的listview滑到顶部才可以下拉刷新
-                        if (mListView.getFirstVisiblePosition() != 0) {
-                            L.d(TAG, "listview");
+
+
+                        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                            L.d(TAG, "展开");
                         }
+                        //只有文字直播的listview滑到顶部才可以下拉刷新
+                       *//* if (mListView.getFirstVisiblePosition() == 1) {
+                            L.d(TAG, "listview" + mListView.getFirstVisiblePosition());
+
+                            bottomSheetBehavior.setHideable(false);
+                        }*//*
+
+                        //bottomSheetBehavior.setHideable(false);
+                        // bottomSheetBehavior.onStopNestedScroll();
+
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
@@ -197,7 +212,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
                 }
                 return false;
             }
-        });
+        });*/
 
         pageId = 1;
 
