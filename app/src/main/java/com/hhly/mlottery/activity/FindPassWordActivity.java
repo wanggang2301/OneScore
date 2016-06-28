@@ -232,6 +232,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void beforGet() {
                 //countDown.start();
+
                 InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(et_username.getWindowToken(), 0);
                 mProgressBar.setVisibility(View.VISIBLE);
