@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.oddfragment.PlateFragment;
+import com.hhly.mlottery.bean.enums.OddsTypeEnum;
+import com.hhly.mlottery.frame.oddfragment.FootballPlateFragment;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -25,7 +26,7 @@ public class OddsFragment extends Fragment {
 
     private FragmentManager fragmentManager;
     //    private Fragment fragment;
-    private PlateFragment mPlateFragment;
+    private FootballPlateFragment mPlateFragment;
     private boolean isVisible;
 
     @Override
@@ -56,28 +57,29 @@ public class OddsFragment extends Fragment {
                     // 亚盘
                     case R.id.odd_plate_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddPlateBtn");
-                        mPlateFragment = new PlateFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("key1", "one");
-                        mPlateFragment.setArguments(bundle);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.PLATE);
+//                        mPlateFragment = new PlateFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("key1", "one");
+//                        mPlateFragment.setArguments(bundle);
                         break;
                     // 大小球
                     case R.id.odd_big_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddBigBtn");
-                        //大小球
-                        mPlateFragment = new PlateFragment();
-                        Bundle bundle3 = new Bundle();
-                        bundle3.putString("key3", "three");
-                        mPlateFragment.setArguments(bundle3);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.BIG);
+//                        mPlateFragment = new PlateFragment();
+//                        Bundle bundle3 = new Bundle();
+//                        bundle3.putString("key3", "three");
+//                        mPlateFragment.setArguments(bundle3);
                         break;
                     // 欧盘
                     case R.id.odd_op_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddOpBtn");
-                        //欧赔
-                        mPlateFragment = new PlateFragment();
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putString("key2", "two");
-                        mPlateFragment.setArguments(bundle2);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.OP);
+//                        mPlateFragment = new PlateFragment();
+//                        Bundle bundle2 = new Bundle();
+//                        bundle2.putString("key2", "two");
+//                        mPlateFragment.setArguments(bundle2);
                         break;
                 }
                 fragmentManager.beginTransaction()
@@ -86,10 +88,10 @@ public class OddsFragment extends Fragment {
             }
         });
 
-        mPlateFragment = new PlateFragment();// 默认选中’亚盘‘
-        Bundle bundle = new Bundle();
-        bundle.putString("key1", "one");
-        mPlateFragment.setArguments(bundle);
+        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.PLATE);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("key1", "one");
+//        mPlateFragment.setArguments(bundle);
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.odd_content_fragment, mPlateFragment).commit();
     }
@@ -110,9 +112,7 @@ public class OddsFragment extends Fragment {
     public void oddPlateRefresh() {
         //如果是显示才让刷新
         if (isVisible) {
-            mPlateFragment.InitData();
-        } else {
-            //刷新无效
+            mPlateFragment.loadData();
         }
     }
 }
