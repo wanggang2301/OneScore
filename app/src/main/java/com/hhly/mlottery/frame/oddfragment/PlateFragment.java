@@ -310,11 +310,6 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
                     mListOddEntity = jsonObject.getListOdd();
 
                     if (mListOddEntity != null && mListOddEntity.size() > 0) {
-
-                        mListOddEntity.addAll(mListOddEntity); //测试滑动listview
-                        mListOddEntity.addAll(mListOddEntity); //测试滑动listview
-                        mListOddEntity.addAll(mListOddEntity); //测试滑动listview
-
                         if ("1".equals(oddType)) {//亚盘
                             mOddsAdapter = new OddsAdapter(mContext, mListOddEntity, stKey);
                         } else if ("2".equals(oddType)) {//欧赔
@@ -584,8 +579,8 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.odds_back_txt://返回
                 //指数页面显示
-                mListView.setVisibility(View.VISIBLE);
-                //mNestedScrollView.setVisibility(View.VISIBLE);
+                //mListView.setVisibility(View.VISIBLE);
+                mNestedScrollView.setVisibility(View.VISIBLE);
                 //指数布局显示
                 plate_linearlayout.setVisibility(View.VISIBLE);
                 //指数详情界面隐藏

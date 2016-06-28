@@ -250,7 +250,7 @@
                     android:layout_height="35dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="14dp"
-                    android:src="@mipmap/basket_default"
+                    android:src="@mipmap/football_analyze_default"
                     />
 
                 <TextView
@@ -288,7 +288,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="14dp"
-                    android:src="@mipmap/basket_default"
+                    android:src="@mipmap/football_analyze_default"
                     />
 
                 <TextView

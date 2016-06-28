@@ -52,6 +52,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+        productFlavors {
+        }
     }
 
     dependencies {
@@ -82,7 +84,9 @@ android {
 
         compile 'com.jakewharton:butterknife:8.0.1'
         apt 'com.jakewharton:butterknife-compiler:8.0.1'
+        compile 'com.android.support:percent:23.2.0'
         compile 'io.reactivex:rxjava:1.1.2'
         compile 'io.reactivex:rxandroid:1.1.0'
+        compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.4'
     }
 }
