@@ -295,7 +295,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         //分析
         mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "");
         //指数
-        mOddsFragment = OddsFragment.newInstance("", "");
+        mOddsFragment = OddsFragment.newInstance();
         //统计
         mStatisticsFragment = StatisticsFragmentTest.newInstance();
 
