@@ -243,9 +243,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mCommentCount = (TextView) mView.findViewById(R.id.tv_commentcount);
         mCommentCount.setOnClickListener(this);
         mTextView = (TextView) mView.findViewById(R.id.et_comment);
+        mTextView.setOnClickListener(this);
         mLinearLayout = (LinearLayout) mView.findViewById(R.id.comment_inputcontainer);
 //        nestedscrollview = (NestedScrollView) mView.findViewById(R.id.nestedscrollview);
-        mTextView.setOnClickListener(this);
+
         mCommentCount.setVisibility(View.VISIBLE);
         //获取评论的一切信息
         if (!TextUtils.isEmpty(mThirdId)) {
@@ -465,6 +466,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
+        }else {
         }
     }
 
@@ -510,4 +512,5 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 break;
         }
     }
+
 }

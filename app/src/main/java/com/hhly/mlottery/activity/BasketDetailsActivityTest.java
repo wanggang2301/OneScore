@@ -417,6 +417,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                         isFragment2 = false;
                         isFragment3 = false;
                         isFragment4 = true;
+                        appBarLayout.setExpanded(false);
                         break;
                 }
                 if (is0) {
