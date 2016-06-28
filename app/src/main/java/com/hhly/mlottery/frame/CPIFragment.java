@@ -180,8 +180,8 @@ public class CPIFragment extends Fragment implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("onActivityResult", requestCode + "-" + resultCode + "-" + data);
-        if (requestCode != startFilterRequestCode ||
-                resultCode != Activity.RESULT_CANCELED
+        if (requestCode != startFilterRequestCode
+                || resultCode != Activity.RESULT_CANCELED
                 || data == null) {
             return;
         }

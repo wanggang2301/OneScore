@@ -40,7 +40,7 @@ import java.util.Map;
 
 /**
  * 赔率列表 Fragment
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/21.
  */
 public class CPIOddsFragment extends Fragment {
@@ -318,17 +318,8 @@ public class CPIOddsFragment extends Fragment {
      * @param result 数据
      */
     public void updateTimeAndStatus(WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result) {
-        for (NewOddsInfo.AllInfoBean item : defaultData) {
-            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
-            // 找到赛事 ID 相等的更新时间和状态
-            if (matchInfo.getMatchId().equals(result.getThirdId())) {
-                WebSocketCPIResult.UpdateTimeAndStatus data = result.getData();
-                int statusOrigin = data.getStatusOrigin();
-                matchInfo.setOpenTime(data.getKeepTime() + "");
-                matchInfo.setMatchState(statusOrigin + "");
-                mAdapter.notifyItemChanged(defaultData.indexOf(item));
-            }
-        }
+        updateSourceTimeAndStatus(result, true);
+        updateSourceTimeAndStatus(result, false);
     }
 
     /**
@@ -337,15 +328,8 @@ public class CPIOddsFragment extends Fragment {
      * @param result result
      */
     public void updateScore(WebSocketCPIResult<WebSocketCPIResult.UpdateScore> result) {
-        for (NewOddsInfo.AllInfoBean item : defaultData) {
-            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
-            // 找到赛事 ID 相等的更新比分
-            if (matchInfo.getMatchId().equals(result.getThirdId())) {
-                WebSocketCPIResult.UpdateScore data = result.getData();
-                matchInfo.setMatchResult(data.getMatchResult());
-                mAdapter.notifyItemChanged(defaultData.indexOf(item));
-            }
-        }
+        updateSourceScore(result, true);
+        updateSourceScore(result, false);
     }
 
     /**
@@ -409,9 +393,9 @@ public class CPIOddsFragment extends Fragment {
         // 赔率类型和 Fragment 类型一致
         if (oddTypeString.equals(type)) {
             // 选择要更新的数据源
-            List<NewOddsInfo.AllInfoBean> items = isDefault ? defaultData : filterData;
+            List<NewOddsInfo.AllInfoBean> infoBeanList = getDataSource(isDefault);
             // 2. 遍历数据源更新数据
-            for (NewOddsInfo.AllInfoBean item : items) {
+            for (NewOddsInfo.AllInfoBean item : infoBeanList) {
                 NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
                 // 找到赛事 ID 相等的赛事
                 if (matchInfo.getMatchId().equals(thirdId)) {
@@ -431,6 +415,52 @@ public class CPIOddsFragment extends Fragment {
     }
 
     /**
+     * 更新本身的数据源和过滤后的数据源的时间和状态
+     *
+     * @param result    result
+     * @param isDefault isDefault
+     */
+    private void updateSourceTimeAndStatus(WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result,
+                                           boolean isDefault) {
+        List<NewOddsInfo.AllInfoBean> infoBeanList = getDataSource(isDefault);
+        for (NewOddsInfo.AllInfoBean item : infoBeanList) {
+            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
+            // 找到赛事 ID 相等的更新时间和状态
+            if (matchInfo.getMatchId().equals(result.getThirdId())) {
+                WebSocketCPIResult.UpdateTimeAndStatus data = result.getData();
+                int statusOrigin = data.getStatusOrigin();
+                matchInfo.setOpenTime(data.getKeepTime() + "");
+                matchInfo.setMatchState(statusOrigin + "");
+                if (!isDefault) {
+                    mAdapter.notifyItemChanged(infoBeanList.indexOf(item));
+                }
+            }
+        }
+    }
+
+    /**
+     * 更新本身的数据源和过滤后的数据源的比分
+     *
+     * @param result    result
+     * @param isDefault isDefault
+     */
+    private void updateSourceScore(WebSocketCPIResult<WebSocketCPIResult.UpdateScore> result,
+                                   boolean isDefault) {
+        List<NewOddsInfo.AllInfoBean> infoBeanList = getDataSource(isDefault);
+        for (NewOddsInfo.AllInfoBean item : infoBeanList) {
+            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
+            // 找到赛事 ID 相等的更新比分
+            if (matchInfo.getMatchId().equals(result.getThirdId())) {
+                WebSocketCPIResult.UpdateScore data = result.getData();
+                matchInfo.setMatchResult(data.getMatchResult());
+                if (!isDefault) {
+                    mAdapter.notifyItemChanged(defaultData.indexOf(item));
+                }
+            }
+        }
+    }
+
+    /**
      * 是否是显示的赔率
      *
      * @param comListBean ComListBean
@@ -444,6 +474,16 @@ public class CPIOddsFragment extends Fragment {
             }
         }
         return show;
+    }
+
+    /**
+     * 获取数据源
+     *
+     * @param isDefault isDefault
+     * @return 数据源
+     */
+    private List<NewOddsInfo.AllInfoBean> getDataSource(boolean isDefault) {
+        return isDefault ? defaultData : filterData;
     }
 
     /**
