@@ -328,20 +328,6 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     }
 
     /**
-     * 分析、欧赔、亚盘、大小Fragment页面统计
-     */
-    private boolean isFragment0 = true;
-    private boolean is0 = false;
-    private boolean isFragment1 = false;
-    private boolean is1 = false;
-    private boolean isFragment2 = false;
-    private boolean is2 = false;
-    private boolean isFragment3 = false;
-    private boolean is3 = false;
-    private boolean isFragment4 = false;
-    private boolean is4 = false;
-
-    /**
      * 初始化界面
      */
     private void initView() {
@@ -382,90 +368,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
             @Override
             public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:// 分析
-                        isFragment0 = true;
-                        isFragment1 = false;
-                        isFragment2 = false;
-                        isFragment3 = false;
-                        isFragment4 = false;
-                        break;
-                    case 1:// 欧赔
-                        isFragment0 = false;
-                        isFragment1 = true;
-                        isFragment2 = false;
-                        isFragment3 = false;
-                        isFragment4 = false;
-                        break;
-                    case 2:// 亚盘
-                        isFragment0 = false;
-                        isFragment1 = false;
-                        isFragment2 = true;
-                        isFragment3 = false;
-                        isFragment4 = false;
-                        break;
-                    case 3:// 大小
-                        isFragment0 = false;
-                        isFragment1 = false;
-                        isFragment2 = false;
-                        isFragment3 = true;
-                        isFragment4 = false;
-                        break;
-                    case 4:// 大小
-                        isFragment0 = false;
-                        isFragment1 = false;
-                        isFragment2 = false;
-                        isFragment3 = false;
-                        isFragment4 = true;
-                        break;
-                }
-                if (is0) {
-                    MobclickAgent.onPageEnd("BasketBall_Info_FX");
-                    is0 = false;
-                    L.d("xxx", "分析隐藏");
-                }
-                if (is1) {
-                    MobclickAgent.onPageEnd("BasketBall_Info_OP");
-                    is1 = false;
-                    L.d("xxx", "欧赔隐藏");
-                }
-                if (is2) {
-                    MobclickAgent.onPageEnd("BasketBall_Info_YP");
-                    is2 = false;
-                    L.d("xxx", "亚盘隐藏");
-                }
-                if (is3) {
-                    MobclickAgent.onPageEnd("BasketBall_Info_DX");
-                    is3 = false;
-                    L.d("xxx", "大小隐藏");
-                }
-                if (is4) {
-                    is4 = false;
-                }
-
-                if (isFragment0) {
-                    MobclickAgent.onPageStart("BasketBall_Info_FX");
-                    is0 = true;
-                    L.d("xxx", "分析显示");
-                }
-                if (isFragment1) {
-                    MobclickAgent.onPageStart("BasketBall_Info_OP");
-                    is1 = true;
-                    L.d("xxx", "欧赔显示");
-                }
-                if (isFragment2) {
-                    MobclickAgent.onPageStart("BasketBall_Info_YP");
-                    is2 = true;
-                    L.d("xxx", "亚盘显示");
-                }
-                if (isFragment3) {
-                    MobclickAgent.onPageStart("BasketBall_Info_DX");
-                    is3 = true;
-                    L.d("xxx", "大小显示");
-                }
-                if (isFragment4) {
-                    is4 = true;
-                }
+                isHindShow(position);
             }
 
             @Override
@@ -539,62 +442,6 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
 
 //        setApos();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (isFragment0) {
-            MobclickAgent.onPageStart("BasketBall_Info_FX");
-            is0 = true;
-            L.d("xxx","分析显示");
-        }
-        if (isFragment1) {
-            MobclickAgent.onPageStart("BasketBall_Info_OP");
-            is1 = true;
-            L.d("xxx","欧赔显示");
-        }
-        if (isFragment2) {
-            MobclickAgent.onPageStart("BasketBall_Info_YP");
-            is2 = true;
-            L.d("xxx","亚盘显示");
-        }
-        if (isFragment3) {
-            MobclickAgent.onPageStart("BasketBall_Info_DX");
-            is3 = true;
-            L.d("xxx","大小显示");
-        }
-        if (isFragment4) {
-            is4 = true;
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (is0) {
-            MobclickAgent.onPageEnd("BasketBall_Info_FX");
-            is0 = false;
-            L.d("xxx","分析 隐藏");
-        }
-        if (is1) {
-            MobclickAgent.onPageEnd("BasketBall_Info_OP");
-            is1 = false;
-            L.d("xxx","欧赔 隐藏");
-        }
-        if (is2) {
-            MobclickAgent.onPageEnd("BasketBall_Info_YP");
-            is2 = false;
-            L.d("xxx","亚盘 隐藏");
-        }
-        if (is3) {
-            MobclickAgent.onPageEnd("BasketBall_Info_DX");
-            is3 = false;
-            L.d("xxx","大小 隐藏");
-        }
-        if (is4) {
-            is4 = false;
-        }
     }
 
     @Override
@@ -1369,5 +1216,170 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 mOddsSize.initData();
             }
         }, 1000);
+    }
+
+    /**
+     * 分析、欧赔、亚盘、大小、聊球Fragment页面统计
+     */
+    private boolean isFragment0 = true;
+    private boolean is0 = false;
+    private boolean isFragment1 = false;
+    private boolean is1 = false;
+    private boolean isFragment2 = false;
+    private boolean is2 = false;
+    private boolean isFragment3 = false;
+    private boolean is3 = false;
+    private boolean isFragment4 = false;
+    private boolean is4 = false;
+
+    private void isHindShow(int position){
+        switch (position) {
+            case 0:// 分析
+                isFragment0 = true;
+                isFragment1 = false;
+                isFragment2 = false;
+                isFragment3 = false;
+                isFragment4 = false;
+                break;
+            case 1:// 欧赔
+                isFragment0 = false;
+                isFragment1 = true;
+                isFragment2 = false;
+                isFragment3 = false;
+                isFragment4 = false;
+                break;
+            case 2:// 亚盘
+                isFragment0 = false;
+                isFragment1 = false;
+                isFragment2 = true;
+                isFragment3 = false;
+                isFragment4 = false;
+                break;
+            case 3:// 大小
+                isFragment0 = false;
+                isFragment1 = false;
+                isFragment2 = false;
+                isFragment3 = true;
+                isFragment4 = false;
+                break;
+            case 4:// 聊球
+                isFragment0 = false;
+                isFragment1 = false;
+                isFragment2 = false;
+                isFragment3 = false;
+                isFragment4 = true;
+                break;
+        }
+        if (is0) {
+            MobclickAgent.onPageEnd("BasketBall_Info_FX");
+            is0 = false;
+            L.d("xxx", "分析隐藏");
+        }
+        if (is1) {
+            MobclickAgent.onPageEnd("BasketBall_Info_OP");
+            is1 = false;
+            L.d("xxx", "欧赔隐藏");
+        }
+        if (is2) {
+            MobclickAgent.onPageEnd("BasketBall_Info_YP");
+            is2 = false;
+            L.d("xxx", "亚盘隐藏");
+        }
+        if (is3) {
+            MobclickAgent.onPageEnd("BasketBall_Info_DX");
+            is3 = false;
+            L.d("xxx", "大小隐藏");
+        }
+        if (is4) {
+            MobclickAgent.onPageEnd("BasketBall_Info_LQ");
+            is4 = false;
+            L.d("xxx", "聊球隐藏");
+        }
+
+        if (isFragment0) {
+            MobclickAgent.onPageStart("BasketBall_Info_FX");
+            is0 = true;
+            L.d("xxx", "分析显示");
+        }
+        if (isFragment1) {
+            MobclickAgent.onPageStart("BasketBall_Info_OP");
+            is1 = true;
+            L.d("xxx", "欧赔显示");
+        }
+        if (isFragment2) {
+            MobclickAgent.onPageStart("BasketBall_Info_YP");
+            is2 = true;
+            L.d("xxx", "亚盘显示");
+        }
+        if (isFragment3) {
+            MobclickAgent.onPageStart("BasketBall_Info_DX");
+            is3 = true;
+            L.d("xxx", "大小显示");
+        }
+        if (isFragment4) {
+            MobclickAgent.onPageStart("BasketBall_Info_LQ");
+            is4 = true;
+            L.d("xxx", "聊球显示");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isFragment0) {
+            MobclickAgent.onPageStart("BasketBall_Info_FX");
+            is0 = true;
+            L.d("xxx","分析显示");
+        }
+        if (isFragment1) {
+            MobclickAgent.onPageStart("BasketBall_Info_OP");
+            is1 = true;
+            L.d("xxx","欧赔显示");
+        }
+        if (isFragment2) {
+            MobclickAgent.onPageStart("BasketBall_Info_YP");
+            is2 = true;
+            L.d("xxx","亚盘显示");
+        }
+        if (isFragment3) {
+            MobclickAgent.onPageStart("BasketBall_Info_DX");
+            is3 = true;
+            L.d("xxx","大小显示");
+        }
+        if (isFragment4) {
+            MobclickAgent.onPageStart("BasketBall_Info_LQ");
+            is4 = true;
+            L.d("xxx", "聊球显示");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (is0) {
+            MobclickAgent.onPageEnd("BasketBall_Info_FX");
+            is0 = false;
+            L.d("xxx","分析 隐藏");
+        }
+        if (is1) {
+            MobclickAgent.onPageEnd("BasketBall_Info_OP");
+            is1 = false;
+            L.d("xxx","欧赔 隐藏");
+        }
+        if (is2) {
+            MobclickAgent.onPageEnd("BasketBall_Info_YP");
+            is2 = false;
+            L.d("xxx","亚盘 隐藏");
+        }
+        if (is3) {
+            MobclickAgent.onPageEnd("BasketBall_Info_DX");
+            is3 = false;
+            L.d("xxx","大小 隐藏");
+        }
+        if (is4) {
+            MobclickAgent.onPageEnd("BasketBall_Info_LQ");
+            is4 = false;
+            L.d("xxx", "聊球隐藏");
+        }
     }
 }

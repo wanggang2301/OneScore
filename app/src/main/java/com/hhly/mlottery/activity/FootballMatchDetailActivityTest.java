@@ -2221,6 +2221,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:  //返回
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
                 MyApp.getContext().sendBroadcast(new Intent("closeself"));
                 // setResult(Activity.RESULT_OK);
@@ -2264,6 +2265,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             @Override
             public void onClick(View v) {
                 //Toast.makeText(mContext, "足球！", Toast.LENGTH_SHORT).show();
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");
                 popupWindow.dismiss();
                 if (FocusFragment.isFocusId(mThirdId)) {
                     FocusFragment.deleteFocusId(mThirdId);
@@ -2284,6 +2286,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Share");
                 popupWindow.dismiss();
 
                 if (mMatchDetail == null) {
