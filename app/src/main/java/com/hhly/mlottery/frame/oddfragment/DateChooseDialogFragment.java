@@ -1,13 +1,14 @@
 package com.hhly.mlottery.frame.oddfragment;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 /**
  * 日期选择
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/22.
  */
 public class DateChooseDialogFragment extends DialogFragment {
@@ -48,29 +49,21 @@ public class DateChooseDialogFragment extends DialogFragment {
         }
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setCancelable(true);
-        getDialog().setCanceledOnTouchOutside(true);
-        return inflater.inflate(R.layout.alertdialog, container, false);
-    }
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.alert_dialog);
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mTitleTextView = (TextView) view.findViewById(R.id.titleView);
-        mListView = (ListView) view.findViewById(R.id.listdate);
-        mOkButton = (Button) view.findViewById(R.id.cpi_btn_ok);
-
-        mOkButton.setVisibility(View.GONE);
-
+        mTitleTextView = (TextView) dialog.findViewById(R.id.titleView);
         mTitleTextView.setText(R.string.tip);
 
+        mOkButton = (Button) dialog.findViewById(R.id.cpi_btn_ok);
+        mOkButton.setVisibility(View.GONE);
+
+        mListView = (ListView) dialog.findViewById(R.id.listdate);
         maybeInitDateList();
 
         final CpiDateAdapter cpiDateAdapter = new CpiDateAdapter(getContext(), dateList);
@@ -87,6 +80,8 @@ public class DateChooseDialogFragment extends DialogFragment {
                 }
             }
         });
+
+        return dialog;
     }
 
     /**
