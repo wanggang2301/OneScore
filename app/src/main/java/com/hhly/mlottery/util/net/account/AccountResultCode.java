@@ -89,4 +89,7 @@ public interface AccountResultCode {
     /**后台报错*/
     int SERVER_ERROR =500;
 
+    /**同一个手机号一天只能发送五次短信*/
+    int ONLY_FIVE_EACHDAY = 25;
+
 }

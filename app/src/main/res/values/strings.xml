@@ -795,4 +795,5 @@
     <string name="home_pager_version_update">忽略此版本</string>
     <string name="cpi_select_company">请选择公司</string>
     <string name="foot_rollball_txt">滚球</string>
+    <string name="only_five_eachday">同一个手机号每天只能发送5次短信</string>
 </resources>

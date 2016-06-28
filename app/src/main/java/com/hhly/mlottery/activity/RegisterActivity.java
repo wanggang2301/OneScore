@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
@@ -57,6 +58,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private CountDown countDown;
 
     private ProgressDialog progressBar;
+
+    //新需求，点击获取验证码的时候显示一个progressbar,服务器返回结果后再开始倒计时。
+    private ProgressBar mProgressBar;
+
 
 
     @Override
@@ -103,6 +108,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);
         progressBar.setMessage(getResources().getString(R.string.registering));
+
+        mProgressBar = (ProgressBar) findViewById(R.id.register_activity_pb);
 
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
@@ -300,24 +307,32 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private void getVerifyCode() {
 
+
         String phone = et_username.getText().toString();
         CommonUtils.getVerifyCode(this, phone, OperateType.TYPE_REGISTER, new GetVerifyCodeCallBack() {
             @Override
             public void beforGet() {
-                countDown.start();
+                //countDown.start();
+                //隐藏软键盘，让progressbar显示出来
+
+                InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(et_username.getWindowToken(), 0);
+
+                mProgressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onGetResponce(SendSmsCode code) {
                 L.e(TAG, "code>>>>>>>>>>>" + code.getResult());
-
+                mProgressBar.setVisibility(View.GONE);
+                countDown.start();
 //              // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
                 if (code.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.send_register_succ);
                 } else if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
                         || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
                         || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                        ) {
+                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY) {
                     countDown.cancel();
                     enableVeryCode();
                 }

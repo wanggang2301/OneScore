@@ -221,6 +221,9 @@ public class CommonUtils {
             case AccountResultCode.NICKNAME_SENSITIVE:
                 UiUtils.toast(MyApp.getInstance(), R.string.nickname_sensitive);
                 break;
+            case AccountResultCode.ONLY_FIVE_EACHDAY:
+                UiUtils.toast(MyApp.getInstance(),R.string.only_five_eachday);
+                break;
             default:
                 L.e(TAG, "未定义错误码 : rescode = " + rescode + " , defaultMessage = " + defaultMessage);
                 if (!TextUtils.isEmpty(defaultMessage)) {
