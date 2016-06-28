@@ -42,6 +42,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
     private DisplayImageOptions mOptions;
     private ImageLoader mImageLoader;
 
@@ -109,7 +110,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     //球员信息
     private TextView mHomeTeamName;
     private TextView mGuestTeamName;
-    private NestedListView mListView;
     private LinearLayout ll_rosters_homeTeam;// 主队名单容器
     private LinearLayout ll_rosters_visitingTeam;// 客队名单容器
     private FrameLayout fl_firsPlayers_not;// 暂无首发容器
@@ -117,7 +117,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     // TODO: Rename and change types of parameters
     private String mThirdId="1111";
-    private String mParam2;
 
     private NewAnalyzeBean mAnalyzeBean;
     public AnalyzeFragment() {
@@ -125,11 +124,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    public static AnalyzeFragment newInstance(String param1, String param2) {
+    public static AnalyzeFragment newInstance(String param1, String param2,String param3) {
         AnalyzeFragment fragment = new AnalyzeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM3, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -139,15 +139,14 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mThirdId = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
                         //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
-                .showImageForEmptyUri(R.mipmap.basket_default)
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .showImageForEmptyUri(R.mipmap.football_analyze_default)
+                .showImageOnFail(R.mipmap.football_analyze_default)// 加载失败显示的图片
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity()).build();
         mImageLoader = ImageLoader.getInstance(); //初始化
@@ -260,46 +259,56 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      */
     private void loadData(NewAnalyzeBean analyzeBean){
         int progress;
-        int homeWin=analyzeBean.getBothRecord().getHome().getHistoryWin();
-        int guestWin=analyzeBean.getBothRecord().getGuest().getHistoryWin();
-        if (homeWin == 0 && guestWin == 0) {
-            progress = 50;
-        } else if (homeWin == 0) {
-            progress = 0;
-        } else if (guestWin == 0) {
-            progress = 100;
-        } else {
-            progress = homeWin * 100 / (guestWin+homeWin);
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&getActivity()!=null){
+
+            int homeWin=analyzeBean.getBothRecord().getHome().getHistoryWin();
+            int guestWin=analyzeBean.getBothRecord().getGuest().getHistoryWin();
+            if (homeWin == 0 && guestWin == 0) {
+                progress = 50;
+            } else if (homeWin == 0) {
+                progress = 0;
+            } else if (guestWin == 0) {
+                progress = 100;
+            } else {
+                progress = homeWin * 100 / (guestWin+homeWin);
+            }
+            mProgressBar.setProgress(progress);
+            mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
+            mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
         }
-        mProgressBar.setProgress(progress);
-        mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
-        mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
+
         //近期战绩
-        List<Integer> homeRecent=analyzeBean.getBothRecord().getHome().getRecentRecord();
-        List<Integer> guestRecent=analyzeBean.getBothRecord().getGuest().getRecentRecord();
-        if(homeRecent.size()!=0){
-            setRecent(mHomeRecent1,homeRecent.get(0));
-            setRecent(mHomeRecent2,homeRecent.get(1));
-            setRecent(mHomeRecent3,homeRecent.get(2));
-            setRecent(mHomeRecent4,homeRecent.get(3));
-            setRecent(mHomeRecent5,homeRecent.get(4));
-            setRecent(mHomeRecent6,homeRecent.get(5));
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null){
+            List<Integer> homeRecent=analyzeBean.getBothRecord().getHome().getRecentRecord();
+            if(homeRecent.size()!=0){
+                setRecent(mHomeRecent1,homeRecent.get(0));
+                setRecent(mHomeRecent2,homeRecent.get(1));
+                setRecent(mHomeRecent3,homeRecent.get(2));
+                setRecent(mHomeRecent4,homeRecent.get(3));
+                setRecent(mHomeRecent5,homeRecent.get(4));
+                setRecent(mHomeRecent6,homeRecent.get(5));
+            }
         }
-        if(guestRecent.size()!=0){
-            setRecent(mGuestRecent1,guestRecent.get(0));
-            setRecent(mGuestRecent2,guestRecent.get(1));
-            setRecent(mGuestRecent3,guestRecent.get(2));
-            setRecent(mGuestRecent4,guestRecent.get(3));
-            setRecent(mGuestRecent5,guestRecent.get(4));
-            setRecent(mGuestRecent6,guestRecent.get(5));
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null){
+            List<Integer> guestRecent=analyzeBean.getBothRecord().getGuest().getRecentRecord();
+
+            if(guestRecent.size()!=0){
+                setRecent(mGuestRecent1,guestRecent.get(0));
+                setRecent(mGuestRecent2,guestRecent.get(1));
+                setRecent(mGuestRecent3,guestRecent.get(2));
+                setRecent(mGuestRecent4,guestRecent.get(3));
+                setRecent(mGuestRecent5,guestRecent.get(4));
+                setRecent(mGuestRecent6,guestRecent.get(5));
+            }
         }
+
         //未来三场
-        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null){
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null&&getActivity()!=null){
             mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+getActivity().getResources().getString(R.string.number_hk_dd));
             mHomeFutureName.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getTeam());
             mImageLoader.displayImage(analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(), mHomeFutureLogo, mOptions);
         }
-        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null){
+        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null&&getActivity()!=null){
             mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + getActivity().getResources().getString(R.string.number_hk_dd));
             mGuestFutureName.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getTeam());
             mImageLoader.displayImage(analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),mGuestFutureLogo,mOptions);
@@ -315,8 +324,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mHomeGoalOrLose.setText(entity.getHome().getGoal()+"/"+entity.getHome().getMiss());
                 mHomeGoalDifference.setText(entity.getHome().getGoalDiff()+"");
                 mHomeIntegral.setText(entity.getHome().getIntegral() + "");
-                //球员信息
-                mHomeTeamName.setText(entity.getHome().getTeam());
+
             }
             if(entity.getGuest()!=null){
                 mGuestRank.setText(entity.getGuest().getRank()+entity.getGuest().getTeam());
@@ -326,11 +334,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
                 mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
 
-                mGuestTeamName.setText(entity.getGuest().getTeam());
+
             }
 
         }
-
+//        //球员信息
+//        mHomeTeamName.setText(mHomeName);
+//        mGuestTeamName.setText(mGuestName);
 
         //是否显示积分榜
         if(analyzeBean.getFullScoreRank()==1){ //有完整积分榜
@@ -408,6 +418,15 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    /**
+     * 设置队员信息的主客队队名
+     * @param home
+     * @param guest
+     */
+    public void setTeamName(String home,String guest){
+        mHomeTeamName.setText(home);
+        mGuestTeamName.setText(guest);
+    }
     /**
      * 设置近期战绩图片  胜平负
      * @param mImage

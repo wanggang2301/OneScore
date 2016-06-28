@@ -88,6 +88,10 @@
             android:checked="true"
             android:background="@drawable/football_screen_left_selector"
             />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/black_details_ball_textcolor2" />
         <RadioButton
             android:id="@+id/football_analyze_num_ten"
             android:layout_width="96dp"
@@ -99,6 +103,10 @@
             android:background="@drawable/football_screen_middle_selector"
             
             />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/black_details_ball_textcolor2" />
         <RadioButton
             android:id="@+id/football_analyze_num_fifteen"
             android:layout_width="96dp"

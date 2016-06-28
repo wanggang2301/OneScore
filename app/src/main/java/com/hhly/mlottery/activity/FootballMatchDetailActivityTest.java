@@ -293,7 +293,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         mTalkAboutBallFragment.setArguments(bundle);
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "");
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "","");
         //指数
         mOddsFragment = OddsFragment.newInstance("", "");
         //统计

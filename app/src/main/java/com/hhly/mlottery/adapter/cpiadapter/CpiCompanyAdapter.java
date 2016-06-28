@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.cpiadapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,34 +22,28 @@ public class CpiCompanyAdapter extends BaseAdapter {
 
     //    private List<Map<String, String>> cpiCompanyList;
     private List<NewOddsInfo.CompanyBean> mCompanyBean;
-    private Context context;
-    private LayoutInflater mInflater;
 
-    public CpiCompanyAdapter(Context context, List<NewOddsInfo.CompanyBean> mCompanyBean) {
+    public CpiCompanyAdapter(List<NewOddsInfo.CompanyBean> mCompanyBean) {
         super();
-        this.context = context;
         this.mCompanyBean = mCompanyBean;
-        this.mInflater = LayoutInflater.from(context);
-//        this.mCheckedTextView = mCheckedTextView;
     }
+
     public void setCompanyBean(List<NewOddsInfo.CompanyBean> companyBean) {
         this.mCompanyBean = companyBean;
     }
+
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return mCompanyBean.size();
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return mCompanyBean.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -63,8 +58,10 @@ public class CpiCompanyAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ListViewItem item;
+        Context context = parent.getContext();
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_dialog_company, null);
+            convertView = LayoutInflater.from(context)
+                    .inflate(R.layout.item_dialog_company, parent, false);
             item = new ListViewItem(convertView);
             convertView.setTag(item);
         } else {
@@ -72,22 +69,20 @@ public class CpiCompanyAdapter extends BaseAdapter {
         }
         item.checkedTextView.setText(mCompanyBean.get(position).getComName());
         item.checkedTextView.setChecked(mCompanyBean.get(position).isChecked());
-        item.checkedTextView.setTextColor(context.getResources().getColor(R.color.msg));
-        //如果checkedTextView有选中的就给设置选中的背景
+        item.checkedTextView.setTextColor(ContextCompat.getColor(context, R.color.msg));
+        // 如果checkedTextView有选中的就给设置选中的背景
         if (item.checkedTextView.isChecked()) {
-//            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select_true));
             item.cpi_img_checked.setSelected(true);
         } else {
-//            item.cpi_img_checked.setBackground(context.getResources().getDrawable(R.mipmap.cpi_img_select));
-//            item.cpi_img_checked.setBackgroundResource(R.mipmap.cpi_img_select);
             item.cpi_img_checked.setSelected(false);
         }
         return convertView;
     }
 
     private static class ListViewItem {
+
         public CheckedTextView checkedTextView;
-        //是否选中的图片
+        // 是否选中的图片
         private ImageView cpi_img_checked;
 
         public ListViewItem(View v) {
