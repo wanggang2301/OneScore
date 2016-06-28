@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
@@ -225,7 +226,7 @@ public class CPIOddsFragment extends Fragment {
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         setStatus(ERROR);
                         VolleyError volleyError = exception.getVolleyError();
-                        Toast.makeText(getContext(),
+                        Toast.makeText(MyApp.getContext(),
                                 volleyError.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         volleyError.printStackTrace();
                         refreshOver();
