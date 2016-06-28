@@ -98,6 +98,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ADDKEYGUEST = "guestAdd";
     private int type;//1 籃球/0 足球
     private String state = "-1";
+    private String title = "-1";
     private View view;
     private View emptyView;
     private ProgressBar mProgressBarRefresh;
@@ -110,6 +111,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
+            title = getArguments().getString("title");
         }
     }
 
@@ -208,12 +210,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         }, MatchLike.class);
     }
 
-    public static TalkAboutBallFragment newInstance(String param1, String param2, int param3) {
+    public static TalkAboutBallFragment newInstance(String param1, String param2, int param3, String title) {
         TalkAboutBallFragment fragment = new TalkAboutBallFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString("state", param2);
         args.putInt("type", param3);
+        args.putString("title", title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -466,7 +469,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
-        }else {
+        } else {
         }
     }
 

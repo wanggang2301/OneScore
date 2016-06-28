@@ -69,11 +69,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @Description: 篮球详情的 Activity
  * @author yixq
- * Created by A on 2016/3/21.
+ *         Created by A on 2016/3/21.
+ * @Description: 篮球详情的 Activity
  */
-public class BasketDetailsActivityTest extends AppCompatActivity implements ExactSwipeRefrashLayout.OnRefreshListener,AppBarLayout.OnOffsetChangedListener,View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
+public class BasketDetailsActivityTest extends AppCompatActivity implements ExactSwipeRefrashLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     public final static String BASKET_THIRD_ID = "thirdId";
     public final static String BASKET_MATCH_STATUS = "MatchStatus";
@@ -108,7 +108,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private String mThirdId = "936707";
     private String mMatchStatus;
 
-    BasketAnalyzeFragment mAnalyzeFragment= new BasketAnalyzeFragment();
+    BasketAnalyzeFragment mAnalyzeFragment = new BasketAnalyzeFragment();
     TalkAboutBallFragment mTalkAboutBallFragment;
 
     BasketOddsFragment mOddsEuro;
@@ -129,9 +129,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private CoordinatorLayout mCoordinatorLayout;
 
 
-    private String[] TITLES ;
-
-
+    private String[] TITLES;
 
 
     private DisplayImageOptions mOptions;
@@ -194,8 +192,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private LinearLayout mLayoutOt3;
     BasketballDetailsBean.MatchEntity mMatch;
     private TextView mApos;
-    private int mGuestNum=0;
-    private int mHomeNum=0;
+    private int mGuestNum = 0;
+    private int mHomeNum = 0;
 
     private int mCurrentId;
     private final int IMMEDIA_FRAGMENT = 0;
@@ -214,10 +212,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
 
-            mOddsEuro=BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
-            mOddsLet=BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
-            mOddsSize=BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
-            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1);
+            mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
+            mOddsLet = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
+            mOddsSize = BasketOddsFragment.newInstance(mThirdId, ODDS_SIZE);
+            mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1, "");
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
 
@@ -253,9 +251,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             e.printStackTrace();
         }
 
-            initView();
-            setListener();
-            loadData();
+        initView();
+        setListener();
+        loadData();
 
     }
 
@@ -308,7 +306,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 long pushEndTime = System.currentTimeMillis();
                 if ((pushEndTime - pushStartTime) >= 30000) {
                     L.i(TAG, "重新启动socket");
-                    if(mSocketClient.isClosed()){
+                    if (mSocketClient.isClosed()) {
                         startWebsocket();
                     }
 
@@ -317,7 +315,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         };
         try {
             computeWebSocketConnTimer.schedule(tt, 15000, 15000);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -347,30 +345,29 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
      */
     private void initView() {
         TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_eur),
-              getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof) , getResources().getString(R.string.basket_details_talkable)};
+                getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_details_talkable)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
 
-        mBasketLayoutHeader= (FrameLayout) findViewById(R.id.basket_layout_header);
+        mBasketLayoutHeader = (FrameLayout) findViewById(R.id.basket_layout_header);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        mCoordinatorLayout= (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         mViewPager = (ViewPager) findViewById(R.id.basket_details_view_pager);
         appBarLayout = (AppBarLayout) findViewById(R.id.basket_details_appbar);
         mTabLayout = (TabLayout) findViewById(R.id.basket_details_tab_layout);
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(TITLES);
 
-        MDStatusBarCompat.setCollapsingToolbar(this,mCoordinatorLayout,appBarLayout,mBasketLayoutHeader,toolbar);
+        MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
 
-        mTabsAdapter.addFragments(mAnalyzeFragment,mOddsEuro,mOddsSize,mOddsLet , mTalkAboutBallFragment);
+        mTabsAdapter.addFragments(mAnalyzeFragment, mOddsEuro, mOddsSize, mOddsLet, mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
         appBarLayout.addOnOffsetChangedListener(this);
-
 
 
         headLayout = (LinearLayout) findViewById(R.id.basket_details_header_layout);
@@ -489,7 +486,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         mGuestScore = (TextView) this.findViewById(R.id.basket_details_guest_all_score);
         mVS = (TextView) this.findViewById(R.id.basket_score_maohao);
         mMatchState = (TextView) this.findViewById(R.id.basket_details_state);
-        mRemainTime= (TextView) this.findViewById(R.id.basket_details_remain_time);
+        mRemainTime = (TextView) this.findViewById(R.id.basket_details_remain_time);
         mHome1 = (TextView) this.findViewById(R.id.basket_details_home_first);
         mHome2 = (TextView) this.findViewById(R.id.basket_details_home_second);
         mHome3 = (TextView) this.findViewById(R.id.basket_details_home_third);
@@ -538,8 +535,6 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         mApos.setVisibility(View.GONE);
 
 
-
-
 //        setApos();
     }
 
@@ -549,22 +544,22 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         if (isFragment0) {
             MobclickAgent.onPageStart("BasketBall_Info_FX");
             is0 = true;
-            L.d("xxx","分析显示");
+            L.d("xxx", "分析显示");
         }
         if (isFragment1) {
             MobclickAgent.onPageStart("BasketBall_Info_OP");
             is1 = true;
-            L.d("xxx","欧赔显示");
+            L.d("xxx", "欧赔显示");
         }
         if (isFragment2) {
             MobclickAgent.onPageStart("BasketBall_Info_YP");
             is2 = true;
-            L.d("xxx","亚盘显示");
+            L.d("xxx", "亚盘显示");
         }
         if (isFragment3) {
             MobclickAgent.onPageStart("BasketBall_Info_DX");
             is3 = true;
-            L.d("xxx","大小显示");
+            L.d("xxx", "大小显示");
         }
         if (isFragment4) {
             is4 = true;
@@ -577,22 +572,22 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         if (is0) {
             MobclickAgent.onPageEnd("BasketBall_Info_FX");
             is0 = false;
-            L.d("xxx","分析 隐藏");
+            L.d("xxx", "分析 隐藏");
         }
         if (is1) {
             MobclickAgent.onPageEnd("BasketBall_Info_OP");
             is1 = false;
-            L.d("xxx","欧赔 隐藏");
+            L.d("xxx", "欧赔 隐藏");
         }
         if (is2) {
             MobclickAgent.onPageEnd("BasketBall_Info_YP");
             is2 = false;
-            L.d("xxx","亚盘 隐藏");
+            L.d("xxx", "亚盘 隐藏");
         }
         if (is3) {
             MobclickAgent.onPageEnd("BasketBall_Info_DX");
             is3 = false;
-            L.d("xxx","大小 隐藏");
+            L.d("xxx", "大小 隐藏");
         }
         if (is4) {
             is4 = false;
@@ -609,6 +604,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         }
         computeWebSocketConnTimer.cancel();
     }
+
     /**
      * 秒闪烁
      */
@@ -751,15 +747,15 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
         mHomeTeam.setText(mMatch.getHomeTeam());
         mGuestTeam.setText(mMatch.getGuestTeam());
-        if(mMatch.getHomeRanking().equals("")){
+        if (mMatch.getHomeRanking().equals("")) {
             mHomeRanking.setText("");
-        }else{
-            mHomeRanking.setText("[ "+mMatch.getHomeRanking()+" ]");
+        } else {
+            mHomeRanking.setText("[ " + mMatch.getHomeRanking() + " ]");
         }
-        if(mMatch.getGuestRanking().equals("")){
+        if (mMatch.getGuestRanking().equals("")) {
             mGuestRanking.setText("");
-        }else {
-            mGuestRanking.setText("[ "+mMatch.getGuestRanking()+" ]");
+        } else {
+            mGuestRanking.setText("[ " + mMatch.getGuestRanking() + " ]");
         }
 
         //图标
@@ -805,7 +801,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 }
                 mApos.setVisibility(View.GONE);
                 mRemainTime.setText("");
-                if(mMatch.getMatchStatus()==PRE_MATCH){
+                if (mMatch.getMatchStatus() == PRE_MATCH) {
                     mTalkAboutBallFragment.setClickableLikeBtn(true);
                 }
                 break;
@@ -931,10 +927,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 }
 
                 mRemainTime.setText(score.getRemainTime());//剩余时间
-                if(mMatch.getMatchStatus()==HALF_GAME){
+                if (mMatch.getMatchStatus() == HALF_GAME) {
                     mRemainTime.setText("");//中场时无剩余时间。。后台可能中场也给时间。没办法
                 }
-                if(score.getRemainTime()==null||score.getRemainTime().equals("")){//没有剩余时间的时候
+                if (score.getRemainTime() == null || score.getRemainTime().equals("")) {//没有剩余时间的时候
                     mApos.setVisibility(View.GONE);
                 }
                 break;
@@ -1029,7 +1025,6 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
 
     }
-
 
 
     @Override
@@ -1221,13 +1216,13 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 mVS.setText(":");
                 mTitleVS.setText(":");
 
-                if(mGuestNum!=score.getGuestScore()){
+                if (mGuestNum != score.getGuestScore()) {
                     scoreAnimation(mGuestScore);
-                    mGuestNum=score.getGuestScore();
+                    mGuestNum = score.getGuestScore();
                 }
-                if(mHomeNum!=score.getHomeScore()){
+                if (mHomeNum != score.getHomeScore()) {
                     scoreAnimation(mHomeScore);
-                    mHomeNum=score.getHomeScore();
+                    mHomeNum = score.getHomeScore();
                 }
                 mTalkAboutBallFragment.setClickableLikeBtn(true);//聊球可点赞
                 setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
@@ -1283,13 +1278,13 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 }
 
                 //设置剩余时间
-                mRemainTime.setText(score.getRemainTime()==null?"":score.getRemainTime());//为空的话就设置为空字符
+                mRemainTime.setText(score.getRemainTime() == null ? "" : score.getRemainTime());//为空的话就设置为空字符
 
-                if(score.getMatchStatus()==HALF_GAME){
+                if (score.getMatchStatus() == HALF_GAME) {
                     mRemainTime.setText("");//中场时无剩余时间。。后台可能中场也给时间。没办法
                 }
 
-                if(score.getRemainTime()==null||score.getRemainTime().equals("")){
+                if (score.getRemainTime() == null || score.getRemainTime().equals("")) {
                     mApos.setVisibility(View.GONE);
                 }
                 break;
@@ -1311,8 +1306,6 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         changeText.startAnimation(rotateAnim);
 
     }
-
-
 
 
     private void eventBusPost() {
@@ -1341,17 +1334,17 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
-        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < flexibleSpaceImageHeight ) {
+        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < flexibleSpaceImageHeight) {
             mRefreshLayout.setEnabled(false);
         } else {
             // mRefreshLayout.setEnabled(true);
             mRefreshLayout.setEnabled(true);
 
         }
-        if((-verticalOffset) == appBarLayout.getTotalScrollRange()){
+        if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
             mTitleScore.setVisibility(View.VISIBLE);
             headLayout.setBackgroundColor(getResources().getColor(R.color.black));
-        }else {
+        } else {
             mTitleScore.setVisibility(View.INVISIBLE);
             headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
         }
@@ -1369,7 +1362,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 mOddsEuro.initData();
                 mOddsLet.initData();
                 mOddsSize.initData();
-                mTalkAboutBallFragment.loadTopic(mThirdId,mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+                mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }, 1000);
     }
