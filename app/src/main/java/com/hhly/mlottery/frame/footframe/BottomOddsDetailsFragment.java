@@ -239,6 +239,16 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
                 initOddsDetails();
             }
         });
+
+
+        odd_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mBottomOddsDetailsItemList.addAll(mBottomOddsDetailsItemList);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**
