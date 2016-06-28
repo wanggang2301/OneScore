@@ -595,6 +595,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
      */
     private synchronized void startWebsocket() {
 
+        L.d(TAG,"滚球赔率");
+
         if (hSocketClient != null) {
             if (!hSocketClient.isClosed()) {
                 hSocketClient.close();

@@ -24,6 +24,7 @@ import com.hhly.mlottery.adapter.LiveTextAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -78,6 +79,9 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
 
     private String status;
 
+    private BottomSheetBehavior bottomSheetBehavior;
+
+
     public static FinishMatchLiveTextFragment newInstance(ArrayList<MatchTextLiveBean> matchTextLiveBeans, String status) {
         FinishMatchLiveTextFragment fragment = new FinishMatchLiveTextFragment();
         Bundle args = new Bundle();
@@ -108,25 +112,51 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
 
         initData();
         dialog.setContentView(mView);
-        CoordinatorLayout.LayoutParams params =
-                (CoordinatorLayout.LayoutParams) ((View) mView.getParent()).getLayoutParams();
-        CoordinatorLayout.Behavior behavior = params.getBehavior();
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) mView.getParent()).getLayoutParams();
+
+        final CoordinatorLayout.Behavior behavior = params.getBehavior();
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
-            BottomSheetBehavior bottomSheetBehavior = (BottomSheetBehavior) behavior;
+            bottomSheetBehavior = (BottomSheetBehavior) behavior;
             bottomSheetBehavior.setHideable(true);
+
             bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
                     if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                         FinishMatchLiveTextFragment.this.dismiss();
-                    }
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                        L.d(TAG, "BottomSheetBehavior.STATE_HIDDEN=" + "state=" + newState);
 
                     }
+                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                        L.d(TAG, "BottomSheetBehavior.STATE_EXPANDED=" + "state=" + newState);
+                       // bottomSheetBehavior.setHideable(false);
+
+                      /*  bottomSheet.setEnabled(false);
+                        mListView.setEnabled(true);*/
+
+                        //  bottomSheet.stopNestedScroll();
+                    }
+
+                    if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                        L.d(TAG, "STATE_COLLAPSED=" + "state=" + newState);
+
+                    }
+
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                        L.d(TAG, "STATE_DRAGGING=" + "state=" + newState);
+
+                    }
+
+                    if (newState == BottomSheetBehavior.STATE_SETTLING) {
+                        L.d(TAG, "STATE_SETTLING=" + "state=" + newState);
+
+                    }
+
                 }
 
                 @Override
-                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                public void onSlide(@NonNull final View bottomSheet, float slideOffset) {
+
 
                 }
             });
@@ -157,7 +187,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
                     case MotionEvent.ACTION_MOVE:
                         //只有文字直播的listview滑到顶部才可以下拉刷新
                         if (mListView.getFirstVisiblePosition() != 0) {
-                            //  mRefreshLayout.setEnabled(false);
+                            L.d(TAG, "listview");
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -221,6 +251,8 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
                     break;
                 case SUCCESS:
                     mLiveTextAdapter.notifyDataSetChanged();
+
+
                     moreView.setVisibility(View.GONE);
                     break;
                 case NODATA:
