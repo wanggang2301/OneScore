@@ -65,6 +65,7 @@ public class FinishMatchLiveTextFragmentTest extends BottomSheetDialogFragment {
     private static final int NODATA = 2;// 没有更多数据
 
     private View moreView;  //加载更多
+    private View customLoading;  //加载更多
 
     private int lastItem;
 
@@ -106,6 +107,7 @@ public class FinishMatchLiveTextFragmentTest extends BottomSheetDialogFragment {
         moreView = View.inflate(mContext, R.layout.load, null);
 
         initView();
+
         initData();
 
         dialog.setContentView(mView);
@@ -152,6 +154,8 @@ public class FinishMatchLiveTextFragmentTest extends BottomSheetDialogFragment {
     private void initView() {
         close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
     }
 
     private void initData() {
@@ -167,7 +171,6 @@ public class FinishMatchLiveTextFragmentTest extends BottomSheetDialogFragment {
         count = matchTextLiveBeansList.size();
         mLiveTextAdapter = new FootBallLiveTextAdapter(getActivity(), matchTextLiveBeansList);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mRecyclerView.setAdapter(mLiveTextAdapter);
 
