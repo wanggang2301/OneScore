@@ -73,7 +73,6 @@ public class CPIOddsFragment extends Fragment {
     TextView mRefreshTextView; // 刷新
 
     private CPIFragment parentFragment;
-    private CompanyChooseDialogFragment mCompanyChooseDialogFragment;
 
     /**
      * 定义注解限制类型
