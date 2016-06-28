@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,7 +20,6 @@ import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -237,14 +234,17 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected void onResume() {
+        mWebView.reload();
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("WebActivity");
     }
 
+
     @Override
     public void onPause() {
         super.onPause();
+
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd("WebActivity");
     }

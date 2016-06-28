@@ -39,6 +39,7 @@ import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
@@ -1368,6 +1369,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 mOddsEuro.initData();
                 mOddsLet.initData();
                 mOddsSize.initData();
+                mTalkAboutBallFragment.loadTopic(mThirdId,mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }, 1000);
     }
