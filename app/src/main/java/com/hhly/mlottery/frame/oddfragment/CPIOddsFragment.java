@@ -454,7 +454,7 @@ public class CPIOddsFragment extends Fragment {
                 WebSocketCPIResult.UpdateScore data = result.getData();
                 matchInfo.setMatchResult(data.getMatchResult());
                 if (!isDefault) {
-                    mAdapter.notifyItemChanged(defaultData.indexOf(item));
+                    mAdapter.notifyItemChanged(infoBeanList.indexOf(item));
                 }
             }
         }
