@@ -86,9 +86,9 @@ public class FootballAnalyzeAdapter extends CommonAdapter<FootballAnaylzeHistory
                 holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + "--");
             }else{
                 if (historyBean.getLet().equals("1")) {
-                    holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + "赢");
+                    holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + mContext.getResources().getString(R.string.football_analyze_details_win));
                 }else if (historyBean.getLet().equals("2")) {
-                    holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + "输");
+                    holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + mContext.getResources().getString(R.string.football_analyze_details_lose));
                 }else if(historyBean.getLet().equals("0")){
                     holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + "走");
                 }

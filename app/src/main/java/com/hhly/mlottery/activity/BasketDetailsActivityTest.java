@@ -734,9 +734,12 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     private void initData(BasketballDetailsBean bean) {
 
-
         BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
         mMatch = bean.getMatch();
+
+        String state; //傳給老龍
+        state=mMatch.getGuestTeam()+"vs"+mMatch.getHomeTeam()+"_"+bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
+
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
