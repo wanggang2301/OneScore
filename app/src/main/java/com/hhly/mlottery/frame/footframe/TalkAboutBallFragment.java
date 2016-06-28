@@ -41,6 +41,7 @@ import com.sohu.cyan.android.sdk.exception.CyanException;
 import com.sohu.cyan.android.sdk.http.CyanRequestListener;
 import com.sohu.cyan.android.sdk.http.response.TopicCommentsResp;
 import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -502,12 +503,14 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 }
                 break;
             case R.id.talkball_home_like:
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_HomeLike");
                 ivHomeLike.setVisibility(View.VISIBLE);
                 ivHomeLike.startAnimation(mRiseHomeAnim);
 //                //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
                 requestLikeData(ADDKEYHOME, "1", type);
                 break;
             case R.id.talkball_guest_like:
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_GuestLike");
                 ivGuestLike.setVisibility(View.VISIBLE);
                 ivGuestLike.startAnimation(mRiseGuestAnim);
                 //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";

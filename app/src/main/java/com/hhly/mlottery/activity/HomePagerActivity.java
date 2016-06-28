@@ -222,7 +222,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                         break;
                     case "basketballInfo":// 篮球详情页面
                         if (!TextUtils.isEmpty(mThirdId)) {
-                            Intent basketIntent = new Intent(mContext, BasketDetailsActivity.class);
+                            Intent basketIntent = new Intent(mContext, BasketDetailsActivityTest.class);
                             basketIntent.putExtra("thirdId", mThirdId);
                             startActivity(basketIntent);
                         }

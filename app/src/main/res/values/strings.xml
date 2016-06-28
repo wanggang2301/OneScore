@@ -786,4 +786,5 @@
 
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>
+    <string name="login_username">请输入用户名</string>
 </resources>

@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/12 11:21
- * @des ${TODO}
+ * @des 足球内页改版统计
  */
 public class StatisticsFragmentTest extends Fragment {
 
