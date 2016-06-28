@@ -164,6 +164,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
             }
 
+
+
+
             @Override
             public void onAnimationEnd(Animation animation) {
                 ivGuestLike.setVisibility(View.INVISIBLE);
