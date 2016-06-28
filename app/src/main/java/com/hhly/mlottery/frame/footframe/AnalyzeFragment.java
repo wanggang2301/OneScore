@@ -42,6 +42,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
     private DisplayImageOptions mOptions;
     private ImageLoader mImageLoader;
 
@@ -109,7 +110,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     //球员信息
     private TextView mHomeTeamName;
     private TextView mGuestTeamName;
-    private NestedListView mListView;
     private LinearLayout ll_rosters_homeTeam;// 主队名单容器
     private LinearLayout ll_rosters_visitingTeam;// 客队名单容器
     private FrameLayout fl_firsPlayers_not;// 暂无首发容器
@@ -117,7 +117,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     // TODO: Rename and change types of parameters
     private String mThirdId="1111";
-    private String mParam2;
+    private String mHomeName;
+    private String mGuestName;
 
     private NewAnalyzeBean mAnalyzeBean;
     public AnalyzeFragment() {
@@ -125,11 +126,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    public static AnalyzeFragment newInstance(String param1, String param2) {
+    public static AnalyzeFragment newInstance(String param1, String param2,String param3) {
         AnalyzeFragment fragment = new AnalyzeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM3, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -139,7 +141,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mThirdId = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mHomeName = getArguments().getString(ARG_PARAM2);
+            mGuestName=getArguments().getString(ARG_PARAM3);
         }
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
@@ -315,8 +318,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mHomeGoalOrLose.setText(entity.getHome().getGoal()+"/"+entity.getHome().getMiss());
                 mHomeGoalDifference.setText(entity.getHome().getGoalDiff()+"");
                 mHomeIntegral.setText(entity.getHome().getIntegral() + "");
-                //球员信息
-                mHomeTeamName.setText(entity.getHome().getTeam());
+
             }
             if(entity.getGuest()!=null){
                 mGuestRank.setText(entity.getGuest().getRank()+entity.getGuest().getTeam());
@@ -326,11 +328,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
                 mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
 
-                mGuestTeamName.setText(entity.getGuest().getTeam());
+
             }
 
         }
-
+        //球员信息
+        mHomeTeamName.setText(mHomeName);
+        mGuestTeamName.setText(mGuestName);
 
         //是否显示积分榜
         if(analyzeBean.getFullScoreRank()==1){ //有完整积分榜
