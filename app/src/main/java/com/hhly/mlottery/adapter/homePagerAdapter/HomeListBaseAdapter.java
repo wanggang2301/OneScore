@@ -35,7 +35,6 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 首页ListView数据适配器
@@ -71,8 +70,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
     private final int MIN_CLICK_DELAY_TIME = 1000;// 控件点击间隔时间
     private long lastClickTime = 0;
-
-    private Random random = new Random();
 
     /**
      * 构造
@@ -492,14 +489,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             View scoreView = getScoreView();
                             if ("13".equals(homeBodysEntity.getJumpAddr())) {// 足球比分
-                                // TODO
-                                int i1 = random.nextInt(AppConstants.homePageScoreBG.length - 1);
-                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreBG[i1]));// 设置背景图片
-                                /*if (j % 2 == 0) {
-                                    score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_football01_bg));// 设置背景图片
-                                } else {
-                                    score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_football02_bg));// 设置背景图片
-                                }*/
+                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreFootBG[j % AppConstants.homePageScoreFootBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getStatusOrigin()) {
                                     case "-1":// 完场
                                         settingScoreItemData(homeBodysEntity, mContext.getResources().getColor(R.color.score_red), "—", mContext.getResources().getString(R.string.fragme_home_wanchang_text));
@@ -542,11 +532,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         break;
                                 }
                             } else if ("20".equals(homeBodysEntity.getJumpAddr())) {// 篮球比分
-                                if (j % 2 == 0) {
-                                    score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_basketball01_bg));// 设置背景图片
-                                } else {
-                                    score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_basketball02_bg));// 设置背景图片
-                                }
+                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreBasketBG[j % AppConstants.homePageScoreBasketBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getMatchStatus()) {
                                     //比赛状态 0:未开赛,1:一节,2:二节,5:1'OT，以此类推，-1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
                                     case 0:// 未开赛
@@ -617,6 +603,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
                             // scoreView.setLayoutParams(scoreParams);
                             scoreViewList.add(scoreView);
+                            L.d("xxx", "scoreViewList.size: " + scoreViewList.size());
                             View splitView = View.inflate(mContext, R.layout.split_view, null);
                             scoreSplitViewList.add(splitView);
                         }

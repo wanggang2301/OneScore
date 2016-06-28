@@ -31,7 +31,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_alignParentBottom="true"
             android:background="@color/line_football_footer"
             />
@@ -158,7 +158,7 @@
                     android:layout_height="@dimen/basket_details_item_height1"
                     android:layout_marginLeft="@dimen/basket_details_item_height4"
                     android:layout_marginRight="@dimen/basket_details_item_height4"
-                    android:background="@color/basket_parting_line"
+                    android:background="@color/line_football_footer"
                     />
 
                 <ImageView
@@ -250,7 +250,7 @@
                     android:layout_height="35dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="14dp"
-                    android:src="@mipmap/basket_default"
+                    android:src="@mipmap/football_analyze_default"
                     />
 
                 <TextView
@@ -274,7 +274,7 @@
                 android:layout_height="@dimen/basket_details_item_height1"
                 android:layout_marginLeft="@dimen/basket_details_item_height4"
                 android:layout_marginRight="@dimen/basket_details_item_height4"
-                android:background="@color/basket_parting_line"
+                android:background="@color/line_football_footer"
                 />
 
             <RelativeLayout
@@ -288,7 +288,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="14dp"
-                    android:src="@mipmap/basket_default"
+                    android:src="@mipmap/football_analyze_default"
                     />
 
                 <TextView
@@ -354,7 +354,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
             />
 
@@ -624,7 +624,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
             />
 
@@ -633,6 +633,7 @@
             android:layout_height="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:layout_marginTop="10dp"
             >
 
             <TextView
@@ -871,7 +872,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
             />
 

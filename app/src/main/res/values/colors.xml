@@ -20,6 +20,8 @@
 
 
     <!-- 主题颜色 -->
+    <color name="new_colorPrimary">#800049BF</color>
+    <color name="new_colorPrimary_three">#4D0049BF</color>
     <color name="colorPrimary">#0085e1</color>
     <color name="colorPrimaryDark">#0358CB</color>
     <color name="colorAccent">#0085e1</color>
@@ -46,6 +48,7 @@
     <!-- 公共颜色，希望大家从这里把UI给的颜色放这里 -->
     <!-- #333333同#333 -->
     <color name="content_txt_black">#333333</color>
+    <color name="login_et_color">#CCCCCC</color>
     <color name="content_txt_dark_grad">#666666</color>
     <color name="content_txt_light_grad">#999999</color>
     <color name="content_txt_grad">#cccccc</color>
@@ -63,6 +66,8 @@
     <color name="txt_blue">#FF007CB0</color>
     <color name="txt_gray">#FF575756</color>
     <color name="white">#FFFFFF</color>
+    <color name="ap_white">#4DFFFFFF</color>
+    <color name="two_ap_white">#26FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="txt_orange">#FFEB6100</color>
     <color name="bg_gray">#FFE3E3E7</color>
