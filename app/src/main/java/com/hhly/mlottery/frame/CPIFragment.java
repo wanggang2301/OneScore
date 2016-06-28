@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
+import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
@@ -301,9 +302,9 @@ public class CPIFragment extends Fragment implements
      */
     private void initViewPager() {
         mFragments = new ArrayList<>();
-        mFragments.add(CPIOddsFragment.newInstance(CPIOddsFragment.TYPE_PLATE));
-        mFragments.add(CPIOddsFragment.newInstance(CPIOddsFragment.TYPE_BIG));
-        mFragments.add(CPIOddsFragment.newInstance(CPIOddsFragment.TYPE_OP));
+        mFragments.add(CPIOddsFragment.newInstance(OddsTypeEnum.PLATE));
+        mFragments.add(CPIOddsFragment.newInstance(OddsTypeEnum.BIG));
+        mFragments.add(CPIOddsFragment.newInstance(OddsTypeEnum.OP));
 
         CPIPagerAdapter pagerAdapter = new CPIPagerAdapter(getChildFragmentManager());
         mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。

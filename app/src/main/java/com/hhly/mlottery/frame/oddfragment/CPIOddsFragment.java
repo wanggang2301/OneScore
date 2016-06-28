@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +22,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerListAdapter;
+import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
@@ -45,10 +45,6 @@ import java.util.Map;
  * Created by loshine on 2016/6/21.
  */
 public class CPIOddsFragment extends Fragment {
-
-    public static final String TYPE_PLATE = "plate"; // 亚盘
-    public static final String TYPE_BIG = "big"; // 大小球
-    public static final String TYPE_OP = "op"; // 欧赔
 
     private static final int ERROR = -1; // 访问失败
     private static final int SUCCESS = 1; // 访问成功
@@ -75,12 +71,11 @@ public class CPIOddsFragment extends Fragment {
 
     private CPIFragment parentFragment;
 
-    /**
-     * 定义注解限制类型
-     */
-    @StringDef({TYPE_PLATE, TYPE_BIG, TYPE_OP})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // attach 的时候获取父 Fragment
+        parentFragment = (CPIFragment) getParentFragment();
     }
 
     @Override
@@ -88,7 +83,7 @@ public class CPIOddsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            type = args.getString(KEY_TYPE, TYPE_PLATE);
+            type = args.getString(KEY_TYPE, OddsTypeEnum.PLATE);
         }
     }
 
@@ -117,13 +112,6 @@ public class CPIOddsFragment extends Fragment {
                 parentFragment.refreshAllChildFragments();
             }
         });
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        // attach 的时候获取父 Fragment
-        parentFragment = (CPIFragment) getParentFragment();
     }
 
     /**
@@ -174,11 +162,11 @@ public class CPIOddsFragment extends Fragment {
     public void refreshData(String date) {
         Map<String, String> map = new HashMap<>();
 
-        if (TYPE_PLATE.equals(type)) {
+        if (OddsTypeEnum.PLATE.equals(type)) {
             map.put("type", "1");
-        } else if (TYPE_BIG.equals(type)) {
+        } else if (OddsTypeEnum.BIG.equals(type)) {
             map.put("type", "3");
-        } else if (TYPE_OP.equals(type)) {
+        } else if (OddsTypeEnum.OP.equals(type)) {
             map.put("type", "2");
         }
 
@@ -373,11 +361,11 @@ public class CPIOddsFragment extends Fragment {
     private String convertTypeString(String oddType) {
         // 1 - 亚盘，2 - 欧赔，3 - 大小球
         if ("1".equals(oddType)) {
-            return TYPE_PLATE;
+            return OddsTypeEnum.PLATE;
         } else if ("2".equals(oddType)) {
-            return TYPE_OP;
+            return OddsTypeEnum.OP;
         } else {
-            return TYPE_BIG;
+            return OddsTypeEnum.BIG;
         }
     }
 
@@ -489,10 +477,10 @@ public class CPIOddsFragment extends Fragment {
     /**
      * 工厂方法
      *
-     * @param type @Type 限制的类型，TYPE_PLATE, TYPE_BIG, TYPE_OP
+     * @param type @Type 限制的类型，PLATE, BIG, OP
      * @return CPIOddsListFragment
      */
-    public static CPIOddsFragment newInstance(@Type String type) {
+    public static CPIOddsFragment newInstance(@OddsTypeEnum.OddsType String type) {
 
         Bundle args = new Bundle();
         args.putString(KEY_TYPE, type);
