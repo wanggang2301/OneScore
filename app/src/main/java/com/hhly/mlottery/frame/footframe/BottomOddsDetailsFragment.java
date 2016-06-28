@@ -158,7 +158,14 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         } else if (mType == EU) {
             odd_title.setText(context.getResources().getString(R.string.eu_first));
         }
-        first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + mBottomOddsItem.getMiddle() + " " + mBottomOddsItem.getRight());
+
+        if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
+            first_odd.setText("");
+
+        } else {
+            first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + mBottomOddsItem.getMiddle() + " " + mBottomOddsItem.getRight());
+        }
+
 
         initOddsDetails();
 
@@ -168,6 +175,15 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
                 dialog.dismiss();
             }
         });
+    }
+
+    private boolean isNULLOrEmpty(String s) {
+        if (s == null || "".equals(s)) {
+            return true;
+        } else {
+            return false;
+
+        }
     }
 
 
