@@ -54,6 +54,7 @@ import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.StatisticsFragmentTest;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
@@ -293,7 +294,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         mTalkAboutBallFragment.setArguments(bundle);
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "","");
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
         //指数
         mOddsFragment = OddsFragment.newInstance("", "");
         //统计
@@ -349,7 +350,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             @Override
             public void onPageSelected(int position) {
-                if (position==1){
+                if (position == 1) {
                     appBarLayout.setExpanded(false);
                 }
 
@@ -616,11 +617,16 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                             mTalkAboutBallFragment.setClickableLikeBtn(true);
 
+
                             mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
 
                         }
                     }
+
+                    mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+                    mAnalyzeFragment.setTeamName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
+
                 }
 
 
@@ -814,6 +820,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
                 mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
             }
+
+            mAnalyzeFragment.setTeamName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
 
 
             new Handler().postDelayed(new Runnable() {
