@@ -1,6 +1,8 @@
 package com.hhly.mlottery.util;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
@@ -13,11 +15,14 @@ import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.account.SendSmsCode;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.impl.GetVerifyCodeCallBack;
+import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.umeng.common.message.Log;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -243,6 +248,18 @@ public class CommonUtils {
             param.put("phone", phone);
             param.put("operateType", oprateType);
 
+            Log.d(TAG,phone+"...............................");
+
+            //以下添加的参数为修复恶意注册的bug所加。
+            String sign = CommonUtils.getSign(phone, AppConstants.deviceToken, AppConstants.SIGN_KEY);
+            param.put("sign",sign);
+
+            int versioncode = CommonUtils.getVersionCode();
+            param.put("versionCode",String.valueOf(versioncode));
+
+            param.put("deviceToken",AppConstants.deviceToken);
+
+
             VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
                 @Override
                 public void onResponse(SendSmsCode jsonObject) {
@@ -276,5 +293,78 @@ public class CommonUtils {
             }
         }
     }
+
+
+    /**
+     * 获取当前版本号
+     */
+    public static int getVersionCode() {
+
+        int versionCode=0;
+        try {
+            PackageManager manager = MyApp.getInstance().getPackageManager();
+            PackageInfo info = manager.getPackageInfo(MyApp.getInstance().getPackageName(), 0);
+            versionCode = info.versionCode;
+        } catch (Exception e) {
+            L.d(e.getMessage());
+        }
+        return versionCode;
+    }
+
+    /**
+     * 获取版本名称
+     * @return
+     */
+    public static String getVersionName(){
+        String versionName="";
+        try {
+            PackageManager manager = MyApp.getInstance().getPackageManager();
+            PackageInfo info = manager.getPackageInfo(MyApp.getInstance().getPackageName(), 0);
+            versionName = info.versionName;
+        } catch (Exception e) {
+            L.d(e.getMessage());
+        }
+        return versionName;
+    }
+
+
+
+    /**
+     * 这个方法是用来生成防止用户恶意注册，由这三个参数拼接的字符串进行MD5加密之后，再加上两位字母，作为参数
+     * 发送给服务器。
+     * @param userName
+     * @param deviceToken
+     * @param signKey
+     * @return
+     */
+    public static String getSign(String userName, String deviceToken, String signKey) {
+
+        String appendString = userName+deviceToken+signKey;
+
+        String beforeTwo = getRandomString(2);
+
+        String afterThree = getRandomString(3);
+
+        String newMd5String = beforeTwo+MD5Util.getMD5(appendString)+afterThree;
+
+        return newMd5String;
+    }
+
+
+
+
+
+    //生成大写的字符和数字的字符串。
+    public static String getRandomString(int length) { //length表示生成字符串的长度
+        String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
+    }
+
 
 }

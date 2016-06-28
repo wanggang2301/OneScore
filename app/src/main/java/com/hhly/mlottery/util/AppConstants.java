@@ -1,6 +1,5 @@
 package com.hhly.mlottery.util;
 
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
@@ -213,7 +212,8 @@ public class AppConstants {
 	public static Register register = null;
 	// ============= account end ==============
 
-
+	//防止用户恶意注册添加的sign字段。
+	public static final String SIGN_KEY ="B2A7748BF1FCAF6326979E1B86DC0C60";
 
 
 }

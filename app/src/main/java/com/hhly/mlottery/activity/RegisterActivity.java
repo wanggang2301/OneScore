@@ -32,6 +32,7 @@ import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.OperateType;
 import com.hhly.mlottery.util.net.account.RegisterType;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.common.message.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,9 +44,12 @@ import java.util.TimerTask;
  */
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
+
+    public static final String TAG="RegisterActivity";
     private EditText et_username, et_password, et_verifycode;
     private TextView tv_register, tv_verycode;
     private ImageView iv_eye, iv_delete;
+
 
     /**
      * 倒计时 默认60s , 间隔1s
@@ -136,7 +140,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     if (tv_verycode.isClickable())
                         tv_verycode.setClickable(false);
 
-                    L.d(TAG, millisUntilFinished / CountDown.TIMEOUT_INTERVEL + "秒");
+                    //L.d(TAG, millisUntilFinished / CountDown.TIMEOUT_INTERVEL + "秒");
                     tv_verycode.setText(millisUntilFinished / CountDown.TIMEOUT_INTERVEL + "秒");
                 }
             }
@@ -244,7 +248,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             param.put("password", MD5Util.getMD5(passWord));
             param.put("registerType", RegisterType.PHONE);
             param.put("smsCode", verifyCode);
+
+            Log.d(TAG,AppConstants.deviceToken);
             param.put("deviceToken", AppConstants.deviceToken);
+
+            //以下添加的参数为修复恶意注册的bug所加。
+            String sign = CommonUtils.getSign(userName, AppConstants.deviceToken, AppConstants.SIGN_KEY);
+            param.put("sign",sign);
+
+            int versioncode = CommonUtils.getVersionCode();
+            param.put("versionCode",String.valueOf(versioncode));
+
+            String versionName= CommonUtils.getVersionName();
+            param.put("versionName",versionName);
+
 
             VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                 @Override
@@ -275,6 +292,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             }, Register.class);
         }
     }
+
+
 
     /**
      * 获取验证码

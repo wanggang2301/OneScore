@@ -1,9 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        maven{
-            url "http://maven.oschina.net/content/groups/public"
-        }
+
         jcenter()
     }
     dependencies {
@@ -14,9 +12,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven{
-            url "http://maven.oschina.net/content/groups/public"
-        }
         jcenter()
     }
 }
