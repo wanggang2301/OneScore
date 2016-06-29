@@ -148,7 +148,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     private LiveTextFragmentTest liveTextFragmentTest;
 
-    private FinishMatchLiveTextFragmentTest finishMatchLiveTextFragment;//完场
+    private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
 
     private HappySocketClient hSocketClient;
@@ -276,7 +276,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                     mBottomOddsDetailsFragment.dismiss();
                 }
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
                     finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
                 } else {
                     liveTextFragmentTest = new LiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
