@@ -69,6 +69,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 showDialog();
                 break;
             case R.id.tv_login: // 昵称头像栏
+                MobclickAgent.onEvent(mContext, "ProfileActivity_Start");
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
             default:

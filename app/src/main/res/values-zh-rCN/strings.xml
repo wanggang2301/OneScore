@@ -667,6 +667,14 @@
     <string name="basket_odds_asiaLet_details">亚盘详情</string>
     <string name="basket_odds_asiaSize_details">大小球详情</string>
 
+    <!--足球分析详情-->
+    <string name="football_analyze_details">分析明细</string>
+    <string name="football_analyze_details_time">时间</string>
+    <string name="football_analyze_details_matchs">联赛</string>
+    <string name="football_analyze_details_game">比赛</string>
+    <string name="football_analyze_details_win">赢</string>
+    <string name="football_analyze_details_lose">输</string>
+
     <!-- 足球资讯 -->
     <string name="foot_title">足球资讯</string>
     <string name="foot_zl_tipf">已经是第一轮了</string>

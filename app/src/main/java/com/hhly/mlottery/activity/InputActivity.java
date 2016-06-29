@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -129,6 +130,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_send://发送评论
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_TalkSend");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
