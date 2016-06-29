@@ -104,6 +104,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private View emptyView;
     private ProgressBar mProgressBarRefresh;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,8 +113,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
-            title = getArguments().getString("title");
         }
+
     }
 
     @Override
@@ -163,8 +164,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             public void onAnimationStart(Animation animation) {
 
             }
-
-
 
 
             @Override
@@ -522,4 +521,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         }
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
