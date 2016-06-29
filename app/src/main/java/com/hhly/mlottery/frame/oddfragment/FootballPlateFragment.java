@@ -36,6 +36,8 @@ public class FootballPlateFragment extends Fragment {
     private static final String TYPE = "type";
 
     RecyclerView mRecyclerView;
+    View mLoadingView;
+    View mErrorView;
 
     private FootballMatchDetailActivityTest mActivity;
 
@@ -56,6 +58,15 @@ public class FootballPlateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mLoadingView = inflater.inflate(R.layout.layout_loading, container, false);
+        mErrorView = inflater.inflate(R.layout.layout_net_error, container, false);
+        mErrorView.findViewById(R.id.reloading_txt)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadData();
+                    }
+                });
         return inflater.inflate(R.layout.fragment_football_plate, container, false);
     }
 
@@ -65,6 +76,7 @@ public class FootballPlateFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         items = new ArrayList<>();
         mAdapter = new FootballPlateAdapter(type, items);
+        mAdapter.setEmptyView(mLoadingView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -104,6 +116,10 @@ public class FootballPlateFragment extends Fragment {
                 OddsDataInfo.class);
     }
 
+    public void setStatus() {
+
+    }
+
     private String convertType() {
         switch (type) {
             case OddsTypeEnum.PLATE:
@@ -115,6 +131,12 @@ public class FootballPlateFragment extends Fragment {
             default:
                 return "1";
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mActivity = null;
     }
 
     public static FootballPlateFragment newInstance(@OddsTypeEnum.OddsType String type) {
