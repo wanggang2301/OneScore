@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -117,30 +116,8 @@ public class FinishMatchLiveTextFragmentTest extends BottomSheetDialogFragment {
         final CoordinatorLayout.Behavior behavior = params.getBehavior();
 
 
-        if (behavior != null && behavior instanceof BottomSheetBehavior) {
-            bottomSheetBehavior = (BottomSheetBehavior) behavior;
-            bottomSheetBehavior.setHideable(true);
+        if (behavior != null && behavior instanceof BottomSheetBehavior)
 
-
-            bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-                @Override
-                public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                        FinishMatchLiveTextFragmentTest.this.dismiss();
-                    }
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    }
-
-                    if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    }
-                }
-
-                @Override
-                public void onSlide(@NonNull final View bottomSheet, float slideOffset) {
-
-                }
-            });
-        }
 
         close_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +132,6 @@ public class FinishMatchLiveTextFragmentTest extends BottomSheetDialogFragment {
         close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
     }
 
     private void initData() {
