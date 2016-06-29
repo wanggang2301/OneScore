@@ -1,7 +1,9 @@
 package com.hhly.mlottery.bean.oddsbean;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +31,7 @@ public class OddsDataInfo{
 
 
 
-    public static class ListOddEntity {
+    public static class ListOddEntity implements Parcelable {
         private String id;
         private String abb;
         private String name;
@@ -122,5 +124,41 @@ public class OddsDataInfo{
                 return guestOdd;
             }
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.abb);
+            dest.writeString(this.name);
+            dest.writeList(this.details);
+        }
+
+        public ListOddEntity() {
+        }
+
+        protected ListOddEntity(Parcel in) {
+            this.id = in.readString();
+            this.abb = in.readString();
+            this.name = in.readString();
+            this.details = new ArrayList<DetailsEntity>();
+            in.readList(this.details, DetailsEntity.class.getClassLoader());
+        }
+
+        public static final Parcelable.Creator<ListOddEntity> CREATOR = new Parcelable.Creator<ListOddEntity>() {
+            @Override
+            public ListOddEntity createFromParcel(Parcel source) {
+                return new ListOddEntity(source);
+            }
+
+            @Override
+            public ListOddEntity[] newArray(int size) {
+                return new ListOddEntity[size];
+            }
+        };
     }
 }

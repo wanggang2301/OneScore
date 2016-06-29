@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="center"
               android:orientation="vertical">
 
     <TextView
-        android:id="@+id/odds_left_txt"
+        android:id="@+id/odds_back_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/x35"
-        android:layout_marginTop="@dimen/x35"
+        android:clickable="true"
+        android:drawableTop="@mipmap/odds_back"
         android:gravity="center"
-        android:textColor="@color/version"
-        android:textSize="13sp"
-        tools:text="test"/>
+        android:paddingBottom="@dimen/x28"
+        android:paddingLeft="@dimen/x15"
+        android:paddingRight="@dimen/x15"
+        android:paddingTop="@dimen/x28"
+        android:text="返回列表"
+        android:textSize="10sp"/>
 
     <View
         android:layout_width="match_parent"

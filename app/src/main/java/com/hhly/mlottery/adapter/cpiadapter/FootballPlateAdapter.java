@@ -3,6 +3,9 @@ package com.hhly.mlottery.adapter.cpiadapter;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.v4.content.ContextCompat;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.TableRow;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -32,6 +35,25 @@ public class FootballPlateAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddE
                                 List<OddsDataInfo.ListOddEntity> items) {
         super(R.layout.item_odds, items);
         this.type = type;
+    }
+
+    @Override
+    protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
+        if (OddsTypeEnum.OP.equals(type)) {
+            TableRow.LayoutParams firstParams =
+                    new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
+            firstParams.weight = 3;
+            firstParams.rightMargin = 1;
+            firstParams.bottomMargin = 1;
+            holder.itemView.findViewById(R.id.plate_dish_txt).setLayoutParams(firstParams);
+            TableRow.LayoutParams secondParams =
+                    new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
+            secondParams.weight = 3;
+            secondParams.rightMargin = 1;
+            holder.itemView.findViewById(R.id.plate_dish_txt2).setLayoutParams(secondParams);
+        }
+        return holder;
     }
 
     @Override

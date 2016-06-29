@@ -1,29 +1,31 @@
 package com.hhly.mlottery.frame.oddfragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.cpiadapter.FootballPlateAdapter;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
+import com.hhly.mlottery.bean.enums.StatusEnum;
 import com.hhly.mlottery.bean.oddsbean.OddsDataInfo;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.footframe.OddsFragment;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,12 +40,21 @@ public class FootballPlateFragment extends Fragment {
     RecyclerView mRecyclerView;
     View mLoadingView;
     View mErrorView;
+    View mNoDataView;
 
     private FootballMatchDetailActivityTest mActivity;
 
-    private List<OddsDataInfo.ListOddEntity> items; // 指数数据源
+    private ArrayList<OddsDataInfo.ListOddEntity> items; // 指数数据源
     private FootballPlateAdapter mAdapter;
     private String type;
+
+    private OddsFragment mParentFragment;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mParentFragment = (OddsFragment) getParentFragment();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +78,7 @@ public class FootballPlateFragment extends Fragment {
                         loadData();
                     }
                 });
+        mNoDataView = inflater.inflate(R.layout.layout_nodata, container, false);
         return inflater.inflate(R.layout.fragment_football_plate, container, false);
     }
 
@@ -76,13 +88,32 @@ public class FootballPlateFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         items = new ArrayList<>();
         mAdapter = new FootballPlateAdapter(type, items);
-        mAdapter.setEmptyView(mLoadingView);
+        mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                FootballPlateDetailsFragment detailsFragment =
+                        FootballPlateDetailsFragment.newInstance(i, items);
+                mParentFragment.showDetails(detailsFragment);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mActivity = (FootballMatchDetailActivityTest) getActivity();
 
         loadData();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mActivity = null;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mParentFragment = null;
     }
 
     /**
@@ -93,15 +124,15 @@ public class FootballPlateFragment extends Fragment {
         myPostParams.put("thirdId", mActivity.mThirdId);
         myPostParams.put("oddType", convertType());
 
+        setStatus(StatusEnum.LOADING);
         VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_MATCHODD, myPostParams,
                 new VolleyContentFast.ResponseSuccessListener<OddsDataInfo>() {
                     @Override
                     public void onResponse(OddsDataInfo jsonObject) {
                         items.clear();
                         items.addAll(jsonObject.getListOdd());
-                        Log.d("count", jsonObject.getListOdd().size() + "");
-                        Log.d("count", items.size() + "");
                         mAdapter.notifyDataSetChanged();
+                        setStatus(StatusEnum.NORMAL);
                     }
                 },
                 new VolleyContentFast.ResponseErrorListener() {
@@ -109,15 +140,25 @@ public class FootballPlateFragment extends Fragment {
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         VolleyError volleyError = exception.getVolleyError();
                         volleyError.printStackTrace();
-                        Toast.makeText(MyApp.getContext(),
-                                volleyError.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        ToastTools.ShowQuick(MyApp.getContext(), volleyError.getLocalizedMessage());
+                        setStatus(StatusEnum.ERROR);
                     }
                 },
                 OddsDataInfo.class);
     }
 
-    public void setStatus() {
-
+    public void setStatus(@StatusEnum.Status int status) {
+        switch (status) {
+            case StatusEnum.ERROR:
+                mAdapter.setEmptyView(mErrorView);
+                break;
+            case StatusEnum.LOADING:
+                mAdapter.setEmptyView(mLoadingView);
+                break;
+            case StatusEnum.NORMAL:
+                mAdapter.setEmptyView(mNoDataView);
+                break;
+        }
     }
 
     private String convertType() {
@@ -131,12 +172,6 @@ public class FootballPlateFragment extends Fragment {
             default:
                 return "1";
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mActivity = null;
     }
 
     public static FootballPlateFragment newInstance(@OddsTypeEnum.OddsType String type) {

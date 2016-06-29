@@ -12,14 +12,14 @@ import java.lang.annotation.RetentionPolicy;
  */
 public interface StatusEnum {
 
-    int LOADING = 1; // 亚盘
-    int NO_DATA = 0; // 大小球
-    int ERROR = -1; // 欧赔
+    int LOADING = 1; // 加载中
+    int NORMAL = 0; // 正常（无数据）
+    int ERROR = -1; // 错误
 
     /**
      * 定义注解限制类型
      */
-    @IntDef({LOADING, NO_DATA, ERROR})
+    @IntDef({LOADING, NORMAL, ERROR})
     @Retention(RetentionPolicy.SOURCE)
     @interface Status {
     }
