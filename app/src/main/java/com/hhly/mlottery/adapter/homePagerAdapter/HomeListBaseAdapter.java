@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -1084,7 +1085,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 mViewHolderOther.ll_content.addView(scoreSplitViewList.get(i));// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hot_score_txt));
-                            mViewHolderOther.ll_content.addView(scoreViewList.get(i));
+                            View scoreView = scoreViewList.get(i);
+                            ViewParent parentScore = scoreView.getParent();
+                            if(parentScore != null){
+                                ((ViewGroup)parentScore).removeAllViews();
+                            }
+                            mViewHolderOther.ll_content.addView(scoreView);
                             addViewScore = true;
                             break;
                         case 2:// 2、	热门资讯
@@ -1092,7 +1098,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 mViewHolderOther.ll_content.addView(dataInfoSplitViewList.get(i));// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hor_data_info_txt));
-                            mViewHolderOther.ll_content.addView(dataInfoViewList.get(i));
+                            View dataInfoView = dataInfoViewList.get(i);
+                            ViewParent parentDataInfo = dataInfoView.getParent();
+                            if(parentDataInfo != null){
+                                ((ViewGroup)parentDataInfo).removeAllViews();
+                            }
+                            mViewHolderOther.ll_content.addView(dataInfoView);
                             addViewDataInfo = true;
                             break;
                         case 3:// 3、	彩票开奖
@@ -1100,7 +1111,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 mViewHolderOther.ll_content.addView(lotterySplitViewList.get(i));// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.frame_home_jieguo_txt));
-                            mViewHolderOther.ll_content.addView(lotteryViewList.get(i));
+                            View lotteryView = lotteryViewList.get(i);
+                            ViewParent parentLottery = lotteryView.getParent();
+                            if(parentLottery != null){
+                                ((ViewGroup)parentLottery).removeAllViews();
+                            }
+                            mViewHolderOther.ll_content.addView(lotteryView);
                             addViewLottery = true;
                             break;
                     }
