@@ -508,6 +508,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                         head_score.setText("VS");
                         mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
                         mTalkAboutBallFragment.setClickableLikeBtn(true);
+                        mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName() + " " + matchDetail.getMatchInfo().getStartTime());
 
 
                     } else {
@@ -623,6 +624,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
 
                         }
+
+                        mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName());
+
                     }
 
                     mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
@@ -702,6 +706,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
 
             mTalkAboutBallFragment.setClickableLikeBtn(true);
+
+            mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName() + " " + matchDetail.getMatchInfo().getStartTime());
 
 
         } else {
@@ -821,6 +827,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
                 mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
             }
+
+            mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName());
 
             mAnalyzeFragment.setTeamName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
 
@@ -2519,9 +2527,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     /**
      * 判断五个Fragment切换显示或隐藏的状态
+     *
      * @param position
      */
-    private void isHindShow(int position){
+    private void isHindShow(int position) {
         switch (position) {
             case 0:// 滚球
                 isDetailsRollballFragment = true;
