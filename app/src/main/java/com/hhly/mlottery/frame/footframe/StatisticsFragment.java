@@ -38,7 +38,7 @@ import java.util.Map;
  * @date 2016/6/12 11:21
  * @des 足球内页改版统计
  */
-public class StatisticsFragmentTest extends Fragment {
+public class StatisticsFragment extends Fragment {
 
 
     private static String STA_PARM = "STA_PARM";
@@ -87,20 +87,20 @@ public class StatisticsFragmentTest extends Fragment {
     private MathchStatisInfo mMathchStatisInfo;
 
 
-    public static StatisticsFragmentTest newInstance() {
+    public static StatisticsFragment newInstance() {
 
 
-        StatisticsFragmentTest fragment = new StatisticsFragmentTest();
+        StatisticsFragment fragment = new StatisticsFragment();
 
         return fragment;
     }
 
 
-    public static StatisticsFragmentTest newInstance(String type) {
+    public static StatisticsFragment newInstance(String type) {
 
         Bundle args = new Bundle();
         args.putString(STA_PARM, type);
-        StatisticsFragmentTest fragment = new StatisticsFragmentTest();
+        StatisticsFragment fragment = new StatisticsFragment();
         fragment.setArguments(args);
 
         return fragment;
