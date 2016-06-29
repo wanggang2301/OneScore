@@ -584,6 +584,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         String state; //傳給老龍
         state=mMatch.getGuestTeam()+"vs"+mMatch.getHomeTeam()+"_"+bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
 
+        mTalkAboutBallFragment.setTitle(state);
 
         if (score != null) {
             mGuestNum = score.getGuestScore();
