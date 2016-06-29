@@ -92,7 +92,8 @@ public class FootballPlateFragment extends Fragment {
             @Override
             public void onItemClick(View view, int i) {
                 FootballPlateDetailsFragment detailsFragment =
-                        FootballPlateDetailsFragment.newInstance(i, items);
+                        FootballPlateDetailsFragment.newInstance(convertType(), mActivity.mThirdId,
+                                items.get(i).getId(), items);
                 mParentFragment.showDetails(detailsFragment);
             }
         });

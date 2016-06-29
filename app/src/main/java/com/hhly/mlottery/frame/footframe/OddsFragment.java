@@ -99,7 +99,7 @@ public class OddsFragment extends Fragment {
      */
     public void oddPlateRefresh() {
         //如果是显示才让刷新
-        if (isVisible) {
+        if (isVisible && mPlateFragment.isVisible()) {
             mPlateFragment.loadData();
         }
     }
