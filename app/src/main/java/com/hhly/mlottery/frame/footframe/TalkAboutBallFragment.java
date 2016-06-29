@@ -34,6 +34,7 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.Comment;
@@ -256,7 +257,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mCommentCount.setVisibility(View.VISIBLE);
         //获取评论的一切信息
         if (!TextUtils.isEmpty(mThirdId)) {
-            loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+            loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
         }
 
     }
@@ -279,6 +280,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     //获取评论的一切消息  无需登录  并刷新listview
     public void loadTopic(String url, String title, int pagenum) {
         mProgressBarRefresh.setVisibility(View.VISIBLE);
+        ToastTools.ShowQuickCenter(getActivity(),title+"=");
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
@@ -430,7 +432,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //下拉刷新后当前页数重新为1，不然先上拉加载到没有数据  再回去下拉刷新  然后再上拉就没有数据了，其实是有的
         mCurrentPager = 1;
         mLoadMore.setText(R.string.foot_loadmore);
-        loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+        loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
     }
 
     @Override
@@ -455,10 +457,16 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     }
                     break;
                 case CyUtils.RESULT_CODE://接收评论输入页面返回
-                    loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+                    loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
                     mLinearLayout.setVisibility(View.VISIBLE);
                     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
                     lp.setMargins(0, 0, 0, 0);
+                    mRecyclerView.requestLayout();
+                    break;
+                case CyUtils.RESULT_BACK://接收评论输入页面返回
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                    FrameLayout.LayoutParams lp1 = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
+                    lp1.setMargins(0, 0, 0, 0);
                     mRecyclerView.requestLayout();
                     break;
             }

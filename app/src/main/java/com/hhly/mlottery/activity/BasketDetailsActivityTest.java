@@ -367,6 +367,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
+                if (position == 4) {
+                    appBarLayout.setExpanded(false);
+                }
             }
 
             @Override

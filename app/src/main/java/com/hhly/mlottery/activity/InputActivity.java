@@ -187,7 +187,7 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            setResult(CyUtils.RESULT_CODE);//这里也需要通知  因为在本窗口关闭的时候那边的假输入框需要显示
+            setResult(CyUtils.RESULT_BACK);//这里也需要通知  因为在本窗口关闭的时候那边的假输入框需要显示
             finish();
             return true;
 

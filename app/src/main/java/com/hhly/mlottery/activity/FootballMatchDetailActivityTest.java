@@ -2432,6 +2432,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
+                if (position == 1) {
+                    appBarLayout.setExpanded(false);
+                }
             }
 
             @Override
@@ -2519,9 +2522,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     /**
      * 判断五个Fragment切换显示或隐藏的状态
+     *
      * @param position
      */
-    private void isHindShow(int position){
+    private void isHindShow(int position) {
         switch (position) {
             case 0:// 滚球
                 isDetailsRollballFragment = true;
