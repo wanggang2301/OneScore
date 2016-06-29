@@ -234,7 +234,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected void onResume() {
-        mWebView.reload();
+//        mWebView.reload();
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("WebActivity");
