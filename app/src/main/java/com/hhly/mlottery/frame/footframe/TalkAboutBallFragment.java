@@ -275,7 +275,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     //获取评论的一切消息  无需登录  并刷新listview
     public void loadTopic(String url, String title, int pagenum) {
         mProgressBarRefresh.setVisibility(View.VISIBLE);
-        ToastTools.ShowQuickCenter(getActivity(), title + "=");
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
