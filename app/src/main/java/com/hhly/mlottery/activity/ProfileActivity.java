@@ -90,17 +90,19 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.rl_nickname: // 昵称栏
+                MobclickAgent.onEvent(mContext, "ModifyNicknameActivity_Start");
                 // startActivity(new Intent(this, ModifyNicknameActivity.class));
                 Intent intent = new Intent(ProfileActivity.this, ModifyNicknameActivity.class);
                 intent.putExtra("nickname", tv_nickname.getText().toString());//传递联赛ID
                 startActivity(intent);
                 break;
             case R.id.rl_modifypass: // 修改密码
+                MobclickAgent.onEvent(mContext, "ModifyPasswordActivity_Start");
                 startActivity(new Intent(this, ModifyPasswordActivity.class));
                 break;
 
             case R.id.head_portrait:
-
+                MobclickAgent.onEvent(mContext, "ProfileActivity_SetHead");
                 setHeadView();
 
                 break;

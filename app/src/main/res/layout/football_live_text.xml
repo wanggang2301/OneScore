@@ -38,14 +38,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/blue" />
+        android:background="@color/line_football_footer" />
 
-    <ListView
-        android:id="@+id/timelistview"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/timerecyclerView"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="10dp"
-        android:clickable="false"
-        android:divider="@null"></ListView>
+        android:clickable="false"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

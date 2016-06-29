@@ -25,8 +25,10 @@
     <string name="shoot">進攻</string>
     <string name="foot_details_live_msg">實況直播敬請關注!</string>
     <string name="foot_details_focus">關注</string>
-    <string name="foot_details_unfocus">已關注</string>
+    <string name="foot_details_focused">已關注</string>
     <string name="foot_details_share">分享</string>
+
+
 
 
     <!--分享-->
@@ -186,7 +188,7 @@
     <string name="exp_refresh_txt">刷新</string>
 
 
-    <string name="no_data_txt">沒有數據！</string>
+    <string name="no_data_txt">沒有更多數據！</string>
     <string name="data_parsing_exp_txt">數據解析異常！</string>
 
     <string name="reload_txt">重新加載</string>
@@ -648,6 +650,14 @@
     <string name="basket_odds_euro_details">歐賠詳情</string>
     <string name="basket_odds_asiaLet_details">亞盤詳情</string>
     <string name="basket_odds_asiaSize_details">大小球詳情</string>
+
+    <!--足球分析详情-->
+    <string name="football_analyze_details">分析明細</string>
+    <string name="football_analyze_details_time">時間</string>
+    <string name="football_analyze_details_matchs">聯賽</string>
+    <string name="football_analyze_details_game">比賽</string>
+    <string name="football_analyze_details_win">贏</string>
+    <string name="football_analyze_details_lose">輸</string>
 
     <!-- 足球资讯 -->
     <string name="foot_title">足球資訊</string>

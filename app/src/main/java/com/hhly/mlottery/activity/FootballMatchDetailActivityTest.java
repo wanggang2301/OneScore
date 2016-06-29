@@ -52,8 +52,9 @@ import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
-import com.hhly.mlottery.frame.footframe.StatisticsFragmentTest;
+import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
@@ -65,6 +66,7 @@ import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.CustomViewpager;
 import com.hhly.mlottery.widget.DepthPageTransformer;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
@@ -218,7 +220,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private AnalyzeFragment mAnalyzeFragment;  //分析
     private OddsFragment mOddsFragment;         //指数
 
-    private StatisticsFragmentTest mStatisticsFragment;  //统计
+    private StatisticsFragment mStatisticsFragment;  //统计
 
     private int mStartTime;// 获取推送的开赛时间
     private TextView reLoading; //赔率请求失败重新加载
@@ -269,7 +271,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         L.e(TAG, "mThirdId = " + mThirdId);
 
         initView();
-
+        initEvent();
 
         /***
          * 足球内页头部ViewPager
@@ -293,11 +295,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         mTalkAboutBallFragment.setArguments(bundle);
         //分析
-        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "");
+        mAnalyzeFragment = AnalyzeFragment.newInstance(mThirdId, "", "");
         //指数
         mOddsFragment = OddsFragment.newInstance();
         //统计
-        mStatisticsFragment = StatisticsFragmentTest.newInstance();
+        mStatisticsFragment = StatisticsFragment.newInstance();
 
         mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
@@ -340,7 +342,26 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    appBarLayout.setExpanded(false);
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         appBarLayout.addOnOffsetChangedListener(this);
@@ -377,7 +398,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
+        if ((-verticalOffset) > appBarLayout.getTotalScrollRange() * 3 / 5) {
             head_home_name.setVisibility(View.VISIBLE);
             head_guest_name.setVisibility(View.VISIBLE);
             head_score.setVisibility(View.VISIBLE);
@@ -487,6 +508,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                         head_score.setText("VS");
                         mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
                         mTalkAboutBallFragment.setClickableLikeBtn(true);
+                        mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName() + " " + matchDetail.getMatchInfo().getStartTime());
 
 
                     } else {
@@ -597,11 +619,19 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                             mTalkAboutBallFragment.setClickableLikeBtn(true);
 
+
                             mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
 
                         }
+
+                        mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName());
+
                     }
+
+                    mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+                    mAnalyzeFragment.setTeamName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
+
                 }
 
 
@@ -676,6 +706,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
 
             mTalkAboutBallFragment.setClickableLikeBtn(true);
+
+            mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName() + " " + matchDetail.getMatchInfo().getStartTime());
 
 
         } else {
@@ -795,6 +827,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
                 mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
             }
+
+            mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName());
+
+            mAnalyzeFragment.setTeamName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
 
 
             new Handler().postDelayed(new Runnable() {
@@ -1061,12 +1097,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         return list;
 
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -2226,6 +2256,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:  //返回
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Exit");
                 eventBusPost();
                 MyApp.getContext().sendBroadcast(new Intent("closeself"));
                 // setResult(Activity.RESULT_OK);
@@ -2269,6 +2300,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             @Override
             public void onClick(View v) {
                 //Toast.makeText(mContext, "足球！", Toast.LENGTH_SHORT).show();
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Focus");
                 popupWindow.dismiss();
                 if (FocusFragment.isFocusId(mThirdId)) {
                     FocusFragment.deleteFocusId(mThirdId);
@@ -2289,6 +2321,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(mContext, "Football_MatchDataInfo_Share");
                 popupWindow.dismiss();
 
                 if (mMatchDetail == null) {
@@ -2393,4 +2426,273 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }
     }
 
+
+    /**
+     * 初始化事件监听
+     */
+    private void initEvent() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                isHindShow(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    /**
+     * 判断五个Fragment切换显示或隐藏的状态
+     */
+    private boolean isDetailsRollballFragment = true;// 滚球
+    private boolean isDetailsRollball = false;
+    private boolean isTalkAboutBallFragment = false;// 聊球
+    private boolean isTalkAboutBall = false;
+    private boolean isAnalyzeFragment = false;// 分析
+    private boolean isAnalyze = false;
+    private boolean isOddsFragment = false;// 指数
+    private boolean isOdds = false;
+    private boolean isStatisticsFragmentTest = false;// 统计
+    private boolean isStatistics = false;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (isDetailsRollballFragment) {
+            MobclickAgent.onPageStart("Football_DetailsRollballFragment");
+            isDetailsRollball = true;
+            L.d("xxx", "DetailsRollballFragment>>>显示");
+        }
+        if (isTalkAboutBallFragment) {
+            MobclickAgent.onPageStart("Football_TalkAboutBallFragment");
+            isTalkAboutBall = true;
+            L.d("xxx", "TalkAboutBallFragment>>>显示");
+        }
+        if (isAnalyzeFragment) {
+            MobclickAgent.onPageStart("Football_AnalyzeFragment");
+            isAnalyze = true;
+            L.d("xxx", "AnalyzeFragment>>>显示");
+        }
+        if (isOddsFragment) {
+            MobclickAgent.onPageStart("Football_OddsFragment");
+            isOdds = true;
+            L.d("xxx", "OddsFragment>>>显示");
+        }
+        if (isStatisticsFragmentTest) {
+            MobclickAgent.onPageStart("Football_StatisticsFragmentTest");
+            isStatistics = true;
+            L.d("xxx", "StatisticsFragment>>>显示");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (isDetailsRollball) {
+            MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
+            isDetailsRollball = false;
+            L.d("xxx", "DetailsRollballFragment>>>隐藏");
+        }
+        if (isTalkAboutBall) {
+            MobclickAgent.onPageEnd("Football_TalkAboutBallFragment");
+            isTalkAboutBall = false;
+            L.d("xxx", "TalkAboutBallFragment>>>隐藏");
+        }
+        if (isAnalyze) {
+            MobclickAgent.onPageEnd("Football_AnalyzeFragment");
+            isAnalyze = false;
+            L.d("xxx", "AnalyzeFragment>>>隐藏");
+        }
+        if (isOdds) {
+            MobclickAgent.onPageEnd("Football_OddsFragment");
+            isOdds = false;
+            L.d("xxx", "OddsFragment>>>隐藏");
+        }
+        if (isStatistics) {
+            MobclickAgent.onPageEnd("Football_StatisticsFragmentTest");
+            isStatistics = false;
+            L.d("xxx", "StatisticsFragment>>>隐藏");
+        }
+    }
+
+    /**
+     * 判断五个Fragment切换显示或隐藏的状态
+     *
+     * @param position
+     */
+    private void isHindShow(int position) {
+        switch (position) {
+            case 0:// 滚球
+                isDetailsRollballFragment = true;
+                isTalkAboutBallFragment = false;
+                isAnalyzeFragment = false;
+                isOddsFragment = false;
+                isStatisticsFragmentTest = false;
+                break;
+            case 1:// 聊球
+                isTalkAboutBallFragment = true;
+                isDetailsRollballFragment = false;
+                isAnalyzeFragment = false;
+                isOddsFragment = false;
+                isStatisticsFragmentTest = false;
+                break;
+            case 2:// 分析
+                isAnalyzeFragment = true;
+                isDetailsRollballFragment = false;
+                isTalkAboutBallFragment = false;
+                isOddsFragment = false;
+                isStatisticsFragmentTest = false;
+                break;
+            case 3:// 指数
+                isOddsFragment = true;
+                isAnalyzeFragment = false;
+                isDetailsRollballFragment = false;
+                isTalkAboutBallFragment = false;
+                isStatisticsFragmentTest = false;
+                break;
+            case 4:// 统计
+                isStatisticsFragmentTest = true;
+                isTalkAboutBallFragment = false;
+                isDetailsRollballFragment = false;
+                isAnalyzeFragment = false;
+                isOddsFragment = false;
+                break;
+        }
+
+        if (isDetailsRollballFragment) {
+            if (isTalkAboutBall) {
+                MobclickAgent.onPageEnd("Football_TalkAboutBallFragment");
+                isTalkAboutBall = false;
+                L.d("xxx", "TalkAboutBallFragment>>>隐藏");
+            }
+            if (isAnalyze) {
+                MobclickAgent.onPageEnd("Football_AnalyzeFragment");
+                isAnalyze = false;
+                L.d("xxx", "AnalyzeFragment>>>隐藏");
+            }
+            if (isOdds) {
+                MobclickAgent.onPageEnd("Football_OddsFragment");
+                isOdds = false;
+                L.d("xxx", "OddsFragment>>>隐藏");
+            }
+            if (isStatistics) {
+                MobclickAgent.onPageEnd("Football_StatisticsFragmentTest");
+                isStatistics = false;
+                L.d("xxx", "StatisticsFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("Football_DetailsRollballFragment");
+            isDetailsRollball = true;
+            L.d("xxx", "DetailsRollballFragment>>>显示");
+        }
+        if (isTalkAboutBallFragment) {
+            if (isDetailsRollball) {
+                MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
+                isDetailsRollball = false;
+                L.d("xxx", "DetailsRollballFragment>>隐藏");
+            }
+            if (isAnalyze) {
+                MobclickAgent.onPageEnd("Football_AnalyzeFragment");
+                isAnalyze = false;
+                L.d("xxx", "AnalyzeFragment>>>隐藏");
+            }
+            if (isOdds) {
+                MobclickAgent.onPageEnd("Football_OddsFragment");
+                isOdds = false;
+                L.d("xxx", "OddsFragment>>>隐藏");
+            }
+            if (isStatistics) {
+                MobclickAgent.onPageEnd("Football_StatisticsFragmentTest");
+                isStatistics = false;
+                L.d("xxx", "StatisticsFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("Football_TalkAboutBallFragment");
+            isTalkAboutBall = true;
+            L.d("xxx", "TalkAboutBallFragment>>>显示");
+        }
+        if (isAnalyzeFragment) {
+            if (isDetailsRollball) {
+                MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
+                isDetailsRollball = false;
+                L.d("xxx", "DetailsRollballFragment>>>隐藏");
+            }
+            if (isTalkAboutBall) {
+                MobclickAgent.onPageEnd("Football_TalkAboutBallFragment");
+                isTalkAboutBall = false;
+                L.d("xxx", "TalkAboutBallFragment>>>隐藏");
+            }
+            if (isOdds) {
+                MobclickAgent.onPageEnd("Football_OddsFragment");
+                isOdds = false;
+                L.d("xxx", "OddsFragment>>>隐藏");
+            }
+            if (isStatistics) {
+                MobclickAgent.onPageEnd("Football_StatisticsFragmentTest");
+                isStatistics = false;
+                L.d("xxx", "StatisticsFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("Football_AnalyzeFragment");
+            isAnalyze = true;
+            L.d("xxx", "AnalyzeFragment>>>显示");
+        }
+        if (isOddsFragment) {
+            if (isDetailsRollball) {
+                MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
+                isDetailsRollball = false;
+                L.d("xxx", "DetailsRollballFragment>>>隐藏");
+            }
+            if (isTalkAboutBall) {
+                MobclickAgent.onPageEnd("Football_TalkAboutBallFragment");
+                isTalkAboutBall = false;
+                L.d("xxx", "TalkAboutBallFragment>>>隐藏");
+            }
+            if (isAnalyze) {
+                MobclickAgent.onPageEnd("Football_AnalyzeFragment");
+                isAnalyze = false;
+                L.d("xxx", "AnalyzeFragment>>>隐藏");
+            }
+            if (isStatistics) {
+                MobclickAgent.onPageEnd("Football_StatisticsFragmentTest");
+                isStatistics = false;
+                L.d("xxx", "StatisticsFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("Football_OddsFragment");
+            isOdds = true;
+            L.d("xxx", "OddsFragment>>>显示");
+        }
+        if (isStatisticsFragmentTest) {
+            if (isDetailsRollball) {
+                MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
+                isDetailsRollball = false;
+                L.d("xxx", "DetailsRollballFragment>>>隐藏");
+            }
+            if (isTalkAboutBall) {
+                MobclickAgent.onPageEnd("Football_TalkAboutBallFragment");
+                isTalkAboutBall = false;
+                L.d("xxx", "TalkAboutBallFragment>>>隐藏");
+            }
+            if (isAnalyze) {
+                MobclickAgent.onPageEnd("Football_AnalyzeFragment");
+                isAnalyze = false;
+                L.d("xxx", "AnalyzeFragment>>>隐藏");
+            }
+            if (isOdds) {
+                MobclickAgent.onPageEnd("Football_OddsFragment");
+                isOdds = false;
+                L.d("xxx", "OddsFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("Football_StatisticsFragmentTest");
+            isStatistics = true;
+            L.d("xxx", "StatisticsFragment>>>显示");
+        }
+    }
 }

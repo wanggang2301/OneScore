@@ -181,7 +181,7 @@
     <string name="exp_refresh_txt">刷新</string>
     <!-- 赛程 -->
 
-    <string name="no_data_txt">没有数据！</string>
+    <string name="no_data_txt">没有更多数据！</string>
     <string name="data_parsing_exp_txt">数据解析异常！</string>
     <string name="loading_txt">正在加载中......</string>
     <string name="reload_txt">重新加载</string>
@@ -679,6 +679,8 @@
     <string name="football_analyze_details_time">时间</string>
     <string name="football_analyze_details_matchs">联赛</string>
     <string name="football_analyze_details_game">比赛</string>
+    <string name="football_analyze_details_win">赢</string>
+    <string name="football_analyze_details_lose">输</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

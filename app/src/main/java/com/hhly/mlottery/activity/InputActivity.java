@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -34,7 +34,7 @@ import com.umeng.analytics.MobclickAgent;
  * @Description: 输入评论的窗口
  * @date
  */
-public class InputActivity extends Activity implements View.OnClickListener, CyanRequestListener<SubmitResp> {
+public class InputActivity extends BaseActivity implements View.OnClickListener, CyanRequestListener<SubmitResp> {
 
     private EditText mEditText;//输入评论
     private TextView mSend;//发送评论
@@ -129,6 +129,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_send://发送评论
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_TalkSend");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
@@ -169,7 +170,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void onRequestSucceeded(SubmitResp submitResp) {
         mEditText.setText("");
         issubmitFinish = true;
-        ToastTools.ShowQuickCenter(this, getResources().getString(R.string.succed_send));
+        ToastTools.ShowQuick(this, getResources().getString(R.string.succed_send));
         setResult(CyUtils.RESULT_CODE);
         finish();
 
