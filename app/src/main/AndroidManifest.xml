@@ -85,7 +85,6 @@
             android:name=".activity.NumberCustomizeActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- webview   adjustResize|stateHidden  android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"-->
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"

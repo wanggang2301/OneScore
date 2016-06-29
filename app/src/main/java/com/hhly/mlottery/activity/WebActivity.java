@@ -11,6 +11,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -31,6 +32,7 @@ import com.umeng.analytics.MobclickAgent;
 public class WebActivity extends BaseActivity implements OnClickListener {
 
     private ProgressWebView mWebView;
+    private RelativeLayout mRelativeLayout;
     private TextView mTv_check_info;// 关联跳转按钮
     private ImageView mPublic_img_back;// 返回
     private TextView mPublic_txt_title;// 标题
@@ -99,9 +101,13 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
         mPublic_img_back = (ImageView) findViewById(R.id.public_img_back);
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
-        mWebView = (ProgressWebView) findViewById(R.id.baseweb_webview);
+//        mWebView = (ProgressWebView) findViewById(R.id.baseweb_webview);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.webview_container);
+        mWebView = new ProgressWebView(this, null);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        mWebView.setLayoutParams(layoutParams);
+        mRelativeLayout.addView(mWebView);
         mTv_check_info = (TextView) findViewById(R.id.tv_check_info);
-//        startyY = mTv_check_info.getY();
         mTv_check_info.setVisibility(View.GONE);
         mPublic_img_back.setOnClickListener(this);
         mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
@@ -109,7 +115,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             public void onSChanged(int l, int t, int oldl, int oldt) {
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
                 if (y < 3) {
-
                     //已经处于底端
 //                    mTv_check_info.setVisibility(View.VISIBLE);
                     if (mType != 0 && !TextUtils.isEmpty(mThird)) {
@@ -165,42 +170,15 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             String deviceId = AppConstants.deviceToken;
             reqMethod = intent.getStringExtra("reqMethod");
             mPublic_txt_title.setText(infoTypeName);
-//            if (!TextUtils.isEmpty(token) && reqMethod != null && reqMethod.equals("post")) {//不是新闻资讯的时候隐藏分享和评论
-//                public_btn_set.setVisibility(View.GONE);
-//            } else {//token为空，说明是资讯，显示分享和评论
-//                public_btn_set.setVisibility(View.VISIBLE);
-//                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-//                ChatFragment chatFragment = new ChatFragment();
-//                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
-//            }
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
+                    System.out.println("lzfshiping" + url);
                     return true;
                 }
 
-//                @Override
-//                public void onPageFinished(WebView view, String url) {
-//                    // TODO Auto-generated method stub
-//
-//                    super.onPageFinished(view, url);
-//                    L.i("lzftype=" + mType + "thirtid=" + mThird);
-//                    if (mType != 0 && !TextUtils.isEmpty(mThird)) {
-//                        mTv_check_info.setVisibility(View.VISIBLE);
-//                    } else {
-//                        mTv_check_info.setVisibility(View.GONE);
-//                    }
-//                }
             });
-//            //其他页传过来的reqMethod为post时，提交token  否则不提交
-//            if (reqMethod != null && token != null && reqMethod.equals("post")) {
-//
-////                mWebView.postUrl(url, token.getBytes("utf-8"));
-////                url = url + "?loginToken=" + token + "&deviceToken=" + deviceId;
-//                url = url.replace("{loginToken}", token);
-//                url = url.replace("{deviceToken}", deviceId);
-//            }
             if (url != null) {
                 //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
                 ChatFragment chatFragment = new ChatFragment();
@@ -229,12 +207,14 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mWebView.removeAllViews();
+        mWebView.destroy();
         mWebView = null;
     }
 
     @Override
     protected void onResume() {
-        mWebView.reload();
+        mWebView.onResume();//继续播放视频
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("WebActivity");
@@ -243,7 +223,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void onPause() {
-        mWebView.reload();
+        mWebView.onPause();//暂停播放视频
         super.onPause();
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd("WebActivity");
@@ -285,8 +265,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 mShareFragment.show(getSupportFragmentManager(), "bottomShare");
         }
     }
-
-
 
 
     @Override

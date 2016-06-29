@@ -25,14 +25,20 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/comment"
         android:layout_below="@+id/top">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/webview_container"
+           android:layout_above="@+id/tv_check_info">
 
-        <com.hhly.mlottery.widget.ProgressWebView
+       </RelativeLayout>
+        <!--<com.hhly.mlottery.widget.ProgressWebView
             android:id="@+id/baseweb_webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/tv_check_info"
             android:fadeScrollbars="true"
-            android:scrollbarStyle="insideOverlay"/>
+            android:scrollbarStyle="insideOverlay"/>-->
 
         <TextView
             android:id="@+id/tv_check_info"
