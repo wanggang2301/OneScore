@@ -22,7 +22,7 @@
     <string name="eu_first">欧赔初盘:</string>
     <string name="foot_details_live_msg">实况直播敬请关注!</string>
     <string name="foot_details_focus">关注</string>
-    <string name="foot_details_unfocus">已关注</string>
+    <string name="foot_details_focused">已关注</string>
     <string name="foot_details_share">分享</string>
 
 
