@@ -698,6 +698,8 @@
     <string name="football_data">数据</string>
     <string name="football_video">视频</string>
     <string name="football_cpi">指数</string>
+    <string name="title_activity_web_counsel">WebCounselActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--WebView H5-->
     <string name="webview_check_info">查看比赛详细数据</string>
