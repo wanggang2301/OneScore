@@ -16,6 +16,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -80,7 +81,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      */
     private TextView mCommentCount;//评论数
     private TextView mTextView;//输入评论
-    private TextView mNoData;//暂无评论
+    //    private TextView mNoData;//暂无评论
     private RecyclerView mRecyclerView;
     private TextView mLoadMore;//加载更多
     private ProgressBar mProgressBar;//上拉加载的进度条
@@ -98,6 +99,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private static final String ADDKEYGUEST = "guestAdd";
     private int type;//1 籃球/0 足球
     private String state = "-1";
+    private String title = "-1";
+    private View view;
+    private View emptyView;
+    private ProgressBar mProgressBarRefresh;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,19 +114,19 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_talkaboutball, container, false);
-        initView();
+        initView(container);
         requestLikeData(ADDKEYHOME, "0", type);
         initAnim();
         initRecyclerView();
         pullUpLoad(container);//上拉加载更多
         return mView;
     }
-
 
     /**
      * bn
@@ -159,6 +165,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
             }
 
+
             @Override
             public void onAnimationEnd(Animation animation) {
                 ivGuestLike.setVisibility(View.INVISIBLE);
@@ -188,6 +195,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             public void onResponse(MatchLike matchLike) {
                 tvHomeLikeCount.setText(matchLike.getHomeLike());
                 tvGuestLikeCount.setText(matchLike.getGuestLike());
+                System.out.println("lzfdianzan" + matchLike.getGuestLike() + matchLike.getHomeLike());
                 if (matchLike.getHomeLike() != null && matchLike.getGuestLike() != null) {
                     int homeLikeCount = Integer.parseInt(matchLike.getHomeLike());
                     int guestLikeCount = Integer.parseInt(matchLike.getGuestLike());
@@ -205,18 +213,20 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         }, MatchLike.class);
     }
 
-    public static TalkAboutBallFragment newInstance(String param1, String param2, int param3) {
+    public static TalkAboutBallFragment newInstance(String param1, String param2, int param3, String title) {
         TalkAboutBallFragment fragment = new TalkAboutBallFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString("state", param2);
         args.putInt("type", param3);
+        args.putString("title", title);
         fragment.setArguments(args);
         return fragment;
     }
 
-    private void initView() {
-
+    private void initView(ViewGroup container) {
+        mProgressBarRefresh = (ProgressBar) mView.findViewById(R.id.pull_to_refresh_progress);
+        mProgressBarRefresh.setVisibility(View.GONE);
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
         ivGuestLike = (ImageView) mView.findViewById(R.id.talkbail_guest_like_anim_img);
@@ -234,18 +244,21 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
-        mNoData = (TextView) mView.findViewById(R.id.nodata);
+        emptyView = getActivity().getLayoutInflater().inflate(R.layout.layout_nodata, container, false);
+//        mNoData = (TextView) mView.findViewById(R.id.nodata);
         mCommentCount = (TextView) mView.findViewById(R.id.tv_commentcount);
         mCommentCount.setOnClickListener(this);
         mTextView = (TextView) mView.findViewById(R.id.et_comment);
+        mTextView.setOnClickListener(this);
         mLinearLayout = (LinearLayout) mView.findViewById(R.id.comment_inputcontainer);
 //        nestedscrollview = (NestedScrollView) mView.findViewById(R.id.nestedscrollview);
-        mTextView.setOnClickListener(this);
+
         mCommentCount.setVisibility(View.VISIBLE);
         //获取评论的一切信息
         if (!TextUtils.isEmpty(mThirdId)) {
             loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
         }
+
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -265,18 +278,26 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      */
     //获取评论的一切消息  无需登录  并刷新listview
     public void loadTopic(String url, String title, int pagenum) {
+        mProgressBarRefresh.setVisibility(View.VISIBLE);
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
+                mProgressBarRefresh.setVisibility(View.GONE);
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
                 topicid = topicLoadResp.topic_id;//文章id
                 cmt_sum = topicLoadResp.cmt_sum;//评论总数inf
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
+                if (mCommentArrayList != null && mCommentArrayList.size() > 4) {
+                    view.setVisibility(View.VISIBLE);
+                } else {
+                    view.setVisibility(View.GONE);
+                }
                 if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
-                    mRecyclerView.setVisibility(View.GONE);
-                    mNoData.setVisibility(View.VISIBLE);
+//                    mRecyclerView.setVisibility(View.VISIBLE);
+//                    mNoData.setVisibility(View.VISIBLE);
+                    mChatballAdapter.setEmptyView(emptyView);
                 } else {
 
 //                    mAdapter.setInfosList(mCommentArrayList);
@@ -284,9 +305,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     mChatballAdapter.getData().clear();
                     mChatballAdapter.addData(mCommentArrayList);
                     mChatballAdapter.notifyDataSetChanged();
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mNoData.setVisibility(View.GONE);
-//                    mRecyclerView.setSelection(0);
+//                    mRecyclerView.setVisibility(View.VISIBLE);
+//                    mNoData.setVisibility(View.GONE);
                     mRecyclerView.smoothScrollToPosition(0);
                     L.i("lzfnotifyDataSetChanged==");
                 }
@@ -296,13 +316,16 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
             @Override
             public void onRequestFailed(CyanException e) {
+                mProgressBarRefresh.setVisibility(View.GONE);
+
                 L.i("lzftopicid=" + e.toString());
                 L.i("lzfcmt_sum=" + e.toString());
                 if (mCommentArrayList != null && mCommentArrayList.size() != 0) {//已经有数据  说明不是第一次操作  既是下拉刷新的操作
-                    mRecyclerView.setVisibility(View.VISIBLE);
+//                    mRecyclerView.setVisibility(View.VISIBLE);
                 } else {//没有数据  说明是第一次操作
-                    mRecyclerView.setVisibility(View.GONE);
-                    mNoData.setVisibility(View.VISIBLE);
+//                    mRecyclerView.setVisibility(View.VISIBLE);
+//                    mNoData.setVisibility(View.VISIBLE);
+                    mChatballAdapter.setEmptyView(emptyView);
                 }
             }
         });
@@ -336,7 +359,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     //上拉加载
     public void pullUpLoad(ViewGroup container) {
         //listview上拉加载
-        View view = getActivity().getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
+        view = getActivity().getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
         mLoadMore = (TextView) view.findViewById(R.id.load_more);
         TextView bottomline = (TextView) view.findViewById(R.id.bottomline);
         bottomline.setVisibility(View.GONE);
@@ -355,10 +378,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         mProgressBar = (ProgressBar) view.findViewById(R.id.pull_to_refresh_progress);
         mLoadMore.setText(R.string.foot_loadmore);
         mChatballAdapter.addFooterView(view);
-    }
-
-    public void setNoDataView() {
-
     }
 
     public void pullUpLoadMore() {
@@ -438,7 +457,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 case CyUtils.RESULT_CODE://接收评论输入页面返回
                     loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
                     mLinearLayout.setVisibility(View.VISIBLE);
-                    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mRecyclerView.getLayoutParams();
+                    FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
                     lp.setMargins(0, 0, 0, 0);
                     mRecyclerView.requestLayout();
                     break;
@@ -453,6 +472,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
+        } else {
         }
     }
 
@@ -478,7 +498,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     mLinearLayout.setVisibility(View.GONE);
                     System.out.println("lzftalk跳" + topicid);
                     //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
-                    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mRecyclerView.getLayoutParams();
+                    FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
                     lp.setMargins(0, 0, 0, DisplayUtil.dip2px(getActivity(), 60));
                     mRecyclerView.requestLayout();
 
@@ -499,5 +519,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 requestLikeData(ADDKEYGUEST, "1", type);
                 break;
         }
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

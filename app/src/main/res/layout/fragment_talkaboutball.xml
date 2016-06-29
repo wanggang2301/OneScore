@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/chatballcontainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/chatballcontainer"
     android:orientation="vertical">
 
     <LinearLayout
@@ -97,13 +97,28 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comment_lv"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </android.support.v7.widget.RecyclerView>
+
+        <ProgressBar
+            android:id="@+id/pull_to_refresh_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:indeterminate="true"
+            />
+    </FrameLayout>
     <!-- <android.support.v4.widget.NestedScrollView
          android:id="@+id/nestedscrollview"
          android:layout_width="match_parent"
@@ -225,16 +240,15 @@
              </android.support.v7.widget.RecyclerView>
          </LinearLayout>
      </android.support.v4.widget.NestedScrollView>-->
-
     <TextView
         android:id="@+id/nodata"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_above="@+id/comment_inputcontainer"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/comment_contentnull"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <!--   <RelativeLayout
            android:id="@+id/www"
@@ -249,7 +263,6 @@
         android:id="@+id/comment_inputcontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="vertical"
         >
 

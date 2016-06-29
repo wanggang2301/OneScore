@@ -16,7 +16,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.DateUtil;
-import com.hhly.mlottery.util.ToastTools;
 import com.sohu.cyan.android.sdk.entity.Comment;
 
 import java.util.ArrayList;
@@ -65,7 +64,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
         if (comment.content.length() > 50) {//字数大于50，则隐藏多于50的部分
             TextView view = baseViewHolder.getView(R.id.tv_time);
             TextView content = baseViewHolder.getView(R.id.tv_content);
-            ToastTools.ShowQuickCenter(mActivity, view.getText() + "");
             System.out.println("lzfmStringList" + mStringList);
             if (mStringList.size() != 0 && mStringList.contains(view.getText() + "")) {
                 baseViewHolder.setText(R.id.tv_content, comment.content);
@@ -104,7 +102,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
                         // TODO Auto-generated method stub
                         textView.setText(comment.content);
                         mStringList.add(DateUtil.transferLongToDate(comment.create_time));
-                        ToastTools.ShowQuickCenter(mActivity, DateUtil.transferLongToDate(comment.create_time));
 //                        ToastTools.ShowQuickCenter(mActivity, "position=" + position);
 
                     }
