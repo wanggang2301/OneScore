@@ -255,11 +255,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //        nestedscrollview = (NestedScrollView) mView.findViewById(R.id.nestedscrollview);
 
         mCommentCount.setVisibility(View.VISIBLE);
-        //获取评论的一切信息
-        if (!TextUtils.isEmpty(mThirdId)) {
-            loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
-        }
-
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -280,7 +275,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     //获取评论的一切消息  无需登录  并刷新listview
     public void loadTopic(String url, String title, int pagenum) {
         mProgressBarRefresh.setVisibility(View.VISIBLE);
-        ToastTools.ShowQuickCenter(getActivity(),title+"=");
+        ToastTools.ShowQuickCenter(getActivity(), title + "=");
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
@@ -379,6 +374,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         });
         mProgressBar = (ProgressBar) view.findViewById(R.id.pull_to_refresh_progress);
         mLoadMore.setText(R.string.foot_loadmore);
+        view.setVisibility(View.GONE);
         mChatballAdapter.addFooterView(view);
     }
 
@@ -481,6 +477,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (!getUserVisibleHint()) {
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
         } else {
+            //获取评论的一切信息
+            if (!TextUtils.isEmpty(mThirdId)&&mCommentArrayList==null) {
+                loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
+            }
         }
     }
 
