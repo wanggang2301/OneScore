@@ -518,7 +518,10 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:paddingBottom="@dimen/basket_details_ball5"
-                            android:paddingTop="@dimen/basket_details_item">
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:paddingLeft="@dimen/basket_details_ball5"
+                            android:paddingRight="@dimen/basket_details_ball5"
+                            >
 
                             <TextView
                                 android:layout_width="0dp"
@@ -608,7 +611,9 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:paddingBottom="@dimen/basket_details_ball5"
-                            android:paddingTop="@dimen/basket_details_item">
+                            android:paddingTop="@dimen/basket_details_item"
+                            android:paddingLeft="@dimen/basket_details_ball5"
+                            android:paddingRight="@dimen/basket_details_ball5">
 
                             <TextView
                                 android:layout_width="0dp"
