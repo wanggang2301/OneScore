@@ -27,17 +27,18 @@ public class BaseURLs {
 
 //            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
-                return "m.1332255.com";
+                return "m.1332255.com";//测试环境
             } else if (url_config == DebugConfigActivity.URL_242) {
 //                return "192.168.31.65:8181";
-                return "192.168.10.242:8181";
+                return "192.168.10.242:8181";//开发环境。
 //                return "192.168.12.242:8181";//余勇俊测试
             } else {
                 return "m.13322.com";
             }
         }
 
-		return  "m.13322.com";
+        //return "m.1332255.com";测试环境。
+        return  "m.13322.com";//发布版本
 
     }
 

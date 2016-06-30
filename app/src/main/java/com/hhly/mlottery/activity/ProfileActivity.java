@@ -1,21 +1,15 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
@@ -103,7 +97,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.head_portrait:
                 MobclickAgent.onEvent(mContext, "ProfileActivity_SetHead");
-                setHeadView();
+                //setHeadView();
 
                 break;
 
@@ -114,7 +108,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     /**
      * 设置头像
-     */
+     *//*
     private void setHeadView() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(
                 ProfileActivity.this, R.style.AppThemeDialog);
@@ -143,7 +137,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         builder.setCancelable(false);
         builder.create().show();
 
-    }
+    }*/
 
     File outFile = null;
     Bitmap bitmap = null;

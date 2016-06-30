@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
@@ -34,6 +35,7 @@ import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.OperateType;
 import com.hhly.mlottery.util.net.account.RegisterType;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.common.message.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,9 +47,12 @@ import java.util.TimerTask;
  */
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
+
+    public static final String TAG="RegisterActivity";
     private EditText et_username, et_password, et_verifycode;
     private TextView tv_register, tv_verycode;
     private ImageView iv_eye, iv_delete;
+
 
     /**
      * 倒计时 默认60s , 间隔1s
@@ -55,6 +60,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private CountDown countDown;
 
     private ProgressDialog progressBar;
+
+    //新需求，点击获取验证码的时候显示一个progressbar,服务器返回结果后再开始倒计时。
+    private ProgressBar mProgressBar;
+
 
 
     @Override
@@ -102,6 +111,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         progressBar.setCancelable(false);
         progressBar.setMessage(getResources().getString(R.string.registering));
 
+        mProgressBar = (ProgressBar) findViewById(R.id.register_activity_pb);
+
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.register);
@@ -138,7 +149,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     if (tv_verycode.isClickable())
                         tv_verycode.setClickable(false);
 
-                    L.d(TAG, millisUntilFinished / CountDown.TIMEOUT_INTERVEL + "秒");
+                    //L.d(TAG, millisUntilFinished / CountDown.TIMEOUT_INTERVEL + "秒");
                     tv_verycode.setText(millisUntilFinished / CountDown.TIMEOUT_INTERVEL + "秒");
                 }
             }
@@ -246,7 +257,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             param.put("password", MD5Util.getMD5(passWord));
             param.put("registerType", RegisterType.PHONE);
             param.put("smsCode", verifyCode);
+
+            Log.d(TAG,AppConstants.deviceToken);
             param.put("deviceToken", AppConstants.deviceToken);
+
+            //以下添加的参数为修复恶意注册的bug所加。
+            String sign = CommonUtils.getSign(userName, AppConstants.deviceToken, AppConstants.SIGN_KEY);
+            param.put("sign",sign);
+
+            int versioncode = CommonUtils.getVersionCode();
+            param.put("versionCode",String.valueOf(versioncode));
+
+            String versionName= CommonUtils.getVersionName();
+            param.put("versionName",versionName);
+
 
             VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                 @Override
@@ -281,6 +305,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             }, Register.class);
         }
     }
+
+
 
     /**
      * 给服务器发送注册成功后用户id和渠道id（用来统计留存率）
@@ -324,24 +350,32 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private void getVerifyCode() {
 
+
         String phone = et_username.getText().toString();
         CommonUtils.getVerifyCode(this, phone, OperateType.TYPE_REGISTER, new GetVerifyCodeCallBack() {
             @Override
             public void beforGet() {
-                countDown.start();
+                //countDown.start();
+                //隐藏软键盘，让progressbar显示出来
+
+                InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(et_username.getWindowToken(), 0);
+
+                mProgressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onGetResponce(SendSmsCode code) {
                 L.e(TAG, "code>>>>>>>>>>>" + code.getResult());
-
+                mProgressBar.setVisibility(View.GONE);
+                countDown.start();
 //              // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
                 if (code.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.send_register_succ);
                 } else if (code.getResult() == AccountResultCode.PHONE_ALREADY_EXIST
                         || code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
                         || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
-                        ) {
+                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY) {
                     countDown.cancel();
                     enableVeryCode();
                 }
