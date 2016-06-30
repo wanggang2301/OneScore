@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.FootballPlateDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.FootballPlateDetailsRightAdapter;
@@ -19,7 +18,6 @@ import com.hhly.mlottery.bean.oddsbean.OddsDataInfo;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
@@ -38,13 +36,14 @@ public class FootballPlateDetailsFragment extends Fragment {
     private static final String LEFT_LIST = "leftList";
     private static final String ODD_TYPE = "oddType";
     private static final String THIRD_ID = "thirdId";
-    private static final String COMPANY_ID = "companyId";
+    private static final String POSITION = "position";
 
     RecyclerView mLeftRecyclerView;
     RecyclerView mRightRecyclerView;
 
     View mLeftFootView;
     View mLoadingView;
+    View mErrorView;
 
     private FootballPlateDetailsLeftAdapter mLeftAdapter;
     private FootballPlateDetailsRightAdapter mRightAdapter;
@@ -72,7 +71,9 @@ public class FootballPlateDetailsFragment extends Fragment {
             leftList = args.getParcelableArrayList(LEFT_LIST);
             oddType = args.getString(ODD_TYPE);
             thirdId = args.getString(THIRD_ID);
-            companyId = args.getString(COMPANY_ID);
+            int position = args.getInt(POSITION);
+            companyId = leftList.get(position).getId();
+            checkedPosition(position);
         }
     }
 
@@ -82,6 +83,14 @@ public class FootballPlateDetailsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mLeftFootView = inflater.inflate(R.layout.layout_odds_left_foot, container, false);
         mLoadingView = inflater.inflate(R.layout.layout_loading, container, false);
+        mErrorView = inflater.inflate(R.layout.layout_net_error, container, false);
+        mErrorView.findViewById(R.id.reloading_txt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRightAdapter.setLoadingView(mLoadingView);
+                loadData();
+            }
+        });
         return inflater.inflate(R.layout.fragment_football_plate_details, container, false);
     }
 
@@ -96,7 +105,8 @@ public class FootballPlateDetailsFragment extends Fragment {
         mLeftAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                ToastTools.ShowQuick(MyApp.getContext(), mLeftAdapter.getItem(i).getName());
+                checkedPosition(i);
+                mLeftAdapter.notifyDataSetChanged();
             }
         });
         mLeftRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -125,6 +135,15 @@ public class FootballPlateDetailsFragment extends Fragment {
         loadData();
     }
 
+    private void checkedPosition(int i) {
+        for (OddsDataInfo.ListOddEntity listOdd : leftList) {
+            listOdd.setChecked(false);
+        }
+        OddsDataInfo.ListOddEntity listOddEntity = leftList.get(i);
+        listOddEntity.setChecked(true);
+        companyId = listOddEntity.getId();
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -150,7 +169,7 @@ public class FootballPlateDetailsFragment extends Fragment {
                 new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+                        mRightAdapter.setLoadingView(mErrorView);
                     }
                 },
                 OddsDetailsDataInfo.class);
@@ -159,13 +178,13 @@ public class FootballPlateDetailsFragment extends Fragment {
 
     public static FootballPlateDetailsFragment newInstance(String oddType,
                                                            String thirdId,
-                                                           String companyId,
+                                                           int position,
                                                            ArrayList<OddsDataInfo.ListOddEntity> items) {
 
         Bundle args = new Bundle();
         args.putString(ODD_TYPE, oddType);
         args.putString(THIRD_ID, thirdId);
-        args.putString(COMPANY_ID, companyId);
+        args.putInt(POSITION, position);
         args.putParcelableArrayList(LEFT_LIST, items);
         FootballPlateDetailsFragment fragment = new FootballPlateDetailsFragment();
         fragment.setArguments(args);

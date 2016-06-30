@@ -93,7 +93,7 @@ public class FootballPlateFragment extends Fragment {
             public void onItemClick(View view, int i) {
                 FootballPlateDetailsFragment detailsFragment =
                         FootballPlateDetailsFragment.newInstance(convertType(), mActivity.mThirdId,
-                                items.get(i).getId(), items);
+                                i, items);
                 mParentFragment.showDetails(detailsFragment);
             }
         });

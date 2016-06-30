@@ -35,6 +35,7 @@ public class OddsDataInfo{
         private String id;
         private String abb;
         private String name;
+        private boolean checked;
         /**
          * time : null
          * score : null
@@ -71,6 +72,14 @@ public class OddsDataInfo{
 
         public String getName() {
             return name;
+        }
+
+        public boolean isChecked() {
+            return checked;
+        }
+
+        public void setChecked(boolean checked) {
+            this.checked = checked;
         }
 
         public List<DetailsEntity> getDetails() {
