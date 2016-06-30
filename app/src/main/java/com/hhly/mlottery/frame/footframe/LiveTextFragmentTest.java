@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
@@ -69,6 +71,9 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         mView = View.inflate(getContext(), R.layout.football_live_text, null);
         initView();
         dialog.setContentView(mView);
