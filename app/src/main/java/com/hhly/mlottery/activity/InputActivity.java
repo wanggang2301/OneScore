@@ -49,7 +49,6 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
         initWindow();
         initView();
         topicid = getIntent().getLongExtra(CyUtils.INTENT_PARAMS_SID, 0);
-        System.out.println("lzfinputonCreatetopicid" + topicid);
         IntentFilter intentFilter = new IntentFilter("closeself");
         registerReceiver(mBroadcastReceiver, intentFilter);
 
@@ -137,8 +136,9 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
                         if (CyUtils.isLogin) {//已登录畅言
                             if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
                                 issubmitFinish = false;
+                                mSend.setEnabled(false);
+                                mSend.setSelected(false);
                                 CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                                System.out.println("lzfinputonsubmitCommenttopicid" + topicid);
                             }
                         } else {//未登录
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
@@ -180,6 +180,8 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onRequestFailed(CyanException e) {
         issubmitFinish = true;
+        mSend.setEnabled(true);
+        mSend.setSelected(true);
         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
     }
 
