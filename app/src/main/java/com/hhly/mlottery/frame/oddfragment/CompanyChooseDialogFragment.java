@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
+import com.hhly.mlottery.util.DisplayUtil;
 
 import java.util.ArrayList;
 
@@ -54,8 +58,17 @@ public class CompanyChooseDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Window window = dialog.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.alert_dialog);
+
+//        WindowManager.LayoutParams layoutParams = window.getAttributes();
+//
+//        layoutParams.height = (int) (DisplayUtil.getScreenHeight(getContext()) * 0.42);
+//        layoutParams.width = (int) (DisplayUtil.getScreenWidth(getContext()) * 0.54);
+//        layoutParams.gravity = Gravity.CENTER;
+//
+//        window.setAttributes(layoutParams);
 
         mTitleTextView = (TextView) dialog.findViewById(R.id.titleView);
         mTitleTextView.setText(R.string.odd_company_txt);
