@@ -139,11 +139,12 @@ public class WelcomeActivity extends BaseActivity {
         getUmeng();
 
         if (AppConstants.isGOKeyboard) {
-            if (MyApp.isLanguage.equals("rTW")) {
+            imageAD.setBackgroundResource(R.mipmap.welcome_tw);
+           /* if (MyApp.isLanguage.equals("rTW")) {
                 imageAD.setBackgroundResource(R.mipmap.welcome_tw);
             } else {
                 imageAD.setBackgroundResource(R.mipmap.welcome_en);
-            }
+            }*/
         } else {//如果是国内版
             if (MyApp.isLanguage.equals("rCN")) {// 如果是中文简体
                 imageAD.setBackgroundResource(R.mipmap.welcome);
