@@ -8,7 +8,6 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,14 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author
+ * @author   lzf
  * @ClassName:
  * @Description:
  * @date
  */
 public class ChatballAdapter extends BaseQuickAdapter<Comment> {
     private List<String> mStringList = new ArrayList<>();
-    private List<Comment> mInfosList;//
     private Activity mActivity;
     private String mString = "...";
     private PullUpLoading mPullUpLoading;
@@ -37,7 +35,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
 
     public ChatballAdapter(int layoutResId, List<Comment> data, Activity activity) {
         super(layoutResId, data);
-        mInfosList = data;
         mActivity = activity;
         this.total = mActivity.getResources().getString(R.string.toatalvisiable);
     }
@@ -46,7 +43,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int positions) {
         super.onBindViewHolder(holder, positions);
         if (positions == getItemCount() - 1) {//已经到达列表的底部
-            Log.d("ChatballAdapter", positions + "");
             if (mPullUpLoading != null) {
                 mPullUpLoading.onPullUpLoading();
             }
@@ -64,7 +60,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
         if (comment.content.length() > 50) {//字数大于50，则隐藏多于50的部分
             TextView view = baseViewHolder.getView(R.id.tv_time);
             TextView content = baseViewHolder.getView(R.id.tv_content);
-            System.out.println("lzfmStringList" + mStringList);
             if (mStringList.size() != 0 && mStringList.contains(view.getText() + "")) {
                 baseViewHolder.setText(R.id.tv_content, comment.content);
             } else {
@@ -74,7 +69,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
         } else {
             baseViewHolder.setText(R.id.tv_content, comment.content);
         }
-//        baseViewHolder.setText(R.id.tv_content,comment.content);
     }
 
     // 对textview部分字体加下划线， 颜色和添加点击事件
