@@ -54,6 +54,7 @@
             android:background="@drawable/selector_loginbtn_yellow"/>
 
 
+
     </LinearLayout>
 
     <EditText
@@ -101,5 +102,12 @@
         android:layout_marginTop="30dp"
         android:text="@string/about_confirm"
         />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/findpassword_activity_pb"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

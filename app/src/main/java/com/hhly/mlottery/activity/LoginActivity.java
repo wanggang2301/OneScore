@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,6 +47,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private EditText et_username , et_password;
     private ImageView iv_eye;
     private ProgressDialog progressBar;
+
+    public static final String TAG = "LoginActivity";
 
     public static final int REQUESTCODE_FINDPW = 200;
 
@@ -174,7 +177,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 Map<String, String> param = new HashMap<>();
                 param.put("account" , userName);
                 param.put("password" , MD5Util.getMD5(passWord));
+
+                Log.d(TAG,AppConstants.deviceToken);
                 param.put("deviceToken" , AppConstants.deviceToken);
+
+                //防止用户恶意注册后先添加的字段，versioncode和versionname;
+                int versionCode = CommonUtils.getVersionCode();
+                param.put("versionCode",String.valueOf(versionCode));
+
+                Log.d(TAG,versionCode+"");
+
+                String versionName = CommonUtils.getVersionName();
+                param.put("versionName",versionName);
+                Log.d(TAG,versionName);
 
                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                     @Override

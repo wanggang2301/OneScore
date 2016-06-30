@@ -1,31 +1,22 @@
 package com.hhly.mlottery.util;
 
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 
 public class AppConstants {
-    /**
-     * 是否是测试环境，true为测试，false为生产环境
-     */
-    public static final boolean isTestEnv = true;
-    /**
-     * true是国际版|false内地版
-     */
-    public static final boolean isGOKeyboard = false;
-    /**
-     * true是纯净版|false完整版
-     */
-    public static final boolean fullORsimple = false;
-    /**
-     * 是否是测试连接，测试连接用于阶段测试使用
-     */
-    public static final boolean isTestLink = false;
-    /**
-     * 判断是否上传奔溃日志到友盟
-     */
-    public static final boolean isUploadCrash = false;
+	/** 是否是测试环境，true为测试，false为生产环境 */
+	public static final boolean isTestEnv = false;
+	/** true是国际版|false内地版 */
+	public static final boolean isGOKeyboard = false;
+	/** true是纯净版|false完整版 */
+	public static final boolean fullORsimple = true;
+	/** 是否是测试连接，测试连接用于阶段测试使用 */
+	public static final boolean isTestLink = false;
+	/**
+	 * 判断是否上传奔溃日志到友盟
+	 */
+	public static final boolean isUploadCrash = true;
 
     public static String ACCESS_LINK = "";// API
     public static String USER_AGENT = "";
@@ -206,32 +197,21 @@ public class AppConstants {
     public static final String HOME_PAGER_VERSION_UPDATE_KEY = "homePagerVersionUpdate";// 首页忽略此版本
 
 
-    // ============= account begin ==============
-    /**
-     * 保存userId的key
-     */
-    public static final String SPKEY_USERID = "userId";
-    /**
-     * 保存token的key
-     */
-    public static final String SPKEY_TOKEN = "token";
-    /**
-     * 保存nickName的key
-     */
-    public static final String SPKEY_NICKNAME = "nickName";
-    /**
-     * 保存loginAccount的key
-     */
-    public static final String SPKEY_LOGINACCOUNT = "loginAccount";
-    /**
-     * 应用启动的时候初始化
-     */
-    public static String deviceToken = "";
-    /**
-     * 应用启动的时候初始化
-     */
-    public static Register register = null;
-    // ============= account end ==============
+
+	// ============= account begin ==============
+	/**保存userId的key*/
+	public static final String SPKEY_USERID = "userId";
+	/**保存token的key*/
+	public static final String SPKEY_TOKEN = "token";
+	/**保存nickName的key*/
+	public static final String SPKEY_NICKNAME = "nickName";
+	/**保存loginAccount的key*/
+	public static final String SPKEY_LOGINACCOUNT = "loginAccount";
+	/**应用启动的时候初始化*/
+	public static String deviceToken ="";
+	/**应用启动的时候初始化*/
+	public static Register register = null;
+	// ============= account end ==============
 
 
     /**
@@ -242,4 +222,8 @@ public class AppConstants {
      * 首页热门赛事篮球背景图片
      */
     public static int[] homePageScoreBasketBG = {R.mipmap.home_pager_score_basketball01_bg, R.mipmap.home_pager_score_basketball02_bg};
+	//防止用户恶意注册添加的sign字段。
+	public static final String SIGN_KEY ="B2A7748BF1FCAF6326979E1B86DC0C60";
+
+
 }
