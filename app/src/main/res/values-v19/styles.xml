@@ -20,4 +20,13 @@
         <item_share name="android:windowTranslucentStatus">true</item_share>
     </style>-->
 
+    <style name="isFitsSystemWindows">
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
+    <style name="toolbar">
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
+
 </resources>
