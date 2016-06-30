@@ -19,6 +19,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
+    <style name="AppTheme.NoActionBarFootBallDetails">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.NoActionBar.TranslucentNavigation"></style>
 
     <style name="AppTheme.BlackStatusBar">
@@ -30,7 +36,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 
 
     <style name="AppTheme.BlackStatusBar.ColorGreen"></style>
@@ -537,6 +542,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/selector_loginbtn</item>
     </style>
+
     <style name="new_login_item_bg">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginRight">25dp</item>
@@ -557,9 +563,11 @@
     <style name="loginbtn_blue" parent="new_login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_blue</item>
     </style>
+
     <style name="new_loginbtn_new_blue" parent="new_login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_new_blue</item>
     </style>
+
     <style name="new_loginbtn_blue" parent="new_login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_new_white</item>
     </style>
@@ -576,6 +584,7 @@
     <style name="login_edittext_phonenumber" parent="login_edittext_common">
         <item name="android:maxLength">11</item>
     </style>
+
     <style name="login_edittext_newphonenumber" parent="login_edittext_newcommon">
         <item name="android:maxLength">11</item>
     </style>
@@ -645,18 +654,21 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="login_edittext_loginbtn" parent="loginbtn_blue">
         <item name="android:layout_height">48dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="login_edittext_loginbtn_newblue" parent="new_loginbtn_new_blue">
         <item name="android:layout_height">48dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="login_edittext_new_loginbtn" parent="loginbtn_blue">
         <item name="android:layout_height">48dp</item>
         <item name="android:textSize">18sp</item>
@@ -694,6 +706,7 @@
         <item name="android:orientation">vertical</item>
         <item name="android:background">@color/home_item_bg</item>
     </style>
+
     <style name="item_rollball_textview">
         <item name="android:layout_width">match_parent</item>
         <item name="android:minWidth">60dp</item>
@@ -707,6 +720,7 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textSize">@dimen/text_size_12</item>
     </style>
+
     <style name="MW_White">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -715,10 +729,12 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
     <style name="WW_Width_0dp">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="item_rollball_MeasureSpec_EXACTLY">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -792,7 +808,14 @@
 
     <!--登录信息背景 end-->
 
-
+    <!-- 足球比赛详情、指数tab -->
+    <style name="odds_radio_button">
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/odds_radio_txt_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
 
 
     <!--AppDialog_Theme-->
@@ -804,7 +827,7 @@
         <!--<item name="android:windowEnterAnimation">@anim/push_bottom_in</item>-->
     </style>
     <!-- 业务选择弹框activity样式 -->
-    <style name="MyDialogStyleTop" parent="android:Theme.Dialog" >
+    <style name="MyDialogStyleTop" parent="android:Theme.Dialog">
         <!--<item name="android:windowAnimationStyle">@style/AnimTop2</item>-->
         <item name="android:windowFrame">@null</item>边框
         <item name="android:windowIsFloating">true</item>是否浮现在activity之上
@@ -813,6 +836,5 @@
         <item name="android:windowBackground">@android:color/transparent</item>背景透明
         <item name="android:backgroundDimEnabled">false</item>false不模糊
     </style>
-
 
 </resources>

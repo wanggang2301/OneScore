@@ -345,6 +345,7 @@ public class LiveHeadInfoFragment extends Fragment {
      * 赛中时获取时间轴数据
      */
     private void getTimeLive() {
+        xMatchLive=new ArrayList<>();
         if (matchLive == null) {
             return;
         }

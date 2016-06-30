@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,10 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerListAdapter;
+import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
@@ -40,14 +41,10 @@ import java.util.Map;
 
 /**
  * 赔率列表 Fragment
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/21.
  */
 public class CPIOddsFragment extends Fragment {
-
-    public static final String TYPE_PLATE = "plate"; // 亚盘
-    public static final String TYPE_BIG = "big"; // 大小球
-    public static final String TYPE_OP = "op"; // 欧赔
 
     private static final int ERROR = -1; // 访问失败
     private static final int SUCCESS = 1; // 访问成功
@@ -73,14 +70,12 @@ public class CPIOddsFragment extends Fragment {
     TextView mRefreshTextView; // 刷新
 
     private CPIFragment parentFragment;
-    private CompanyChooseDialogFragment mCompanyChooseDialogFragment;
 
-    /**
-     * 定义注解限制类型
-     */
-    @StringDef({TYPE_PLATE, TYPE_BIG, TYPE_OP})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // attach 的时候获取父 Fragment
+        parentFragment = (CPIFragment) getParentFragment();
     }
 
     @Override
@@ -88,7 +83,7 @@ public class CPIOddsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            type = args.getString(KEY_TYPE, TYPE_PLATE);
+            type = args.getString(KEY_TYPE, OddsTypeEnum.PLATE);
         }
     }
 
@@ -117,13 +112,6 @@ public class CPIOddsFragment extends Fragment {
                 parentFragment.refreshAllChildFragments();
             }
         });
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        // attach 的时候获取父 Fragment
-        parentFragment = (CPIFragment) getParentFragment();
     }
 
     /**
@@ -174,11 +162,11 @@ public class CPIOddsFragment extends Fragment {
     public void refreshData(String date) {
         Map<String, String> map = new HashMap<>();
 
-        if (TYPE_PLATE.equals(type)) {
+        if (OddsTypeEnum.PLATE.equals(type)) {
             map.put("type", "1");
-        } else if (TYPE_BIG.equals(type)) {
+        } else if (OddsTypeEnum.BIG.equals(type)) {
             map.put("type", "3");
-        } else if (TYPE_OP.equals(type)) {
+        } else if (OddsTypeEnum.OP.equals(type)) {
             map.put("type", "2");
         }
 
@@ -226,7 +214,7 @@ public class CPIOddsFragment extends Fragment {
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         setStatus(ERROR);
                         VolleyError volleyError = exception.getVolleyError();
-                        Toast.makeText(getContext(),
+                        Toast.makeText(MyApp.getContext(),
                                 volleyError.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         volleyError.printStackTrace();
                         refreshOver();
@@ -318,17 +306,8 @@ public class CPIOddsFragment extends Fragment {
      * @param result 数据
      */
     public void updateTimeAndStatus(WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result) {
-        for (NewOddsInfo.AllInfoBean item : defaultData) {
-            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
-            // 找到赛事 ID 相等的更新时间和状态
-            if (matchInfo.getMatchId().equals(result.getThirdId())) {
-                WebSocketCPIResult.UpdateTimeAndStatus data = result.getData();
-                int statusOrigin = data.getStatusOrigin();
-                matchInfo.setOpenTime(data.getKeepTime() + "");
-                matchInfo.setMatchState(statusOrigin + "");
-                mAdapter.notifyItemChanged(defaultData.indexOf(item));
-            }
-        }
+        updateSourceTimeAndStatus(result, true);
+        updateSourceTimeAndStatus(result, false);
     }
 
     /**
@@ -337,15 +316,8 @@ public class CPIOddsFragment extends Fragment {
      * @param result result
      */
     public void updateScore(WebSocketCPIResult<WebSocketCPIResult.UpdateScore> result) {
-        for (NewOddsInfo.AllInfoBean item : defaultData) {
-            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
-            // 找到赛事 ID 相等的更新比分
-            if (matchInfo.getMatchId().equals(result.getThirdId())) {
-                WebSocketCPIResult.UpdateScore data = result.getData();
-                matchInfo.setMatchResult(data.getMatchResult());
-                mAdapter.notifyItemChanged(defaultData.indexOf(item));
-            }
-        }
+        updateSourceScore(result, true);
+        updateSourceScore(result, false);
     }
 
     /**
@@ -389,11 +361,11 @@ public class CPIOddsFragment extends Fragment {
     private String convertTypeString(String oddType) {
         // 1 - 亚盘，2 - 欧赔，3 - 大小球
         if ("1".equals(oddType)) {
-            return TYPE_PLATE;
+            return OddsTypeEnum.PLATE;
         } else if ("2".equals(oddType)) {
-            return TYPE_OP;
+            return OddsTypeEnum.OP;
         } else {
-            return TYPE_BIG;
+            return OddsTypeEnum.BIG;
         }
     }
 
@@ -409,9 +381,9 @@ public class CPIOddsFragment extends Fragment {
         // 赔率类型和 Fragment 类型一致
         if (oddTypeString.equals(type)) {
             // 选择要更新的数据源
-            List<NewOddsInfo.AllInfoBean> items = isDefault ? defaultData : filterData;
+            List<NewOddsInfo.AllInfoBean> infoBeanList = getDataSource(isDefault);
             // 2. 遍历数据源更新数据
-            for (NewOddsInfo.AllInfoBean item : items) {
+            for (NewOddsInfo.AllInfoBean item : infoBeanList) {
                 NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
                 // 找到赛事 ID 相等的赛事
                 if (matchInfo.getMatchId().equals(thirdId)) {
@@ -425,6 +397,52 @@ public class CPIOddsFragment extends Fragment {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * 更新本身的数据源和过滤后的数据源的时间和状态
+     *
+     * @param result    result
+     * @param isDefault isDefault
+     */
+    private void updateSourceTimeAndStatus(WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result,
+                                           boolean isDefault) {
+        List<NewOddsInfo.AllInfoBean> infoBeanList = getDataSource(isDefault);
+        for (NewOddsInfo.AllInfoBean item : infoBeanList) {
+            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
+            // 找到赛事 ID 相等的更新时间和状态
+            if (matchInfo.getMatchId().equals(result.getThirdId())) {
+                WebSocketCPIResult.UpdateTimeAndStatus data = result.getData();
+                int statusOrigin = data.getStatusOrigin();
+                matchInfo.setOpenTime(data.getKeepTime() + "");
+                matchInfo.setMatchState(statusOrigin + "");
+                if (!isDefault) {
+                    mAdapter.notifyItemChanged(infoBeanList.indexOf(item));
+                }
+            }
+        }
+    }
+
+    /**
+     * 更新本身的数据源和过滤后的数据源的比分
+     *
+     * @param result    result
+     * @param isDefault isDefault
+     */
+    private void updateSourceScore(WebSocketCPIResult<WebSocketCPIResult.UpdateScore> result,
+                                   boolean isDefault) {
+        List<NewOddsInfo.AllInfoBean> infoBeanList = getDataSource(isDefault);
+        for (NewOddsInfo.AllInfoBean item : infoBeanList) {
+            NewOddsInfo.AllInfoBean.MatchInfoBean matchInfo = item.getMatchInfo();
+            // 找到赛事 ID 相等的更新比分
+            if (matchInfo.getMatchId().equals(result.getThirdId())) {
+                WebSocketCPIResult.UpdateScore data = result.getData();
+                matchInfo.setMatchResult(data.getMatchResult());
+                if (!isDefault) {
+                    mAdapter.notifyItemChanged(infoBeanList.indexOf(item));
                 }
             }
         }
@@ -447,12 +465,22 @@ public class CPIOddsFragment extends Fragment {
     }
 
     /**
+     * 获取数据源
+     *
+     * @param isDefault isDefault
+     * @return 数据源
+     */
+    private List<NewOddsInfo.AllInfoBean> getDataSource(boolean isDefault) {
+        return isDefault ? defaultData : filterData;
+    }
+
+    /**
      * 工厂方法
      *
-     * @param type @Type 限制的类型，TYPE_PLATE, TYPE_BIG, TYPE_OP
+     * @param type @Type 限制的类型，PLATE, BIG, OP
      * @return CPIOddsListFragment
      */
-    public static CPIOddsFragment newInstance(@Type String type) {
+    public static CPIOddsFragment newInstance(@OddsTypeEnum.OddsType String type) {
 
         Bundle args = new Bundle();
         args.putString(KEY_TYPE, type);

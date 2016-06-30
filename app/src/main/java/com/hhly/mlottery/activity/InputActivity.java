@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +34,7 @@ import com.umeng.analytics.MobclickAgent;
  * @Description: 输入评论的窗口
  * @date
  */
-public class InputActivity extends Activity implements View.OnClickListener, CyanRequestListener<SubmitResp> {
+public class InputActivity extends BaseActivity implements View.OnClickListener, CyanRequestListener<SubmitResp> {
 
     private EditText mEditText;//输入评论
     private TextView mSend;//发送评论
@@ -50,7 +49,6 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
         initWindow();
         initView();
         topicid = getIntent().getLongExtra(CyUtils.INTENT_PARAMS_SID, 0);
-        System.out.println("lzfinputonCreatetopicid" + topicid);
         IntentFilter intentFilter = new IntentFilter("closeself");
         registerReceiver(mBroadcastReceiver, intentFilter);
 
@@ -138,8 +136,9 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
                         if (CyUtils.isLogin) {//已登录畅言
                             if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
                                 issubmitFinish = false;
+                                mSend.setEnabled(false);
+                                mSend.setSelected(false);
                                 CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
-                                System.out.println("lzfinputonsubmitCommenttopicid" + topicid);
                             }
                         } else {//未登录
                             ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
@@ -171,7 +170,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void onRequestSucceeded(SubmitResp submitResp) {
         mEditText.setText("");
         issubmitFinish = true;
-        ToastTools.ShowQuickCenter(this, getResources().getString(R.string.succed_send));
+        ToastTools.ShowQuick(this, getResources().getString(R.string.succed_send));
         setResult(CyUtils.RESULT_CODE);
         finish();
 
@@ -181,6 +180,8 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     @Override
     public void onRequestFailed(CyanException e) {
         issubmitFinish = true;
+        mSend.setEnabled(true);
+        mSend.setSelected(true);
         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
     }
 
@@ -188,7 +189,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            setResult(CyUtils.RESULT_CODE);//这里也需要通知  因为在本窗口关闭的时候那边的假输入框需要显示
+            setResult(CyUtils.RESULT_BACK);//这里也需要通知  因为在本窗口关闭的时候那边的假输入框需要显示
             finish();
             return true;
 

@@ -1,13 +1,14 @@
 package com.hhly.mlottery.frame.oddfragment;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -36,9 +37,6 @@ public class CompanyChooseDialogFragment extends DialogFragment {
 
     private OnFinishSelectionListener listener;
 
-    public CompanyChooseDialogFragment() {
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,27 +46,22 @@ public class CompanyChooseDialogFragment extends DialogFragment {
         }
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setCancelable(true);
-        getDialog().setCanceledOnTouchOutside(true);
-        return inflater.inflate(R.layout.alertdialog, container, false);
+    public CompanyChooseDialogFragment() {
     }
 
+    @NonNull
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.alert_dialog);
 
-        // 标题
-        mTitleTextView = (TextView) view.findViewById(R.id.titleView);
+        mTitleTextView = (TextView) dialog.findViewById(R.id.titleView);
         mTitleTextView.setText(R.string.odd_company_txt);
 
         // 确认按钮
-        mOkButton = (Button) view.findViewById(R.id.cpi_btn_ok);
+        mOkButton = (Button) dialog.findViewById(R.id.cpi_btn_ok);
         mOkButton.setVisibility(View.VISIBLE);
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,10 +72,13 @@ public class CompanyChooseDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
-        view.findViewById(R.id.cpi_view_id).setVisibility(View.VISIBLE);
 
-        mListView = (ListView) view.findViewById(R.id.listdate);
+        dialog.findViewById(R.id.cpi_view_id).setVisibility(View.VISIBLE);
+
+        mListView = (ListView) dialog.findViewById(R.id.listdate);
         initListView();
+
+        return dialog;
     }
 
     /**
