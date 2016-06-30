@@ -44,6 +44,7 @@ public class FootballPlateDetailsFragment extends Fragment {
     RecyclerView mRightRecyclerView;
 
     View mLeftFootView;
+    View mLoadingView;
 
     private FootballPlateDetailsLeftAdapter mLeftAdapter;
     private FootballPlateDetailsRightAdapter mRightAdapter;
@@ -80,6 +81,7 @@ public class FootballPlateDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mLeftFootView = inflater.inflate(R.layout.layout_odds_left_foot, container, false);
+        mLoadingView = inflater.inflate(R.layout.layout_loading, container, false);
         return inflater.inflate(R.layout.fragment_football_plate_details, container, false);
     }
 
@@ -112,6 +114,7 @@ public class FootballPlateDetailsFragment extends Fragment {
         rightList = new ArrayList<>();
         rightConvertList = new ArrayList<>();
         mRightAdapter = new FootballPlateDetailsRightAdapter(oddType, rightList, rightConvertList);
+        mRightAdapter.setLoadingView(mLoadingView);
         mRightRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRightRecyclerView.setAdapter(mRightAdapter);
 

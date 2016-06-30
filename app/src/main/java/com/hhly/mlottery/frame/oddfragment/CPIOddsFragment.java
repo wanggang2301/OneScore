@@ -180,8 +180,8 @@ public class CPIOddsFragment extends Fragment {
                     public void onResponse(NewOddsInfo jsonObject) {
                         if (jsonObject.getCode() == 500) {
                             setStatus(ERROR);
-                            Toast.makeText(getContext(),
-                                    "服务器内部错误", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyApp.getContext(), R.string.server_busy,
+                                    Toast.LENGTH_SHORT).show();
                             refreshOver();
                             return;
                         }

@@ -792,4 +792,5 @@
     <string name="login_username">请输入用户名</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
+    <string name="server_busy">系统繁忙</string>
 </resources>
