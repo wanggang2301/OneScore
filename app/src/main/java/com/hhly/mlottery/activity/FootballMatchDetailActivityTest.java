@@ -2440,6 +2440,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
+                if (position == 1) {
+                    appBarLayout.setExpanded(false);
+                }
             }
 
             @Override

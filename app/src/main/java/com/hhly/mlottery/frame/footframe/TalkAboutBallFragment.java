@@ -254,11 +254,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //        nestedscrollview = (NestedScrollView) mView.findViewById(R.id.nestedscrollview);
 
         mCommentCount.setVisibility(View.VISIBLE);
-        //获取评论的一切信息
-        if (!TextUtils.isEmpty(mThirdId)) {
-            loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
-        }
-
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -377,6 +372,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         });
         mProgressBar = (ProgressBar) view.findViewById(R.id.pull_to_refresh_progress);
         mLoadMore.setText(R.string.foot_loadmore);
+        view.setVisibility(View.GONE);
         mChatballAdapter.addFooterView(view);
     }
 
@@ -430,7 +426,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //下拉刷新后当前页数重新为1，不然先上拉加载到没有数据  再回去下拉刷新  然后再上拉就没有数据了，其实是有的
         mCurrentPager = 1;
         mLoadMore.setText(R.string.foot_loadmore);
-        loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+        loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
     }
 
     @Override
@@ -455,10 +451,16 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     }
                     break;
                 case CyUtils.RESULT_CODE://接收评论输入页面返回
-                    loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
+                    loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
                     mLinearLayout.setVisibility(View.VISIBLE);
                     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
                     lp.setMargins(0, 0, 0, 0);
+                    mRecyclerView.requestLayout();
+                    break;
+                case CyUtils.RESULT_BACK://接收评论输入页面返回
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                    FrameLayout.LayoutParams lp1 = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
+                    lp1.setMargins(0, 0, 0, 0);
                     mRecyclerView.requestLayout();
                     break;
             }
@@ -473,6 +475,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         if (!getUserVisibleHint()) {
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
         } else {
+            //获取评论的一切信息
+            if (!TextUtils.isEmpty(mThirdId)&&mCommentArrayList==null) {
+                loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
+            }
         }
     }
 
