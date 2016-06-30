@@ -806,4 +806,6 @@
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滾球</string>
     <string name="login_username">請輸入用戶名</string>
+    <string name="forty_five_plus">45+</string>
+    <string name="ninety_plus">90+</string>
 </resources>

@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
-import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.util.HandicapUtils;
 
 /**
@@ -63,7 +63,7 @@ public class CpiOddsItemView extends LinearLayout {
         }
 
         int middleUp = currLevel.getMiddleUp();
-        if (CPIOddsFragment.TYPE_OP.equals(oddsType)) {
+        if (OddsTypeEnum.OP.equals(oddsType)) {
             //欧赔
             if (middleUp == -1) {
                 mNowCenter.setTextColor(green);
@@ -99,13 +99,13 @@ public class CpiOddsItemView extends LinearLayout {
         String currLevelMiddle = currLevel.getMiddle();
         String preLevelMiddle = preLevel.getMiddle();
         // 转换盘口
-        if (CPIOddsFragment.TYPE_PLATE.equals(oddsType)) {//亚盘
+        if (OddsTypeEnum.PLATE.equals(oddsType)) {//亚盘
             mNowCenter.setText(HandicapUtils.changeHandicap(currLevelMiddle));
             mDefaultCenter.setText(HandicapUtils.changeHandicap(preLevelMiddle));
-        } else if (CPIOddsFragment.TYPE_BIG.equals(oddsType)) {//大小
+        } else if (OddsTypeEnum.BIG.equals(oddsType)) {//大小
             mNowCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(currLevelMiddle));
             mDefaultCenter.setText(HandicapUtils.changeHandicapByBigLittleBall(preLevelMiddle));
-        } else if (CPIOddsFragment.TYPE_OP.equals(oddsType)) {//欧赔
+        } else if (OddsTypeEnum.OP.equals(oddsType)) {//欧赔
             //不用转换盘口
             mNowCenter.setText(currLevelMiddle);
             mDefaultCenter.setText(preLevelMiddle);

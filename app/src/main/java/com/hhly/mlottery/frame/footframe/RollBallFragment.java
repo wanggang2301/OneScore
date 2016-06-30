@@ -103,7 +103,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private Subscription subscription;
     private boolean resestTheLifeCycle;
     private boolean loadingMoreData;
-    private boolean websocketConnectionIsError;
+    private long checkoutWebsocketIsConnectedNow;
+    private static long onNewMessageCount, onOldMessageCount;
     public LeagueCup[] checkedLeagueCup; // 记录筛选过的联赛
     public List<LeagueCup> leagueCupLists; // 全部联赛
     private List<Match> allDataLists; // 所有数据
@@ -186,6 +187,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     protected void initData() {
         this.requestApi();
         this.setupWebSocketClient();
+        this.checkedOutWebsocketIsConnected();
     }
 
     @Override
@@ -208,11 +210,14 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public void onDestroyView() {
         super.onDestroyView();
         eventBus.unregister(this);
+        eventBus = null;
         /*if (adapter != null && adapter.getSubscription() != null)
             if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();*/
         if (subscription.isUnsubscribed()) subscription.unsubscribe();
         if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
         if (adapter != null) adapter.getSharedPreperences().edit().clear().commit();
+        this.restoreSocketClient();
+        this.restoreSocketConnectedFieldCount();
     }
 
     @Override
@@ -238,6 +243,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                 socketClient = new HappySocketClient(new URI(BaseURLs.WS_SERVICE), new Draft_17(), new HappySocketClient.Callback() {
                     @Override
                     public void onMessage(String message) {
+                        ++onNewMessageCount;
                         if (message.startsWith("CONNECTED")) {
                             socketClient.send("SUBSCRIBE\nid:" + MD5Util.getMD5(
                                     "android" + DeviceInfo.getDeviceId(getActivity())) + "\ndestination:/topic/USER.topic.app\n\n");
@@ -264,38 +270,58 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
                     @Override
                     public void onError(Exception exception) {
-                        socketClient.close();
-                        socketClient = null;
-                        websocketConnectionIsError = true;
-                        RollBallFragment.this.reConnectionWebSocket();
+                        RollBallFragment.this.restoreSocketClient();
                     }
 
                     @Override
                     public void onClose(String message) {
-                        if (!websocketConnectionIsError) {
-                            socketClient = null;
-                            RollBallFragment.this.reConnectionWebSocket();
-                        }
+                        RollBallFragment.this.restoreSocketClient();
                     }
                 });
 
                 socketClient.connect();
             } catch (Exception e) {
-                if (socketClient != null) socketClient.close();
+                RollBallFragment.this.restoreSocketClient();
                 e.printStackTrace();
             }
-
-            // 当websocket出现错误后，会一直发送消息，为了避免循环调用initData()，判断当前网络layout显示状态
-            if (websocketConnectionIsError && networkExceptionLayout.getVisibility() != View.VISIBLE)
-                this.initData();
-            websocketConnectionIsError = false;
         }
     }
 
-    private void reConnectionWebSocket() {
-        Observable.timer(2000, TimeUnit.MILLISECONDS).observeOn(Schedulers.io()).subscribe(new Action1<Long>() {
+    private void restoreSocketClient() {
+        if (socketClient != null) {
+            socketClient.close();
+            socketClient = null;
+        }
+    }
+
+
+    private void checkedOutWebsocketIsConnected() {
+        Observable.timer(25000, TimeUnit.MILLISECONDS).observeOn(Schedulers.io()).subscribe(new Action1<Long>() {
             @Override
             public void call(Long aLong) {
+                checkoutWebsocketIsConnectedNow = onOldMessageCount;
+                onOldMessageCount = onNewMessageCount;
+                // 一定是断开socket连接了
+                if (checkoutWebsocketIsConnectedNow == onOldMessageCount) {
+                    RollBallFragment.this.restoreSocketConnectedFieldCount();
+                    RollBallFragment.this.reConnectionWebSocket();
+                }
+                if (eventBus != null) RollBallFragment.this.checkedOutWebsocketIsConnected();
+            }
+        });
+    }
+
+    private void restoreSocketConnectedFieldCount() {
+        checkoutWebsocketIsConnectedNow = 0;
+        onOldMessageCount = 0;
+        onNewMessageCount = 0;
+    }
+
+    private void reConnectionWebSocket() {
+        Observable.timer(0, TimeUnit.MILLISECONDS).observeOn(Schedulers.io()).subscribe(new Action1<Long>() {
+            @Override
+            public void call(Long aLong) {
+                RollBallFragment.this.restoreSocketClient();
                 RollBallFragment.this.setupWebSocketClient();
             }
         });
