@@ -827,6 +827,7 @@
 
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>
+    <string name="only_five_eachday">同一个手机号每天只能发送5次短信</string>
     <string name="login_username">请输入用户名</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
