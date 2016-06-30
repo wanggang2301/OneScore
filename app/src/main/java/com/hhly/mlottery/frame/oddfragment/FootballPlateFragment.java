@@ -23,6 +23,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.EmptyView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,9 +39,7 @@ public class FootballPlateFragment extends Fragment {
     private static final String TYPE = "type";
 
     RecyclerView mRecyclerView;
-    View mLoadingView;
-    View mErrorView;
-    View mNoDataView;
+    EmptyView mEmptyView;
 
     private FootballMatchDetailActivityTest mActivity;
 
@@ -69,22 +68,13 @@ public class FootballPlateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mLoadingView = inflater.inflate(R.layout.layout_loading, container, false);
-        mErrorView = inflater.inflate(R.layout.layout_net_error, container, false);
-        mErrorView.findViewById(R.id.reloading_txt)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        loadData();
-                    }
-                });
-        mNoDataView = inflater.inflate(R.layout.layout_nodata, container, false);
         return inflater.inflate(R.layout.fragment_football_plate, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         items = new ArrayList<>();
         mAdapter = new FootballPlateAdapter(type, items);
@@ -97,6 +87,10 @@ public class FootballPlateFragment extends Fragment {
                 mParentFragment.showDetails(detailsFragment);
             }
         });
+
+        initEmptyView();
+
+        mAdapter.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -149,17 +143,7 @@ public class FootballPlateFragment extends Fragment {
     }
 
     public void setStatus(@StatusEnum.Status int status) {
-        switch (status) {
-            case StatusEnum.ERROR:
-                mAdapter.setEmptyView(mErrorView);
-                break;
-            case StatusEnum.LOADING:
-                mAdapter.setEmptyView(mLoadingView);
-                break;
-            case StatusEnum.NORMAL:
-                mAdapter.setEmptyView(mNoDataView);
-                break;
-        }
+        mEmptyView.setStatus(status);
     }
 
     private String convertType() {
@@ -173,6 +157,23 @@ public class FootballPlateFragment extends Fragment {
             default:
                 return "1";
         }
+    }
+
+    /**
+     * 初始化 EmptyView
+     */
+    private void initEmptyView() {
+        mEmptyView = new EmptyView(getContext());
+        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
+        RecyclerView.LayoutParams layoutParams =
+                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+        mEmptyView.setLayoutParams(layoutParams);
     }
 
     public static FootballPlateFragment newInstance(@OddsTypeEnum.OddsType String type) {

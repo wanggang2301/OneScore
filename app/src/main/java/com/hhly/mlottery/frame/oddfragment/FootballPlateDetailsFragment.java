@@ -14,11 +14,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.FootballPlateDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.FootballPlateDetailsRightAdapter;
+import com.hhly.mlottery.bean.enums.StatusEnum;
 import com.hhly.mlottery.bean.oddsbean.OddsDataInfo;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.EmptyView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.util.ArrayList;
@@ -42,8 +44,7 @@ public class FootballPlateDetailsFragment extends Fragment {
     RecyclerView mRightRecyclerView;
 
     View mLeftFootView;
-    View mLoadingView;
-    View mErrorView;
+    EmptyView mEmptyView;
 
     private FootballPlateDetailsLeftAdapter mLeftAdapter;
     private FootballPlateDetailsRightAdapter mRightAdapter;
@@ -82,21 +83,13 @@ public class FootballPlateDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mLeftFootView = inflater.inflate(R.layout.layout_odds_left_foot, container, false);
-        mLoadingView = inflater.inflate(R.layout.layout_loading, container, false);
-        mErrorView = inflater.inflate(R.layout.layout_net_error, container, false);
-        mErrorView.findViewById(R.id.reloading_txt).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRightAdapter.setLoadingView(mLoadingView);
-                loadData();
-            }
-        });
         return inflater.inflate(R.layout.fragment_football_plate_details, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mLeftRecyclerView = (RecyclerView) view.findViewById(R.id.left_recycler_view);
         mRightRecyclerView = (RecyclerView) view.findViewById(R.id.right_recycler_view);
 
@@ -107,6 +100,9 @@ public class FootballPlateDetailsFragment extends Fragment {
             public void onItemClick(View view, int i) {
                 checkedPosition(i);
                 mLeftAdapter.notifyDataSetChanged();
+                // 请求右侧数据
+                companyId = leftList.get(i).getId();
+                loadData();
             }
         });
         mLeftRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -121,10 +117,12 @@ public class FootballPlateDetailsFragment extends Fragment {
             }
         });
 
+        initEmptyView();
+
         rightList = new ArrayList<>();
         rightConvertList = new ArrayList<>();
         mRightAdapter = new FootballPlateDetailsRightAdapter(oddType, rightList, rightConvertList);
-        mRightAdapter.setLoadingView(mLoadingView);
+        mRightAdapter.setEmptyView(mEmptyView);
         mRightRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRightRecyclerView.setAdapter(mRightAdapter);
 
@@ -133,6 +131,23 @@ public class FootballPlateDetailsFragment extends Fragment {
         mRightRecyclerView.addItemDecoration(headersDecor);
 
         loadData();
+    }
+
+    /**
+     * 初始化 EmptyView
+     */
+    private void initEmptyView() {
+        mEmptyView = new EmptyView(getContext());
+        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
+        RecyclerView.LayoutParams layoutParams =
+                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+        mEmptyView.setLayoutParams(layoutParams);
     }
 
     private void checkedPosition(int i) {
@@ -155,6 +170,7 @@ public class FootballPlateDetailsFragment extends Fragment {
         myPostParams.put("companyId", companyId);
         myPostParams.put("oddType", oddType);
         myPostParams.put("thirdId", thirdId);
+        setStatus(StatusEnum.LOADING);
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_MATCHODD_DETAILS, myPostParams,
                 new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
@@ -164,16 +180,21 @@ public class FootballPlateDetailsFragment extends Fragment {
                         rightList.addAll(jsonObject.getDetails());
                         mRightAdapter.refreshData();
                         mRightAdapter.notifyDataSetChanged();
+                        setStatus(StatusEnum.NORMAL);
                     }
                 },
                 new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        mRightAdapter.setLoadingView(mErrorView);
+                        setStatus(StatusEnum.ERROR);
                     }
                 },
                 OddsDetailsDataInfo.class);
 
+    }
+
+    private void setStatus(@StatusEnum.Status int status) {
+        mEmptyView.setStatus(status);
     }
 
     public static FootballPlateDetailsFragment newInstance(String oddType,
