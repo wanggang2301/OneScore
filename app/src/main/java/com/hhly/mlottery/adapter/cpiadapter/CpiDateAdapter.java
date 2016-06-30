@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.cpiadapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,22 +32,22 @@ public class CpiDateAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return cpiDateList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return cpiDateList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
-    /**根据选中的position更改item背景颜色*/
+
+    /**
+     * 根据选中的 position 更改 item 背景颜色
+     */
     public void setDefSelect(int position) {
         this.defItem = position;
         notifyDataSetChanged();
@@ -55,18 +56,27 @@ public class CpiDateAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        LayoutInflater _LayoutInflater = LayoutInflater.from(context);
-        convertView = _LayoutInflater.inflate(R.layout.item_dialog_layout, null);
-        if (convertView != null) {
-            ((TextView) convertView.findViewById(R.id.dialog_txt_cancel_list)).setText(cpiDateList.get(position).get("date"));
-            ((TextView) convertView.findViewById(R.id.dialog_txt_cancel_list)).setTextColor(context.getResources().getColor(R.color.msg));
+        LayoutInflater inflater = LayoutInflater.from(context);
+        ViewHolder viewHolder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.item_dialog_layout, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.mTextView = (TextView) convertView.findViewById(R.id.dialog_txt_cancel_list);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.mTextView.setText(cpiDateList.get(position).get("date"));
         if (defItem == position) {//如果点击listview的当前的position相等
-            //设置背景颜色
-            convertView.setBackgroundResource(R.color.content_txt_grad);
+            // 设置背景颜色
+            convertView.setBackgroundResource(R.color.whitesmoke);
         } else {
             convertView.setBackgroundResource(R.color.transparent);
         }
         return convertView;
+    }
+
+    class ViewHolder {
+        TextView mTextView;
     }
 }

@@ -99,16 +99,18 @@ public class DetailsRollOdd extends FrameLayout {
 
 
         //初盘
-        if (isNULLOrEmpty(bottomOddsItem.get(0).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(0).getMiddle()) || "-".equals(isNULLOrEmpty(bottomOddsItem.get(0).getRight()))) {
+        if (isNULLOrEmpty(bottomOddsItem.get(0).getLeft()) || isNULLOrEmpty(bottomOddsItem.get(0).getMiddle()) || isNULLOrEmpty(bottomOddsItem.get(0).getRight())) {
+
             first_left.setText("-");
-            first_left.setTextColor(mContext.getResources().getColor(R.color.white));
+            first_left.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
 
             first_middle.setText("-");
-            first_middle.setTextColor(mContext.getResources().getColor(R.color.white));
+            first_middle.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
 
             first_right.setText("-");
-            first_right.setTextColor(mContext.getResources().getColor(R.color.white));
+            first_right.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
         } else {
+
             first_left.setText(bottomOddsItem.get(0).getLeft());
             first_middle.setText(bottomOddsItem.get(0).getMiddle());
             first_right.setText(bottomOddsItem.get(0).getRight());
