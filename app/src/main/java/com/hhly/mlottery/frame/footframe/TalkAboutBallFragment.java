@@ -3,7 +3,6 @@ package com.hhly.mlottery.frame.footframe;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -61,7 +60,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private TextView tvGuestLikeCount;//点赞客队数
     private TextView tvHomeLikeCount;//点赞主队数
     private LinearLayout mLinearLayout;
-    private NestedScrollView nestedscrollview;
     /**
      * 主队点赞
      */
@@ -290,18 +288,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     view.setVisibility(View.GONE);
                 }
                 if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
-//                    mRecyclerView.setVisibility(View.VISIBLE);
-//                    mNoData.setVisibility(View.VISIBLE);
                     mChatballAdapter.setEmptyView(emptyView);
                 } else {
-
-//                    mAdapter.setInfosList(mCommentArrayList);
-//                    mAdapter.notifyDataSetChanged();
                     mChatballAdapter.getData().clear();
                     mChatballAdapter.addData(mCommentArrayList);
                     mChatballAdapter.notifyDataSetChanged();
-//                    mRecyclerView.setVisibility(View.VISIBLE);
-//                    mNoData.setVisibility(View.GONE);
                     mRecyclerView.smoothScrollToPosition(0);
                     L.i("lzfnotifyDataSetChanged==");
                 }
