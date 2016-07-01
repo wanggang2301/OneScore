@@ -61,6 +61,7 @@ public class CPIOddsFragment extends Fragment {
     private List<NewOddsInfo.AllInfoBean> defaultData; // 列表数据源
     private List<NewOddsInfo.AllInfoBean> filterData; // 过滤后的数据源
     private List<NewOddsInfo.FileterTagsBean> filterTagList; // 过滤信息
+    private List<NewOddsInfo.CompanyBean> companyList; // 初次加载需要使用自己的 companyList
     private CPIRecyclerListAdapter mAdapter; // 适配器
 
     RecyclerView mRecyclerView;
@@ -112,6 +113,8 @@ public class CPIOddsFragment extends Fragment {
                 parentFragment.refreshAllChildFragments();
             }
         });
+
+        refreshData(null);
     }
 
     /**
@@ -228,13 +231,15 @@ public class CPIOddsFragment extends Fragment {
     public void updateFilterData() {
         filterData.clear();
         LinkedList<String> filterList = parentFragment.getFilterList();
-        for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
-            if (filterList == null || filterList.isEmpty()) {
-                if (allInfo.isHot()) {
+        if (filterList != null && filterList.size() > 0) {
+            for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
+                if (filterList.indexOf(allInfo.getLeagueId()) >= 0) {
                     filterAllInfo(allInfo);
                 }
-            } else {
-                if (filterList.indexOf(allInfo.getLeagueId()) >= 0) {
+            }
+        } else {
+            for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
+                if (allInfo.isHot()) {
                     filterAllInfo(allInfo);
                 }
             }
@@ -270,10 +275,8 @@ public class CPIOddsFragment extends Fragment {
      * @param company company
      */
     private void handleCompany(List<NewOddsInfo.CompanyBean> company) {
-        ArrayList<NewOddsInfo.CompanyBean> companyList =
-                parentFragment.getCompanyList();
-        if (companyList.isEmpty()
-                && parentFragment.getCurrentFragment() == CPIOddsFragment.this) {
+        ArrayList<NewOddsInfo.CompanyBean> companyList = parentFragment.getCompanyList();
+        if (companyList.isEmpty()) {
 
             // 默认选中头两个公司
             int size = company.size();
@@ -456,10 +459,15 @@ public class CPIOddsFragment extends Fragment {
      */
     private boolean isOddsShow(NewOddsInfo.AllInfoBean.ComListBean comListBean) {
         boolean show = false;
-        for (NewOddsInfo.CompanyBean company : parentFragment.getCompanyList()) {
-            if (comListBean.getComId().equals(company.getComId()) && company.isChecked()) {
-                show = true;
+        ArrayList<NewOddsInfo.CompanyBean> companyList = parentFragment.getCompanyList();
+        if (companyList != null && companyList.size() > 0) {
+            for (NewOddsInfo.CompanyBean company : companyList) {
+                if (comListBean.getComId().equals(company.getComId()) && company.isChecked()) {
+                    show = true;
+                }
             }
+        } else {
+
         }
         return show;
     }

@@ -17,10 +17,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.ToastTools;
 
 import java.util.ArrayList;
 
@@ -106,6 +108,11 @@ public class CompanyChooseDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NewOddsInfo.CompanyBean company = companyList.get(position);
+                if (getCheckedNum() == 1 && company.isChecked()) {
+                    ToastTools.ShowQuick(MyApp.getContext(), getString(R.string.at_least_one_company));
+                    return;
+                }
+
                 company.setIsChecked(!company.isChecked());
                 View selectedView = view.findViewById(R.id.item_img_checked);
                 selectedView.setSelected(!selectedView.isSelected());
@@ -121,6 +128,14 @@ public class CompanyChooseDialogFragment extends DialogFragment {
         fragment.listener = listener;
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public int getCheckedNum() {
+        int checkedNum = 0;
+        for (NewOddsInfo.CompanyBean company : companyList) {
+            if (company.isChecked()) checkedNum += 1;
+        }
+        return checkedNum;
     }
 
     public interface OnFinishSelectionListener {
