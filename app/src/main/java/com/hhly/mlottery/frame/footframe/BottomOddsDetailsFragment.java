@@ -67,6 +67,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
     private BottomOddsAdapter mAdapter;
 
     private View mView;
+    private View bottomview;
 
     private Context context;
 
@@ -128,6 +129,8 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
+
         mView = View.inflate(getContext(), R.layout.fragment_bottom_odds_details, null);
         initView();
         dialog.setContentView(mView);
@@ -140,17 +143,23 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
             bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                        BottomOddsDetailsFragment.this.dismiss();
-                    }
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    switch (newState) {
+                        case BottomSheetBehavior.STATE_HIDDEN:
+                            BottomOddsDetailsFragment.this.dismiss();
+                            break;
 
+                        case BottomSheetBehavior.STATE_EXPANDED:
+                            bottomview.setVisibility(View.VISIBLE);
+                            break;
+                        case BottomSheetBehavior.STATE_COLLAPSED:
+                            bottomview.setVisibility(View.GONE);
+                            break;
                     }
                 }
 
                 @Override
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
+                    L.d("vvvbbb", slideOffset + "");
                 }
             });
         }
@@ -236,6 +245,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         fl_no_data = (FrameLayout) mView.findViewById(R.id.fl_nodata);
         ll_content = (LinearLayout) mView.findViewById(R.id.ll_content);
         reLoading = (TextView) mView.findViewById(R.id.reLoading);
+        bottomview = (View) mView.findViewById(R.id.bottomview);
 
 
         reLoading.setOnClickListener(new View.OnClickListener() {

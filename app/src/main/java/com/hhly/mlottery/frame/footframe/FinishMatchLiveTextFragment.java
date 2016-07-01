@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -12,7 +13,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -66,7 +69,8 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     private static final int NODATA = 2;// 没有更多数据
 
     private View moreView;  //加载更多
-    private View customLoading;  //加载更多
+    private View bottomview;
+
 
     private int lastItem;
 
@@ -101,6 +105,17 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         }
     }
 
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        moreView = inflater.inflate(R.layout.load, container, false);
+
+        System.out.println("lzfonCreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
@@ -109,11 +124,9 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
             dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
+        System.out.println("lzfsetupDialog");
         mView = View.inflate(mContext, R.layout.football_live_text, null);  //文字直播
-        moreView = View.inflate(mContext, R.layout.load, null);
-
         initView();
-
         initData();
 
         dialog.setContentView(mView);
@@ -122,23 +135,48 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
 
         final CoordinatorLayout.Behavior behavior = params.getBehavior();
 
-
-        if (behavior != null && behavior instanceof BottomSheetBehavior)
-
-
-            close_image.setOnClickListener(new View.OnClickListener() {
+        if (behavior != null && behavior instanceof BottomSheetBehavior) {
+            BottomSheetBehavior bottomSheetBehavior = (BottomSheetBehavior) behavior;
+            bottomSheetBehavior.setHideable(true);
+            bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                    switch (newState) {
+                        case BottomSheetBehavior.STATE_HIDDEN:
+                            FinishMatchLiveTextFragment.this.dismiss();
+                            break;
+                        case BottomSheetBehavior.STATE_EXPANDED:
+                            bottomview.setVisibility(View.VISIBLE);
+                            break;
+                        case BottomSheetBehavior.STATE_COLLAPSED:
+                            bottomview.setVisibility(View.GONE);
+                            break;
+                    }
+                }
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 }
             });
+        }
+
+
+        close_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 
     private void initView() {
+
         close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        bottomview = (View) mView.findViewById(R.id.bottomview);
     }
 
     private void initData() {
@@ -181,19 +219,16 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STARTLOADING:
-                    moreView.setVisibility(View.VISIBLE);
                     break;
                 case SUCCESS:
-                    moreView.setVisibility(View.VISIBLE);
-
                     mLiveTextAdapter.notifyDataChangedAfterLoadMore(true);
                     break;
                 case NODATA:
-                    moreView.setVisibility(View.GONE);
+                    mLiveTextAdapter.notifyDataChangedAfterLoadMore(false);
                     Toast.makeText(getActivity(), mContext.getResources().getString(R.string.no_data_txt), Toast.LENGTH_SHORT).show();
                     break;
                 case ERROR:
-                    moreView.setVisibility(View.GONE);
+                    mLiveTextAdapter.notifyDataChangedAfterLoadMore(true);
                     Toast.makeText(getActivity(), mContext.getResources().getString(R.string.exp_net_status_txt), Toast.LENGTH_SHORT).show();
                     break;
                 default:
@@ -203,7 +238,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     };
 
     private void loadMoreData() { //加载更多数据
-        mHandler.sendEmptyMessage(STARTLOADING);
+        //mHandler.sendEmptyMessage(STARTLOADING);
 
         String url = BaseURLs.URL_FOOTBALL_LIVE_TEXT_INFO;
         // 设置参数
@@ -228,13 +263,18 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
                         filterLiveText(preLiveTextList);
                         matchTextLiveBeansList.addAll(preLiveTextList);
                         mHandler.sendEmptyMessage(SUCCESS);// 访问成功
+                        System.out.println("lzf成功");
+
                     } else {
                         mHandler.sendEmptyMessage(NODATA);
+                        System.out.println("lzfNODATA");
+
                     }
 
                 } else {
                     // 后台没请求到数据
                     mHandler.sendEmptyMessage(NODATA);
+                    System.out.println("lzfNODATA");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
