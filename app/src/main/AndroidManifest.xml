@@ -280,7 +280,8 @@
 
         <activity
             android:name=".activity.BasketDetailsActivityTest"
-            android:theme="@style/AppTheme.BlackStatusBar">
+            android:theme="@style/AppThemeDark.NoActionBar"
+            >
 
         </activity>
     </application>
