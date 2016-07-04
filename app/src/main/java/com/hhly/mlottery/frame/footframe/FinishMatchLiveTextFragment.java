@@ -263,18 +263,14 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
                         filterLiveText(preLiveTextList);
                         matchTextLiveBeansList.addAll(preLiveTextList);
                         mHandler.sendEmptyMessage(SUCCESS);// 访问成功
-                        System.out.println("lzf成功");
 
                     } else {
                         mHandler.sendEmptyMessage(NODATA);
-                        System.out.println("lzfNODATA");
-
                     }
 
                 } else {
                     // 后台没请求到数据
                     mHandler.sendEmptyMessage(NODATA);
-                    System.out.println("lzfNODATA");
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
