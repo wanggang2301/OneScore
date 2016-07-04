@@ -272,13 +272,25 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             @Override
             public void onClick(View v) {
 
+
                 if (mBottomOddsDetailsFragment != null) {
                     mBottomOddsDetailsFragment.dismiss();
                 }
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
+                    if(finishMatchLiveTextFragment==null){
+                        finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    }
+
+                    if (!finishMatchLiveTextFragment.isAdded()) {
+                        finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
+                    }
+
                 } else {
+
+                    if (liveTextFragmentTest != null) {
+                        liveTextFragmentTest.dismiss();
+                    }
+
                     liveTextFragmentTest = new LiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
                     liveTextFragmentTest.show(getChildFragmentManager(), "bottomLive");
                 }
