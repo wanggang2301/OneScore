@@ -3,12 +3,16 @@ package com.hhly.mlottery.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.enums.StatusEnum;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * RecyclerView 的 EmptyView
@@ -17,9 +21,20 @@ import com.hhly.mlottery.bean.enums.StatusEnum;
  */
 public class EmptyView extends FrameLayout {
 
+    public static final int LOADING_TYPE_PIC = 0;
+    public static final int LOADING_TYPE_TXT = 1;
+
+    @IntDef({LOADING_TYPE_PIC, LOADING_TYPE_TXT})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Type {
+    }
+
     View mNoDataView;
     View mErrorView;
     View mLoadingView;
+
+    View mProgress;
+    View mLoadingText;
 
     public EmptyView(Context context) {
         super(context);
@@ -46,7 +61,29 @@ public class EmptyView extends FrameLayout {
         View view = inflate(getContext(), R.layout.layout_empty_view, this);
         mNoDataView = view.findViewById(R.id.nodata);
         mErrorView = view.findViewById(R.id.error);
-        mLoadingView = view.findViewById(R.id.progress);
+
+        mProgress = view.findViewById(R.id.progress);
+        mLoadingText = view.findViewById(R.id.loading);
+
+        mLoadingView = mProgress;
+    }
+
+    /**
+     * 设置加载中的类型
+     *
+     * @param type type
+     */
+    public void setLoadingType(@Type int type) {
+        switch (type) {
+            case LOADING_TYPE_PIC:
+                mLoadingView = mProgress;
+                mLoadingText.setVisibility(GONE);
+                break;
+            case LOADING_TYPE_TXT:
+                mLoadingView = mLoadingText;
+                mProgress.setVisibility(GONE);
+                break;
+        }
     }
 
     /**

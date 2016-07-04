@@ -11,4 +11,12 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"/>
 
+    <TextView
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/loading_txt"
+        android:textColor="@color/loading_txt_color"/>
+
 </RelativeLayout>

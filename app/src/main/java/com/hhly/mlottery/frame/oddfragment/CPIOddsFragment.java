@@ -3,7 +3,6 @@ package com.hhly.mlottery.frame.oddfragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,24 +11,23 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.cpiadapter.CPIRecyclerListAdapter;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
+import com.hhly.mlottery.bean.enums.StatusEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.EmptyView;
 
 import java.io.Serializable;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -44,15 +42,6 @@ import java.util.Map;
  */
 public class CPIOddsFragment extends Fragment {
 
-    private static final int ERROR = -1; // 访问失败
-    private static final int SUCCESS = 1; // 访问成功
-    private static final int NODATA = 0; // 暂无数据
-
-    @IntDef({ERROR, SUCCESS, NODATA})
-    @Retention(RetentionPolicy.SOURCE)
-    @interface Status {
-    }
-
     private static final String KEY_TYPE = "type"; // 类型
 
     private String type; // 该 Fragment 的类型
@@ -63,10 +52,7 @@ public class CPIOddsFragment extends Fragment {
     private CPIRecyclerListAdapter mAdapter; // 适配器
 
     RecyclerView mRecyclerView;
-    FrameLayout mLoadingLayout; // 正在加载中
-    FrameLayout mFailedLayout; // 加载失败
-    FrameLayout mNoDataLayout; // 暂无数据
-    TextView mRefreshTextView; // 刷新
+    EmptyView mEmptyView;
 
     private CPIFragment parentFragment;
 
@@ -98,21 +84,29 @@ public class CPIOddsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // findViews
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cpi_odds_recyclerView);
-        mLoadingLayout = (FrameLayout) view.findViewById(R.id.cpi_fl_plate_loading);
-        mFailedLayout = (FrameLayout) view.findViewById(R.id.cpi_fl_plate_networkError);
-        mNoDataLayout = (FrameLayout) view.findViewById(R.id.cpi_fl_plate_noData);
-        mRefreshTextView = (TextView) view.findViewById(R.id.cpi_plate_reLoading);
+
+        initEmptyView();
 
         initRecyclerView();
-        mRefreshTextView.setOnClickListener(new View.OnClickListener() {
+
+        refreshData(null);
+    }
+
+    private void initEmptyView() {
+        mEmptyView = new EmptyView(getContext());
+        mEmptyView.setLoadingType(EmptyView.LOADING_TYPE_TXT);
+        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 parentFragment.setRefreshing(true);
                 parentFragment.refreshAllChildFragments();
             }
         });
-
-        refreshData(null);
+        RecyclerView.LayoutParams layoutParams =
+                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+        mEmptyView.setLayoutParams(layoutParams);
+        setStatus(StatusEnum.LOADING);
     }
 
     /**
@@ -124,12 +118,13 @@ public class CPIOddsFragment extends Fragment {
         filterData = new ArrayList<>();
         filterTagList = new ArrayList<>();
         mAdapter = new CPIRecyclerListAdapter(filterData, parentFragment.getCompanyList(), type);
+        mAdapter.setEmptyView(mEmptyView);
         // RecyclerView Item 单击
-        mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
+        mAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
             @Override
-            public void onItemClick(NewOddsInfo.AllInfoBean item) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int i) {
                 Intent intent = new Intent(getContext(), FootballMatchDetailActivityTest.class);
-                intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
+                intent.putExtra("thirdId", mAdapter.getItem(i).getMatchInfo().getMatchId());
                 getContext().startActivity(intent);
             }
         });
@@ -175,19 +170,20 @@ public class CPIOddsFragment extends Fragment {
             map.put("date", date);
         }
 
+        setStatus(StatusEnum.LOADING);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_NEW_ODDS, map,
                 new VolleyContentFast.ResponseSuccessListener<NewOddsInfo>() {
                     @Override
                     public void onResponse(NewOddsInfo jsonObject) {
                         if (jsonObject.getCode() == 500) {
-                            setStatus(ERROR);
+                            setStatus(StatusEnum.ERROR);
                             refreshOver();
                             return;
                         }
                         List<NewOddsInfo.AllInfoBean> allInfo = jsonObject.getAllInfo();
                         if (allInfo.size() == 0) {
                             // 无数据
-                            setStatus(NODATA);
+                            setStatus(StatusEnum.NORMAL);
                             refreshOver();
                             return;
                         }
@@ -204,14 +200,14 @@ public class CPIOddsFragment extends Fragment {
 
                         // 更新过滤后的数据源
                         updateFilterData();
-                        setStatus(SUCCESS);
+                        setStatus(StatusEnum.NORMAL);
                         // 只有当前的 Fragment 刷新成功才可以停止刷新行为
                         refreshOverWithDate(jsonObject.getCurrDate().trim());
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        setStatus(ERROR);
+                        setStatus(StatusEnum.ERROR);
                         VolleyError volleyError = exception.getVolleyError();
                         volleyError.printStackTrace();
                         refreshOver();
@@ -322,9 +318,8 @@ public class CPIOddsFragment extends Fragment {
      *
      * @param status status
      */
-    public void setStatus(@Status int status) {
-        mFailedLayout.setVisibility(status == ERROR ? View.VISIBLE : View.GONE);
-        mNoDataLayout.setVisibility(status == NODATA ? View.VISIBLE : View.GONE);
+    public void setStatus(@StatusEnum.Status int status) {
+        mEmptyView.setStatus(status);
     }
 
     /**
