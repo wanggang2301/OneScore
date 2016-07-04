@@ -50,6 +50,7 @@ import com.umeng.message.PushAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -375,6 +376,17 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                 if (jsonObject != null) {// 请求成功
                     try {
                         mHomePagerEntity = JSON.parseObject(jsonObject, HomePagerEntity.class);
+                        /**----将百度渠道的游戏竞猜去除掉--Start---*/
+                        if("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber)){
+                            Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
+                            while(iterator.hasNext()){
+                                HomeContentEntity b = iterator.next();
+                                if("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle())){
+                                    iterator.remove();
+                                }
+                            }
+                        }
+                        /**----将百度渠道的游戏竞猜去除掉--End---*/
                         PreferenceUtil.commitString(AppConstants.HOME_PAGER_DATA_KEY, jsonObject);// 保存首页缓存数据
                         L.d("xxx", "保存数据到本地！jsonObject:" + jsonObject);
                     } catch (Exception e) {
