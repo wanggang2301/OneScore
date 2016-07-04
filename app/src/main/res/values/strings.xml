@@ -832,4 +832,5 @@
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
     <string name="server_busy">系统繁忙</string>
+    <string name="at_least_one_company">至少选择一家公司</string>
 </resources>
