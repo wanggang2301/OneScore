@@ -31,11 +31,6 @@
     </style>
 
 
-    <style name="AppTheme.NoActionBarFootBallDetails">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="AppTheme.NoActionBar.TranslucentNavigation"></style>
 
     <style name="AppTheme.BlackStatusBar">
@@ -846,6 +841,16 @@
         <item name="android:windowNoTitle">true</item>无标题
         <item name="android:windowBackground">@android:color/transparent</item>背景透明
         <item name="android:backgroundDimEnabled">false</item>false不模糊
+    </style>
+
+
+
+    <style name="isFitsSystemWindows">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="toolbar">
+        <item name="android:layout_marginTop">0dp</item>
     </style>
 
 </resources>
