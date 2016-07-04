@@ -135,7 +135,6 @@ public class FootballPlateFragment extends Fragment {
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         VolleyError volleyError = exception.getVolleyError();
                         volleyError.printStackTrace();
-                        ToastTools.ShowQuick(MyApp.getContext(), volleyError.getLocalizedMessage());
                         setStatus(StatusEnum.ERROR);
                     }
                 },
