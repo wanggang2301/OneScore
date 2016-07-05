@@ -61,7 +61,6 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 import static com.hhly.mlottery.util.Preconditions.checkNotNull;
 
@@ -298,7 +297,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
 
     private void checkedOutWebsocketIsConnected() {
-        Observable.timer(25000, TimeUnit.MILLISECONDS).observeOn(Schedulers.io()).subscribe(new Action1<Long>() {
+        Observable.timer(25000, TimeUnit.MILLISECONDS).subscribe(new Action1<Long>() {
             @Override
             public void call(Long aLong) {
                 checkoutWebsocketIsConnectedNow = onOldMessageCount;
@@ -320,13 +319,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     }
 
     private void reConnectionWebSocket() {
-        Observable.timer(0, TimeUnit.MILLISECONDS).observeOn(Schedulers.io()).subscribe(new Action1<Long>() {
-            @Override
-            public void call(Long aLong) {
-                RollBallFragment.this.restoreSocketClient();
-                RollBallFragment.this.setupWebSocketClient();
-            }
-        });
+        RollBallFragment.this.restoreSocketClient();
+        RollBallFragment.this.setupWebSocketClient();
     }
 
     private void setupTitleAnimations(View titleView, int translationY, Animator.AnimatorListener animatorListener) {
