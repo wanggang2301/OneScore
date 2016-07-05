@@ -28,6 +28,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +75,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private ImageView mGuestRecent5;
     private ImageView mGuestRecent6;
     //未来比赛
+    private LinearLayout mLinearFutureMatch;
+    private TextView mFutureNodata;
     /**主队未来比赛距离天数*/
     private TextView mHomeFutureDate;
     private TextView mHomeFutureName;
@@ -85,6 +89,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private TextView mTextMoreGame;
 
     //积分排名
+    private LinearLayout mLinearRanking;
+    private TextView mRankingNodata;
     private TextView mHomeRank;
     private TextView mHomeHasGame;
     private TextView mHomeWinOrLose;
@@ -102,6 +108,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private TextView mIntegralTable;
 
     //攻防对比
+    private LinearLayout mLinearAttack;
+    private TextView mAttackNodata;
     private TextView mHomeGoal;
     private TextView mHomeLose;
     private TextView mGuestGoal;
@@ -185,6 +193,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mGuestRecent5= (ImageView) mView.findViewById(R.id.football_img_recent_guest5);
         mGuestRecent6= (ImageView) mView.findViewById(R.id.football_img_recent_guest6);
         //未来比赛
+        mLinearFutureMatch= (LinearLayout) mView.findViewById(R.id.ll_football_analyze_future);
+        mFutureNodata= (TextView) mView.findViewById(R.id.football_analyze_nodata1);
         mHomeFutureDate= (TextView) mView.findViewById(R.id.football_home_future_date);
         mHomeFutureName= (TextView) mView.findViewById(R.id.football_home_future_name);
         mHomeFutureLogo= (ImageView) mView.findViewById(R.id.football_home_future_logo);
@@ -194,6 +204,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         //更多战绩
         mTextMoreGame= (TextView) mView.findViewById(R.id.football_analyze_more_record);
         //积分榜
+        mLinearRanking= (LinearLayout) mView.findViewById(R.id.ll_football_analyze_ranking);
+        mRankingNodata= (TextView) mView.findViewById(R.id.football_analyze_nodata2);
         mHomeRank= (TextView) mView.findViewById(R.id.football_analyze__home_rank);
         mHomeHasGame= (TextView) mView.findViewById(R.id.football_analyze_home_hadgame);
         mHomeWinOrLose= (TextView) mView.findViewById(R.id.football_analyze_home_win_or_lose);
@@ -210,6 +222,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         //完整积分榜
         mIntegralTable= (TextView) mView.findViewById(R.id.football_analyze_integral_table);
         //攻防对比
+        mLinearAttack= (LinearLayout) mView.findViewById(R.id.ll_football_analyze_attack);
+        mAttackNodata= (TextView) mView.findViewById(R.id.football_analyze_nodata3);
         mHomeGoal= (TextView) mView.findViewById(R.id.home_goal);
         mHomeLose= (TextView) mView.findViewById(R.id.home_lose);
         mGuestGoal= (TextView) mView.findViewById(R.id.guest_goal);
@@ -236,11 +250,25 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     mAnalyzeBean=analyzeBean;
                     loadData(mAnalyzeBean);
                 }
+                else{
+                    mLinearRanking.setVisibility(View.GONE);
+                    mRankingNodata.setVisibility(View.VISIBLE);
+                    mLinearAttack.setVisibility(View.GONE);
+                    mAttackNodata.setVisibility(View.VISIBLE);
+                    fl_firsPlayers_not.setVisibility(View.VISIBLE);
+                    fl_firsPlayers_content.setVisibility(View.GONE);
+                }
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mLinearRanking.setVisibility(View.GONE);
+                mRankingNodata.setVisibility(View.VISIBLE);
+                mLinearAttack.setVisibility(View.GONE);
+                mAttackNodata.setVisibility(View.VISIBLE);
+                fl_firsPlayers_not.setVisibility(View.VISIBLE);
+                fl_firsPlayers_content.setVisibility(View.GONE);
             }
         }, NewAnalyzeBean.class);
 
@@ -315,7 +343,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
 
         //积分排名
+        if(analyzeBean.getScoreRank()==null){
+            mLinearRanking.setVisibility(View.GONE);
+            mRankingNodata.setVisibility(View.VISIBLE);
+        }
         if(analyzeBean.getScoreRank()!=null){
+            mLinearRanking.setVisibility(View.VISIBLE);
+            mRankingNodata.setVisibility(View.GONE);
             NewAnalyzeBean.ScoreRankEntity entity=analyzeBean.getScoreRank();
             if(entity.getHome()!=null){
                 mHomeRank.setText(entity.getHome().getRank()+entity.getHome().getTeam());
@@ -350,7 +384,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
 
         //攻防对比
+        if(analyzeBean.getAttackDefense()==null){
+            mLinearAttack.setVisibility(View.GONE);
+            mAttackNodata.setVisibility(View.VISIBLE);
+        }
         if(analyzeBean.getAttackDefense()!=null){
+            mLinearAttack.setVisibility(View.VISIBLE);
+            mAttackNodata.setVisibility(View.GONE);
             mHomeGoal.setText(analyzeBean.getAttackDefense().getHomeFieldGoal());
             mHomeLose.setText(analyzeBean.getAttackDefense().getHomeFieldLose());
             mGuestGoal.setText(analyzeBean.getAttackDefense().getGuestFieldGoal());
