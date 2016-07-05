@@ -181,12 +181,6 @@ public class CPIOddsFragment extends Fragment {
                             return;
                         }
                         List<NewOddsInfo.AllInfoBean> allInfo = jsonObject.getAllInfo();
-                        if (allInfo.size() == 0) {
-                            // 无数据
-                            setStatus(StatusEnum.NORMAL);
-                            refreshOver();
-                            return;
-                        }
 
                         // 公司数据
                         handleCompany(jsonObject.getCompany());
