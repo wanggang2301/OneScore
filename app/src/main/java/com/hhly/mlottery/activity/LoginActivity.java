@@ -1,21 +1,24 @@
 package com.hhly.mlottery.activity;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
@@ -45,15 +48,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private EditText et_username , et_password;
     private ImageView iv_eye;
     private ProgressDialog progressBar;
-    private ImageView iv_delete;
+
+    public static final String TAG = "LoginActivity";
 
     public static final int REQUESTCODE_FINDPW = 200;
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_login);
+
+        //应UI要求，把状态栏设置成透明的
+        Window window = getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         initView();
     }
@@ -94,29 +104,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         progressBar.setCancelable(false);
         progressBar.setMessage(getResources().getString(R.string.logining));
 
-        findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
-        findViewById(R.id.public_btn_set).setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.login);
-        iv_delete = (ImageView) findViewById(R.id.iv_delete);
-        iv_delete.setOnClickListener(this);
 
         iv_eye = (ImageView) findViewById(R.id.iv_eye);
         iv_eye.setOnClickListener(this);
         findViewById(R.id.tv_login).setOnClickListener(this);
         findViewById(R.id.public_img_back).setOnClickListener(this);
-
-
+        findViewById(R.id.iv_delete).setOnClickListener(this);
         et_username = (EditText) findViewById(R.id.et_username);
 
         et_username.addTextChangedListener(this);
 
         et_password = (EditText) findViewById(R.id.et_password);
 
-
-        View tv_register = findViewById(R.id.tv_right);
+       findViewById(R.id.tv_register).setOnClickListener(this);
+     /*   View tv_register = findViewById(R.id.tv_right);
         tv_register.setVisibility(View.VISIBLE);
         tv_register.setOnClickListener(this);
-
+*/
         findViewById(R.id.tv_forgetpw).setOnClickListener(this);
     }
 
@@ -127,7 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 MobclickAgent.onEvent(mContext, "LoginActivity_Exit");
                 finish();
                 break;
-            case R.id.tv_right: // 注册
+            case R.id.tv_register: // 注册
                 MobclickAgent.onEvent(mContext, "RegisterActivity_Start");
                 startActivityForResult(new Intent(this , RegisterActivity.class) , HomePagerActivity.REQUESTCODE_LOGIN);
                 break;
@@ -140,10 +144,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 int inputType = et_password.getInputType();
                 if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD){
                     et_password.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    iv_eye.setImageResource(R.mipmap.close_eye);
+                    iv_eye.setImageResource(R.mipmap.new_close_eye);
                 }else{
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    iv_eye.setImageResource(R.mipmap.open_eye);
+                    iv_eye.setImageResource(R.mipmap.new_open_eye);
                 }
 
                 // 光标移动到结尾
@@ -180,7 +184,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 Map<String, String> param = new HashMap<>();
                 param.put("account" , userName);
                 param.put("password" , MD5Util.getMD5(passWord));
+
+                Log.d(TAG,AppConstants.deviceToken);
                 param.put("deviceToken" , AppConstants.deviceToken);
+
+                //防止用户恶意注册后先添加的字段，versioncode和versionname;
+                int versionCode = CommonUtils.getVersionCode();
+                param.put("versionCode",String.valueOf(versionCode));
+
+                Log.d(TAG,versionCode+"");
+
+                String versionName = CommonUtils.getVersionName();
+                param.put("versionName",versionName);
+                Log.d(TAG,versionName);
 
                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                     @Override
@@ -285,11 +301,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onTextChanged(CharSequence s, int start, int before, int count) {}
     @Override
     public void afterTextChanged(Editable s) {
-        if (TextUtils.isEmpty(s)){
+       /* if (TextUtils.isEmpty(s)){
             iv_delete.setVisibility(View.GONE);
         }else{
             iv_delete.setVisibility(View.VISIBLE);
-        }
+        }*/
     }
 }
 

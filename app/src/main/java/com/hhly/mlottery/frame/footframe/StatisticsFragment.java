@@ -4,171 +4,420 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.TrendAllBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.MyLineChart;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
- * 统计
- * Created by asus1 on 2015/12/29.
+ * @author wang gang
+ * @date 2016/6/12 11:21
+ * @des 足球内页改版统计
  */
 public class StatisticsFragment extends Fragment {
 
-    private View view;
+
+    private static String STA_PARM = "STA_PARM";
+
+    private String type = "";
+    private View mView;
     private Context mContext;
 
     private final int ERROR = -1;//访问失败
     private final int SUCCESS = 0;// 访问成功
-    private final int STARTLOADING = 300;// 正在加载中
+    private final int STARTLOADING = 1;// 正在加载中
+
+    private List<Integer> mHomeDangers = new ArrayList<>();// 主队攻防数据
+    private List<Integer> mGuestDangers = new ArrayList<>();// 客队攻防数据
+    private List<Integer> mHomeCorners = new ArrayList<>();// 主队角球数据
+    private List<Integer> mGuestCorners = new ArrayList<>();// 客队角球数据
+
+    private LinearLayout ll_trend_main;// 走势图容器
+    private FrameLayout ff;// 攻防折线图显示容器
+    private FrameLayout ff_corner;// 角球折线图显示容器
+    private FrameLayout fl_attackTrend_loading;// 正在加载中
+    private FrameLayout fl_attackTrend_networkError;// 加载失败
+    private TextView reLoading;// 刷新
+    private ScrollView sv_attack;
+    private MyLineChart myLineChartAttack;// 攻防图表对象
+    private MyLineChart myLineChartCorner;// 角球图表对象
+
+
+    /***
+     * 统计
+     */
 
 
     private FrameLayout fl_cornerTrend_loading;// 正在加载中
     private FrameLayout fl_cornerTrend_networkError;// 访问失败
 
-    private TextView reLoading;// 刷新
+    private TextView reLoadin;// 刷新
     private DataStatisInfo.HomeStatisEntity mHomeStatisEntity;//主队统计数据
     private DataStatisInfo.GuestStatisEntity mGuestStatisEntity;//客队统计数据
     private ProgressBar prohome_team, prohome_trapping, prohome_foul, prohome_offside, prohome_freehit, prohome_lineout;// 主队
-    private ProgressBar proguest_team, proguest_trapping, proguest_foul, proguest_offside, proguest_freehit, proguest_lineout;// 客队
     private TextView home_team_txt, home_trapping_txt, home_foul_txt, home_offside_txt, home_freehit_txt, home_lineout_txt;
     private TextView guest_team_txt, guest_trapping_txt, guest_foul_txt, guest_offside_txt, guest_freehit_txt, guest_lineout_txt;//客队射门数
     private int dataSize;
-    private ScrollView stadium_scrollview_id;//统计数据滑动的scrollview
     private RelativeLayout layout_match_bottom;//统计数据layout
 
+    private MathchStatisInfo mMathchStatisInfo;
+
+
     public static StatisticsFragment newInstance() {
+
+
         StatisticsFragment fragment = new StatisticsFragment();
 
         return fragment;
     }
 
+
+    public static StatisticsFragment newInstance(String type) {
+
+        Bundle args = new Bundle();
+        args.putString(STA_PARM, type);
+        StatisticsFragment fragment = new StatisticsFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.statis_trend, container, false);
+        mView = inflater.inflate(R.layout.fragment_statistics, container, false);
         mContext = getActivity();
+       /* Bundle args = getArguments();
+        if (args != null) {
+            type = args.getString(STA_PARM);
+        }*/
         initView();
+        //  loadData();
+        return mView;
+    }
+
+
+    public void setType(String type) {
+        this.type = type;
+        loadData();
         initEvent();
-        return view;
+
+    }
+
+
+    private void loadData() {
+        if ("-1".equals(type)) {
+            getVolleyData();
+            getVolleyDataStatic();
+
+        } else { //未完场
+            initData(type);
+            initJson(type);
+        }
+
     }
 
     /**
-     * 初始化布局
+     * 初始化事件
      */
-    private void initView() {
-
-        fl_cornerTrend_loading = (FrameLayout) view.findViewById(R.id.fl_cornerTrend_loading);
-        fl_cornerTrend_networkError = (FrameLayout) view.findViewById(R.id.fl_cornerTrend_networkError);
-        layout_match_bottom = (RelativeLayout) view.findViewById(R.id.layout_match_bottom);
-        reLoading = (TextView) view.findViewById(R.id.reLoading);// 刷新
+    private void initEvent() {
+        // 访问失败，点击刷新
         reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData();
+                // 请求数据
+                getVolleyData();
             }
         });
-        //addtjl
+
+
+        reLoadin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 请求数据
+                getVolleyDataStatic();
+            }
+        });
+        // 走势图滚动监听
+     /*   sv_attack.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_MOVE:
+                        if (sv_attack.getScrollY() != 0) {// 处于顶部
+                            if (getActivity() != null) {
+                              //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
+                            }
+                        }
+                        break;
+
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        if (getActivity() != null) {
+                          //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
+                        }
+                        break;
+                }
+                return false;
+            }
+        });*/
+    }
+
+    /**
+     * 初始化界面
+     */
+    private void initView() {
+        ll_trend_main = (LinearLayout) mView.findViewById(R.id.ll_trend_main);
+        ff = (FrameLayout) mView.findViewById(R.id.fl_main);
+        ff_corner = (FrameLayout) mView.findViewById(R.id.fl_main_corner);
+        fl_attackTrend_loading = (FrameLayout) mView.findViewById(R.id.fl_attackTrend_loading);
+        fl_attackTrend_networkError = (FrameLayout) mView.findViewById(R.id.fl_attackTrend_networkError);
+        //  sv_attack = (ScrollView) mView.findViewById(R.id.sv_attack);
+
+        reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新走势图
+        // 攻防走势图控件
+        myLineChartAttack = new MyLineChart(mContext);
+        myLineChartAttack.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
+        myLineChartAttack.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
+        myLineChartAttack.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
+        myLineChartAttack.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
+        myLineChartAttack.setmOneLineColor(mContext.getResources().getColor(R.color.firstPlayers_homeTeam_bg));// 设置第一条线颜色
+        myLineChartAttack.setmTwoLineColor(mContext.getResources().getColor(R.color.firstPlayers_visitingTeam_bg));// 设置第二条线颜色
+        myLineChartAttack.setMargin(DisplayUtil.dip2px(mContext, 16));// 设置边距
+        myLineChartAttack.setXscale(DisplayUtil.px2dip(mContext, 6));// 设置X轴长度
+        myLineChartAttack.setYscale(DisplayUtil.px2dip(mContext, 6));// 设置Y轴长度
+        myLineChartAttack.setmTextSize(DisplayUtil.dip2px(mContext, 10));// XY轴字体大小
+        myLineChartAttack.setmLineWidth(DisplayUtil.dip2px(mContext, 1));// 线条宽度
+        myLineChartAttack.setmCircleSize(DisplayUtil.dip2px(mContext, 3));// 圆点大小
+        // 角球走势图控件
+        myLineChartCorner = new MyLineChart(mContext);
+        myLineChartCorner.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
+        myLineChartCorner.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
+        myLineChartCorner.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
+        myLineChartCorner.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
+        myLineChartCorner.setmOneLineColor(mContext.getResources().getColor(R.color.firstPlayers_homeTeam_bg));// 设置第一条线颜色
+        myLineChartCorner.setmTwoLineColor(mContext.getResources().getColor(R.color.firstPlayers_visitingTeam_bg));// 设置第二条线颜色
+        myLineChartCorner.setMargin(DisplayUtil.dip2px(mContext, 16));// 设置边距
+        myLineChartCorner.setXscale(DisplayUtil.px2dip(mContext, 6));// 设置X轴长度
+        myLineChartCorner.setYscale(DisplayUtil.px2dip(mContext, 6));// 设置Y轴长度
+        myLineChartCorner.setmTextSize(DisplayUtil.dip2px(mContext, 10));// XY轴字体大小
+        myLineChartCorner.setmLineWidth(DisplayUtil.dip2px(mContext, 1));// 线条宽度
+        myLineChartCorner.setmCircleSize(DisplayUtil.dip2px(mContext, 3));// 圆点大小
+
+
+        /***
+         * 统计图
+         */
+
+
+        fl_cornerTrend_loading = (FrameLayout) mView.findViewById(R.id.fl_cornerTrend_loading);
+        fl_cornerTrend_networkError = (FrameLayout) mView.findViewById(R.id.fl_cornerTrend_networkError);
+        layout_match_bottom = (RelativeLayout) mView.findViewById(R.id.layout_match_bottom);
+        reLoadin = (TextView) mView.findViewById(R.id.reLoadin);// 刷新统计图
+
 
         //主（客）队进度条
-        prohome_team = (ProgressBar) view.findViewById(R.id.prohome_team);
-        proguest_team = (ProgressBar) view.findViewById(R.id.proguest_team);
+        prohome_team = (ProgressBar) mView.findViewById(R.id.prohome_team);
 
-        prohome_trapping = (ProgressBar) view.findViewById(R.id.prohome_trapping);
-        proguest_trapping = (ProgressBar) view.findViewById(R.id.proguest_trapping);
+        prohome_trapping = (ProgressBar) mView.findViewById(R.id.prohome_trapping);
 
-        prohome_foul = (ProgressBar) view.findViewById(R.id.prohome_foul);
-        proguest_foul = (ProgressBar) view.findViewById(R.id.proguest_foul);
+        prohome_foul = (ProgressBar) mView.findViewById(R.id.prohome_foul);
 
-        prohome_offside = (ProgressBar) view.findViewById(R.id.prohome_offside);
-        proguest_offside = (ProgressBar) view.findViewById(R.id.proguest_offside);
+        prohome_offside = (ProgressBar) mView.findViewById(R.id.prohome_offside);
 
-        prohome_freehit = (ProgressBar) view.findViewById(R.id.prohome_freeHit);
-        proguest_freehit = (ProgressBar) view.findViewById(R.id.proguest_freeHit);
+        prohome_freehit = (ProgressBar) mView.findViewById(R.id.prohome_freeHit);
 
-        prohome_lineout = (ProgressBar) view.findViewById(R.id.prohome_lineout);
-        proguest_lineout = (ProgressBar) view.findViewById(R.id.proguest_lineout);
+        prohome_lineout = (ProgressBar) mView.findViewById(R.id.prohome_lineout);
 
 
         //主（客）队进度数
-        home_team_txt = (TextView) view.findViewById(R.id.home_team_txt);
-        guest_team_txt = (TextView) view.findViewById(R.id.guest_team_txt);
+        home_team_txt = (TextView) mView.findViewById(R.id.home_team_txt);
+        guest_team_txt = (TextView) mView.findViewById(R.id.guest_team_txt);
 
-        home_trapping_txt = (TextView) view.findViewById(R.id.home_trapping_txt);
-        guest_trapping_txt = (TextView) view.findViewById(R.id.guest_trapping_txt);
+        home_trapping_txt = (TextView) mView.findViewById(R.id.home_trapping_txt);
+        guest_trapping_txt = (TextView) mView.findViewById(R.id.guest_trapping_txt);
 
-        home_foul_txt = (TextView) view.findViewById(R.id.home_foul_txt);
-        guest_foul_txt = (TextView) view.findViewById(R.id.guest_foul_txt);
+        home_foul_txt = (TextView) mView.findViewById(R.id.home_foul_txt);
+        guest_foul_txt = (TextView) mView.findViewById(R.id.guest_foul_txt);
 
-        home_offside_txt = (TextView) view.findViewById(R.id.home_offside_txt);
-        guest_offside_txt = (TextView) view.findViewById(R.id.guest_offside_txt);
+        home_offside_txt = (TextView) mView.findViewById(R.id.home_offside_txt);
+        guest_offside_txt = (TextView) mView.findViewById(R.id.guest_offside_txt);
 
-        home_freehit_txt = (TextView) view.findViewById(R.id.home_freeHit_txt);
-        guest_freehit_txt = (TextView) view.findViewById(R.id.guest_freeHit_txt);
+        home_freehit_txt = (TextView) mView.findViewById(R.id.home_freeHit_txt);
+        guest_freehit_txt = (TextView) mView.findViewById(R.id.guest_freeHit_txt);
 
-        home_lineout_txt = (TextView) view.findViewById(R.id.home_lineout_txt);
-        guest_lineout_txt = (TextView) view.findViewById(R.id.guest_lineout_txt);
-
-        stadium_scrollview_id = (ScrollView) view.findViewById(R.id.stadium_scrollview_id);
-
-        //addtjlend
+        home_lineout_txt = (TextView) mView.findViewById(R.id.home_lineout_txt);
+        guest_lineout_txt = (TextView) mView.findViewById(R.id.guest_lineout_txt);
 
     }
-    private boolean isHttpData = false;// 是否有请求到后台数据
+
+
+    public void setList(List<Integer> hCorners, List<Integer> gCorners, List<Integer> hDangers, List<Integer> gDangers) {
+        mHomeCorners = hCorners;
+        mGuestCorners = gCorners;
+        mHomeDangers = hDangers;
+        mGuestDangers = gDangers;
+    }
+
     /**
-     * 初始化数据
+     * 初始化数据走势图数据
      */
-    public void initData() {
-        boolean mStart = StadiumFragment.isStart;// 判断是否完场
+    public void initData(String id) {
 
+        if ("0".equals(id)) {
+            ArrayList<Integer> arrayList = new ArrayList<>();
 
-        //正在比赛中
-        if (!mStart) {
-            // 显示统计数据
-            fl_cornerTrend_loading.setVisibility(View.GONE);
-            fl_cornerTrend_networkError.setVisibility(View.GONE);
-            layout_match_bottom.setVisibility(View.VISIBLE);
-            initJson(1);
-        } else {//完场
-            if(!isHttpData){//请求到，执行
-                // 请求后台数据
-                getVolleyData();
-            }
+            showData(arrayList, arrayList, myLineChartCorner, ff_corner);// 显示角球数据
+            showData(arrayList, arrayList, myLineChartAttack, ff);// 显示攻防数据
 
+        } else if ("1".equals(id)) {
+
+            showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
+            showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
+
+        } else if ("-1".equals(id)) {
+            // getVolleyData();
         }
     }
 
     /**
-     * 请求后台数据
+     * 显示数据走势图
+     */
+    private void showData(List<Integer> mHDList, List<Integer> mGDList, MyLineChart myLineChart, FrameLayout mff) {
+        // 动态判断Y轴刻度
+        if (mHDList.size() != 0 && mGDList.size() != 0) {
+            // 获取Y轴需要显示的最大值
+            int hc = 0;
+            int gc = 0;
+            for (Integer homeMax : mHDList) {
+                if (homeMax > hc) {
+                    hc = homeMax;
+                }
+            }
+            for (Integer guestMax : mGDList) {
+                if (guestMax > gc) {
+                    gc = guestMax;
+                }
+            }
+            // 动态设置Y轴刻度
+            if (mHDList.size() > 1 && mGDList.size() > 1) {
+                if (hc >= gc) {
+                    int hcCount = (int) Math.ceil((hc / 4D)) * 4;
+                    if (hcCount < 4) {
+                        hcCount = 4;// 设置最小刻度
+                    }
+                    myLineChart.setYlabel(new String[]{"0", hcCount / 4 + "", (hcCount / 4) * 2 + "", (hcCount / 4) * 3 + "", (hcCount / 4) * 4 + ""});// 设置Y轴刻度值
+                } else {
+                    int gcCount = (int) Math.ceil((gc / 4D)) * 4;
+                    if (gcCount < 4) {
+                        gcCount = 4;
+                    }
+                    myLineChart.setYlabel(new String[]{"0", gcCount / 4 + "", (gcCount / 4) * 2 + "", (gcCount / 4) * 3 + "", (gcCount / 4) * 4 + ""});// 设置Y轴刻度值
+                }
+            } else {
+                myLineChart.setYlabel(new String[]{"0", "2", "4", "6", "8"});// 设置Y轴刻度值
+            }
+        }
+
+        myLineChart.setData(mHDList);// 设置第一条线数据
+        myLineChart.setData2(mGDList);// 设置第二条线数据
+        mff.removeAllViews();
+        mff.addView(myLineChart);
+    }
+
+    /**
+     * 请求走势图后台数据
      *
      * @return
      */
     public void getVolleyData() {
+        if (getActivity() == null) {
+            return;
+        }
+        mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
+        // 获取对象ID
+        String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
+        // 设置参数
+        Map<String, String> myPostParams = new HashMap<>();
+        myPostParams.put("thirdId", mThirdId);
+        L.d("xxxx", "mThirdId   " + mThirdId);
+        // 请求数据
+        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<TrendAllBean>() {
+            @Override
+            public void onResponse(TrendAllBean jsonObject) {
+                if (jsonObject != null) {
+                    mHomeCorners.clear();
+                    mGuestCorners.clear();
+                    mHomeDangers.clear();
+                    mGuestDangers.clear();
+                    mHomeCorners = jsonObject.getHomeCorner();
+                    mGuestCorners = jsonObject.getGuestCorner();
+                    mHomeDangers = jsonObject.getHomeDanger();
+                    mGuestDangers = jsonObject.getGuestDanger();
+                    if (mHomeCorners != null && mGuestCorners != null && mHomeDangers != null && mGuestDangers != null) {
+                        mHomeCorners.add(0, 0);
+                        mGuestCorners.add(0, 0);
 
-        L.d("456","总计");
-        mHandler.sendEmptyMessage(STARTLOADING);// 正在加载中
+                        mHomeDangers.add(0, 0);
+                        mGuestDangers.add(0, 0);
+                        mHandler.sendEmptyMessage(SUCCESS);// 访问成功
+                    } else {
+                        mHandler.sendEmptyMessage(ERROR);
+                    }
+                } else {
+                    // 后台没请求到数据
+                    mHandler.sendEmptyMessage(ERROR);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mHandler.sendEmptyMessage(ERROR);// 访问失败
+            }
+        }, TrendAllBean.class);
+    }
+
+
+    /**
+     * 请求统计图后台数据
+     *
+     * @return
+     */
+    public void getVolleyDataStatic() {
+
+        L.d("456", "总计");
+        mHandlerStatics.sendEmptyMessage(STARTLOADING);// 正在加载中
         Map<String, String> map = new HashMap<>();
         if (getActivity() == null) {
             return;
         } else {
-            map.put("thirdId", ((FootballMatchDetailActivity) getActivity()).mThirdId);
+            map.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
 
             L.i("dddffdfd");
 
@@ -178,262 +427,127 @@ public class StatisticsFragment extends Fragment {
                     if (json != null && "200".equals(json.getResult())) {
                         mHomeStatisEntity = json.getHomeStatis();
                         mGuestStatisEntity = json.getGuestStatis();
-                        initJson(-1);//初始化json数据，绑定txt
-                        mHandler.sendEmptyMessage(SUCCESS);// 访问成功
+                        //initJson("-1");//初始化json数据，绑定txt
+                        mHandlerStatics.sendEmptyMessage(SUCCESS);// 访问成功
                     }
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                     L.i("init", "====initFailed===" + exception.getVolleyError().getMessage());
-                    mHandler.sendEmptyMessage(ERROR);
+                    mHandlerStatics.sendEmptyMessage(ERROR);
                 }
             }, DataStatisInfo.class);
         }
 
     }
-    //初始化json数据，绑定txt
-    public void initJson(int id) {
-        if (id == 1) {//正在比赛
-            //射门
-            initStatisData(StadiumFragment.mathchStatisInfo.getHome_shoot_door(), 1);
-            initStatisData(StadiumFragment.mathchStatisInfo.getGuest_shoot_door(), 10);
-            //扑救
-            initStatisData(StadiumFragment.mathchStatisInfo.getHome_rescue(), 2);
-            initStatisData(StadiumFragment.mathchStatisInfo.getGuest_rescue(), 20);
-            //犯规
-            initStatisData(StadiumFragment.mathchStatisInfo.getHome_foul(), 3);
-            initStatisData(StadiumFragment.mathchStatisInfo.getGuest_foul(), 30);
-            //越位
-            initStatisData(StadiumFragment.mathchStatisInfo.getHome_away(), 4);
-            initStatisData(StadiumFragment.mathchStatisInfo.getGuest_away(), 40);
-            //任意球
-            initStatisData(StadiumFragment.mathchStatisInfo.getHome_free_kick(), 5);
-            initStatisData(StadiumFragment.mathchStatisInfo.getGuest_free_kick(), 50);
-            //界外球
-            initStatisData(StadiumFragment.mathchStatisInfo.getHome_lineOut(), 6);
-            initStatisData(StadiumFragment.mathchStatisInfo.getGuest_lineOut(), 60);
 
-            ///////////////////////////////////////////////////////////
-            guest_team_txt.setText(StadiumFragment.mathchStatisInfo.getGuest_shoot_door() + "");
-            home_team_txt.setText(StadiumFragment.mathchStatisInfo.getHome_shoot_door() + "");
-
-            guest_trapping_txt.setText(StadiumFragment.mathchStatisInfo.getGuest_rescue() + "");
-            home_trapping_txt.setText(StadiumFragment.mathchStatisInfo.getHome_rescue() + "");
-
-            guest_foul_txt.setText(StadiumFragment.mathchStatisInfo.getGuest_foul() + "");
-            home_foul_txt.setText(StadiumFragment.mathchStatisInfo.getHome_foul() + "");
-
-            guest_offside_txt.setText(StadiumFragment.mathchStatisInfo.getGuest_away() + "");
-            home_offside_txt.setText(StadiumFragment.mathchStatisInfo.getHome_away() + "");
-
-            guest_freehit_txt.setText(StadiumFragment.mathchStatisInfo.getGuest_free_kick() + "");
-            home_freehit_txt.setText(StadiumFragment.mathchStatisInfo.getHome_free_kick() + "");
-
-            guest_lineout_txt.setText(StadiumFragment.mathchStatisInfo.getGuest_lineOut() + "");
-            home_lineout_txt.setText(StadiumFragment.mathchStatisInfo.getHome_lineOut() + "");
-
-
-        } else if (id == -1) {//完场
-            //射门
-            initStatisData(mHomeStatisEntity.getAllShots(), 1);
-            initStatisData(mGuestStatisEntity.getAllShots(), 10);
-            //扑救
-            initStatisData(mHomeStatisEntity.getTrapping(), 2);
-            initStatisData(mGuestStatisEntity.getTrapping(), 20);
-            //犯规
-            initStatisData(mHomeStatisEntity.getFoul(), 3);
-            initStatisData(mGuestStatisEntity.getFoul(), 30);
-            //越位
-            initStatisData(mHomeStatisEntity.getOffside(), 4);
-            initStatisData(mGuestStatisEntity.getOffside(), 40);
-            //任意球
-            initStatisData(mHomeStatisEntity.getFreeHit(), 5);
-            initStatisData(mGuestStatisEntity.getFreeHit(), 50);
-            //界外球
-            initStatisData(mHomeStatisEntity.getLineOut(), 6);
-            initStatisData(mGuestStatisEntity.getLineOut(), 60);
-
-            home_team_txt.setText(mHomeStatisEntity.getAllShots() + "");
-            guest_team_txt.setText(mGuestStatisEntity.getAllShots() + "");
-
-            home_trapping_txt.setText(mHomeStatisEntity.getTrapping() + "");
-            guest_trapping_txt.setText(mGuestStatisEntity.getTrapping() + "");
-
-            home_foul_txt.setText(mHomeStatisEntity.getFoul() + "");
-            guest_foul_txt.setText(mGuestStatisEntity.getFoul() + "");
-
-            guest_offside_txt.setText(mGuestStatisEntity.getOffside() + "");
-            home_offside_txt.setText(mHomeStatisEntity.getOffside() + "");
-
-            guest_freehit_txt.setText(mGuestStatisEntity.getFreeHit() + "");
-            home_freehit_txt.setText(mHomeStatisEntity.getFreeHit() + "");
-
-
-            guest_lineout_txt.setText(mGuestStatisEntity.getLineOut() + "");
-            home_lineout_txt.setText(mHomeStatisEntity.getLineOut() + "");
-
-        }
+    public void setMathchStatisInfo(MathchStatisInfo m) {
+        mMathchStatisInfo = m;
     }
 
-    /**
-     * 得到统计数据展现
-     */
-    public void initStatisData(final int data, final int number) {
-        switch (number) {
-            case 1://射门
-                if (data % 2 == 0) {
-                    dataSize = data;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 1);
-                } else if (data % 2 == 1) {
-                    dataSize = data + 1;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 1);
-                }
-                break;
-            case 10:
-                if (data % 2 == 0) {
-                    dataSize = data;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 10);
-                } else if (data % 2 == 1) {
-                    int dataSize = data + 1;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 10);
-                }
-                break;
-            case 2://扑救
-                dataSize = data;
-                dataSize = dataSize * 10;
-                findData(dataSize, 2);
-                break;
-            case 20:
-                dataSize = data;
-                dataSize = dataSize * 10;
-                findData(dataSize, 20);
-                break;
-            case 3://犯规
-                if (data % 2 == 0) {
-                    dataSize = data;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 3);
-                } else if (data % 2 == 1) {
-                    int dataSize = data + 1;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 3);
-                }
-                break;
-            case 30:
-                if (data % 2 == 0) {
-                    dataSize = data;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 30);
-                } else if (data % 2 == 1) {
-                    int dataSize = data + 1;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 30);
-                }
-                break;
-            case 4://越位
-                dataSize = data;
-                dataSize = dataSize * 10;
-                findData(dataSize, 4);
-                break;
-            case 40:
-                dataSize = data;
-                dataSize = dataSize * 10;
-                findData(dataSize, 40);
-                break;
-            case 5://任意球
-                if (data % 2 == 0) {
-                    dataSize = data;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 5);
-                } else if (data % 2 == 1) {
-                    int dataSize = data + 1;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 5);
-                }
-                break;
-            case 50:
-                if (data % 2 == 0) {
-                    dataSize = data;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 50);
-                } else if (data % 2 == 1) {
-                    int dataSize = data + 1;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 50);
-                }
-                break;
-            case 6://界外球
-                if (data % 3 == 0) {
-                    dataSize = data;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 6);
-                } else if (data % 3 == 2) {
-                    int dataSize = data + 1;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 6);
-                } else if (data % 3 == 1) {
-                    int dataSize = data + 2;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 6);
-                }
-                break;
-            case 60:
-                if (data % 3 == 0) {
-                    dataSize = data;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 60);
-                } else if (data % 3 == 2) {
-                    int dataSize = data + 1;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 60);
-                } else if (data % 3 == 1) {
-                    int dataSize = data + 2;
-                    dataSize = dataSize * 10;
-                    findData(dataSize, 60);
-                }
-                break;
-            default:
-                break;
 
-        }
-    }
-    /**
-     * 根据判断增加进度条传值
+    /***
+     * 初始化统计图数据
      *
-     * @param dataNum
+     * @param id
      */
-    public void findData(final int dataNum, final int messNumber) {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                for (int i = 0; i <= dataNum; i++) {
-                    Message message = Message.obtain();
-                    message.what = messNumber;
-                    message.obj = i;
-                    if (message == null | mHandler == null) {
-                        return;
-                    } else {
-                        mHandler.sendMessage(message);
-                    }
+    public void initJson(String id) {
 
-//                    try {
-//                        Thread.sleep(6);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
+        //未开赛
+        if ("0".equals(id)) {
+            prohome_team.setProgress(50);
+            prohome_trapping.setProgress(50);
+            prohome_foul.setProgress(50);
+            prohome_offside.setProgress(50);
+            prohome_freehit.setProgress(50);
+            prohome_lineout.setProgress(50);
 
-                }
+
+            guest_team_txt.setText("");
+            home_team_txt.setText("");
+
+            guest_trapping_txt.setText("");
+            home_trapping_txt.setText("");
+
+            guest_foul_txt.setText("");
+            home_foul_txt.setText("");
+
+            guest_offside_txt.setText("");
+            home_offside_txt.setText("");
+
+            guest_freehit_txt.setText("");
+            home_freehit_txt.setText("");
+
+            guest_lineout_txt.setText("");
+            home_lineout_txt.setText("");
+
+        } else if ("1".equals(id)) {//正在比赛
+
+            if (mMathchStatisInfo == null) {
+                return;
             }
-        }, 0);
 
+
+            prohome_team.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_shoot_door(), mMathchStatisInfo.getGuest_shoot_door()));
+            prohome_trapping.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_rescue(), mMathchStatisInfo.getGuest_rescue()));
+            prohome_foul.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_foul(), mMathchStatisInfo.getGuest_foul()));
+            prohome_offside.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_away(), mMathchStatisInfo.getGuest_away()));
+            prohome_freehit.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_free_kick(), mMathchStatisInfo.getGuest_free_kick()));
+            prohome_lineout.setProgress((int) StadiumUtils.computeProgressbarPercent(mMathchStatisInfo.getHome_lineOut(), mMathchStatisInfo.getGuest_lineOut()));
+
+
+            guest_team_txt.setText(mMathchStatisInfo.getGuest_shoot_door() + "");
+            home_team_txt.setText(mMathchStatisInfo.getHome_shoot_door() + "");
+
+            guest_trapping_txt.setText(mMathchStatisInfo.getGuest_rescue() + "");
+            home_trapping_txt.setText(mMathchStatisInfo.getHome_rescue() + "");
+
+            guest_foul_txt.setText(mMathchStatisInfo.getGuest_foul() + "");
+            home_foul_txt.setText(mMathchStatisInfo.getHome_foul() + "");
+
+            guest_offside_txt.setText(mMathchStatisInfo.getGuest_away() + "");
+            home_offside_txt.setText(mMathchStatisInfo.getHome_away() + "");
+
+            guest_freehit_txt.setText(mMathchStatisInfo.getGuest_free_kick() + "");
+            home_freehit_txt.setText(mMathchStatisInfo.getHome_free_kick() + "");
+
+            guest_lineout_txt.setText(mMathchStatisInfo.getGuest_lineOut() + "");
+            home_lineout_txt.setText(mMathchStatisInfo.getHome_lineOut() + "");
+
+        } else if ("-1".equals(id)) {//完场
+            // getVolleyDataStatic();
+        }
     }
 
     private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case STARTLOADING:// 正在加载中
+                    fl_attackTrend_loading.setVisibility(View.VISIBLE);
+                    fl_attackTrend_networkError.setVisibility(View.GONE);
+                    ll_trend_main.setVisibility(View.GONE);
+                    break;
+                case SUCCESS:// 加载成功
+                    fl_attackTrend_loading.setVisibility(View.GONE);
+                    fl_attackTrend_networkError.setVisibility(View.GONE);
+                    ll_trend_main.setVisibility(View.VISIBLE);
+                    showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
+                    showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
+                    break;
+                case ERROR:// 加载失败
+                    fl_attackTrend_loading.setVisibility(View.GONE);
+                    fl_attackTrend_networkError.setVisibility(View.VISIBLE);
+                    ll_trend_main.setVisibility(View.GONE);
+                    break;
+            }
+        }
+    };
+
+
+    private Handler mHandlerStatics = new Handler() {
         @Override
         public void handleMessage(Message msg) {
 
@@ -447,108 +561,48 @@ public class StatisticsFragment extends Fragment {
                     fl_cornerTrend_loading.setVisibility(View.GONE);
                     fl_cornerTrend_networkError.setVisibility(View.GONE);
                     layout_match_bottom.setVisibility(View.VISIBLE);
-                    isHttpData = true;
-
+                    loadStatics();
                     break;
                 case ERROR:// 访问失败
                     fl_cornerTrend_loading.setVisibility(View.GONE);
                     fl_cornerTrend_networkError.setVisibility(View.VISIBLE);
                     layout_match_bottom.setVisibility(View.GONE);
-                    isHttpData = false;
                     break;
-                case 1://主队射门
-                    int p1 = (Integer) msg.obj;
 
-                    prohome_team.setProgress(p1);
-
-                    break;
-                case 10://客队射门
-                    int p10 = (Integer) msg.obj;
-                    proguest_team.setProgress(p10);
-                    break;
-                case 2://主队扑救
-                    int p2 = (Integer) msg.obj;
-                    prohome_trapping.setProgress(p2);
-
-                    break;
-                case 20://客队扑救
-                    int p20 = (Integer) msg.obj;
-                    proguest_trapping.setProgress(p20);
-
-                    break;
-                case 3://主队犯规
-                    int p3 = (Integer) msg.obj;
-                    prohome_foul.setProgress(p3);
-
-                    break;
-                case 30://客队犯规
-                    int p30 = (Integer) msg.obj;
-                    proguest_foul.setProgress(p30);
-
-                    break;
-                case 4://主队越位
-                    int p4 = (Integer) msg.obj;
-                    prohome_offside.setProgress(p4);
-
-                    break;
-                case 40://客队越位
-                    int p40 = (Integer) msg.obj;
-                    proguest_offside.setProgress(p40);
-
-                    break;
-                case 5://主队任意球
-                    int p5 = (Integer) msg.obj;
-                    prohome_freehit.setProgress(p5);
-
-                    break;
-                case 50://客队任意球
-                    int p50 = (Integer) msg.obj;
-                    proguest_freehit.setProgress(p50);
-
-                    break;
-                case 6://主队界外球
-                    int p6 = (Integer) msg.obj;
-                    prohome_lineout.setProgress(p6);
-
-                    break;
-                case 60://客队界外球
-                    int p60 = (Integer) msg.obj;
-                    proguest_lineout.setProgress(p60);
-
-                    break;
-                case 100://正在比赛
-                    initJson(1);
-                    break;
-                case 200://完场
-                    getVolleyData();//请求json
-                    break;
                 default:
                     break;
             }
         }
     };
-    public void initEvent() {
-        stadium_scrollview_id.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_MOVE:
-                        //处于顶部
-                        if (stadium_scrollview_id.getScrollY() != 0) {
-                            ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(false);
-                        }
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        ((FootballMatchDetailActivity) getActivity()).mRefreshLayout.setEnabled(true);
-                        break;
-                }
-                return false;
-            }
-        });
+
+    private void loadStatics() {
+        prohome_team.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getAllShots(), mGuestStatisEntity.getAllShots()));
+        prohome_trapping.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getTrapping(), mGuestStatisEntity.getTrapping()));
+        prohome_foul.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getFoul(), mGuestStatisEntity.getFoul()));
+        prohome_offside.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getOffside(), mGuestStatisEntity.getOffside()));
+        prohome_freehit.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getFreeHit(), mGuestStatisEntity.getFreeHit()));
+        prohome_lineout.setProgress((int) StadiumUtils.computeProgressbarPercent(mHomeStatisEntity.getLineOut(), mGuestStatisEntity.getLineOut()));
+
+
+        home_team_txt.setText(mHomeStatisEntity.getAllShots() + "");
+        guest_team_txt.setText(mGuestStatisEntity.getAllShots() + "");
+
+        home_trapping_txt.setText(mHomeStatisEntity.getTrapping() + "");
+        guest_trapping_txt.setText(mGuestStatisEntity.getTrapping() + "");
+
+        home_foul_txt.setText(mHomeStatisEntity.getFoul() + "");
+        guest_foul_txt.setText(mGuestStatisEntity.getFoul() + "");
+
+        guest_offside_txt.setText(mGuestStatisEntity.getOffside() + "");
+        home_offside_txt.setText(mHomeStatisEntity.getOffside() + "");
+
+        guest_freehit_txt.setText(mGuestStatisEntity.getFreeHit() + "");
+        home_freehit_txt.setText(mHomeStatisEntity.getFreeHit() + "");
+
+
+        guest_lineout_txt.setText(mGuestStatisEntity.getLineOut() + "");
+        home_lineout_txt.setText(mHomeStatisEntity.getLineOut() + "");
+
     }
-
-
 
 }

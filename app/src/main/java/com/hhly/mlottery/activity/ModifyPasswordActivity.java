@@ -89,6 +89,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                 modifyPassword();
                 break;
             case R.id.iv_eye: // 返回
+                MobclickAgent.onEvent(mContext, "ModifyPasswordActivity_eye");
                 int old_inputType = et_password_old.getInputType();
                 int new_inputType = et_password_new.getInputType();
                 int confirm_inputType = et_password_confirm.getInputType();

@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -10,17 +11,20 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.MotionEvent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AbsListView;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
-import com.hhly.mlottery.adapter.LiveTextAdapter;
+import com.hhly.mlottery.adapter.FootBallLiveTextAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.config.BaseURLs;
@@ -33,16 +37,15 @@ import java.util.Map;
 
 /**
  * @author wang gang
- * @date 2016/6/8 9:31
+ * @date 2016/6/28 15:26
  * @des ${TODO}
  */
-public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment implements AbsListView.OnScrollListener {
-
+public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     private static String TAG = "FinishMatchLiveTextFragment";
 
     private static final String PARAM_TYPE = "type";
 
-    private LiveTextAdapter mLiveTextAdapter;
+    private FootBallLiveTextAdapter mLiveTextAdapter;
 
 
     private static final String FINISHMATCHLIVETEXT_PARAM = "FINISHMATCHLIVETEXT_PARAM";
@@ -57,7 +60,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
     private ArrayList<MatchTextLiveBean> matchTextLiveBeansList;
     private static ArrayList<MatchTextLiveBean> preLiveTextList;
 
-    private ListView mListView;
+    private RecyclerView mRecyclerView;
 
 
     private static final int ERROR = -1;//访问失败
@@ -66,6 +69,8 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
     private static final int NODATA = 2;// 没有更多数据
 
     private View moreView;  //加载更多
+    private View bottomview;
+
 
     private int lastItem;
 
@@ -77,6 +82,9 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
 
 
     private String status;
+
+    private BottomSheetBehavior bottomSheetBehavior;
+
 
     public static FinishMatchLiveTextFragment newInstance(ArrayList<MatchTextLiveBean> matchTextLiveBeans, String status) {
         FinishMatchLiveTextFragment fragment = new FinishMatchLiveTextFragment();
@@ -97,37 +105,58 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
         }
     }
 
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        moreView = inflater.inflate(R.layout.load, container, false);
+
+        System.out.println("lzfonCreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        mView = View.inflate(mContext, R.layout.live_text, null);  //文字直播
-        moreView = View.inflate(mContext, R.layout.load, null);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
 
+        System.out.println("lzfsetupDialog");
+        mView = View.inflate(mContext, R.layout.football_live_text, null);  //文字直播
         initView();
-
         initData();
+
         dialog.setContentView(mView);
-        CoordinatorLayout.LayoutParams params =
-                (CoordinatorLayout.LayoutParams) ((View) mView.getParent()).getLayoutParams();
-        CoordinatorLayout.Behavior behavior = params.getBehavior();
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) mView.getParent()).getLayoutParams();
+
+
+        final CoordinatorLayout.Behavior behavior = params.getBehavior();
+
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             BottomSheetBehavior bottomSheetBehavior = (BottomSheetBehavior) behavior;
             bottomSheetBehavior.setHideable(true);
             bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                        FinishMatchLiveTextFragment.this.dismiss();
-                    }
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
 
+                    switch (newState) {
+                        case BottomSheetBehavior.STATE_HIDDEN:
+                            FinishMatchLiveTextFragment.this.dismiss();
+                            break;
+                        case BottomSheetBehavior.STATE_EXPANDED:
+                            bottomview.setVisibility(View.VISIBLE);
+                            break;
+                        case BottomSheetBehavior.STATE_COLLAPSED:
+                            bottomview.setVisibility(View.GONE);
+                            break;
                     }
                 }
 
                 @Override
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
                 }
             });
         }
@@ -139,37 +168,18 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
                 dialog.dismiss();
             }
         });
-
-
     }
 
 
     private void initView() {
+
         close_image = (ImageView) mView.findViewById(R.id.close_image);
-        mListView = (ListView) mView.findViewById(R.id.timelistview);
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        bottomview = (View) mView.findViewById(R.id.bottomview);
     }
 
     private void initData() {
-        mListView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_MOVE:
-                        //只有文字直播的listview滑到顶部才可以下拉刷新
-                        if (mListView.getFirstVisiblePosition() != 0) {
-                            //  mRefreshLayout.setEnabled(false);
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        // mRefreshLayout.setEnabled(true);
-                        break;
-                }
-                return false;
-            }
-        });
-
         pageId = 1;
 
         if (matchTextLiveBeansList.size() > 0) {
@@ -179,36 +189,28 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
             }
         }
         filterLiveText(matchTextLiveBeansList);
-
         count = matchTextLiveBeansList.size();
-        mListView.addFooterView(moreView);
-
-        mLiveTextAdapter = new LiveTextAdapter(getActivity(), matchTextLiveBeansList);
-        mListView.setAdapter(mLiveTextAdapter);
-        mListView.setOnScrollListener(this);
-
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        lastItem = firstVisibleItem + visibleItemCount - 1;  //减1是因为上面加了个addFooterView
-    }
-
-    private boolean isSucessedLoad = true;
+        mLiveTextAdapter = new FootBallLiveTextAdapter(getActivity(), matchTextLiveBeansList);
 
 
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        //下拉到空闲是，且最后一个item的数等于数据的总数时，进行更新
+        mRecyclerView.setAdapter(mLiveTextAdapter);
 
-        if (lastItem == count && scrollState == this.SCROLL_STATE_IDLE) {
-            moreView.setVisibility(view.VISIBLE);
+        mLiveTextAdapter.openLoadMore(count, true);
 
-            if (isSucessedLoad) {
-                mHandler.sendEmptyMessage(STARTLOADING);
+        mLiveTextAdapter.setLoadingView(moreView);
+
+        mLiveTextAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mRecyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadMoreData();
+                    }
+                });
             }
+        });
 
-        }
     }
 
 
@@ -217,20 +219,17 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STARTLOADING:
-                    isSucessedLoad = false;
-                    loadMoreData();  //加载更多数据，这里可以使用异步加载
                     break;
                 case SUCCESS:
-                    mLiveTextAdapter.notifyDataSetChanged();
-                    moreView.setVisibility(View.GONE);
+                    mLiveTextAdapter.notifyDataChangedAfterLoadMore(true);
                     break;
                 case NODATA:
+                    mLiveTextAdapter.notifyDataChangedAfterLoadMore(false);
                     Toast.makeText(getActivity(), mContext.getResources().getString(R.string.no_data_txt), Toast.LENGTH_SHORT).show();
-                    mListView.removeFooterView(moreView); //移除底部视图
                     break;
                 case ERROR:
+                    mLiveTextAdapter.notifyDataChangedAfterLoadMore(true);
                     Toast.makeText(getActivity(), mContext.getResources().getString(R.string.exp_net_status_txt), Toast.LENGTH_SHORT).show();
-                    //timeListView.removeFooterView(moreView); //移除底部视图
                     break;
                 default:
                     break;
@@ -239,6 +238,8 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
     };
 
     private void loadMoreData() { //加载更多数据
+        //mHandler.sendEmptyMessage(STARTLOADING);
+
         String url = BaseURLs.URL_FOOTBALL_LIVE_TEXT_INFO;
         // 设置参数
         if (getActivity() == null) {
@@ -261,8 +262,8 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
                     if (preLiveTextList.size() > 0) {
                         filterLiveText(preLiveTextList);
                         matchTextLiveBeansList.addAll(preLiveTextList);
-                        count = matchTextLiveBeansList.size();
                         mHandler.sendEmptyMessage(SUCCESS);// 访问成功
+
                     } else {
                         mHandler.sendEmptyMessage(NODATA);
                     }
@@ -271,13 +272,11 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment imple
                     // 后台没请求到数据
                     mHandler.sendEmptyMessage(NODATA);
                 }
-                isSucessedLoad = true;
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mHandler.sendEmptyMessage(ERROR);// 访问失败
-                isSucessedLoad = true;
             }
         }, PreLiveText.class);
     }

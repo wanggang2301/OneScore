@@ -80,11 +80,11 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         /**
          * 判断是否是欧赔（euro 去平均）
          */
-        if (mOddsType.equals(BasketDetailsActivity.ODDS_EURO)) {
+        if (mOddsType.equals(BasketDetailsActivityTest.ODDS_EURO)) {
             mOddsCompanyList.remove(0);
         }
 
-        if (mOddsType.equals(BasketDetailsActivity.ODDS_EURO)) {
+        if (mOddsType.equals(BasketDetailsActivityTest.ODDS_EURO)) {
             mOddsId = mOddsCompanyList.get(mPositionId-1).getOddsId();
         }else{
             mOddsId = mOddsCompanyList.get(mPositionId).getOddsId();
@@ -96,7 +96,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         if (mAdapter2 == null) {
             mAdapter2 = new CompanyAdapter(BasketOddsDetailsActivity.this , mOddsCompanyList , R.layout.basket_odds_company_item);
             mListView1.setAdapter(mAdapter2);
-            if (mOddsType.equals(BasketDetailsActivity.ODDS_EURO)) {
+            if (mOddsType.equals(BasketDetailsActivityTest.ODDS_EURO)) {
                 mAdapter2.setChickedId(mPositionId-1);
                 mListView1.setSelection(mPositionId-1);
             }else{
@@ -113,7 +113,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
         mTveuro = (TextView)findViewById(R.id.basket_odds_details_iseuro);
         mOddsLeft = (TextView)findViewById(R.id.basket_odds_details_left);
         mOddsRight = (TextView)findViewById(R.id.basket_odds_details_right);
-        if (mOddsType.equals(BasketDetailsActivity.ODDS_EURO)) {
+        if (mOddsType.equals(BasketDetailsActivityTest.ODDS_EURO)) {
             mTveuro.setVisibility(View.GONE);
         }else{
             mTveuro.setVisibility(View.VISIBLE);
@@ -203,7 +203,7 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
 
                 if (mOddsData.size() != 0) {
 //                    if (mAdapter == null) {
-                    if (mOddsType.equals(BasketDetailsActivity.ODDS_EURO)) {
+                    if (mOddsType.equals(BasketDetailsActivityTest.ODDS_EURO)) {
                         mAdapter = new BasketOddsDetailsAdapter(BasketOddsDetailsActivity.this, mOddsData, R.layout.basket_odds_details_item, true);
                     } else {
                         mAdapter = new BasketOddsDetailsAdapter(BasketOddsDetailsActivity.this, mOddsData, R.layout.basket_odds_details_item, false);

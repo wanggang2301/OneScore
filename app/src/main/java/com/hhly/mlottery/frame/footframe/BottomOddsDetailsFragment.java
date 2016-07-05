@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,7 +37,7 @@ import java.util.Map;
 /**
  * 底部赔率弹窗
  * <p/>
- * Created by Administrator on 2016/5/11.
+ * Created by wangg on 2016/5/11.
  */
 public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
 
@@ -65,6 +67,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
     private BottomOddsAdapter mAdapter;
 
     private View mView;
+    private View bottomview;
 
     private Context context;
 
@@ -123,6 +126,11 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+
         mView = View.inflate(getContext(), R.layout.fragment_bottom_odds_details, null);
         initView();
         dialog.setContentView(mView);
@@ -135,17 +143,23 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
             bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                        BottomOddsDetailsFragment.this.dismiss();
-                    }
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    switch (newState) {
+                        case BottomSheetBehavior.STATE_HIDDEN:
+                            BottomOddsDetailsFragment.this.dismiss();
+                            break;
 
+                        case BottomSheetBehavior.STATE_EXPANDED:
+                            bottomview.setVisibility(View.VISIBLE);
+                            break;
+                        case BottomSheetBehavior.STATE_COLLAPSED:
+                            bottomview.setVisibility(View.GONE);
+                            break;
                     }
                 }
 
                 @Override
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
+                    L.d("vvvbbb", slideOffset + "");
                 }
             });
         }
@@ -158,7 +172,14 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         } else if (mType == EU) {
             odd_title.setText(context.getResources().getString(R.string.eu_first));
         }
-        first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + mBottomOddsItem.getMiddle() + " " + mBottomOddsItem.getRight());
+
+        if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
+            first_odd.setText("");
+
+        } else {
+            first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + mBottomOddsItem.getMiddle() + " " + mBottomOddsItem.getRight());
+        }
+
 
         initOddsDetails();
 
@@ -168,6 +189,15 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
                 dialog.dismiss();
             }
         });
+    }
+
+    private boolean isNULLOrEmpty(String s) {
+        if (s == null || "".equals(s)) {
+            return true;
+        } else {
+            return false;
+
+        }
     }
 
 
@@ -215,12 +245,23 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         fl_no_data = (FrameLayout) mView.findViewById(R.id.fl_nodata);
         ll_content = (LinearLayout) mView.findViewById(R.id.ll_content);
         reLoading = (TextView) mView.findViewById(R.id.reLoading);
+        bottomview = (View) mView.findViewById(R.id.bottomview);
 
 
         reLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initOddsDetails();
+            }
+        });
+
+
+        odd_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mBottomOddsDetailsItemList.addAll(mBottomOddsDetailsItemList);
+                mAdapter.notifyDataSetChanged();
             }
         });
     }

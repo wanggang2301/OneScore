@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -34,7 +34,7 @@ import com.umeng.analytics.MobclickAgent;
  * @Description: 输入评论的窗口
  * @date
  */
-public class InputActivity extends Activity implements View.OnClickListener, CyanRequestListener<SubmitResp> {
+public class InputActivity extends BaseActivity implements View.OnClickListener, CyanRequestListener<SubmitResp> {
 
     private EditText mEditText;//输入评论
     private TextView mSend;//发送评论
@@ -57,10 +57,8 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("closeself")){
-                InputActivity.this.setResult(CyUtils.RESULT_CODE);
-                finish();
-            }
+            InputActivity.this.setResult(CyUtils.RESULT_CODE);
+            finish();
         }
     };
 
@@ -130,6 +128,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_send://发送评论
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_TalkSend");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
                     ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
@@ -137,6 +136,8 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
                         if (CyUtils.isLogin) {//已登录畅言
                             if (issubmitFinish) {//是否提交完成，若提交未完成，则不再重复提交
                                 issubmitFinish = false;
+                                mSend.setEnabled(false);
+                                mSend.setSelected(false);
                                 CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                             }
                         } else {//未登录
@@ -169,10 +170,9 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public void onRequestSucceeded(SubmitResp submitResp) {
         mEditText.setText("");
         issubmitFinish = true;
-//        setResult(CyUtils.RESULT_CODE);
-        sendBroadcast(new Intent("loadingdata"));
-//        ToastTools.ShowQuickCenter(this,getResources().getString(R.string.succed_send));
-//        finish();
+        ToastTools.ShowQuick(this, getResources().getString(R.string.succed_send));
+        setResult(CyUtils.RESULT_CODE);
+        finish();
 
     }
 
@@ -180,6 +180,8 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     @Override
     public void onRequestFailed(CyanException e) {
         issubmitFinish = true;
+        mSend.setEnabled(true);
+        mSend.setSelected(true);
         ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
     }
 
@@ -187,7 +189,7 @@ public class InputActivity extends Activity implements View.OnClickListener, Cya
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            setResult(CyUtils.RESULT_CODE);//这里也需要通知  因为在本窗口关闭的时候那边的假输入框需要显示
+            setResult(CyUtils.RESULT_BACK);//这里也需要通知  因为在本窗口关闭的时候那边的假输入框需要显示
             finish();
             return true;
 

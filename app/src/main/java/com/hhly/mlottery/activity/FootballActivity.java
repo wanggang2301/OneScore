@@ -22,6 +22,7 @@ import com.hhly.mlottery.frame.footframe.InformationFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.util.FragmentUtils;
+import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class FootballActivity extends BaseActivity {
     private Fragment currentFragment;
     private int currentPosition = 0;
     public LinearLayout ly_tab_bar;
+    public int fragmentIndex = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +71,7 @@ public class FootballActivity extends BaseActivity {
         fragments.add(new CounselFragment());
         fragments.add(new InformationFragment());
         fragments.add(new VideoFragment());
-        fragments.add(new CPIFragment());
+        fragments.add(CPIFragment.newInstance());
         fragments.add(new BasketScoresFragment());
     }
 
@@ -141,6 +143,8 @@ public class FootballActivity extends BaseActivity {
     }
 
     public void switchFragment(int position) {
+        fragmentIndex = position;// 当前fragment下标
+        L.d("xxx","当前Fragment下标：" + fragmentIndex);
         fragmentManager = getSupportFragmentManager();
         currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content, currentFragment,
                 fragments.get(position).getClass(), null, false,

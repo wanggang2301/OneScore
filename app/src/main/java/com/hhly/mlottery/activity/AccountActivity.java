@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
@@ -68,6 +69,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
                 showDialog();
                 break;
             case R.id.tv_login: // 昵称头像栏
+                MobclickAgent.onEvent(mContext, "ProfileActivity_Start");
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
             default:

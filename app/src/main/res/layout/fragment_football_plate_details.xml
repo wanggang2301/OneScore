@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y65"
+        android:background="@color/plate_title_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="72"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:gravity="center"
+            android:text="@string/odd_time_txt"
+            android:textColor="@color/version"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/plate_home_details_txt_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="75"
+            android:gravity="center"
+            android:text="@string/odd_home_txt"
+            android:textColor="@color/version"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/plate_dish_details_txt_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="100"
+            android:gravity="center"
+            android:text="@string/odd_dish_txt"
+            android:textColor="@color/version"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/plate_guest_details_txt_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="75"
+            android:gravity="center"
+            android:text="@string/odd_guest_txt"
+            android:textColor="@color/version"
+            android:textSize="13sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/left_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            tools:listitem="@layout/item_odds_left"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/line_football_footer"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/right_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"/>
+
+    </LinearLayout>
+
+</LinearLayout>

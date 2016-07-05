@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
@@ -25,7 +26,6 @@ import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HomeNumbersSplit;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.MyGridView;
@@ -166,7 +166,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                         intent.putExtra("currentFragmentId", -1);
                                                         mContext.startActivity(intent);
                                                     } else if ("20".equals(jumpAddr)) {// 篮球内页20
-                                                        Intent intent = new Intent(mContext, BasketDetailsActivity.class);
+                                                        Intent intent = new Intent(mContext, BasketDetailsActivityTest.class);
                                                         intent.putExtra("thirdId", thirdId);
                                                         mContext.startActivity(intent);
                                                     }
@@ -490,11 +490,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         {
                             View scoreView = getScoreView();
                             if ("13".equals(homeBodysEntity.getJumpAddr())) {// 足球比分
-                                if (j % 2 == 0) {
-                                    score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_football01_bg));// 设置背景图片
-                                } else {
-                                    score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_football02_bg));// 设置背景图片
-                                }
+                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreFootBG[j % AppConstants.homePageScoreFootBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getStatusOrigin()) {
                                     case "-1":// 完场
                                         settingScoreItemData(homeBodysEntity, mContext.getResources().getColor(R.color.score_red), "—", mContext.getResources().getString(R.string.fragme_home_wanchang_text));
@@ -537,11 +533,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                         break;
                                 }
                             } else if ("20".equals(homeBodysEntity.getJumpAddr())) {// 篮球比分
-                                if (j % 2 == 0) {
-                                    score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_basketball01_bg));// 设置背景图片
-                                } else {
-                                    score01_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_pager_score_basketball02_bg));// 设置背景图片
-                                }
+                                score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreBasketBG[j % AppConstants.homePageScoreBasketBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getMatchStatus()) {
                                     //比赛状态 0:未开赛,1:一节,2:二节,5:1'OT，以此类推，-1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
                                     case 0:// 未开赛
@@ -612,6 +604,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
                             // scoreView.setLayoutParams(scoreParams);
                             scoreViewList.add(scoreView);
+                            L.d("xxx", "scoreViewList.size: " + scoreViewList.size());
                             View splitView = View.inflate(mContext, R.layout.split_view, null);
                             scoreSplitViewList.add(splitView);
                         }
@@ -1092,7 +1085,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 mViewHolderOther.ll_content.addView(scoreSplitViewList.get(i));// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hot_score_txt));
-                            mViewHolderOther.ll_content.addView(scoreViewList.get(i));
+                            View scoreView = scoreViewList.get(i);
+                            ViewParent parentScore = scoreView.getParent();
+                            if(parentScore != null){
+                                ((ViewGroup)parentScore).removeAllViews();
+                            }
+                            mViewHolderOther.ll_content.addView(scoreView);
                             addViewScore = true;
                             break;
                         case 2:// 2、	热门资讯
@@ -1100,7 +1098,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 mViewHolderOther.ll_content.addView(dataInfoSplitViewList.get(i));// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hor_data_info_txt));
-                            mViewHolderOther.ll_content.addView(dataInfoViewList.get(i));
+                            View dataInfoView = dataInfoViewList.get(i);
+                            ViewParent parentDataInfo = dataInfoView.getParent();
+                            if(parentDataInfo != null){
+                                ((ViewGroup)parentDataInfo).removeAllViews();
+                            }
+                            mViewHolderOther.ll_content.addView(dataInfoView);
                             addViewDataInfo = true;
                             break;
                         case 3:// 3、	彩票开奖
@@ -1108,7 +1111,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 mViewHolderOther.ll_content.addView(lotterySplitViewList.get(i));// 添加分割线
                             }
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.frame_home_jieguo_txt));
-                            mViewHolderOther.ll_content.addView(lotteryViewList.get(i));
+                            View lotteryView = lotteryViewList.get(i);
+                            ViewParent parentLottery = lotteryView.getParent();
+                            if(parentLottery != null){
+                                ((ViewGroup)parentLottery).removeAllViews();
+                            }
+                            mViewHolderOther.ll_content.addView(lotteryView);
                             addViewLottery = true;
                             break;
                     }

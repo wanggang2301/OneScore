@@ -1,6 +1,5 @@
 package com.hhly.mlottery.bean.websocket;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,9 +10,9 @@ public class WebFootBallSocketTime {
 
     private String thirdId;
 
-    private  int type;
+    private int type;
 
-    private Map<String,String> data;
+    private Map<String, String> data;
 
     public String getThirdId() {
         return thirdId;

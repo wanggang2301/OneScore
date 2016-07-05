@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
@@ -27,7 +29,6 @@ import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.util.AccessTokenKeeper;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NoDoubleClickUtils;
 import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -121,6 +122,9 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         mView = View.inflate(getContext(), R.layout.share_popmenu, null);
         initView();
 

@@ -31,6 +31,7 @@ public class CyUtils {
     public static boolean isLogin = false;
     public static final int JUMP_COMMENT_QUESTCODE = 3;//跳转登录界面的请求码
     public static final int RESULT_CODE = 5;
+    public static final int RESULT_BACK = 11;
     public static final int JUMP_QUESTCODE = 1;//跳转全部评论页面的请求码
     public static final int SINGLE_PAGE_COMMENT = 30;//一页获取的评论数
     public static final int JUMP_RESULTCODE = 2;//一页获取的评论数
@@ -39,7 +40,7 @@ public class CyUtils {
     public static final String ISSHOWCOMMENT = "isShowComment";
     public static final String INTENT_PARAMS_SID = "sourceid";
     public static final String INTENT_PARAMS_TITLE = "title";
-    public static  String nickname = "";
+    public static String nickname = "";
 
     //初始化畅言
     public static void initCy(Context context) {
@@ -133,7 +134,7 @@ public class CyUtils {
                 public void onRequestSucceeded(UserInfoResp userInfoResp) {
                     System.out.println("lzf" + JSON.toJSONString(userInfoResp));
                     System.out.println(userInfoResp.user_id);
-                    nickname=userInfoResp.nickname;
+                    nickname = userInfoResp.nickname;
 
                 }
 

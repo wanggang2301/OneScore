@@ -32,6 +32,7 @@
 
 
         <ImageView
+            android:id="@+id/head_portrait"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_centerVertical="true"
