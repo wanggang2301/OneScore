@@ -532,14 +532,14 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     break;
                 case VERSION_UPDATA_SUCCESS:// 检查版本更新
                     try {
-//                        boolean isNewVersion = true;
+                        boolean isNewVersion = true;
                         int serverVersion = Integer.parseInt(mUpdateInfo.getVersion()); // 取得服务器上的版本code
                         int currentVersion = Integer.parseInt(versionCode);// 获取当前版本code
                         L.d("xxx", "serverVersion:" + serverVersion);
                         L.d("xxx", "currentVersion:" + currentVersion);
                         if (currentVersion < serverVersion) {// 有更新
-                            promptVersionUp();
-                            /*String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);// 获取本地忽略版本
+//                            promptVersionUp();
+                            String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);// 获取本地忽略版本
                             L.d("xxx", "versionIgnore:" + versionIgnore);
                             if (versionIgnore != null) {
                                 if (versionIgnore.contains("#")) {
@@ -560,7 +560,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                                 }
                             } else {
                                 promptVersionUp();
-                            }*/
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -627,20 +627,20 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     // Toast.makeText(mContext, "取消", Toast.LENGTH_SHORT).show();
                 }
             });
-//            builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);
-//                    if (versionIgnore != null) {
-//                        versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
-//                    } else {
-//                        versionIgnore = String.valueOf(mUpdateInfo.getVersion());
-//                    }
-//                    PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
-//                    L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
-//                    dialog.cancel();
-//                }
-//            });
+            builder.setNeutralButton(mContext.getResources().getString(R.string.home_pager_version_update), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String versionIgnore = PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null);
+                    if (versionIgnore != null) {
+                        versionIgnore = versionIgnore + "#" + mUpdateInfo.getVersion();
+                    } else {
+                        versionIgnore = String.valueOf(mUpdateInfo.getVersion());
+                    }
+                    PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
+                    L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
+                    dialog.cancel();
+                }
+            });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         } catch (Resources.NotFoundException e) {
