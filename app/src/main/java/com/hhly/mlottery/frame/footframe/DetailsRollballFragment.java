@@ -424,6 +424,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     private boolean isOpenOddsDetails = true;
 
+
     private void initItemOdd(final BottomOdds bottomOdds) {
         odd_alet.setTitle(getString(R.string.set_asialet_txt));
         odd_asize.setTitle(getString(R.string.set_asiasize_txt));
@@ -451,6 +452,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             public void onClick(View v) {
 
                 isRepeatShowDialog();
+
 
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
