@@ -103,6 +103,10 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
 
     private TextView reLoading;
 
+    private TextView odds_left;
+    private TextView odds_middle;
+    private TextView odds_right;
+
     public static BottomOddsDetailsFragment newInstance(BottomOddsItem b, int type) {
         Bundle args = new Bundle();
         args.putParcelable(BOTTOODDS_PARM, b);
@@ -166,11 +170,23 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
 
         if (mType == ASIA) {
             odd_title.setText(context.getResources().getString(R.string.alet_first));
+            odds_left.setText(context.getResources().getString(R.string.foot_odds_alet_left));
+            odds_middle.setText(context.getResources().getString(R.string.foot_odds_alet_middle));
+            odds_right.setText(context.getResources().getString(R.string.foot_odds_alet_right));
+
+
         } else if (mType == BIG_SMALL_BALL) {
             odd_title.setText(context.getResources().getString(R.string.asize_first));
+            odds_left.setText(context.getResources().getString(R.string.foot_odds_asize_left));
+            odds_middle.setText(context.getResources().getString(R.string.foot_odds_asize_middle));
+            odds_right.setText(context.getResources().getString(R.string.foot_odds_asize_right));
 
         } else if (mType == EU) {
             odd_title.setText(context.getResources().getString(R.string.eu_first));
+            odds_left.setText(context.getResources().getString(R.string.foot_odds_eu_left));
+            odds_middle.setText(context.getResources().getString(R.string.foot_odds_eu_middle));
+            odds_right.setText(context.getResources().getString(R.string.foot_odds_eu_right));
+
         }
 
         if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
@@ -246,6 +262,10 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         ll_content = (LinearLayout) mView.findViewById(R.id.ll_content);
         reLoading = (TextView) mView.findViewById(R.id.reLoading);
         bottomview = (View) mView.findViewById(R.id.bottomview);
+
+        odds_left=(TextView)mView.findViewById(R.id.odds_left);
+        odds_middle=(TextView)mView.findViewById(R.id.odds_middle);
+        odds_right=(TextView)mView.findViewById(R.id.odds_right);
 
 
         reLoading.setOnClickListener(new View.OnClickListener() {

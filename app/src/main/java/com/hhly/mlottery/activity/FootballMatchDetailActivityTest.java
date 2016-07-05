@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -264,8 +263,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_football_match_details_test);
-
-        L.d("cccnnn", Build.VERSION.SDK_INT + "====" + Build.VERSION_CODES.KITKAT);
 
         this.mContext = getApplicationContext();
         if (getIntent().getExtras() != null) {
