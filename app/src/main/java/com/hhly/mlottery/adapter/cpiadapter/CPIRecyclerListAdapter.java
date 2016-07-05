@@ -35,7 +35,12 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
 
     private List<NewOddsInfo.CompanyBean> companies; // 过滤的公司
 
+    private OnItemClickListener onItemClickListener; // 点击监听
     private OnOddsClickListener onOddsClickListener; // 赔率点击监听
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public void setOnOddsClickListener(OnOddsClickListener onOddsClickListener) {
         this.onOddsClickListener = onOddsClickListener;
@@ -50,7 +55,7 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, NewOddsInfo.AllInfoBean allInfoBean) {
+    protected void convert(BaseViewHolder holder, final NewOddsInfo.AllInfoBean allInfoBean) {
         maybeInitColors(holder);
 
         // 联盟名称
@@ -104,6 +109,15 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
                 score.setTextColor(redColor);
                 status.setTextColor(redColor);
             }
+        }
+
+        if (onItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(allInfoBean);
+                }
+            });
         }
 
         setStatusText(holder, matchInfo, intState);

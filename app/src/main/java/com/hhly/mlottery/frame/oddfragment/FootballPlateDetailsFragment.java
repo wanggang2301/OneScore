@@ -52,6 +52,7 @@ public class FootballPlateDetailsFragment extends Fragment {
     private String oddType;
     private String thirdId;
     private String companyId; // 选中的公司
+    private boolean isFirstLoad = true;
     private List<OddsDataInfo.ListOddEntity> leftList; // 左侧列表数据源
     private List<OddsDetailsDataInfo.DetailsEntity> rightList; // 右侧列表数据源
     private List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity> rightConvertList; // 右侧转换后的数据源
@@ -117,12 +118,17 @@ public class FootballPlateDetailsFragment extends Fragment {
             }
         });
 
-        initEmptyView();
+        mEmptyView = (EmptyView) view.findViewById(R.id.empty_view);
+        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
 
         rightList = new ArrayList<>();
         rightConvertList = new ArrayList<>();
         mRightAdapter = new FootballPlateDetailsRightAdapter(oddType, rightList, rightConvertList);
-        mRightAdapter.setEmptyView(mEmptyView);
         mRightRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRightRecyclerView.setAdapter(mRightAdapter);
 
@@ -131,23 +137,6 @@ public class FootballPlateDetailsFragment extends Fragment {
         mRightRecyclerView.addItemDecoration(headersDecor);
 
         loadData();
-    }
-
-    /**
-     * 初始化 EmptyView
-     */
-    private void initEmptyView() {
-        mEmptyView = new EmptyView(getContext());
-        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData();
-            }
-        });
-        RecyclerView.LayoutParams layoutParams =
-                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
-        mEmptyView.setLayoutParams(layoutParams);
     }
 
     private void checkedPosition(int i) {
@@ -170,6 +159,8 @@ public class FootballPlateDetailsFragment extends Fragment {
         myPostParams.put("companyId", companyId);
         myPostParams.put("oddType", oddType);
         myPostParams.put("thirdId", thirdId);
+
+        rightList.clear();
         setStatus(StatusEnum.LOADING);
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_MATCHODD_DETAILS, myPostParams,
@@ -179,22 +170,33 @@ public class FootballPlateDetailsFragment extends Fragment {
                         rightList.clear();
                         rightList.addAll(jsonObject.getDetails());
                         mRightAdapter.refreshData();
-                        mRightAdapter.notifyDataSetChanged();
                         setStatus(StatusEnum.NORMAL);
                     }
                 },
                 new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                        rightList.clear();
                         setStatus(StatusEnum.ERROR);
                     }
                 },
                 OddsDetailsDataInfo.class);
-
     }
 
     private void setStatus(@StatusEnum.Status int status) {
+        if (status == StatusEnum.LOADING || status == StatusEnum.ERROR) {
+            mRightRecyclerView.setVisibility(isFirstLoad ? View.VISIBLE : View.GONE);
+            if (isFirstLoad) isFirstLoad = false;
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else if (status == StatusEnum.NORMAL && rightList.size() > 0) {
+            mRightRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        } else {
+            mRightRecyclerView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
         mEmptyView.setStatus(status);
+        mRightAdapter.notifyDataSetChanged();
     }
 
     public static FootballPlateDetailsFragment newInstance(String oddType,

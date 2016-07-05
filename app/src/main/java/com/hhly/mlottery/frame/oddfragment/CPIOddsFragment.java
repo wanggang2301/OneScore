@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.VolleyError;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiDetailsActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
@@ -120,11 +119,11 @@ public class CPIOddsFragment extends Fragment {
         mAdapter = new CPIRecyclerListAdapter(filterData, parentFragment.getCompanyList(), type);
         mAdapter.setEmptyView(mEmptyView);
         // RecyclerView Item 单击
-        mAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
+        mAdapter.setOnItemClickListener(new CPIRecyclerListAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int i) {
+            public void onItemClick(NewOddsInfo.AllInfoBean item) {
                 Intent intent = new Intent(getContext(), FootballMatchDetailActivityTest.class);
-                intent.putExtra("thirdId", mAdapter.getItem(i).getMatchInfo().getMatchId());
+                intent.putExtra("thirdId", item.getMatchInfo().getMatchId());
                 getContext().startActivity(intent);
             }
         });
@@ -181,12 +180,6 @@ public class CPIOddsFragment extends Fragment {
                             return;
                         }
                         List<NewOddsInfo.AllInfoBean> allInfo = jsonObject.getAllInfo();
-                        if (allInfo.size() == 0) {
-                            // 无数据
-                            setStatus(StatusEnum.NORMAL);
-                            refreshOver();
-                            return;
-                        }
 
                         // 公司数据
                         handleCompany(jsonObject.getCompany());
