@@ -426,9 +426,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
 
     private void initItemOdd(final BottomOdds bottomOdds) {
-        odd_alet.setTitle(getString(R.string.set_asialet_txt));
-        odd_asize.setTitle(getString(R.string.set_asiasize_txt));
-        odd_eur.setTitle(getString(R.string.set_euro_txt));
+        odd_alet.setTitle(mContext.getResources().getString(R.string.set_asialet_txt));
+        odd_asize.setTitle(mContext.getResources().getString(R.string.set_asiasize_txt));
+        odd_eur.setTitle(mContext.getResources().getString(R.string.set_euro_txt));
 
 
         //  "-"表示没有数据   null 表封盘
