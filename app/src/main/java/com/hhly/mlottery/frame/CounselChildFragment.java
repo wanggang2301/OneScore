@@ -83,27 +83,23 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        initView(inflater);
+        initData();
+        addListViewHeadAndInitListView(isImageLeft);
+        return mView;
+    }
 
-        mView = inflater.inflate(R.layout.fragment_counsel_child, null);
-        mContext = getActivity();
-        initView();
+    private void initData() {
         Bundle bundle = getArguments();
         index = bundle.getInt(INTENT_PARAM_INDEX);//当前fg表示
         mHeadName = bundle.getString(BUNDLE_PARM_TITLE);//当前fg的头名称
         isImageLeft = bundle.getBoolean("isImageLeft", false);//是否图片左边布局
-        infotype=bundle.getInt(BUNDLE_PARM_INFOTYPE);
-        addListViewHeadAndInitListView(isImageLeft);
-        L.d("onCreateView" + index);
-        isCreated = true;
-        //解决使用懒加载时跳跃点击无法加载的问题,因为viewpager刚进来时只会初始化前2个fg
-        // 突然点击第三个时 有两个问题 第一没初始化好，第二 不会触发setUserVisibleHint()所以在初始化完时处于可见且没有数据则加载
-        if (getUserVisibleHint() && mInfos.size() == 0) {
-            onVisible();
-        }
-      return mView;
+        infotype = bundle.getInt(BUNDLE_PARM_INFOTYPE);
     }
 
-    private void initView() {
+    private void initView(LayoutInflater inflater) {
+        mView = inflater.inflate(R.layout.fragment_counsel_child, null);
+        mContext = getActivity();
         mReloadWhenFail = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
         reLoading = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         reLoading.setOnClickListener(this);
@@ -116,6 +112,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         //listview
         mListView = (PullUpRefreshListView) mView.findViewById(R.id.lv_fg_counsel_child);
         mListView.setOnItemClickListener(this);
+        isCreated = true;
     }
 
     private void addListViewHeadAndInitListView(boolean isleft) {
@@ -134,6 +131,11 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         //上拉加载更多
         pullUpLoad();
         mListView.setAdapter(mAdapter);
+        //解决使用懒加载时跳跃点击无法加载的问题,因为viewpager刚进来时只会初始化前2个fg
+        // 突然点击第三个时 有两个问题 第一没初始化好，第二 不会触发setUserVisibleHint()所以在初始化完时处于可见且没有数据则加载
+        if (getUserVisibleHint() && mInfos.size() == 0) {
+            onVisible();
+        }
     }
 
     public static final int NEWS_LOADING = 0;//头部正在加载
@@ -258,7 +260,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         //下拉刷新后当前页数重新为1，不然先上拉加载到没有数据  再回去下拉刷新  然后再上拉就没有数据了，其实是有的
-        mCurrentPager=1;
+        mCurrentPager = 1;
         mLoadMore.setText(R.string.foot_loadmore);
         if (index == 0) {
             //向首页的接口发起请求
@@ -310,10 +312,10 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                             mLoadMore.setText(R.string.foot_nomoredata);
 
                         } else {
-                            if (index==0){
+                            if (index == 0) {
                                 mInfosList.addAll(json.getInfoIndex().getInfos());
                                 mAdapter.setInfosList(mInfosList);
-                            }else {
+                            } else {
                                 mInfos.addAll(json.getInfoIndex().getInfos());
                                 mAdapter.setInfosList(mInfos);
                             }
@@ -362,6 +364,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
         Intent intent = new Intent(mContext, WebActivity.class);
         String jumpurl;//跳转url
         String title;//标题
@@ -371,7 +374,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         String ThirdId;//联赛id
         int type;//联赛id类型  1篮球 2足球
         if (index == 0) {
-            if (mAdsList!=null&&mAdsList.size()!=0) {//有轮播图
+            if (mAdsList != null && mAdsList.size() != 0) {//有轮播图
                 //因为头部下标是0，item下标变成从1开始，所以要减去1
                 jumpurl = mInfosList.get(position - 1).getInfoUrl();
                 title = mInfosList.get(position - 1).getTitle();
@@ -381,26 +384,37 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                 ThirdId = mInfosList.get(position - 1).getThirdId();
                 isRelateMatch = mInfosList.get(position - 1).isRelateMatch();
                 type = mInfosList.get(position - 1).getType();
-            }else {//没有轮播图
-                jumpurl = mInfosList.get(position ).getInfoUrl();
-                title = mInfosList.get(position ).getTitle();
-                subtitle = mInfosList.get(position ).getSubTitle();
-                imageurl = mInfosList.get(position ).getPicUrl();
+            } else {//没有轮播图
+                jumpurl = mInfosList.get(position).getInfoUrl();
+                title = mInfosList.get(position).getTitle();
+                subtitle = mInfosList.get(position).getSubTitle();
+                imageurl = mInfosList.get(position).getPicUrl();
 
-                ThirdId = mInfosList.get(position ).getThirdId();
-                isRelateMatch = mInfosList.get(position ).isRelateMatch();
-                type = mInfosList.get(position ).getType();
+                ThirdId = mInfosList.get(position).getThirdId();
+                isRelateMatch = mInfosList.get(position).isRelateMatch();
+                type = mInfosList.get(position).getType();
             }
 
 
         } else {
-            jumpurl = mInfos.get(position).getInfoUrl();
-            title = mInfos.get(position).getTitle();
-            subtitle = mInfos.get(position).getSubTitle();
-            imageurl = mInfos.get(position).getPicUrl();
-            ThirdId = mInfos.get(position).getThirdId();
-            isRelateMatch = mInfos.get(position).isRelateMatch();
-            type = mInfos.get(position).getType();
+            if (mInfos.size() != 0) {
+                jumpurl = mInfos.get(position).getInfoUrl();
+                title = mInfos.get(position).getTitle();
+                subtitle = mInfos.get(position).getSubTitle();
+                imageurl = mInfos.get(position).getPicUrl();
+                ThirdId = mInfos.get(position).getThirdId();
+                isRelateMatch = mInfos.get(position).isRelateMatch();
+                type = mInfos.get(position).getType();
+            } else {
+                jumpurl = "";
+                title = "";
+                subtitle = "";
+                imageurl = "";
+                ThirdId = "";
+                isRelateMatch = false;
+                type = 1;
+            }
+
         }
         if (isRelateMatch) {
             intent.putExtra(INTENT_PARAM_THIRDID, ThirdId);
@@ -474,7 +488,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                 if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //向列表接口发起请求
-                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))){//没有更多数据的时候，上拉不再发起请求
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
                         pullUpLoadMore(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
                     }
                 }
@@ -491,7 +505,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                 if (isRequestFinish) {//上一个请求完成才执行这个，不然一直往上拉，会连续发多个请求
                     mCurrentPager++;
                     //向列表接口发起请求
-                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))){//没有更多数据的时候，上拉不再发起请求
+                    if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
                         pullUpLoadMore(BaseURLs.URL_FOOTBALL_INFOLIST, mCurrentPager + "", infotype + "");
                     }
 
@@ -500,6 +514,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         });
 
     }
+
     //fg切换时回调该方法
     //用来取消viewpager的预加载机制  减少初始化开销
     @Override
@@ -538,7 +553,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         L.i("position=onDestroyView" + index);
         //解决因counsel层滑动引起的轮播小圆点混乱
         if (index == 0) {
-            if (mPagerAdapter!=null){
+            if (mPagerAdapter != null) {
                 mPagerAdapter.end();
             }
 

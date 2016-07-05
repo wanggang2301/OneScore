@@ -25,18 +25,20 @@ public class BaseURLs {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
 
+//            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
-                return "m.1332255.com";
+                return "m.1332255.com";//测试环境
             } else if (url_config == DebugConfigActivity.URL_242) {
 //                return "192.168.31.65:8181";
-                return "192.168.10.242:8181";
+                return "192.168.10.242:8181";//开发环境。
 //                return "192.168.12.242:8181";//余勇俊测试
             } else {
                 return "m.13322.com";
             }
         }
 
-		return  "m.13322.com";
+        //return "m.1332255.com";测试环境。
+        return  "m.13322.com";//发布版本
 
     }
 
@@ -273,9 +275,10 @@ public class BaseURLs {
     private final static String URL_TJSSCNextAndNew = "detailedLotteryResults.findTJSSCNextAndNewResults.do";
 
     //赛场
-    private final static String URL_FOOTBALL_DETAIL = "footBallMatch.queryMatchInfos.do";
+    private final static String URL_FOOTBALL_DETAIL = "footBallMatch.queryAndroidMatchInfos.do";
     //赛场——点赞
     private final static String URL_FOOTBALL_DETAIL_LIKE = "footBallMatch.updLike.do";
+    private final static String URL_BASKETBALLBALL_DETAIL_LIKE = "basketballDetail.updLike.do";
 
     //直播加载更多
 
@@ -306,6 +309,15 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_URL_MATCHVIDEO_DATA = URL_API_HOST + URL_MATCHVIDEO_DATA;
     // 二期改版首页接口
     private final static String URL_HOME_PAGER_DATA = "mainPage.findAndroidMainRsts.do";
+
+
+    //足球内页改版滚球赔率接口和详情接口
+
+    private final static String URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW = "footballBallList.ballListOverview.do";
+
+    private final static String URL_FOOTBALL_DETAIL_BALLLISTDETAIL = "footballBallList.ballListDetail.do";
+
+
     /**
      * 彩票开奖
      */
@@ -472,10 +484,12 @@ public class BaseURLs {
     //即时(增加队徽请求字段)
     private final static String URL_IMMEDIATE = "androidMatchResults.findImmediateMatchs.do";
 
+    // 滚球
+    private final static String URL_ROLLBALL = "matchResults.findBallList.do";
+
 
     // 热门和焦点
     private final static String URL_HOT = "matchResults.findHotRaceIds.do";
-
 
 
     // 赛果
@@ -507,6 +521,8 @@ public class BaseURLs {
 
     public final static String URL_ImmediateMatchs = URL_API_HOST + URL_IMMEDIATE;
 
+    public final static String URL_Rollball = URL_API_HOST + URL_ROLLBALL;
+
     public final static String URL_ResultMatchs = URL_API_HOST + URL_RESULT;
 
     public final static String URL_CeaselessMatchs = URL_API_HOST + URL_CEASELESS;
@@ -521,6 +537,7 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL;
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
+    public final static String URL_BASKETBALLBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_BASKETBALLBALL_DETAIL_LIKE;
 
     //直播加载更多
     public final static String URL_FOOTBALL_LIVE_TEXT_INFO = URL_API_HOST + URL_FOOTBALL_LIVE_TEXT;
@@ -547,6 +564,20 @@ public class BaseURLs {
     // 版本更新"http://192.168.10.66:8080/mlottery/core/apkDownload.apkUpdate.do";
 
 
+    //足球内页滚球赔率
+    public final static String URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_BALLLISTOVERVIEW;
+
+    public final static String URL_FOOTBALL_DETAIL_BALLLISTDETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_BALLLISTDETAIL;
+
+
+    //足球分析详情
+    public final static String URL_FOOTBALL_HTTP = "http://";
+    public final static String URL_FOOTBALL_PROJECT = "/mlottery/core/";
+    public final static String URL_FOOTBALL_FINDANALYSISDETAIL = "footBallMatch.findAnalysisDetail.do";
+
+    public final static String URL_FOOTBALL_ANALYZE_DETAILS = URL_FOOTBALL_HTTP + HOST + URL_FOOTBALL_PROJECT + URL_FOOTBALL_FINDANALYSISDETAIL;           // http://192.168.10.242:8181/mlottery/core/footBallMatch.findAnalysisDetail.do";
+
+
     // 首页数据测试URL
     public final static String URL_MAINDEMO = URL_API_HOST + "main.findMainResult.do";
 
@@ -565,6 +596,9 @@ public class BaseURLs {
      */
 //	public final static String UMENG_CHANNEL_URL = "http://192.168.10.242:8083/traffic/api";
     public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";
+
+    //用户留存率分析
+    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";
 
     //指数详情
     public final static String URL_FOOTBALL_MATCHODD_DETAILS = URL_API_HOST + FOOTBALLMATCH_MATCHODD_DETAILS;
@@ -618,6 +652,7 @@ public class BaseURLs {
     public final static String URL_BASKET_ANALYZE = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDANALYSIS; //"http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysis.do";
     //篮球分析详情
     public final static String URL_BASKET_ANALYZE_DETAILS = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDANALYSISDETAIL; //"http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysisDetail.do";
+
     //赔率详情
     public final static String URL_BASKET_ODDS_DETAILS = URL_BASKET_HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDODDSDETAIL; //http://192.168.10.242:8181/mlottery/core/basketballDetail.findOddsDetail.do
 
@@ -644,8 +679,14 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfo.do";
 
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
-    /**新版指数*/
+    /**
+     * 新版指数
+     */
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
+    /**指数推送*/
+    public final static String URL_CPI_SOCKET = WS_SERVICE;
+    /**新版足球分析接口*/
+    public final static String URL_NEW_ANALYZE=URL_API_HOST+"footBallMatch.findAnalysisOverview.do";
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
@@ -658,7 +699,15 @@ public class BaseURLs {
     public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
     /**登出*/
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
+    /**重置密码*/
+    public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
+    /**修改昵称*/
+    public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
+    /**修改密码*/
+    public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
 
+    /**资讯Id查询*/
+    public final static String URL_INFORMATION_BY_THIRDID = URL_API_HOST + "info.findSingleInfo.do";
 
 
 }

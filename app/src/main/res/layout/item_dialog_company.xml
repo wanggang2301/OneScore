@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:orientation="horizontal">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingBottom="15dp"
+              android:paddingTop="15dp">
 
     <CheckedTextView
         android:id="@+id/item_checkedTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_weight="1"
         android:checked="false"
-        android:gravity="center"
-        android:text="New CheckedTextView"
-        android:textSize="15sp"
-        android:textColor="@color/blue"
-        android:padding="12dp"
-        android:layout_weight="5"/>
+        android:gravity="start"
+        android:textSize="13sp"
+        tools:text="New CheckedTextView"/>
+
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:gravity="center|left"
-        android:layout_weight="0.6">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp">
+
         <ImageView
             android:id="@+id/item_img_checked"
             android:layout_width="@dimen/y33"
             android:layout_height="@dimen/y33"
-            android:background="@drawable/cpi_selected_company_bg"/>
+            android:src="@drawable/cpi_selected_company_bg"/>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -8,10 +8,28 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
+    </style>
+
+    <style name="AppTheme_loginEdiText" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/login_et_color</item>
+        <item name="colorPrimaryDark">@color/login_et_color</item>
+        <item name="colorAccent">@color/login_et_color</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="AppThemeDark.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 
     <style name="AppTheme.NoActionBar.TranslucentNavigation"></style>
 
@@ -19,6 +37,12 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
     <style name="AppTheme.BlackStatusBar.ColorGreen"></style>
 
@@ -241,6 +265,21 @@
         <item name="android:max">240</item>
         <item name="android:background">@mipmap/line</item>
     </style>
+
+
+    <!-- 客队样式 -->
+    <style name="StyleProgressBarguest_statics" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">5dp</item>
+        <item name="android:progressDrawable">@drawable/pro</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:max">100</item>
+        <item name="android:progress">50</item>
+    </style>
+
+
     <!-- 主队样式 -->
     <style name="StyleProgressBarhome_team24" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:minHeight">4dip</item>
@@ -286,7 +325,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
-        <item name="android:background">@color/white</item>
 
     </style>
     <!-- 主队和客队的射门数 begin -->
@@ -305,6 +343,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/progress_score</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:text">0</item>
         <!-- 主队和客队的射门数 end -->
     </style>
 
@@ -509,22 +548,61 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/selector_loginbtn</item>
     </style>
-    <style name="loginbtn_blue" parent="login_item_bg">
+
+    <style name="new_login_item_bg">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginRight">25dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/selector_loginbtn</item>
+    </style>
+    <!--透明背景-->
+    <style name="login_newitem_bg">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginRight">25dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <!-- 长条背景 蓝色背景-->
+    <style name="loginbtn_blue" parent="new_login_item_bg">
         <item name="android:background">@drawable/selector_loginbtn_blue</item>
     </style>
 
+    <style name="new_loginbtn_new_blue" parent="new_login_item_bg">
+        <item name="android:background">@drawable/selector_loginbtn_new_blue</item>
+    </style>
 
+    <style name="new_loginbtn_blue" parent="new_login_item_bg">
+        <item name="android:background">@drawable/selector_loginbtn_new_white</item>
+    </style>
+
+    <!--TextView 字体 13sp-->
     <style name="login_edittext_common">
-        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:background">@null</item>
     </style>
 
+    <!--手机号码的格式-->
     <style name="login_edittext_phonenumber" parent="login_edittext_common">
         <item name="android:maxLength">11</item>
     </style>
 
+    <style name="login_edittext_newphonenumber" parent="login_edittext_newcommon">
+        <item name="android:maxLength">11</item>
+    </style>
+    <!--TextView 字体 13sp-->
+    <style name="login_edittext_newcommon">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:background">@null</item>
+    </style>
 
+    <!--退出登录的 TextView-->
     <style name="login_textview_logout">
         <item name="android:textSize">15sp</item>
         <item name="android:layout_width">match_parent</item>
@@ -534,14 +612,54 @@
         <item name="android:background">@color/white</item>
     </style>
 
-
+    <!--密码号码的格式 TextView-->
     <style name="login_edittext_password" parent="login_edittext_common">
         <item name="android:inputType">textPassword</item>
         <item name="android:digits">@string/password_digits</item>
         <item name="android:maxLength">16</item>
-        <item name="android:hint">@string/pwd_empty</item>
+        <item name="android:hint">@string/pwd_format_hint</item>
+    </style>
+    <!--密码号码的格式 TextView-->
+    <style name="new_login_edittext_password" parent="login_edittext_newcommon">
+        <item name="android:inputType">textPassword</item>
+        <item name="android:digits">@string/password_digits</item>
+        <item name="android:maxLength">16</item>
+        <item name="android:hint">@string/pwd_format_hint</item>
     </style>
 
+    <!--密码号码的格式 TextView , 不限制输入字符-->
+    <style name="login_edittext_password_no_digits" parent="login_edittext_password">
+        <item name="android:digits">@null</item>
+    </style>
+
+    <!--密码号码的格式 TextView , 不限制输入字符-->
+    <style name="new_login_edittext_password_no_digits" parent="new_login_edittext_password">
+        <item name="android:digits">@null</item>
+    </style>
+
+    <!--密码号码的格式 TextView ：整个 Item 带宽高-->
+    <style name="login_edittext_password_measured" parent="login_edittext_password">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:background">@drawable/selector_loginbtn</item>
+    </style>
+
+
+    <!--密码号码的格式 TextView ：整个Item带宽高  不限制输入字符-->
+    <style name="login_edittext_password_measured_no_digits" parent="login_edittext_password_measured">
+        <item name="android:digits">@null</item>
+    </style>
+
+
+    <!--登录 TextView-->
+    <style name="new_login_edittext_loginbtn" parent="new_loginbtn_blue">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
 
     <style name="login_edittext_loginbtn" parent="loginbtn_blue">
         <item name="android:layout_height">48dp</item>
@@ -550,6 +668,21 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="login_edittext_loginbtn_newblue" parent="new_loginbtn_new_blue">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="login_edittext_new_loginbtn" parent="loginbtn_blue">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--整个条目 两边的 ImageView 样式-->
     <style name="login_item_image">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">wrap_content</item>
@@ -558,19 +691,166 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
+    <!--整个条目 右边的 ImageView 样式-->
     <style name="login_item_image_right" parent="login_item_image">
         <item name="android:paddingRight">18dp</item>
         <item name="android:paddingLeft">10dp</item>
     </style>
 
+    <!--整个条目 左边的 ImageView 样式-->
     <style name="login_item_image_left" parent="login_item_image">
         <item name="android:layout_marginRight">18dp</item>
         <item name="android:layout_marginLeft">18dp</item>
     </style>
 
+    <!-- rollball style-->
+    <style name="item_rollball_linearlayout">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/home_item_bg</item>
+    </style>
+
+    <style name="item_rollball_textview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minWidth">60dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:text">-</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+
+    <style name="MW_White">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="WW_Width_0dp">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="item_rollball_MeasureSpec_EXACTLY">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxWidth">100dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/res_name_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
+
+    <style name="Md.Card" parent="CardView">
+        <item name="contentPadding">0dp</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+    </style>
+
+    <!-- cardView 通用 -->
+    <dimen name="card_elevation">0dp</dimen>
+    <dimen name="card_corner_radius">3dp</dimen>
+
+    <!--忘记密码 TextView-->
+    <style name="login_textview_forget_pw" parent="login_edittext_common">
+        <item name="android:textColor">#CCCCCC</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--个人资料 TextView-->
+    <style name="login_textview_account_center">
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:textSize">@dimen/home_pager_user_title</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--个人资料 TextView 带上默认margin参数-->
+    <style name="login_textview_account_center_margin" parent="login_textview_account_center">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+    </style>
+
+    <!--个人资料 TextView 灰色字体-->
+    <style name="login_textview_account_center_gray" parent="login_textview_account_center_margin">
+        <item name="android:textColor">@color/content_txt_light_grad</item>
+    </style>
+
+    <!--昵称输入 EditText-->
+    <style name="login_edittext_modify_nickname" parent="login_textview_account_center">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:maxLength">15</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/selector_loginbtn</item>
+    </style>
+
+    <!--昵称提示 TextView-->
+    <style name="login_textview_modify_nickname_hint" parent="login_edittext_common">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:textColor">@color/content_txt_light_grad</item>
+    </style>
+
+    <!--登录信息背景 end-->
+
+    <!-- 足球比赛详情、指数tab -->
+    <style name="odds_radio_button">
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/odds_radio_txt_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
+
+
     <!--AppDialog_Theme-->
-    <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Dialog.Alert">
+    <style name="AppThemeDialog" parent="@style/Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!-- 业务选择弹框activity动画样式 -->
+    <style name="AnimTop2" parent="@android:style/Animation">
+        <!--<item name="android:windowEnterAnimation">@anim/push_bottom_in</item>-->
+    </style>
+    <!-- 业务选择弹框activity样式 -->
+    <style name="MyDialogStyleTop" parent="android:Theme.Dialog">
+        <!--<item name="android:windowAnimationStyle">@style/AnimTop2</item>-->
+        <item name="android:windowFrame">@null</item>边框
+        <item name="android:windowIsFloating">true</item>是否浮现在activity之上
+        <item name="android:windowIsTranslucent">true</item>半透明
+        <item name="android:windowNoTitle">true</item>无标题
+        <item name="android:windowBackground">@android:color/transparent</item>背景透明
+        <item name="android:backgroundDimEnabled">false</item>false不模糊
+    </style>
+
+
+
+    <style name="isFitsSystemWindows">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="toolbar">
+        <item name="android:layout_marginTop">0dp</item>
     </style>
 
 </resources>

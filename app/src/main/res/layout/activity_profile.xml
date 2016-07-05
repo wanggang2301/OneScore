@@ -1,0 +1,189 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/whitesmoke"
+              android:orientation="vertical"
+    >
+
+
+    <include layout="@layout/layout_header"/>
+
+    <!-- 修改头像-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="@dimen/profile_item_minheight"
+        android:orientation="horizontal"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_pic"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/person"
+            android:text="@string/pic"
+            android:textSize="15sp"
+            />
+
+
+        <ImageView
+            android:id="@+id/head_portrait"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tv_pic"
+            android:src="@mipmap/smallhead"
+            />
+
+
+        <!--<ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/plate_icon"
+            />-->
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="@dimen/profile_item_minheight"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_account"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/account"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_account_real"
+            style="@style/login_textview_account_center_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="25dp"
+            android:textSize="15sp"
+            />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="@dimen/profile_item_minheight"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_nick"
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/person"
+            android:text="@string/nickname"
+            android:textSize="15sp"
+            />
+
+        <TextView
+
+            android:id="@+id/tv_nickname"
+            style="@style/login_textview_account_center_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/image_login"
+            android:src="@mipmap/person"
+            android:text="@string/nickname"
+            android:textSize="15sp"
+            />
+
+
+        <ImageView
+            android:id="@+id/image_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/plate_icon"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_modifypass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:minHeight="@dimen/profile_item_minheight"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/login_textview_account_center_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/person"
+            android:text="@string/modify_password"
+            android:textSize="15sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/plate_icon"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

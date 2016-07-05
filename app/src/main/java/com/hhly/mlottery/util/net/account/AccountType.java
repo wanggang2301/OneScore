@@ -5,6 +5,6 @@ package com.hhly.mlottery.util.net.account;
  */
 public interface AccountType {
     String TYPE_NAME = "1";
-    String TYPE_PHONE = "2";
-    String TYPE_EMAIL = "3";
+    String TYPE_EMAIL = "2";
+    String TYPE_PHONE = "3";
 }

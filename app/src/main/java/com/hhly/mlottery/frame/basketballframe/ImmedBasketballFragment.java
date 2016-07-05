@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableAdapter;
@@ -74,7 +74,7 @@ import java.util.TimerTask;
 import de.greenrobot.event.EventBus;
 
 /**
- * 篮球比分fragment （即时）
+ * 篮球比分fragment
  * Created by yixq on 2015/12/30.
  */
 public class ImmedBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
@@ -120,6 +120,13 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     private LinearLayout mErrorLayout;
     private TextView mReloadTvBtn;// 刷新 控件
 
+    //    private ImageView mIb_back;//返回按钮
+    //    private TextView mTittle; //标题头
+//    private ImageView mFilterImgBtn = BasketScoresFragment.getmFilterImgBtn();// 筛选
+//    private ImageView mSetting = BasketScoresFragment.getmSetting();//设置按钮
+
+
+
     private Intent mIntent;
 
     private boolean isScroll = false; //是否处于划定状态
@@ -157,6 +164,10 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      * 关注事件EventBus
      */
     public static EventBus BasketImmedEventBus;
+//    public static EventBus BasketResultEventBus;
+//    public static EventBus BasketScheduleEventBus;
+//    public static EventBus BasketFocusEventBus;
+
 
     /**
      * 切换后更新显示的fragment
@@ -191,6 +202,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         }
         BasketImmedEventBus=new EventBus();
         BasketImmedEventBus.register(this);
+
     }
 
     /**
@@ -590,8 +602,9 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
      */
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        Intent intent = new Intent(getActivity(), BasketDetailsActivity.class);
-        intent.putExtra(BasketDetailsActivity.BASKET_THIRD_ID, childrenDataList.get(groupPosition).get(childPosition).getThirdId());//跳转到详情
+        Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
+        intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, childrenDataList.get(groupPosition).get(childPosition).getThirdId());//跳转到详情
+        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_STATUS, childrenDataList.get(groupPosition).get(childPosition).getMatchStatus());//跳转到详情
         //用getActivity().startActivityForResult();不走onActivityResult ;
 //        startActivityForResult(intent, REQUEST_DETAILSCODE);
         intent.putExtra("currentfragment", mBasketballType);

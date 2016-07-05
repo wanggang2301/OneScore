@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.InforFragmentAdapter;
@@ -38,7 +37,7 @@ import java.util.Map;
 /**
  * @ClassName: OneScore
  * @author:Administrator luyao
- * @Description: 足球数据二级显示
+ * @Description: 足球数据内页显示
  * @data: 2016/3/29 16:32
  */
 public class FootballInformationActivity extends BaseActivity implements View.OnClickListener {
@@ -46,10 +45,8 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
     private static final int ISNET_SUCCESS = 11;//数据请求成功
     private static final int ISNET_RERROR = 22;//网络请求失败
-    private static final int INTEGRAL_FRAGMENT = 0;//积分榜
-    private static final int AGENDAL_FRAGMENT = 1;//赛程
 
-    private List<List<IntegralBean.LangueScoreBean.ListBean>> childDataList;//小组数据
+    private List<List<IntegralBean.LangueScoreBean.ListBean>> childDataList = new ArrayList<>();;//小组数据
     private List<IntegralBean.LangueScoreBean> mAllLangueScore;  //获取小组数据
     private List<IntegralBean.LeagueTimesBean.LeagueDateBean> leagueData;//获取联赛时间
     private ArrayList<String> mListDatas = new ArrayList<>();//赛季存储集合
@@ -62,7 +59,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
     private TextView integral_datas;//获取下拉显示的数据
     private PopupWindow popupWindow;//弹出框
     private String mLeagueType;  //联赛类型
-    private List<String> groupDataList;//小组列表
+    private List<String>groupDataList = new ArrayList<>();//小组列表
 
     private int mSize;
     private String mTeam_abb;//联赛简称标头
@@ -75,7 +72,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
     private IntegralFragment integralFragment;//积分榜
     private AgendalFragment agendalFragment;//赛程
     private InforFragmentAdapter mInforFragmentAdapter;
-
+    private  boolean isLoadData=false;//判断是否加载成功数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +88,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         initEvent();
         intiData(true);
 
-    }
+}
 
 
     //初始化viewPager
@@ -124,11 +121,18 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case ISNET_SUCCESS:
-                    integralFragment.initData(groupDataList, childDataList, mLeagueType);
+                    if(groupDataList!=null&&childDataList!=null&mLeagueType!=null) {
+                        integralFragment.initData(groupDataList, childDataList, mLeagueType);
+                    }
+                    if(mStmLeaguesId!=null&&mLeagueType!=null&&mIsCurenDatas!=null) {
+                        agendalFragment.getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
+                    }
+
                     // agendalFragment.getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
                     break;
                 case ISNET_RERROR:
-                    integralFragment.requestFail();
+                     integralFragment.requestFail();
+                     agendalFragment.requestFail();
                     break;
             }
         }
@@ -136,6 +140,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
     //网络请求数据
     public void intiData(final boolean isFrist) {
+
 
         String url = BaseURLs.URL_FOOT_QLEAGUEDATE;
         Map<String, String> myPostParams = new HashMap<>();
@@ -152,52 +157,45 @@ public class FootballInformationActivity extends BaseActivity implements View.On
             public synchronized void onResponse(final IntegralBean json) {
                 if (json != null) {//如果json不为空，清除数据（刷新的时候）
 
-                    groupDataList = new ArrayList<>();
-                    childDataList = new ArrayList<>();
+                    groupDataList.clear();
+                    childDataList.clear();
+                    mListDatas.clear();
 
-                }
+                   // isLoadData=true;//加载数据成功
 
-                if (json == null || json.getLangueScore() == null || json.getLeagueTimes() == null) {
+                    //获取默认积分榜数据
+                    mAllLangueScore = json.getLangueScore();
+                    if( mAllLangueScore !=null) {
+                        mSize = mAllLangueScore.size();
+                        //获取子类父类数据
+                        for (int i = 0; i < mSize; i++) {
+                            //循环添加父view数据  可扩展view
+                            groupDataList.add(mAllLangueScore.get(i).getGroup());
+                            childDataList.add(mAllLangueScore.get(i).getList());
+                        }
 
-                    Toast.makeText(mContext, "数据为空", Toast.LENGTH_LONG).show();
+                        //设置联赛标头
+                        mTeam_abb = json.getLeagueTimes().getAbb();
+                        mTxt_title.setText(mTeam_abb);
+                        // Log.v(TAG, "mTeam_abb" + mTeam_abb);
 
-                    return;
-                }
+                        //获取联赛赛季时间
+                        leagueData = json.getLeagueTimes().getLeagueDate();
+                        for (int i = 0; i < leagueData.size(); i++) {
+                            //判断是否为当前赛季
+                            mListDatas.add(leagueData.get(i).getDate());
+                            if (leagueData.get(i).isCurrentSeason() && (isFrist || mIsCurenDatas == null)) {
+                                //遍历获取数据进行赋值控件
+                                //文本框显示数据
+                                mIsCurenDatas = leagueData.get(i).getDate();
+                                integral_datas.setText(mIsCurenDatas);
 
-                groupDataList.clear();
-                childDataList.clear();
-                mListDatas.clear();
+                            }
+                        }
 
-                //获取默认积分榜数据
-                mAllLangueScore = json.getLangueScore();
-                mSize = mAllLangueScore.size();
-                //获取子类父类数据
-                for (int i = 0; i < mSize; i++) {
-                    //循环添加父view数据  可扩展view
-                    groupDataList.add(mAllLangueScore.get(i).getGroup());
-                    childDataList.add(mAllLangueScore.get(i).getList());
-                }
-
-                //设置联赛标头
-                mTeam_abb = json.getLeagueTimes().getAbb();
-                mTxt_title.setText(mTeam_abb);
-                // Log.v(TAG, "mTeam_abb" + mTeam_abb);
-
-                //获取联赛赛季时间
-                leagueData = json.getLeagueTimes().getLeagueDate();
-                for (int i = 0; i < leagueData.size(); i++) {
-                    //判断是否为当前赛季
-                    mListDatas.add(leagueData.get(i).getDate());
-                    if (leagueData.get(i).isCurrentSeason() && (isFrist||mIsCurenDatas==null)) {
-                        //遍历获取数据进行赋值控件
-                        //文本框显示数据
-                        mIsCurenDatas = leagueData.get(i).getDate();
-                        integral_datas.setText(mIsCurenDatas);
-
+                        mViewHandler.sendEmptyMessage(ISNET_SUCCESS);
                     }
                 }
-
-                mViewHandler.sendEmptyMessage(ISNET_SUCCESS);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -210,6 +208,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
     }
 
+/*
     private void updatePage(int selectedPage) {
         // L.d(TAG, "____updatePage______");
 
@@ -219,21 +218,23 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                 //((IntegralFragment) listFragment.get(selectedPage)).initData(groupDataList, childDataList, mLeagueType);
                 // integralFragment.initData(groupDataList, childDataList, mLeagueType);
 
-
                 break;
             case AGENDAL_FRAGMENT:
 
-                ((AgendalFragment) listFragment.get(selectedPage)).getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
+                     if(!((AgendalFragment) listFragment.get(selectedPage)).getisLoadDataed()) {
+                         ((AgendalFragment) listFragment.get(selectedPage)).getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mIsCurenDatas);
+                     }
 
                 break;
         }
 
     }
+*/
 
     //事件
     private void initEvent() {
 
-        mFragment_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+  /*      mFragment_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -249,7 +250,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
 
 
         //获取联赛列表时间集
@@ -325,8 +326,9 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                 // mAdapter.notifyDataSetChanged();
 
                 //当弹框消失后  请求数据
+               // isLoadData=false;
                 intiData(false);
-                agendalFragment.getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mListDatas.get(postion));
+               // agendalFragment.getLeagueRoundDataFromNet(mStmLeaguesId, mLeagueType, mListDatas.get(postion));
                 // agendalFragment.onRefresh();
 
             }
@@ -359,7 +361,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
                 MobclickAgent.onEvent(mContext,"Football_InformationFragment_Exit");
                 break;
             case R.id.intggral_datas:
-                Toast.makeText(mContext, "亲,请检查你的网络....", Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext, "亲,请检查你的网络....", Toast.LENGTH_LONG).show();
                 MobclickAgent.onEvent(mContext,"Football_InformationFragment_NotNet");
                 break;
 

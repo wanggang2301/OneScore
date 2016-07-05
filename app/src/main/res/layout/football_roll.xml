@@ -1,15 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordiNatorContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitesmoke"
+    android:background="@color/home_item_bg">
 
-    android:orientation="vertical">
+    <!--<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/app_bar_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/home_item_bg"-->
+    <!--app:elevation="0.5dp">-->
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/recyclerview_roll"
+    <!-- app:layout_scrollFlags="scroll|enterAlways" -->
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/titleContainer"
         android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        android:background="@drawable/selector_item_clickable">
+
+        <TextView
+            android:id="@+id/t1"
+            style="@style/WW_Width_0dp"
+            app:layout_widthPercent="65%" />
+
+        <TextView
+            android:id="@+id/t2"
+            style="@style/WW_Width_0dp"
+            android:layout_toRightOf="@id/t1"
+            android:text="亚"
+            app:layout_widthPercent="14%" />
+
+        <TextView
+            android:id="@+id/t3"
+            style="@style/WW_Width_0dp"
+            android:layout_toRightOf="@id/t2"
+            android:text="大"
+            app:layout_widthPercent="13%" />
+
+        <TextView
+            android:id="@+id/t4"
+            style="@style/WW_Width_0dp"
+            android:layout_toRightOf="@id/t3"
+            android:text="欧"
+            app:layout_widthPercent="5%" />
+    </android.support.percent.PercentRelativeLayout>
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <include
+        layout="@layout/view_recyclerview_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleContainer" />
+
+    <RelativeLayout
+        android:id="@+id/football_immediate_unfocus_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/football_immediate_unfocus_coffee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/unfocus_coffee" />
+
+        <TextView
+            android:id="@+id/football_immediate_no_data_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/football_immediate_unfocus_coffee"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/immediate_no_match"
+            android:textColor="@color/unfocus_text"
+            android:textSize="@dimen/text_size_14" />
+    </RelativeLayout>
+
+    <include layout="@layout/network_exception" />
+</RelativeLayout><!--</android.support.design.widget.CoordinatorLayout>-->

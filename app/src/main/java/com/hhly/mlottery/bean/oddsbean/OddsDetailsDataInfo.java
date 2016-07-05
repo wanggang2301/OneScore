@@ -8,13 +8,17 @@ import java.util.List;
  */
 public class OddsDetailsDataInfo {
 
-
-    /**
-     * date : 2016-03-08
-     * details : [{"time":"10:00","score":"1:0","homeOdd":2.01,"hand":2.5,"guestOdd":1.5},{"time":"10:00","score":"1:0","homeOdd":2.01,"hand":2.5,"guestOdd":1.5},{"time":"10:00","score":"1:0","homeOdd":2.01,"hand":2.5,"guestOdd":1.5}]
-     */
+    private int code;
 
     private List<DetailsEntity> details;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 
     public void setDetails(List<DetailsEntity> details) {
         this.details = details;
@@ -24,6 +28,10 @@ public class OddsDetailsDataInfo {
         return details;
     }
 
+    /**
+     * date : 2016-03-08
+     * details : [{"time":"10:00","score":"1:0","homeOdd":2.01,"hand":2.5,"guestOdd":1.5},{"time":"10:00","score":"1:0","homeOdd":2.01,"hand":2.5,"guestOdd":1.5},{"time":"10:00","score":"1:0","homeOdd":2.01,"hand":2.5,"guestOdd":1.5}]
+     */
     public static class DetailsEntity {
         private String date;
         /**
@@ -33,7 +41,6 @@ public class OddsDetailsDataInfo {
          * hand : 2.5
          * guestOdd : 1.5
          */
-
         private List<DataDetailsEntity> details;
 
         public void setDate(String date) {
@@ -61,7 +68,16 @@ public class OddsDetailsDataInfo {
             private String homeColor = "black";
             private String guestColor = "black";
             private String dishColor = "black";
-            private boolean scoreVisible=false;
+            private String selectTag;
+            private boolean scoreVisible = false;
+
+            public String getSelectTag() {
+                return selectTag;
+            }
+
+            public void setSelectTag(String selectTag) {
+                this.selectTag = selectTag;
+            }
 
             public boolean isScoreVisible() {
                 return scoreVisible;

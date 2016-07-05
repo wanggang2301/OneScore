@@ -7,9 +7,8 @@
     <!-- 数据展示 -->
 
     <FrameLayout
-        android:id="@+id/fl_current_data"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content" >
 
         <!-- 下拉刷新控件 -->
 
@@ -26,15 +25,16 @@
                 android:scrollbars="none" >
 
                 <LinearLayout
-                    android:id="@+id/ll_not_touch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white" >
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
                     <FrameLayout
+                        android:id="@+id/fl_current_data"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="visible" >
+                        android:layout_height="wrap_content"
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -428,6 +428,21 @@
                             </FrameLayout>
                         </LinearLayout>
                     </FrameLayout>
+                    <!-- 正在加载中 -->
+
+                    <FrameLayout
+                        android:id="@+id/fl_current_reLoading"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y1024"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/loading_txt"
+                            android:textColor="@color/loading_txt_color"/>
+                    </FrameLayout>
                 </LinearLayout>
             </ScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>
@@ -483,34 +498,6 @@
                     android:textColor="@color/exp_refresh"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
-
-    <!-- 正在加载中 -->
-
-    <FrameLayout
-        android:id="@+id/fl_current_reLoading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/iv_loading_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/icon_loading" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/loading_txt"
-                android:textColor="@color/loading_txt_color" />
         </LinearLayout>
     </FrameLayout>
 

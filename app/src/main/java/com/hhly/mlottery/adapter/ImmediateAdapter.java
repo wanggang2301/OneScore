@@ -246,10 +246,13 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
 
-
         holder.item_football_racename.setText(match.getRacename());
         holder.item_football_racename.setTextColor(Color.parseColor(match.getRaceColor()));
         holder.item_football_time.setText(match.getTime());
+        holder.item_football_half_score.setTextColor(mContext.getResources().getColor(R.color.text_about_color));
+        holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.text_about_color));
+
+
 
         if ("0".equals(match.getStatusOrigin())) {// 未开
             holder.item_football_full_score.setText("VS");
@@ -369,7 +372,7 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.keeptime.setText(mContext.getString(R.string.immediate_status_mesomere));
             holder.keeptime.setTextColor(mContext.getResources().getColor(R.color.red));
             holder.item_football_full_score.setText(Html.fromHtml("<span><b>" + match.getHomeScore() + "</b></span><span>-</span><span><b>" + match.getGuestScore() + "</b></span>"));
-            holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
+                holder.item_football_full_score.setTextColor(mContext.getResources().getColor(R.color.bg_header));
             holder.keeptime.setVisibility(View.VISIBLE);
 
 

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cpi_item_cardview"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="0.5dp"
-    app:cardUseCompatPadding="true">
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:id="@+id/cpi_item_cardview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="3dp"
+                                    app:cardElevation="0.5dp"
+                                    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,49 +21,113 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/y80"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/cpi_item_leagueName_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:gravity="center|left"
-                android:text="欧冠是"
-                android:textColor="@color/basket_over_score"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/cpi_item_time_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|left"
-                android:layout_marginLeft="10dp"
-                android:text="22:33"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/cpi_scoreAndName_txt"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.6"
-                android:layout_marginLeft="10dp"
-                android:gravity="center|left"
-                android:text="欧冠\t0:0\t淘宝"
-                android:textSize="13sp" />
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cpi_item_leagueName_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center|left"
+                        android:text="欧冠是"
+                        android:textColor="@color/basket_over_score"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/cpi_item_time_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center|left"
+                        android:text="22:33"
+                        android:textSize="13sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center_vertical|start"
+                        android:textSize="13sp"
+                        tools:text="完"/>
+
+                    <LinearLayout
+                        android:id="@+id/cpi_item_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center|left"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/cpi_item_keepTime_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:text="56"
+                            android:textSize="13sp"/>
+
+                        <TextView
+                            android:id="@+id/cpi_item_seconds_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:text="&apos;"
+                            android:textColor="@color/colorPrimary"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cpi_scoreAndName_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:ellipsize="end"
+                        android:gravity="center|left"
+                        android:singleLine="true"
+                        android:text="欧冠\t0:0\t淘宝"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center|right"
                 android:layout_marginRight="@dimen/y8"
                 android:layout_weight="0.2"
-                android:src="@mipmap/plate_icon" />
+                android:src="@mipmap/plate_icon"/>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/homwe_grey" />
+            android:layout_height="0.3dp"
+            android:background="@color/homwe_grey"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,8 +136,8 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/cpi_item_home_txt"
@@ -81,16 +146,16 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="主队"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/cpi_item_odds_txt"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:gravity="center"
                 android:text="盘口"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/cpi_item_guest_txt"
@@ -99,14 +164,14 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="客队"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/homwe_grey" />
+            android:layout_height="0.3dp"
+            android:background="@color/homwe_grey"/>
 
         <com.hhly.mlottery.widget.CpiListView
             android:id="@+id/item_cpi_odds_list"

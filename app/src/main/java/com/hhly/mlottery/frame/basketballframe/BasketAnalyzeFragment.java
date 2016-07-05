@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketAnalyzeMoreRecordActivity;
-import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeContentBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeFutureMatchBean;
@@ -27,10 +28,6 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.view.ObservableScrollView;
-import com.hhly.mlottery.view.ScrollUtils;
-import com.hhly.mlottery.view.Scrollable;
-import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -45,7 +42,7 @@ import java.util.Map;
  * @Description: 篮球分析的 fragment
  * @author yixq
  */
-public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableScrollView> implements SwipeRefreshLayout.OnRefreshListener {
+public class BasketAnalyzeFragment extends Fragment  {
 
     //    public static final int REQUEST_MORERECORD = 0x80;
     private View mView;
@@ -96,7 +93,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private TextView mHomeScoreLoseSix;
 
     private TextView mBasketAnalyzeMoreRecord;
-    private ObservableScrollView scrollView;
+    private NestedScrollView scrollView;
 
     Handler mHandler = new Handler();
     private DisplayImageOptions options; //
@@ -104,7 +101,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private String mThirdId;
     private TextView mScoreWin;
     private TextView mScoreLose;
-    private ExactSwipeRefrashLayout mRefresh;//下拉刷新
+//    private ExactSwipeRefrashLayout mRefresh;//下拉刷新
 
 //    private NestedListView mListView1;
 //    private NestedListView mListView2;
@@ -127,29 +124,11 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mThirdId = ((BasketDetailsActivity) getActivity()).getmThirdId();
+        mThirdId = ((BasketDetailsActivityTest) getActivity()).getmThirdId();
         L.d("mThirdId ==AAAAA===", mThirdId + "");
 
         mView = inflater.inflate(R.layout.basket_analysis, container, false);
-        scrollView = (ObservableScrollView) mView.findViewById(R.id.scroll);
-
-        scrollView.setTouchInterceptionViewGroup((ViewGroup) mView.findViewById(R.id.fragment_root));
-
-        Bundle args = getArguments();
-        if (args != null && args.containsKey(ARG_SCROLL_Y)) {
-            final int scrollY = args.getInt(ARG_SCROLL_Y, 0);
-            ScrollUtils.addOnGlobalLayoutListener(scrollView, new Runnable() {
-                @Override
-                public void run() {
-                    scrollView.scrollTo(0, scrollY);
-                }
-            });
-            updateFlexibleSpace(scrollY, mView);
-        } else {
-            updateFlexibleSpace(0, mView);
-        }
-        scrollView.setScrollViewCallbacks(this);
-
+        scrollView = (NestedScrollView) mView.findViewById(R.id.scroll);
 
         try {
             initView();
@@ -189,6 +168,7 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
 
         mProgressBar = (ProgressBar) mView.findViewById(R.id.basket_progressbar);
         mBasketProgressbarGuest = (TextView) mView.findViewById(R.id.basket_progressbar_guest);
+
         mBasketProgressbarHome = (TextView) mView.findViewById(R.id.basket_progressbar_home);
         mRecentGuestImg1 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest1);
         mRecentGuestImg2 = (ImageView) mView.findViewById(R.id.basket_img_recent_guest2);
@@ -261,12 +241,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
             }
         });
 
-        mRefresh = (ExactSwipeRefrashLayout) mView.findViewById(R.id.basket_analyze_refresh);
-        mRefresh.setColorSchemeResources(R.color.tabhost);
-        mRefresh.setOnRefreshListener(this);
-
-//        mListView1 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_guest);
-//        mListView2 = (NestedListView) mView.findViewById(R.id.basket_analyze_frture_listview_home);
         //分割线
         mTextLine = (TextView) mView.findViewById(R.id.basket_analyze_line);
 
@@ -295,7 +269,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     private FutureAdapter mAdapter1;
     private FutureAdapter mAdapter2;
 
-    @Override
     public void initData() {
 
 //        String url = "http://192.168.10.242:8181/mlottery/core/basketballDetail.findAnalysis.do";
@@ -360,15 +333,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
                     mFutureLinearLayout.setVisibility(View.GONE);
                     mFutureNodata.setVisibility(View.VISIBLE);
                 } else {
-//                    if (guestNum >= homeNum) {
-//                        setLineHeight(guestNum);
-//                    }else{
-//                        setLineHeight(homeNum);
-//                    }
-//                    mAdapter1 = new FutureAdapter(getContext() , guestFuture , R.layout.basket_analyze_guest_frture_item);
-//                    mListView1.setAdapter(mAdapter1);
-//                    mAdapter2 = new FutureAdapter(getContext() , homeFuture , R.layout.basket_analyze_home_frture_item);
-//                    mListView2.setAdapter(mAdapter2);
 
                     //未来比赛
                     mFutureLinearLayout.setVisibility(View.VISIBLE);
@@ -537,20 +501,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
         mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
 
-//        setRecent(mRecentGuestImg1, -1);
-//        setRecent(mRecentGuestImg2, -1);
-//        setRecent(mRecentGuestImg3, -1);
-//        setRecent(mRecentGuestImg4, -1);
-//        setRecent(mRecentGuestImg5, -1);
-//        setRecent(mRecentGuestImg6, -1);
-//
-//        setRecent(mRecentHomeImg1, -1);
-//        setRecent(mRecentHomeImg2, -1);
-//        setRecent(mRecentHomeImg3, -1);
-//        setRecent(mRecentHomeImg4, -1);
-//        setRecent(mRecentHomeImg5, -1);
-//        setRecent(mRecentHomeImg6, -1);
-
         //未来比赛
         mFutureLinearLayout.setVisibility(View.GONE);
         mFutureNodata.setVisibility(View.VISIBLE);
@@ -561,32 +511,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
         mRecentLinearLayout.setVisibility(View.GONE);
         mRecentNodata.setVisibility(View.VISIBLE);
 
-//        setFutureMatch(mFutureGuestDate1, mFutureGuestName1, mFutureGuestImg1, null, false);
-//        setFutureMatch(mFutureGuestDate2, mFutureGuestName2, mFutureGuestImg2, null, false);
-//        setFutureMatch(mFutureGuestDate3, mFutureGuestName3, mFutureGuestImg3, null, false);
-//        setFutureMatch(mFutureHomeDate1, mFutureHomeName1, mFutureHomeImg1, null, false);
-//        setFutureMatch(mFutureHomeDate2 , mFutureHomeName2 , mFutureHomeImg2 , null , false);
-//        setFutureMatch(mFutureHomeDate3 , mFutureHomeName3 , mFutureHomeImg3 , null , false);
-//
-//        mRankingGuestName.setText("--");
-//        mRankingHomeName.setText("--");
-//        //已赛
-//        mRankingGuestOverGame.setText("--");
-//        mRankingHomeOverGame.setText("--");
-//        //胜负
-//        mRankingGuestResult.setText("--");
-//        mRankingHomeResult.setText("--");
-//        //胜率
-//        mRankingGuestWinRate.setText("--");
-//        mRankingHomeWinRate.setText("--");
-//
-//        mGuestScoreWinSix.setText("--");
-//        mGuestScoreLoseSix.setText("--");
-//        mHomeScoreWinSix.setText("--");
-//        mHomeScoreLoseSix.setText("--");
-//
-//        mScoreWin.setText("");
-//        mScoreLose.setText("");
     }
 
     /**
@@ -631,8 +555,6 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
          * 过滤主客队历史交锋1-0 或 0-1 时 X胜显示位置会居中问题
          */
         if (guestWins != 0 && homeWins == 0) {
-//            mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, guestNumWin*10));
-//            mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, homeNumWin));
             mBasketProgressbarGuest.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 15));
             mBasketProgressbarHome.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0));
         } else if (guestWins == 0 && homeWins != 0) {
@@ -962,42 +884,8 @@ public class BasketAnalyzeFragment extends BasketDetailsBaseFragment<ObservableS
     }
 
     @Override
-    public void updateFlexibleSpace(int scrollY) {
-        Scrollable s = getScrollable();
-        s.scrollVerticallyTo(scrollY);
-
-        updateFlexibleSpace(scrollY, getView());
-    }
-
-    @Override
-    protected void updateFlexibleSpace(int scrollY, View view) {
-        ObservableScrollView scrollView = (ObservableScrollView) view.findViewById(R.id.scroll);
-
-        BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
-        if (parentActivity != null) {
-            parentActivity.onScrollChanged(scrollY, scrollView);
-        }
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRefresh.setRefreshing(false);
-                initData();
-                BasketDetailsActivity parentActivity = (BasketDetailsActivity) getActivity();
-                if (parentActivity != null) {
-                    parentActivity.analyzeRefreshData();
-                }
-            }
-        }, 500);
-
     }
 
     class FutureAdapter extends CommonAdapter<BasketAnalyzeFutureMatchBean> {

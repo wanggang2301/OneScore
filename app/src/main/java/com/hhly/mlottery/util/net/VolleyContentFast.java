@@ -2,6 +2,7 @@ package com.hhly.mlottery.util.net;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;
@@ -35,7 +36,6 @@ public class VolleyContentFast {
     private final static int RESPONSE_TYPE_JSON = 2;
 
     private static RequestQueue mQueue;
-    public static String jsonData;// json数据
 
     /**
      * 初始化，在Application上初始化，只初始化一次赛
@@ -112,9 +112,11 @@ public class VolleyContentFast {
                 }
             }
             L.i(TAG, "request method get url = [ " + tempUrl + " ]");
+            Log.i("URL", "************GET****************[ " + tempUrl + " ]**************GET**************");
         } else {
             appendMapLanguage(params);
             L.i(TAG, "request method post url = [ " + url + " ]");
+            Log.i("URL", "************POST****************[ " + url + " ]***************POST*************");
             if (params != null && params.size() != 0) {
                 for (String key : params.keySet()) {
                     L.d(TAG, "[ key = " + key + " ，param = " + params.get(key) + " ]");
@@ -127,9 +129,11 @@ public class VolleyContentFast {
             @Override
             public void onResponse(String response) {
                 L.d(TAG, "request success.");
-                L.i(TAG, "[ response = " + response + " ]");
+                if (L.isDebug){//会导致内存泄漏
+                    L.i(TAG, "[ response = " + response + " ]");
+                }
 
-                jsonData = response;
+
                 if (response == null) {
                     VolleyException volleyException = new VolleyException();
                     volleyException.setErrorCode(ERROR_CODE_RESPONSE_NULL);
@@ -325,7 +329,7 @@ public class VolleyContentFast {
             url = url + "?" + BaseURLs.LANGUAGE_PARAM + "=" + BaseURLs.LANGUAGE_SWITCHING_TH;
         } else if (MyApp.isLanguage.equals("rVI")) {
             // 如果是越南语
-            url = url + BaseURLs.LANGUAGE_PARAM + "=" + BaseURLs.LANGUAGE_SWITCHING_VI;
+            url = url + "?" + BaseURLs.LANGUAGE_PARAM + "=" + BaseURLs.LANGUAGE_SWITCHING_VI;
         }
 
         return url;

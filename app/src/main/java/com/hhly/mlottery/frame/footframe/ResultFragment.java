@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
-import com.hhly.mlottery.activity.FootballMatchDetailActivity;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.ResultMultiAdapter;
 import com.hhly.mlottery.adapter.ResultMultiInternationAdapter;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
@@ -363,11 +363,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
          */
         //初始化 dialog
 
-        if (isGJB) { //否则  显示国际版 界面
+      /*  if (isGJB) { //否则  显示国际版 界面
             setDialog_internation();
-        } else {    //如果是中文 或繁体--  则用中文ui显示
+        } else {*/    //如果是中文 或繁体--  则用中文ui显示
             setDialog();
-        }
+        //}
 
     }
 
@@ -453,17 +453,17 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     public void updateAdapter() {
 
-        if (isGJB) { //国际版样式
+        /*if (isGJB) { //国际版样式
             if (mInternationAdapter != null) {
                 mInternationAdapter.updateDatas(mMatchs); //默认 显示 热门
                 mInternationAdapter.notifyDataSetChanged();
             }
-        } else {// 中文版样式
+        } else {// 中文版样式*/
             if (mAdapter != null) {
                 mAdapter.updateDatas(mMatchs); //默认 显示 热门
                 mAdapter.notifyDataSetChanged();
             }
-        }
+        //}
     }
 
     // 加载数据
@@ -549,8 +549,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     }
                 }
 
-
                 if (!isCheckedDefualt) {
+
+               // if (!isCheckedDefualt) {
                     //否则显示  筛选后的比赛
 
                     mMatchs.clear();
@@ -609,7 +610,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     @Override
                     public void onItemClick(View view, String data) {
                         String thirdId = data;
-                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
+                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
                         intent.putExtra("thirdId", thirdId);
                         intent.putExtra("currentFragmentId", 1);
                         getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);

@@ -10,7 +10,7 @@ public class FootballAnalyzeFuture {
     private String leagueName; //: "西甲",
     private String homeName; //: "皇马",
     private String guestName; //: "皇家社会",
-    private int diffDays; //: 11
+    private String diffDays; //: 11
 
     public String getDate() {
         return date;
@@ -44,11 +44,11 @@ public class FootballAnalyzeFuture {
         this.guestName = guestName;
     }
 
-    public int getDiffDays() {
+    public String getDiffDays() {
         return diffDays;
     }
 
-    public void setDiffDays(int diffDays) {
+    public void setDiffDays(String diffDays) {
         this.diffDays = diffDays;
     }
 }

@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 import com.hhly.mlottery.bean.numbersBean.NumbersOpenBean;
@@ -98,7 +99,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
-        if ("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)) {
+        if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             mView = inflater.inflate(R.layout.numbers_current_page, container, false);// 国语
         } else {
             mView = inflater.inflate(R.layout.numbers_current_page_i18n, container, false);// 英语

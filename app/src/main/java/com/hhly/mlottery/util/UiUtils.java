@@ -1,18 +1,6 @@
 package com.hhly.mlottery.util;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,10 +8,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -34,8 +20,15 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -360,15 +353,15 @@ public class UiUtils {
      * @param numDay
      * @return
      */
-    public static String getDay(int numDay) {
-        Calendar cal;
-        String day;
-        cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, numDay);
-        day = new SimpleDateFormat("yyyy-MM-dd ").format(cal.getTime());
-        return day;
-
-    }
+//    public static String getDay(int numDay) {
+//        Calendar cal;
+//        String day;
+//        cal = Calendar.getInstance();
+//        cal.add(Calendar.DATE, numDay);
+//        day = new SimpleDateFormat("yyyy-MM-dd ").format(cal.getTime());
+//        return day;
+//
+//    }
 
 
     /**
@@ -377,42 +370,42 @@ public class UiUtils {
      * @param daNumber 代表哪一天
      * @return
      */
-    public static String getWebsiteDatetime(int daNumber, long ld) {
-        Date date = new Date(ld);// 转换为标准时间对象
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);// 输出北京时间
-        Calendar canlandar = Calendar.getInstance();
-        canlandar.setTime(date);
-        canlandar.add(canlandar.DATE, daNumber);
-        canlandar.add(canlandar.MONTH, 0);
-        return sdf.format(canlandar.getTime());
-    }
+//    public static String getWebsiteDatetime(int daNumber, long ld) {
+//        Date date = new Date(ld);// 转换为标准时间对象
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);// 输出北京时间
+//        Calendar canlandar = Calendar.getInstance();
+//        canlandar.setTime(date);
+//        canlandar.add(canlandar.DATE, daNumber);
+//        canlandar.add(canlandar.MONTH, 0);
+//        return sdf.format(canlandar.getTime());
+//    }
 
-    public static String requestByGetDay(int day) {
-        String dateTime = "";
-        try {
-            URL url = new URL("http://www.beijing-time.org");
-            HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
-            // 设置连接超时时间
-            urlConn.setConnectTimeout(5 * 1000);
-            urlConn.connect();
-            // 判断请求是否成功
-            if (urlConn.getResponseCode() == 200) {
-                // 获取返回的数据
-                long ld = urlConn.getDate();// 读取网站日期时间
-                dateTime = getWebsiteDatetime(day, ld);
-            } else {
-                //失败关闭连接
-                urlConn.disconnect();
-            }
-            // 关闭连接
-            urlConn.disconnect();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return dateTime;
-    }
+//    public static String requestByGetDay(int day) {
+//        String dateTime = "";
+//        try {
+//            URL url = new URL("http://www.beijing-time.org");
+//            HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+//            // 设置连接超时时间
+//            urlConn.setConnectTimeout(5 * 1000);
+//            urlConn.connect();
+//            // 判断请求是否成功
+//            if (urlConn.getResponseCode() == 200) {
+//                // 获取返回的数据
+//                long ld = urlConn.getDate();// 读取网站日期时间
+//                dateTime = getWebsiteDatetime(day, ld);
+//            } else {
+//                //失败关闭连接
+//                urlConn.disconnect();
+//            }
+//            // 关闭连接
+//            urlConn.disconnect();
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return dateTime;
+//    }
 
     /**
      * 500毫秒禁止点击
@@ -430,56 +423,208 @@ public class UiUtils {
 		return flag;
 	}
 
-	/**
-	 * 检查手机号码是否符合格式
-	 *
-	 * @param mobiles
-	 * @return
 
-	 */
-	public static boolean isMobileNO(Context ctx ,String mobiles) {
+    /**昵称格式 ： 中文数字字母下划线*/
+    private static String REG_NICKNAME = "[\\u4e00-\\u9fa5_a-zA-Z0-9_]{1,15}";
+    /**昵称长度 **/
+    private static int NICKNAME_MAX_LENGTH = 15;
+    /**手机号码格式*/
+    private static String REG_PHONE = "^((14[0-9])|(17[0-9])|(13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+    /**密码格式*/
+   // private static String REG_PASSWORD = "^[0-9a-zA-Z_]{6,16}$";
+   private static final String REG_PASSWORD = "[A-Z0-9a-z!@#$%^&*.~/\\{\\}|()'\"?><,.`\\+-=_\\[\\]:;]{6,16}$";
+    /**密码最小长度*/
+    private static final int PASSWORD_MIN_LENGTH = 6;
+    /**
+     * 密码最大长度
+     */
+    private static final int PASSWORD_MAX_LENGTH = 16;
 
-		if (TextUtils.isEmpty(mobiles)){
-			toast(ctx, R.string.phone_empty);
-			return false;
-		}
+    /**
+     * 检查手机号码是否符合格式
+     *
+     * @param mobiles
+     * @return
+     */
+    public static boolean isMobileNO(Context ctx, String mobiles) {
 
-		Pattern p = Pattern
-				.compile("^((14[0-9])|(17[0-9])|(13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$");
-		Matcher m = p.matcher(mobiles);
-		boolean match =  m.matches();
-		if (!match){
-			toast(ctx, R.string.phone_error);
-		}
-		return match;
-	}
+        if (TextUtils.isEmpty(mobiles)) {
+            toast(ctx.getApplicationContext(), R.string.phone_empty);
+            return false;
+        }
+
+        Pattern p = Pattern
+                .compile(REG_PHONE);
+        Matcher m = p.matcher(mobiles);
+        boolean match = m.matches();
+        if (!match) {
+            toast(ctx.getApplicationContext(), R.string.phone_error);
+        }
+        return match;
+    }
+
+    /**
+     * 校验验证码
+     *
+     * @param ctx
+     * @param verifycode
+     * @return
+     */
+    public static boolean checkVerifyCode(Context ctx, String verifycode) {
+
+        if (TextUtils.isEmpty(verifycode)) {
+            toast(ctx.getApplicationContext(), R.string.verify_code);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 校验昵称
+     *
+     * @param ctx
+     * @param nickName
+     * @return
+     */
+    public static boolean checkNickname(Context ctx, String nickName) {
+
+        boolean match = false;
+
+        if (TextUtils.isEmpty(nickName)) {
+            toast(ctx.getApplicationContext(), R.string.input_nickname);
+            return match;
+        }
+        Pattern p = Pattern
+                .compile(REG_NICKNAME);
+        Matcher m = p.matcher(nickName);
+        boolean temp = m.matches();
+        if (temp) {
+            try {
+                L.i(TAG, nickName + " gbk lenght = " + nickName.getBytes("GBK").length + "");
+                if (nickName.getBytes("GBK").length <= NICKNAME_MAX_LENGTH) {
+                    match = true;
+                }
+            } catch (Exception e) {
+                L.e(TAG, " 获取昵称 gbk格式字节长度 出错");
+                e.printStackTrace();
+            }
+        }
+        if (!match) {
+            toast(ctx.getApplicationContext(), R.string.nickname_format);
+        }
+        return match;
+    }
+
+    /**
+     * 校验密码
+     *
+     * @param ctx
+     * @param pwd
+     * @return
+     */
+    public static boolean checkPassword(Activity ctx, String pwd) {
+        return checkPassword(ctx, pwd, true, "", "");
+    }
+
+    /**
+     * 校验密码
+     *
+     * @param ctx
+     * @param pwd
+     * @param needDefaultToast 是否需要默认提示
+     * @param emptyStrId
+     * @param errorStrId
+     * @return
+     */
+    public static boolean checkPassword(Activity ctx, String pwd, boolean needDefaultToast, int emptyStrId, int errorStrId) {
+
+        String emptyStr = ctx.getResources().getString(emptyStrId);
+        String errorStr = ctx.getResources().getString(errorStrId);
+
+        return checkPassword(ctx, pwd, needDefaultToast, emptyStr, errorStr);
+    }
+
+    /**
+     * 校验密码
+     *
+     * @param ctx
+     * @param pwd
+     * @param needDefaultToast
+     * @param emptyStr
+     * @param errorStr
+     * @return
+     */
+    public static boolean checkPassword(Context ctx, String pwd, boolean needDefaultToast, String emptyStr, String errorStr) {
+
+        boolean match = false;
+
+        if (TextUtils.isEmpty(pwd)) {
+            if (needDefaultToast) {  // 默认提示
+                toast(ctx.getApplicationContext(), R.string.pwd_empty);
+            } else {
+                toast(ctx.getApplicationContext(), emptyStr);
+            }
+            return match;
+        }
+
+        Pattern p = Pattern.compile(REG_PASSWORD);
+        Matcher matcher = p.matcher(pwd);
+        match = matcher.matches();
+        if (!match) {
+            if (needDefaultToast) { // 默认提示
+                toast(ctx.getApplicationContext(), R.string.pwd_format);
+            } else {
+                toast(ctx.getApplicationContext(), errorStr);
+            }
+        }
+        return match;
+    }
 
 
-	public static boolean checkVerifyCode(Context ctx, String verifycode) {
+    /**
+     * 只检查密码长度 6 - 16 位
+     *
+     * @param ctx
+     * @param pwd
+     * @return
+     */
+    public static boolean checkPassword_JustLength(Activity ctx, String pwd) {
+        return checkPassword_JustLength(ctx, pwd, "");
+    }
 
-		if (TextUtils.isEmpty(verifycode)){
-			toast(ctx, R.string.verify_code);
-			return false;
-		}
-		return true;
-	}
+    public static boolean checkPassword_JustLength(Activity ctx, String pwd, String defaultToast) {
+        boolean match = false;
+        if (!TextUtils.isEmpty(pwd)) {
+            if (pwd.length() >= PASSWORD_MIN_LENGTH && pwd.length() <= PASSWORD_MAX_LENGTH) {
+                match = true;
+            }
+        }
+        if (!match) {
+            if (TextUtils.isEmpty(defaultToast)) {
+                // 弹出默认提示
+                toast(ctx.getApplicationContext(), R.string.pwd_format_just_length);
+            } else {
+                // 弹出传入的提示
+                toast(ctx.getApplicationContext(), defaultToast);
+            }
+        }
+        return match;
+    }
 
-
-	public static boolean checkPassword(Context ctx, String pwd) {
-
-		if (TextUtils.isEmpty(pwd)){
-			toast(ctx, R.string.pwd_empty);
-			return false;
-		}
-
-		Pattern p = Pattern.compile("^[0-9a-zA-Z_]{6,16}$");
-		Matcher matcher = p.matcher(pwd);
-		boolean match =  matcher.matches();
-		if (!match){
-			toast(ctx, R.string.pwd_format);
-		}
-		return match;
-	}
-
-
+    /**
+     * 根据传过来的日期获取前6后7的日期
+     *
+     * @param currentDate 当前日期
+     * @param day         ”1“代表明天
+     * @return
+     */
+    public static String getDate(String currentDate, int day) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        Date dt = sdf.parse(currentDate, new ParsePosition(0));
+        Calendar rightNow = Calendar.getInstance();
+        rightNow.setTime(dt);
+        rightNow.add(Calendar.DATE, day);//你要加减的日期
+        Date dt1 = rightNow.getTime();
+        return sdf.format(dt1);
+    }
 }

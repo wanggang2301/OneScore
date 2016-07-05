@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.MyConstants;
+import com.hhly.mlottery.util.NumberDataUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.DragGridView;
 import com.hhly.mlottery.widget.DragGridView.OnChanageListener;
@@ -35,6 +37,7 @@ import com.umeng.analytics.MobclickAgent;
  * @date 2015-10-24 下午9:47:31
  */
 public class NumberCustomizeActivity extends Activity implements OnClickListener {
+	private Context mContext;
 	private ImageView public_btn_filter;
 	private ImageView public_btn_set;
 	private ImageView public_img_back;// 返回
@@ -59,7 +62,7 @@ public class NumberCustomizeActivity extends Activity implements OnClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		mContext = this;
 		initView();
 		initData();
 		initEvent();
@@ -218,8 +221,8 @@ public class NumberCustomizeActivity extends Activity implements OnClickListener
 
 			View view = View.inflate(NumberCustomizeActivity.this, R.layout.number_customize_item, null);
 			TextView tv = (TextView) view.findViewById(R.id.tv_item);
-			tv.setText(AppConstants.numberNames[sortOks.get(position) - 1]);
-
+//			tv.setText(AppConstants.numberNames[sortOks.get(position) - 1]);
+			NumberDataUtils.setTextTitle(mContext,tv,String.valueOf(sortOks.get(position)));
 			return view;
 		}
 
@@ -251,7 +254,8 @@ public class NumberCustomizeActivity extends Activity implements OnClickListener
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View view = View.inflate(NumberCustomizeActivity.this, R.layout.number_customize_item, null);
 			TextView tv = (TextView) view.findViewById(R.id.tv_item);
-			tv.setText(AppConstants.numberNames[sortDefs.get(position) - 1]);
+//			tv.setText(AppConstants.numberNames[sortDefs.get(position) - 1]);
+			NumberDataUtils.setTextTitle(mContext,tv,String.valueOf(sortDefs.get(position)));
 			return view;
 		}
 
@@ -272,7 +276,7 @@ public class NumberCustomizeActivity extends Activity implements OnClickListener
 	 */
 	public void initView() {
 		
-		if("rCN".equals(AppConstants.i18n) || "rTW".equals(AppConstants.i18n)){
+		if("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)){
 			setContentView(R.layout.number_custom_activity);// 国内
 		}else{
 			setContentView(R.layout.number_custom_activity_i18n);// 国外

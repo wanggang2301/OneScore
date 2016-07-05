@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketDetailsActivity;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketOddsDetailsActivity;
 import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
 import com.hhly.mlottery.bean.basket.BasketDetails.OddsDataEntity;
@@ -163,7 +163,7 @@ public class BasketOddsAdapter  extends BaseAdapter{
 
         @Override
         public void onClick(View v) {
-            if(mType.equals(BasketDetailsActivity.ODDS_EURO)&&position==0){
+            if(mType.equals(BasketDetailsActivityTest.ODDS_EURO)&&position==0){
                 return;
             }
             MobclickAgent.onEvent(MyApp.getContext(),"BasketOddsDetailsActivity");

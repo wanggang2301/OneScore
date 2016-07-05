@@ -51,15 +51,16 @@ public class CpiDetailsFragment extends Fragment {
     private String mThirdId;
     //公司id
     private String stCompanId;
-    private PinnedHeaderExpandableListView  cpi_odds_tetails_right_listview;
+    private PinnedHeaderExpandableListView cpi_odds_tetails_right_listview;
     //新版指数详情右边数据
     private CpiDetailsAdatper mCpiDetailsAdatper;
-    private FrameLayout cpi_right_fl_plate_noData,cpi_right_fl_plate_networkError,cpi_right_fl_plate_loading;
+    private FrameLayout cpi_right_fl_plate_noData, cpi_right_fl_plate_networkError, cpi_right_fl_plate_loading;
     private TextView cpi_txt_reLoading;
     private static final int ERROR = -1;//访问失败
     private static final int SUCCESS = 0;// 访问成功
     private static final int STARTLOADING = 1;// 数据加载中
     private static final int NODATA = 400;// 暂无数据
+    private List<OddsDetailsDataInfo.DetailsEntity> groupListDetailsEntity = new ArrayList<>();
 
     public static CpiDetailsFragment newInstance(String param1, List listParam2, String mParamComId, String mParamPositionNunber, String mParamType) {
         CpiDetailsFragment fragment = new CpiDetailsFragment();
@@ -184,24 +185,31 @@ public class CpiDetailsFragment extends Fragment {
             myPostParams.put("oddType", mParam1);
         }
         myPostParams.put("thirdId", mThirdId);
+//        myPostParams.put("thirdId", "333541");
 
         // 2、连接服务器
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_MATCHODD_DETAILS,myPostParams, new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_MATCHODD_DETAILS, myPostParams, new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
             @Override
             public synchronized void onResponse(final OddsDetailsDataInfo json) {
                 if (json != null) {
-                    List<OddsDetailsDataInfo.DetailsEntity> groupListDetailsEntity = json.getDetails();
+                    groupListDetailsEntity = json.getDetails();
 
-                    if (groupListDetailsEntity != null && groupListDetailsEntity.size() > 0) {
+                    if (groupListDetailsEntity != null) {
 
                         for (int i = 0; i < groupListDetailsEntity.size(); i++) {
                             //循环添加父view数据(日期)
                             groupDataList.add(groupListDetailsEntity.get(i).getDate());
                             //添加子view数据(拿子类的DetailsEntity)
                             childDetailsList.add(groupListDetailsEntity.get(i).getDetails());
+                            //i=0的时候拿到第一条设置一个标识”初盘“
+                            if(i==0){
+                                groupListDetailsEntity.get(i).getDetails().get(i).setSelectTag("tag");
+                            }
+
                             // //倒序，排列子view的数据
                             Collections.reverse(groupListDetailsEntity.get(i).getDetails());
                         }
+
                         //倒序，排列父view
                         Collections.reverse(groupDataList);
 //                            //倒序，排列子view
@@ -238,22 +246,25 @@ public class CpiDetailsFragment extends Fragment {
                         }
                         if ("1".equals(mParam1)) {
                             //亚盘
-                            mCpiDetailsAdatper = new CpiDetailsAdatper(childDetailsList, groupDataList, mContext, cpi_odds_tetails_right_listview, "one");
+                            mCpiDetailsAdatper = new CpiDetailsAdatper(childDetailsList, groupDataList, mContext, cpi_odds_tetails_right_listview, "one", groupListDetailsEntity);
                         } else if ("3".equals(mParam1)) {
                             //大小球
-                            mCpiDetailsAdatper = new CpiDetailsAdatper(childDetailsList, groupDataList, mContext, cpi_odds_tetails_right_listview, "two");
+                            mCpiDetailsAdatper = new CpiDetailsAdatper(childDetailsList, groupDataList, mContext, cpi_odds_tetails_right_listview, "two", groupListDetailsEntity);
                         } else if ("2".equals(mParam1)) {
                             //欧赔
-                            mCpiDetailsAdatper = new CpiDetailsAdatper(childDetailsList, groupDataList, mContext, cpi_odds_tetails_right_listview, "three");
+                            mCpiDetailsAdatper = new CpiDetailsAdatper(childDetailsList, groupDataList, mContext, cpi_odds_tetails_right_listview, "three", groupListDetailsEntity);
                         }
                         cpi_odds_tetails_right_listview.setAdapter(mCpiDetailsAdatper);
-                        for (int i = 0; i <  groupListDetailsEntity.size(); i++) {
+                        for (int i = 0; i < groupListDetailsEntity.size(); i++) {
                             //默认打开全部的父类view
                             cpi_odds_tetails_right_listview.expandGroup(i);
                         }
+                        mHandler.sendEmptyMessage(SUCCESS);
+                    } else {
+                        mHandler.sendEmptyMessage(NODATA);
                     }
-                    mHandler.sendEmptyMessage(SUCCESS);
-                }else{
+
+                } else {
                     mHandler.sendEmptyMessage(NODATA);
                 }
             }

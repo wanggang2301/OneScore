@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hhly.mlottery"
-    android:versionCode="13"
-    android:versionName="1.1.0.0523">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hhly.mlottery">
 
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="22" />
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <!-- 友盟统计的权限 begin -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 友盟统计的权限 edd -->
 
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 获取经纬度权限 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- 用于修改电源时间 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 畅言权限 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".MyApp"
@@ -45,6 +41,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
+
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -54,11 +51,8 @@
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -70,9 +64,15 @@
 
         </activity>
         <!-- 内地版的key-begin -->
-        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
-        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5625a606e0f55aad6700244f" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="BETA" />
         <!-- 内地版的key-end -->
         <activity
             android:name=".activity.FootballInformationActivity"
@@ -91,24 +91,23 @@
             android:name=".activity.NumberCustomizeActivity"
             android:screenOrientation="portrait" />
 
-        <!-- webview   adjustResize|stateHidden  android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"-->
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
-           android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <!--评论activity-->
         <activity
             android:name=".activity.CounselCommentActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activity.FootballTypeSettingDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.FootballMatchDetailActivity"
+            android:name=".activity.FootballMatchDetailActivityTest"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.BlackStatusBar.ColorGreen" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activity.LiveChannelActivity"
             android:screenOrientation="portrait" />
@@ -126,9 +125,6 @@
             android:screenOrientation="portrait" />
 
         <!-- 篮球详情 -->
-        <activity
-            android:name=".activity.BasketDetailsActivity"
-            android:screenOrientation="portrait" />
         <!-- 篮球赔率详情 -->
         <activity
             android:name="com.hhly.mlottery.activity.BasketOddsDetailsActivity"
@@ -144,7 +140,8 @@
             android:name=".activity.FootballAnalyzeDetailsActivity"
             android:screenOrientation="portrait" />
 
-        <!--<receiver android:name=".activity.WelcomeActivity$DownLoadBroadcastReceiver">
+        <!--
+        <receiver android:name=".activity.WelcomeActivity$DownLoadBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
@@ -152,9 +149,7 @@
         <!-- 首页Activity -->
         <activity
             android:name=".activity.HomePagerActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <!-- 首页用户设置选项 -->
         <activity
@@ -163,7 +158,7 @@
         <!-- 足球比分 -->
         <activity
             android:name=".activity.FootballActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"></activity>
 
         <!-- 语言切换 -->
         <activity
@@ -181,28 +176,57 @@
         <activity
             android:name=".activity.BasketListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.FeedbackActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
+        <!-- 登录注册 begin -->
         <!-- 登录界面 -->
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
+        <!-- 注册界面 -->
         <activity
             android:name=".activity.RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.AccountActivity"
-                  android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
+        <!-- 用户中心界面 -->
+        <activity
+            android:name=".activity.AccountActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 找回密码界面 -->
+        <activity
+            android:name=".activity.FindPassWordActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 个人资料 -->
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 修改昵称界面 -->
+        <activity
+            android:name=".activity.ModifyNicknameActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 修改密码界面 -->
+        <activity
+            android:name=".activity.ModifyPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 登录注册 end -->
+
+
         <!-- 畅言的配置项 -->
-        <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity"></activity>
+        <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity" />
 
         <!--微信分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!--QQ分享-->
         <activity
@@ -222,7 +246,7 @@
         <activity
             android:name=".activity.CpiDetailsActivity"
             android:screenOrientation="portrait" />
-        <!--新版指数筛选-->
+        <!-- 新版指数筛选 -->
         <activity
             android:name=".activity.CpiFiltrateActivity"
             android:screenOrientation="portrait" />
@@ -236,19 +260,30 @@
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen"
-            android:screenOrientation="portrait"></activity>
-        <!--消息推送服务-->
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activity.InputActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyleTop"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <!-- 消息推送服务 -->
         <service android:name=".service.umengPushService" />
-        <!--版本更新广播-->
+        <!-- 版本更新广播 -->
         <receiver android:name=".receiver.CompleteReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".activity.BasketDetailsActivityTest"
+            android:theme="@style/AppThemeDark.NoActionBar"
+            >
+
+        </activity>
     </application>
 
 </manifest>

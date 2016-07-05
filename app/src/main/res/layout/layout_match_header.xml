@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/layout_match_header_vs"
             android:layout_toLeftOf="@id/layout_match_header_hometeam_flag"
-            android:text="@string/homeBitmap"
+            android:text="主队kkkkk"
             android:textColor="@color/white"
             android:textSize="13sp" />
 

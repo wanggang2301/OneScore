@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -13,12 +15,14 @@ import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.frame.CounselFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.frame.VideoFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.InformationFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.util.FragmentUtils;
+import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -36,14 +40,16 @@ public class FootballActivity extends BaseActivity {
     private final static int DATA_FRAGMENT = 2;   //数据
     private final static int VIDEO_FRAGMENT = 3;  //视频
     private final static int CPI_FRAGMENT = 4;    //指数
+    private final static int BASKET_FRAGMENT = 5;    //篮球
     private Context mContext;
 
     private RadioGroup mRadioGroup;
-    private ScoresFragment scoresFragment;
     private List<Fragment> fragments = new ArrayList<>();
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
     private int currentPosition = 0;
+    public LinearLayout ly_tab_bar;
+    public int fragmentIndex = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +65,14 @@ public class FootballActivity extends BaseActivity {
      * 初始化界面View
      */
     private void initView() {
+        ly_tab_bar = (LinearLayout) findViewById(R.id.ly_tab_bar);
         mRadioGroup = (RadioGroup) findViewById(R.id.mRadioGroup);
-        scoresFragment = new ScoresFragment();
-        fragments.add(scoresFragment);
+        fragments.add(new ScoresFragment());
         fragments.add(new CounselFragment());
         fragments.add(new InformationFragment());
         fragments.add(new VideoFragment());
-        fragments.add(new CPIFragment());
+        fragments.add(CPIFragment.newInstance());
+        fragments.add(new BasketScoresFragment());
     }
 
     private void initData() {
@@ -89,6 +96,10 @@ public class FootballActivity extends BaseActivity {
             case CPI_FRAGMENT:
                 switchFragment(CPI_FRAGMENT);
                 ((RadioButton) findViewById(R.id.rb_cpi)).setChecked(true);
+                break;
+            case BASKET_FRAGMENT:
+                switchFragment(BASKET_FRAGMENT);
+                ly_tab_bar.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -132,6 +143,8 @@ public class FootballActivity extends BaseActivity {
     }
 
     public void switchFragment(int position) {
+        fragmentIndex = position;// 当前fragment下标
+        L.d("xxx","当前Fragment下标：" + fragmentIndex);
         fragmentManager = getSupportFragmentManager();
         currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content, currentFragment,
                 fragments.get(position).getClass(), null, false,
@@ -142,6 +155,7 @@ public class FootballActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         CpiFiltrateActivity.mCheckedIds.clear();
+        CpiFiltrateActivity.isDefualHot = true;
         if (ImmediateFragment.imEventBus != null) {
             ImmediateFragment.imEventBus.unregister(ImmediateFragment.class);
         }
