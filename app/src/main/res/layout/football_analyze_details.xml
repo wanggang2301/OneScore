@@ -544,7 +544,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_guest"
+                                android:text="@string/basket_analyze_home"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -552,7 +552,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_home"
+                                android:text="@string/basket_analyze_guest"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -636,7 +636,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_guest"
+                                android:text="@string/basket_analyze_home"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
@@ -644,7 +644,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
                                 android:gravity="center"
-                                android:text="@string/basket_analyze_home"
+                                android:text="@string/basket_analyze_guest"
                                 android:textSize="@dimen/text_size_11" />
 
                             <TextView
