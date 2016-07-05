@@ -272,13 +272,25 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             @Override
             public void onClick(View v) {
 
+
                 if (mBottomOddsDetailsFragment != null) {
                     mBottomOddsDetailsFragment.dismiss();
                 }
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
-                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
+                    if(finishMatchLiveTextFragment==null){
+                        finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    }
+
+                    if (!finishMatchLiveTextFragment.isAdded()) {
+                        finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
+                    }
+
                 } else {
+
+                    if (liveTextFragmentTest != null) {
+                        liveTextFragmentTest.dismiss();
+                    }
+
                     liveTextFragmentTest = new LiveTextFragmentTest().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
                     liveTextFragmentTest.show(getChildFragmentManager(), "bottomLive");
                 }
@@ -412,6 +424,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     private boolean isOpenOddsDetails = true;
 
+
     private void initItemOdd(final BottomOdds bottomOdds) {
         odd_alet.setTitle(getString(R.string.set_asialet_txt));
         odd_asize.setTitle(getString(R.string.set_asiasize_txt));
@@ -439,6 +452,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             public void onClick(View v) {
 
                 isRepeatShowDialog();
+
 
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
