@@ -10,7 +10,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -18,20 +17,14 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.basketball.BasketAnalyzeAdapter;
-import com.hhly.mlottery.adapter.basketball.BasketAnalyzeFutureAdapter;
 import com.hhly.mlottery.adapter.basketball.FootballAnalyzeAdapter;
 import com.hhly.mlottery.adapter.basketball.FootballAnalyzeFutureAdapter;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreFutureBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreRecentHistoryBean;
 import com.hhly.mlottery.bean.footballDetails.FootballAnalyzeDetailsBean;
 import com.hhly.mlottery.bean.footballDetails.FootballAnalyzeFuture;
 import com.hhly.mlottery.bean.footballDetails.FootballAnaylzeHistoryRecent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NestedListView;
@@ -50,7 +43,7 @@ import java.util.Map;
 public class FootballAnalyzeDetailsActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     public final static String FOOTBALL_ANALYZE_THIRD_ID = "analyzeId";
-    private ImageButton mBack;
+    private ImageView mBack;
     private String mThirdId;
     private NestedListView mHistoryListView;//历史交锋 listview
     private NestedListView mRecentListView1;//近期战绩 1 listview
@@ -113,7 +106,11 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     };
 
     private void initView (){
-        mBack = (ImageButton)findViewById(R.id.football_analyze_img_back);
+
+        TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
+        public_txt_title.setText(R.string.football_analyze_details);
+
+        mBack = (ImageView)findViewById(R.id.public_img_back);
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,6 +167,9 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         mNoData3 = (TextView) findViewById(R.id.football_analyze_nodata3);
         mNoData4 = (TextView) findViewById(R.id.football_analyze_nodata4);
         mNoData5 = (TextView) findViewById(R.id.football_analyze_nodata5);
+
+        findViewById(R.id.public_btn_set).setVisibility(View.GONE); //隐藏设置按键
+        findViewById(R.id.public_btn_filter).setVisibility(View.GONE); //隐藏筛选按键
     }
 
     private List<FootballAnaylzeHistoryRecent> mHistoryData = new ArrayList<>();//历史交锋所有比赛
@@ -478,7 +478,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                 }
             }
         }
-        L.d("dataAAAAAAAAAAAAAAAA =",mHistoryScreenSite.size()+"");
         /**
          * 筛选场数
          */
@@ -513,7 +512,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                 }
             }
         }
-        L.d("dataBBBBBBBBBBBBB =", screenData.size() + "");
     }
 
     /**
@@ -580,17 +578,13 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         }else{
             //胜率
             winning = (countWin*100)/(matchNum)+"%";
-            L.d("winning>>>>>>>>" , winning);
 
             //大球胜率
             totWinning = (countTot*100)/(matchNum) + "%";
-            L.d("totWinning>>>>>>>>" , totWinning);
 
             //让分球胜率
             letWinnging = (countLet*100)/(matchNum) + "%";
-            L.d("letWinnging>>>>>>>>" , letWinnging);
 
-            L.d("matchNum>>>>>>>>" , matchNum+"++++++++++++");
         }
 
         homeWin = countWin + "" + getResources().getText(R.string.basket_analyze_win);
@@ -746,8 +740,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                         mHomeRecentSite = true;
                     }
 
-//                    mSite = 1;
-//                    L.d("mAllsiteButon = " , "mAllsiteButon" + mSite );
                 }else if(checkedId == mSamesiteButon.getId()){
                     if (type) {
                         mHistorySite = false;
@@ -755,8 +747,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                         mGuestRecentSite = false;
                         mHomeRecentSite = false;
                     }
-//                    mSite = 0;
-//                    L.d("mSamesiteButon = " , "mSamesiteButon" + mSite );
                 }
             }
         });
@@ -774,8 +764,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                         mGuestRecentNum = 6;
                         mHomeRecentNum = 6;
                     }
-//                    mNumSite = 6;
-//                    L.d("mNumSixButon = " , "mNumSixButon" + mNumSite );
                 }else if(checkedId == mNumTenButon.getId()){
                     if (type) {
                         mHistoryNum = 10;
@@ -783,8 +771,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                         mGuestRecentNum = 10;
                         mHomeRecentNum = 10;
                     }
-//                    mNumSite = 10;
-//                    L.d("mNumTenButon = " , "mNumTenButon" + mNumSite );
                 }else if(checkedId == mNumFifteenButon.getId()){
                     if (type) {
                         mHistoryNum = 15;
@@ -792,8 +778,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                         mGuestRecentNum = 15;
                         mHomeRecentNum = 15;
                     }
-//                    mNumSite = 15;
-//                    L.d("mNumFifteenButon = " , "mNumFifteenButon" + mNumSite );
                 }
             }
         });
@@ -805,7 +789,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                L.d("mBtn = ", "mBtn 点击取消");
             }
         });
         mConfirmButon.setOnClickListener(new View.OnClickListener() {
@@ -819,7 +802,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                 setScreen(mGuestRecentSite, mGuestRecentNum, mGuestRecentScreenNum, mRecentData1 , false); // 客队近期战绩相同主客场去 同在客场比赛
 
                 mHomeRecentScreenNum = new ArrayList<>();
-                setScreen(mHomeRecentSite, mHomeRecentNum, mHomeRecentScreenNum, mRecentData2 , true);
+                setScreen(mHomeRecentSite, mHomeRecentNum, mHomeRecentScreenNum, mRecentData2, true);
 
                 if (type) {
                     updateAdapter(mHistoryScreenNum, mHistoryAdaptey , 0);
@@ -833,7 +816,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                     setHomeWinLoseData(mHomeRecentScreenNum, mFootballAnalyzeRecent2, mHomeTeam);
                 }
                 mDialog.dismiss();
-                L.d("mBtn = ", "mBtn 点击确定");
             }
         });
         mDialog.dismiss();
