@@ -209,11 +209,13 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        eventBus.unregister(this);
-        eventBus = null;
+        if (eventBus != null) {
+            eventBus.unregister(this);
+            eventBus = null;
+        }
         /*if (adapter != null && adapter.getSubscription() != null)
             if (adapter.getSubscription().isUnsubscribed()) adapter.getSubscription().unsubscribe();*/
-        if (subscription.isUnsubscribed()) subscription.unsubscribe();
+        if (subscription != null && subscription.isUnsubscribed()) subscription.unsubscribe();
         if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
         if (adapter != null) adapter.getSharedPreperences().edit().clear().commit();
         this.restoreSocketClient();
