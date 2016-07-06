@@ -60,6 +60,11 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     private TextView mFootballAnalyzeHistory;
     private TextView mFootballAnalyzeRecent1;
     private TextView mFootballAnalyzeRecent2;
+
+    private TextView mFootballAnalyzeHistoryB;
+    private TextView mFootballAnalyzeRecent1B;
+    private TextView mFootballAnalyzeRecent2B;
+
     private ImageView mHistoryScreen;
     private ImageView mRecentScreen;
 
@@ -131,6 +136,10 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         mFootballAnalyzeHistory = (TextView)findViewById(R.id.football_analyze_history);
         mFootballAnalyzeRecent1 = (TextView)findViewById(R.id.football_analyze_record_guest);
         mFootballAnalyzeRecent2 = (TextView)findViewById(R.id.football_analyze_record_home);
+
+        mFootballAnalyzeHistoryB = (TextView)findViewById(R.id.football_analyze_history2);
+        mFootballAnalyzeRecent1B = (TextView)findViewById(R.id.football_analyze_record_guest2);
+        mFootballAnalyzeRecent2B = (TextView)findViewById(R.id.football_analyze_record_home2);
 
         mHistoryScreen = (ImageView)findViewById(R.id.football_analyze_history_screen);
         mHistoryScreen.setOnClickListener(this);
@@ -259,7 +268,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                             if (mHistoryAdaptey == null) {
                                 mHistoryAdaptey = new FootballAnalyzeAdapter(mContext, fistData, R.layout.football_analyze_details_item);
                                 mHistoryListView.setAdapter(mHistoryAdaptey);
-                                setHomeWinLoseData(list, mFootballAnalyzeHistory, mHomeTeam);
+                                setHomeWinLoseData(list, mFootballAnalyzeHistory,mFootballAnalyzeHistoryB, mHomeTeam);
                             } else {
                                 if (mHistoryScreenNum != null) {
                                     updateAdapter(mHistoryScreenNum, mHistoryAdaptey, 0);
@@ -303,7 +312,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 if (mRecentAdapter1 == null) {
                                     mRecentAdapter1 = new FootballAnalyzeAdapter(mContext, fistData, R.layout.football_analyze_details_item);
                                     mRecentListView1.setAdapter(mRecentAdapter1);
-                                    setHomeWinLoseData(list, mFootballAnalyzeRecent1, mGuestTeam);
+                                    setHomeWinLoseData(list, mFootballAnalyzeRecent1,mFootballAnalyzeRecent1B, mGuestTeam);
                                 } else {
                                     if (mGuestRecentScreenNum != null) {
                                         updateAdapter(mGuestRecentScreenNum, mRecentAdapter1, 2);
@@ -344,7 +353,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 if (mRecentAdapter2 == null) {
                                     mRecentAdapter2 = new FootballAnalyzeAdapter(mContext, fistData, R.layout.football_analyze_details_item);
                                     mRecentListView2.setAdapter(mRecentAdapter2);
-                                    setHomeWinLoseData(list, mFootballAnalyzeRecent2, mHomeTeam);
+                                    setHomeWinLoseData(list, mFootballAnalyzeRecent2,mFootballAnalyzeRecent2B, mHomeTeam);
                                 } else {
                                     if (mHomeRecentScreenNum != null) {
                                         updateAdapter(mHomeRecentScreenNum, mRecentAdapter2, 1);
@@ -518,10 +527,11 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     /**
      * 主队胜负数据设置
      * @param mData
-     * @param mText
+     * @param text1
+     * @param text2
      * @param mTeam
      */
-    private void setHomeWinLoseData(List<FootballAnaylzeHistoryRecent> mData , TextView mText ,String mTeam){
+    private void setHomeWinLoseData(List<FootballAnaylzeHistoryRecent> mData , TextView text1 ,TextView text2 ,String mTeam){
 
         String homeWin , homeLose , homeCourtWin , homeCourtLose , draw;
 
@@ -607,9 +617,16 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         homeLose = countLose + "" + getResources().getText(R.string.football_analyze_lost);
         draw = countDraw + "" + getResources().getText(R.string.football_analyze_equ);
 
-        mText.setText(Html.fromHtml(mTeam + "<font color='#FF1F1F'><b>" + homeWin + "</b></font>" + "<font color='#00aaee'><b>" + draw + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
-                + getResources().getText(R.string.football_analyze_jin) + "<font color='#FF1F1F'><b>" + countGoal + "</b></font>" + getResources().getText(R.string.football_analyze_shi) + "<font color='#21B11E'><b>" + countFumble + "</b></font>" + getResources().getText(R.string.football_analyze_ball) + getResources().getText(R.string.football_analyze_winodds) + "<font color='#FF1F1F'><b>" + winning + "</b></font>"
-                + getResources().getText(R.string.football_analyze_bigball) + "<font color='#FF1F1F'><b>" + totWinning + "</b></font>" + getResources().getText(R.string.football_analyze_let_points) + "<font color='#FF1F1F'><b>" + letWinnging + "</b></font>"));
+        text1.setText(Html.fromHtml(mTeam + "<font color='#FF1F1F'><b>" + homeWin + "</b></font>" + "<font color='#00aaee'><b>" + draw + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
+                + getResources().getText(R.string.football_analyze_jin) + "<font color='#FF1F1F'><b>" + countGoal + "</b></font>" + getResources().getText(R.string.football_analyze_shi) + "<font color='#21B11E'><b>"
+                + countFumble + "</b></font>" + getResources().getText(R.string.football_analyze_ball)
+        ));
+
+        text2.setText(Html.fromHtml(getResources().getText(R.string.football_analyze_winodds) + "<font color='#FF1F1F'><b>" + winning + "</b></font>"
+                + getResources().getText(R.string.football_analyze_bigball) + "<font color='#FF1F1F'><b>" + totWinning + "</b></font>"
+                + getResources().getText(R.string.football_analyze_let_points) + "<font color='#FF1F1F'><b>" + letWinnging + "</b></font>"
+        ));
+
     }
 
     @Override
@@ -821,14 +838,14 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
                 if (type) {
                     updateAdapter(mHistoryScreenNum, mHistoryAdaptey , 0);
-                    setHomeWinLoseData(mHistoryScreenNum, mFootballAnalyzeHistory, mHomeTeam);
+                    setHomeWinLoseData(mHistoryScreenNum, mFootballAnalyzeHistory,mFootballAnalyzeHistoryB, mHomeTeam);
 
                 } else {
                     updateAdapter(mGuestRecentScreenNum , mRecentAdapter1 , 2);
-                    setHomeWinLoseData(mGuestRecentScreenNum, mFootballAnalyzeRecent1, mGuestTeam);
+                    setHomeWinLoseData(mGuestRecentScreenNum, mFootballAnalyzeRecent1,mFootballAnalyzeRecent1B, mGuestTeam);
 
                     updateAdapter(mHomeRecentScreenNum, mRecentAdapter2 , 1);
-                    setHomeWinLoseData(mHomeRecentScreenNum, mFootballAnalyzeRecent2, mHomeTeam);
+                    setHomeWinLoseData(mHomeRecentScreenNum, mFootballAnalyzeRecent2,mFootballAnalyzeRecent2B, mHomeTeam);
                 }
                 mDialog.dismiss();
             }

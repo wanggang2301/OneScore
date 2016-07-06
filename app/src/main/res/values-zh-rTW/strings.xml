@@ -521,9 +521,9 @@
     <string name="football_analyze_jin">,進</string>
     <string name="football_analyze_shi">球失</string>
     <string name="football_analyze_ball">球</string>
-    <string name="football_analyze_winodds">,勝率</string>
+    <string name="football_analyze_winodds">勝率</string>
     <string name="football_analyze_bigball">,大球率</string>
-    <string name="football_analyze_let_points">讓分贏盤率</string>
+    <string name="football_analyze_let_points">,讓分贏盤率</string>
 
     <!-- 篮球界面 -->
     <string name="basket_left">籃球比分</string>
