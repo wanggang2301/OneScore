@@ -600,8 +600,8 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
         }
 
-        L.d("FootballAnaylzeHistoryRecent_>>>>>>>>>>>>>>>>" , "总="+ matchNum + " 胜=" + countWin + " 负=" + countLose + " 平=" + countDraw + " 进球=" +countGoal + " 失球=" + countFumble
-                + " 大球="+ countTot + " 让分球=" + countLet + " 胜率=" + winning + " 大球胜率=" + totWinning + " 让分球胜率=" + letWinnging);
+//        L.d("FootballAnaylzeHistoryRecent_>>>>>>>>>>>>>>>>" , "总="+ matchNum + " 胜=" + countWin + " 负=" + countLose + " 平=" + countDraw + " 进球=" +countGoal + " 失球=" + countFumble
+//                + " 大球="+ countTot + " 让分球=" + countLet + " 胜率=" + winning + " 大球胜率=" + totWinning + " 让分球胜率=" + letWinnging);
 
         homeWin = countWin + "" + getResources().getText(R.string.football_analyze_win);
         homeLose = countLose + "" + getResources().getText(R.string.football_analyze_lost);
