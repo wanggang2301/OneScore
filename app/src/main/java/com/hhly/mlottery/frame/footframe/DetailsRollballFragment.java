@@ -277,7 +277,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                     mBottomOddsDetailsFragment.dismiss();
                 }
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                    if(finishMatchLiveTextFragment==null){
+                    if (finishMatchLiveTextFragment == null) {
                         finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
                     }
 
@@ -426,6 +426,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
 
     private void initItemOdd(final BottomOdds bottomOdds) {
+        if (mContext == null) {
+            return;
+        }
         odd_alet.setTitle(mContext.getResources().getString(R.string.set_asialet_txt));
         odd_asize.setTitle(mContext.getResources().getString(R.string.set_asiasize_txt));
         odd_eur.setTitle(mContext.getResources().getString(R.string.set_euro_txt));
@@ -485,6 +488,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         });
 
         mHandler.sendEmptyMessage(SUCCESS);
+
 
     }
 
@@ -811,7 +815,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     //心跳时间
     private long pushStartTime;
 
-    private Timer computeWebSocketConnTimer = new Timer();
+    public Timer detailsTimer = new Timer();
 
     /***
      * 计算推送Socket断开重新连接
@@ -833,17 +837,19 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 }
             };
 
-            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+            detailsTimer.schedule(tt, 15000, 15000);
             isStartTimer = true;
         }
     }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if (computeWebSocketConnTimer != null) {
-            computeWebSocketConnTimer.cancel();
+        if (detailsTimer != null) {
+            L.d("timer", "detailsRoll定时器");
+            detailsTimer.cancel();
         }
 
         if (hSocketClient != null) {

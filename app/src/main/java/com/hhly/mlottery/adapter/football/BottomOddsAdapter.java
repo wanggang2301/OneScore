@@ -41,7 +41,18 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             hold.item_time.setText("-");
         }
 
-        hold.item_score.setText(list.get(position).getScore());
+
+        if (position < list.size() - 1 && !list.get(position).getScore().equals(list.get(position + 1).getScore())) {
+            hold.item_score.setText(list.get(position).getScore());
+            hold.item_score.setTextColor(mContext.getResources().getColor(R.color.white));
+            hold.item_score.setBackgroundResource(R.color.analyze_left);
+
+        } else {
+            hold.item_score.setText(list.get(position).getScore());
+            hold.item_score.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
+            hold.item_score.setBackgroundResource(R.color.white);
+        }
+
 
         if ("-".equals(list.get(position).getOdd().getLeft()) || "-".equals(list.get(position).getOdd().getMiddle()) || "-".equals(list.get(position).getOdd().getRight())) {
 
