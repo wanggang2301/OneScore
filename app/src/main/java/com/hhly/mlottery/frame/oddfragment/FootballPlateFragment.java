@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.cpiadapter.FootballPlateAdapter;
@@ -21,7 +20,6 @@ import com.hhly.mlottery.bean.enums.StatusEnum;
 import com.hhly.mlottery.bean.oddsbean.OddsDataInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.EmptyView;
 
@@ -31,7 +29,7 @@ import java.util.Map;
 
 /**
  * 足球详情指数列表
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/28.
  */
 public class FootballPlateFragment extends Fragment {
@@ -40,6 +38,7 @@ public class FootballPlateFragment extends Fragment {
 
     RecyclerView mRecyclerView;
     EmptyView mEmptyView;
+    View mTitleView;
 
     private FootballMatchDetailActivityTest mActivity;
 
@@ -68,6 +67,7 @@ public class FootballPlateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mTitleView = inflater.inflate(R.layout.item_odds_football_title, container, false);
         return inflater.inflate(R.layout.fragment_football_plate, container, false);
     }
 
@@ -78,6 +78,7 @@ public class FootballPlateFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         items = new ArrayList<>();
         mAdapter = new FootballPlateAdapter(type, items);
+        mAdapter.addHeaderView(mTitleView);
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
