@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -130,6 +131,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
         tv_comfirm.setOnClickListener(this);
 
         et_password = (EditText) findViewById(R.id.et_password);
+        et_password.setTypeface(Typeface.SANS_SERIF);
         iv_eye = (ImageView) findViewById(R.id.iv_eye);
         iv_eye.setOnClickListener(this);
 
@@ -164,7 +166,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     iv_eye.setImageResource(R.mipmap.open_eye);
                 }
-
+                et_password.setTypeface(Typeface.SANS_SERIF);
                 // 光标移动到结尾
                 CommonUtils.selectionLast(et_password);
                 break;

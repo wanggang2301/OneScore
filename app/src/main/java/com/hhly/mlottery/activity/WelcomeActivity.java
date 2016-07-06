@@ -312,7 +312,7 @@ public class WelcomeActivity extends BaseActivity {
             public synchronized void onResponse(final WelcomeUrl json) {
                 if ("200".equals(json.getResult() + "") && json != null) {
 
-                    if (json.getUrl().isEmpty()) {
+                    if (json.getUrl().isEmpty()&& json.getUrl()==null) {
                         //没有图片 不显示
                         imageHandler.sendEmptyMessage(GET_IMAGE_NODATA);
                     } else {

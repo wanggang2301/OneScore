@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -115,7 +116,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         et_username.addTextChangedListener(this);
 
         et_password = (EditText) findViewById(R.id.et_password);
-
+        et_password.setTypeface(Typeface.SANS_SERIF);
        findViewById(R.id.tv_register).setOnClickListener(this);
      /*   View tv_register = findViewById(R.id.tv_right);
         tv_register.setVisibility(View.VISIBLE);
@@ -142,14 +143,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.iv_eye:  // 显示密码
                 MobclickAgent.onEvent(mContext, "LoginActivity_PassWord_isHide");
                 int inputType = et_password.getInputType();
+                et_password.setHint(mContext.getString(R.string.pwd_format_hint));
                 if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD){
                     et_password.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     iv_eye.setImageResource(R.mipmap.new_close_eye);
                 }else{
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
                     iv_eye.setImageResource(R.mipmap.new_open_eye);
                 }
-
+                et_password.setTypeface(Typeface.SANS_SERIF);
                 // 光标移动到结尾
                 CommonUtils.selectionLast(et_password);
 
