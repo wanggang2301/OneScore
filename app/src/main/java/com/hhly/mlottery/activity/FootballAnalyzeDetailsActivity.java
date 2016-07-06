@@ -25,6 +25,7 @@ import com.hhly.mlottery.bean.footballDetails.FootballAnaylzeHistoryRecent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NestedListView;
@@ -526,7 +527,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
         //所显示的总场数
 //        String matchNum;
-        int matchNum;
+        int matchNum = 0;
 
         int countWin = 0 ; //胜
         int countLose = 0 ; //负
@@ -545,21 +546,33 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
             for (FootballAnaylzeHistoryRecent history : mData) {
                 if (history.getResult() == 1) {
                     countWin++;
-                    if(history.getTot() != null){
-                        if (history.getTot().equals("1")) {
-                            countTot++;
-                        }
-                    }
-                    if(history.getLet() != null){
-                        if (history.getLet().equals("1")) {
-                            countLet++;
-                        }
-                    }
+//                    if(history.getTot() != null){
+//                        if (history.getTot().equals("1")) {
+//                            countTot++;
+//                        }
+//                    }
+//                    if(history.getLet() != null){
+//                        if (history.getLet().equals("1")) {
+//                            countLet++;
+//                        }
+//                    }
                 }else if (history.getResult() == -1){
                     countLose++;
                 }else if(history.getResult() == 0){
                     countDraw++;
                 }
+
+                if(history.getTot() != null){
+                    if (history.getTot().equals("1")) {
+                        countTot++;
+                    }
+                }
+                if(history.getLet() != null){
+                    if (history.getLet().equals("1")) {
+                        countLet++;
+                    }
+                }
+
                 if (history.isHomeGround()) {
                     countGoal += history.getHomeScore();
                     countFumble += history.getGuestScore();
@@ -587,14 +600,16 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
         }
 
-        homeWin = countWin + "" + getResources().getText(R.string.basket_analyze_win);
-        homeLose = countLose + "" + getResources().getText(R.string.basket_analyze_lost);
+        L.d("FootballAnaylzeHistoryRecent_>>>>>>>>>>>>>>>>" , "总="+ matchNum + " 胜=" + countWin + " 负=" + countLose + " 平=" + countDraw + " 进球=" +countGoal + " 失球=" + countFumble
+                + " 大球="+ countTot + " 让分球=" + countLet + " 胜率=" + winning + " 大球胜率=" + totWinning + " 让分球胜率=" + letWinnging);
 
-        draw = countDraw + "平";
+        homeWin = countWin + "" + getResources().getText(R.string.football_analyze_win);
+        homeLose = countLose + "" + getResources().getText(R.string.football_analyze_lost);
+        draw = countDraw + "" + getResources().getText(R.string.football_analyze_equ);
 
         mText.setText(Html.fromHtml(mTeam + "<font color='#FF1F1F'><b>" + homeWin + "</b></font>" + "<font color='#00aaee'><b>" + draw + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
-                + ",进" + "<font color='#FF1F1F'><b>" + countGoal + "</b></font>" + "球失" + "<font color='#21B11E'><b>" + countFumble + "</b></font>" + "球" + ",胜率" + "<font color='#FF1F1F'><b>" + winning + "</b></font>"
-                + ",大球率" + "<font color='#FF1F1F'><b>" + totWinning + "</b></font>" + "让分赢盘率" + "<font color='#FF1F1F'><b>" + letWinnging + "</b></font>"));
+                + getResources().getText(R.string.football_analyze_jin) + "<font color='#FF1F1F'><b>" + countGoal + "</b></font>" + getResources().getText(R.string.football_analyze_shi) + "<font color='#21B11E'><b>" + countFumble + "</b></font>" + getResources().getText(R.string.football_analyze_ball) + getResources().getText(R.string.football_analyze_winodds) + "<font color='#FF1F1F'><b>" + winning + "</b></font>"
+                + getResources().getText(R.string.football_analyze_bigball) + "<font color='#FF1F1F'><b>" + totWinning + "</b></font>" + getResources().getText(R.string.football_analyze_let_points) + "<font color='#FF1F1F'><b>" + letWinnging + "</b></font>"));
     }
 
     @Override
