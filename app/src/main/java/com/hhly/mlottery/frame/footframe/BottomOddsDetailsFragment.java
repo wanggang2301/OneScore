@@ -52,14 +52,20 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
 
     private static final String PARAM_TYPE = "type";
 
-    public static final int ASIA = 1;
-    public static final int BIG_SMALL_BALL = 3;
+   /* public static final int ASIA = 1;
 
     public static final int EU = 2;
+    public static final int BIG_SMALL_BALL = 3;*/
+
+
+    private static final int ALET = 1;
+    private static final int EUR = 2;
+    private static final int ASIZE = 3;  //大小球
+
 
     private RecyclerView mRecyclerView;
 
-    private int mType = ASIA;
+    private int mType = ALET;
 
     private BottomOddsItem mBottomOddsItem;
 
@@ -168,20 +174,20 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
             });
         }
 
-        if (mType == ASIA) {
+        if (mType == ALET) {
             odd_title.setText(context.getResources().getString(R.string.alet_first));
             odds_left.setText(context.getResources().getString(R.string.foot_odds_alet_left));
             odds_middle.setText(context.getResources().getString(R.string.foot_odds_alet_middle));
             odds_right.setText(context.getResources().getString(R.string.foot_odds_alet_right));
 
 
-        } else if (mType == BIG_SMALL_BALL) {
+        } else if (mType == ASIZE) {
             odd_title.setText(context.getResources().getString(R.string.asize_first));
             odds_left.setText(context.getResources().getString(R.string.foot_odds_asize_left));
             odds_middle.setText(context.getResources().getString(R.string.foot_odds_asize_middle));
             odds_right.setText(context.getResources().getString(R.string.foot_odds_asize_right));
 
-        } else if (mType == EU) {
+        } else if (mType == EUR) {
             odd_title.setText(context.getResources().getString(R.string.eu_first));
             odds_left.setText(context.getResources().getString(R.string.foot_odds_eu_left));
             odds_middle.setText(context.getResources().getString(R.string.foot_odds_eu_middle));
@@ -339,7 +345,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
      * 加载数据
      */
     private void loadData() {
-        mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList);
+        mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList,mType);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mHandler.sendEmptyMessage(SUCCESS);

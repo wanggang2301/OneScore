@@ -108,8 +108,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     //亚盘
     private static final int ALET = 1;
-    private static final int ASIZE = 3;
     private static final int EUR = 2;
+    private static final int ASIZE = 3;  //大小球
 
     //赛前view
     private TextView pre_dataTime_txt;//开赛时间
@@ -436,16 +436,16 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
         //  "-"表示没有数据   null 表封盘
 
-        odd_alet.setTableLayoutData(bottomOdds.getAsianlistOdd());
+        odd_alet.setTableLayoutData(bottomOdds.getAsianlistOdd(), ALET);
 
         aletBottomOddsItem = bottomOdds.getAsianlistOdd().get(1);  //获取即时赔率
 
 
-        odd_asize.setTableLayoutData(bottomOdds.getOverunderlistOdd());
+        odd_asize.setTableLayoutData(bottomOdds.getOverunderlistOdd(), ASIZE);
         asizeBottomOddsItem = bottomOdds.getOverunderlistOdd().get(1);
 
 
-        odd_eur.setTableLayoutData(bottomOdds.getEuropelistOdd());
+        odd_eur.setTableLayoutData(bottomOdds.getEuropelistOdd(), EUR);
         eurBottomOddsItem = bottomOdds.getEuropelistOdd().get(1);
 
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
+import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
 
@@ -19,13 +20,26 @@ import java.util.List;
  */
 public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+/*
+    private static final int ASIA = 1;
+    private static final int BIG_SMALL_BALL = 3;
+
+    private static final int EU = 2;*/
+
+    //亚盘
+    private static final int ALET = 1;
+    private static final int EUR = 2;
+    private static final int ASIZE = 3;  //大小球
 
     private List<BottomOddsDetailsItem> list;
     private Context mContext;
 
-    public BottomOddsAdapter(Context context, List<BottomOddsDetailsItem> datas) {
+    private int mType;
+
+    public BottomOddsAdapter(Context context, List<BottomOddsDetailsItem> datas, int type) {
         this.mContext = context;
         this.list = datas;
+        this.mType = type;
     }
 
 
@@ -82,10 +96,16 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             hold.item_home.setText(list.get(position).getOdd().getLeft());
             setTextViewColor(hold.item_home, 0, list.get(position).getOdd().getLeftUp());
-
-            hold.item_handicap.setText(list.get(position).getOdd().getMiddle());
-            setTextViewColor(hold.item_handicap, 1, list.get(position).getOdd().getMiddleUp());
-
+            if (mType == ALET) {
+                hold.item_handicap.setText(HandicapUtils.changeHandicap(list.get(position).getOdd().getMiddle()));
+                setTextViewColor(hold.item_handicap, 1, list.get(position).getOdd().getMiddleUp());
+            } else if (mType == ASIZE) {//大小球
+                hold.item_handicap.setText(HandicapUtils.changeHandicapByBigLittleBall(list.get(position).getOdd().getMiddle()));
+                setTextViewColor(hold.item_handicap, 1, list.get(position).getOdd().getMiddleUp());
+            } else if (mType == EUR) {  //欧赔
+                hold.item_handicap.setText(list.get(position).getOdd().getMiddle());
+                setTextViewColor(hold.item_handicap, 0, list.get(position).getOdd().getMiddleUp());
+            }
             hold.item_guest.setText(list.get(position).getOdd().getRight());
             setTextViewColor(hold.item_guest, 0, list.get(position).getOdd().getRightUp());
         }
