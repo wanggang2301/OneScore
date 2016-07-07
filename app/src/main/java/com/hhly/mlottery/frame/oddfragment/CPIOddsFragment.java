@@ -36,7 +36,7 @@ import java.util.Map;
 
 /**
  * 赔率列表 Fragment
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/21.
  */
 public class CPIOddsFragment extends Fragment {
@@ -402,7 +402,10 @@ public class CPIOddsFragment extends Fragment {
             if (matchInfo.getMatchId().equals(result.getThirdId())) {
                 WebSocketCPIResult.UpdateTimeAndStatus data = result.getData();
                 int statusOrigin = data.getStatusOrigin();
-                matchInfo.setOpenTime(data.getKeepTime() + "");
+                int keepTime = data.getKeepTime();
+                if (keepTime != 0) {
+                    matchInfo.setOpenTime(keepTime + "");
+                }
                 matchInfo.setMatchState(statusOrigin + "");
                 if (!isDefault) {
                     mAdapter.notifyItemChanged(infoBeanList.indexOf(item));
