@@ -75,11 +75,22 @@
             android:layout_height="match_parent"
             android:background="@color/line_football_footer"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/right_recycler_view"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="25"/>
+            android:layout_weight="25">
+
+            <com.hhly.mlottery.widget.EmptyView
+                android:id="@+id/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/right_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 

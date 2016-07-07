@@ -116,7 +116,7 @@ public class BasketOddsAdapter  extends BaseAdapter{
                 holder.immediate_handicap.setBackgroundColor(context.getResources().getColor(R.color.odds_down));
             }
             else {
-                holder.immediate_handicap.setTextColor(context.getResources().getColor(R.color.white));
+                holder.immediate_handicap.setBackgroundColor(context.getResources().getColor(R.color.transparency));
             }
             //左侧的颜色变化
 

@@ -65,7 +65,7 @@ public class EmptyView extends FrameLayout {
         mProgress = view.findViewById(R.id.progress);
         mLoadingText = view.findViewById(R.id.loading);
 
-        mLoadingView = mProgress;
+        setLoadingType(LOADING_TYPE_PIC);
     }
 
     /**
