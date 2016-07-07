@@ -8,37 +8,6 @@
     <!--<include layout="@layout/basket_analyze_layout_header" />-->
     <!-- 标题头 -->
     <include layout="@layout/layout_header" />
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/x120"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:paddingTop="@dimen/x40">-->
-
-        <!--<ImageButton-->
-            <!--android:id="@+id/football_analyze_img_back"-->
-            <!--style="@style/RippleBackgroudBorderless"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:paddingLeft="@dimen/x24"-->
-            <!--android:paddingRight="@dimen/x24"-->
-            <!--android:scaleType="centerInside"-->
-            <!--android:src="@mipmap/back" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/public_txt_title"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:gravity="center"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:text="@string/football_analyze_details"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="20sp" />-->
-    <!--</RelativeLayout>-->
 
     <LinearLayout
         android:id="@+id/football_immediate_loading"
@@ -625,20 +594,20 @@
                             android:layout_height="wrap_content"
                             android:divider="#00000000"
                             android:dividerHeight="0dip"
-                            android:listSelector="@android:color/transparent"></com.hhly.mlottery.widget.NestedListView>
-
-                        <TextView
-                            android:id="@+id/football_analyze_nodata4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/basket_details_item"
-                            android:paddingTop="@dimen/basket_details_item"
-                            android:text="@string/basket_nodata"
-                            android:textSize="@dimen/text_size_16"
-                            android:visibility="gone"/>
+                            android:listSelector="@android:color/transparent"/>
 
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/football_analyze_nodata4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/basket_details_item"
+                        android:paddingTop="@dimen/basket_details_item"
+                        android:text="@string/basket_nodata"
+                        android:textSize="@dimen/text_size_16"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:id="@+id/football_analyze_details_future_home"
@@ -719,17 +688,17 @@
                             android:dividerHeight="0dip"
                             android:listSelector="@android:color/transparent"></com.hhly.mlottery.widget.NestedListView>
 
-                        <TextView
-                            android:id="@+id/football_analyze_nodata5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/basket_details_item"
-                            android:paddingTop="@dimen/basket_details_item"
-                            android:text="@string/basket_nodata"
-                            android:textSize="@dimen/text_size_16"
-                            android:visibility="gone"/>
                     </LinearLayout>
+                    <TextView
+                        android:id="@+id/football_analyze_nodata5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/basket_details_item"
+                        android:paddingTop="@dimen/basket_details_item"
+                        android:text="@string/basket_nodata"
+                        android:textSize="@dimen/text_size_16"
+                        android:visibility="gone"/>
 
                     <View
                         android:layout_width="1px"

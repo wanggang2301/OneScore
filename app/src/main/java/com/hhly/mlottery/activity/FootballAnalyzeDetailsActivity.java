@@ -276,10 +276,11 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                     updateAdapter(fistData, mHistoryAdaptey, 0);
                                 }
                             }
-
+                            mNoData1.setVisibility(View.GONE);
                             mHistory_ll.setVisibility(View.VISIBLE);
                         } else {
                             mHistory_ll.setVisibility(View.GONE);
+                            mNoData1.setVisibility(View.VISIBLE);
                         }
                         /**
                          * 近期战绩
@@ -293,7 +294,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
                                 //暂无数据提示
                                 if (mRecentData1.isEmpty()) {
-                                    mNoData3.setVisibility(View.VISIBLE);
+                                    mNoData2.setVisibility(View.VISIBLE);
                                 }
                                 //默认选中全部场地6场
                                 List<FootballAnaylzeHistoryRecent> fistData = new ArrayList<>();
@@ -320,11 +321,11 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                         updateAdapter(fistData, mRecentAdapter1, 2);
                                     }
                                 }
-    //                    mNoData2.setVisibility(View.GONE);
                                 mGuestRecent_ll.setVisibility(View.VISIBLE);
+                                mNoData2.setVisibility(View.GONE);
                             }else{
-//         //                   mNoData2.setVisibility(View.VISIBLE);
                                 mGuestRecent_ll.setVisibility(View.GONE);
+                                mNoData2.setVisibility(View.VISIBLE);
                             }
                             /**
                              * 主队近期战绩
@@ -334,7 +335,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
                                 //暂无数据提示
                                 if (mRecentData2.isEmpty()) {
-                                    mNoData2.setVisibility(View.VISIBLE);
+                                    mNoData3.setVisibility(View.VISIBLE);
                                 }
 
                                 List<FootballAnaylzeHistoryRecent> fistData = new ArrayList<>();
@@ -361,15 +362,16 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                         updateAdapter(fistData, mRecentAdapter2, 1);
                                     }
                                 }
-    //                    mNoData3.setVisibility(View.GONE);
+                                mNoData3.setVisibility(View.GONE);
                                 mHomeRecent_ll.setVisibility(View.VISIBLE);
                             } else {
-    //                    mNoData3.setVisibility(View.VISIBLE);
+                                mNoData3.setVisibility(View.VISIBLE);
                                 mHomeRecent_ll.setVisibility(View.GONE);
                             }
                         }else {
                             mGuestRecent_ll.setVisibility(View.GONE);
                             mHomeRecent_ll.setVisibility(View.GONE);
+                            mNoData3.setVisibility(View.VISIBLE);
                         }
 
                         /**
@@ -401,9 +403,13 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 mGuestFuture_ll.setVisibility(View.VISIBLE);   //客队未来三场
                             } else {
                                 mGuestFuture_ll.setVisibility(View.GONE);
+                                if (json.getFutureMatch().getHome() == null) {
+                                    mNoData4.setVisibility(View.VISIBLE);
+                                }
                             }
                          }else{
                              mGuestFuture_ll.setVisibility(View.GONE);
+                             mNoData4.setVisibility(View.VISIBLE);
                          }
                         /**
                          * 主队未来比赛
@@ -427,14 +433,16 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
                                 mFutureAdapter2 = new FootballAnalyzeFutureAdapter(mContext, mFutureData2, R.layout.football_analyze_item);
                                 mFutureListView2.setAdapter(mFutureAdapter2);
-    //                    mNoData4.setVisibility(View.GONE);
                                 mHomeFuture_ll.setVisibility(View.VISIBLE);
                             } else {
-    //                    mNoData4.setVisibility(View.VISIBLE);
                                 mHomeFuture_ll.setVisibility(View.GONE);
+                                if (json.getFutureMatch().getGuest() == null) {
+                                    mNoData4.setVisibility(View.VISIBLE);
+                                }
                             }
                         }else{
                             mHomeFuture_ll.setVisibility(View.GONE);
+                            mNoData4.setVisibility(View.VISIBLE);
                         }
 
                         mErrorLoad.setVisibility(View.GONE);
@@ -595,9 +603,9 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
         String winning , totWinning , letWinnging;
         if (matchNum == 0) {
-            winning = "--";
-            totWinning = "--";
-            letWinnging = "--";
+            winning = "0";
+            totWinning = "0";
+            letWinnging = "0";
         }else{
             //胜率
             winning = (countWin*100)/(matchNum)+"%";
