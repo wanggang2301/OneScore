@@ -600,4 +600,6 @@
     <color name="football_analyze_lose_color">#21B11E</color>
     <color name="football_analyze_draw_color">#00aaee</color>
     <color name="football_analyze_default_color">#333333</color>
+
+    <color name="odds_title_bg_color">#F3F7F9</color>
 </resources>

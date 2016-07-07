@@ -45,6 +45,7 @@ public class FootballPlateDetailsFragment extends Fragment {
 
     View mLeftFootView;
     EmptyView mEmptyView;
+    View mRightContentLayout;
 
     private FootballPlateDetailsLeftAdapter mLeftAdapter;
     private FootballPlateDetailsRightAdapter mRightAdapter;
@@ -93,6 +94,8 @@ public class FootballPlateDetailsFragment extends Fragment {
 
         mLeftRecyclerView = (RecyclerView) view.findViewById(R.id.left_recycler_view);
         mRightRecyclerView = (RecyclerView) view.findViewById(R.id.right_recycler_view);
+
+        mRightContentLayout = view.findViewById(R.id.content);
 
         mLeftAdapter = new FootballPlateDetailsLeftAdapter(leftList);
         mLeftAdapter.addFooterView(mLeftFootView);
@@ -185,14 +188,14 @@ public class FootballPlateDetailsFragment extends Fragment {
 
     private void setStatus(@StatusEnum.Status int status) {
         if (status == StatusEnum.LOADING || status == StatusEnum.ERROR) {
-            mRightRecyclerView.setVisibility(isFirstLoad ? View.VISIBLE : View.GONE);
+            mRightContentLayout.setVisibility(isFirstLoad ? View.VISIBLE : View.GONE);
             if (isFirstLoad) isFirstLoad = false;
             mEmptyView.setVisibility(View.VISIBLE);
         } else if (status == StatusEnum.NORMAL && rightList.size() > 0) {
-            mRightRecyclerView.setVisibility(View.VISIBLE);
+            mRightContentLayout.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);
         } else {
-            mRightRecyclerView.setVisibility(View.GONE);
+            mRightContentLayout.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.VISIBLE);
         }
         mEmptyView.setStatus(status);
