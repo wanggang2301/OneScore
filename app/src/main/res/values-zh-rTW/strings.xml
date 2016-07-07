@@ -28,6 +28,22 @@
     <string name="foot_details_focused">已關注</string>
     <string name="foot_details_share">分享</string>
 
+    <!--亚盘-->
+    <string name="foot_odds_alet_left">主隊</string>
+    <string name="foot_odds_alet_middle">讓球</string>
+    <string name="foot_odds_alet_right">客隊</string>
+
+    <!--大小-->
+    <string name="foot_odds_asize_left">大球</string>
+    <string name="foot_odds_asize_middle">盤口</string>
+    <string name="foot_odds_asize_right">小球</string>
+
+
+    <!--欧赔-->
+    <string name="foot_odds_eu_left">勝</string>
+    <string name="foot_odds_eu_middle">平</string>
+    <string name="foot_odds_eu_right">負</string>
+
 
 
 

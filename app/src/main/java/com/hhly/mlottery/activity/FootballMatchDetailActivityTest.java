@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -114,6 +114,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private final static String BEFOURLIVE = "0";//直播前
     private final static String ONLIVE = "1";//直播中
     private final static String LIVEENDED = "-1";//直播结束
+
+
+    private final static int ROLLBALL_FG = 0;
+    private final static int TALKBALL_FG = 1;
+    private final static int ANALYZE_FG = 2;
+    private final static int ODDS_FG = 3;
+    private final static int STATISTICS_FG = 4;
+
 
     /**
      * 未开
@@ -265,8 +273,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         setContentView(R.layout.activity_football_match_details_test);
 
-        L.d("cccnnn", Build.VERSION.SDK_INT + "====" + Build.VERSION_CODES.KITKAT);
-
         this.mContext = getApplicationContext();
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
@@ -321,7 +327,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             e.printStackTrace();
         }
     }
-
 
 
     private void initView() {
@@ -699,6 +704,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
 
+
+            //赛前进入分析
+            mViewPager.setCurrentItem(ANALYZE_FG);
+
+
             mHeadviewpager.setIsScrollable(false);
             mIndicator.setVisibility(View.GONE);
 
@@ -718,6 +728,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
         } else {
+
+            mViewPager.setCurrentItem(ROLLBALL_FG);
+
 
             mHeadviewpager.setIsScrollable(true);
             mIndicator.setVisibility(View.VISIBLE);
@@ -1109,8 +1122,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (computeWebSocketConnTimer != null) {
-            computeWebSocketConnTimer.cancel();
+        if (footballTimer != null) {
+            L.d("timer", "footballdetails定时器");
+
+            footballTimer.cancel();
         }
 
         if (hSocketClient != null) {
@@ -1120,6 +1135,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
         }
+        this.finish();
     }
 
 
@@ -1202,7 +1218,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     //心跳时间
     private long pushStartTime;
 
-    private Timer computeWebSocketConnTimer = new Timer();
+    private Timer footballTimer = new Timer();
 
     private boolean isStarComputeTimer = false;
 
@@ -1223,7 +1239,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     }
                 }
             };
-            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+            footballTimer.schedule(tt, 15000, 15000);
             isStarComputeTimer = true;
         }
     }
@@ -2300,7 +2316,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        popupWindow.showAsDropDown(v);
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - v.getWidth()-v.getPaddingRight(), location[1] + v.getHeight());         //  popupWindow.showAsDropDown(v,-10,0);
 
 
         (mView.findViewById(R.id.football_item_focus)).setOnClickListener(new View.OnClickListener() {
