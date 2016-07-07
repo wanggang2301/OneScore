@@ -27,7 +27,7 @@
             android:id="@+id/odd_big_btn"
             style="@style/odds_radio_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/odds_selected_op"
             android:text="@string/asiasize"/>
         <!--欧赔-->
@@ -35,7 +35,7 @@
             android:id="@+id/odd_op_btn"
             style="@style/odds_radio_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/odds_selected_big"
             android:text="@string/odd_op_rb_txt"/>
 
