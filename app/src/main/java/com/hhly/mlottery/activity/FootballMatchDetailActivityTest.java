@@ -1123,7 +1123,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     protected void onDestroy() {
         super.onDestroy();
         if (footballTimer != null) {
-            L.d("timer","footballdetails定时器");
+            L.d("timer", "footballdetails定时器");
 
             footballTimer.cancel();
         }
@@ -2318,7 +2318,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         int[] location = new int[2];
         v.getLocationOnScreen(location);
-        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - v.getPaddingRight() - v.getWidth(), location[1] + v.getHeight());         //  popupWindow.showAsDropDown(v,-10,0);
+
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - v.getWidth()-v.getPaddingRight(), location[1] + v.getHeight());         //  popupWindow.showAsDropDown(v,-10,0);
 
 
         (mView.findViewById(R.id.football_item_focus)).setOnClickListener(new View.OnClickListener() {

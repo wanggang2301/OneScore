@@ -115,7 +115,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="right"
                             android:paddingLeft="@dimen/x24"
-                            android:paddingRight="@dimen/x24"
+                            android:paddingRight="@dimen/x34"
                             android:scaleType="centerInside"
                             android:src="@mipmap/head_details" />
                     </FrameLayout>
