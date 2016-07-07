@@ -3,15 +3,16 @@
                                             xmlns:app="http://schemas.android.com/apk/res-auto"
                                             xmlns:tools="http://schemas.android.com/tools"
                                             android:layout_width="match_parent"
-                                            android:layout_height="64dp">
+                                            android:layout_height="64dp"
+                                            android:background="@color/white">
 
     <TextView
         android:id="@+id/company"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:drawableLeft="@mipmap/basket_odds_more"
+        android:drawableLeft="@mipmap/football_odds_more"
         android:drawablePadding="5dp"
-        android:drawableStart="@mipmap/basket_odds_more"
+        android:drawableStart="@mipmap/football_odds_more"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
@@ -39,7 +40,7 @@
             app:layout_widthPercent="33.33%">
 
             <TextView
-                android:id="@+id/plate_guestOdds_txt"
+                android:id="@+id/plate_homeOdds_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -49,7 +50,7 @@
                 tools:text="3.0"/>
 
             <TextView
-                android:id="@+id/plate_guestOdds_txt2"
+                android:id="@+id/plate_homeOdds_txt2"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -113,7 +114,7 @@
             app:layout_widthPercent="33.33%">
 
             <TextView
-                android:id="@+id/plate_homeOdds_txt"
+                android:id="@+id/plate_guestOdds_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -123,7 +124,7 @@
                 tools:text="3.3"/>
 
             <TextView
-                android:id="@+id/plate_homeOdds_txt2"
+                android:id="@+id/plate_guestOdds_txt2"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"

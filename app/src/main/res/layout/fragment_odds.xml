@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              android:background="@color/whitesmoke"
               android:orientation="vertical">
     <!--指数-->
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y65"
-        android:layout_margin="@dimen/x24"
+        android:layout_height="36dp"
+        android:layout_margin="13dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -18,7 +18,7 @@
             android:id="@+id/odd_plate_btn"
             style="@style/odds_radio_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/odds_selected_plate"
             android:checked="true"
             android:text="@string/odd_plate_rb_txt"/>

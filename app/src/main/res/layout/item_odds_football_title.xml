@@ -1,7 +1,10 @@
 <android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            xmlns:tools="http://schemas.android.com/tools"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/white"
+                                            tools:showIn="@layout/fragment_football_plate">
 
     <TextView
         android:id="@+id/company"
@@ -31,7 +34,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
-            android:text="@string/basket_analyze_guest_win"
+            android:text="@string/basket_analyze_home_win"
             android:textSize="@dimen/text_size_11"/>
 
         <TextView
@@ -51,7 +54,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
-            android:text="@string/basket_analyze_home_win"
+            android:text="@string/basket_analyze_guest_win"
             android:textSize="@dimen/text_size_11"/>
 
     </LinearLayout>
