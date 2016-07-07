@@ -330,8 +330,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
      * 初始化界面
      */
     private void initView() {
-        TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_eur),
-                getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_details_talkable)};
+        TITLES = new String[]{getResources().getString(R.string.basket_analyze),
+                getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
@@ -348,7 +348,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
 
-        mTabsAdapter.addFragments(mAnalyzeFragment, mOddsEuro, mOddsLet,mOddsSize, mTalkAboutBallFragment);
+        mTabsAdapter.addFragments(mAnalyzeFragment,mOddsLet,mOddsSize, mOddsEuro,  mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
