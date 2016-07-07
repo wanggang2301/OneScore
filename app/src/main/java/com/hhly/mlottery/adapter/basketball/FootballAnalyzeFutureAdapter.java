@@ -26,6 +26,10 @@ public class FootballAnalyzeFutureAdapter extends CommonAdapter<FootballAnalyzeF
     @Override
     public void convert(ViewHolder holder, FootballAnalyzeFuture historyBean) {
 
+//        if (holder.getPosition()%2 == 0) {
+//            holder.setBackgroundRes(R.id.football_analyze_details_future_item, R.color.home_item_bg);
+//        }
+
         holder.setText(R.id.football_team_name ,historyBean.getLeagueName());
         holder.setText(R.id.football_data , historyBean.getDate());
         holder.setText(R.id.football_guest_name , historyBean.getGuestName());

@@ -219,7 +219,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
 
-            L.d("BASKET_MATCH_STATUS>>>>>>", mMatchStatus);
+//            L.d("BASKET_MATCH_STATUS>>>>>>", mMatchStatus);
         }
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
@@ -348,7 +348,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
 
-        mTabsAdapter.addFragments(mAnalyzeFragment, mOddsEuro, mOddsSize, mOddsLet, mTalkAboutBallFragment);
+        mTabsAdapter.addFragments(mAnalyzeFragment, mOddsEuro, mOddsLet,mOddsSize, mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -1080,7 +1080,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 mTalkAboutBallFragment.setClickableLikeBtn(true);//聊球可点赞
                 setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);// 动画有毒，最后在设一下比分
 
-                L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());
+//                L.d("score.getHomeScore()>>>>...>>>" + score.getHomeScore());
                 setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
 
                 mTitleHome.setText(score.getHomeScore() + "");

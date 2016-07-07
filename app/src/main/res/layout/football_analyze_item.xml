@@ -7,6 +7,7 @@
     android:paddingTop="@dimen/basket_details_ball6"
     android:paddingLeft="@dimen/basket_details_ball5"
     android:paddingRight="@dimen/basket_details_ball5"
+    android:id="@+id/football_analyze_details_future_item"
     >
 
     <!--<LinearLayout-->
@@ -42,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:gravity="center"
-            android:text="老鹰"
             android:singleLine="true"
+            android:text="老鹰"
             android:textColor="@color/res_name_color"
             android:textSize="@dimen/text_size_11" />
 

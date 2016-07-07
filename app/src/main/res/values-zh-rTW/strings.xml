@@ -529,6 +529,18 @@
     <string name="analyze_date">日期</string>
     <string name="analyze_match">賽事</string>
     <string name="analyze_match_result">賽果</string>
+
+    <!--足球分析详情页面 -->
+    <string name="football_analyze_equ">平</string>
+    <string name="football_analyze_win">勝</string>
+    <string name="football_analyze_lost">負</string>
+    <string name="football_analyze_jin">,進</string>
+    <string name="football_analyze_shi">球失</string>
+    <string name="football_analyze_ball">球</string>
+    <string name="football_analyze_winodds">勝率</string>
+    <string name="football_analyze_bigball">,大球率</string>
+    <string name="football_analyze_let_points">,讓分贏盤率</string>
+
     <!-- 篮球界面 -->
     <string name="basket_left">籃球比分</string>
     <string name="basket_tittle">籃球比分</string>
@@ -821,7 +833,10 @@
 
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滾球</string>
+    <string name="only_five_eachday">同壹個手機號每天只能發送5次短信</string>
     <string name="login_username">請輸入用戶名</string>
+    <string name="server_busy">系統繁忙</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
+    <string name="at_least_one_company">至少選擇壹家公司</string>
 </resources>

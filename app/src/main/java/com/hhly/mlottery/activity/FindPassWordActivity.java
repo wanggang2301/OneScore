@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
@@ -49,6 +50,8 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
     private TextView tv_verycode ,tv_comfirm;
     private ImageView iv_delete , iv_eye;
     private ProgressDialog progressBar;
+
+    private ProgressBar mProgressBar;
 
     /**
      * 倒计时 默认60s , 间隔1s
@@ -104,6 +107,8 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
+        mProgressBar = (ProgressBar) findViewById(R.id.findpassword_activity_pb);
+
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.find_pw);
@@ -112,6 +117,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
 
         et_username = (EditText) findViewById(R.id.et_username);
         et_username.addTextChangedListener(this);
+
 
         et_verifycode = (EditText) findViewById(R.id.et_verifycode);
         tv_verycode = (TextView) findViewById(R.id.tv_verycode);
@@ -225,16 +231,25 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
         CommonUtils.getVerifyCode(this, phone, OperateType.TYPE_FORGET_PASSWORD ,new GetVerifyCodeCallBack() {
             @Override
             public void beforGet() {
-                countDown.start();
+                //countDown.start();
+
+                InputMethodManager inputManager = (InputMethodManager) et_username.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(et_username.getWindowToken(), 0);
+                mProgressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onGetResponce(SendSmsCode code) {
+
+                mProgressBar.setVisibility(View.GONE);
+                countDown.start();
                 // 正常情况下要1min后才能重新发验证码，但是遇到下面几种情况可以点击重发
                 if (code.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.send_register_succ);
                 } else if(code.getResult() == AccountResultCode.PHONE_FORMAT_ERROR
                         || code.getResult() == AccountResultCode.MESSAGE_SEND_FAIL
+                        ||code.getResult()==AccountResultCode.ONLY_FIVE_EACHDAY
+                        ||code.getResult()==AccountResultCode.USER_NOT_EXIST
                         ){
                     resetCountDown();
                 }

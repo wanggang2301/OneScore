@@ -11,6 +11,26 @@
         <item_share name="android:colorControlHighlight">@color/colorPrimaryDark</item_share>-->
     </style>
 
+    <style name="AppThemeDark.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <!--
+        <item_share name="android:colorControlHighlight">@color/colorPrimaryDark</item_share>-->
+    </style>
+
+
+    <style name="AppTheme.NoActionBarFootBallDetails">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+    </style>
+
+
     <style name="AppTheme.BlackStatusBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

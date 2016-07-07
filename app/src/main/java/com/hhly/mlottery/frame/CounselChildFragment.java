@@ -83,27 +83,23 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        initView(inflater);
+        initData();
+        addListViewHeadAndInitListView(isImageLeft);
+        return mView;
+    }
 
-        mView = inflater.inflate(R.layout.fragment_counsel_child, null);
-        mContext = getActivity();
-        initView();
+    private void initData() {
         Bundle bundle = getArguments();
         index = bundle.getInt(INTENT_PARAM_INDEX);//当前fg表示
         mHeadName = bundle.getString(BUNDLE_PARM_TITLE);//当前fg的头名称
         isImageLeft = bundle.getBoolean("isImageLeft", false);//是否图片左边布局
         infotype = bundle.getInt(BUNDLE_PARM_INFOTYPE);
-        addListViewHeadAndInitListView(isImageLeft);
-        L.d("onCreateView" + index);
-        isCreated = true;
-        //解决使用懒加载时跳跃点击无法加载的问题,因为viewpager刚进来时只会初始化前2个fg
-        // 突然点击第三个时 有两个问题 第一没初始化好，第二 不会触发setUserVisibleHint()所以在初始化完时处于可见且没有数据则加载
-        if (getUserVisibleHint() && mInfos.size() == 0) {
-            onVisible();
-        }
-        return mView;
     }
 
-    private void initView() {
+    private void initView(LayoutInflater inflater) {
+        mView = inflater.inflate(R.layout.fragment_counsel_child, null);
+        mContext = getActivity();
         mReloadWhenFail = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
         reLoading = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         reLoading.setOnClickListener(this);
@@ -116,6 +112,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         //listview
         mListView = (PullUpRefreshListView) mView.findViewById(R.id.lv_fg_counsel_child);
         mListView.setOnItemClickListener(this);
+        isCreated = true;
     }
 
     private void addListViewHeadAndInitListView(boolean isleft) {
@@ -134,6 +131,11 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         //上拉加载更多
         pullUpLoad();
         mListView.setAdapter(mAdapter);
+        //解决使用懒加载时跳跃点击无法加载的问题,因为viewpager刚进来时只会初始化前2个fg
+        // 突然点击第三个时 有两个问题 第一没初始化好，第二 不会触发setUserVisibleHint()所以在初始化完时处于可见且没有数据则加载
+        if (getUserVisibleHint() && mInfos.size() == 0) {
+            onVisible();
+        }
     }
 
     public static final int NEWS_LOADING = 0;//头部正在加载
@@ -439,7 +441,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         mViewPager.setAdapter(mPagerAdapter);
         int currentIndex = (Integer.MAX_VALUE / 2) % adsurl.size() == 0 ? (Integer.MAX_VALUE / 2) : (Integer.MAX_VALUE / 2) - (Integer.MAX_VALUE / 2) % adsurl.size();
         mViewPager.setCurrentItem(currentIndex);// 设置当前轮播图下标
-        mTextView.      setText(mAdsList
+        mTextView.setText(mAdsList
                 .get(0).getTitle());
         // 绑定动作监听器
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

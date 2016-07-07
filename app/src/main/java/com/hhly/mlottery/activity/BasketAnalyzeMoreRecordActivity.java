@@ -93,7 +93,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         setContentView(R.layout.basket_analyze_details);
         if(getIntent().getExtras() != null){
             mThirdId = getIntent().getExtras().getString(BASKET_ANALYZE_THIRD_ID);
-            L.d("BASKET_ANALYZE_THIRD_ID : ", mThirdId + "");
+//            L.d("BASKET_ANALYZE_THIRD_ID : ", mThirdId + "");
         }
 
         initView();
@@ -461,7 +461,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 }
             }
         }
-        L.d("dataAAAAAAAAAAAAAAAA =",mHistoryScreenSite.size()+"");
         /**
          * 筛选场数
          */
@@ -496,7 +495,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 }
             }
         }
-        L.d("dataBBBBBBBBBBBBB =", screenData.size() + "");
     }
 
     /**
@@ -694,8 +692,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                         mHomeRecentSite = true;
                     }
 
-//                    mSite = 1;
-//                    L.d("mAllsiteButon = " , "mAllsiteButon" + mSite );
                 }else if(checkedId == mSamesiteButon.getId()){
                     if (type) {
                         mHistorySite = false;
@@ -703,8 +699,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                         mGuestRecentSite = false;
                         mHomeRecentSite = false;
                     }
-//                    mSite = 0;
-//                    L.d("mSamesiteButon = " , "mSamesiteButon" + mSite );
                 }
             }
         });
@@ -722,8 +716,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                         mGuestRecentNum = 6;
                         mHomeRecentNum = 6;
                     }
-//                    mNumSite = 6;
-//                    L.d("mNumSixButon = " , "mNumSixButon" + mNumSite );
                 }else if(checkedId == mNumTenButon.getId()){
                     if (type) {
                         mHistoryNum = 10;
@@ -731,8 +723,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                         mGuestRecentNum = 10;
                         mHomeRecentNum = 10;
                     }
-//                    mNumSite = 10;
-//                    L.d("mNumTenButon = " , "mNumTenButon" + mNumSite );
                 }else if(checkedId == mNumFifteenButon.getId()){
                     if (type) {
                         mHistoryNum = 15;
@@ -740,8 +730,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                         mGuestRecentNum = 15;
                         mHomeRecentNum = 15;
                     }
-//                    mNumSite = 15;
-//                    L.d("mNumFifteenButon = " , "mNumFifteenButon" + mNumSite );
                 }
             }
         });
@@ -753,7 +741,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
-                L.d("mBtn = ", "mBtn 点击取消");
             }
         });
         mConfirmButon.setOnClickListener(new View.OnClickListener() {
@@ -781,7 +768,6 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                     setHomeWinLoseData(mHomeRecentScreenNum, mBasketAnalyzeRecent2, mHomeTeam);
                 }
                 mDialog.dismiss();
-                L.d("mBtn = ", "mBtn 点击确定");
             }
         });
         mDialog.dismiss();

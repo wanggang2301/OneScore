@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
@@ -46,7 +47,7 @@ import java.util.List;
 
 /**
  * 重构版 CPIFragment
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/21.
  */
 public class CPIFragment extends Fragment implements
@@ -169,7 +170,7 @@ public class CPIFragment extends Fragment implements
             @Override
             public void run() {
                 setRefreshing(true);
-                refreshAllChildFragments();
+//                refreshAllChildFragments();
             }
         });
 
@@ -355,7 +356,7 @@ public class CPIFragment extends Fragment implements
     @Override
     public void onMessage(String message) {
         if (message.startsWith("CONNECTED")) {
-            String id = "android" + DeviceInfo.getDeviceId(getContext());
+            String id = "android" + DeviceInfo.getDeviceId(MyApp.getContext());
             id = MD5Util.getMD5(id);
             // USER.topic.indexcenter
             socketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
