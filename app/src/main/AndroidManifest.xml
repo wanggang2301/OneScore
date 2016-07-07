@@ -106,7 +106,7 @@
         <activity
             android:name=".activity.FootballMatchDetailActivityTest"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBarFootBallDetails"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activity.LiveChannelActivity"
@@ -280,7 +280,8 @@
 
         <activity
             android:name=".activity.BasketDetailsActivityTest"
-            android:theme="@style/AppTheme.BlackStatusBar">
+            android:theme="@style/AppThemeDark.NoActionBar"
+            >
 
         </activity>
     </application>

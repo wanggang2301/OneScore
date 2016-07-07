@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
     <!--亚盘item-->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
-        android:background="@color/line_football_footer" />
+        android:background="@color/line_football_footer"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,9 +21,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1.2"
             android:gravity="center"
-            android:text="皇冠"
+            android:textColor="@color/res_name_color"
             android:textSize="13sp"
-            android:textColor="@color/res_name_color"/>
+            tools:text="皇冠"/>
 
         <TableLayout
             android:layout_width="0dp"
@@ -35,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginLeft="0.2dp"
+                android:layout_marginStart="0.2dp"
                 android:layout_weight="1">
 
                 <TextView
@@ -47,23 +49,22 @@
                     android:id="@+id/plate_homeOdds_txt"
                     style="@style/plateTableBg"
                     android:layout_weight="3"
-                    android:text="2.50" />
+                    tools:text="2.50"/>
 
                 <TextView
                     android:id="@+id/plate_dish_txt"
                     style="@style/plateTableBg"
                     android:layout_weight="4"
-                    android:text="*平手"
-                    android:textColor="@color/tabhost_unselected_text"/>
+                    android:textColor="@color/tabhost_unselected_text"
+                    tools:text="*平手"/>
 
                 <TextView
                     android:id="@+id/plate_guestOdds_txt"
                     style="@style/plateTableBg"
                     android:layout_weight="3"
-                    android:text="1.40"
-                    android:textColor="@color/tabhost_unselected_text"/>
+                    android:textColor="@color/tabhost_unselected_text"
+                    tools:text="1.40"/>
             </TableRow>
-
 
 
             <TableRow
@@ -71,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginLeft="0.2dp"
+                android:layout_marginStart="0.2dp"
                 android:layout_weight="1">
 
                 <TextView
@@ -83,22 +85,22 @@
                     android:id="@+id/plate_homeOdds_txt2"
                     style="@style/plateTableBg2"
                     android:layout_weight="3"
-                    android:text="1.50"
-                    android:textColor="@color/content_txt_dark_grad"/>
+                    android:textColor="@color/content_txt_dark_grad"
+                    tools:text="1.50"/>
 
                 <TextView
                     android:id="@+id/plate_dish_txt2"
                     style="@style/plateTableBg2"
                     android:layout_weight="4"
-                    android:text="*平手/两球半"
-                    android:textColor="@color/content_txt_dark_grad"/>
+                    android:textColor="@color/content_txt_dark_grad"
+                    tools:text="*平手/两球半"/>
 
                 <TextView
                     android:id="@+id/plate_guestOdds_txt2"
                     style="@style/plateTableBg2"
                     android:layout_weight="3"
-                    android:text="1.60"
-                    android:textColor="@color/content_txt_dark_grad"/>
+                    android:textColor="@color/content_txt_dark_grad"
+                    tools:text="1.60"/>
             </TableRow>
         </TableLayout>
 
@@ -107,12 +109,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.7"
-            android:src="@mipmap/plate_icon" />
+            android:src="@mipmap/plate_icon"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
         android:layout_marginBottom="@dimen/x24"
-        android:background="@color/line_football_footer" />
+        android:background="@color/line_football_footer"/>
 </LinearLayout>

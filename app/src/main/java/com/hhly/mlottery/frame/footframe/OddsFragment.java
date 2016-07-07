@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.frame.oddfragment.PlateFragment;
+import com.hhly.mlottery.bean.enums.OddsTypeEnum;
+import com.hhly.mlottery.frame.oddfragment.FootballPlateDetailsFragment;
+import com.hhly.mlottery.frame.oddfragment.FootballPlateFragment;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -25,7 +28,8 @@ public class OddsFragment extends Fragment {
 
     private FragmentManager fragmentManager;
     //    private Fragment fragment;
-    private PlateFragment mPlateFragment;
+    private FootballPlateFragment mPlateFragment;
+    private FootballPlateDetailsFragment mDetailsFragment;
     private boolean isVisible;
 
     @Override
@@ -56,28 +60,17 @@ public class OddsFragment extends Fragment {
                     // 亚盘
                     case R.id.odd_plate_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddPlateBtn");
-                        mPlateFragment = new PlateFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("key1", "one");
-                        mPlateFragment.setArguments(bundle);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.PLATE);
                         break;
                     // 大小球
                     case R.id.odd_big_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddBigBtn");
-                        //大小球
-                        mPlateFragment = new PlateFragment();
-                        Bundle bundle3 = new Bundle();
-                        bundle3.putString("key3", "three");
-                        mPlateFragment.setArguments(bundle3);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.BIG);
                         break;
                     // 欧盘
                     case R.id.odd_op_btn:
                         MobclickAgent.onEvent(mContext, "Football_MatchData_OddOpBtn");
-                        //欧赔
-                        mPlateFragment = new PlateFragment();
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putString("key2", "two");
-                        mPlateFragment.setArguments(bundle2);
+                        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.OP);
                         break;
                 }
                 fragmentManager.beginTransaction()
@@ -86,10 +79,7 @@ public class OddsFragment extends Fragment {
             }
         });
 
-        mPlateFragment = new PlateFragment();// 默认选中’亚盘‘
-        Bundle bundle = new Bundle();
-        bundle.putString("key1", "one");
-        mPlateFragment.setArguments(bundle);
+        mPlateFragment = FootballPlateFragment.newInstance(OddsTypeEnum.PLATE);
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.odd_content_fragment, mPlateFragment).commit();
     }
@@ -109,10 +99,29 @@ public class OddsFragment extends Fragment {
      */
     public void oddPlateRefresh() {
         //如果是显示才让刷新
-        if (isVisible) {
-            mPlateFragment.InitData();
-        } else {
-            //刷新无效
+        if (isVisible && mPlateFragment.isVisible()) {
+            mPlateFragment.loadData();
         }
+    }
+
+    /**
+     * 显示详情
+     *
+     * @param fragment fragment
+     */
+    public void showDetails(@NonNull FootballPlateDetailsFragment fragment) {
+        mDetailsFragment = fragment;
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.odd_content_fragment, mDetailsFragment)
+                .commit();
+    }
+
+    /**
+     * 显示列表
+     */
+    public void showList() {
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.odd_content_fragment, mPlateFragment)
+                .commit();
     }
 }

@@ -217,6 +217,7 @@
         </LinearLayout>
         <!--未来比赛-->
         <LinearLayout
+            android:id="@+id/ll_football_analyze_future"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -318,7 +319,18 @@
 
             </RelativeLayout>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/football_analyze_nodata1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
         <TextView
             android:id="@+id/football_analyze_more_record"
             android:layout_width="wrap_content"
@@ -359,7 +371,7 @@
             />
 
         <LinearLayout
-            android:id="@+id/basket_analyze_runking"
+            android:id="@+id/ll_football_analyze_ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -576,6 +588,18 @@
                 android:visibility="gone"/>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/football_analyze_nodata2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
 
         <View
             android:layout_width="match_parent"
@@ -658,6 +682,7 @@
         </RelativeLayout>
         <!--攻防对比-->
         <LinearLayout
+            android:id="@+id/ll_football_analyze_attack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -847,7 +872,18 @@
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/football_analyze_nodata3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
