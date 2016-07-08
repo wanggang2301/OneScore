@@ -48,6 +48,8 @@ public class CyUtils {
         try {
             CyanSdk.register(context, "cyslrkBTR", "021bf43427836304a81c1ff382f326e3",
                     "http://10.2.58.251:8081/login-success.html", config);
+//            CyanSdk.register(context, "cysu2zve0", "cc350c756399934b20fc692beb0418f2",
+//                    "http://10.2.58.251:8081/login-success.html", config);//中国版
             L.i("lzf初始化畅言成功");
         } catch (CyanException e) {
             // TODO Auto-generated catch block
