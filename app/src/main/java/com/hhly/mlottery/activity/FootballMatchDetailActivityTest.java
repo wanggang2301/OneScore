@@ -436,8 +436,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     public void onRefresh() {
-        L.d("10299", "下拉刷新");
-
         L.d(TAG, "下拉刷新");
         new Handler().postDelayed(new Runnable() {
             @Override

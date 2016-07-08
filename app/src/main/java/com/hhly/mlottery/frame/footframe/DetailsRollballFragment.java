@@ -456,8 +456,6 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             public void onClick(View v) {
 
                 isRepeatShowDialog();
-
-
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
