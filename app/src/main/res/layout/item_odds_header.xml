@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/number_info_two_bg"
-              android:orientation="vertical">
+              android:layout_height="30dp"
+              android:background="@color/odds_title_bg_color"
+              android:orientation="vertical"
+              tools:layout_marginTop="100dp">
 
     <TextView
         android:id="@+id/odds_details_data_txt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:padding="@dimen/x10"
-        android:textSize="10sp"
+        android:textColor="@color/loading_txt_color"
+        android:textSize="@dimen/text_size_10"
         tools:text="2016年3月9日"/>
 
 </LinearLayout>

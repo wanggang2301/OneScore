@@ -45,6 +45,7 @@ public class FootballPlateDetailsFragment extends Fragment {
 
     View mLeftFootView;
     EmptyView mEmptyView;
+    View mRightContentLayout;
 
     private FootballPlateDetailsLeftAdapter mLeftAdapter;
     private FootballPlateDetailsRightAdapter mRightAdapter;
@@ -93,6 +94,8 @@ public class FootballPlateDetailsFragment extends Fragment {
 
         mLeftRecyclerView = (RecyclerView) view.findViewById(R.id.left_recycler_view);
         mRightRecyclerView = (RecyclerView) view.findViewById(R.id.right_recycler_view);
+
+        mRightContentLayout = view.findViewById(R.id.content);
 
         mLeftAdapter = new FootballPlateDetailsLeftAdapter(leftList);
         mLeftAdapter.addFooterView(mLeftFootView);
@@ -197,6 +200,7 @@ public class FootballPlateDetailsFragment extends Fragment {
         }
         mEmptyView.setStatus(status);
         mRightAdapter.notifyDataSetChanged();
+        mRightRecyclerView.scrollToPosition(0);
     }
 
     public static FootballPlateDetailsFragment newInstance(String oddType,

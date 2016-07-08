@@ -3,9 +3,6 @@ package com.hhly.mlottery.adapter.cpiadapter;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.v4.content.ContextCompat;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.TableRow;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -25,35 +22,17 @@ import java.util.Locale;
 public class FootballPlateAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddEntity> {
 
     int red;
-    int grey;
+    int black;
     int green;
+    int white;
 
     @OddsTypeEnum.OddsType
     private String type;
 
     public FootballPlateAdapter(@OddsTypeEnum.OddsType String type,
                                 List<OddsDataInfo.ListOddEntity> items) {
-        super(R.layout.item_odds, items);
+        super(R.layout.item_odds_football, items);
         this.type = type;
-    }
-
-    @Override
-    protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
-        BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
-        if (OddsTypeEnum.OP.equals(type)) {
-            TableRow.LayoutParams firstParams =
-                    new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
-            firstParams.weight = 3;
-            firstParams.rightMargin = 1;
-            firstParams.bottomMargin = 1;
-            holder.itemView.findViewById(R.id.plate_dish_txt).setLayoutParams(firstParams);
-            TableRow.LayoutParams secondParams =
-                    new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
-            secondParams.weight = 3;
-            secondParams.rightMargin = 1;
-            holder.itemView.findViewById(R.id.plate_dish_txt2).setLayoutParams(secondParams);
-        }
-        return holder;
     }
 
     @Override
@@ -67,21 +46,22 @@ public class FootballPlateAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddE
         OddsDataInfo.ListOddEntity.DetailsEntity currentOdds = details.get(1);
 
         // 公司名
-        holder.setText(R.id.plate_company_txt, item.getName());
+        holder.setText(R.id.company, item.getName());
 
-        // 左边
-        holder.setTextColor(R.id.plate_homeOdds_txt2, grey);
+        // 右边
+        holder.setTextColor(R.id.plate_homeOdds_txt2, black);
         setOddsColor(holder, currentOdds.getHomeOdd(), preOdds.getHomeOdd(), R.id.plate_homeOdds_txt);
         holder.setText(R.id.plate_homeOdds_txt2, String.format(Locale.US, "%.2f", preOdds.getHomeOdd()));
         holder.setText(R.id.plate_homeOdds_txt, String.format(Locale.US, "%.2f", currentOdds.getHomeOdd()));
 
         // 中间
-        holder.setTextColor(R.id.plate_dish_txt2, grey);
+        holder.setTextColor(R.id.plate_dish_txt2, black);
         setOddsColor(holder, currentOdds.getHand(), preOdds.getHand(), R.id.plate_dish_txt);
+        setCenterOddsColor(holder, currentOdds.getHand(), preOdds.getHand(), R.id.plate_dish_txt);
         setHandicap(holder, currentOdds, preOdds);
 
-        // 右边
-        holder.setTextColor(R.id.plate_guestOdds_txt2, grey);
+        // 左边
+        holder.setTextColor(R.id.plate_guestOdds_txt2, black);
         setOddsColor(holder, currentOdds.getGuestOdd(), preOdds.getGuestOdd(), R.id.plate_guestOdds_txt);
         holder.setText(R.id.plate_guestOdds_txt2, String.format(Locale.US, "%.2f", preOdds.getGuestOdd()));
         holder.setText(R.id.plate_guestOdds_txt, String.format(Locale.US, "%.2f", currentOdds.getGuestOdd()));
@@ -128,9 +108,33 @@ public class FootballPlateAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddE
         } else if (current < pre) {
             homeColor = green;
         } else {
-            homeColor = grey;
+            homeColor = black;
         }
         holder.setTextColor(idRes, homeColor);
+    }
+
+    /**
+     * 设置盘口颜色
+     *
+     * @param holder  holder
+     * @param current 即赔
+     * @param pre     初赔
+     * @param idRes   idRes
+     */
+    private void setCenterOddsColor(BaseViewHolder holder, double current, double pre, int idRes) {
+        if (current == pre) {
+            holder.setTextColor(idRes, black);
+            holder.setBackgroundColor(idRes, white);
+        } else {
+            int color;
+            if (current > pre) {
+                color = red;
+            } else {
+                color = green;
+            }
+            holder.setBackgroundColor(idRes, color);
+            holder.setTextColor(idRes, white);
+        }
     }
 
     /**
@@ -138,13 +142,16 @@ public class FootballPlateAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddE
      */
     private void maybeInitColor(Context context) {
         if (red == 0) {
-            red = ContextCompat.getColor(context, R.color.homwe_lhc_red);
+            red = ContextCompat.getColor(context, R.color.odds_details);
         }
-        if (grey == 0) {
-            grey = ContextCompat.getColor(context, R.color.content_txt_dark_grad);
+        if (black == 0) {
+            black = ContextCompat.getColor(context, R.color.content_txt_black);
         }
         if (green == 0) {
-            green = ContextCompat.getColor(context, R.color.tabhost);
+            green = ContextCompat.getColor(context, R.color.odds_down_bg);
+        }
+        if (white == 0) {
+            white = ContextCompat.getColor(context, R.color.white);
         }
     }
 }
