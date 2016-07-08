@@ -188,18 +188,19 @@ public class FootballPlateDetailsFragment extends Fragment {
 
     private void setStatus(@StatusEnum.Status int status) {
         if (status == StatusEnum.LOADING || status == StatusEnum.ERROR) {
-            mRightContentLayout.setVisibility(isFirstLoad ? View.VISIBLE : View.GONE);
+            mRightRecyclerView.setVisibility(isFirstLoad ? View.VISIBLE : View.GONE);
             if (isFirstLoad) isFirstLoad = false;
             mEmptyView.setVisibility(View.VISIBLE);
         } else if (status == StatusEnum.NORMAL && rightList.size() > 0) {
-            mRightContentLayout.setVisibility(View.VISIBLE);
+            mRightRecyclerView.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);
         } else {
-            mRightContentLayout.setVisibility(View.GONE);
+            mRightRecyclerView.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.VISIBLE);
         }
         mEmptyView.setStatus(status);
         mRightAdapter.notifyDataSetChanged();
+        mRightRecyclerView.scrollToPosition(0);
     }
 
     public static FootballPlateDetailsFragment newInstance(String oddType,

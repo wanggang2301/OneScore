@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * 足球详情指数列表
- * <p>
+ * <p/>
  * Created by loshine on 2016/6/28.
  */
 public class FootballPlateFragment extends Fragment {
@@ -38,6 +38,7 @@ public class FootballPlateFragment extends Fragment {
 
     RecyclerView mRecyclerView;
     EmptyView mEmptyView;
+    View mContentView;
 
     private FootballMatchDetailActivityTest mActivity;
 
@@ -73,6 +74,8 @@ public class FootballPlateFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mContentView = view.findViewById(R.id.content);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         items = new ArrayList<>();
         mAdapter = new FootballPlateAdapter(type, items);
@@ -86,9 +89,14 @@ public class FootballPlateFragment extends Fragment {
             }
         });
 
-        initEmptyView();
+        mEmptyView = (EmptyView) view.findViewById(R.id.empty_view);
+        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
 
-        mAdapter.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -139,7 +147,17 @@ public class FootballPlateFragment extends Fragment {
                 OddsDataInfo.class);
     }
 
-    public void setStatus(@StatusEnum.Status int status) {
+    private void setStatus(@StatusEnum.Status int status) {
+        if (status == StatusEnum.LOADING || status == StatusEnum.ERROR) {
+            mContentView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else if (status == StatusEnum.NORMAL && items.size() > 0) {
+            mContentView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        } else {
+            mContentView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
         mEmptyView.setStatus(status);
     }
 
@@ -154,23 +172,6 @@ public class FootballPlateFragment extends Fragment {
             default:
                 return "1";
         }
-    }
-
-    /**
-     * 初始化 EmptyView
-     */
-    private void initEmptyView() {
-        mEmptyView = new EmptyView(getContext());
-        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData();
-            }
-        });
-        RecyclerView.LayoutParams layoutParams =
-                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
-        mEmptyView.setLayoutParams(layoutParams);
     }
 
     public static FootballPlateFragment newInstance(@OddsTypeEnum.OddsType String type) {
