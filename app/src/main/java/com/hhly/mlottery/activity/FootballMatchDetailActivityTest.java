@@ -679,13 +679,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 mHandler.sendEmptyMessage(SUCCESS);
 
-                if (isInitedViewPager) {
-
-                    if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
-                        startWebsocket();
-                        computeWebSocket();
-                    }
-                }
 
 
             }
@@ -860,6 +853,17 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }
 
         mStatisticsFragment.setType(matchDetail.getLiveStatus());
+
+        if (!isInitedViewPager) {
+
+            if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
+                L.d(TAG,"第一次启动socket");
+                startWebsocket();
+                computeWebSocket();
+            }
+        }
+
+
         isInitedViewPager = true;
     }
 

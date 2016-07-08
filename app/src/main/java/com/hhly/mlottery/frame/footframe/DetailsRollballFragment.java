@@ -625,6 +625,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
     public void setLiveText(String msg) {
+
+        L.d(TAG,"推送文字直播LiveText");
         live_text.setText(msg);
     }
 
