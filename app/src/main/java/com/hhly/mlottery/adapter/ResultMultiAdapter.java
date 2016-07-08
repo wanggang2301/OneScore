@@ -1017,10 +1017,10 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         });
 
-        holder.item_football_home_rc.setVisibility(View.VISIBLE);
+       /* holder.item_football_home_rc.setVisibility(View.VISIBLE);
         holder.item_football_home_yc.setVisibility(View.VISIBLE);
         holder.item_football_guest_rc.setVisibility(View.VISIBLE);
-        holder.item_football_guest_yc.setVisibility(View.VISIBLE);
+        holder.item_football_guest_yc.setVisibility(View.VISIBLE);*/
     }
 
 

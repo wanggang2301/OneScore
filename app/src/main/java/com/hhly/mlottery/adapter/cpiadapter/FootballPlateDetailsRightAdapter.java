@@ -31,7 +31,7 @@ public class FootballPlateDetailsRightAdapter
 
     int red;
     int green;
-    int grey;
+    int black;
 
     private String oddsType;
     private List<OddsDetailsDataInfo.DetailsEntity> details;
@@ -152,9 +152,9 @@ public class FootballPlateDetailsRightAdapter
         } else if ("green".equals(color)) {
             return green;
         } else if ("grey".equals(color)) {
-            return grey;
+            return black;
         }
-        return grey;
+        return black;
     }
 
     /**
@@ -162,13 +162,13 @@ public class FootballPlateDetailsRightAdapter
      */
     private void maybeInitColor() {
         if (red == 0) {
-            red = ContextCompat.getColor(mContext, R.color.homwe_lhc_red);
+            red = ContextCompat.getColor(mContext, R.color.odds_details);
         }
         if (green == 0) {
-            green = ContextCompat.getColor(mContext, R.color.tabhost);
+            green = ContextCompat.getColor(mContext, R.color.odds_down_bg);
         }
-        if (grey == 0) {
-            grey = ContextCompat.getColor(mContext, R.color.content_txt_dark_grad);
+        if (black == 0) {
+            black = ContextCompat.getColor(mContext, R.color.content_txt_black);
         }
     }
 

@@ -113,12 +113,12 @@ public class BasketAnalyzeFragment extends Fragment  {
     private TextView mRunkingNodata;
     private LinearLayout mRecentLinearLayout;
     private TextView mRecentNodata;
-    private RelativeLayout mGuest1;
-    private RelativeLayout mGuest2;
-    private RelativeLayout mGuest3;
-    private RelativeLayout mHome1;
-    private RelativeLayout mHome2;
-    private RelativeLayout mHome3;
+    private LinearLayout mGuest1;
+    private LinearLayout mGuest2;
+    private LinearLayout mGuest3;
+    private LinearLayout mHome1;
+    private LinearLayout mHome2;
+    private LinearLayout mHome3;
 
 
     @Override
@@ -257,12 +257,12 @@ public class BasketAnalyzeFragment extends Fragment  {
         mRecentLinearLayout = (LinearLayout) mView.findViewById(R.id.basket_analyze_scorewin);
         mRecentNodata = (TextView) mView.findViewById(R.id.basket_analyze_nodata3);
 
-        mGuest1 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_guest1);
-        mGuest2 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_guest2);
-        mGuest3 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_guest3);
-        mHome1 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_home1);
-        mHome2 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_home2);
-        mHome3 = (RelativeLayout) mView.findViewById(R.id.basket_analyze_home3);
+        mGuest1 = (LinearLayout) mView.findViewById(R.id.basket_analyze_guest1);
+        mGuest2 = (LinearLayout) mView.findViewById(R.id.basket_analyze_guest2);
+        mGuest3 = (LinearLayout) mView.findViewById(R.id.basket_analyze_guest3);
+        mHome1 = (LinearLayout) mView.findViewById(R.id.basket_analyze_home1);
+        mHome2 = (LinearLayout) mView.findViewById(R.id.basket_analyze_home2);
+        mHome3 = (LinearLayout) mView.findViewById(R.id.basket_analyze_home3);
 
     }
 
