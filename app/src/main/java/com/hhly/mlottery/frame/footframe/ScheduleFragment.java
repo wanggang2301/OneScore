@@ -434,31 +434,22 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         mCheckedCups = mAllCup.toArray(new LeagueCup[mAllCup.size()]);
                     }
 
-                    if (mAdapter == null) {
-                        mAdapter = new ScheduleAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                        //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                        //
+                    mAdapter = new ScheduleAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                    recyclerView.setAdapter(mAdapter);
+                    mAdapter.setmFocusMatchClickListener(mFocusMatchClickListener);
+                    mAdapter.setDateOnClickListener(mDateOnClickListener);
 
-                        mAdapter = new ScheduleAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                    mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, String data) {
+                            String thirdId = data;
+                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                            intent.putExtra("thirdId", thirdId);
+                            intent.putExtra("currentFragmentId", 2);
+                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        }
+                    });
 
-                        recyclerView.setAdapter(mAdapter);
-                        mAdapter.setmFocusMatchClickListener(mFocusMatchClickListener);
-                        mAdapter.setDateOnClickListener(mDateOnClickListener);
-
-                        mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, String data) {
-                                String thirdId = data;
-                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
-                                intent.putExtra("thirdId", thirdId);
-                                intent.putExtra("currentFragmentId", 2);
-                                getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-                            }
-                        });
-
-                    } else {
-                        updateAdapter();
-                    }
 
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     isLoadData = true;
@@ -569,11 +560,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 //  internalAdapter.notifyDataSetChanged();
             }
         } else {*/
-            if (mAdapter != null) {
-                mAdapter.updateDatas(mMatchs);
-                mAdapter.notifyDataSetChanged();
-            }
-      //  }
+        if (mAdapter != null) {
+            mAdapter.updateDatas(mMatchs);
+            mAdapter.notifyDataSetChanged();
+        }
+        //  }
 
     }
 
