@@ -309,6 +309,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
 
+    //下拉刷新
     public void refreshMatch(MatchDetail matchDetail, int type) {
         this.mMatchDetail = matchDetail;
         this.mViewType = type;
@@ -627,12 +628,12 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         live_text.setText(msg);
     }
 
+    //推送刷新
     public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
 
         if (liveTextFragmentTest != null) {
             liveTextFragmentTest.updataLiveTextAdapter(matchLive);
         }
-
     }
 
 

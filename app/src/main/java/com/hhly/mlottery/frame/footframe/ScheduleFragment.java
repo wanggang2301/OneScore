@@ -708,6 +708,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isCheckedDefualt = true;
+    }
+
+    @Override
     public void onRefresh() {
         // TODO Auto-generated method stub
         new Handler().postDelayed(new Runnable() {

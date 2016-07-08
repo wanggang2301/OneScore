@@ -700,7 +700,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private void initViewPager(MatchDetail matchDetail) {
 
-        L.d(TAG, "状态" + matchDetail.getLiveStatus());
 
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
 
@@ -772,8 +771,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
 
-
-                L.d(TAG, "统计数据" + mMatchDetail.getLiveStatus());
                 initMatchSatisInfo();
 
 
