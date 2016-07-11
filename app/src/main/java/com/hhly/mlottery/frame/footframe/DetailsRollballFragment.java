@@ -277,13 +277,13 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                     mBottomOddsDetailsFragment.dismiss();
                 }
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                    if (finishMatchLiveTextFragment == null) {
-                        finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    if (finishMatchLiveTextFragment != null) {
+                        finishMatchLiveTextFragment.dismiss();
                     }
 
-                    if (!finishMatchLiveTextFragment.isAdded()) {
-                        finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
-                    }
+                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
+
 
                 } else {
 
@@ -624,7 +624,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     public void setLiveText(String msg) {
 
-        L.d(TAG,"推送文字直播LiveText");
+        L.d(TAG, "推送文字直播LiveText");
         live_text.setText(msg);
     }
 

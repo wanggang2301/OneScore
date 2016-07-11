@@ -227,7 +227,6 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
             return true;
         } else {
             return false;
-
         }
     }
 
