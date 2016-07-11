@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
+    </style>
+
     <style name="AppTheme_loginEdiText" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/login_et_color</item>
         <item name="colorPrimaryDark">@color/login_et_color</item>
@@ -19,11 +25,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-
-    <style name="AppTheme.NoActionBarFootBallDetails">
+    <style name="AppThemeDark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
     <style name="AppTheme.NoActionBar.TranslucentNavigation"></style>
 
@@ -835,6 +841,16 @@
         <item name="android:windowNoTitle">true</item>无标题
         <item name="android:windowBackground">@android:color/transparent</item>背景透明
         <item name="android:backgroundDimEnabled">false</item>false不模糊
+    </style>
+
+
+
+    <style name="isFitsSystemWindows">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="toolbar">
+        <item name="android:layout_marginTop">0dp</item>
     </style>
 
 </resources>

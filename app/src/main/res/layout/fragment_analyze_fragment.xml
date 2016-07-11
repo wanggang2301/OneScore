@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/white"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -217,6 +219,7 @@
         </LinearLayout>
         <!--未来比赛-->
         <LinearLayout
+            android:id="@+id/ll_football_analyze_future"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -318,7 +321,18 @@
 
             </RelativeLayout>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/football_analyze_nodata1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
         <TextView
             android:id="@+id/football_analyze_more_record"
             android:layout_width="wrap_content"
@@ -332,7 +346,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="10dp"
             android:background="@color/home_item_bg"/>
         <!--积分排名-->
         <RelativeLayout
@@ -359,7 +373,7 @@
             />
 
         <LinearLayout
-            android:id="@+id/basket_analyze_runking"
+            android:id="@+id/ll_football_analyze_ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -576,10 +590,22 @@
                 android:visibility="gone"/>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/football_analyze_nodata2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="10dp"
             android:background="@color/home_item_bg"/>
         <!--攻防对比-->
         <RelativeLayout
@@ -658,6 +684,7 @@
         </RelativeLayout>
         <!--攻防对比-->
         <LinearLayout
+            android:id="@+id/ll_football_analyze_attack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -847,10 +874,21 @@
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/football_analyze_nodata3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="10dp"
             android:background="@color/home_item_bg"/>
         <!--球员信息-->
         <RelativeLayout

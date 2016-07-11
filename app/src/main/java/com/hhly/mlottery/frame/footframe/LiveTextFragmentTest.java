@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
@@ -36,6 +38,7 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
     private static final String LIVETEXT_TYPE = "LIVETEXT_TYPE";
 
     private View mView;
+    private View bottomview;
 
     private Context context;
 
@@ -69,6 +72,9 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         mView = View.inflate(getContext(), R.layout.football_live_text, null);
         initView();
         dialog.setContentView(mView);
@@ -81,16 +87,22 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
             bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                        LiveTextFragmentTest.this.dismiss();
-                    }
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-
+                    switch (newState) {
+                        case BottomSheetBehavior.STATE_HIDDEN:
+                            LiveTextFragmentTest.this.dismiss();
+                            break;
+                        case BottomSheetBehavior.STATE_EXPANDED:
+                            bottomview.setVisibility(View.VISIBLE);
+                            break;
+                        case BottomSheetBehavior.STATE_COLLAPSED:
+                            bottomview.setVisibility(View.GONE);
+                            break;
                     }
                 }
 
                 @Override
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
                 }
             });
         }
@@ -112,6 +124,8 @@ public class LiveTextFragmentTest extends BottomSheetDialogFragment {
     private void initView() {
         close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
+        bottomview = (View) mView.findViewById(R.id.bottomview);
+
     }
 
     public void updataLiveTextAdapter(List<MatchTextLiveBean> m) {

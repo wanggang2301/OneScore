@@ -69,6 +69,7 @@ public class DateChooseDialogFragment extends DialogFragment {
         final CpiDateAdapter cpiDateAdapter = new CpiDateAdapter(getContext(), dateList);
         mListView.setAdapter(cpiDateAdapter);
         cpiDateAdapter.setDefSelect(selectedPosition);
+        mListView.setSelection(selectedPosition);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

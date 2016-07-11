@@ -533,8 +533,16 @@
     <string name="keduijin">客队近</string>
     <string name="nodata">暂无数据</string>
 
-
-
+    <!--足球分析详情页面 -->
+    <string name="football_analyze_equ">平</string>
+    <string name="football_analyze_win">胜</string>
+    <string name="football_analyze_lost">负</string>
+    <string name="football_analyze_jin">,进</string>
+    <string name="football_analyze_shi">球失</string>
+    <string name="football_analyze_ball">球</string>
+    <string name="football_analyze_winodds">胜率</string>
+    <string name="football_analyze_bigball">,大球率</string>
+    <string name="football_analyze_let_points">,让分赢盘率</string>
 
     <!-- 篮球界面 -->
     <string name="basket_left">篮球比分</string>
@@ -831,4 +839,6 @@
     <string name="login_username">请输入用户名</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
+    <string name="server_busy">系统繁忙</string>
+    <string name="at_least_one_company">至少选择一家公司</string>
 </resources>

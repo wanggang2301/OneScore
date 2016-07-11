@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/container"
+             android:layout_width="match_parent"
+             android:layout_height="42dp"
+             android:background="@color/white"
+             android:gravity="center"
+             android:orientation="vertical">
 
     <TextView
         android:id="@+id/odds_left_txt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/x35"
-        android:layout_marginTop="@dimen/x35"
+        android:layout_gravity="center"
         android:gravity="center"
+        android:textColor="@color/version"
         android:textSize="13sp"
-        android:textColor="@color/version"/>
+        tools:text="test"/>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/left_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/blue_circle"
+        android:visibility="gone"/>
+
+</FrameLayout>
