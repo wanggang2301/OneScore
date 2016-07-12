@@ -79,7 +79,7 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
                              boolean isLastChild, View convertView, ViewGroup parent) {
         Holder holder = null;
         if (null == convertView) {
-            convertView = createChildrenView();
+            convertView = createChildrenView(parent);
             holder = new Holder();
             //时间和比分
             holder.odds_details_timeAndscore_child_txt = (TextView) convertView.findViewById(R.id.odds_details_timeAndscore_txt);
@@ -178,8 +178,6 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
         TextView odds_details_dish_child_txt; //盘口
         TextView odds_details_guest_child_txt; //客队分数
         LinearLayout odds_details_dish_layout;
-
-
     }
 
     /**
@@ -239,7 +237,8 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        LinearLayout parentLayout = (LinearLayout) View.inflate(mContext, R.layout.item_odds_header, null);
+        LinearLayout parentLayout =
+                (LinearLayout) View.inflate(mContext, R.layout.item_odds_header, null);
         TextView live_item_day_tx = (TextView) parentLayout.findViewById(R.id.odds_details_data_txt);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
         params.weight = 0;
@@ -270,8 +269,8 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
         return true;
     }
 
-    private View createChildrenView() {
-        return inflater.inflate(R.layout.item_odds_details_child, null);
+    private View createChildrenView(ViewGroup parent) {
+        return inflater.inflate(R.layout.item_odds_details_child, parent, false);
     }
 
 
