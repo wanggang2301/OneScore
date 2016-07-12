@@ -1125,7 +1125,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             L.d("timer", "footballdetails定时器");
             footballTimer.cancel();
             footballTimer.purge();
-
             footballTimer = null;
         }
 
@@ -1223,6 +1222,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private Timer footballTimer = new Timer();
 
+
     private boolean isStarComputeTimer = false;
 
     /***
@@ -1233,6 +1233,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             TimerTask tt = new TimerTask() {
                 @Override
                 public void run() {
+                    L.d(TAG, "计算");
+
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                     L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
                     long pushEndTime = System.currentTimeMillis();
@@ -1243,9 +1245,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             };
 
+            L.d(TAG, "ffff" + footballTimer);
+            if (!isStarComputeTimer) {
+                footballTimer.schedule(tt, 15000, 15000);
+                isStarComputeTimer = true;
 
-            footballTimer.schedule(tt, 15000, 15000);
-            isStarComputeTimer = true;
+            }
         }
     }
 
