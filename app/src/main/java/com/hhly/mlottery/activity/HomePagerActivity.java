@@ -433,7 +433,7 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         } else {
             for (int i = 0, len = jsonObject.getMenus().getContent().size(); i < len; i++) {
                 HomeContentEntity homeContentEntity = jsonObject.getMenus().getContent().get(i);
-                if (homeContentEntity != null) {
+                if (homeContentEntity != null && homeContentEntity.getJumpAddr() != null) {
                     switch (homeContentEntity.getJumpAddr()) {
                         case "30":
                         case "31":
