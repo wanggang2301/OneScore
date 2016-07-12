@@ -16,8 +16,6 @@ import com.hhly.mlottery.R;
  * description:
  * author: yixq
  * Created by A on 2016/7/8.
- * 仿iphone带进度的进度条，线程安全的View，可直接在线程中更新进度
- * @author xiaanming
  */
 public class RoundProgressBar extends View {
     /**
@@ -86,20 +84,21 @@ public class RoundProgressBar extends View {
         paint = new Paint();
 
 
-//        TypedArray mTypedArray = context.obtainStyledAttributes(attrs,
-//                R.styleable.RoundProgressBar);
-//
-//        //获取自定义属性和默认值
-//        roundColor = mTypedArray.getColor(R.styleable.RoundProgressBar_roundColor, Color.RED);
-//        roundProgressColor = mTypedArray.getColor(R.styleable.RoundProgressBar_roundProgressColor, Color.GREEN);
-//        textColor = mTypedArray.getColor(R.styleable.RoundProgressBar_textColor, Color.GREEN);
-//        textSize = mTypedArray.getDimension(R.styleable.RoundProgressBar_textSize, 15);
-//        roundWidth = mTypedArray.getDimension(R.styleable.RoundProgressBar_roundWidth, 5);
-//        max = mTypedArray.getInteger(R.styleable.RoundProgressBar_max, 100);
-//        textIsDisplayable = mTypedArray.getBoolean(R.styleable.RoundProgressBar_textIsDisplayable, true);
-//        style = mTypedArray.getInt(R.styleable.RoundProgressBar_style, 0);
+        TypedArray mTypedArray = context.obtainStyledAttributes(attrs,
+                R.styleable.RoundProgressBar);
 
-//        mTypedArray.recycle();
+        //获取自定义属性和默认值
+        roundColor = mTypedArray.getColor(R.styleable.RoundProgressBar_roundColor, getResources().getColor(R.color.home_item_bg));
+//        roundColor = mTypedArray.getColor(R.styleable.RoundProgressBar_roundColor, Color.GREEN);
+        roundProgressColor = mTypedArray.getColor(R.styleable.RoundProgressBar_roundProgressColor, Color.RED);
+        textColor = mTypedArray.getColor(R.styleable.RoundProgressBar_textColor, Color.RED);
+        textSize = mTypedArray.getDimension(R.styleable.RoundProgressBar_textSize, 50);
+        roundWidth = mTypedArray.getDimension(R.styleable.RoundProgressBar_roundWidth, 10);
+        max = mTypedArray.getInteger(R.styleable.RoundProgressBar_max, 100);
+        textIsDisplayable = mTypedArray.getBoolean(R.styleable.RoundProgressBar_textIsDisplayable, true);
+        style = mTypedArray.getInt(R.styleable.RoundProgressBar_style, 0);
+
+        mTypedArray.recycle();
     }
 
 
@@ -131,7 +130,8 @@ public class RoundProgressBar extends View {
         int percent = (int)(((float)progress / (float)max) * 100);  //中间的进度百分比，先转换成float在进行除法运算，不然都为0
         float textWidth = paint.measureText(percent + "%");   //测量字体宽度，我们需要根据字体的宽度设置在圆环中间
 
-        if(textIsDisplayable && percent != 0 && style == STROKE){
+//        if(textIsDisplayable && percent != 0 && style == STROKE){
+        if(textIsDisplayable && style == STROKE){
             canvas.drawText(percent + "%", centre - textWidth / 2, centre + textSize/2, paint); //画出进度百分比
         }
 
@@ -149,7 +149,7 @@ public class RoundProgressBar extends View {
         switch (style) {
             case STROKE:{
                 paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval, 0, 360 * progress / max, false, paint);  //根据进度画圆弧
+                canvas.drawArc(oval, 270, 360 * progress / max, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
                 break;
             }
             case FILL:{
