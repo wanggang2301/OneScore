@@ -313,6 +313,10 @@ public class CPIOddsFragment extends Fragment {
      * @param status status
      */
     public void setStatus(@StatusEnum.Status int status) {
+        if (status == StatusEnum.ERROR) {
+            filterData.clear();
+            mAdapter.notifyDataSetChanged();
+        }
         mEmptyView.setStatus(status);
     }
 
