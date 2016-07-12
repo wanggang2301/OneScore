@@ -58,6 +58,7 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
         @Override
         public void onReceive(Context context, Intent intent) {
             InputActivity.this.setResult(CyUtils.RESULT_CODE);
+            CyUtils.hideKeyBoard(InputActivity.this);
             finish();
         }
     };
