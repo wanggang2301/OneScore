@@ -25,8 +25,8 @@ import com.hhly.mlottery.bean.footballDetails.FootballAnaylzeHistoryRecent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NestedListView;
 import com.umeng.analytics.MobclickAgent;
@@ -86,6 +86,17 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     private TextView mNoData4;
     private TextView mNoData5;
     private TextView mNodataTextview;
+    private RoundProgressBar mRoundProgressBarHistory1; // 环形条
+    private RoundProgressBar mRoundProgressBarHistory2;
+    private RoundProgressBar mRoundProgressBarHistory3;
+
+    private RoundProgressBar mRoundProgressBarHome1;
+    private RoundProgressBar mRoundProgressBarHome2;
+    private RoundProgressBar mRoundProgressBarHome3;
+
+    private RoundProgressBar mRoundProgressBarGuest1;
+    private RoundProgressBar mRoundProgressBarGuest2;
+    private RoundProgressBar mRoundProgressBarGuest3;
 
 
     @Override
@@ -97,7 +108,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         }
 
         initView();
-//        initData();
         mHandler.postDelayed(mRun , 500); // 加载数据
     }
 
@@ -178,6 +188,18 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         mNoData4 = (TextView) findViewById(R.id.football_analyze_nodata4);
         mNoData5 = (TextView) findViewById(R.id.football_analyze_nodata5);
 
+        mRoundProgressBarHistory1 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar1);
+        mRoundProgressBarHistory2 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar2);//#E8C129
+        mRoundProgressBarHistory3 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar3); //#7DC050
+
+        mRoundProgressBarHome1 = (RoundProgressBar)findViewById(R.id.football_home_roundProgressBar1);
+        mRoundProgressBarHome2 = (RoundProgressBar)findViewById(R.id.football_home_roundProgressBar2);
+        mRoundProgressBarHome3 = (RoundProgressBar)findViewById(R.id.football_home_roundProgressBar3);
+
+        mRoundProgressBarGuest1 = (RoundProgressBar)findViewById(R.id.football_guest_roundProgressBar1);
+        mRoundProgressBarGuest2 = (RoundProgressBar)findViewById(R.id.football_guest_roundProgressBar2);
+        mRoundProgressBarGuest3 = (RoundProgressBar)findViewById(R.id.football_guest_roundProgressBar3);
+
         findViewById(R.id.public_btn_set).setVisibility(View.GONE); //隐藏设置按键
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE); //隐藏筛选按键
     }
@@ -223,8 +245,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                     mNodataTextview.setVisibility(View.VISIBLE);
                 } else {
 
-//                    if (json.getHomeFuture() == null && json.getGuestFuture() == null && json.getHistory() == null &&
-//                            json.getHomeRecent() == null && json.getGuestRecent() == null && json.getHomeTeam() == null && json.getGuestTeam() == null) {
                     if (json.getFutureMatch() == null && json.getBattleHistory() == null && json.getTeamRecent() == null &&
                             json.getResult() == null && json.getHomeTeam() == null && json.getGuestTeam() == null) {
 
@@ -268,7 +288,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                             if (mHistoryAdaptey == null) {
                                 mHistoryAdaptey = new FootballAnalyzeAdapter(mContext, fistData, R.layout.football_analyze_details_item);
                                 mHistoryListView.setAdapter(mHistoryAdaptey);
-                                setHomeWinLoseData(list, mFootballAnalyzeHistory,mFootballAnalyzeHistoryB, mHomeTeam);
+                                setHomeWinLoseData(list, mFootballAnalyzeHistory,mFootballAnalyzeHistoryB, mHomeTeam , mRoundProgressBarHistory1 , mRoundProgressBarHistory2 , mRoundProgressBarHistory3);
                             } else {
                                 if (mHistoryScreenNum != null) {
                                     updateAdapter(mHistoryScreenNum, mHistoryAdaptey, 0);
@@ -313,7 +333,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 if (mRecentAdapter1 == null) {
                                     mRecentAdapter1 = new FootballAnalyzeAdapter(mContext, fistData, R.layout.football_analyze_details_item);
                                     mRecentListView1.setAdapter(mRecentAdapter1);
-                                    setHomeWinLoseData(list, mFootballAnalyzeRecent1,mFootballAnalyzeRecent1B, mGuestTeam);
+                                    setHomeWinLoseData(list, mFootballAnalyzeRecent1,mFootballAnalyzeRecent1B, mGuestTeam , mRoundProgressBarGuest1 , mRoundProgressBarGuest2 , mRoundProgressBarGuest3);
                                 } else {
                                     if (mGuestRecentScreenNum != null) {
                                         updateAdapter(mGuestRecentScreenNum, mRecentAdapter1, 2);
@@ -354,7 +374,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 if (mRecentAdapter2 == null) {
                                     mRecentAdapter2 = new FootballAnalyzeAdapter(mContext, fistData, R.layout.football_analyze_details_item);
                                     mRecentListView2.setAdapter(mRecentAdapter2);
-                                    setHomeWinLoseData(list, mFootballAnalyzeRecent2,mFootballAnalyzeRecent2B, mHomeTeam);
+                                    setHomeWinLoseData(list, mFootballAnalyzeRecent2,mFootballAnalyzeRecent2B, mHomeTeam , mRoundProgressBarHome1 , mRoundProgressBarHome2 , mRoundProgressBarHome3);
                                 } else {
                                     if (mHomeRecentScreenNum != null) {
                                         updateAdapter(mHomeRecentScreenNum, mRecentAdapter2, 1);
@@ -537,11 +557,11 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
      * @param mData
      * @param text1
      * @param text2
-     * @param mTeam
+     * @param team
      */
-    private void setHomeWinLoseData(List<FootballAnaylzeHistoryRecent> mData , TextView text1 ,TextView text2 ,String mTeam){
+    private void setHomeWinLoseData(List<FootballAnaylzeHistoryRecent> mData , TextView text1 ,TextView text2 ,String team , RoundProgressBar progressBar1 ,RoundProgressBar progressBar2 , RoundProgressBar progressBar3){
 
-        String homeWin , homeLose , homeCourtWin , homeCourtLose , draw;
+        String homeWin , homeLose , draw;
 
         //所显示的总场数
 //        String matchNum;
@@ -564,16 +584,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
             for (FootballAnaylzeHistoryRecent history : mData) {
                 if (history.getResult() == 1) {
                     countWin++;
-//                    if(history.getTot() != null){
-//                        if (history.getTot().equals("1")) {
-//                            countTot++;
-//                        }
-//                    }
-//                    if(history.getLet() != null){
-//                        if (history.getLet().equals("1")) {
-//                            countLet++;
-//                        }
-//                    }
                 }else if (history.getResult() == -1){
                     countLose++;
                 }else if(history.getResult() == 0){
@@ -601,39 +611,47 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
             }
         }
 
-        String winning , totWinning , letWinnging;
+        int winning , totWinning , letWinnging;
         if (matchNum == 0) {
-            winning = "0";
-            totWinning = "0";
-            letWinnging = "0";
+            winning = 0;
+            totWinning = 0;
+            letWinnging = 0;
         }else{
             //胜率
-            winning = (countWin*100)/(matchNum)+"%";
+            winning = (countWin*100)/(matchNum);
 
             //大球胜率
-            totWinning = (countTot*100)/(matchNum) + "%";
+            totWinning = (countTot*100)/(matchNum);
 
             //让分球胜率
-            letWinnging = (countLet*100)/(matchNum) + "%";
+            letWinnging = (countLet*100)/(matchNum);
 
         }
-
-//        L.d("FootballAnaylzeHistoryRecent_>>>>>>>>>>>>>>>>" , "总="+ matchNum + " 胜=" + countWin + " 负=" + countLose + " 平=" + countDraw + " 进球=" +countGoal + " 失球=" + countFumble
-//                + " 大球="+ countTot + " 让分球=" + countLet + " 胜率=" + winning + " 大球胜率=" + totWinning + " 让分球胜率=" + letWinnging);
 
         homeWin = countWin + "" + getResources().getText(R.string.football_analyze_win);
         homeLose = countLose + "" + getResources().getText(R.string.football_analyze_lost);
         draw = countDraw + "" + getResources().getText(R.string.football_analyze_equ);
 
-        text1.setText(Html.fromHtml(mTeam + "<font color='#FF1F1F'><b>" + homeWin + "</b></font>" + "<font color='#00aaee'><b>" + draw + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
+        text1.setText(Html.fromHtml(team + "<font color='#FF1F1F'><b>" + homeWin + "</b></font>" + "<font color='#00aaee'><b>" + draw + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
                 + getResources().getText(R.string.football_analyze_jin) + "<font color='#FF1F1F'><b>" + countGoal + "</b></font>" + getResources().getText(R.string.football_analyze_shi) + "<font color='#21B11E'><b>"
                 + countFumble + "</b></font>" + getResources().getText(R.string.football_analyze_ball)
         ));
 
-        text2.setText(Html.fromHtml(getResources().getText(R.string.football_analyze_winodds) + "<font color='#FF1F1F'><b>" + winning + "</b></font>"
-                + getResources().getText(R.string.football_analyze_bigball) + "<font color='#FF1F1F'><b>" + totWinning + "</b></font>"
-                + getResources().getText(R.string.football_analyze_let_points) + "<font color='#FF1F1F'><b>" + letWinnging + "</b></font>"
+        text2.setText(Html.fromHtml(getResources().getText(R.string.football_analyze_winodds) + "<font color='#FF1F1F'><b>" + winning  + "%" + "</b></font>"
+                + getResources().getText(R.string.football_analyze_bigball) + "<font color='#FF1F1F'><b>" + totWinning  + "%" + "</b></font>"
+                + getResources().getText(R.string.football_analyze_let_points) + "<font color='#FF1F1F'><b>" + letWinnging  + "%" + "</b></font>"
         ));
+
+        progressBar1.setProgress(winning);
+        progressBar2.setProgress(totWinning);
+        progressBar3.setProgress(letWinnging);
+
+        progressBar1.setCricleProgressColor(getResources().getColor(R.color.football_analyze_progress_color1));
+        progressBar2.setCricleProgressColor(getResources().getColor(R.color.football_analyze_progress_color2));
+        progressBar3.setCricleProgressColor(getResources().getColor(R.color.football_analyze_progress_color3));
+
+//        L.d("FootballAnaylzeHistoryRecent_>>>>>>>>>>>>>>>>", "总=" + matchNum + " 胜=" + countWin + " 负=" + countLose + " 平=" + countDraw + " 进球=" + countGoal + " 失球=" + countFumble
+//                + " 大球=" + countTot + " 让分球=" + countLet + " 胜率=" + winning + " 大球胜率=" + totWinning + " 让分球胜率=" + letWinnging);
 
     }
 
@@ -846,14 +864,14 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
                 if (type) {
                     updateAdapter(mHistoryScreenNum, mHistoryAdaptey , 0);
-                    setHomeWinLoseData(mHistoryScreenNum, mFootballAnalyzeHistory,mFootballAnalyzeHistoryB, mHomeTeam);
+                    setHomeWinLoseData(mHistoryScreenNum, mFootballAnalyzeHistory,mFootballAnalyzeHistoryB, mHomeTeam,mRoundProgressBarHistory1 , mRoundProgressBarHistory2 , mRoundProgressBarHistory3);
 
                 } else {
                     updateAdapter(mGuestRecentScreenNum , mRecentAdapter1 , 2);
-                    setHomeWinLoseData(mGuestRecentScreenNum, mFootballAnalyzeRecent1,mFootballAnalyzeRecent1B, mGuestTeam);
+                    setHomeWinLoseData(mGuestRecentScreenNum, mFootballAnalyzeRecent1,mFootballAnalyzeRecent1B, mGuestTeam , mRoundProgressBarGuest1 , mRoundProgressBarGuest2 , mRoundProgressBarGuest3);
 
                     updateAdapter(mHomeRecentScreenNum, mRecentAdapter2 , 1);
-                    setHomeWinLoseData(mHomeRecentScreenNum, mFootballAnalyzeRecent2,mFootballAnalyzeRecent2B, mHomeTeam);
+                    setHomeWinLoseData(mHomeRecentScreenNum, mFootballAnalyzeRecent2,mFootballAnalyzeRecent2B, mHomeTeam , mRoundProgressBarHome1 , mRoundProgressBarHome2 , mRoundProgressBarHome3);
                 }
                 mDialog.dismiss();
             }

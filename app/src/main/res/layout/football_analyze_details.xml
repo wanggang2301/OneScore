@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yxq_custom="http://schemas.android.com/tools"
     android:id="@+id/football_analyze_history_record"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -85,7 +86,8 @@
                         android:id="@+id/football_analyze_details_history"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        >
 
                         <TextView
                             android:id="@+id/football_analyze_history"
@@ -107,6 +109,84 @@
                             android:paddingRight="3dp"
                             android:textSize="@dimen/text_size_13" />
                         <!--android:text="最近&#45;&#45;场，-&#45;&#45;胜&#45;&#45;负，主场&#45;&#45;胜&#45;&#45;负"    -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="10dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_history_roundProgressBar1"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="胜率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_history_roundProgressBar2"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="大球率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_history_roundProgressBar3"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="让分赢盘率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -244,7 +324,8 @@
                         android:id="@+id/football_analyze_details_recent_guest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        >
 
                         <TextView
                             android:id="@+id/football_analyze_record_home"
@@ -265,6 +346,82 @@
                             android:paddingLeft="6dp"
                             android:paddingRight="3dp"
                             android:textSize="@dimen/text_size_13" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="10dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_home_roundProgressBar1"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="胜率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_home_roundProgressBar2"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="大球率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_home_roundProgressBar3"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="让分赢盘率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -391,6 +548,82 @@
                             android:paddingLeft="6dp"
                             android:paddingRight="3dp"
                             android:textSize="@dimen/text_size_13" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="10dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_guest_roundProgressBar1"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="胜率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_guest_roundProgressBar2"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="大球率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <com.hhly.mlottery.view.RoundProgressBar
+                                    android:id="@+id/football_guest_roundProgressBar3"
+                                    android:layout_width="60dip"
+                                    android:layout_height="60dip"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_gravity="center"
+
+                                    yxq_custom:textIsDisplayable="false"
+                                    yxq_custom:textSize="18sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="让分赢盘率"
+                                    android:layout_gravity="center"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/progress_score"/>
+                            </LinearLayout>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
