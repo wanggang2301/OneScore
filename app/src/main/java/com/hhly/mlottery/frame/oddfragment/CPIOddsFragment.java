@@ -228,6 +228,7 @@ public class CPIOddsFragment extends Fragment {
             }
         }
         mAdapter.notifyDataSetChanged();
+        mRecyclerView.scrollToPosition(0);
     }
 
     /**

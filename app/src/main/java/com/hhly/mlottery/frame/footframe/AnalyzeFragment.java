@@ -343,11 +343,11 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
 
         //积分排名
-        if(analyzeBean.getScoreRank()==null){
+        if(analyzeBean.getScoreRank().getHome()==null&&analyzeBean.getScoreRank().getGuest()==null){
             mLinearRanking.setVisibility(View.GONE);
             mRankingNodata.setVisibility(View.VISIBLE);
         }
-        if(analyzeBean.getScoreRank()!=null){
+        else{
             mLinearRanking.setVisibility(View.VISIBLE);
             mRankingNodata.setVisibility(View.GONE);
             NewAnalyzeBean.ScoreRankEntity entity=analyzeBean.getScoreRank();
@@ -383,19 +383,20 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             mIntegralTable.setVisibility(View.GONE);
         }
 
+        NewAnalyzeBean.AttackDefenseEntity defense=analyzeBean.getAttackDefense();
         //攻防对比
-        if(analyzeBean.getAttackDefense()==null){
+        if(defense.getGuestFieldGoal()==null&&defense.getGuestFieldLose()==null&&defense.getHomeFieldGoal()==null&&defense.getHomeFieldLose()==null){
             mLinearAttack.setVisibility(View.GONE);
             mAttackNodata.setVisibility(View.VISIBLE);
         }
-        if(analyzeBean.getAttackDefense()!=null){
+        else{
             mLinearAttack.setVisibility(View.VISIBLE);
             mAttackNodata.setVisibility(View.GONE);
             mHomeGoal.setText(analyzeBean.getAttackDefense().getHomeFieldGoal());
             mHomeLose.setText(analyzeBean.getAttackDefense().getHomeFieldLose());
             mGuestGoal.setText(analyzeBean.getAttackDefense().getGuestFieldGoal());
             mGuestLose.setText(analyzeBean.getAttackDefense().getGuestFieldLose());
-            mSizeOfBet.setText(analyzeBean.getAttackDefense().getSizeHandicap());
+            mSizeOfBet.setText(analyzeBean.getAttackDefense().getSizeHandicap()==null?"--":analyzeBean.getAttackDefense().getSizeHandicap());
         }
 
         List<NewAnalyzeBean.LineUpEntity.PlayerInfo> homeLineUpList=analyzeBean.getLineUp().getHomeLineUp();//主队队员
