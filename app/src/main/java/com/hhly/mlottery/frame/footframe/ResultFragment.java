@@ -45,6 +45,7 @@ import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -366,7 +367,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
       /*  if (isGJB) { //否则  显示国际版 界面
             setDialog_internation();
         } else {*/    //如果是中文 或繁体--  则用中文ui显示
-            setDialog();
+        setDialog();
         //}
 
     }
@@ -459,10 +460,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 mInternationAdapter.notifyDataSetChanged();
             }
         } else {// 中文版样式*/
-            if (mAdapter != null) {
-                mAdapter.updateDatas(mMatchs); //默认 显示 热门
-                mAdapter.notifyDataSetChanged();
-            }
+        if (mAdapter != null) {
+            mAdapter.updateDatas(mMatchs); //默认 显示 热门
+            mAdapter.notifyDataSetChanged();
+        }
         //}
     }
 
@@ -549,10 +550,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     }
                 }
 
-                if (!isCheckedDefualt) {
+                L.d("1234", isCheckedDefualt + "");
 
-               // if (!isCheckedDefualt) {
-                    //否则显示  筛选后的比赛
+                if (!isCheckedDefualt) {
 
                     mMatchs.clear();
                     for (ResultMatchDto match : mAllMatchs) {
@@ -833,6 +833,12 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         updateAdapter();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isCheckedDefualt = true;
     }
 
     @Override

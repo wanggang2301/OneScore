@@ -277,13 +277,13 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                     mBottomOddsDetailsFragment.dismiss();
                 }
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                    if (finishMatchLiveTextFragment == null) {
-                        finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    if (finishMatchLiveTextFragment != null) {
+                        finishMatchLiveTextFragment.dismiss();
                     }
 
-                    if (!finishMatchLiveTextFragment.isAdded()) {
-                        finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
-                    }
+                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
+
 
                 } else {
 
@@ -304,11 +304,10 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 initOdds();
             }
         });
-
-
     }
 
 
+    //下拉刷新
     public void refreshMatch(MatchDetail matchDetail, int type) {
         this.mMatchDetail = matchDetail;
         this.mViewType = type;
@@ -455,8 +454,6 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             public void onClick(View v) {
 
                 isRepeatShowDialog();
-
-
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
@@ -624,15 +621,17 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
     public void setLiveText(String msg) {
+
+        L.d(TAG, "推送文字直播LiveText");
         live_text.setText(msg);
     }
 
+    //推送刷新
     public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
 
         if (liveTextFragmentTest != null) {
             liveTextFragmentTest.updataLiveTextAdapter(matchLive);
         }
-
     }
 
 

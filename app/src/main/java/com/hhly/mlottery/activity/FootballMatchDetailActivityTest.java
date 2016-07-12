@@ -436,8 +436,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     public void onRefresh() {
-        L.d("10299", "下拉刷新");
-
         L.d(TAG, "下拉刷新");
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -679,13 +677,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 mHandler.sendEmptyMessage(SUCCESS);
 
-                if (isInitedViewPager) {
-
-                    if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
-                        startWebsocket();
-                        computeWebSocket();
-                    }
-                }
 
 
             }
@@ -700,7 +691,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private void initViewPager(MatchDetail matchDetail) {
 
-        L.d(TAG, "状态" + matchDetail.getLiveStatus());
 
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
 
@@ -772,8 +762,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
 
-
-                L.d(TAG, "统计数据" + mMatchDetail.getLiveStatus());
                 initMatchSatisInfo();
 
 
@@ -863,6 +851,17 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }
 
         mStatisticsFragment.setType(matchDetail.getLiveStatus());
+
+        if (!isInitedViewPager) {
+
+            if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
+                L.d(TAG,"第一次启动socket");
+                startWebsocket();
+                computeWebSocket();
+            }
+        }
+
+
         isInitedViewPager = true;
     }
 
