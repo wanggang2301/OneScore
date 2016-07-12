@@ -3,41 +3,43 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+
     <include layout="@layout/football_listview_header"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/football_infor_loading_ll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading_txt"
-            android:textColor="@color/loading_txt_color" />
-    </LinearLayout>
-
-    <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
-        android:id="@+id/football_infor_swiperefreshlayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/infor_listview"
+        <LinearLayout
+            android:id="@+id/football_infor_loading_ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/linecolor"
-            android:dividerHeight="0.5px"
-            >
-        </ListView>
+            android:gravity="center"
+            android:orientation="vertical">
 
-    </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading_txt"
+                android:textColor="@color/loading_txt_color"/>
+        </LinearLayout>
 
-    <include layout="@layout/network_exception" />
+        <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
+            android:id="@+id/football_infor_swiperefreshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/infor_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/linecolor"
+                android:dividerHeight="0.5px"
+                >
+            </ListView>
+
+        </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
+
+        <include layout="@layout/network_exception"/>
     </FrameLayout>
 </LinearLayout>

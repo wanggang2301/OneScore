@@ -225,5 +225,8 @@ public class AppConstants {
 	//防止用户恶意注册添加的sign字段。
 	public static final String SIGN_KEY ="B2A7748BF1FCAF6326979E1B86DC0C60";
 
+    /**这个是把devicetoken存入到sharedprefrence中的键*/
+    public static final String DEVICETOKEN ="devicetoken";
+
 
 }

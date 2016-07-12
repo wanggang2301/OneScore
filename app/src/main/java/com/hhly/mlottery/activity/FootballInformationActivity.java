@@ -93,7 +93,6 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
     //初始化viewPager
     private void initViewPager() {
-
         mFragment_Tablayout = (TabLayout) findViewById(R.id.tab_Fragment_title);
         mFragment_pager = (ViewPager) findViewById(R.id.vp_Fragment_pager);
         titles = new ArrayList<>();

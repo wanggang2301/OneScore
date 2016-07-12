@@ -3,8 +3,6 @@ package com.hhly.mlottery.util;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.widget.EditText;
@@ -32,6 +30,8 @@ import java.util.UUID;
 public class CommonUtils {
 
     private static final java.lang.String TAG = "CommonUtils";
+
+    private static String deviceToken;
 
     /**
      * 保存注册信息
@@ -110,20 +110,22 @@ public class CommonUtils {
      * @return
      */
     public static String getDeviceToken() {
-        TelephonyManager tm = (TelephonyManager) MyApp.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
-        String devId = tm.getDeviceId();
-        if (!TextUtils.isEmpty(devId)) {
-            return devId;
+
+        deviceToken = PreferenceUtil.getString(AppConstants.DEVICETOKEN, "");
+
+        if (TextUtils.isEmpty(deviceToken) || deviceToken.equals("")) {
+            /**没有devicetoken,获取手机唯一标示，如果获取不到，则生成一个uuid值。*/
+            TelephonyManager tm = (TelephonyManager) MyApp.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
+            String devId = tm.getDeviceId();
+            if (!TextUtils.isEmpty(devId)) {
+                deviceToken = devId;
+            } else {
+                deviceToken = UUID.randomUUID().toString();
+            }
+            PreferenceUtil.commitString(AppConstants.DEVICETOKEN, deviceToken);
         }
-        String uuid;
-        WifiManager wifi = (WifiManager) MyApp.getInstance().getSystemService(Context.WIFI_SERVICE);
-        WifiInfo info = (null == wifi ? null : wifi.getConnectionInfo());
-        if (info != null) {
-            uuid = info.getMacAddress();
-        } else {
-            uuid = UUID.randomUUID().toString();
-        }
-        return uuid;
+        L.d(TAG,deviceToken+">>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<");
+        return deviceToken;
     }
 
 
@@ -222,7 +224,7 @@ public class CommonUtils {
                 UiUtils.toast(MyApp.getInstance(), R.string.nickname_sensitive);
                 break;
             case AccountResultCode.ONLY_FIVE_EACHDAY:
-                UiUtils.toast(MyApp.getInstance(),R.string.only_five_eachday);
+                UiUtils.toast(MyApp.getInstance(), R.string.only_five_eachday);
                 break;
             default:
                 L.e(TAG, "未定义错误码 : rescode = " + rescode + " , defaultMessage = " + defaultMessage);
@@ -251,16 +253,16 @@ public class CommonUtils {
             param.put("phone", phone);
             param.put("operateType", oprateType);
 
-            Log.d(TAG,phone+"...............................");
+            Log.d(TAG, phone + "...............................");
 
             //以下添加的参数为修复恶意注册的bug所加。
             String sign = CommonUtils.getSign(phone, AppConstants.deviceToken, AppConstants.SIGN_KEY);
-            param.put("sign",sign);
+            param.put("sign", sign);
 
             int versioncode = CommonUtils.getVersionCode();
-            param.put("versionCode",String.valueOf(versioncode));
+            param.put("versionCode", String.valueOf(versioncode));
 
-            param.put("deviceToken",AppConstants.deviceToken);
+            param.put("deviceToken", AppConstants.deviceToken);
 
 
             VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<SendSmsCode>() {
@@ -303,7 +305,7 @@ public class CommonUtils {
      */
     public static int getVersionCode() {
 
-        int versionCode=0;
+        int versionCode = 0;
         try {
             PackageManager manager = MyApp.getInstance().getPackageManager();
             PackageInfo info = manager.getPackageInfo(MyApp.getInstance().getPackageName(), 0);
@@ -316,10 +318,11 @@ public class CommonUtils {
 
     /**
      * 获取版本名称
+     *
      * @return
      */
-    public static String getVersionName(){
-        String versionName="";
+    public static String getVersionName() {
+        String versionName = "";
         try {
             PackageManager manager = MyApp.getInstance().getPackageManager();
             PackageInfo info = manager.getPackageInfo(MyApp.getInstance().getPackageName(), 0);
@@ -331,10 +334,10 @@ public class CommonUtils {
     }
 
 
-
     /**
      * 这个方法是用来生成防止用户恶意注册，由这三个参数拼接的字符串进行MD5加密之后，再加上两位字母，作为参数
      * 发送给服务器。
+     *
      * @param userName
      * @param deviceToken
      * @param signKey
@@ -342,19 +345,16 @@ public class CommonUtils {
      */
     public static String getSign(String userName, String deviceToken, String signKey) {
 
-        String appendString = userName+deviceToken+signKey;
+        String appendString = userName + deviceToken + signKey;
 
         String beforeTwo = getRandomString(2);
 
         String afterThree = getRandomString(3);
 
-        String newMd5String = beforeTwo+MD5Util.getMD5(appendString)+afterThree;
+        String newMd5String = beforeTwo + MD5Util.getMD5(appendString) + afterThree;
 
         return newMd5String;
     }
-
-
-
 
 
     //生成大写的字符和数字的字符串。
