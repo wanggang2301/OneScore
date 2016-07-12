@@ -50,7 +50,7 @@ public class CpiCompanyAdapter extends BaseAdapter {
     /**
      * 根据选中的position选中
      */
-//    public void setDefSelect(List<Integer> defItemList, boolean isTrue) {
+//    public void setSelect(List<Integer> defItemList, boolean isTrue) {
 //        this.defItemList = defItemList;
 //        this.isTrue = isTrue;
 //        notifyDataSetChanged();

@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.OddDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDetailsAdatper;
-import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -138,7 +137,7 @@ public class CpiDetailsFragment extends Fragment {
         oddDetailsLeftAdapter = new OddDetailsLeftAdapter(mContext, mParam2List);
         cpi_tails_left_listview.setAdapter(oddDetailsLeftAdapter);
         //根据传过去的postion更改选中的item选中背景
-        oddDetailsLeftAdapter.setDefSelect(Integer.parseInt(mParamPositionNunber));
+        oddDetailsLeftAdapter.setSelect(Integer.parseInt(mParamPositionNunber));
         // 指数详情右边数据
         RightData(mParamComId);
 
@@ -148,7 +147,7 @@ public class CpiDetailsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //根据传过去的postion更改选中的item选中背景
-                oddDetailsLeftAdapter.setDefSelect(position);
+                oddDetailsLeftAdapter.setSelect(position);
                 //根据position获取list集合里面id
                 stCompanId = mParam2List.get(position).get("id");
                 if (mCpiDetailsAdatper != null) {

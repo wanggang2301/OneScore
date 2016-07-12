@@ -358,7 +358,7 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
 //        SimpleAdapter smAdapter=new SimpleAdapter(mContext,list,R.layout.item_odds_left,new String[]{"name"},new int[]{R.id.odds_left_txt});
         mLeft_listview.setAdapter(oddDetailsLeftAdapter);
         //根据传过去的postion更改选中的item选中背景
-        oddDetailsLeftAdapter.setDefSelect(positionNum);
+        oddDetailsLeftAdapter.setSelect(positionNum);
         stIdposition = idPosition;
         //指数详情右边数据
         RightData(stIdposition);
@@ -367,7 +367,7 @@ public class PlateFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //根据传过去的postion更改选中的item选中背景
-                oddDetailsLeftAdapter.setDefSelect(position);
+                oddDetailsLeftAdapter.setSelect(position);
                 //根据position获取list集合里面id
                 String stId = list.get(position).get("id");
                 if (mOddsDetailsAdapter != null) {
