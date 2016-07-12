@@ -91,17 +91,6 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
             holder.odds_details_guest_child_txt = (TextView) convertView.findViewById(R.id.odds_details_guest_txt);
             holder.odds_details_dish_layout = (LinearLayout) convertView.findViewById(R.id.odds_details_dish_layout);
 
-            //手动设置宽高
-            params = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
-            params.weight = 3;
-            params.rightMargin = 1;
-            holder.odds_details_timeAndscore_child_txt.setLayoutParams(params);
-
-
-            TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
-            params1.weight = 4;
-            params1.rightMargin = 1;
-            holder.odds_details_dish_layout.setLayoutParams(params1);
             convertView.setTag(holder);
 
         } else {
@@ -270,9 +259,10 @@ public class CpiDetailsAdatper extends BaseExpandableListAdapter implements Pinn
     }
 
     private View createChildrenView(ViewGroup parent) {
-        return inflater.inflate(R.layout.item_odds_details_child, parent, false);
+        View view = inflater.inflate(R.layout.item_odds_details_child, parent, false);
+        view.findViewById(R.id.bottom_divider).setVisibility(View.GONE);
+        return view;
     }
-
 
     @Override
     public int getHeaderState(int groupPosition, int childPosition) {
