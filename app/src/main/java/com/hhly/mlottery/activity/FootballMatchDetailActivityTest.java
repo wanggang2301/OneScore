@@ -678,7 +678,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mHandler.sendEmptyMessage(SUCCESS);
 
 
-
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -855,7 +854,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         if (!isInitedViewPager) {
 
             if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
-                L.d(TAG,"第一次启动socket");
+                L.d(TAG, "第一次启动socket");
                 startWebsocket();
                 computeWebSocket();
             }
@@ -1121,10 +1120,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         if (footballTimer != null) {
             L.d("timer", "footballdetails定时器");
-
             footballTimer.cancel();
+            footballTimer.purge();
+
+            footballTimer = null;
         }
 
         if (hSocketClient != null) {
@@ -1133,6 +1135,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
+            mReloadTimer.purge();
+
         }
         this.finish();
     }
@@ -1238,6 +1242,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     }
                 }
             };
+
+
             footballTimer.schedule(tt, 15000, 15000);
             isStarComputeTimer = true;
         }
@@ -2318,7 +2324,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         int[] location = new int[2];
         v.getLocationOnScreen(location);
 
-        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - v.getWidth()-v.getPaddingRight(), location[1] + v.getHeight());         //  popupWindow.showAsDropDown(v,-10,0);
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - v.getWidth() - v.getPaddingRight(), location[1] + v.getHeight());         //  popupWindow.showAsDropDown(v,-10,0);
 
 
         (mView.findViewById(R.id.football_item_focus)).setOnClickListener(new View.OnClickListener() {
