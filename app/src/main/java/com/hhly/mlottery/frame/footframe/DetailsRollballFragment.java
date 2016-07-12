@@ -304,8 +304,6 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 initOdds();
             }
         });
-
-
     }
 
 
