@@ -49,7 +49,7 @@
 
             <TextView
                 android:id="@+id/odds_details_dish_txt"
-                android:layout_width="48dp"
+                android:layout_width="52dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textColor="@color/content_txt_dark_grad"
