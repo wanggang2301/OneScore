@@ -417,6 +417,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     int dip5 = DisplayUtil.dip2px(mContext, 5);
                     int dip10 = DisplayUtil.dip2px(mContext, 10);
 
+                    if(ll_rosters_homeTeam.getChildCount()!=0){  //刷新时清空上次add的textview
+                        ll_rosters_homeTeam.removeAllViews();
+                    }
+                    if(ll_rosters_visitingTeam.getChildCount()!=0){
+                        ll_rosters_visitingTeam.removeAllViews();
+                    }
                     // 添加主队名单
                     for (int i = 0, len = homeLineUpList.size(); i < len; i++) {
                         TextView tv_homeTeams = new TextView(mContext);
