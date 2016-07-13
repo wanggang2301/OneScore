@@ -29,7 +29,8 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:id="@+id/webview_container"
-           android:layout_above="@+id/tv_check_info">
+           android:paddingBottom="10dp"
+          >
 
        </RelativeLayout>
         <!--<com.hhly.mlottery.widget.ProgressWebView
@@ -45,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/y24"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="@dimen/x30"
             android:layout_marginRight="@dimen/x30"
               android:layout_marginTop="@dimen/y24"

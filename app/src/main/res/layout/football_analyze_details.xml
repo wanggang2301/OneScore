@@ -130,7 +130,7 @@
                                     android:layout_gravity="center"
 
                                     yxq_custom:textIsDisplayable="false"
-                                    yxq_custom:textSize="18sp"/>
+                                    yxq_custom:textSize="@dimen/text_size_13"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                                     android:layout_gravity="center"
 
                                     yxq_custom:textIsDisplayable="false"
-                                    yxq_custom:textSize="18sp"/>
+                                    yxq_custom:textSize="@dimen/text_size_13"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                                     android:layout_gravity="center"
 
                                     yxq_custom:textIsDisplayable="false"
-                                    yxq_custom:textSize="18sp"/>
+                                    yxq_custom:textSize="@dimen/text_size_13"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
