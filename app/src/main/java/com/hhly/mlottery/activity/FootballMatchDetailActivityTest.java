@@ -1245,7 +1245,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             };
 
-            L.d(TAG, "ffff" + footballTimer);
             if (!isStarComputeTimer) {
                 footballTimer.schedule(tt, 15000, 15000);
                 isStarComputeTimer = true;
@@ -1296,10 +1295,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 MatchTextLiveBean currMatchTextLiveBean = new MatchTextLiveBean(data.get("code"), data.get("msgId"), data.get("msgPlace"), data.get("showId"), data.get("fontStyle"), data.get("time"), data.get("msgText"), data.get("cancelEnNum"), data.get("enNum"), data.get("state"), data.get("homeScore"), data.get("guestScore"));
                 if (currMatchTextLiveBean != null) {
                     isLostMsgId(currMatchTextLiveBean.getMsgId());
-                }
-                allMatchLiveMsgId.add(0, Integer.parseInt(currMatchTextLiveBean.getMsgId()));
-
-                if (currMatchTextLiveBean != null) {
+                    allMatchLiveMsgId.add(0, Integer.parseInt(currMatchTextLiveBean.getMsgId()));
                     updatePushData(currMatchTextLiveBean);
                 }
             }
