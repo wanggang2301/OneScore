@@ -68,8 +68,17 @@ public class OddsDetailsDataInfo {
             private String homeColor = "black";
             private String guestColor = "black";
             private String dishColor = "black";
+            private boolean scoreChanged = false;
             private String selectTag;
             private boolean scoreVisible = false;
+
+            public boolean isScoreChanged() {
+                return scoreChanged;
+            }
+
+            public void setScoreChanged(boolean scoreChanged) {
+                this.scoreChanged = scoreChanged;
+            }
 
             public String getSelectTag() {
                 return selectTag;

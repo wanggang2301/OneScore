@@ -57,7 +57,9 @@ public class FootballPlateAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddE
         // 中间
         holder.setTextColor(R.id.plate_dish_txt2, black);
         setOddsColor(holder, currentOdds.getHand(), preOdds.getHand(), R.id.plate_dish_txt);
-        setCenterOddsColor(holder, currentOdds.getHand(), preOdds.getHand(), R.id.plate_dish_txt);
+        if (!OddsTypeEnum.OP.equals(type)) {
+            setCenterOddsColor(holder, currentOdds.getHand(), preOdds.getHand(), R.id.plate_dish_txt);
+        }
         setHandicap(holder, currentOdds, preOdds);
 
         // 左边

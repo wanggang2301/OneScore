@@ -47,7 +47,7 @@ import java.util.List;
 
 /**
  * 重构版 CPIFragment
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/21.
  */
 public class CPIFragment extends Fragment implements
@@ -133,7 +133,7 @@ public class CPIFragment extends Fragment implements
 
         // 右上角公司和联赛筛选
         mCompanyButton = (ImageView) view.findViewById(R.id.public_img_company);
-        mCompanyButton.setVisibility(View.VISIBLE);
+//        mCompanyButton.setVisibility(View.VISIBLE);
         mCompanyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +141,7 @@ public class CPIFragment extends Fragment implements
             }
         });
         mFilterButton = (ImageView) view.findViewById(R.id.public_img_filter);
-        mFilterButton.setVisibility(View.VISIBLE);
+//        mFilterButton.setVisibility(View.VISIBLE);
         mFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -448,6 +448,11 @@ public class CPIFragment extends Fragment implements
         for (CPIOddsFragment fragment : mFragments) {
             fragment.updateTimeAndStatus(result);
         }
+    }
+
+    public void showRightButton() {
+        mCompanyButton.setVisibility(View.VISIBLE);
+        mFilterButton.setVisibility(View.VISIBLE);
     }
 
     /**

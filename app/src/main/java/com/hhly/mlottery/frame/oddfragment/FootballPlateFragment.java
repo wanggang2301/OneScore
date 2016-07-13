@@ -118,19 +118,19 @@ public class FootballPlateFragment extends Fragment {
 
         switch (type) {
             case OddsTypeEnum.PLATE:
-                mLeftTitle.setText(R.string.odd_home_txt);
-                mCenterTitle.setText(R.string.odd_dish_txt);
-                mRightTitle.setText(R.string.odd_guest_txt);
+                mLeftTitle.setText(R.string.foot_odds_alet_left);
+                mCenterTitle.setText(R.string.foot_odds_alet_middle);
+                mRightTitle.setText(R.string.foot_odds_alet_right);
                 break;
             case OddsTypeEnum.BIG:
-                mLeftTitle.setText(R.string.odd_home_big_txt);
-                mCenterTitle.setText(R.string.odd_dish_txt);
-                mRightTitle.setText(R.string.odd_guest_big_txt);
+                mLeftTitle.setText(R.string.foot_odds_asize_left);
+                mCenterTitle.setText(R.string.foot_odds_asize_middle);
+                mRightTitle.setText(R.string.foot_odds_asize_right);
                 break;
             case OddsTypeEnum.OP:
-                mLeftTitle.setText(R.string.odd_home_op_txt);
-                mCenterTitle.setText(R.string.odd_dish_op_txt);
-                mRightTitle.setText(R.string.odd_guest_op_txt);
+                mLeftTitle.setText(R.string.foot_odds_eu_left);
+                mCenterTitle.setText(R.string.foot_odds_eu_middle);
+                mRightTitle.setText(R.string.foot_odds_eu_right);
                 break;
         }
     }

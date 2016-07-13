@@ -260,6 +260,7 @@ public class CPIOddsFragment extends Fragment {
      */
     private void handleCompany(List<NewOddsInfo.CompanyBean> company) {
         ArrayList<NewOddsInfo.CompanyBean> companyList = parentFragment.getCompanyList();
+        parentFragment.showRightButton();
         if (companyList.isEmpty()) {
 
             // 默认选中头两个公司
