@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -39,6 +40,9 @@ public class FootballPlateFragment extends Fragment {
     RecyclerView mRecyclerView;
     EmptyView mEmptyView;
     View mContentView;
+    TextView mLeftTitle;
+    TextView mCenterTitle;
+    TextView mRightTitle;
 
     private FootballMatchDetailActivityTest mActivity;
 
@@ -74,6 +78,8 @@ public class FootballPlateFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initTitle(view);
+
         mContentView = view.findViewById(R.id.content);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -103,6 +109,30 @@ public class FootballPlateFragment extends Fragment {
         mActivity = (FootballMatchDetailActivityTest) getActivity();
 
         loadData();
+    }
+
+    private void initTitle(View view) {
+        mLeftTitle = (TextView) view.findViewById(R.id.left);
+        mCenterTitle = (TextView) view.findViewById(R.id.center);
+        mRightTitle = (TextView) view.findViewById(R.id.right);
+
+        switch (type) {
+            case OddsTypeEnum.PLATE:
+                mLeftTitle.setText(R.string.odd_home_txt);
+                mCenterTitle.setText(R.string.odd_dish_txt);
+                mRightTitle.setText(R.string.odd_guest_txt);
+                break;
+            case OddsTypeEnum.BIG:
+                mLeftTitle.setText(R.string.odd_home_big_txt);
+                mCenterTitle.setText(R.string.odd_dish_txt);
+                mRightTitle.setText(R.string.odd_guest_big_txt);
+                break;
+            case OddsTypeEnum.OP:
+                mLeftTitle.setText(R.string.odd_home_op_txt);
+                mCenterTitle.setText(R.string.odd_dish_op_txt);
+                mRightTitle.setText(R.string.odd_guest_op_txt);
+                break;
+        }
     }
 
     @Override
