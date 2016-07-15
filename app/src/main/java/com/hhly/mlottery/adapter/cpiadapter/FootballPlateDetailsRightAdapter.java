@@ -111,7 +111,12 @@ public class FootballPlateDetailsRightAdapter
     private void setDishColor(BaseViewHolder holder, String color) {
         if ("1".equals(oddsType) || "3".equals(oddsType)) {
             holder.setBackgroundColor(R.id.odds_details_dish_txt, getBackgroundColor(color));
-            holder.setTextColor(R.id.odds_details_dish_txt, "grey".equals(color) ? grey : white);
+            if ("red".equals(color) || "green".equals(color)) {
+                holder.setTextColor(R.id.odds_details_dish_txt, white);
+            } else {
+                holder.setTextColor(R.id.odds_details_dish_txt, black);
+            }
+
         } else {
             holder.setTextColor(R.id.odds_details_dish_txt, getTextColor(color));
         }

@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -189,6 +190,17 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         mNoData5 = (TextView) findViewById(R.id.football_analyze_nodata5);
 
         mRoundProgressBarHistory1 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar1);
+//        mRoundProgressBarHistory1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(FootballAnalyzeDetailsActivity.this, AutoCompleteActivity.class);
+////                Bundle bundleset = new Bundle();
+////                bundleset.putInt("currentfragment" , mBasketballType);
+////                intent.putExtras(bundleset);
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+//            }
+//        });
         mRoundProgressBarHistory2 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar2);//#E8C129
         mRoundProgressBarHistory3 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar3); //#7DC050
 
@@ -269,7 +281,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                         if (json.getBattleHistory() != null) {
                             mHistoryData = json.getBattleHistory();
                             //暂无数据提示
-                            if (mHistoryData.isEmpty()) {
+                            if (mHistoryData.isEmpty() || mHistoryData.size()==0) {
                                 mNoData1.setVisibility(View.VISIBLE);
                             }
                             //取前六场
@@ -296,7 +308,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                     updateAdapter(fistData, mHistoryAdaptey, 0);
                                 }
                             }
-                            mNoData1.setVisibility(View.GONE);
+//                            mNoData1.setVisibility(View.GONE);
                             mHistory_ll.setVisibility(View.VISIBLE);
                         } else {
                             mHistory_ll.setVisibility(View.GONE);
@@ -313,7 +325,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 mRecentData1 = json.getTeamRecent().getGuest();
 
                                 //暂无数据提示
-                                if (mRecentData1.isEmpty()) {
+                                if (mRecentData1.isEmpty() || mRecentData1.size()==0) {
                                     mNoData2.setVisibility(View.VISIBLE);
                                 }
                                 //默认选中全部场地6场
@@ -342,7 +354,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                     }
                                 }
                                 mGuestRecent_ll.setVisibility(View.VISIBLE);
-                                mNoData2.setVisibility(View.GONE);
+//                                mNoData2.setVisibility(View.GONE);
                             }else{
                                 mGuestRecent_ll.setVisibility(View.GONE);
                                 mNoData2.setVisibility(View.VISIBLE);
@@ -354,7 +366,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 mRecentData2 = json.getTeamRecent().getHome();
 
                                 //暂无数据提示
-                                if (mRecentData2.isEmpty()) {
+                                if (mRecentData2.isEmpty() || mRecentData2.size()==0) {
                                     mNoData3.setVisibility(View.VISIBLE);
                                 }
 
@@ -382,7 +394,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                         updateAdapter(fistData, mRecentAdapter2, 1);
                                     }
                                 }
-                                mNoData3.setVisibility(View.GONE);
+//                                mNoData3.setVisibility(View.GONE);
                                 mHomeRecent_ll.setVisibility(View.VISIBLE);
                             } else {
                                 mNoData3.setVisibility(View.VISIBLE);
@@ -401,7 +413,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                             if (json.getFutureMatch().getGuest() != null) {
                                 mFutureData1 = json.getFutureMatch().getGuest();
                                 //暂无数据提示
-                                if (mFutureData1.isEmpty()) {
+                                if (mFutureData1.isEmpty() || mFutureData1.size()==0) {
                                     mNoData4.setVisibility(View.VISIBLE);
                                 }
                                 if (json.getGuestTeam() != null) {
@@ -439,7 +451,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 mFutureData2 = json.getFutureMatch().getHome();
 
                                 //暂无数据提示
-                                if (mFutureData2.isEmpty()) {
+                                if (mFutureData2.isEmpty() || mFutureData2.size()==0) {
                                     mNoData5.setVisibility(View.VISIBLE);
                                 }
 

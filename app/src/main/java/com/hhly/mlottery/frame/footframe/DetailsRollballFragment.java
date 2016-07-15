@@ -836,8 +836,10 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 }
             };
 
-            detailsTimer.schedule(tt, 15000, 15000);
-            isStartTimer = true;
+            if (!isStartTimer) {
+                detailsTimer.schedule(tt, 15000, 15000);
+                isStartTimer = true;
+            }
         }
     }
 
@@ -849,6 +851,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         if (detailsTimer != null) {
             L.d("timer", "detailsRoll定时器");
             detailsTimer.cancel();
+            detailsTimer.purge();
+            detailsTimer = null;
         }
 
         if (hSocketClient != null) {
