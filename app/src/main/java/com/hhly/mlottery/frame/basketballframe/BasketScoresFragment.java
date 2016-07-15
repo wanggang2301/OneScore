@@ -19,13 +19,10 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
+import com.hhly.mlottery.activity.BasketballInformationActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallSelectArrayAdapter;
@@ -74,6 +71,8 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
         return mFilterImgBtn;
     }
 
+    private ImageView ivInfomation;
+
     /**
      * 设置
      */
@@ -87,6 +86,7 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
      * 中间标题
      */
     private TextView mTittle;// 标题
+
 
     /**
      * 当前处于哪个比赛fg
@@ -161,6 +161,11 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
         //设置按钮
         mSetting = (ImageView) mView.findViewById(R.id.public_btn_set);
         mSetting.setOnClickListener(this);
+
+
+        ivInfomation = (ImageView) mView.findViewById(R.id.public_btn_infomation);
+        ivInfomation.setVisibility(View.VISIBLE);
+        ivInfomation.setOnClickListener(this);
     }
 
     private void setupViewPager() {
@@ -368,6 +373,13 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
                     }
                     L.d("mBasketballType shaicheng >>>>>>>>>>>", "mBasketballType == >" + SCHEDULE_FRAGMENT);
                 }
+                break;
+
+
+            case R.id.public_btn_infomation:
+                Intent intent = new Intent(getActivity(), BasketballInformationActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 break;
         }
     }
