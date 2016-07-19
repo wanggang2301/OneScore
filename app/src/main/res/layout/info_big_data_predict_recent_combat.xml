@@ -5,10 +5,10 @@
               android:layout_height="match_parent"
               android:background="@color/white"
               android:orientation="vertical"
+              android:paddingBottom="15dp"
               android:paddingLeft="13dp"
               android:paddingRight="13dp"
               tools:showIn="@layout/fragment_info">
-
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -56,53 +56,51 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:baselineAligned="false">
-
-        <android.support.v4.widget.ContentLoadingProgressBar
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
-            android:layout_weight="1"/>
-
-        <android.support.v4.widget.ContentLoadingProgressBar
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
-            android:layout_weight="1"/>
-
-        <android.support.v4.widget.ContentLoadingProgressBar
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp">
+
+            <TextView
+                android:id="@+id/home_recent_home_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
 
             <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/home_recent_home_win_rate_progress"
                 style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"/>
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_red"/>
+
+            <TextView
+                android:id="@+id/guest_recent_home_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/guest_recent_home_win_rate_progress"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_green"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -117,15 +115,45 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp">
+
+            <TextView
+                android:id="@+id/home_recent_size_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
 
             <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/home_recent_size_win_rate_progress"
                 style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"/>
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_red"/>
+
+            <TextView
+                android:id="@+id/guest_recent_size_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/guest_recent_size_win_rate_progress"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_green"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -134,21 +162,50 @@
                 android:text="@string/size_win_rate"
                 android:textColor="@color/week"
                 android:textSize="13sp"/>
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp">
+
+            <TextView
+                android:id="@+id/home_recent_asia_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
 
             <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/home_recent_asia_win_rate_progress"
                 style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"/>
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_red"/>
+
+            <TextView
+                android:id="@+id/guest_recent_asia_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/guest_recent_asia_win_rate_progress"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_green"/>
 
             <TextView
                 android:layout_width="match_parent"

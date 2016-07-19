@@ -29,20 +29,32 @@
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/history_host_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
+
             <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/history_host_win_progress"
                 style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"/>
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_red"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="13sp"
+                android:text="@string/home_win_rate"
                 android:textColor="@color/week"
-                android:text="@string/home_win_rate"/>
+                android:textSize="13sp"/>
 
         </LinearLayout>
 
@@ -52,20 +64,33 @@
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/history_size_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
+
             <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/history_size_win_progress"
                 style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"/>
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_red"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="@string/size_win_rate"
                 android:textColor="@color/week"
-                android:text="@string/size_win_rate"/>
+                android:textSize="13sp"/>
 
         </LinearLayout>
 
@@ -75,20 +100,33 @@
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/history_asia_win_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/info_home_progress_color"
+                android:textSize="@dimen/text_size_13"
+                tools:text="55%"/>
+
             <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/history_asia_win_progress"
                 style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"/>
+                android:layout_height="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/info_progress_red"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:text="@string/asia_win_rate"
                 android:textColor="@color/week"
-                android:text="@string/asia_win_rate"/>
+                android:textSize="13sp"/>
 
         </LinearLayout>
 

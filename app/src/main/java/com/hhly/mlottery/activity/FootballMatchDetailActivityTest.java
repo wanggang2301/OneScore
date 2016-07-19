@@ -314,7 +314,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         //统计
         mStatisticsFragment = StatisticsFragment.newInstance();
         // 情报
-        mInfoFragment = InfoFragment.newInstance();
+        mInfoFragment = InfoFragment.newInstance(mThirdId);
 
         mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment,
                 mAnalyzeFragment, mOddsFragment, mStatisticsFragment, mInfoFragment);
