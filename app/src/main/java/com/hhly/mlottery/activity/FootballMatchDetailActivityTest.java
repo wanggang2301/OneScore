@@ -48,7 +48,7 @@ import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
-import com.hhly.mlottery.frame.footframe.InfoFragment;
+import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
@@ -231,7 +231,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private OddsFragment mOddsFragment;         //指数
 
     private StatisticsFragment mStatisticsFragment;  //统计
-    private InfoFragment mInfoFragment; // 情报
+    private IntelligenceFragment mIntelligenceFragment; // 情报
 
     private int mStartTime;// 获取推送的开赛时间
     private TextView reLoading; //赔率请求失败重新加载
@@ -314,10 +314,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         //统计
         mStatisticsFragment = StatisticsFragment.newInstance();
         // 情报
-        mInfoFragment = InfoFragment.newInstance(mThirdId);
+        mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
 
         mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment,
-                mAnalyzeFragment, mOddsFragment, mStatisticsFragment, mInfoFragment);
+                mAnalyzeFragment, mOddsFragment, mStatisticsFragment, mIntelligenceFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

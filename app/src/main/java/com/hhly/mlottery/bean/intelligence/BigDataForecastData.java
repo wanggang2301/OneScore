@@ -1,11 +1,11 @@
-package com.hhly.mlottery.bean.footballDetails;
+package com.hhly.mlottery.bean.intelligence;
 
 /**
  * 单个情报
  * <p/>
  * Created by loshine on 2016/7/19.
  */
-public class BigDataOddsInfo {
+public class BigDataForecastData {
 
     /**
      * homeWinPercent : 0.2

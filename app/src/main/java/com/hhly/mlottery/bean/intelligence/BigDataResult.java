@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.footballDetails;
+package com.hhly.mlottery.bean.intelligence;
 
 /**
  * 大数据预测接口返回结果

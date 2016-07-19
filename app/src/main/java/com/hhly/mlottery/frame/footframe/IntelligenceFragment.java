@@ -12,9 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.footballDetails.BigDataForecast;
-import com.hhly.mlottery.bean.footballDetails.BigDataOddsInfo;
-import com.hhly.mlottery.bean.footballDetails.BigDataResult;
+import com.hhly.mlottery.bean.intelligence.BigDataForecast;
+import com.hhly.mlottery.bean.intelligence.BigDataForecastData;
+import com.hhly.mlottery.bean.intelligence.BigDataResult;
 import com.hhly.mlottery.util.StringFormatUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
@@ -27,7 +27,7 @@ import java.util.Map;
  * <p/>
  * Created by loshine on 2016/7/18.
  */
-public class InfoFragment extends Fragment {
+public class IntelligenceFragment extends Fragment {
 
     private static final String KEY_THIRD_ID = "thirdId";
 
@@ -171,7 +171,7 @@ public class InfoFragment extends Fragment {
      * @param sizeTextView 大球
      * @param asiaTextView 赢盘
      */
-    private void setWinRate(BigDataOddsInfo oddsInfo,
+    private void setWinRate(BigDataForecastData oddsInfo,
                             TextView hostTextView, TextView sizeTextView, TextView asiaTextView,
                             ProgressBar hostProgress, ProgressBar sizeProgress, ProgressBar asiaProgress) {
         if (oddsInfo != null) {
@@ -185,11 +185,11 @@ public class InfoFragment extends Fragment {
         }
     }
 
-    public static InfoFragment newInstance(String thirdId) {
+    public static IntelligenceFragment newInstance(String thirdId) {
 
         Bundle args = new Bundle();
         args.putString(KEY_THIRD_ID, thirdId);
-        InfoFragment fragment = new InfoFragment();
+        IntelligenceFragment fragment = new IntelligenceFragment();
         fragment.setArguments(args);
         return fragment;
     }
