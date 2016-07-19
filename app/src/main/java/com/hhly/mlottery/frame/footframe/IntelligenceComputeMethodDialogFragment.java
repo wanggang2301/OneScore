@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.view.View;
 import android.view.Window;
@@ -64,17 +65,19 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = new Dialog(getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Window window = dialog.getWindow();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = View.inflate(getContext(), R.layout.dialog_intelligence_compute_method, null);
+        builder.setView(view);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Window window = alertDialog.getWindow();
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(R.layout.dialog_intelligence_compute_method);
 
-        initViews(dialog);
+        initViews(view);
 
         setData();
 
-        return dialog;
+        return alertDialog;
     }
 
     /**
@@ -135,10 +138,10 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     /**
      * 初始化 Views
      *
-     * @param dialog
+     * @param view
      */
-    private void initViews(Dialog dialog) {
-        mRadioGroup = (RadioGroup) dialog.findViewById(R.id.radio_group);
+    private void initViews(View view) {
+        mRadioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -146,9 +149,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             }
         });
 
-        mMessage = (TextView) dialog.findViewById(R.id.message);
+        mMessage = (TextView) view.findViewById(R.id.message);
 
-        mHistoryEditText = (EditText) dialog.findViewById(R.id.history_edt);
+        mHistoryEditText = (EditText) view.findViewById(R.id.history_edt);
         mHistoryEditText.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -167,7 +170,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                 updateMessage();
             }
         });
-        mHostEditText = (EditText) dialog.findViewById(R.id.host_edt);
+        mHostEditText = (EditText) view.findViewById(R.id.host_edt);
         mHostEditText.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -186,7 +189,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                 updateMessage();
             }
         });
-        mGuestEditText = (EditText) dialog.findViewById(R.id.guest_edt);
+        mGuestEditText = (EditText) view.findViewById(R.id.guest_edt);
         mGuestEditText.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -206,13 +209,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             }
         });
 
-        mHistoryTextView = (TextView) dialog.findViewById(R.id.history_percent);
-        mHostTextView = (TextView) dialog.findViewById(R.id.host_percent);
-        mGuestTextView = (TextView) dialog.findViewById(R.id.guest_percent);
+        mHistoryTextView = (TextView) view.findViewById(R.id.history_percent);
+        mHostTextView = (TextView) view.findViewById(R.id.host_percent);
+        mGuestTextView = (TextView) view.findViewById(R.id.guest_percent);
 
-        mResultTextView = (TextView) dialog.findViewById(R.id.result);
+        mResultTextView = (TextView) view.findViewById(R.id.result);
 
-        dialog.findViewById(R.id.close)
+        view.findViewById(R.id.close)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -222,7 +225,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     }
                 });
 
-        dialog.findViewById(R.id.compute)
+        view.findViewById(R.id.compute)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
