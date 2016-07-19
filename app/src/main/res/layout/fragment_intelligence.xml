@@ -12,7 +12,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_height="10dp"
+            android:background="@color/home_item_bg"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,9 +28,11 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/title_big_data_predict"
+                android:textColor="@color/analyze_title"
                 android:textSize="@dimen/sp_14"/>
 
             <TextView
+                android:id="@+id/diy_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="15dp"

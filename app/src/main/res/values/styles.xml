@@ -39,20 +39,20 @@
     </style>
 
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 
     <style name="AppTheme.BlackStatusBar.ColorGreen"></style>
 
-    <style name="Widget" />
+    <style name="Widget"/>
 
-    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse" />
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse"/>
 
-    <style name="Widget.Light" />
+    <style name="Widget.Light"/>
 
-    <style name="Widget.Light.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid" />
+    <style name="Widget.Light.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid"/>
 
     <style name="Widget.ActionBar.Transparent">
         <item name="android:background">@android:color/transparent</item>
@@ -511,9 +511,9 @@
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 
     <!--足球比分-->
@@ -843,8 +843,6 @@
         <item name="android:backgroundDimEnabled">false</item>false不模糊
     </style>
 
-
-
     <style name="isFitsSystemWindows">
         <item name="android:fitsSystemWindows">true</item>
     </style>
@@ -853,4 +851,9 @@
         <item name="android:layout_marginTop">0dp</item>
     </style>
 
+    <style name="edit_text_line" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/linecolor</item>
+        <item name="colorControlActivated">@color/linecolor</item>
+        <item name="colorControlHighlight">@color/linecolor</item>
+    </style>
 </resources>

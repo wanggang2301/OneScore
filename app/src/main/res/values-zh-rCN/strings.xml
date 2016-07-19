@@ -861,4 +861,7 @@
     <string name="title_big_data_predict">大数据预测</string>
     <string name="diy_compute_method">DIY算法</string>
     <string name="foot_details_info">情报</string>
+    <string name="diy_custom_compute_method">DIY自定义算法</string>
+    <string name="action_close">关闭</string>
+    <string name="action_compute">计算</string>
 </resources>

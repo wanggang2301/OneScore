@@ -2,7 +2,6 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -658,9 +657,9 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         progressBar2.setProgress(totWinning);
         progressBar3.setProgress(letWinnging);
 
-        progressBar1.setCricleProgressColor(getResources().getColor(R.color.football_analyze_progress_color1));
-        progressBar2.setCricleProgressColor(getResources().getColor(R.color.football_analyze_progress_color2));
-        progressBar3.setCricleProgressColor(getResources().getColor(R.color.football_analyze_progress_color3));
+        progressBar1.setCircleProgressColor(getResources().getColor(R.color.football_analyze_progress_color1));
+        progressBar2.setCircleProgressColor(getResources().getColor(R.color.football_analyze_progress_color2));
+        progressBar3.setCircleProgressColor(getResources().getColor(R.color.football_analyze_progress_color3));
 
 //        L.d("FootballAnaylzeHistoryRecent_>>>>>>>>>>>>>>>>", "总=" + matchNum + " 胜=" + countWin + " 负=" + countLose + " 平=" + countDraw + " 进球=" + countGoal + " 失球=" + countFumble
 //                + " 大球=" + countTot + " 让分球=" + countLet + " 胜率=" + winning + " 大球胜率=" + totWinning + " 让分球胜率=" + letWinnging);

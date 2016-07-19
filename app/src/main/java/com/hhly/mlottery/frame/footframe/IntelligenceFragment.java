@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.intelligence.BigDataForecast;
 import com.hhly.mlottery.bean.intelligence.BigDataForecastData;
+import com.hhly.mlottery.bean.intelligence.BigDataForecastFactor;
 import com.hhly.mlottery.bean.intelligence.BigDataResult;
 import com.hhly.mlottery.util.StringFormatUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -60,6 +61,8 @@ public class IntelligenceFragment extends Fragment {
     ContentLoadingProgressBar mGuestRecentAsiaWinProgress;
 
     private String mThirdId;
+    private BigDataForecast mBigDataForecast;
+    private BigDataForecastFactor mFactor;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,13 +71,16 @@ public class IntelligenceFragment extends Fragment {
         if (args != null) {
             mThirdId = args.getString(KEY_THIRD_ID);
         }
+        if (mFactor == null) {
+            mFactor = new BigDataForecastFactor();
+        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        return inflater.inflate(R.layout.fragment_intelligence, container, false);
     }
 
     @Override
@@ -91,17 +97,23 @@ public class IntelligenceFragment extends Fragment {
                     @Override
                     public void onResponse(BigDataResult jsonObject) {
                         if (jsonObject.getResult() != 200) return;
-                        BigDataForecast bigDataForecast = jsonObject.getBigDataForecast();
-                        if (bigDataForecast == null) return;
-                        setWinRate(bigDataForecast.getBattleHistory(),
+                        mBigDataForecast = jsonObject.getBigDataForecast();
+                        if (mBigDataForecast == null) return;
+                        BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
+                        BigDataForecastData homeRecent = mBigDataForecast.getHomeRecent();
+                        BigDataForecastData guestRecent = mBigDataForecast.getGuestRecent();
+
+                        setWinRate(battleHistory,
                                 mHistoryHostWin, mHistorySizeWin, mHistoryAsiaWin,
                                 mHistoryHostWinProgress, mHistorySizeWinProgress, mHistoryAsiaWinProgress);
-                        setWinRate(bigDataForecast.getHomeRecent(),
+                        setWinRate(homeRecent,
                                 mHostRecentHostWin, mHostRecentSizeWin, mHostRecentAsiaWin,
                                 mHostRecentHostWinProgress, mHostRecentSizeWinProgress, mHostRecentAsiaWinProgress);
-                        setWinRate(bigDataForecast.getGuestRecent(),
+                        setWinRate(guestRecent,
                                 mGuestRecentHostWin, mGuestRecentSizeWin, mGuestRecentAsiaWin,
                                 mGuestRecentHostWinProgress, mGuestRecentSizeWinProgress, mGuestRecentAsiaWinProgress);
+
+                        refreshFactorUI();
                     }
                 },
                 new VolleyContentFast.ResponseErrorListener() {
@@ -161,6 +173,15 @@ public class IntelligenceFragment extends Fragment {
                 view.findViewById(R.id.guest_recent_size_win_rate_progress);
         mGuestRecentAsiaWinProgress = (ContentLoadingProgressBar)
                 view.findViewById(R.id.guest_recent_asia_win_rate_progress);
+
+        view.findViewById(R.id.diy_text)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        IntelligenceComputeMethodDialogFragment.newInstance(mBigDataForecast, mFactor)
+                                .show(getChildFragmentManager(), "computeMethod");
+                    }
+                });
     }
 
     /**
@@ -175,14 +196,31 @@ public class IntelligenceFragment extends Fragment {
                             TextView hostTextView, TextView sizeTextView, TextView asiaTextView,
                             ProgressBar hostProgress, ProgressBar sizeProgress, ProgressBar asiaProgress) {
         if (oddsInfo != null) {
-            hostTextView.setText(StringFormatUtils.toPercentString(oddsInfo.getHomeWinPercent()));
-            sizeTextView.setText(StringFormatUtils.toPercentString(oddsInfo.getSizeWinPercent()));
-            asiaTextView.setText(StringFormatUtils.toPercentString(oddsInfo.getAsiaWinPercent()));
 
-            hostProgress.setProgress((int) (oddsInfo.getHomeWinPercent() * 100));
-            sizeProgress.setProgress((int) (oddsInfo.getSizeWinPercent() * 100));
-            asiaProgress.setProgress((int) (oddsInfo.getAsiaWinPercent() * 100));
+            double homeWinPercent = oddsInfo.getHomeWinPercent();
+            double sizeWinPercent = oddsInfo.getSizeWinPercent();
+            double asiaWinPercent = oddsInfo.getAsiaWinPercent();
+
+            hostTextView.setText(StringFormatUtils.toPercentString(homeWinPercent));
+            sizeTextView.setText(StringFormatUtils.toPercentString(sizeWinPercent));
+            asiaTextView.setText(StringFormatUtils.toPercentString(asiaWinPercent));
+
+            hostProgress.setProgress((int) (homeWinPercent * 100));
+            sizeProgress.setProgress((int) (sizeWinPercent * 100));
+            asiaProgress.setProgress((int) (asiaWinPercent * 100));
         }
+    }
+
+    /**
+     * 刷新DIY算法UI
+     */
+    public void refreshFactorUI() {
+        double hostWinRate = mFactor.computeHostWinRate(mBigDataForecast);
+        mHostProgress.setProgress((int) (hostWinRate * 100));
+        double sizeWinRate = mFactor.computeSizeWinRate(mBigDataForecast);
+        mSizeProgress.setProgress((int) (sizeWinRate * 100));
+        double asiaWinRate = mFactor.computeAsiaWinRate(mBigDataForecast);
+        mAsiaProgress.setProgress((int) (asiaWinRate * 100));
     }
 
     public static IntelligenceFragment newInstance(String thirdId) {

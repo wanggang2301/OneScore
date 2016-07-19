@@ -845,4 +845,7 @@
     <string name="title_big_data_predict">大數據預測</string>
     <string name="diy_compute_method">DIY算法</string>
     <string name="foot_details_info">情報</string>
+    <string name="diy_custom_compute_method">DIY自定義算法</string>
+    <string name="action_compute">計算</string>
+    <string name="action_close">關閉</string>
 </resources>
