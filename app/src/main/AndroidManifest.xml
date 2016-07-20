@@ -132,6 +132,11 @@
             android:name="com.hhly.mlottery.activity.BasketOddsDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 篮球资料库详情 -->
+        <activity
+            android:name="com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <!-- 篮球分析战绩详情 -->
         <activity
             android:name=".activity.BasketAnalyzeMoreRecordActivity"
