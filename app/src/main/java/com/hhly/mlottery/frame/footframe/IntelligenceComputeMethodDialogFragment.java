@@ -21,13 +21,14 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.intelligence.BigDataForecast;
 import com.hhly.mlottery.bean.intelligence.BigDataForecastFactor;
 import com.hhly.mlottery.util.StringFormatUtils;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.widget.TextWatcherAdapter;
 
 import java.util.Locale;
 
 /**
  * 大数据预测 DIY 算法对话框
- * <p/>
+ * <p>
  * Created by Loshine on 2016/7/19.
  */
 public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
@@ -138,7 +139,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     /**
      * 初始化 Views
      *
-     * @param view
+     * @param view view
      */
     private void initViews(View view) {
         mRadioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
@@ -229,6 +230,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        double history = StringFormatUtils.asDouble(mHistoryEditText.getText().toString());
+                        double host = StringFormatUtils.asDouble(mHostEditText.getText().toString());
+                        double guest = StringFormatUtils.asDouble(mGuestEditText.getText().toString());
+                        if (!checkNumbers(history, host, guest)) {
+                            ToastTools.showQuick(getContext(), R.string.big_data_check_alert);
+                            return;
+                        }
                         closeInputMethod(getContext(), mGuestEditText);
                         getDialog().dismiss();
                         mFactor.updateTemp();
@@ -238,9 +246,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     }
 
     /**
-     * 获取当前在 RadioGroupd 的哪个位置
+     * 获取当前在 RadioGroup 的哪个位置
      *
-     * @return
+     * @return position
      */
     public int getCurrentRadioPosition() {
         switch (mRadioGroup.getCheckedRadioButtonId()) {
@@ -304,10 +312,40 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     * 关闭输入法
+     *
+     * @param context  context
+     * @param editText EditText
+     */
     private void closeInputMethod(Context context, View editText) {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    /**
+     * 检查数字合法性
+     *
+     * @param number 数字
+     * @return 是否合法
+     */
+    private boolean checkNumber(double number) {
+        return number >= 0 && number <= 1;
+    }
+
+    /**
+     * 检查所有数字合法性
+     *
+     * @param numbers 数字
+     * @return 是否合法
+     */
+    private boolean checkNumbers(double... numbers) {
+        boolean isOk = true;
+        for (double d : numbers) {
+            isOk &= checkNumber(d);
+        }
+        return isOk;
     }
 
     public static IntelligenceComputeMethodDialogFragment newInstance(BigDataForecast bigDataForecast,

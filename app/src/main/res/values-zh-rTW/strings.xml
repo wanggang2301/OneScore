@@ -848,4 +848,6 @@
     <string name="diy_custom_compute_method">DIY自定義算法</string>
     <string name="action_compute">計算</string>
     <string name="action_close">關閉</string>
+    <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
+    <string name="diy_compute_method_message">歷史交鋒 × %1$s + 主隊 × %2$s + 客隊 × %3$s = 概率</string>
 </resources>

@@ -170,7 +170,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                     if (isPullDownRefresh) {
                         mReloadWhenFail.setVisibility(View.GONE);
                         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                        ToastTools.ShowQuickCenter(mContext, mContext.getString(R.string.number_exp_net_status_txt));
+                        ToastTools.showQuickCenter(mContext, mContext.getString(R.string.number_exp_net_status_txt));
                     } else {
                         mReloadWhenFail.setVisibility(View.VISIBLE);
                         mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -192,7 +192,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                     if (isPullDownRefresh) {//是下拉刷新
                         mReloadWhenFail.setVisibility(View.GONE);
                         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                        ToastTools.ShowQuickCenter(mContext, mContext.getString(R.string.number_exp_net_status_txt));
+                        ToastTools.showQuickCenter(mContext, mContext.getString(R.string.number_exp_net_status_txt));
                     } else {
                         mReloadWhenFail.setVisibility(View.VISIBLE);
                         mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -223,7 +223,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                     //没有数据
                     if (json == null) {
                         mHandler.sendEmptyMessage(NEWS_NODATA);//暂时没有数据
-                        ToastTools.ShowQuickCenter(mContext, "json == null");
+                        ToastTools.showQuickCenter(mContext, "json == null");
                         //
                     } else {
                         //有数据
@@ -269,7 +269,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
             //向列表接口发起请求
             isPullDownRefresh = true;
             loadNewsData(BaseURLs.URL_FOOTBALL_INFOLIST, 1 + "", infotype + "");
-//            ToastTools.ShowQuickCenter(mContext, "mCurrentPager=" + mCurrentPager + "index=" + index);
+//            ToastTools.showQuickCenter(mContext, "mCurrentPager=" + mCurrentPager + "index=" + index);
         }
     }
 
