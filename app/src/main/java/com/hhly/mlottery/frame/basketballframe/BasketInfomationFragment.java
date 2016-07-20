@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.basketballframe;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,6 +20,9 @@ import com.hhly.mlottery.adapter.basketball.ExpandableGridAdapter;
 import com.hhly.mlottery.bean.basket.infomation.Be;
 import com.hhly.mlottery.bean.basket.infomation.Model;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,18 +33,16 @@ import java.util.Map;
  * @date 2016/7/14 17:54
  * @des 篮球资料库列表项
  */
-public class BasketInfomationFragment extends Fragment {
+public class BasketInfomationFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
+
 
     public static final int DATA_STATUS_LOADING = 1;
     public static final int DATA_STATUS_SUCCESS = 2;
     public static final int DATA_STATUS_ERROR = 3;
-
     private static final int NUM0 = 0;
     private static final int NUM1 = 1;
     private static final int NUM2 = 2;
     private static final int NUM3 = 3;
-
-
     private static final int HOT = 0;
     private static final int EUR = 1;
     private static final int AMERICA = 2;
@@ -50,6 +52,7 @@ public class BasketInfomationFragment extends Fragment {
 
 
     private BasketInfomationCallBack basketInfomationCallBack;
+    private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
 
     private final static String TYPE_PARM = "TYPE_PARM";
 
@@ -101,22 +104,22 @@ public class BasketInfomationFragment extends Fragment {
         }
 
 
-        if (mType==HOT){
+        if (mType == HOT) {
             Log.d("123456", "onCreate热门");
 
-        }else if (mType==EUR){
+        } else if (mType == EUR) {
             Log.d("123456", "onCreate欧洲");
 
-        }else if (mType==AMERICA){
+        } else if (mType == AMERICA) {
             Log.d("123456", "onCreateme美洲");
 
-        }else if (mType==ASIA){
+        } else if (mType == ASIA) {
             Log.d("123456", "onCreate亚洲");
 
-        }else if (mType==AFRICA){
+        } else if (mType == AFRICA) {
             Log.d("123456", "onCreate非洲洲");
 
-        }else if (mType==INTER){
+        } else if (mType == INTER) {
             Log.d("123456", "onCreate国际");
 
         }
@@ -128,34 +131,27 @@ public class BasketInfomationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_infomation, container, false);
-        if (mType==HOT){
+        if (mType == HOT) {
             Log.d("123456", "onCreateView热门");
 
-        }else if (mType==EUR){
+        } else if (mType == EUR) {
             Log.d("123456", "onCreateView欧洲");
 
-        }else if (mType==AMERICA){
+        } else if (mType == AMERICA) {
             Log.d("123456", "onCreateView美洲");
 
-        }else if (mType==ASIA){
+        } else if (mType == ASIA) {
             Log.d("123456", "onCreateView亚洲");
 
-        }else if (mType==AFRICA){
+        } else if (mType == AFRICA) {
             Log.d("123456", "onCreateView非洲洲");
 
-        }else if (mType==INTER){
+        } else if (mType == INTER) {
             Log.d("123456", "onCreateView国际");
 
         }
 
-
         initView();
-        if (mType == HOT_MATCH) {
-            radioGroup.setVisibility(View.GONE);
-        } else {
-            radioGroup.setVisibility(View.VISIBLE);
-        }
-
         return mView;
     }
 
@@ -163,6 +159,11 @@ public class BasketInfomationFragment extends Fragment {
         radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
         gridviewInter = (GridView) mView.findViewById(R.id.gridview_inter);
         expandableGridView = (ExpandableListView) mView.findViewById(R.id.listview);
+        mExactSwipeRefrashLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.info_swiperefreshlayout);
+        mExactSwipeRefrashLayout.setOnRefreshListener(this);
+        mExactSwipeRefrashLayout.setColorSchemeResources(R.color.bg_header);
+        mExactSwipeRefrashLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
+        //listview
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -183,10 +184,38 @@ public class BasketInfomationFragment extends Fragment {
             }
         });
 
+        if (mType == HOT_MATCH) {
+            radioGroup.setVisibility(View.GONE);
+        } else {
+            radioGroup.setVisibility(View.VISIBLE);
+        }
+
+
         new Handler().postDelayed(mLoadingDataThread, 0);
 
-
     }
+
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+
+                case DATA_STATUS_LOADING:
+                    break;
+
+                case DATA_STATUS_SUCCESS:
+
+                    break;
+
+                case DATA_STATUS_ERROR:
+
+                    break;
+
+            }
+        }
+    };
 
     private Runnable mLoadingDataThread = new Runnable() {
         @Override
@@ -276,6 +305,13 @@ public class BasketInfomationFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onRefresh() {
+        Log.d("123456", "下拉刷新");
+        //mExactSwipeRefrashLayout.setRefreshing(true);  //一直存在
+        mExactSwipeRefrashLayout.setRefreshing(false);  //刷新消失
+
+    }
 
     private List<String> getDataHotRaceType() {
         hotRaceType = new ArrayList<>();

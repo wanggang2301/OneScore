@@ -38,13 +38,6 @@ public class BasketballInformationActivity extends BaseActivity implements View.
 
     private FragmentManager fragmentManager;
 
-   /* private BasketInfomationFragment hotInfoFragment; //热门
-    private BasketInfomationFragment eurInfoFragment; //欧洲
-    private BasketInfomationFragment americaInfoFragment; //美洲
-    private BasketInfomationFragment asiaInfoFragment; //亚洲
-    private BasketInfomationFragment africaInfoFragment; //非洲
-    private BasketInfomationFragment interInfoFragment;//国际*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
