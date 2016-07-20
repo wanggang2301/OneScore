@@ -16,6 +16,7 @@ import com.hhly.mlottery.bean.intelligence.BigDataForecast;
 import com.hhly.mlottery.bean.intelligence.BigDataForecastData;
 import com.hhly.mlottery.bean.intelligence.BigDataForecastFactor;
 import com.hhly.mlottery.bean.intelligence.BigDataResult;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.StringFormatUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 /**
  * 情报 Fragment
- * <p/>
+ * <p>
  * Created by loshine on 2016/7/18.
  */
 public class IntelligenceFragment extends Fragment {
@@ -88,11 +89,10 @@ public class IntelligenceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
 
-        String url = "http://192.168.31.114:8080/mlottery/core/footBallMatch.findIntelligence.do";
         Map<String, String> params = new HashMap<>();
         params.put(KEY_THIRD_ID, mThirdId);
 
-        VolleyContentFast.requestJsonByGet(url, params,
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_INTELLIGENCE_BIG_DATA, params,
                 new VolleyContentFast.ResponseSuccessListener<BigDataResult>() {
                     @Override
                     public void onResponse(BigDataResult jsonObject) {
