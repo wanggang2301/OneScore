@@ -163,7 +163,7 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/data"
+            android:src="@mipmap/basket_info"
             android:visibility="gone" />
 
         <!--addtjl begin 热门，公司，筛选-->
