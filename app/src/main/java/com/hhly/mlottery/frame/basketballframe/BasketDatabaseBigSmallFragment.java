@@ -1,5 +1,6 @@
-package com.hhly.mlottery.frame.footframe;
+package com.hhly.mlottery.frame.basketballframe;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -17,75 +17,98 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsAdapter;
+import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsBigSmallAdapter;
+import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBigSmallBean;
+import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBigSmallDetailsBean;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * description:
  * author: yixq
- * Created by A on 2016/7/15.
+ * Created by A on 2016/7/20.
  */
-public class BasketDatasaseHandicapFragment extends Fragment{
+public class BasketDatabaseBigSmallFragment extends Fragment{
 
     private View mView;
-    private static final String PARAM = "param";
-    private TextView mDatabaseName; // 排名\队名
-    private TextView mYisai;//已赛
-    private TextView mUp;//上盘
-    private TextView mDown;//下盘
-    private TextView mYzs;//赢走输
+    private static final String PARAM_ID = "leagueId";
+    private static final String PARAM2_SEASON = "season";
     private RadioGroup mRadioGroup;
     private RadioButton mAllRadioButon;
     private RadioButton mHomeRadioButon;
     private RadioButton mGuestRadioButon;
     private NoScrollListView mListView;
-    private BasketDatabaseDetailsAdapter mAdapter;
+    private BasketDatabaseDetailsBigSmallAdapter mAdapter;
     private List mData;
     private LinearLayout mListData;
     private LinearLayout mLoadRefresh; // 网络异常
     private TextView mNodata; // 暂无数据
     private FrameLayout mLoading;// 加载中 loading...
+    Handler mHandlerData = new Handler();
 
     private final static int VIEW_STATUS_LOADING = 1; //加载中
     private final static int VIEW_STATUS_SUCCESS = 2; // 加载成功
     private final static int VIEW_STATUS_NET_ERROR = 3; // 请求失败
     private final static int VIEW_STATUS_NET_NODATA = 4; // 暂无数据
 
+    private String mSeason; // 赛季
+    private String mLeagueId; // 联赛ID
+    private int mTypeSelect = 0;// 主客场选中type（默认全部）【All: 0 、 主场：1 、 客场：2】
 
-    public static BasketDatasaseHandicapFragment newInstance(String param) {
-        BasketDatasaseHandicapFragment fragment = new BasketDatasaseHandicapFragment();
+    private List<BasketDatabaseBigSmallDetailsBean> mAllList = new ArrayList<>();
+    private List<BasketDatabaseBigSmallDetailsBean> mHomeList = new ArrayList<>();
+    private List<BasketDatabaseBigSmallDetailsBean> mGuestList = new ArrayList<>();
+
+    public static BasketDatabaseBigSmallFragment newInstance(String leagueId , String season) {
+        BasketDatabaseBigSmallFragment fragment = new BasketDatabaseBigSmallFragment();
         Bundle args = new Bundle();
-        args.putString(PARAM, param);
+        args.putString(PARAM_ID, leagueId);
+        args.putString(PARAM2_SEASON, season);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setSeason(String season){
+        this.mSeason = season;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mLeagueId = getArguments().getString(PARAM_ID);
+        mSeason = getArguments().getString(PARAM2_SEASON);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.basket_database_details_handicap, container, false);
+        mView = inflater.inflate(R.layout.basket_database_details_big_small, container, false);
 
         initView();
-        initData();
+        mHandlerData.postDelayed(mRun, 500); // 加载数据
         return mView;
     }
 
+    /**
+     * 外部调用更新数据
+     */
+    public void upDate(){
+        mHandlerData.postDelayed(mRun, 500); // 加载数据
+    }
+    private Runnable mRun = new Runnable() {
+        @Override
+        public void run() {
+            initData();
+        }
+    };
     private void initView(){
-
-        mDatabaseName = (TextView)mView.findViewById(R.id.basket_database_name);
-        mYisai = (TextView)mView.findViewById(R.id.basket_database_yisai);
-        mUp = (TextView)mView.findViewById(R.id.basket_database_up);
-        mDown = (TextView)mView.findViewById(R.id.basket_database_down);
-        mYzs = (TextView)mView.findViewById(R.id.basket_database_yzs);
 
         mRadioGroup = (RadioGroup)mView.findViewById(R.id.gendergroup);
         mAllRadioButon = (RadioButton)mView.findViewById(R.id.basket_database_details_all);
@@ -137,26 +160,64 @@ public class BasketDatasaseHandicapFragment extends Fragment{
         }
     };
 
-    Handler mHandlerTT = new Handler();
-   private Runnable mRun = new Runnable() {
-        @Override
-        public void run() {
-            mHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        }
-    };
     private void initData(){
 
-//        mHandlerTT.postDelayed(mRun , 1000);
-//        mHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        mData = new ArrayList<String>();
-        for (int i = 0; i < 50; i++) {
-            mData.add(i+1+ "Penta kill");
+        //        mHandler.sendEmptyMessage(VIEW_STATUS_LOADING); // loading....
+
+        //http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do?lang=zh&season=10-11&leagueId=138
+        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do";
+//        String url = BaseURLs.URL_BASKET_ANALYZE;
+        Map<String, String> params = new HashMap<>();
+        params.put("season" , mSeason);
+        params.put("leagueId", mLeagueId);
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBigSmallBean>() {
+
+            @Override
+            public void onResponse(BasketDatabaseBigSmallBean bean) {
+
+                if (bean == null) {
+                    mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA); // 暂无数据
+                    return;
+                }
+
+                mAllList = bean.getAll(); //All -- 默认
+                mHomeList = bean.getHome(); //主场
+                mGuestList = bean.getGuest();//客场
+
+                if (mAdapter == null) {
+                    mAdapter = new BasketDatabaseDetailsBigSmallAdapter(getContext(), mAllList, R.layout.basket_database_details_big_small_item);
+                    mListView.setAdapter(mAdapter);
+                } else {
+                    updataAdapter(mTypeSelect);
+                }
+
+                mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
+            }
+        }, BasketDatabaseBigSmallBean.class);
+    }
+
+    public void updataAdapter(int type){
+
+        if (type == 0) {
+            mAdapter.updateDatas(mAllList);
+            mAdapter.notifyDataSetChanged();
+            L.d("mAllList.size()=====>>>+++ ", mAllList.size() + "");
+        } else if (type == 1) {
+            mAdapter.updateDatas(mHomeList);
+            mAdapter.notifyDataSetChanged();
+            L.d("mHomeList.size()=====>>>+++ ", mHomeList.size() + "");
+        } else if(type == 2){
+            mAdapter.updateDatas(mGuestList);
+            mAdapter.notifyDataSetChanged();
+            L.d("mGuestList.size()=====>>>+++ ", mGuestList.size() + "");
         }
 
-        mAdapter = new BasketDatabaseDetailsAdapter(getContext() , mData, R.layout.basket_database_details_item);
-
-        mListView.setAdapter(mAdapter);
-        mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
     }
 
     /**
@@ -168,18 +229,13 @@ public class BasketDatasaseHandicapFragment extends Fragment{
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 if (checkedId == mAllRadioButon.getId()) {
-
-                    Toast.makeText(getContext(), "全部", Toast.LENGTH_SHORT).show();
-
+                    mTypeSelect = 0;
                 }else if(checkedId == mHomeRadioButon.getId()){
-
-                    Toast.makeText(getContext(), "主场", Toast.LENGTH_SHORT).show();
-
+                    mTypeSelect = 1;
                 }else if(checkedId == mGuestRadioButon.getId()){
-
-                    Toast.makeText(getContext(), "客场", Toast.LENGTH_SHORT).show();
-
+                    mTypeSelect = 2;
                 }
+                updataAdapter(mTypeSelect);
             }
         });
     }

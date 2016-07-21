@@ -29,6 +29,12 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <!--<include layout="@layout/layout_basket_header"/>-->
+                <ImageView
+                    android:id="@+id/image_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    />
                 <LinearLayout
                     android:id="@+id/basket_database_details_img"
                     android:layout_width="match_parent"
@@ -36,6 +42,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     >
+
                     <RelativeLayout
                         android:id="@+id/rl_iv"
                         android:layout_width="@dimen/x210"
@@ -54,6 +61,7 @@
                     </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/basket_database_leaguename"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"

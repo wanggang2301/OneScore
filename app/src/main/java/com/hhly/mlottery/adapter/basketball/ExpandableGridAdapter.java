@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.bean.basket.infomation.B;
 import com.hhly.mlottery.bean.basket.infomation.Be;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
@@ -376,12 +378,11 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-       /* Intent intent = new Intent(mContext, SecondActivity.class);
+        Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
 
         mContext.startActivity(intent);
-        Toast.makeText(mContext, "当前选中的是:" + groPosition + "---" + position, Toast.LENGTH_SHORT).show();*/
+//        Toast.makeText(mContext, "当前选中的是:" + groPosition + "---" + position, Toast.LENGTH_SHORT).show();*/
     }
-
     /**
      * 数据ViewHolder
      */

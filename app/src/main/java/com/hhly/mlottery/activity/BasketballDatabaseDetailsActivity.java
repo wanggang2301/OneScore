@@ -2,7 +2,8 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -17,7 +18,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,13 +29,24 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.footframe.BasketDatasaseHandicapFragment;
+import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBean;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
 import com.hhly.mlottery.util.MDStatusBarCompat;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NoScrollListView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yixq
@@ -71,9 +82,14 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
     private BasketDatasaseHandicapFragment mBasketDatasaseHandicapFragment;
-    private BasketDatasaseHandicapFragment mBasketDatasaseHandicapFragment2;
-//    private BasketDatasaseHandicapFragment mBasketDatasaseHandicapFragment3;
-//    private BasketDatasaseHandicapFragment mBasketDatasaseHandicapFragment4;
+    private BasketDatabaseBigSmallFragment mBasketDatabaseBigSmallFragment;
+
+    private DisplayImageOptions mOptions;
+    private DisplayImageOptions mOptionsHead;
+    private ImageLoader mImageLoader;
+    private ImageView mIcon;
+    private ImageView mBackground;
+    private TextView mLeaguename;
 
 
     @Override
@@ -81,11 +97,34 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basketball_database_details);
 
+        if(getIntent().getExtras() != null){
 
-        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance("");
-        mBasketDatasaseHandicapFragment2 = BasketDatasaseHandicapFragment.newInstance("");
-//        mBasketDatasaseHandicapFragment3= BasketDatasaseHandicapFragment.newInstance("");
-//        mBasketDatasaseHandicapFragment4 = BasketDatasaseHandicapFragment.newInstance("");
+        }
+
+        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance("138" , "10-11");
+        mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance("138" , "10-11");
+
+        mOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageForEmptyUri(R.mipmap.basket_default)
+                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .build();
+
+
+        mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.color.colorPrimary)
+                .showImageForEmptyUri(R.color.colorPrimary)
+                .showImageOnFail(R.color.colorPrimary)// 加载失败显示的图片
+                .displayer(new FadeInBitmapDisplayer(2000))
+                .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        mImageLoader = ImageLoader.getInstance(); //初始化
+        mImageLoader.init(config);
 
         initView();
         setListener();
@@ -106,6 +145,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         toolbar = (Toolbar) findViewById(R.id.basket_database_details_toolbar);
         setSupportActionBar(toolbar);
 
+        mIcon = (ImageView)findViewById(R.id.basket_details_guest_icon);
+        mBackground = (ImageView)findViewById(R.id.image_background);
+        mLeaguename = (TextView)findViewById(R.id.basket_database_leaguename);
+
         mBasketLayoutHeader = (LinearLayout) findViewById(R.id.basket_database_details_img);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
@@ -118,7 +161,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
 
-        mTabsAdapter.addFragments(mBasketDatasaseHandicapFragment, mBasketDatasaseHandicapFragment2);
+        mTabsAdapter.addFragments(mBasketDatasaseHandicapFragment, mBasketDatabaseBigSmallFragment);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -150,15 +193,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.basket_database_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
-//        mRefreshLayout.setFocusable(true);
         mRefreshLayout.setOnRefreshListener(this);
-
-
-
 
         mBack = (ImageView) this.findViewById(R.id.basket_database_details_back);
 
-//        mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
         mCollect = (TextView) this.findViewById(R.id.basket_database_details_collect);
 
     }
@@ -169,6 +207,35 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private void setListener() {
         mBack.setOnClickListener(this);
         mCollect.setOnClickListener(this);
+
+    }
+    private String[] mSports;
+
+    private void initData(){
+        Map<String, String> params = new HashMap<>();
+        params.put("leagueId", "");
+        VolleyContentFast.requestJsonByGet("URL", params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBean>() {
+
+            @Override
+            public void onResponse(BasketDatabaseBean basketDatabaseBean) {
+                if (basketDatabaseBean != null) {
+//                    initData(basketDetailsBean);
+                    mSports = basketDatabaseBean.getSeason();
+
+                    mLeaguename.setText(basketDatabaseBean.getLeagueName());
+                    //图标
+                    mImageLoader.displayImage(basketDatabaseBean.getLeagueLogoUrl(), mIcon, mOptions);
+                    mImageLoader.displayImage(basketDatabaseBean.getBgUrl(), mBackground, mOptionsHead);
+
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        }, BasketDatabaseBean.class);
+
 
     }
 
@@ -350,7 +417,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 @Override
                 public void run() {
                     mRefreshLayout.setRefreshing(false);
-                    Toast.makeText(BasketballDatabaseDetailsActivity.this, "aaaaa", Toast.LENGTH_SHORT).show();
+                    mBasketDatasaseHandicapFragment.upDate();
+                    mBasketDatabaseBigSmallFragment.upDate();
                 }
             }, 1000);
     }
@@ -366,7 +434,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         TextView titleView = (TextView) view.findViewById(R.id.titleView);
         Button dataOk = (Button)view.findViewById(R.id.sports_btn_ok);
         titleView.setText("赛季");
-
 
         final List<String> data = new ArrayList<>();
         data.add("15-16");
@@ -404,9 +471,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             });
             scroll.setVisibility(View.VISIBLE);
             listview.setVisibility(View.GONE);
-            Toast.makeText(BasketballDatabaseDetailsActivity.this, "size " + data.size(), Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else {
             listview.setAdapter(mAdapter);
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -419,7 +484,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             });
             scroll.setVisibility(View.GONE);
             listview.setVisibility(View.VISIBLE);
-            Toast.makeText(BasketballDatabaseDetailsActivity.this, "size " + data.size(), Toast.LENGTH_SHORT).show();
         }
 
         dataOk.setOnClickListener(new View.OnClickListener() {
@@ -427,6 +491,13 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             public void onClick(View v) {
                 mAlertDialog.dismiss();
                 Toast.makeText(BasketballDatabaseDetailsActivity.this, "确定 "+currentDialogPosition, Toast.LENGTH_SHORT).show();
+
+                mBasketDatasaseHandicapFragment.setSeason("12-13"); //切换赛季
+                mBasketDatasaseHandicapFragment.upDate();
+
+                mBasketDatabaseBigSmallFragment.setSeason("12-13");
+                mBasketDatabaseBigSmallFragment.upDate();
+
             }
         });
 

@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 
 import java.util.List;
 
@@ -68,10 +70,10 @@ public class BasketInfoGridAdapter extends BaseAdapter {
         mViewHolder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(mContext, SecondActivity.class);
+               Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
                 mContext.startActivity(intent);
 
-                Toast.makeText(mContext, "洲际：" + mList.get(position).toString(), Toast.LENGTH_SHORT).show();*/
+//                Toast.makeText(mContext, "洲际：" + mList.get(position).toString(), Toast.LENGTH_SHORT).show();
 
             }
         });
