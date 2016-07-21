@@ -113,6 +113,7 @@ public class OddsFragment extends Fragment {
         mDetailsFragment = fragment;
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.odd_content_fragment, mDetailsFragment)
+                .addToBackStack(null)
                 .commit();
     }
 
