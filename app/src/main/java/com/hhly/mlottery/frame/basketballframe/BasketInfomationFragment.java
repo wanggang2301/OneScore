@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,18 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketInfoGridAdapter;
 import com.hhly.mlottery.adapter.basketball.ExpandableGridAdapter;
 import com.hhly.mlottery.bean.basket.infomation.Be;
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.bean.basket.infomation.Model;
+import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,94 +39,75 @@ import java.util.Map;
  */
 public class BasketInfomationFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
 
-
-    public static final int DATA_STATUS_LOADING = 1;
-    public static final int DATA_STATUS_SUCCESS = 2;
-    public static final int DATA_STATUS_ERROR = 3;
+    private static final String TAG = "BasketInfomationFragment";
+    private static final String TYPE_PARM = "TYPE_PARM";
+    private static final String HOT_MATCH = "hot";
+    private static final int DATA_STATUS_LOADING = 1;
+    private static final int DATA_STATUS_SUCCESS = 2;
+    private static final int DATA_STATUS_ERROR = 3;
     private static final int NUM0 = 0;
     private static final int NUM1 = 1;
     private static final int NUM2 = 2;
     private static final int NUM3 = 3;
-    private static final int HOT = 0;
-    private static final int EUR = 1;
-    private static final int AMERICA = 2;
-    private static final int ASIA = 3;
-    private static final int AFRICA = 4;
-    private static final int INTER = 5;
 
 
     private BasketInfomationCallBack basketInfomationCallBack;
     private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
-
-    private final static String TYPE_PARM = "TYPE_PARM";
-
-    private final static int HOT_MATCH = 0;
-
-
+    private BasketInfoGridAdapter mBasketInfoGridAdapterInter;
+    private ExpandableGridAdapter mExpandableGridAdapter;
+    private ExpandableListView expandableGridView;
     private RadioGroup radioGroup;
     private GridView gridviewInter;
-    private ExpandableListView expandableGridView;
 
-    private View mView;
-    private int mType = 0;
-
-
-    private BasketInfoGridAdapter mBasketInfoGridAdapterInter;
-    private ExpandableGridAdapter adapter;
-
-    private List<Map<String, Object>> list;
-    private String[][] child_text_array;
     private int sign = -1;// 控制列表的展开
-
     private int childsign = -1;
-
+    private View mView;
+    private String mType;
 
     private List<String> hotRaceType; //热门
-
     private List<String> interRaceType; //洲际赛事
-
     private List<List<Be>> alldata;
 
+    private List<List<NationalLeague>> interLeagues;
+    private List<LeagueBean> hotLeagues;
 
-    public static BasketInfomationFragment newInstance(int type) {
-
+    public static BasketInfomationFragment newInstance(String type) {
         Bundle bundle = new Bundle();
-
-        bundle.putInt(TYPE_PARM, type);
-
+        bundle.putString(TYPE_PARM, type);
         BasketInfomationFragment basketInfomationFragment = new BasketInfomationFragment();
         basketInfomationFragment.setArguments(bundle);
         return basketInfomationFragment;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mType = getArguments().getInt(TYPE_PARM);
+            mType = getArguments().getString(TYPE_PARM);
         }
 
+/*
 
         if (mType == HOT) {
-            Log.d("123456", "onCreate热门");
+            L.d(TAG, "onCreate热门");
 
         } else if (mType == EUR) {
-            Log.d("123456", "onCreate欧洲");
+            L.d(TAG, "onCreate欧洲");
 
         } else if (mType == AMERICA) {
-            Log.d("123456", "onCreateme美洲");
+            L.d(TAG, "onCreateme美洲");
 
         } else if (mType == ASIA) {
-            Log.d("123456", "onCreate亚洲");
+            L.d(TAG, "onCreate亚洲");
 
         } else if (mType == AFRICA) {
-            Log.d("123456", "onCreate非洲洲");
+            L.d(TAG, "onCreate非洲洲");
 
         } else if (mType == INTER) {
-            Log.d("123456", "onCreate国际");
+            L.d(TAG, "onCreate国际");
 
         }
+*/
 
 
     }
@@ -131,25 +116,27 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_infomation, container, false);
-        if (mType == HOT) {
-            Log.d("123456", "onCreateView热门");
+       /* if (mType == HOT) {
+            L.d(TAG, "onCreateView热门");
 
         } else if (mType == EUR) {
-            Log.d("123456", "onCreateView欧洲");
+            L.d(TAG, "onCreateView欧洲");
 
         } else if (mType == AMERICA) {
-            Log.d("123456", "onCreateView美洲");
+            L.d(TAG, "onCreateView美洲");
 
         } else if (mType == ASIA) {
-            Log.d("123456", "onCreateView亚洲");
+            L.d(TAG, "onCreateView亚洲");
 
         } else if (mType == AFRICA) {
-            Log.d("123456", "onCreateView非洲洲");
+            L.d(TAG, "onCreateView非洲洲");
 
         } else if (mType == INTER) {
-            Log.d("123456", "onCreateView国际");
+            L.d(TAG, "onCreateView国际");
 
-        }
+        }*/
+        // L.d(TAG, mType + "--" + getUserVisibleHint() + "");
+
 
         initView();
         return mView;
@@ -184,7 +171,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
             }
         });
 
-        if (mType == HOT_MATCH) {
+        if (HOT_MATCH.equals(mType)) {
             radioGroup.setVisibility(View.GONE);
         } else {
             radioGroup.setVisibility(View.VISIBLE);
@@ -225,8 +212,50 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     };
 
     private void loadData() {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("type", mType);
+
+        String url = BaseURLs.URL_BASKET_INFOMATION;
+
+        /*VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
+
+            @Override
+            public void onResponse(LeagueAllBean json) {
+
+                //if ()
+                if (json.getSpecificLeague() != null) {
+                    hotLeagues = json.getSpecificLeague();
+                }
+
+                if (json.getNationalLeague() != null) {
+                    for (int t = 0; t < Math.ceil((double) json.getNationalLeague().size() / 4); t++) {
+                        List<NationalLeague> list = new ArrayList<>();
+                        for (int j = 0; j < 4; j++) {
+                            if ((j + 4 * t) < list.size()) {
+                                list.add(list.get(j + 4 * t));
+                            }
+                        }
+                        interLeagues.add(list);
+                    }
+                }
+
+                initViewData();
 
 
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        }, LeagueAllBean.class);*/
+
+        initViewData();
+
+    }
+
+
+    private void initViewData() {
         if (mType == HOT_MATCH) {//热门
             mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(getActivity(), getDataHotRaceType());
             gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
@@ -241,7 +270,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
             basketInfomationCallBack = new BasketInfomationCallBack() {
                 @Override
                 public void onClick(View view, int groupPosition, int child) {
-                    Log.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
+                    L.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
 
 
                     if (sign == -1 && childsign == -1) {
@@ -251,9 +280,9 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                         expandableGridView.setSelectedGroup(groupPosition);
                         sign = groupPosition;
                         childsign = child;
-                        Log.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
+                        L.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
 
-                        Log.i("112", "第一次展开");
+                        L.i("112", "第一次展开");
 
 
                     } else if (sign == groupPosition && child == childsign) {
@@ -261,9 +290,9 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                         sign = -1;
                         childsign = -1;
 
-                        Log.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
+                        L.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
 
-                        Log.i("112", "关闭");
+                        L.i("112", "关闭");
                         if (child == NUM0) {
                             ((ImageView) view.findViewById(R.id.iv0)).setVisibility(View.INVISIBLE);
                         } else if (child == NUM1) {
@@ -277,11 +306,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
                         }
 
-                       /* view.findViewById(R.id.iv1).setVisibility(View.INVISIBLE);
-                        view.findViewById(R.id.iv2).setVisibility(View.INVISIBLE);
-                        view.findViewById(R.id.iv3).setVisibility(View.INVISIBLE);*/
-
-                        adapter.isInitChildAdapter = false;
+                        mExpandableGridAdapter.isInitChildAdapter = false;
 
                     } else if (sign != groupPosition) {
                         expandableGridView.collapseGroup(sign);
@@ -294,20 +319,20 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                         expandableGridView.setSelectedGroup(groupPosition);
                         sign = groupPosition;
                         childsign = child;
-                        Log.i("112", "关闭在展开");
+                        L.i("112", "关闭在展开");
                     }
                     childsign = child;
                 }
             };
-            adapter = new ExpandableGridAdapter(getActivity(), alldata);
-            adapter.setBasketInfomationCallBack(basketInfomationCallBack);
-            expandableGridView.setAdapter(adapter);
+            mExpandableGridAdapter = new ExpandableGridAdapter(getActivity(), alldata);
+            mExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
+            expandableGridView.setAdapter(mExpandableGridAdapter);
         }
     }
 
     @Override
     public void onRefresh() {
-        Log.d("123456", "下拉刷新");
+        L.d(TAG, "下拉刷新");
         //mExactSwipeRefrashLayout.setRefreshing(true);  //一直存在
         mExactSwipeRefrashLayout.setRefreshing(false);  //刷新消失
 
@@ -352,4 +377,16 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         return interRaceType;
     }
 
+
+   /* @Override
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+       // L.d(TAG, "setUserVisibleHint==" + isVisibleToUser);
+
+    }*/
 }

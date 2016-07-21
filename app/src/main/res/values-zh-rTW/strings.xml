@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--篮球资料库-->
+    <string name="basket_info_hot">熱門</string>
+    <string name="basket_info_eur">歐洲</string>
+    <string name="basket_info_america">美洲</string>
+    <string name="basket_info_asia">亞洲</string>
+    <string name="basket_info_africa">非洲</string>
+    <string name="basket_info_inter">國際</string>
+    <string name="basket_info_title">籃球資料庫</string>
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滾球</string>
     <string name="foot_details_talkball">聊球</string>

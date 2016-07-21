@@ -15,16 +15,15 @@ import com.hhly.mlottery.frame.basketballframe.BasketInfomationFragment;
 /**
  * @author wang gang
  * @date 2016/7/14 17:07
- * @des 篮球资料库
+ * @des 篮球资料库Activity
  */
 public class BasketballInformationActivity extends BaseActivity implements View.OnClickListener {
-    private static final int HOT = 0;
-    private static final int EUR = 1;
-    private static final int AMERICA = 2;
-    private static final int ASIA = 3;
-    private static final int AFRICA = 4;
-    private static final int INTER = 5;
-
+    private static final String HOT = "hot";            //热门
+    private static final String EUR = "europe";         //欧洲
+    private static final String AMERICA = "america";    //美洲
+    private static final String ASIA = "asia";          //亚洲
+    private static final String AFRICA = "africa";      //非洲
+    private static final String INTER = "intl";         //国际
 
     private ImageView publicImgBack;
     private TextView publicTxtTitle;
@@ -32,10 +31,7 @@ public class BasketballInformationActivity extends BaseActivity implements View.
     private ImageView publicBtnFilter;
     private TabLayout tabLayout;
     private ViewPager viewpager;
-
-
     private TabsAdapter mTabsAdapter;
-
     private FragmentManager fragmentManager;
 
     @Override
@@ -49,7 +45,6 @@ public class BasketballInformationActivity extends BaseActivity implements View.
 
         publicImgBack = (ImageView) findViewById(R.id.public_img_back);
         publicBtnSet = (ImageView) findViewById(R.id.public_btn_set);
-
         publicBtnFilter = (ImageView) findViewById(R.id.public_btn_filter);
         publicTxtTitle = (TextView) findViewById(R.id.public_txt_title);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -59,17 +54,15 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         publicBtnSet.setOnClickListener(this);
 
 
-        publicTxtTitle.setText("篮球资料库");
+        publicTxtTitle.setText(getApplicationContext().getResources().getString(R.string.basket_info_title));
         publicBtnFilter.setVisibility(View.GONE);
 
         publicBtnSet.setImageResource(R.mipmap.info_search);
 
         fragmentManager = getSupportFragmentManager();
 
-        String[] titles = {"热门", "欧洲", "美洲", "亚洲", "非洲", "国际"};
+        String[] titles = getApplicationContext().getResources().getStringArray(R.array.basket_info_tabs);
         mTabsAdapter = new TabsAdapter(fragmentManager);
-
-
         mTabsAdapter.setTitles(titles);
         mTabsAdapter.addFragments(BasketInfomationFragment.newInstance(HOT), BasketInfomationFragment.newInstance(EUR), BasketInfomationFragment.newInstance(AMERICA), BasketInfomationFragment.newInstance(ASIA), BasketInfomationFragment.newInstance(AFRICA), BasketInfomationFragment.newInstance(INTER));
         viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
@@ -78,7 +71,6 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
-
 
     @Override
     public void onClick(View v) {
