@@ -208,7 +208,6 @@ public class RoundProgressBar extends View {
 
     }
 
-
     public int getCircleColor() {
         return roundColor;
     }
@@ -247,5 +246,10 @@ public class RoundProgressBar extends View {
 
     public void setRoundWidth(float roundWidth) {
         this.roundWidth = roundWidth;
+    }
+
+    public void setTextIsDisplayable(boolean b) {
+        this.textIsDisplayable = b;
+        postInvalidate();
     }
 }

@@ -865,4 +865,5 @@
     <string name="action_close">关闭</string>
     <string name="action_compute">计算</string>
     <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
+    <string name="insufficient_sampling">采样\n不足</string>
 </resources>

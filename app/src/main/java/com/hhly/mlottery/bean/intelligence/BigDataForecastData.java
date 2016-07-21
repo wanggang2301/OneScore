@@ -16,31 +16,31 @@ public class BigDataForecastData implements Parcelable {
      * asiaWinPercent : 0.13
      */
 
-    private double homeWinPercent;
-    private double sizeWinPercent;
-    private double asiaWinPercent;
+    private Float homeWinPercent;
+    private Float sizeWinPercent;
+    private Float asiaWinPercent;
 
-    public double getHomeWinPercent() {
+    public Float getHomeWinPercent() {
         return homeWinPercent;
     }
 
-    public void setHomeWinPercent(double homeWinPercent) {
+    public void setHomeWinPercent(Float homeWinPercent) {
         this.homeWinPercent = homeWinPercent;
     }
 
-    public double getSizeWinPercent() {
+    public Float getSizeWinPercent() {
         return sizeWinPercent;
     }
 
-    public void setSizeWinPercent(double sizeWinPercent) {
+    public void setSizeWinPercent(Float sizeWinPercent) {
         this.sizeWinPercent = sizeWinPercent;
     }
 
-    public double getAsiaWinPercent() {
+    public Float getAsiaWinPercent() {
         return asiaWinPercent;
     }
 
-    public void setAsiaWinPercent(double asiaWinPercent) {
+    public void setAsiaWinPercent(Float asiaWinPercent) {
         this.asiaWinPercent = asiaWinPercent;
     }
 
@@ -51,21 +51,21 @@ public class BigDataForecastData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(this.homeWinPercent);
-        dest.writeDouble(this.sizeWinPercent);
-        dest.writeDouble(this.asiaWinPercent);
+        dest.writeValue(this.homeWinPercent);
+        dest.writeValue(this.sizeWinPercent);
+        dest.writeValue(this.asiaWinPercent);
     }
 
     public BigDataForecastData() {
     }
 
     protected BigDataForecastData(Parcel in) {
-        this.homeWinPercent = in.readDouble();
-        this.sizeWinPercent = in.readDouble();
-        this.asiaWinPercent = in.readDouble();
+        this.homeWinPercent = (Float) in.readValue(Float.class.getClassLoader());
+        this.sizeWinPercent = (Float) in.readValue(Float.class.getClassLoader());
+        this.asiaWinPercent = (Float) in.readValue(Float.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<BigDataForecastData> CREATOR = new Parcelable.Creator<BigDataForecastData>() {
+    public static final Creator<BigDataForecastData> CREATOR = new Creator<BigDataForecastData>() {
         @Override
         public BigDataForecastData createFromParcel(Parcel source) {
             return new BigDataForecastData(source);
