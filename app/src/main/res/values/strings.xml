@@ -848,6 +848,7 @@
     <string name="new_analyze_attack_defense">攻防对比</string>
     <string name="new_analyze_bet">大小盘口:</string>
     <string name="new_analyze_player_info">球员信息</string>
+    <string name="new_analyze_recommend">心水推荐</string>
 
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>

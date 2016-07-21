@@ -852,5 +852,28 @@
     <style name="toolbar">
         <item name="android:layout_marginTop">0dp</item>
     </style>
-
+    
+    <!--足球分析界面亚盘大小球走势左侧样式-->
+    <style name="analyze_ll_let_win_lose">
+        <item name="android:width">30dp</item>
+        <item name="android:height">90dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@color/home_item_bg</item>
+    </style>
+   <!--分析界面 比分 初盘 结果-->
+    <style name="analyze_text_score">
+        <item name="android:textSize">@dimen/text_size_13</item>
+        <item name="android:textColor">@color/basket_vs</item>
+    </style>
+    <!-- 分析页面rb -->
+    <style name="analyze_radio_button">
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/analyze_radio_text_color</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+    </style>
 </resources>
