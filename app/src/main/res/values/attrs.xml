@@ -2,7 +2,6 @@
 <resources>
 
 
-
     <!-- 滑动阻尼效果 -->
     <declare-styleable name="ParallaxScrollView">
         <attr name="zoomRatio" format="float" />
@@ -41,33 +40,33 @@
     <declare-styleable name="ViewFlow">
         <attr name="sidebuffer" format="integer" />
     </declare-styleable>
-    
-    
+
+
     <declare-styleable name="SlideListView">
         <attr name="itemPaddingRight" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="ToolbarScrollerView">
-        <attr name="toolbarHeight" format="dimension"/>
-        <attr name="toolbarBackGroundHeight" format="dimension"/>
+        <attr name="toolbarHeight" format="dimension" />
+        <attr name="toolbarBackGroundHeight" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="TimeView" >
+    <declare-styleable name="TimeView">
         <!--设置字体大小-->
-        <attr name="time_textsize" format="dimension"/>
+        <attr name="time_textsize" format="dimension" />
         <!--设置中间黑色部分占总宽度的比例-->
-        <attr name="time_midwidth_proportion" format="integer"/>
+        <attr name="time_midwidth_proportion" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="FootballEventView">
         <!--设置图片居于底部还是顶部-->
         <attr name="image_gravity" format="string"></attr>
         <!--设置中间黑色部分占总宽度的比例,上面布局得跟时间轴的比例一样才行-->
-        <attr name="midwidth_proportion" format="integer"/>
+        <attr name="midwidth_proportion" format="integer" />
         <!--距离左边距离-->
-        <attr name="mdymargin" format="dimension"/>
+        <attr name="mdymargin" format="dimension" />
     </declare-styleable>
-  <!--赛季选择-->
+    <!--赛季选择-->
     <string-array name="languages">
         <item>@string/data_date_txt</item>
         <item>@string/data_date_txt1</item>
@@ -89,8 +88,8 @@
 
     <!--环形进度条-->
     <declare-styleable name="RoundProgressBar">
-        <attr name="roundColor" format="color"/>
-        <attr name="roundProgressColor" format="color"/>
+        <attr name="roundColor" format="color" />
+        <attr name="roundProgressColor" format="color" />
         <attr name="roundWidth" format="dimension"></attr>
         <attr name="textColor" format="color" />
         <attr name="textSize" format="dimension" />
@@ -101,5 +100,15 @@
             <enum name="FILL" value="1"></enum>
         </attr>
     </declare-styleable>
+
+
+    <string-array name="basket_info_tabs">
+        <item>@string/basket_info_hot</item>
+        <item>@string/basket_info_eur</item>
+        <item>@string/basket_info_america</item>
+        <item>@string/basket_info_asia</item>
+        <item>@string/basket_info_africa</item>
+        <item>@string/basket_info_inter</item>
+    </string-array>
 
 </resources>
