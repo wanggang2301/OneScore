@@ -203,7 +203,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
         } else {
             listViewHolder.rl1.setEnabled(false);
-
+            listViewHolder.icon1.setImageDrawable(null);
+            listViewHolder.name1.setText("");
         }
 
         if (allDatas.get(groupPosition).size() > NUM2) {
@@ -218,6 +219,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
         } else {
             listViewHolder.rl2.setEnabled(false);
+            listViewHolder.icon2.setImageDrawable(null);
+            listViewHolder.name2.setText("");
 
         }
 
@@ -232,6 +235,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             listViewHolder.rl3.setEnabled(true);
         } else {
             listViewHolder.rl3.setEnabled(false);
+            listViewHolder.icon3.setImageDrawable(null);
+            listViewHolder.name3.setText("");
         }
 
 
