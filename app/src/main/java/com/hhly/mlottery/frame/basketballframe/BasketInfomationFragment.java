@@ -233,37 +233,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
     }
 
-    private boolean isTop(GridView listView) {
-        View firstView = null;
-        if (listView.getCount() == 0) {
-            return true;
-        }
-        firstView = listView.getChildAt(0);
-        if (firstView != null) {
-            if (listView.getFirstVisiblePosition() == 0 && firstView.getTop() == listView.getListPaddingTop()) {
-                return true;
-            }
-        } else {
-            return true;
-        }
-        return false;
-    }
 
-    private boolean isTop(ListView listView) {
-        View firstView = null;
-        if (listView.getCount() == 0) {
-            return true;
-        }
-        firstView = listView.getChildAt(0);
-        if (firstView != null) {
-            if (listView.getFirstVisiblePosition() == 0 && firstView.getTop() == listView.getListPaddingTop()) {
-                return true;
-            }
-        } else {
-            return true;
-        }
-        return false;
-    }
 
     private Handler mHandler = new Handler() {
         @Override
@@ -447,5 +417,37 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         L.d(TAG, "下拉刷新");
         new Handler().postDelayed(mLoadingDataThread, 1000);
         //mExactSwipeRefrashLayout.setRefreshing(false);  //刷新消失
+    }
+
+    private boolean isTop(GridView listView) {
+        View firstView = null;
+        if (listView.getCount() == 0) {
+            return true;
+        }
+        firstView = listView.getChildAt(0);
+        if (firstView != null) {
+            if (listView.getFirstVisiblePosition() == 0 && firstView.getTop() == listView.getListPaddingTop()) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTop(ListView listView) {
+        View firstView = null;
+        if (listView.getCount() == 0) {
+            return true;
+        }
+        firstView = listView.getChildAt(0);
+        if (firstView != null) {
+            if (listView.getFirstVisiblePosition() == 0 && firstView.getTop() == listView.getListPaddingTop()) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+        return false;
     }
 }
