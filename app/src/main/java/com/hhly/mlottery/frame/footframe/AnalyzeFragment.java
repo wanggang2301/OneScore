@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +27,14 @@ import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.LineChartView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.sina.weibo.sdk.api.share.Base;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,6 +137,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private LinearLayout mLinearLetRecent; //近期对比
     private RadioGroup mLetRg;
     private TextView mLetMore;
+    private LineChartView mChartLetHistory;
+    private LineChartView mChartLetHome;
+    private LineChartView mChartLetGuest;
     //大小球走势
     private LinearLayout mllSize;
     private TextView mTextSize1;
@@ -275,6 +282,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mLinearLetRecent= (LinearLayout) mView.findViewById(R.id.ll_analyze_let_recent);
         mLetRg= (RadioGroup) mView.findViewById(R.id.radio_group_let);
         mLetMore= (TextView) mView.findViewById(R.id.tv_analyze_more_message1);
+        mChartLetHistory= (LineChartView) mView.findViewById(R.id.chart_let_history);
+        mChartLetHome= (LineChartView) mView.findViewById(R.id.chart_let_home);
+        mChartLetGuest= (LineChartView) mView.findViewById(R.id.chart_let_guest);
 
         //大小球走势
         mllSize= (LinearLayout) mView.findViewById(R.id.ll_analyze_size);
@@ -541,7 +551,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                         tv_visitingTeams.setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
                         ll_rosters_visitingTeam.addView(tv_visitingTeams);
                     }
-                    return;
+
                 }
             }
             // 显示暂无首发提示
@@ -549,19 +559,71 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             fl_firsPlayers_content.setVisibility(View.GONE);
         }
         //心水推荐
+//        Log.e("fuckkkkkk",analyzeBean.getRecommend());
         if(analyzeBean.getRecommend()!=null){
             mRecommend.setText(Html.fromHtml(analyzeBean.getRecommend()));
         }
 
         //亚盘走势
         if(analyzeBean.getAsiaTrend()!=null){
+            //假数据
+            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity1=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
+            entity1.setLet(0);entity1.setHomeGround(true);
+
+            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity2=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
+            entity2.setLet(2);entity2.setHomeGround(true);
+
+            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity3=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
+            entity3.setLet(0);entity3.setHomeGround(false);
+
+            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity4=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
+            entity4.setLet(1);entity4.setHomeGround(true);
+
+
+
+            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity1);
+            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity2);
+            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity3);
+            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
+            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
+
             if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
                 setLetText1(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
                 setLetText2(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
             }
-            mLetAdapter=new AnalyzeAsiaAdapter(mContext,analyzeBean.getAsiaTrend().getBattleHistory().getPointList(),analyzeBean);
+            mLetAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getAsiaTrend().getBattleHistory().getPointList(),analyzeBean);
             mLetListView.setAdapter(mLetAdapter);
+            //亚盘历史交锋
+            List<List<Integer>> asiaHistoryList=new ArrayList<>();
+            for(NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity:analyzeBean.getAsiaTrend().getBattleHistory().getLetList()){
 
+                List<Integer> list1=new ArrayList<>();
+                list1.add(entity.getLet());
+                list1.add(entity.isHomeGround()? 1:2); //主队是1 客队是2
+                asiaHistoryList.add(list1);
+            }
+            mChartLetHistory.setLineChartList(asiaHistoryList);
+
+            //亚盘近期对比主队
+            List<List<Integer>> asiaHomeList=new ArrayList<>();
+            for(NewAnalyzeBean.AsiaTrendEntity.HomeRecentEntity entity:analyzeBean.getAsiaTrend().getHomeRecent()){
+
+                List<Integer> list1=new ArrayList<>();
+                list1.add(entity.getLet());
+                list1.add(entity.isHomeGround()?1:2);
+                asiaHomeList.add(list1);
+            }
+            mChartLetHome.setLineChartList(asiaHomeList);
+
+            //亚盘近期对比客队
+            List<List<Integer>> asiaGuestList=new ArrayList<>();
+            for(NewAnalyzeBean.AsiaTrendEntity.GuestRecentEntity entity:analyzeBean.getAsiaTrend().getGuestRecent()){
+                List<Integer> list=new ArrayList<>();
+                list.add(entity.getLet()==1?2:entity.getLet()==2?1:entity.getLet()); //因为主队是赢走输 客队是输走赢 。是对称的。所以客队的在这里直接 赢变输，输变赢。然后控件中就可以不处理了。
+                list.add(entity.isHomeGround()?1:2);
+                asiaGuestList.add(list);
+            }
+            mChartLetGuest.setLineChartList(asiaGuestList);
         }
 
         //大小球走势
@@ -570,9 +632,10 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 setSizeText1(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
                 setSizeText2(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
             }
-            mSizeAdapter=new AnalyzeAsiaAdapter(mContext,analyzeBean.getSizeTrend().getBattleHistory().getPointList(),analyzeBean);
+            mSizeAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getSizeTrend().getBattleHistory().getPointList(),analyzeBean);
             mSizeListView.setAdapter(mSizeAdapter);
         }
+
     }
 
     private void setLetText1(NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.StatisticsEntity statistics) {
