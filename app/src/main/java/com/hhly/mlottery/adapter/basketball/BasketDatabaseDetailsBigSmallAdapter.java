@@ -30,10 +30,10 @@ public class BasketDatabaseDetailsBigSmallAdapter extends CommonAdapter<BasketDa
     @Override
     public void convert(ViewHolder holder, BasketDatabaseBigSmallDetailsBean bean) {
 
-        holder.setText(R.id.basket_database_details_ranking_name_big_small, bean.getRanking() + " " + bean.getTeamName() + "");
-        holder.setText(R.id.basket_database_details_finished_big_small, bean.getFinished() + "");
-        holder.setText(R.id.basket_database_details_big, bean.getHigh() + "");
-        holder.setText(R.id.basket_database_details_draw, bean.getDraw() + "");
-        holder.setText(R.id.basket_database_details_small, bean.getLow() + "");
+        holder.setText(R.id.basket_database_details_ranking_name_big_small, bean.getRanking() + bean.getTeamName());
+        holder.setText(R.id.basket_database_details_finished_big_small, bean.getFinished());
+        holder.setText(R.id.basket_database_details_big, bean.getHigh());
+        holder.setText(R.id.basket_database_details_draw, bean.getDraw());
+        holder.setText(R.id.basket_database_details_small, bean.getLow());
     }
 }

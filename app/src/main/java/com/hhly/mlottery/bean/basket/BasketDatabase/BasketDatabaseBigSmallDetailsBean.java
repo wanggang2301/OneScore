@@ -7,18 +7,18 @@ package com.hhly.mlottery.bean.basket.BasketDatabase;
  */
 public class BasketDatabaseBigSmallDetailsBean {
 
-    private int ranking;//: 1,
+    private String ranking;//: 1,
     private String teamName;//: "克雷顿大学",
-    private int finished;//: 4,
-    private int high;//: 4,
-    private int draw;//: 0,
-    private int low;//: 4
+    private String finished;//: 4,
+    private String high;//: 4,
+    private String draw;//: 0,
+    private String low;//: 4
 
-    public int getRanking() {
+    public String getRanking() {
         return ranking;
     }
 
-    public void setRanking(int ranking) {
+    public void setRanking(String ranking) {
         this.ranking = ranking;
     }
 
@@ -30,35 +30,35 @@ public class BasketDatabaseBigSmallDetailsBean {
         this.teamName = teamName;
     }
 
-    public int getFinished() {
+    public String getFinished() {
         return finished;
     }
 
-    public void setFinished(int finished) {
+    public void setFinished(String finished) {
         this.finished = finished;
     }
 
-    public int getHigh() {
+    public String getHigh() {
         return high;
     }
 
-    public void setHigh(int high) {
+    public void setHigh(String high) {
         this.high = high;
     }
 
-    public int getDraw() {
+    public String getDraw() {
         return draw;
     }
 
-    public void setDraw(int draw) {
+    public void setDraw(String draw) {
         this.draw = draw;
     }
 
-    public int getLow() {
+    public String getLow() {
         return low;
     }
 
-    public void setLow(int low) {
+    public void setLow(String low) {
         this.low = low;
     }
 }

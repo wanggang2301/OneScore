@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -18,35 +18,45 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="left"
-            android:text="1 凯尔特人"/>
+            android:text="1 凯尔特人"
+            android:textSize="10sp"
+            android:textColor="@color/content_txt_black"/>
         <TextView
             android:id="@+id/basket_database_details_finished_big_small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="已赛"/>
+            android:text="已赛"
+            android:textSize="10sp"
+            android:textColor="@color/live_text1"/>
         <TextView
             android:id="@+id/basket_database_details_big"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="大"/>
+            android:text="大"
+            android:textSize="10sp"
+            android:textColor="@color/live_text1"/>
         <TextView
             android:id="@+id/basket_database_details_draw"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="走"/>
+            android:text="走"
+            android:textSize="10sp"
+            android:textColor="@color/live_text1"/>
         <TextView
             android:id="@+id/basket_database_details_small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="小"/>
+            android:text="小"
+            android:textSize="10sp"
+            android:textColor="@color/live_text1"/>
     </LinearLayout>
 
 </LinearLayout>
