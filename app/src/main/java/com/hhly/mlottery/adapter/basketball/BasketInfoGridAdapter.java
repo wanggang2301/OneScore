@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
@@ -27,7 +26,7 @@ import java.util.List;
  */
 public class BasketInfoGridAdapter extends BaseAdapter {
 
-    private static final String LEAGUEID="leagueId";
+    private static final String LEAGUEID = "leagueId";
 
     private DisplayImageOptions options; //
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
@@ -93,9 +92,9 @@ public class BasketInfoGridAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
-                intent.putExtra(LEAGUEID,mList.get(position).getLeagueId());
+                intent.putExtra(LEAGUEID, mList.get(position).getLeagueId());
                 mContext.startActivity(intent);
-                Toast.makeText(mContext, "当前选中的是:" + mList.get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "当前选中的是:" + mList.get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
 
             }
         });

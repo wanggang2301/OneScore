@@ -13,6 +13,7 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -148,24 +149,15 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
-                        //只有listview滑到顶部才可以下拉刷新
-                        if (gridviewInter.getFirstVisiblePosition() != 0) {
-                            L.d("456789", "down" + expandableGridView.getFirstVisiblePosition());
-
+                        if (!isTop(gridviewInter)) {
                             mExactSwipeRefrashLayout.setEnabled(false);
-                        } else {
+                        }else {
                             mExactSwipeRefrashLayout.setEnabled(true);
-
                         }
                         break;
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-
-                        // mExactSwipeRefrashLayout.setEnabled(true);
-
-
-                        L.d("456789", "up");
 
                         break;
                 }
@@ -181,13 +173,10 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
                         //只有listview滑到顶部才可以下拉刷新
-                        if (expandableGridView.getFirstVisiblePosition() != 0) {
-                            L.d("456789", "down" + expandableGridView.getFirstVisiblePosition());
-
+                        if (!isTop(expandableGridView)) {
                             mExactSwipeRefrashLayout.setEnabled(false);
-                        } else {
+                        }else {
                             mExactSwipeRefrashLayout.setEnabled(true);
-
                         }
                         break;
 
@@ -244,6 +233,37 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
     }
 
+    private boolean isTop(GridView listView) {
+        View firstView = null;
+        if (listView.getCount() == 0) {
+            return true;
+        }
+        firstView = listView.getChildAt(0);
+        if (firstView != null) {
+            if (listView.getFirstVisiblePosition() == 0 && firstView.getTop() == listView.getListPaddingTop()) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTop(ListView listView) {
+        View firstView = null;
+        if (listView.getCount() == 0) {
+            return true;
+        }
+        firstView = listView.getChildAt(0);
+        if (firstView != null) {
+            if (listView.getFirstVisiblePosition() == 0 && firstView.getTop() == listView.getListPaddingTop()) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+        return false;
+    }
 
     private Handler mHandler = new Handler() {
         @Override
@@ -336,6 +356,10 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
 
     private void initViewData() {
+
+        sign = -1;  //刷新重置
+        childsign = -1;
+
         if (mType == HOT_MATCH) {//热门
 
             if (hotLeagues != null && hotLeagues.size() > 0) {
@@ -421,10 +445,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     @Override
     public void onRefresh() {
         L.d(TAG, "下拉刷新");
-
         new Handler().postDelayed(mLoadingDataThread, 1000);
         //mExactSwipeRefrashLayout.setRefreshing(false);  //刷新消失
-
     }
-
 }
