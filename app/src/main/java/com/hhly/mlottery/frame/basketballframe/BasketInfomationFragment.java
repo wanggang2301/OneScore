@@ -6,25 +6,27 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketInfoGridAdapter;
 import com.hhly.mlottery.adapter.basketball.ExpandableGridAdapter;
-import com.hhly.mlottery.bean.basket.infomation.Be;
+import com.hhly.mlottery.bean.basket.infomation.LeagueAllBean;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
-import com.hhly.mlottery.bean.basket.infomation.Model;
 import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
-import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.ArrayList;
@@ -50,6 +52,8 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     private static final int NUM2 = 2;
     private static final int NUM3 = 3;
 
+    private static final int ROWNUM = 4;
+
 
     private BasketInfomationCallBack basketInfomationCallBack;
     private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
@@ -59,14 +63,15 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     private RadioGroup radioGroup;
     private GridView gridviewInter;
 
+    private LinearLayout ll_loading;
+    private LinearLayout ll_net_error;
+
+    private TextView network_exception_reload_btn;
+
     private int sign = -1;// 控制列表的展开
     private int childsign = -1;
     private View mView;
     private String mType;
-
-    private List<String> hotRaceType; //热门
-    private List<String> interRaceType; //洲际赛事
-    private List<List<Be>> alldata;
 
     private List<List<NationalLeague>> interLeagues;
     private List<LeagueBean> hotLeagues;
@@ -116,27 +121,6 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_infomation, container, false);
-       /* if (mType == HOT) {
-            L.d(TAG, "onCreateView热门");
-
-        } else if (mType == EUR) {
-            L.d(TAG, "onCreateView欧洲");
-
-        } else if (mType == AMERICA) {
-            L.d(TAG, "onCreateView美洲");
-
-        } else if (mType == ASIA) {
-            L.d(TAG, "onCreateView亚洲");
-
-        } else if (mType == AFRICA) {
-            L.d(TAG, "onCreateView非洲洲");
-
-        } else if (mType == INTER) {
-            L.d(TAG, "onCreateView国际");
-
-        }*/
-        // L.d(TAG, mType + "--" + getUserVisibleHint() + "");
-
 
         initView();
         return mView;
@@ -150,7 +134,77 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         mExactSwipeRefrashLayout.setOnRefreshListener(this);
         mExactSwipeRefrashLayout.setColorSchemeResources(R.color.bg_header);
         mExactSwipeRefrashLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
-        //listview
+
+        ll_loading = (LinearLayout) mView.findViewById(R.id.info_loading_ll);
+        ll_net_error = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
+
+        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
+
+        mExactSwipeRefrashLayout.setEnabled(false);
+
+        gridviewInter.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_MOVE:
+                        //只有listview滑到顶部才可以下拉刷新
+                        if (gridviewInter.getFirstVisiblePosition() != 0) {
+                            L.d("456789", "down" + expandableGridView.getFirstVisiblePosition());
+
+                            mExactSwipeRefrashLayout.setEnabled(false);
+                        } else {
+                            mExactSwipeRefrashLayout.setEnabled(true);
+
+                        }
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+
+                        // mExactSwipeRefrashLayout.setEnabled(true);
+
+
+                        L.d("456789", "up");
+
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+        expandableGridView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_MOVE:
+                        //只有listview滑到顶部才可以下拉刷新
+                        if (expandableGridView.getFirstVisiblePosition() != 0) {
+                            L.d("456789", "down" + expandableGridView.getFirstVisiblePosition());
+
+                            mExactSwipeRefrashLayout.setEnabled(false);
+                        } else {
+                            mExactSwipeRefrashLayout.setEnabled(true);
+
+                        }
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+
+                        // mExactSwipeRefrashLayout.setEnabled(true);
+
+
+                        L.d("456789", "up");
+
+                        break;
+                }
+                return false;
+            }
+        });
+
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -177,7 +231,15 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
             radioGroup.setVisibility(View.VISIBLE);
         }
 
+        network_exception_reload_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
+                new Handler().postDelayed(mLoadingDataThread, 0);
+            }
+        });
 
+        mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
 
     }
@@ -188,16 +250,26 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         public void handleMessage(Message msg) {
 
             switch (msg.what) {
-
                 case DATA_STATUS_LOADING:
+                    ll_loading.setVisibility(View.VISIBLE);
+                    mExactSwipeRefrashLayout.setVisibility(View.GONE);
+                    ll_net_error.setVisibility(View.GONE);
+                    mExactSwipeRefrashLayout.setRefreshing(true);
+
                     break;
 
                 case DATA_STATUS_SUCCESS:
-
+                    ll_loading.setVisibility(View.GONE);
+                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    ll_net_error.setVisibility(View.GONE);
+                    mExactSwipeRefrashLayout.setRefreshing(false);
                     break;
 
                 case DATA_STATUS_ERROR:
-
+                    ll_loading.setVisibility(View.GONE);
+                    mExactSwipeRefrashLayout.setVisibility(View.GONE);
+                    ll_net_error.setVisibility(View.VISIBLE);
+                    mExactSwipeRefrashLayout.setRefreshing(false);
                     break;
 
             }
@@ -215,31 +287,40 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         Map<String, String> params = new HashMap<String, String>();
         params.put("type", mType);
 
-        String url = BaseURLs.URL_BASKET_INFOMATION;
+        //String url = BaseURLs.URL_BASKET_INFOMATION;
+        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
 
-        /*VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
 
             @Override
             public void onResponse(LeagueAllBean json) {
 
-                //if ()
                 if (json.getSpecificLeague() != null) {
                     hotLeagues = json.getSpecificLeague();
+
+                    int size = hotLeagues.size() % 4 == 0 ? 0 : 4 - hotLeagues.size() % 4;
+                    for (int i = 0; i < size; i++) {
+                        hotLeagues.add(new LeagueBean("", "", ""));
+                    }
                 }
 
+
                 if (json.getNationalLeague() != null) {
-                    for (int t = 0; t < Math.ceil((double) json.getNationalLeague().size() / 4); t++) {
+                    interLeagues = new ArrayList<List<NationalLeague>>();
+                    for (int t = 0; t < Math.ceil((double) json.getNationalLeague().size() / ROWNUM); t++) {
                         List<NationalLeague> list = new ArrayList<>();
-                        for (int j = 0; j < 4; j++) {
-                            if ((j + 4 * t) < list.size()) {
-                                list.add(list.get(j + 4 * t));
+                        for (int j = 0; j < ROWNUM; j++) {
+                            if ((j + ROWNUM * t) < json.getNationalLeague().size()) {
+                                list.add(json.getNationalLeague().get(j + ROWNUM * t));
                             }
                         }
                         interLeagues.add(list);
                     }
                 }
 
+
                 initViewData();
+                mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS);
 
 
             }
@@ -247,25 +328,28 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
+                mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
             }
-        }, LeagueAllBean.class);*/
-
-        initViewData();
+        }, LeagueAllBean.class);
 
     }
 
 
     private void initViewData() {
         if (mType == HOT_MATCH) {//热门
-            mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(getActivity(), getDataHotRaceType());
-            gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
+
+            if (hotLeagues != null && hotLeagues.size() > 0) {
+                mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(getActivity(), hotLeagues);
+                gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
+            }
 
         } else { //欧洲、美洲、亚洲等
 
             //洲际赛事
-            mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(getActivity(), getDataInterRaceType());
-            gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
-            alldata = Model.getdata2();
+            if (hotLeagues != null && hotLeagues.size() > 0) {
+                mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(getActivity(), hotLeagues);
+                gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
+            }
 
             basketInfomationCallBack = new BasketInfomationCallBack() {
                 @Override
@@ -324,69 +408,23 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                     childsign = child;
                 }
             };
-            mExpandableGridAdapter = new ExpandableGridAdapter(getActivity(), alldata);
-            mExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
-            expandableGridView.setAdapter(mExpandableGridAdapter);
+
+
+            if (interLeagues != null && interLeagues.size() > 0) {
+                mExpandableGridAdapter = new ExpandableGridAdapter(getActivity(), interLeagues);
+                mExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
+                expandableGridView.setAdapter(mExpandableGridAdapter);
+            }
         }
     }
 
     @Override
     public void onRefresh() {
         L.d(TAG, "下拉刷新");
-        //mExactSwipeRefrashLayout.setRefreshing(true);  //一直存在
-        mExactSwipeRefrashLayout.setRefreshing(false);  //刷新消失
+
+        new Handler().postDelayed(mLoadingDataThread, 1000);
+        //mExactSwipeRefrashLayout.setRefreshing(false);  //刷新消失
 
     }
 
-    private List<String> getDataHotRaceType() {
-        hotRaceType = new ArrayList<>();
-        hotRaceType.add("CBA");
-        hotRaceType.add("NBA");
-        hotRaceType.add("DDD");
-        hotRaceType.add("FFF");
-        hotRaceType.add("TTT");
-        hotRaceType.add("GGG");
-        hotRaceType.add("HHH");
-        hotRaceType.add("NNN");
-        hotRaceType.add("TTT");
-        hotRaceType.add("UUU");
-        int size = hotRaceType.size() % 4 == 0 ? 0 : 4 - hotRaceType.size() % 4;
-        for (int i = 0; i < size; i++) {
-            hotRaceType.add("");
-        }
-        return hotRaceType;
-    }
-
-    private List<String> getDataInterRaceType() {
-        interRaceType = new ArrayList<>();
-        interRaceType.add("CBA");
-        interRaceType.add("NBA");
-        interRaceType.add("DDD");
-        interRaceType.add("FFF");
-        interRaceType.add("TTT");
-        interRaceType.add("GGG");
-        interRaceType.add("HHH");
-        interRaceType.add("NNN");
-        interRaceType.add("TTT");
-        interRaceType.add("UUU");
-        int size = interRaceType.size() % 4 == 0 ? 0 : 4 - interRaceType.size() % 4;
-
-        for (int i = 0; i < size; i++) {
-            interRaceType.add("");
-        }
-        return interRaceType;
-    }
-
-
-   /* @Override
-    public boolean getUserVisibleHint() {
-        return super.getUserVisibleHint();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-       // L.d(TAG, "setUserVisibleHint==" + isVisibleToUser);
-
-    }*/
 }

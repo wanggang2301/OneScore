@@ -9,7 +9,9 @@ import java.util.List;
  */
 public class NationalLeague {
 
-    private LeagueBean leagueBean;
+    private String nationName;
+    private String nationLogoUrl;
+    private String nationId;
     private List<LeagueBean> leagueData;
 
 
@@ -21,12 +23,27 @@ public class NationalLeague {
         this.leagueData = leagueData;
     }
 
-    public LeagueBean getLeagueBean() {
-        return leagueBean;
+    public String getNationName() {
+        return nationName;
     }
 
-    public void setLeagueBean(LeagueBean leagueBean) {
-        this.leagueBean = leagueBean;
+    public void setNationName(String nationName) {
+        this.nationName = nationName;
     }
 
+    public String getNationLogoUrl() {
+        return nationLogoUrl;
+    }
+
+    public void setNationLogoUrl(String nationLogoUrl) {
+        this.nationLogoUrl = nationLogoUrl;
+    }
+
+    public String getNationId() {
+        return nationId;
+    }
+
+    public void setNationId(String nationId) {
+        this.nationId = nationId;
+    }
 }

@@ -11,6 +11,15 @@ public class LeagueBean {
     private String leagueName;
     private String leagueLogoUrl;
 
+    public LeagueBean() {
+    }
+
+    public LeagueBean(String leagueId, String leagueName, String leagueLogoUrl) {
+        this.leagueId = leagueId;
+        this.leagueName = leagueName;
+        this.leagueLogoUrl = leagueLogoUrl;
+    }
+
 
     public String getLeagueId() {
         return leagueId;
