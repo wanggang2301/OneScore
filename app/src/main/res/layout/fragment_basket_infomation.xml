@@ -20,80 +20,66 @@
             android:textColor="@color/loading_txt_color" />
     </LinearLayout>
 
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_margin="13dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <RadioButton
+            android:id="@+id/info_inter_match"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/shape_basketball_infomation_left"
+            android:checked="true"
+            android:text="洲际赛事"
+            android:textColor="@drawable/info_text_color" />
+
+        <RadioButton
+            android:id="@+id/info_country_match"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:background="@drawable/shape_basketball_infomation_right"
+            android:checked="false"
+            android:text="国家赛事"
+            android:textColor="@drawable/info_text_color" />
+    </RadioGroup>
+
     <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
         android:id="@+id/info_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <RadioGroup
-                android:id="@+id/radio_group"
+            android:layout_height="match_parent">
+            <GridView
+                android:id="@+id/gridview_inter"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_margin="13dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:numColumns="4"></GridView>
+
+            <ExpandableListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:childDivider="#c8c7cc"
+                android:divider="@null"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="4">
-
-                <RadioButton
-                    android:id="@+id/info_inter_match"
-                    style="@style/odds_radio_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="-0.25dp"
-                    android:background="@drawable/shape_basketball_infomation_left"
-                    android:checked="true"
-                    android:text="洲际赛事"
-                    android:textColor="@drawable/info_text_color" />
-
-                <RadioButton
-                    android:id="@+id/info_country_match"
-                    style="@style/odds_radio_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="-0.25dp"
-                    android:background="@drawable/shape_basketball_infomation_right"
-                    android:checked="false"
-                    android:text="国家赛事"
-                    android:textColor="@drawable/info_text_color" />
-            </RadioGroup>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#dddddd"></View>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <GridView
-                    android:id="@+id/gridview_inter"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:numColumns="4"></GridView>
-
-                <ExpandableListView
-                    android:id="@+id/listview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:childDivider="#c8c7cc"
-                    android:divider="@null"
-                    android:gravity="center"
-                    android:groupIndicator="@null"
-                    android:listSelector="#00000000"
-                    android:scrollbars="none"
-                    android:visibility="gone" />
-            </RelativeLayout>
-        </LinearLayout>
-
+                android:groupIndicator="@null"
+                android:listSelector="#00000000"
+                android:scrollbars="none"
+                android:visibility="gone" />
+        </FrameLayout>
 
     </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
 

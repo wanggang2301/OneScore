@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
@@ -204,7 +203,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
         } else {
             listViewHolder.rl1.setEnabled(false);
-
+            listViewHolder.icon1.setImageDrawable(null);
+            listViewHolder.name1.setText("");
         }
 
         if (allDatas.get(groupPosition).size() > NUM2) {
@@ -219,6 +219,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
         } else {
             listViewHolder.rl2.setEnabled(false);
+            listViewHolder.icon2.setImageDrawable(null);
+            listViewHolder.name2.setText("");
 
         }
 
@@ -233,6 +235,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             listViewHolder.rl3.setEnabled(true);
         } else {
             listViewHolder.rl3.setEnabled(false);
+            listViewHolder.icon3.setImageDrawable(null);
+            listViewHolder.name3.setText("");
         }
 
 
@@ -407,7 +411,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
         Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
         intent.putExtra(LEAGUEID, allDatas.get(groPosition).get(parentItem).getLeagueData().get(position).getLeagueId());
         mContext.startActivity(intent);
-        Toast.makeText(mContext, "当前选中的是:" + allDatas.get(groPosition).get(parentItem).getLeagueData().get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(mContext, "当前选中的是:" + allDatas.get(groPosition).get(parentItem).getLeagueData().get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
     }
 
     /**
