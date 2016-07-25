@@ -27,7 +27,6 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 畅言权限 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <application
         android:name=".MyApp"
         android:allowBackup="true"

@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_gravity="center_vertical"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/y90"
+        android:layout_height="45dp"
         android:orientation="horizontal"
         >
 
@@ -32,8 +32,8 @@
 
                 <ImageView
                     android:id="@+id/integral_team_imag"
-                    android:layout_width="@dimen/x35"
-                    android:layout_height="@dimen/y35"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/foot_default"/>
 
@@ -42,7 +42,7 @@
                     android:id="@+id/integral_team_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginLeft="5dp"
                     android:text="莱切城莱切城莱切"
                     android:textColor="@color/content_txt_black"
                     android:textSize="@dimen/text_size_13"/>

@@ -755,6 +755,7 @@
     <string name="login">登录</string>
     <string name="logining">正在登录...</string>
     <string name="login_succ">登录成功</string>
+    <string name="login_peak">登录高峰期,请稍后再试</string>
     <string name="login_fail">登录失败</string>
     <string name="pwd_format">密码格式为6-16位数字和字符组成</string>
     <string name="pwd_format_hint">6-16位字符,区分大小写</string>
@@ -797,6 +798,10 @@
     <string name="logout_check">确认退出登录?</string>
 
     <!--1.1.2 begin-->
+    <string name="weixin_installed">请先安装微信客户端!</string>
+    <string name="Login_register">登录/注册</string>
+    <string name="personal_center">个人中心</string>
+    <string name="social_account_login">社交账号快速登录</string>
     <string name="forget_pwd">忘记密码?</string>
     <string name="next_step">下一步</string>
     <string name="find_pw">找回密码</string>

@@ -190,7 +190,105 @@ public class VolleyContentFast {
         }
         mQueue.add(stringRequest);
     }
+        /*没有追加携带语言的请求方式*/
+        private static <T> void requestThreeLan(final String url, final Map<String, String> params, final int method,
+                                        RetryPolicy retryPolicy, final ResponseSuccessListener<T> successlistener,
+                                        final ResponseErrorListener errorListener, final Class clazz, final int responseType) {
 
+            String tempUrl = url;
+
+            L.e(TAG, "┍—————————————————————————————————————————————————————————————————————————————");
+
+            if (method == Request.Method.GET) {
+                tempUrl = url;
+                if (params != null) {
+                    for (String key : params.keySet()) {
+                        if (tempUrl.contains("?")) {
+                            tempUrl += ("&" + key + "=" + params.get(key));
+                        } else {
+                            tempUrl += ("?" + key + "=" + params.get(key));
+                        }
+                    }
+                }
+                L.i(TAG, "request method get url = [ " + tempUrl + " ]");
+                Log.i("URL", "************GET****************[ " + tempUrl + " ]**************GET**************");
+            } else {
+                appendMapLanguage(params);
+                L.i(TAG, "request method post url = [ " + url + " ]");
+                Log.i("URL", "************POST****************[ " + url + " ]***************POST*************");
+                if (params != null && params.size() != 0) {
+                    for (String key : params.keySet()) {
+                        L.d(TAG, "[ key = " + key + " ，param = " + params.get(key) + " ]");
+                    }
+                }
+            }
+
+
+            StringRequest stringRequest = new StringRequest(method, tempUrl, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    L.d(TAG, "request success.");
+                    if (L.isDebug){//会导致内存泄漏
+                        L.i(TAG, "[ response = " + response + " ]");
+                    }
+
+
+                    if (response == null) {
+                        VolleyException volleyException = new VolleyException();
+                        volleyException.setErrorCode(ERROR_CODE_RESPONSE_NULL);
+                        errorListener.onErrorResponse(volleyException);
+                        return;
+                    }
+
+                    if (responseType == RESPONSE_TYPE_STRING) {
+                        successlistener.onResponse((T) response);
+                    } else {
+                        Object object = null;
+                        try {
+                            object = JSON.parseObject(response, clazz);
+
+                        } catch (Exception e) {
+                            L.e(TAG, e.getMessage());
+                            VolleyException volleyException = new VolleyException();
+                            volleyException.setErrorCode(ERROR_CODE_JSON_PARSE);
+                            errorListener.onErrorResponse(volleyException);
+                            return;
+                        }
+                        successlistener.onResponse((T) object);
+                    }
+
+                    L.e(TAG, "┗—————————————————————————————————————————————————————————————————————————————");
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    L.e(TAG, "request [ " + url + " ] error,error msg = [ " + volleyError.getMessage() + " ].");
+                    VolleyException volleyException = new VolleyException();
+                    volleyException.setErrorCode(ERROR_CODE_VOLLEY_ERROR);
+                    volleyException.setVolleyError(volleyError);
+                    errorListener.onErrorResponse(volleyException);
+                    L.e(TAG, "┗—————————————————————————————————————————————————————————————————————————————");
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    if (method == Request.Method.GET) {
+                        return super.getParams();
+                    } else {
+                        return params;
+                    }
+
+                }
+            };
+
+            if (retryPolicy != null) {
+                stringRequest.setRetryPolicy(retryPolicy);
+            } else {
+                stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
+            }
+            mQueue.add(stringRequest);
+        }
 
     /**
      * 网络请求，GET方式，返回没有转化的string（无参）
@@ -213,6 +311,9 @@ public class VolleyContentFast {
      */
     public static void requestStringByGet(String url, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener) {
         requestStringByGet(url, null, retryPolicy, successlistener, errorListener);
+    }
+    public static void requestStringNoLanguageByGet(String url, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener) {
+        requestStringNoLanguageByGet(url, null, retryPolicy, successlistener, errorListener);
     }
 
     /**
@@ -240,7 +341,9 @@ public class VolleyContentFast {
     public static void requestStringByGet(final String url, Map<String, String> params, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener) {
         request(url, params, Request.Method.GET, retryPolicy, successlistener, errorListener, null, RESPONSE_TYPE_STRING);
     }
-
+    public static void requestStringNoLanguageByGet(final String url, Map<String, String> params, DefaultRetryPolicy retryPolicy, final ResponseSuccessListener<String> successlistener, final ResponseErrorListener errorListener) {
+        requestThreeLan(url, params, Request.Method.GET, retryPolicy, successlistener, errorListener, null, RESPONSE_TYPE_STRING);
+    }
 
     /**
      * 网络请求，POST方式，返回json对应实体类(无参数)
