@@ -294,7 +294,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 if (json.getSpecificLeague() != null) {
                     hotLeagues = json.getSpecificLeague();
 
-                    int size = hotLeagues.size() % 4 == 0 ? 0 : 4 - hotLeagues.size() % 4;
+                    int size = hotLeagues.size() % ROWNUM == 0 ? 0 : ROWNUM - hotLeagues.size() % ROWNUM;
                     for (int i = 0; i < size; i++) {
                         hotLeagues.add(new LeagueBean("", "", ""));
                     }
