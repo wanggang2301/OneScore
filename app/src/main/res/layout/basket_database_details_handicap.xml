@@ -122,7 +122,7 @@
                     android:id="@+id/basket_database_yzs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:gravity="right"
                     android:text="@string/basket_database_details_yzs"
                     android:textSize="10sp"

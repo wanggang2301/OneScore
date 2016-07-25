@@ -13,13 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsAdapter;
 import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseHandicapBean;
 import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseHandicapDetailsBean;
-import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;
 
@@ -171,10 +170,10 @@ public class BasketDatasaseHandicapFragment extends Fragment implements View.OnC
         mHandler.sendEmptyMessage(VIEW_STATUS_LOADING); // loading....
 
         //http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do?lang=zh&season=10-11&leagueId=138
-        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do";
-//        String url = BaseURLs.URL_BASKET_ANALYZE;
+//        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do";
+        String url = BaseURLs.URL_BASKET_DATABASE_HANDICP_DETAILS;
         Map<String, String> params = new HashMap<>();
-        if (!mSeason.equals("")) {
+        if (!mSeason.equals("-1")) {
             params.put("season" , mSeason);
         }
         params.put("leagueId", mLeagueId);
@@ -197,7 +196,7 @@ public class BasketDatasaseHandicapFragment extends Fragment implements View.OnC
                 mGuestList = bean.getGuest();//客场
 
                 if (mAdapter == null) {
-                    if (bean.getAll() == null) {
+                    if (bean.getAll() == null || bean.getAll().size() == 0) {
                         mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA); // 暂无数据
                     }else{
                         mAdapter = new BasketDatabaseDetailsAdapter(getContext() , mAllList, R.layout.basket_database_details_item);
@@ -205,9 +204,9 @@ public class BasketDatasaseHandicapFragment extends Fragment implements View.OnC
                         mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     }
                 }else{
-                    if ((mTypeSelect == 0 && (bean.getAll() == null || bean.getAll().equals("")))
-                            || (mTypeSelect == 1 && (bean.getHome() == null || bean.getHome().equals("")))
-                            || (mTypeSelect == 2 && (bean.getGuest() == null || bean.getGuest().equals("")))) {
+                    if ((mTypeSelect == 0 && (bean.getAll() == null || bean.getAll().equals("") || bean.getAll().size() == 0))
+                            || (mTypeSelect == 1 && (bean.getHome() == null || bean.getHome().equals("") || bean.getHome().size() == 0))
+                            || (mTypeSelect == 2 && (bean.getGuest() == null || bean.getGuest().equals("") || bean.getGuest().size() == 0))) {
                         mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA); // 暂无数据
                     }else{
                         updataAdapter(mTypeSelect);

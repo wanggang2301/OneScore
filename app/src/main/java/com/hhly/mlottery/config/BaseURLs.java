@@ -649,6 +649,13 @@ public class BaseURLs {
     //篮球资料库
     public final static String URL_BASKET_INFOMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
 
+    //篮球资料库详情
+    public final static String URL_BASKET_DATABASE_DETAILS = URL_API_HOST + "basketballData.findLeagueHeader.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do
+    //让分盘
+    public final static String URL_BASKET_DATABASE_HANDICP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
+    //大小盘
+    public final static String URL_BASKET_DATABASE_BIG_SMALL_DETAILS = URL_API_HOST + "basketballData.findAsiaSize.do"; // "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
+
     public final static String URL_BASKET_FINDANALYSIS = "basketballDetail.findAnalysis.do";
     public final static String URL_BASKET_FINDANALYSISDETAIL = "basketballDetail.findAnalysisDetail.do";
     public final static String URL_BASKET_FINDODDSDETAIL = "basketballDetail.findOddsDetail.do";

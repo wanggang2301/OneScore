@@ -31,11 +31,15 @@ public class BasketDatabaseDetailsBigSmallAdapter extends CommonAdapter<BasketDa
     public void convert(ViewHolder holder, BasketDatabaseBigSmallDetailsBean bean) {
 
         if (holder.getPosition() < 3) {
+            holder.setText(R.id.basket_database_datails_ranking_big_small , bean.getRanking());
             holder.setBackgroundRes(R.id.basket_database_datails_ranking_big_small, R.drawable.basket_databae_round_dra);
+        }else{
+            holder.setText(R.id.basket_database_datails_ranking_big_small , bean.getRanking());
+            holder.setBackgroundColorRes(R.id.basket_database_datails_ranking_big_small , R.color.transparent);
         }
-//        holder.setText(R.id.basket_database_details_ranking_name_big_small, bean.getRanking() + bean.getTeamName());
+
+//        holder.setText(R.id.basket_database_datails_ranking_big_small , bean.getRanking());
         holder.setText(R.id.basket_database_details_name_big_small, bean.getTeamName());
-        holder.setText(R.id.basket_database_datails_ranking_big_small , bean.getRanking());
 
         holder.setText(R.id.basket_database_details_finished_big_small, bean.getFinished());
         holder.setText(R.id.basket_database_details_big, bean.getHigh());

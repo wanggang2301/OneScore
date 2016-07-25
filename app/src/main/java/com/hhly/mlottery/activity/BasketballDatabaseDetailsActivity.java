@@ -2,9 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -25,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
@@ -34,10 +31,7 @@ import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
-import com.hhly.mlottery.util.adapter.CommonAdapter;
-import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NoScrollListView;
@@ -110,8 +104,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             mLeagueId = getIntent().getExtras().getString(LEAGUEID);
         }
 
-        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "10-11"); //TODO~~~~~~~~~~~~~~~~~~~~~~
-        mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId , "10-11");
+        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1"); //TODO~~~~~~~~~~~~~~~~~~~~~~
+        mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId , "-1");
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
@@ -233,8 +227,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private void initData(){
 
         // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do?lang=zh&leagueId=2
-        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do"; //
-
+//        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do"; //
+        String url = BaseURLs.URL_BASKET_DATABASE_DETAILS;
         Map<String, String> params = new HashMap<>();
 //        params.put("leagueId", "2");
         params.put("leagueId", mLeagueId);
@@ -271,7 +265,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                Toast.makeText(BasketballDatabaseDetailsActivity.this, "error + ", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BasketballDatabaseDetailsActivity.this, "error + ", Toast.LENGTH_SHORT).show();
                 isLoad = false;
             }
         }, BasketDatabaseBean.class);
