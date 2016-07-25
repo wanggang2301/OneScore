@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
@@ -33,7 +34,10 @@ import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
+import com.hhly.mlottery.util.adapter.CommonAdapter;
+import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NoScrollListView;
@@ -55,6 +59,8 @@ import java.util.Map;
  */
 public class BasketballDatabaseDetailsActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+
+    public static final String LEAGUEID="leagueId";
     private String mThirdId = "936707";
 
     private ViewPager mViewPager;
@@ -65,6 +71,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private Toolbar toolbar;
     private LinearLayout mBasketLayoutHeader;
     private CoordinatorLayout mCoordinatorLayout;
+    Handler mHandlerData = new Handler();
 
     private String[] TITLES;
 
@@ -75,7 +82,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     /**
      * 收藏按钮
      */
-    private TextView mCollect;
+    private LinearLayout mCollect;
 
     LinearLayout headLayout;// 小头部
 
@@ -90,6 +97,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private ImageView mIcon;
     private ImageView mBackground;
     private TextView mLeaguename;
+    private TextView mSportsText;
+    private String mLeagueId;
 
 
     @Override
@@ -98,11 +107,11 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         setContentView(R.layout.activity_basketball_database_details);
 
         if(getIntent().getExtras() != null){
-
+            mLeagueId = getIntent().getExtras().getString(LEAGUEID);
         }
 
-        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance("138" , "10-11");
-        mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance("138" , "10-11");
+        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "10-11");
+        mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId , "10-11");
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
@@ -127,6 +136,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         mImageLoader.init(config);
 
         initView();
+        mHandlerData.postDelayed(mRun, 500); // 加载数据
         setListener();
 
     }
@@ -135,11 +145,16 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         return mThirdId;
     }
 
+    private Runnable mRun = new Runnable() {
+        @Override
+        public void run() {
+            initData();
+        }
+    };
     /**
      * 初始化界面
      */
     private void initView() {
-//        TITLES = new String[]{"赛程" , "排行" , "让分盘" ,"大小盘" ， "统计"};
         TITLES = new String[]{ "让分盘" ,"大小盘"};
 
         toolbar = (Toolbar) findViewById(R.id.basket_database_details_toolbar);
@@ -148,6 +163,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         mIcon = (ImageView)findViewById(R.id.basket_details_guest_icon);
         mBackground = (ImageView)findViewById(R.id.image_background);
         mLeaguename = (TextView)findViewById(R.id.basket_database_leaguename);
+
+        mSportsText = (TextView)findViewById(R.id.basket_database_datails_tv);
 
         mBasketLayoutHeader = (LinearLayout) findViewById(R.id.basket_database_details_img);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -197,7 +214,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
         mBack = (ImageView) this.findViewById(R.id.basket_database_details_back);
 
-        mCollect = (TextView) this.findViewById(R.id.basket_database_details_collect);
+        mCollect = (LinearLayout) this.findViewById(R.id.basket_database_details_collect);
 
     }
 
@@ -209,12 +226,18 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         mCollect.setOnClickListener(this);
 
     }
-    private String[] mSports;
+    private String[] mSports; // 赛季集
 
+    private String mCurrentSports = "";
     private void initData(){
+
+        // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do?lang=zh&leagueId=2
+        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do"; //
+
         Map<String, String> params = new HashMap<>();
-        params.put("leagueId", "");
-        VolleyContentFast.requestJsonByGet("URL", params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBean>() {
+//        params.put("leagueId", "2");
+        params.put("leagueId", mLeagueId);
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBean>() {
 
             @Override
             public void onResponse(BasketDatabaseBean basketDatabaseBean) {
@@ -222,17 +245,28 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 //                    initData(basketDetailsBean);
                     mSports = basketDatabaseBean.getSeason();
 
-                    mLeaguename.setText(basketDatabaseBean.getLeagueName());
+                    if (mCurrentSports.equals("")) {
+                        mSportsText.setText(mSports[0] + " 赛季");
+                    }else{
+                        mSportsText.setText(mCurrentSports + " 赛季");
+                    }
+
+                    if (basketDatabaseBean.getLeagueName() == null || basketDatabaseBean.getLeagueName().equals("")) {
+                        mLeaguename.setText("--");
+                    }else{
+                        mLeaguename.setText(basketDatabaseBean.getLeagueName());
+                    }
                     //图标
                     mImageLoader.displayImage(basketDatabaseBean.getLeagueLogoUrl(), mIcon, mOptions);
                     mImageLoader.displayImage(basketDatabaseBean.getBgUrl(), mBackground, mOptionsHead);
 
+//                    Toast.makeText(BasketballDatabaseDetailsActivity.this, "success + " + mSports.length, Toast.LENGTH_SHORT).show();
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+                Toast.makeText(BasketballDatabaseDetailsActivity.this, "error + ", Toast.LENGTH_SHORT).show();
             }
         }, BasketDatabaseBean.class);
 
@@ -290,49 +324,28 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private boolean is0 = false;
     private boolean isFragment1 = false;
     private boolean is1 = false;
-    private boolean isFragment2 = false;
-    private boolean is2 = false;
-    private boolean isFragment3 = false;
-    private boolean is3 = false;
-    private boolean isFragment4 = false;
-    private boolean is4 = false;
 
     private void isHindShow(int position){
         switch (position) {
-            case 0:// 分析
+            case 0:
                 isFragment0 = true;
                 isFragment1 = false;
-                isFragment2 = false;
-                isFragment3 = false;
-                isFragment4 = false;
                 break;
-            case 1:// 欧赔
+            case 1:
                 isFragment0 = false;
                 isFragment1 = true;
-                isFragment2 = false;
-                isFragment3 = false;
-                isFragment4 = false;
                 break;
-            case 2:// 亚盘
+            case 2:
                 isFragment0 = false;
                 isFragment1 = false;
-                isFragment2 = true;
-                isFragment3 = false;
-                isFragment4 = false;
                 break;
-            case 3:// 大小
+            case 3:
                 isFragment0 = false;
                 isFragment1 = false;
-                isFragment2 = false;
-                isFragment3 = true;
-                isFragment4 = false;
                 break;
-            case 4:// 聊球
+            case 4:
                 isFragment0 = false;
                 isFragment1 = false;
-                isFragment2 = false;
-                isFragment3 = false;
-                isFragment4 = true;
                 break;
         }
         if (is0) {
@@ -341,30 +354,12 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         if (is1) {
             is1 = false;
         }
-        if (is2) {
-            is2 = false;
-        }
-        if (is3) {
-            is3 = false;
-        }
-        if (is4) {
-            is4 = false;
-        }
 
         if (isFragment0) {
             is0 = true;
         }
         if (isFragment1) {
             is1 = true;
-        }
-        if (isFragment2) {
-            is2 = true;
-        }
-        if (isFragment3) {
-            is3 = true;
-        }
-        if (isFragment4) {
-            is4 = true;
         }
     }
 
@@ -377,15 +372,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         if (isFragment1) {
             is1 = true;
         }
-        if (isFragment2) {
-            is2 = true;
-        }
-        if (isFragment3) {
-            is3 = true;
-        }
-        if (isFragment4) {
-            is4 = true;
-        }
     }
 
     @Override
@@ -396,15 +382,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         }
         if (is1) {
             is1 = false;
-        }
-        if (is2) {
-            is2 = false;
-        }
-        if (is3) {
-            is3 = false;
-        }
-        if (is4) {
-            is4 = false;
         }
     }
 
@@ -417,6 +394,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 @Override
                 public void run() {
                     mRefreshLayout.setRefreshing(false);
+
+                    mHandlerData.postDelayed(mRun, 500); // 加载数据
                     mBasketDatasaseHandicapFragment.upDate();
                     mBasketDatabaseBigSmallFragment.upDate();
                 }
@@ -436,17 +415,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         titleView.setText("赛季");
 
         final List<String> data = new ArrayList<>();
-        data.add("15-16");
-        data.add("14-15");
-        data.add("13-14");
-        data.add("12-13");
-        data.add("12-13");
-        data.add("12-13");
-        data.add("12-13");
-        data.add("12-13");
-        data.add("12-13");
-        data.add("12-13");
-        data.add("12-13");
+        for (int i = 0; i < mSports.length; i++) {
+            data.add(mSports[i]);
+        }
 
         final SportsDialogAdapter mAdapter = new SportsDialogAdapter(data ,this , currentDialogPosition);
 
@@ -490,12 +461,20 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             @Override
             public void onClick(View v) {
                 mAlertDialog.dismiss();
-                Toast.makeText(BasketballDatabaseDetailsActivity.this, "确定 "+currentDialogPosition, Toast.LENGTH_SHORT).show();
 
-                mBasketDatasaseHandicapFragment.setSeason("12-13"); //切换赛季
+                String newData = mSports[currentDialogPosition];
+//                Toast.makeText(BasketballDatabaseDetailsActivity.this, "赛季 ：" + newData, Toast.LENGTH_SHORT).show();
+
+                mCurrentSports = newData;
+
+                mHandlerData.postDelayed(mRun, 500); // 加载数据
+
+                //让分盘
+                mBasketDatasaseHandicapFragment.setSeason(newData); //切换赛季
                 mBasketDatasaseHandicapFragment.upDate();
 
-                mBasketDatabaseBigSmallFragment.setSeason("12-13");
+                //大小盘
+                mBasketDatabaseBigSmallFragment.setSeason(newData);
                 mBasketDatabaseBigSmallFragment.upDate();
 
             }

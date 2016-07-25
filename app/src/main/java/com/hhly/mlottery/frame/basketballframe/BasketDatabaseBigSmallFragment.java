@@ -34,7 +34,7 @@ import java.util.Map;
  * author: yixq
  * Created by A on 2016/7/20.
  */
-public class BasketDatabaseBigSmallFragment extends Fragment{
+public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnClickListener {
 
     private View mView;
     private static final String PARAM_ID = "leagueId";
@@ -64,6 +64,7 @@ public class BasketDatabaseBigSmallFragment extends Fragment{
     private List<BasketDatabaseBigSmallDetailsBean> mAllList = new ArrayList<>();
     private List<BasketDatabaseBigSmallDetailsBean> mHomeList = new ArrayList<>();
     private List<BasketDatabaseBigSmallDetailsBean> mGuestList = new ArrayList<>();
+    private TextView mRefresh;
 
     public static BasketDatabaseBigSmallFragment newInstance(String leagueId , String season) {
         BasketDatabaseBigSmallFragment fragment = new BasketDatabaseBigSmallFragment();
@@ -120,11 +121,14 @@ public class BasketDatabaseBigSmallFragment extends Fragment{
         mListView.setFocusable(false);//让listview失去焦点，处理加载时listview置顶情况.
 
         mListData = (LinearLayout)mView.findViewById(R.id.basket_database_details_data);
+        mListData.setVisibility(View.GONE);
         mLoadRefresh = (LinearLayout)mView.findViewById(R.id.basket_database_details_refresh);
         mNodata = (TextView)mView.findViewById(R.id.basket_database_details_nodata);
         mLoading = (FrameLayout)mView.findViewById(R.id.basket_database_loading_details);
 
-        onClick();
+        mRefresh = (TextView)mView.findViewById(R.id.reLoadin);
+        mRefresh.setOnClickListener(this);
+        RadioGroupOnClick();
     }
 
     private Handler mHandler = new Handler(){
@@ -162,13 +166,15 @@ public class BasketDatabaseBigSmallFragment extends Fragment{
 
     private void initData(){
 
-        //        mHandler.sendEmptyMessage(VIEW_STATUS_LOADING); // loading....
+        mHandler.sendEmptyMessage(VIEW_STATUS_LOADING); // loading....
 
-        //http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do?lang=zh&season=10-11&leagueId=138
-        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do";
+        //http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do?lang=zh&season=10-11&leagueId=138
+        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
 //        String url = BaseURLs.URL_BASKET_ANALYZE;
         Map<String, String> params = new HashMap<>();
-        params.put("season" , mSeason);
+        if (!mSeason.equals("")) {
+            params.put("season" , mSeason);
+        }
         params.put("leagueId", mLeagueId);
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBigSmallBean>() {
 
@@ -180,18 +186,32 @@ public class BasketDatabaseBigSmallFragment extends Fragment{
                     return;
                 }
 
+                if (bean.getAll() == null && bean.getHome() == null && bean.getGuest() == null) {
+                    mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA); // 暂无数据
+                    return;
+                }
                 mAllList = bean.getAll(); //All -- 默认
                 mHomeList = bean.getHome(); //主场
                 mGuestList = bean.getGuest();//客场
 
                 if (mAdapter == null) {
-                    mAdapter = new BasketDatabaseDetailsBigSmallAdapter(getContext(), mAllList, R.layout.basket_database_details_big_small_item);
-                    mListView.setAdapter(mAdapter);
+                    if (bean.getAll() == null) {
+                        mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA);
+                    }else{
+                        mAdapter = new BasketDatabaseDetailsBigSmallAdapter(getContext(), mAllList, R.layout.basket_database_details_big_small_item);
+                        mListView.setAdapter(mAdapter);
+                        mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                    }
                 } else {
-                    updataAdapter(mTypeSelect);
+                    if ((mTypeSelect == 0 && (bean.getAll() == null || bean.getAll().equals("")))
+                            || (mTypeSelect == 1 && (bean.getHome() == null || bean.getHome().equals("")))
+                            || (mTypeSelect == 2 && (bean.getGuest() == null || bean.getGuest().equals("")))) {
+                        mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA); // 暂无数据
+                    }else{
+                        updataAdapter(mTypeSelect);
+                        mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                    }
                 }
-
-                mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -207,15 +227,15 @@ public class BasketDatabaseBigSmallFragment extends Fragment{
         if (type == 0) {
             mAdapter.updateDatas(mAllList);
             mAdapter.notifyDataSetChanged();
-            L.d("mAllList.size()=====>>>+++ ", mAllList.size() + "");
+//            L.d("mAllList.size()=====>>>+++ ", mAllList.size() + "");
         } else if (type == 1) {
             mAdapter.updateDatas(mHomeList);
             mAdapter.notifyDataSetChanged();
-            L.d("mHomeList.size()=====>>>+++ ", mHomeList.size() + "");
+//            L.d("mHomeList.size()=====>>>+++ ", mHomeList.size() + "");
         } else if(type == 2){
             mAdapter.updateDatas(mGuestList);
             mAdapter.notifyDataSetChanged();
-            L.d("mGuestList.size()=====>>>+++ ", mGuestList.size() + "");
+//            L.d("mGuestList.size()=====>>>+++ ", mGuestList.size() + "");
         }
 
     }
@@ -223,7 +243,7 @@ public class BasketDatabaseBigSmallFragment extends Fragment{
     /**
      * RadioGroup的点击（全部、主、客切换）
      */
-    private void onClick(){
+    private void RadioGroupOnClick(){
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -238,5 +258,14 @@ public class BasketDatabaseBigSmallFragment extends Fragment{
                 updataAdapter(mTypeSelect);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.reLoadin:
+                mHandlerData.postDelayed(mRun , 500);
+                break;
+        }
     }
 }

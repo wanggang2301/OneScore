@@ -7,20 +7,20 @@ package com.hhly.mlottery.bean.basket.BasketDatabase;
  */
 public class BasketDatabaseHandicapDetailsBean {
 
-    private int ranking;//: 1,
+    private String ranking;//: 1,
     private String teamName;//: "克雷顿大学",
-    private int finished;//: 4,
-    private int over;//: 4,
-    private int under;//: 0,
-    private int win;//: 4,
-    private int draw; //: 0,
-    private int lose;//: 0
+    private String finished;//: 4,
+    private String over;//: 4,
+    private String under;//: 0,
+    private String win;//: 4,
+    private String draw; //: 0,
+    private String lose;//: 0
 
-    public int getRanking() {
+    public String getRanking() {
         return ranking;
     }
 
-    public void setRanking(int ranking) {
+    public void setRanking(String ranking) {
         this.ranking = ranking;
     }
 
@@ -32,51 +32,51 @@ public class BasketDatabaseHandicapDetailsBean {
         this.teamName = teamName;
     }
 
-    public int getFinished() {
+    public String getFinished() {
         return finished;
     }
 
-    public void setFinished(int finished) {
+    public void setFinished(String finished) {
         this.finished = finished;
     }
 
-    public int getOver() {
+    public String getOver() {
         return over;
     }
 
-    public void setOver(int over) {
+    public void setOver(String over) {
         this.over = over;
     }
 
-    public int getUnder() {
+    public String getUnder() {
         return under;
     }
 
-    public void setUnder(int under) {
+    public void setUnder(String under) {
         this.under = under;
     }
 
-    public int getWin() {
+    public String getWin() {
         return win;
     }
 
-    public void setWin(int win) {
+    public void setWin(String win) {
         this.win = win;
     }
 
-    public int getDraw() {
+    public String getDraw() {
         return draw;
     }
 
-    public void setDraw(int draw) {
+    public void setDraw(String draw) {
         this.draw = draw;
     }
 
-    public int getLose() {
+    public String getLose() {
         return lose;
     }
 
-    public void setLose(int lose) {
+    public void setLose(String lose) {
         this.lose = lose;
     }
 }

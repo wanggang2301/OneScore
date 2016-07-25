@@ -21,46 +21,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@color/selected_bg">
 
                 <RadioButton
                     android:id="@+id/basket_database_details_all"
                     android:layout_width="110dp"
                     android:layout_height="29dp"
-                    android:background="@drawable/football_screen_left_selector"
+                    android:background="@drawable/basket_database_screen_left_selector"
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
                     android:text="全部"
                     android:textColor="@color/basket_screen_text_color" />
 
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="29dp"
-                    android:background="@color/black_details_ball_textcolor2" />
-
                 <RadioButton
                     android:id="@+id/basket_database_details_home"
                     android:layout_width="110dp"
                     android:layout_height="29dp"
-                    android:background="@drawable/football_screen_middle_selector"
+                    android:background="@drawable/basket_database_screen_middle_selector"
                     android:button="@null"
                     android:gravity="center"
                     android:text="主场"
+                    android:layout_marginLeft="-1dp"
+                    android:layout_marginRight="-1dp"
                     android:textColor="@color/basket_screen_text_color"
 
                     />
-
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="29dp"
-                    android:background="@color/black_details_ball_textcolor2" />
 
                 <RadioButton
                     android:id="@+id/basket_database_details_guest"
                     android:layout_width="110dp"
                     android:layout_height="29dp"
-                    android:background="@drawable/football_screen_right_selector"
+                    android:background="@drawable/basket_database_screen_right_selector"
                     android:button="@null"
                     android:gravity="center"
                     android:text="客场"
@@ -69,7 +62,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
@@ -80,7 +73,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="left"
-                    android:text="排名/球队" />
+                    android:text="排名/球队"
+                    android:textSize="10sp"
+                    android:textColor="@color/black_details_ball_textcolor"/>
 
                 <TextView
                     android:id="@+id/basket_database_yisai"
@@ -88,7 +83,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="已赛" />
+                    android:text="已赛"
+                    android:textSize="10sp"
+                    android:textColor="@color/black_details_ball_textcolor"/>
 
                 <TextView
                     android:id="@+id/basket_database_up"
@@ -96,7 +93,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="大" />
+                    android:text="大"
+                    android:textSize="10sp"
+                    android:textColor="@color/black_details_ball_textcolor"/>
 
                 <TextView
                     android:id="@+id/basket_database_down"
@@ -104,7 +103,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="走" />
+                    android:text="走"
+                    android:textSize="10sp"
+                    android:textColor="@color/black_details_ball_textcolor"/>
 
                 <TextView
                     android:id="@+id/basket_database_yzs"
@@ -112,22 +113,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="小" />
+                    android:text="小"
+                    android:textSize="10sp"
+                    android:textColor="@color/black_details_ball_textcolor"/>
             </LinearLayout>
 
             <!--分割线-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/basket_parting_line" />
+                android:background="@color/content_txt_light_grad" />
             <!--listview-->
             <com.hhly.mlottery.widget.NoScrollListView
                 android:id="@+id/basket_database_handicap_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="#00000000"
-                android:dividerHeight="0dip"
+                android:divider="@color/content_txt_light_grad"
+                android:dividerHeight="0.5px"
                 android:listSelector="@android:color/transparent" />
+            <!--分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/content_txt_light_grad" />
         </LinearLayout>
 
         <!--正在加载中显示进度条-->
