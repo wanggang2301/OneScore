@@ -12,15 +12,29 @@
         android:paddingRight="10dp"
         >
 
-        <TextView
-            android:id="@+id/basket_database_details_ranking_name"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:gravity="left"
-            android:text="1 凯尔特人"
-            android:textSize="10sp"
-            android:textColor="@color/content_txt_black"/>
+            android:layout_weight="2">
+            <TextView
+                android:id="@+id/basket_database_details_ranking"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:text="1"
+                android:textColor="@color/content_txt_black"/>
+            <TextView
+                android:id="@+id/basket_database_details_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="left"
+                android:text="凯尔特人"
+                android:textSize="10sp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/content_txt_black"/>
+        </LinearLayout>
         <TextView
             android:id="@+id/basket_database_details_finished"
             android:layout_width="0dp"
