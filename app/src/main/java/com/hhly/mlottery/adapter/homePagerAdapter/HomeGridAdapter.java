@@ -181,6 +181,10 @@ public class HomeGridAdapter extends BaseAdapter {
                                         case "24":// 篮球资讯
                                             //Toast.makeText(mContext, "篮球资讯", Toast.LENGTH_SHORT).show();
                                             break;
+                                        case "25":// 篮球资料库
+//                                            mContext.startActivity(new Intent(mContext, BasketballInformationActivity.class));
+//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Info");
+                                            break;
                                         case "30":// 彩票开奖
                                             mContext.startActivity(new Intent(mContext, NumbersActivity.class));
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_List");
