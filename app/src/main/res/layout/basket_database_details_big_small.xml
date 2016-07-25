@@ -32,7 +32,7 @@
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
-                    android:text="全部"
+                    android:text="@string/basket_database_details_all"
                     android:textColor="@color/basket_screen_text_color" />
 
                 <RadioButton
@@ -42,7 +42,7 @@
                     android:background="@drawable/basket_database_screen_middle_selector"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="主场"
+                    android:text="@string/basket_database_details_home"
                     android:layout_marginLeft="-1dp"
                     android:layout_marginRight="-1dp"
                     android:textColor="@color/basket_screen_text_color"
@@ -56,7 +56,7 @@
                     android:background="@drawable/basket_database_screen_right_selector"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="客场"
+                    android:text="@string/basket_database_details_guest"
                     android:textColor="@color/basket_screen_text_color" />
             </RadioGroup>
 
@@ -73,8 +73,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="left"
-                    android:text="排名/球队"
+                    android:text="@string/basket_database_details_runkingname"
                     android:textSize="10sp"
+                    android:paddingLeft="10dp"
                     android:textColor="@color/black_details_ball_textcolor"/>
 
                 <TextView
@@ -83,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="已赛"
+                    android:text="@string/basket_database_details_overgame"
                     android:textSize="10sp"
                     android:textColor="@color/black_details_ball_textcolor"/>
 
@@ -93,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="大"
+                    android:text="@string/basket_database_details_big"
                     android:textSize="10sp"
                     android:textColor="@color/black_details_ball_textcolor"/>
 
@@ -103,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="走"
+                    android:text="@string/basket_database_details_dorw"
                     android:textSize="10sp"
                     android:textColor="@color/black_details_ball_textcolor"/>
 
@@ -113,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="小"
+                    android:text="@string/basket_database_details_small"
                     android:textSize="10sp"
                     android:textColor="@color/black_details_ball_textcolor"/>
             </LinearLayout>

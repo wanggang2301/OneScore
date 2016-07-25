@@ -12,7 +12,7 @@
         android:layout_height="35dp"
         android:background="@drawable/share_date_top_bg"
         android:gravity="center"
-        android:text="赛季"
+        android:text="@string/basket_database_details_season"
         android:textColor="@color/white"
         android:textSize="15sp" />
 
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="确定"
+            android:text="@string/basket_analyze_dialog_ok"
             android:textSize="15sp"
             android:background="@color/white"
             android:textColor="@color/week"/>

@@ -30,10 +30,14 @@ public class BasketDatabaseDetailsAdapter extends CommonAdapter<BasketDatabaseHa
     public void convert(ViewHolder holder, BasketDatabaseHandicapDetailsBean bean) {
 
         if (bean != null) {
-//            if (bean.getRanking() == null || bean.getRanking().equals("")) {
-//
-//            }
-            holder.setText(R.id.basket_database_details_ranking_name, bean.getRanking() + bean.getTeamName());
+
+            if (holder.getPosition() < 3) {
+                holder.setBackgroundRes(R.id.basket_database_details_ranking, R.drawable.basket_databae_round_dra);
+            }
+//            holder.setText(R.id.basket_database_details_ranking_name, bean.getRanking() + bean.getTeamName());
+            holder.setText(R.id.basket_database_details_ranking , bean.getRanking());
+            holder.setText(R.id.basket_database_details_name , bean.getTeamName());
+
             holder.setText(R.id.basket_database_details_finished, bean.getFinished());
             holder.setText(R.id.basket_database_details_over, bean.getOver());
             holder.setText(R.id.basket_database_details_under, bean.getUnder());

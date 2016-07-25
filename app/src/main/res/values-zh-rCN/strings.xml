@@ -700,6 +700,23 @@
     <string name="basket_odds_asiaLet_details">亚盘详情</string>
     <string name="basket_odds_asiaSize_details">大小球详情</string>
 
+    <!--篮球资料库详情-->
+    <string name="basket_database_details_handicapname">让分盘</string>
+    <string name="basket_database_details_bigsmallname">大小盘</string>
+    <string name="basket_database_details_season">赛季</string>
+    <string name="basket_database_details_all">全部</string>
+    <string name="basket_database_details_home">主场</string>
+    <string name="basket_database_details_guest">客场</string>
+    <string name="basket_database_details_runkingname">排名/球队</string>
+    <string name="basket_database_details_overgame">已赛</string>
+    <string name="basket_database_details_big">大</string>
+    <string name="basket_database_details_dorw">走</string>
+    <string name="basket_database_details_small">小</string>
+
+    <string name="basket_database_details_up">上盘</string>
+    <string name="basket_database_details_down">下盘</string>
+    <string name="basket_database_details_yzs">赢/走/输</string>
+
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
     <string name="football_analyze_details_time">时间</string>
