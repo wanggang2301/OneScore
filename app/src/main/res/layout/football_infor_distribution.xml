@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y100"
+                android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:id="@+id/football_infor_real"
 
@@ -10,11 +10,11 @@
 
     <ImageView
         android:id="@+id/football_logo_img"
-        android:layout_width="@dimen/x60"
-        android:layout_height="@dimen/y60"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginLeft="10dp"
         android:src="@mipmap/foot_default"/>
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/football_logo_img"
-        android:paddingLeft="@dimen/x20"
+        android:paddingLeft="10dp"
         android:gravity="center"
         android:text="英格兰超级联赛"
         android:textColor="@color/res_name_color"
