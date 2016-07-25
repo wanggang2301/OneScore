@@ -88,8 +88,9 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
             holder.tv6.setText(list.get(position).getPoint6());
             //1 赢（大）2 输（小）0 走
             if(position==2){
-                List<NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity> listLet=analyzeBean.getAsiaTrend().getBattleHistory().getLetList();
-                for(int i=0;i<listLet.size();i++){
+                if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getLetList().size()!=0){
+                    List<NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity> listLet=analyzeBean.getAsiaTrend().getBattleHistory().getLetList();
+                    for(int i=0;i<listLet.size();i++){
                         if(listLet.get(i).getLet()==0){ //第i场比赛 走
                             tvList.get(i).setText("走");
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.more_record));
@@ -100,6 +101,7 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
                             tvList.get(i).setText("输");
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_lose_color));
                         }
+                    }
                 }
             }
         }
@@ -123,19 +125,22 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
             holder.tv6.setText(list.get(position).getPoint6());
             //1 赢（大）2 输（小）0 走
             if(position==2){
-                List<NewAnalyzeBean.SizeTrendEntity.BattleHistoryEntity.TotListEntity> listLet=analyzeBean.getSizeTrend().getBattleHistory().getTotList();
-                for(int i=0;i<listLet.size();i++){
-                    if(listLet.get(i).getTot()==0){ //第i场比赛 走
-                        tvList.get(i).setText("走");
-                        tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.more_record));
-                    }else if(listLet.get(i).getTot()==1){
-                        tvList.get(i).setText("大");
-                        tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_win_color));
-                    }else if(listLet.get(i).getTot()==2){
-                        tvList.get(i).setText("小");
-                        tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_lose_color));
+                if(analyzeBean.getSizeTrend()!=null&&analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getTotList().size()!=0){
+                    List<NewAnalyzeBean.SizeTrendEntity.BattleHistoryEntity.TotListEntity> listLet=analyzeBean.getSizeTrend().getBattleHistory().getTotList();
+                    for(int i=0;i<listLet.size();i++){
+                        if(listLet.get(i).getTot()==0){ //第i场比赛 走
+                            tvList.get(i).setText("走");
+                            tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.more_record));
+                        }else if(listLet.get(i).getTot()==1){
+                            tvList.get(i).setText("大");
+                            tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_win_color));
+                        }else if(listLet.get(i).getTot()==2){
+                            tvList.get(i).setText("小");
+                            tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_lose_color));
+                        }
                     }
                 }
+
             }
         }
         return convertView;
