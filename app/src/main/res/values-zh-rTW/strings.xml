@@ -846,4 +846,27 @@
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">至少選擇壹家公司</string>
+    <string name="asia_win_rate">贏盤率</string>
+    <string name="home_win_rate">主胜率</string>
+    <string name="size_win_rate">大球率</string>
+    <string name="title_big_data_predict">大數據預測</string>
+    <string name="diy_compute_method">DIY算法</string>
+    <string name="foot_details_info">情報</string>
+    <string name="diy_custom_compute_method">DIY自定義算法</string>
+    <string name="action_compute">計算</string>
+    <string name="action_close">關閉</string>
+    <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
+    <string name="diy_compute_method_message">歷史交鋒 × %1$s + 主隊 × %2$s + 客隊 × %3$s = 概率</string>
+    <string name="action_close">關閉</string>
+    <string name="action_compute">計算</string>
+    <string name="asia_win_rate">贏盤率</string>
+    <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
+    <string name="diy_compute_method">DIY算法</string>
+    <string name="diy_compute_method_message">歷史交鋒 × %1$s + 主隊 × %2$s + 客隊 × %3$s = 概率</string>
+    <string name="diy_custom_compute_method">DIY自定義算法</string>
+    <string name="foot_details_info">情報</string>
+    <string name="insufficient_sampling">采樣\n不足</string>
+    <string name="title_big_data_predict">大數據預測</string>
+    <string name="size_win_rate">大球率</string>
+    <string name="home_win_rate">主勝率</string>
 </resources>

@@ -72,7 +72,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
             holder.nickname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ToastTools.ShowQuickCenter(mActivity, "nickname");
+//                    ToastTools.showQuickCenter(mActivity, "nickname");
                 }
             });
             holder.time = (TextView) convertView.findViewById(R.id.tv_time);
@@ -128,7 +128,7 @@ public class CounselComentLvAdapter extends BaseAdapter {
                         // TODO Auto-generated method stub
                         textView.setText(mInfosList.get(position).content);
                         mStringList.add(DateUtil.transferLongToDate(mInfosList.get(position).create_time));
-//                        ToastTools.ShowQuickCenter(mActivity, "position=" + position);
+//                        ToastTools.showQuickCenter(mActivity, "position=" + position);
 
                     }
 

@@ -699,7 +699,6 @@ public class BaseURLs {
     public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
     /**登出*/
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
-
     /**重置密码*/
     public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
     /**修改昵称*/
@@ -715,4 +714,6 @@ public class BaseURLs {
     public final static String URL_SINA_LOGIN = URL_API_HOST + "androidUserCenter.loginWeibo.do";
 
     public final static String URL_WEIXIN_LOGIN = URL_API_HOST + "androidUserCenter.loginWeChat.do";
+    /**足球情报 - 大数据预测*/
+    public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
 }

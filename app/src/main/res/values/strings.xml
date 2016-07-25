@@ -67,8 +67,6 @@
     <string name="share_summary_default">一比分,专业的足球比分直播平台</string>
 
 
-
-
     <!--指数-->
     <string name="odd_plate_rb_txt">亚盘</string>
     <string name="odd_op_rb_txt">欧赔</string>
@@ -175,9 +173,9 @@
     <string name="foot_guanzhu_txt">关注</string>
     <string name="foot_setting_txt">设置</string>
     <!-- 下拉刷新 -->
-    <string name="pull_to_refresh_pull_label" >向下拉动可以刷新</string>
-    <string name="pull_to_refresh_release_label" >松开可以刷新</string>
-    <string name="pull_to_refresh_refreshing_label" >加载中&#8230;</string>
+    <string name="pull_to_refresh_pull_label">向下拉动可以刷新</string>
+    <string name="pull_to_refresh_release_label">松开可以刷新</string>
+    <string name="pull_to_refresh_refreshing_label">加载中&#8230;</string>
 
     <!-- 设置 -->
     <string name="set_sound_txt">声音</string>
@@ -452,7 +450,6 @@
     <string name="number_xinqi6">周六</string>
 
 
-
     <!-- 代码中的添加 string -->
 
     <string name="language_select_txt">语种选择</string>
@@ -473,10 +470,7 @@
     <string name="china_vi_txt">tiếng việt</string>
 
 
-
-
     <string name="reload_the_txt">重新加载</string>
-
 
 
     <!-- 首页足球状态 -->
@@ -593,7 +587,6 @@
     <string name="basket_interrupt">中断</string>
     <string name="basket_cancel">取消</string>
     <string name="basket_postpone">推迟</string>
-
 
 
     <string name="basket_yesterday">昨日</string>
@@ -864,4 +857,20 @@
     <string name="ninety_plus">90+</string>
     <string name="server_busy">系统繁忙</string>
     <string name="at_least_one_company">至少选择一家公司</string>
+
+    <string name="home_win_rate">主胜率</string>
+    <string name="size_win_rate">大球率</string>
+    <string name="asia_win_rate">赢盘率</string>
+    <string name="title_big_data_predict">大数据预测</string>
+    <string name="diy_compute_method">DIY算法</string>
+    <string name="diy_custom_compute_method">DIY自定义算法</string>
+    <string name="foot_details_info">情报</string>
+    <string name="diy_compute_method_message">历史交锋 × %1$s + 主队 × %2$s + 客队 × %3$s = 概率</string>
+    <string name="symbol_times" translatable="false">×</string>
+    <string name="symbol_plus" translatable="false">+</string>
+    <string name="symbol_equal" translatable="false">=</string>
+    <string name="action_close">关闭</string>
+    <string name="action_compute">计算</string>
+    <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
+    <string name="insufficient_sampling">采样\n不足</string>
 </resources>
