@@ -32,6 +32,7 @@
                 android:gravity="left"
                 android:text="凯尔特人"
                 android:textSize="10sp"
+                android:paddingLeft="5dp"
                 android:textColor="@color/content_txt_black"/>
         </LinearLayout>
         <TextView
