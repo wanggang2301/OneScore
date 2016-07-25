@@ -17,6 +17,7 @@ import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.MyGridViewInfo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -289,15 +290,28 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                         updateAdapter(groupPosition, NUM0);
                     }
 
+
                     if (lastParentPostion != -1 && lastChildPosition != -1) {
-                        allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        if (lastParentPostion != groupPosition || lastChildPosition!=NUM0){
+                            allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        }
                     }
-                    allDatas.get(groupPosition).get(NUM0).setIsShow(true);
+
+                    L.d("123147", allDatas.get(groupPosition).get(NUM0).isShow() + "");
+
+                    if (allDatas.get(groupPosition).get(NUM0).isShow()) {
+                        L.d("123147", allDatas.get(groupPosition).get(NUM0).isShow() + "");
+                        allDatas.get(groupPosition).get(NUM0).setIsShow(false);
+                    } else {
+                        allDatas.get(groupPosition).get(NUM0).setIsShow(true);
+                        L.d("123147", allDatas.get(groupPosition).get(NUM0).isShow() + "");
+
+                    }
+
                     lastParentPostion = groupPosition;
                     lastChildPosition = NUM0;
 
                     notifyDataSetChanged();
-
 
                     basketInfomationCallBack.onClick(v, groupPosition, NUM0);
                 }
@@ -323,9 +337,16 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                     }
 
                     if (lastParentPostion != -1 && lastChildPosition != -1) {
-                        allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        if (lastParentPostion != groupPosition || lastChildPosition != NUM1) {
+                            allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        }
                     }
-                    allDatas.get(groupPosition).get(NUM1).setIsShow(true);
+
+                    if (allDatas.get(groupPosition).get(NUM1).isShow()) {
+                        allDatas.get(groupPosition).get(NUM1).setIsShow(false);
+                    } else {
+                        allDatas.get(groupPosition).get(NUM1).setIsShow(true);
+                    }
                     lastParentPostion = groupPosition;
                     lastChildPosition = NUM1;
 
@@ -356,9 +377,15 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                     }
 
                     if (lastParentPostion != -1 && lastChildPosition != -1) {
-                        allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        if (lastParentPostion != groupPosition || lastChildPosition != NUM2) {
+                            allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        }                    }
+
+                    if (allDatas.get(groupPosition).get(NUM2).isShow()) {
+                        allDatas.get(groupPosition).get(NUM2).setIsShow(false);
+                    } else {
+                        allDatas.get(groupPosition).get(NUM2).setIsShow(true);
                     }
-                    allDatas.get(groupPosition).get(NUM2).setIsShow(true);
                     lastParentPostion = groupPosition;
                     lastChildPosition = NUM2;
 
@@ -389,9 +416,16 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                     }
 
                     if (lastParentPostion != -1 && lastChildPosition != -1) {
-                        allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        if (lastParentPostion != groupPosition || lastChildPosition != NUM3) {
+                            allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        }
                     }
-                    allDatas.get(groupPosition).get(NUM3).setIsShow(true);
+
+                    if (allDatas.get(groupPosition).get(NUM3).isShow()) {
+                        allDatas.get(groupPosition).get(NUM3).setIsShow(false);
+                    } else {
+                        allDatas.get(groupPosition).get(NUM3).setIsShow(true);
+                    }
                     lastParentPostion = groupPosition;
                     lastChildPosition = NUM3;
                     notifyDataSetChanged();
