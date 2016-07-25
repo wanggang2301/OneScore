@@ -225,8 +225,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("HomeUserOptionsActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("HomeUserOptionsActivity");
          /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
@@ -238,8 +238,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("HomeUserOptionsActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("HomeUserOptionsActivity");
     }
 
     @Override

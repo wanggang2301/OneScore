@@ -18,7 +18,6 @@ import android.widget.Scroller;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketListActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -288,30 +287,30 @@ public class HomePagerAdapter extends PagerAdapter {
                                 break;
                                 case "20":// 篮球即时比分
                                 {
-                                    Intent intent = new Intent(mContext, BasketListActivity.class);
-                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
-                                    mContext.startActivity(intent);
+//                                    Intent intent = new Intent(mContext, BasketListActivity.class);
+//                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
+//                                    mContext.startActivity(intent);
                                 }
                                 break;
                                 case "21":// 篮球赛果
                                 {
-                                    Intent intent = new Intent(mContext, BasketListActivity.class);
-                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_AMIDITHION_VALUE);
-                                    mContext.startActivity(intent);
+//                                    Intent intent = new Intent(mContext, BasketListActivity.class);
+//                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_AMIDITHION_VALUE);
+//                                    mContext.startActivity(intent);
                                 }
                                 break;
                                 case "22":// 篮球赛程
                                 {
-                                    Intent intent = new Intent(mContext, BasketListActivity.class);
-                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_COMPETITION_VALUE);
-                                    mContext.startActivity(intent);
+//                                    Intent intent = new Intent(mContext, BasketListActivity.class);
+//                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_COMPETITION_VALUE);
+//                                    mContext.startActivity(intent);
                                 }
                                 break;
                                 case "23":// 篮球关注
                                 {
-                                    Intent intent = new Intent(mContext, BasketListActivity.class);
-                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_ATTENTION_VALUE);
-                                    mContext.startActivity(intent);
+//                                    Intent intent = new Intent(mContext, BasketListActivity.class);
+//                                    intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_ATTENTION_VALUE);
+//                                    mContext.startActivity(intent);
                                 }
                                 break;
                                 case "24":// 篮球资讯

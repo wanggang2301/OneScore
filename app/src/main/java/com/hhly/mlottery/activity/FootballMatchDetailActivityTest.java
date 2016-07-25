@@ -275,6 +275,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         setContentView(R.layout.activity_football_match_details_test);
 
+        /**当前Activity不统计*/
+        MobclickAgent.openActivityDurationTrack(false);
+
         this.mContext = getApplicationContext();
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
@@ -2506,7 +2509,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
-
+        MobclickAgent.onResume(this);
         if (isDetailsRollballFragment) {
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");
             isDetailsRollball = true;
@@ -2537,7 +2540,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onPause() {
         super.onPause();
-
+        MobclickAgent.onPause(this);
         if (isDetailsRollball) {
             MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
             isDetailsRollball = false;

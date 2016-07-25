@@ -29,7 +29,6 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NestedListView;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +37,7 @@ import java.util.Map;
 
 /**
  * @ClassName: FootballAnalyzeDetailsActivity
- * @Description: 足球分析详情Activity
+ * @Description: 足球分析详情Activity  更多战绩
  * @author yixq
  */
 public class FootballAnalyzeDetailsActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -895,7 +894,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
+//        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -912,6 +911,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
+//        MobclickAgent.onPause(this);
     }
 }

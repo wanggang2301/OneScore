@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -58,7 +57,7 @@ import java.util.Map;
  * 首页Activity
  * Created by hhly107 on 2016/3/29.com.hhly.mlottery.activity.HomePagerActivity
  */
-public class HomePagerActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private static final java.lang.String TAG = "HomePagerActivity";
     private Context mContext;// 上下文
@@ -273,8 +272,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             mListBaseAdapter.start();// 启动轮播图
         }
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("HomePagerActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("HomePagerActivity");
     }
 
 
@@ -284,8 +283,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             mListBaseAdapter.end();// 结束轮播图
         }
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("HomePagerActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("HomePagerActivity");
     }
 
     /**

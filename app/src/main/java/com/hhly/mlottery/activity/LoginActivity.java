@@ -97,8 +97,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         /**友盟页面统计*/
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("LoginActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("LoginActivity");
         super.onResume();
         // UiUtils.toast(MyApp.getInstance(), "Onresume我进来了");
       /*  // 自动弹出软键盘
@@ -126,8 +126,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onPause() {
         super.onPause();
         /**友盟页面统计*/
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("LoginActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("LoginActivity");
     }
 
     private void initView() {
