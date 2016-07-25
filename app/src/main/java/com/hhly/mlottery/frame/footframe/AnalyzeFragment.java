@@ -560,12 +560,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
         //心水推荐
 //        Log.e("fuckkkkkk",analyzeBean.getRecommend());
-        if(analyzeBean.getRecommend()!=null){
+        if(analyzeBean.getRecommend()!=null&&analyzeBean.getRecommend()!=""){
             mRecommend.setText(Html.fromHtml(analyzeBean.getRecommend()));
         }
 
         //亚盘走势
-        if(analyzeBean.getAsiaTrend()!=null){
+       /* if(analyzeBean.getAsiaTrend()!=null){
             //假数据
             NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity1=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
             entity1.setLet(0);entity1.setHomeGround(true);
@@ -643,7 +643,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             }
             mSizeAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getSizeTrend().getBattleHistory().getPointList(),analyzeBean);
             mSizeListView.setAdapter(mSizeAdapter);
-        }
+        }*/
 
     }
 

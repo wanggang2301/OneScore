@@ -43,7 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
-            android:visibility="gone"
             >
 
             <TextView
@@ -59,7 +58,7 @@
                 android:id="@+id/football_analyze__progressbar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="24dp"
+                android:layout_height="6dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:max="100"
@@ -229,7 +228,6 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="5dp"
-            android:visibility="gone"
             >
 
             <RelativeLayout
@@ -342,7 +340,6 @@
             android:layout_gravity="center"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            android:visibility="gone"
             android:text="@string/basket_analyze_more"
             android:textColor="@color/more_record"
             android:textSize="@dimen/text_size_13"/>
@@ -382,7 +379,6 @@
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:visibility="gone"
             >
 
             <LinearLayout
@@ -615,7 +611,9 @@
         <!--亚盘走势-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -669,6 +667,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
+            android:visibility="gone"
             />
 
         <LinearLayout
@@ -678,6 +677,7 @@
             android:orientation="vertical"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
+            android:visibility="gone"
             >
             <TextView
                 android:id="@+id/tv_analyze_let1"
@@ -985,12 +985,16 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/home_item_bg"/>
+            android:background="@color/home_item_bg"
+            android:visibility="gone"
+            />
 
         <!--大小球走势-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -1044,6 +1048,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
+            android:visibility="gone"
             />
 
         <LinearLayout
@@ -1053,6 +1058,7 @@
             android:orientation="vertical"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
+            android:visibility="gone"
             >
             <TextView
                 android:id="@+id/tv_analyze_size1"
@@ -1358,7 +1364,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/home_item_bg"/>
+            android:background="@color/home_item_bg"
+            android:visibility="gone"
+            />
         <!--攻防对比-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -1443,7 +1451,6 @@
             android:paddingBottom="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:visibility="gone"
             >
 
             <!--第一行-->
@@ -1677,7 +1684,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_13"
-                android:text="暂无数据"
+                android:text="@string/basket_nodata"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
