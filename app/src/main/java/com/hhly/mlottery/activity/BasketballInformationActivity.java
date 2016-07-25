@@ -53,6 +53,8 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         publicImgBack.setOnClickListener(this);
         publicBtnSet.setOnClickListener(this);
 
+        publicBtnSet.setVisibility(View.GONE); //模糊搜索隐藏
+
 
         publicTxtTitle.setText(getApplicationContext().getResources().getString(R.string.basket_info_title));
         publicBtnFilter.setVisibility(View.GONE);

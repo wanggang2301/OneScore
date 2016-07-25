@@ -38,7 +38,7 @@
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/shape_basketball_infomation_left"
             android:checked="true"
-            android:text="洲际赛事"
+            android:text="@string/basket_info_zhouji"
             android:textColor="@drawable/info_text_color" />
 
         <RadioButton
@@ -49,7 +49,7 @@
             android:layout_marginLeft="-0.25dp"
             android:background="@drawable/shape_basketball_infomation_right"
             android:checked="false"
-            android:text="国家赛事"
+            android:text="@string/basket_info_country"
             android:textColor="@drawable/info_text_color" />
     </RadioGroup>
 

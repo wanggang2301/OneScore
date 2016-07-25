@@ -647,7 +647,7 @@ public class BaseURLs {
      */
 
     //篮球资料库
-    public final static String URL_BASKET_INFOMATION = URL_API_HOST + "";
+    public final static String URL_BASKET_INFOMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
 
     public final static String URL_BASKET_FINDANALYSIS = "basketballDetail.findAnalysis.do";
     public final static String URL_BASKET_FINDANALYSISDETAIL = "basketballDetail.findAnalysisDetail.do";
