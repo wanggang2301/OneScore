@@ -17,6 +17,7 @@ import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.MyGridViewInfo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -44,7 +45,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
     private Context mContext;
     private MyGridViewInfo gridview;
 
-    private ImageView lastCheckedOption;
+    private int lastParentPostion = -1;
+    private int lastChildPosition = -1;
 
     private List<LeagueBean> child_array;
     private List<List<NationalLeague>> allDatas;
@@ -57,8 +59,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
     public ExpandableGridAdapter(Context context, List<List<NationalLeague>> lists) {
         this.mContext = context;
-        // this.list = list;
-        //this.child_text_array = child_text_array;
+
         this.allDatas = lists;
 
         options = new DisplayImageOptions.Builder()
@@ -134,6 +135,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
         return true;
     }
 
+
     /**
      * 对一级标签进行设置
      */
@@ -186,8 +188,15 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             listViewHolder.name0.setText(allDatas.get(groupPosition).get(0).getNationName().toString());
             listViewHolder.rl0.setEnabled(true);
 
+            if (allDatas.get(groupPosition).get(0).isShow()) {
+                listViewHolder.iv0.setVisibility(View.VISIBLE);
+            } else {
+                listViewHolder.iv0.setVisibility(View.INVISIBLE);
+            }
+
         } else {
             listViewHolder.rl0.setEnabled(false);
+            listViewHolder.iv0.setVisibility(View.INVISIBLE);
 
         }
 
@@ -200,11 +209,19 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
             listViewHolder.name1.setText(allDatas.get(groupPosition).get(1).getNationName().toString());
             listViewHolder.rl1.setEnabled(true);
+            if (allDatas.get(groupPosition).get(1).isShow()) {
+                listViewHolder.iv1.setVisibility(View.VISIBLE);
+            } else {
+                listViewHolder.iv1.setVisibility(View.INVISIBLE);
+            }
+
 
         } else {
             listViewHolder.rl1.setEnabled(false);
             listViewHolder.icon1.setImageDrawable(null);
             listViewHolder.name1.setText("");
+            listViewHolder.iv1.setVisibility(View.INVISIBLE);
+
         }
 
         if (allDatas.get(groupPosition).size() > NUM2) {
@@ -216,11 +233,17 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
             listViewHolder.name2.setText(allDatas.get(groupPosition).get(2).getNationName().toString());
             listViewHolder.rl2.setEnabled(true);
+            if (allDatas.get(groupPosition).get(2).isShow()) {
+                listViewHolder.iv2.setVisibility(View.VISIBLE);
+            } else {
+                listViewHolder.iv2.setVisibility(View.INVISIBLE);
+            }
 
         } else {
             listViewHolder.rl2.setEnabled(false);
             listViewHolder.icon2.setImageDrawable(null);
             listViewHolder.name2.setText("");
+            listViewHolder.iv2.setVisibility(View.INVISIBLE);
 
         }
 
@@ -233,10 +256,17 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
             listViewHolder.name3.setText(allDatas.get(groupPosition).get(3).getNationName().toString());
             listViewHolder.rl3.setEnabled(true);
+            if (allDatas.get(groupPosition).get(3).isShow()) {
+                listViewHolder.iv3.setVisibility(View.VISIBLE);
+            } else {
+                listViewHolder.iv3.setVisibility(View.INVISIBLE);
+            }
         } else {
             listViewHolder.rl3.setEnabled(false);
             listViewHolder.icon3.setImageDrawable(null);
             listViewHolder.name3.setText("");
+            listViewHolder.iv3.setVisibility(View.INVISIBLE);
+
         }
 
 
@@ -256,17 +286,32 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                         }
                     }
 
-
                     if (isInitChildAdapter) {
                         updateAdapter(groupPosition, NUM0);
                     }
 
-                    if (lastCheckedOption != null) {
-                        lastCheckedOption.setVisibility(View.INVISIBLE);
-                    }
-                    lastCheckedOption = listViewHolder.iv0;
-                    lastCheckedOption.setVisibility(View.VISIBLE);
 
+                    if (lastParentPostion != -1 && lastChildPosition != -1) {
+                        if (lastParentPostion != groupPosition || lastChildPosition!=NUM0){
+                            allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        }
+                    }
+
+                    L.d("123147", allDatas.get(groupPosition).get(NUM0).isShow() + "");
+
+                    if (allDatas.get(groupPosition).get(NUM0).isShow()) {
+                        L.d("123147", allDatas.get(groupPosition).get(NUM0).isShow() + "");
+                        allDatas.get(groupPosition).get(NUM0).setIsShow(false);
+                    } else {
+                        allDatas.get(groupPosition).get(NUM0).setIsShow(true);
+                        L.d("123147", allDatas.get(groupPosition).get(NUM0).isShow() + "");
+
+                    }
+
+                    lastParentPostion = groupPosition;
+                    lastChildPosition = NUM0;
+
+                    notifyDataSetChanged();
 
                     basketInfomationCallBack.onClick(v, groupPosition, NUM0);
                 }
@@ -291,11 +336,22 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                         updateAdapter(groupPosition, NUM1);
                     }
 
-                    if (lastCheckedOption != null) {
-                        lastCheckedOption.setVisibility(View.INVISIBLE);
+                    if (lastParentPostion != -1 && lastChildPosition != -1) {
+                        if (lastParentPostion != groupPosition || lastChildPosition != NUM1) {
+                            allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        }
                     }
-                    lastCheckedOption = listViewHolder.iv1;
-                    lastCheckedOption.setVisibility(View.VISIBLE);
+
+                    if (allDatas.get(groupPosition).get(NUM1).isShow()) {
+                        allDatas.get(groupPosition).get(NUM1).setIsShow(false);
+                    } else {
+                        allDatas.get(groupPosition).get(NUM1).setIsShow(true);
+                    }
+                    lastParentPostion = groupPosition;
+                    lastChildPosition = NUM1;
+
+                    notifyDataSetChanged();
+
                     basketInfomationCallBack.onClick(v, groupPosition, NUM1);
                 }
 
@@ -305,6 +361,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             @Override
             public void onClick(View v) {
                 if (basketInfomationCallBack != null) {
+
                     parentItem = NUM2;
                     if (groPosition == -1) {
                         groPosition = groupPosition;
@@ -315,16 +372,25 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                         }
                     }
 
-                    //Log.d("112", isInitChildAdapter + "");
-
                     if (isInitChildAdapter) {
                         updateAdapter(groupPosition, NUM2);
                     }
-                    if (lastCheckedOption != null) {
-                        lastCheckedOption.setVisibility(View.INVISIBLE);
+
+                    if (lastParentPostion != -1 && lastChildPosition != -1) {
+                        if (lastParentPostion != groupPosition || lastChildPosition != NUM2) {
+                            allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        }                    }
+
+                    if (allDatas.get(groupPosition).get(NUM2).isShow()) {
+                        allDatas.get(groupPosition).get(NUM2).setIsShow(false);
+                    } else {
+                        allDatas.get(groupPosition).get(NUM2).setIsShow(true);
                     }
-                    lastCheckedOption = listViewHolder.iv2;
-                    lastCheckedOption.setVisibility(View.VISIBLE);
+                    lastParentPostion = groupPosition;
+                    lastChildPosition = NUM2;
+
+                    notifyDataSetChanged();
+
                     basketInfomationCallBack.onClick(v, groupPosition, NUM2);
                 }
 
@@ -334,8 +400,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             @Override
             public void onClick(View v) {
                 if (basketInfomationCallBack != null) {
-                    parentItem = NUM3;
 
+                    parentItem = NUM3;
                     if (groPosition == -1) {
                         groPosition = groupPosition;
                     } else {
@@ -344,16 +410,26 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                             groPosition = groupPosition;
                         }
                     }
-                    // Log.d("112", isInitChildAdapter + "");
 
                     if (isInitChildAdapter) {
                         updateAdapter(groupPosition, NUM3);
                     }
-                    if (lastCheckedOption != null) {
-                        lastCheckedOption.setVisibility(View.INVISIBLE);
+
+                    if (lastParentPostion != -1 && lastChildPosition != -1) {
+                        if (lastParentPostion != groupPosition || lastChildPosition != NUM3) {
+                            allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
+                        }
                     }
-                    lastCheckedOption = listViewHolder.iv3;
-                    lastCheckedOption.setVisibility(View.VISIBLE);
+
+                    if (allDatas.get(groupPosition).get(NUM3).isShow()) {
+                        allDatas.get(groupPosition).get(NUM3).setIsShow(false);
+                    } else {
+                        allDatas.get(groupPosition).get(NUM3).setIsShow(true);
+                    }
+                    lastParentPostion = groupPosition;
+                    lastChildPosition = NUM3;
+                    notifyDataSetChanged();
+
                     basketInfomationCallBack.onClick(v, groupPosition, NUM3);
                 }
 
@@ -411,7 +487,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
         Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
         intent.putExtra(LEAGUEID, allDatas.get(groPosition).get(parentItem).getLeagueData().get(position).getLeagueId());
         mContext.startActivity(intent);
-       // Toast.makeText(mContext, "当前选中的是:" + allDatas.get(groPosition).get(parentItem).getLeagueData().get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(mContext, "当前选中的是:" + allDatas.get(groPosition).get(parentItem).getLeagueData().get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
     }
 
     /**

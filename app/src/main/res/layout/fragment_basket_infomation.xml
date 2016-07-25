@@ -51,15 +51,23 @@
             android:checked="false"
             android:text="@string/basket_info_country"
             android:textColor="@drawable/info_text_color" />
+
     </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#dddddd"></View>
 
     <com.hhly.mlottery.widget.ExactSwipeRefrashLayout
         android:id="@+id/info_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <GridView
                 android:id="@+id/gridview_inter"
                 android:layout_width="match_parent"

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -92,30 +91,6 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         if (getArguments() != null) {
             mType = getArguments().getString(TYPE_PARM);
         }
-
-/*
-
-        if (mType == HOT) {
-            L.d(TAG, "onCreate热门");
-
-        } else if (mType == EUR) {
-            L.d(TAG, "onCreate欧洲");
-
-        } else if (mType == AMERICA) {
-            L.d(TAG, "onCreateme美洲");
-
-        } else if (mType == ASIA) {
-            L.d(TAG, "onCreate亚洲");
-
-        } else if (mType == AFRICA) {
-            L.d(TAG, "onCreate非洲洲");
-
-        } else if (mType == INTER) {
-            L.d(TAG, "onCreate国际");
-
-        }
-*/
-
 
     }
 
@@ -353,11 +328,9 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
             }
 
             basketInfomationCallBack = new BasketInfomationCallBack() {
+
                 @Override
                 public void onClick(View view, int groupPosition, int child) {
-                    L.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
-
-
                     if (sign == -1 && childsign == -1) {
                         // 展开被选的group
                         expandableGridView.expandGroup(groupPosition);
@@ -365,32 +338,14 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                         expandableGridView.setSelectedGroup(groupPosition);
                         sign = groupPosition;
                         childsign = child;
-                        L.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
-
-                        L.i("112", "第一次展开");
-
+                        L.d("147258", "第一次展开");
 
                     } else if (sign == groupPosition && child == childsign) {
                         expandableGridView.collapseGroup(sign);
                         sign = -1;
                         childsign = -1;
 
-                        L.d("112", groupPosition + "--" + child + "--" + sign + "--" + childsign);
-
-                        L.i("112", "关闭");
-                        if (child == NUM0) {
-                            ((ImageView) view.findViewById(R.id.iv0)).setVisibility(View.INVISIBLE);
-                        } else if (child == NUM1) {
-                            ((ImageView) view.findViewById(R.id.iv1)).setVisibility(View.INVISIBLE);
-
-                        } else if (child == NUM2) {
-                            ((ImageView) view.findViewById(R.id.iv2)).setVisibility(View.INVISIBLE);
-
-                        } else if (child == NUM3) {
-                            ((ImageView) view.findViewById(R.id.iv3)).setVisibility(View.INVISIBLE);
-
-                        }
-
+                        L.d("147258", "关闭");
                         mExpandableGridAdapter.isInitChildAdapter = false;
 
                     } else if (sign != groupPosition) {
@@ -405,6 +360,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                         sign = groupPosition;
                         childsign = child;
                         L.i("112", "关闭在展开");
+
                     }
                     childsign = child;
                 }
@@ -415,6 +371,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 mExpandableGridAdapter = new ExpandableGridAdapter(getActivity(), interLeagues);
                 mExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
                 expandableGridView.setAdapter(mExpandableGridAdapter);
+
             }
         }
     }

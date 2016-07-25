@@ -11,15 +11,15 @@ public class LeagueBean {
     private String leagueName;
     private String leagueLogoUrl;
 
+
     public LeagueBean() {
     }
 
-    public LeagueBean(String leagueId, String leagueName, String leagueLogoUrl) {
+    public LeagueBean(String leagueId, String leagueLogoUrl, String leagueName) {
         this.leagueId = leagueId;
-        this.leagueName = leagueName;
         this.leagueLogoUrl = leagueLogoUrl;
+        this.leagueName = leagueName;
     }
-
 
     public String getLeagueId() {
         return leagueId;
