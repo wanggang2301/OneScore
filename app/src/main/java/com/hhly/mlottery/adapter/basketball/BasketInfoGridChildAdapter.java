@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author wang gang
  * @date 2016/7/15 17:50
- * @des ${TODO}
+ * @des 篮球资料里列表
  */
 public class BasketInfoGridChildAdapter extends BaseAdapter {
     private List<LeagueBean> mList;

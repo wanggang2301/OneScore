@@ -12,6 +12,16 @@ public class NationalLeague {
     private String nationName;
     private String nationLogoUrl;
     private String nationId;
+    private boolean isShow = false;
+
+    public boolean isShow() {
+        return isShow;
+    }
+
+    public void setIsShow(boolean isShow) {
+        this.isShow = isShow;
+    }
+
     private List<LeagueBean> leagueData;
 
 
