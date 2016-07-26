@@ -35,7 +35,7 @@ import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.hhly.mlottery.widget.NoScrollListView;
+import com.hhly.mlottery.widget.ScrollTouchListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -410,7 +410,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
          * 根据List数据条数加载不同的view （数据多加载可滑动View）
          */
         ScrollView scroll = (ScrollView)view.findViewById(R.id.basket_sports_scroll);//数据多时显示
-        NoScrollListView scrollListview = (NoScrollListView) view.findViewById(R.id.sport_date_scroll);
+        ScrollTouchListView  scrollListview = (ScrollTouchListView ) view.findViewById(R.id.sport_date_scroll);
         ListView listview = (ListView) view.findViewById(R.id.sport_date);//数据少时显示
         if (data.size() > 5) {
             scrollListview.setAdapter(mAdapter);
