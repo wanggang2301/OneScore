@@ -23,6 +23,7 @@ import com.hhly.mlottery.bean.basket.infomation.LeagueAllBean;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -160,8 +161,6 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                     case MotionEvent.ACTION_CANCEL:
 
 
-                        L.d("456789", "up");
-
                         break;
                 }
                 return false;
@@ -259,9 +258,9 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         L.d(TAG, mType);
 
         //String url = BaseURLs.URL_BASKET_INFOMATION;
-        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
+       // String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
 
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_INFOMATION, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
 
             @Override
             public void onResponse(LeagueAllBean json) {
