@@ -442,10 +442,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mAlertDialog.dismiss();
 
                 String newData = mSports[currentDialogPosition];
-
                 mCurrentSports = newData;
 
-                mHandlerData.postDelayed(mRun, 500); // 加载数据
+                // 加载数据
+                mHandlerData.postDelayed(mRun, 500);
 
                 //让分盘
                 mBasketDatasaseHandicapFragment.setSeason(newData); //切换赛季
