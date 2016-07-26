@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballInformationActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
@@ -180,8 +181,8 @@ public class HomeGridAdapter extends BaseAdapter {
                                             //Toast.makeText(mContext, "篮球资讯", Toast.LENGTH_SHORT).show();
                                             break;
                                         case "25":// 篮球资料库
-//                                            mContext.startActivity(new Intent(mContext, BasketballInformationActivity.class));
-//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Info");
+                                            mContext.startActivity(new Intent(mContext, BasketballInformationActivity.class));
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Info");
                                             break;
                                         case "30":// 彩票开奖
                                             mContext.startActivity(new Intent(mContext, NumbersActivity.class));
