@@ -32,6 +32,7 @@ import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -41,6 +42,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,6 +102,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basketball_database_details);
+
+        /**不统计当前Activity*/
+        MobclickAgent.openActivityDurationTrack(false);
 
         if(getIntent().getExtras() != null){
             mLeagueId = getIntent().getExtras().getString(LEAGUEID);
@@ -342,6 +347,13 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         if (is1) {
             is1 = false;
         }
+
+        if (isFragment0) {
+            is0 = true;
+        }
+        if (isFragment1) {
+            is1 = true;
+        }
     }
 
     @Override
@@ -404,8 +416,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
         final AlertDialog mAlertDialog = mBuilder.create();
         mAlertDialog.setCanceledOnTouchOutside(true);//设置空白处点击 dialog消失
-
-        Toast.makeText(BasketballDatabaseDetailsActivity.this, "size》》" + data.size(), Toast.LENGTH_SHORT).show();
         /**
          * 根据List数据条数加载不同的view （数据多加载可滑动View）
          */
