@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -78,6 +79,8 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     private List<List<NationalLeague>> interLeagues;
     private List<LeagueBean> hotLeagues;
 
+    private Context mContext;
+
     public static BasketInfomationFragment newInstance(String type) {
         Bundle bundle = new Bundle();
         bundle.putString(TYPE_PARM, type);
@@ -99,6 +102,8 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_infomation, container, false);
+
+        mContext = getActivity();
 
         initView();
         return mView;
@@ -258,7 +263,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         L.d(TAG, mType);
 
         //String url = BaseURLs.URL_BASKET_INFOMATION;
-       // String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
+        // String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_INFOMATION, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
 
@@ -308,13 +313,16 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
     private void initViewData() {
 
+        if (mContext == null) {
+            return;
+        }
         sign = -1;  //刷新重置
         childsign = -1;
 
         if (mType.equals(HOT_MATCH) || mType.equals(INTEL_MATCH)) {//热门
 
             if (hotLeagues != null && hotLeagues.size() > 0) {
-                mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(getActivity(), hotLeagues);
+                mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(mContext, hotLeagues);
                 gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
             }
 
@@ -322,7 +330,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
             //洲际赛事
             if (hotLeagues != null && hotLeagues.size() > 0) {
-                mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(getActivity(), hotLeagues);
+                mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(mContext, hotLeagues);
                 gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
             }
 
@@ -367,7 +375,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
 
             if (interLeagues != null && interLeagues.size() > 0) {
-                mExpandableGridAdapter = new ExpandableGridAdapter(getActivity(), interLeagues);
+                mExpandableGridAdapter = new ExpandableGridAdapter(mContext, interLeagues);
                 mExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
                 expandableGridView.setAdapter(mExpandableGridAdapter);
 
