@@ -13,14 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsBigSmallAdapter;
 import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBigSmallBean;
 import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBigSmallDetailsBean;
-import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;
 
@@ -169,10 +167,10 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
         mHandler.sendEmptyMessage(VIEW_STATUS_LOADING); // loading....
 
         //http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do?lang=zh&season=10-11&leagueId=138
-        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
-//        String url = BaseURLs.URL_BASKET_ANALYZE;
+//        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
+        String url = BaseURLs.URL_BASKET_DATABASE_BIG_SMALL_DETAILS;
         Map<String, String> params = new HashMap<>();
-        if (!mSeason.equals("")) {
+        if (!mSeason.equals("-1")) {
             params.put("season" , mSeason);
         }
         params.put("leagueId", mLeagueId);
@@ -195,7 +193,7 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
                 mGuestList = bean.getGuest();//客场
 
                 if (mAdapter == null) {
-                    if (bean.getAll() == null) {
+                    if (bean.getAll() == null || bean.getAll().size() == 0) {
                         mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA);
                     }else{
                         mAdapter = new BasketDatabaseDetailsBigSmallAdapter(getContext(), mAllList, R.layout.basket_database_details_big_small_item);
@@ -203,9 +201,9 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
                         mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     }
                 } else {
-                    if ((mTypeSelect == 0 && (bean.getAll() == null || bean.getAll().equals("")))
-                            || (mTypeSelect == 1 && (bean.getHome() == null || bean.getHome().equals("")))
-                            || (mTypeSelect == 2 && (bean.getGuest() == null || bean.getGuest().equals("")))) {
+                    if ((mTypeSelect == 0 && (bean.getAll() == null || bean.getAll().equals("") || bean.getAll().size() == 0))
+                            || (mTypeSelect == 1 && (bean.getHome() == null || bean.getHome().equals("") || bean.getHome().size() == 0))
+                            || (mTypeSelect == 2 && (bean.getGuest() == null || bean.getGuest().equals("") || bean.getGuest().size() == 0))) {
                         mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA); // 暂无数据
                     }else{
                         updataAdapter(mTypeSelect);

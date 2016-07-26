@@ -32,10 +32,13 @@ public class BasketDatabaseDetailsAdapter extends CommonAdapter<BasketDatabaseHa
         if (bean != null) {
 
             if (holder.getPosition() < 3) {
+                holder.setText(R.id.basket_database_details_ranking , bean.getRanking());
                 holder.setBackgroundRes(R.id.basket_database_details_ranking, R.drawable.basket_databae_round_dra);
+            }else{
+                holder.setBackgroundColorRes(R.id.basket_database_details_ranking, R.color.transparent);
+                holder.setText(R.id.basket_database_details_ranking , bean.getRanking());
             }
-//            holder.setText(R.id.basket_database_details_ranking_name, bean.getRanking() + bean.getTeamName());
-            holder.setText(R.id.basket_database_details_ranking , bean.getRanking());
+//            holder.setText(R.id.basket_database_details_ranking , bean.getRanking());
             holder.setText(R.id.basket_database_details_name , bean.getTeamName());
 
             holder.setText(R.id.basket_database_details_finished, bean.getFinished());
