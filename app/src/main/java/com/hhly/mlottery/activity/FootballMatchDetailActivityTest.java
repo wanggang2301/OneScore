@@ -321,7 +321,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment,
                 mAnalyzeFragment, mOddsFragment, mStatisticsFragment, mIntelligenceFragment);
-        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
