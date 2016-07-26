@@ -26,7 +26,8 @@ public class StringFormatUtils {
      * @return
      */
     public static String toString(double d) {
-        return String.format(Locale.getDefault(), "%.2f", d);
+        String string = String.format(Locale.getDefault(), "%.3f", d);
+        return string.substring(0, string.length() - 1);
     }
 
     public static double asDouble(String string) {
