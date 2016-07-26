@@ -577,15 +577,15 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 //        String matchNum;
         int matchNum = 0;
 
-        int countWin = 0 ; //胜
-        int countLose = 0 ; //负
-        int countDraw = 0;  //平
+        double countWin = 0 ; //胜
+        double countLose = 0 ; //负
+        double countDraw = 0;  //平
 
-        int countGoal = 0 ; //进球
-        int countFumble = 0 ; //失球
+        double countGoal = 0 ; //进球
+        double countFumble = 0 ; //失球
 
-        int countTot = 0; // 大球
-        int countLet = 0; //让分球
+        double countTot = 0; // 大球
+        double countLet = 0; //让分球
 
         if (mData.isEmpty() || mData.size()==0) {
             matchNum = 0;
@@ -628,23 +628,23 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
             letWinnging = 0;
         }else{
             //胜率
-            winning = (countWin*100)/(matchNum);
+            winning = (int)((countWin*100)/(matchNum)+0.5); // (+0.5 四舍五入)
 
             //大球胜率
-            totWinning = (countTot*100)/(matchNum);
+            totWinning = (int)((countTot*100)/(matchNum)+0.5);
 
             //让分球胜率
-            letWinnging = (countLet*100)/(matchNum);
+            letWinnging = (int)((countLet*100)/(matchNum)+0.5);
 
         }
 
-        homeWin = countWin + "" + getResources().getText(R.string.football_analyze_win);
-        homeLose = countLose + "" + getResources().getText(R.string.football_analyze_lost);
-        draw = countDraw + "" + getResources().getText(R.string.football_analyze_equ);
+        homeWin = (int)countWin + "" + getResources().getText(R.string.football_analyze_win);
+        homeLose = (int)countLose + "" + getResources().getText(R.string.football_analyze_lost);
+        draw = (int)countDraw + "" + getResources().getText(R.string.football_analyze_equ);
 
         text1.setText(Html.fromHtml(team + "<font color='#FF1F1F'><b>" + homeWin + "</b></font>" + "<font color='#00aaee'><b>" + draw + "</b></font>" + "<font color='#21B11E'><b>" + homeLose + "</b></font>"
-                + getResources().getText(R.string.football_analyze_jin) + "<font color='#FF1F1F'><b>" + countGoal + "</b></font>" + getResources().getText(R.string.football_analyze_shi) + "<font color='#21B11E'><b>"
-                + countFumble + "</b></font>" + getResources().getText(R.string.football_analyze_ball)
+                + getResources().getText(R.string.football_analyze_jin) + "<font color='#FF1F1F'><b>" + (int)countGoal + "</b></font>" + getResources().getText(R.string.football_analyze_shi) + "<font color='#21B11E'><b>"
+                + (int)countFumble + "</b></font>" + getResources().getText(R.string.football_analyze_ball)
         ));
 
         text2.setText(Html.fromHtml(getResources().getText(R.string.football_analyze_winodds) + "<font color='#FF1F1F'><b>" + winning  + "%" + "</b></font>"
