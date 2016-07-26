@@ -18,10 +18,14 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.umeng.common.message.Log;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * Created by lyx on 2016/5/19.
@@ -63,7 +67,27 @@ public class CommonUtils {
         }
 
     }
-
+    /**
+     * 获取ip
+     * @return
+     */
+    public static  String getIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()) {
+                        return inetAddress.getHostAddress().toString();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "获取 ip 异常");
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     /**
      * 初始化注册信息（与登录信息一样）

@@ -96,7 +96,7 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
                         // TODO Auto-generated method stub
                         textView.setText(comment.content);
                         mStringList.add(DateUtil.transferLongToDate(comment.create_time));
-//                        ToastTools.ShowQuickCenter(mActivity, "position=" + position);
+//                        ToastTools.showQuickCenter(mActivity, "position=" + position);
 
                     }
 

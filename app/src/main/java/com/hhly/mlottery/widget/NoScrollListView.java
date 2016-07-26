@@ -2,6 +2,7 @@ package com.hhly.mlottery.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ListView;
 
 /**
@@ -25,5 +26,10 @@ public class NoScrollListView extends ListView {
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return false; // 让 listView不消费点击事件
     }
 }

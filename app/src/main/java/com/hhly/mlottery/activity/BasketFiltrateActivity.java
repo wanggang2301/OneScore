@@ -606,14 +606,14 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("BasketFiltrateActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("BasketFiltrateActivity");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("BasketFiltrateActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("BasketFiltrateActivity");
     }
 }

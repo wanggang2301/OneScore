@@ -32,6 +32,7 @@ import java.util.Map;
 
 /**
  * @author chenml
+ * @Desc 足球筛选界面
  */
 public class FiltrateMatchConfigActivity extends BaseActivity implements OnClickListener, CheckedCupsCallback {
 
@@ -235,14 +236,14 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("FiltrateMatchConfigActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("FiltrateMatchConfigActivity");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("FiltrateMatchConfigActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("FiltrateMatchConfigActivity");
     }
 }
