@@ -23,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
@@ -56,7 +55,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
 
     public static final String LEAGUEID="leagueId";
-    private String mThirdId = "936707";
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -136,9 +134,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
     }
 
-    public String getmThirdId() {
-        return mThirdId;
-    }
 
     private Runnable mRun = new Runnable() {
         @Override
@@ -405,7 +400,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         final AlertDialog mAlertDialog = mBuilder.create();
         mAlertDialog.setCanceledOnTouchOutside(true);//设置空白处点击 dialog消失
 
-        Toast.makeText(BasketballDatabaseDetailsActivity.this, "size》》" + data.size(), Toast.LENGTH_SHORT).show();
         /**
          * 根据List数据条数加载不同的view （数据多加载可滑动View）
          */
@@ -422,7 +416,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                     mAdapter.updateDatas(currentDialogPosition);
                     mAdapter.notifyDataSetChanged();
 
-                    Toast.makeText(BasketballDatabaseDetailsActivity.this, "data1》》" + currentDialogPosition, Toast.LENGTH_SHORT).show();
                 }
             });
             scroll.setVisibility(View.VISIBLE);
@@ -437,7 +430,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                     mAdapter.updateDatas(currentDialogPosition);
                     mAdapter.notifyDataSetChanged();
 
-                    Toast.makeText(BasketballDatabaseDetailsActivity.this, "data2》》" + currentDialogPosition, Toast.LENGTH_SHORT).show();
                 }
             });
             scroll.setVisibility(View.GONE);
@@ -450,7 +442,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mAlertDialog.dismiss();
 
                 String newData = mSports[currentDialogPosition];
-//                Toast.makeText(BasketballDatabaseDetailsActivity.this, "赛季 ：" + newData, Toast.LENGTH_SHORT).show();
 
                 mCurrentSports = newData;
 
