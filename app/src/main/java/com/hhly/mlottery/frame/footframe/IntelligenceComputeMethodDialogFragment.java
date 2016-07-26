@@ -268,7 +268,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                         closeInputMethod(getContext(), mGuestEditText);
                         getDialog().dismiss();
                         mFactor.updateTemp();
-                        ((IntelligenceFragment) getParentFragment()).refreshFactorUI();
+                        ((IntelligenceFragment) getParentFragment()).refreshFactorUI(true);
                     }
                 });
     }

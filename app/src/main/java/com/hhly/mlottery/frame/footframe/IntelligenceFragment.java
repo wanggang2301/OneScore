@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * 情报 Fragment
- * <p/>
+ * <p>
  * Created by loshine on 2016/7/18.
  */
 public class IntelligenceFragment extends Fragment {
@@ -108,7 +108,7 @@ public class IntelligenceFragment extends Fragment {
                     public void onResponse(BigDataResult jsonObject) {
                         mBigDataForecast = jsonObject.getBigDataForecast();
                         if (jsonObject.getResult() != 200 || mBigDataForecast == null) {
-                            refreshFactorUI();
+                            refreshFactorUI(false);
                             setEmptyAlert();
                             mDiyComputeMethodView.setVisibility(View.GONE);
                             return;
@@ -127,7 +127,7 @@ public class IntelligenceFragment extends Fragment {
                         setWinRate(guestRecent,
                                 mGuestRecentHostWin, mGuestRecentSizeWin, mGuestRecentAsiaWin,
                                 mGuestRecentHostWinProgress, mGuestRecentSizeWinProgress, mGuestRecentAsiaWinProgress);
-                        refreshFactorUI();
+                        refreshFactorUI(false);
                     }
                 },
                 new VolleyContentFast.ResponseErrorListener() {
@@ -262,28 +262,34 @@ public class IntelligenceFragment extends Fragment {
     /**
      * 刷新DIY算法UI
      */
-    public void refreshFactorUI() {
+    public void refreshFactorUI(boolean ignoreNull) {
         BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
-        if (battleHistory == null) {
-            hideProgress(mHostProgress, mHostAlert);
-            hideProgress(mSizeProgress, mSizeAlert);
-            hideProgress(mAsiaProgress, mAsiaAlert);
-            return;
-        }
-        if (battleHistory.getHomeWinPercent() != null) {
+        if (!ignoreNull) {
+            if (battleHistory == null) {
+                hideProgress(mHostProgress, mHostAlert);
+                hideProgress(mSizeProgress, mSizeAlert);
+                hideProgress(mAsiaProgress, mAsiaAlert);
+                return;
+            }
+            if (battleHistory.getHomeWinPercent() != null) {
+                showProgress(mHostProgress, mHostAlert, TYPE_HOST);
+            } else {
+                hideProgress(mHostProgress, mHostAlert);
+            }
+            if (battleHistory.getSizeWinPercent() != null) {
+                showProgress(mSizeProgress, mSizeAlert, TYPE_SIZE);
+            } else {
+                hideProgress(mSizeProgress, mSizeAlert);
+            }
+            if (battleHistory.getAsiaWinPercent() != null) {
+                showProgress(mAsiaProgress, mAsiaAlert, TYPE_ASIA);
+            } else {
+                hideProgress(mAsiaProgress, mAsiaAlert);
+            }
+        } else {
             showProgress(mHostProgress, mHostAlert, TYPE_HOST);
-        } else {
-            hideProgress(mHostProgress, mHostAlert);
-        }
-        if (battleHistory.getSizeWinPercent() != null) {
             showProgress(mSizeProgress, mSizeAlert, TYPE_SIZE);
-        } else {
-            hideProgress(mSizeProgress, mSizeAlert);
-        }
-        if (battleHistory.getAsiaWinPercent() != null) {
             showProgress(mAsiaProgress, mAsiaAlert, TYPE_ASIA);
-        } else {
-            hideProgress(mAsiaProgress, mAsiaAlert);
         }
     }
 
