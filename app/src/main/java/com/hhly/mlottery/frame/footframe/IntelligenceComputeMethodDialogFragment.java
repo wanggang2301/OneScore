@@ -54,6 +54,8 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     private BigDataForecast mBigDataForecast;
     private BigDataForecastFactor mFactor;
 
+    private int currentPosition = 0;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,15 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         setData();
 
         return alertDialog;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (currentPosition != 0) {
+            if (currentPosition == 1) mRadioGroup.check(R.id.center);
+            if (currentPosition == 2) mRadioGroup.check(R.id.right);
+        }
     }
 
     /**
@@ -174,6 +185,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                currentPosition = getCurrentRadioPosition();
                 setData();
             }
         });

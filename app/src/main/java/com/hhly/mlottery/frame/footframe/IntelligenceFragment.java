@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * 情报 Fragment
- * <p>
+ * <p/>
  * Created by loshine on 2016/7/18.
  */
 public class IntelligenceFragment extends Fragment {
@@ -70,6 +70,8 @@ public class IntelligenceFragment extends Fragment {
     ContentLoadingProgressBar mGuestRecentHostWinProgress;
     ContentLoadingProgressBar mGuestRecentSizeWinProgress;
     ContentLoadingProgressBar mGuestRecentAsiaWinProgress;
+
+    private IntelligenceComputeMethodDialogFragment mDialog;
 
     private String mThirdId;
     private BigDataForecast mBigDataForecast;
@@ -213,8 +215,11 @@ public class IntelligenceFragment extends Fragment {
         mDiyComputeMethodView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntelligenceComputeMethodDialogFragment.newInstance(mBigDataForecast, mFactor)
-                        .show(getChildFragmentManager(), "computeMethod");
+                if (mDialog == null) {
+                    mDialog = IntelligenceComputeMethodDialogFragment
+                            .newInstance(mBigDataForecast, mFactor);
+                }
+                mDialog.show(getChildFragmentManager(), "computeMethod");
             }
         });
 
