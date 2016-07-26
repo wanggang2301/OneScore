@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alertdialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="55dp">
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@drawable/share_date_top_bg"
+        android:gravity="center"
+        android:text="@string/basket_database_details_season"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/share_date_botton_bg"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/sport_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/linecolor"
+            android:dividerHeight="0.5px"
+            android:layout_marginBottom="0dp"
+            android:gravity="center" />
+
+        <ScrollView
+            android:id="@+id/basket_sports_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            >
+
+            <com.hhly.mlottery.widget.NoScrollListView
+                android:id="@+id/sport_date_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/linecolor"
+                android:dividerHeight="0.5px"
+                android:layout_marginBottom="0dp"
+                android:gravity="center" />
+        </ScrollView>
+
+        <View
+            android:id="@+id/cpi_view_id"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y1"
+            android:background="@color/homwe_pk10_grey"
+             />
+
+        <Button
+            android:id="@+id/sports_btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/basket_analyze_dialog_ok"
+            android:textSize="15sp"
+            android:background="@color/white"
+            android:textColor="@color/week"/>
+    </LinearLayout>
+</LinearLayout>
