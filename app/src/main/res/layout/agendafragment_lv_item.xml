@@ -10,9 +10,9 @@
 
         android:id="@+id/lay_agendafg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y85"
+        android:layout_height="42dp"
         android:orientation="horizontal"
-        android:padding="@dimen/x10">
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -33,7 +33,7 @@
                 android:id="@+id/tv_agendafg_lv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x30"
+                android:layout_marginLeft="10dp"
                 android:text="18:00"
                 android:textColor="@color/res_name_color"
                 android:textSize="@dimen/text_size_11"/>

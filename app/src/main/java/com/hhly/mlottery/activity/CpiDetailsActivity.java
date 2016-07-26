@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.oddfragment.CpiDetailsFragment;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.L;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.Map;
 
 /**
  * Created by 103TJL on 2016/5/6.
- * 新版指数详情
+ * 新版指数详情 赔率详情界面
  */
 public class CpiDetailsActivity extends BaseActivity implements View.OnClickListener {
     private TextView public_txt_title, public_txt_left_title;//标题
@@ -43,6 +45,9 @@ public class CpiDetailsActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cpi_details_activity);
+        /**当前Activity界面不统计，只统计Fragment界面*/
+        MobclickAgent.openActivityDurationTrack(false);
+
         Intent joinIntent = getIntent();
         obList = (List<Map<String, String>>) getIntent().getSerializableExtra("obListEntity");
         comId = joinIntent.getStringExtra("comId");
@@ -102,6 +107,24 @@ public class CpiDetailsActivity extends BaseActivity implements View.OnClickList
         mTabLayout.setupWithViewPager(mViewPager);
         //标记是否初始化
         isInitViewPager = true;
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                /**判断三个Fragment切换显示或隐藏的状态 */
+                isHindShow(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -160,4 +183,125 @@ public class CpiDetailsActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+    /**
+     * 判断三个Fragment切换显示或隐藏的状态
+     */
+    private boolean isPalteFragment = true;
+    private boolean isPalte = false;
+    private boolean isBigFragment = false;
+    private boolean isBig = false;
+    private boolean isOpFragment = false;
+    private boolean isOp = false;
+
+    /**
+     * 判断三个Fragment切换显示或隐藏的状态
+     *
+     * @param position
+     */
+    private void isHindShow(int position) {
+        switch (position) {
+            case 0:
+                isPalteFragment = true;
+                isBigFragment = false;
+                isOpFragment = false;
+                break;
+            case 1:
+                isBigFragment = true;
+                isPalteFragment = false;
+                isOpFragment = false;
+                break;
+            case 2:
+                isOpFragment = true;
+                isPalteFragment = false;
+                isBigFragment = false;
+                break;
+        }
+        if (isPalteFragment) {
+            if (isBig) {
+                MobclickAgent.onPageEnd("CpiDetailsActivity_BigFragment");
+                isBig = false;
+                L.d("xxx", "BigFragment>>>隐藏");
+            }
+            if (isOp) {
+                MobclickAgent.onPageEnd("CpiDetailsActivity_OpFragment");
+                isOp = false;
+                L.d("xxx", "OpFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("CpiDetailsActivity_PalteFragment");
+            isPalte = true;
+            L.d("xxx", "PalteFragment>>>显示");
+        }
+        if (isBigFragment) {
+            if (isPalte) {
+                MobclickAgent.onPageEnd("CpiDetailsActivity_PalteFragment");
+                isPalte = false;
+                L.d("xxx", "PalteFragment>>>隐藏");
+            }
+            if (isOp) {
+                MobclickAgent.onPageEnd("CpiDetailsActivity_OpFragment");
+                isOp = false;
+                L.d("xxx", "OpFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("CpiDetailsActivity_BigFragment");
+            isBig = true;
+            L.d("xxx", "BigFragment>>>显示");
+        }
+        if (isOpFragment) {
+            if (isPalte) {
+                MobclickAgent.onPageEnd("CpiDetailsActivity_PalteFragment");
+                isPalte = false;
+                L.d("xxx", "PalteFragment>>>隐藏");
+            }
+            if (isBig) {
+                MobclickAgent.onPageEnd("CpiDetailsActivity_BigFragment");
+                isBig = false;
+                L.d("xxx", "BigFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("CpiDetailsActivity_OpFragment");
+            isOp = true;
+            L.d("xxx", "OpFragment>>>显示");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        if (isPalteFragment) {
+            MobclickAgent.onPageStart("CpiDetailsActivity_PalteFragment");
+            isPalte = true;
+            L.d("xxx", "PalteFragment>>>显示");
+        }
+        if (isBigFragment) {
+            MobclickAgent.onPageStart("CpiDetailsActivity_BigFragment");
+            isBig = true;
+            L.d("xxx", "BigFragment>>>显示");
+        }
+        if (isOpFragment) {
+            MobclickAgent.onPageStart("CpiDetailsActivity_OpFragment");
+            isOp = true;
+            L.d("xxx", "OpFragment>>>显示");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        if (isPalte) {
+            MobclickAgent.onPageEnd("CpiDetailsActivity_PalteFragment");
+            isPalte = false;
+            L.d("xxx", "PalteFragment>>>隐藏");
+        }
+        if (isBig) {
+            MobclickAgent.onPageEnd("CpiDetailsActivity_BigFragment");
+            isBig = false;
+            L.d("xxx", "BigFragment>>>隐藏");
+        }
+        if (isOp) {
+            MobclickAgent.onPageEnd("CpiDetailsActivity_OpFragment");
+            isOp = false;
+            L.d("xxx", "OpFragment>>>隐藏");
+        }
+    }
 }

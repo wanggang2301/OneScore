@@ -55,7 +55,9 @@ public class FootballActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frag_basefootball);
         this.mContext = this;
-        MobclickAgent.openActivityDurationTrack(true);
+        /**当前Activity界面不统计，只统计下面Fragment界面*/
+        MobclickAgent.openActivityDurationTrack(false);
+
         currentPosition = getIntent().getIntExtra("football", 0);
         initView();
         initData();

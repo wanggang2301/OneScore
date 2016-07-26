@@ -708,6 +708,12 @@ public class BaseURLs {
 
     /**资讯Id查询*/
     public final static String URL_INFORMATION_BY_THIRDID = URL_API_HOST + "info.findSingleInfo.do";
+    /*QQ登录*/
+    public final static String URL_QQ_LOGIN = URL_API_HOST + "androidUserCenter. loginQQ.do";
+    /*QQ登录*/
+    public final static String URL_SINA_LOGIN = URL_API_HOST + "androidUserCenter.loginWeibo.do";
 
-
+    public final static String URL_WEIXIN_LOGIN = URL_API_HOST + "androidUserCenter.loginWeChat.do";
+    /**足球情报 - 大数据预测*/
+    public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
 }

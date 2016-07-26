@@ -6,7 +6,7 @@
     >
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y20"
+        android:layout_height="10dp"
         android:background="@color/whitesmoke"/>
     <RelativeLayout
         android:id="@+id/top"
@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         >
         <TextView
-            android:layout_marginTop="@dimen/y20"
+            android:layout_marginTop="10dp"
             android:text="A组"
             android:id="@+id/tv_agendafg_lv_gropname"
             android:layout_width="wrap_content"

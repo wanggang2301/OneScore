@@ -134,7 +134,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
             public synchronized void onResponse(final CounselBean json) {
                 //请求成功
                 if ("200".equals(json.getResult() + "")) {
-//                    ToastTools.ShowQuickCenter(mContext, json.getResult() + "");
+//                    ToastTools.showQuickCenter(mContext, json.getResult() + "");
                     //没有数据
                     if (json == null) {
                         mHandler.sendEmptyMessage(HEAD_NODATA);//暂时没有数据

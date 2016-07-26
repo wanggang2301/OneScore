@@ -122,7 +122,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                ToastTools.ShowQuickCenter(CounselCommentActivity.this,position+"");
+//                ToastTools.showQuickCenter(CounselCommentActivity.this,position+"");
             }
         });
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.comment_swiperefreshlayout);
@@ -349,7 +349,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
                 mLoadMore.setText(R.string.foot_loadmore);
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
-                    ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_nullcontent));
+                    ToastTools.showQuickCenter(mContext, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
                     if (CommonUtils.isLogin()) {//已登录华海
                         if (CyUtils.isLogin) {//已登录畅言
@@ -359,7 +359,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                                 CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                             }
                         } else {//未登录
-                            ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
+                            ToastTools.showQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
                             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                         }
                         CyUtils.hideKeyBoard(getActivity());
@@ -476,7 +476,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     public void onRequestSucceeded(SubmitResp submitResp) {
         issubmitFinish = true;
         mEditText.setText("");
-        ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.succed_send));
+        ToastTools.showQuickCenter(mContext, getResources().getString(R.string.succed_send));
         //刷新界面
         loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
     }
@@ -485,7 +485,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     @Override
     public void onRequestFailed(CyanException e) {
         issubmitFinish = true;
-        ToastTools.ShowQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
+        ToastTools.showQuickCenter(mContext, getResources().getString(R.string.warn_submitfail));
     }
 
     //提供键盘显示隐藏的接口供外部调用

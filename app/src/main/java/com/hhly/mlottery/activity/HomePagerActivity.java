@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -58,7 +57,7 @@ import java.util.Map;
  * 首页Activity
  * Created by hhly107 on 2016/3/29.com.hhly.mlottery.activity.HomePagerActivity
  */
-public class HomePagerActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private static final java.lang.String TAG = "HomePagerActivity";
     private Context mContext;// 上下文
@@ -240,13 +239,13 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
      * 初始化事件
      */
     private void initEvent() {
-        public_btn_set.setOnClickListener(new View.OnClickListener() { // 登录跳转
+      /*  public_btn_set.setOnClickListener(new View.OnClickListener() { // 登录跳转
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomePagerActivity.this, HomeUserOptionsActivity.class));
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting");
             }
-        });
+        });*/
         if (AppConstants.isTestEnv) {
             public_txt_title.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -273,8 +272,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             mListBaseAdapter.start();// 启动轮播图
         }
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("HomePagerActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("HomePagerActivity");
     }
 
 
@@ -284,8 +283,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
             mListBaseAdapter.end();// 结束轮播图
         }
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("HomePagerActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("HomePagerActivity");
     }
 
     /**
@@ -348,8 +347,8 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
         iv_account.setOnClickListener(this);
 
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
-        public_btn_set.setVisibility(View.VISIBLE);
-        public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
+        public_btn_set.setVisibility(View.GONE);
+        // public_btn_set.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_user_setting));// 设置登录图标
 
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
 
@@ -377,11 +376,11 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
                     try {
                         mHomePagerEntity = JSON.parseObject(jsonObject, HomePagerEntity.class);
                         /**----将百度渠道的游戏竞猜去除掉--Start---*/
-                        if("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber)){
+                        if ("B1001".equals(channelNumber) || "B1002".equals(channelNumber) || "B1003".equals(channelNumber)) {
                             Iterator<HomeContentEntity> iterator = mHomePagerEntity.getMenus().getContent().iterator();
-                            while(iterator.hasNext()){
+                            while (iterator.hasNext()) {
                                 HomeContentEntity b = iterator.next();
-                                if("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle())){
+                                if ("遊戲競猜".equals(b.getTitle()) || "游戏竞猜".equals(b.getTitle())) {
                                     iterator.remove();
                                 }
                             }
@@ -697,20 +696,23 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_account:
-                MobclickAgent.onEvent(mContext, "LoginActivity_Start");
-                if (CommonUtils.isLogin()) {
+
+             /*   if (CommonUtils.isLogin()) {
                     goToAccountActivity();
                 } else {
-                    goToLoginActivity();
-                }
+                    goToUserOptionsActivity();
+                }*/
+                goToUserOptionsActivity();
+
+
                 break;
             default:
                 break;
         }
     }
 
-    private void goToLoginActivity() {
-        startActivityForResult(new Intent(this, LoginActivity.class), REQUESTCODE_LOGIN);
+    private void goToUserOptionsActivity() {
+        startActivityForResult(new Intent(this, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
     }
 
     private void goToAccountActivity() {
@@ -720,7 +722,6 @@ public class HomePagerActivity extends Activity implements SwipeRefreshLayout.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回

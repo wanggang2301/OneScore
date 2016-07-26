@@ -22,7 +22,6 @@ import com.hhly.mlottery.bean.basket.BasketDetails.OddsDataEntity;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -339,14 +338,14 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("BasketOddsDetailsActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("BasketOddsDetailsActivity");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("BasketOddsDetailsActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("BasketOddsDetailsActivity");
     }
 }

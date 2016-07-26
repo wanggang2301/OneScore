@@ -27,7 +27,6 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 畅言权限 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -106,9 +105,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".activity.LiveChannelActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.PlayWebViewActivity"
             android:screenOrientation="portrait" />
         <!-- 篮球设置 -->
@@ -170,9 +166,6 @@
             android:name=".activity.NumbersActivity"
             android:screenOrientation="portrait" />
         <!-- 篮球入口 -->
-        <activity
-            android:name=".activity.BasketListActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait" />

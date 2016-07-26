@@ -109,8 +109,8 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             isOnResume = true;
         }
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("NumbersActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("NumbersActivity");
     }
 
     private boolean isExit = true;
@@ -119,8 +119,8 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     public void onPause() {
         isExit = false;
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("NumbersActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("NumbersActivity");
     }
 
     /**
