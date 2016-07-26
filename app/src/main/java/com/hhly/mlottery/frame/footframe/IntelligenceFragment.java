@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * 情报 Fragment
- * <p>
+ * <p/>
  * Created by loshine on 2016/7/18.
  */
 public class IntelligenceFragment extends Fragment {
@@ -263,9 +263,28 @@ public class IntelligenceFragment extends Fragment {
      * 刷新DIY算法UI
      */
     public void refreshFactorUI() {
-        setProgress(mHostProgress, mHostAlert, TYPE_HOST);
-        setProgress(mSizeProgress, mSizeAlert, TYPE_SIZE);
-        setProgress(mAsiaProgress, mAsiaAlert, TYPE_ASIA);
+        BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
+        if (battleHistory == null) {
+            hideProgress(mHostProgress, mHostAlert);
+            hideProgress(mSizeProgress, mSizeAlert);
+            hideProgress(mAsiaProgress, mAsiaAlert);
+            return;
+        }
+        if (battleHistory.getHomeWinPercent() != null) {
+            showProgress(mHostProgress, mHostAlert, TYPE_HOST);
+        } else {
+            hideProgress(mHostProgress, mHostAlert);
+        }
+        if (battleHistory.getSizeWinPercent() != null) {
+            showProgress(mSizeProgress, mSizeAlert, TYPE_SIZE);
+        } else {
+            hideProgress(mSizeProgress, mSizeAlert);
+        }
+        if (battleHistory.getAsiaWinPercent() != null) {
+            showProgress(mAsiaProgress, mAsiaAlert, TYPE_ASIA);
+        } else {
+            hideProgress(mAsiaProgress, mAsiaAlert);
+        }
     }
 
     /**
@@ -274,23 +293,23 @@ public class IntelligenceFragment extends Fragment {
      * @param progressBar
      * @param type        数据类型 0-Host，1-Size，2-Asia
      */
-    private void setProgress(RoundProgressBar progressBar, View alertView, int type) {
-        try {
-            double winRate;
-            if (type == TYPE_HOST) {
-                winRate = mFactor.computeHostWinRate(mBigDataForecast);
-            } else if (type == TYPE_SIZE) {
-                winRate = mFactor.computeSizeWinRate(mBigDataForecast);
-            } else {
-                winRate = mFactor.computeAsiaWinRate(mBigDataForecast);
-            }
-            progressBar.setProgress((int) (winRate * 100));
-            progressBar.setTextIsDisplayable(true);
-            alertView.setVisibility(View.GONE);
-        } catch (Exception e) {
-            progressBar.setTextIsDisplayable(false);
-            alertView.setVisibility(View.VISIBLE);
+    private void showProgress(RoundProgressBar progressBar, View alertView, int type) {
+        double winRate;
+        if (type == TYPE_HOST) {
+            winRate = mFactor.computeHostWinRate(mBigDataForecast);
+        } else if (type == TYPE_SIZE) {
+            winRate = mFactor.computeSizeWinRate(mBigDataForecast);
+        } else {
+            winRate = mFactor.computeAsiaWinRate(mBigDataForecast);
         }
+        progressBar.setProgress((int) (winRate * 100));
+        progressBar.setTextIsDisplayable(true);
+        alertView.setVisibility(View.GONE);
+    }
+
+    private void hideProgress(RoundProgressBar progressBar, View alertView) {
+        progressBar.setTextIsDisplayable(false);
+        alertView.setVisibility(View.VISIBLE);
     }
 
     public static IntelligenceFragment newInstance(String thirdId) {
