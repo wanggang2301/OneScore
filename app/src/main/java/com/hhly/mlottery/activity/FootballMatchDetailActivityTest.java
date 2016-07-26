@@ -1254,8 +1254,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             };
 
             if (!isStarComputeTimer) {
-                footballTimer.schedule(tt, 15000, 15000);
-                isStarComputeTimer = true;
+                if (tt != null) {
+                    footballTimer.schedule(tt, 15000, 15000);
+                    isStarComputeTimer = true;
+                }
 
             }
         }
