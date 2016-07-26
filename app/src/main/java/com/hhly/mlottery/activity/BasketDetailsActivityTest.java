@@ -208,6 +208,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_details_activity_test);
+        /**不统计当前的Activity界面，只统计Fragment界面*/
+        MobclickAgent.openActivityDurationTrack(false);
+
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
@@ -1328,6 +1331,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         if (isFragment0) {
             MobclickAgent.onPageStart("BasketBall_Info_FX");
             is0 = true;
@@ -1358,6 +1362,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         if (is0) {
             MobclickAgent.onPageEnd("BasketBall_Info_FX");
             is0 = false;

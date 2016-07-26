@@ -7,13 +7,13 @@
               android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y20"
+        android:layout_height="10dp"
         android:background="@color/whitesmoke"/>
 
     <LinearLayout
         android:id="@+id/integal_rela"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/y75"
+        android:layout_height="38dp"
         android:orientation="horizontal">
 
         <LinearLayout

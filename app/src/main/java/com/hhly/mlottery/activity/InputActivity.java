@@ -131,7 +131,7 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
             case R.id.iv_send://发送评论
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_TalkSend");
                 if (TextUtils.isEmpty(mEditText.getText())) {//没有输入内容
-                    ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
+                    ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_nullcontent));
                 } else {//有输入内容
                     if (CommonUtils.isLogin()) {//已登录华海
                         if (CyUtils.isLogin) {//已登录畅言
@@ -142,7 +142,7 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
                                 CyUtils.submitComment(topicid, mEditText.getText() + "", sdk, this);
                             }
                         } else {//未登录
-                            ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
+                            ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_submitfail));
                             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                         }
                         CyUtils.hideKeyBoard(this);
@@ -171,7 +171,7 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
     public void onRequestSucceeded(SubmitResp submitResp) {
         mEditText.setText("");
         issubmitFinish = true;
-        ToastTools.ShowQuick(this, getResources().getString(R.string.succed_send));
+        ToastTools.showQuick(this, getResources().getString(R.string.succed_send));
         setResult(CyUtils.RESULT_CODE);
         finish();
 
@@ -183,7 +183,7 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
         issubmitFinish = true;
         mSend.setEnabled(true);
         mSend.setSelected(true);
-        ToastTools.ShowQuickCenter(this, getResources().getString(R.string.warn_submitfail));
+        ToastTools.showQuickCenter(this, getResources().getString(R.string.warn_submitfail));
     }
 
     @Override

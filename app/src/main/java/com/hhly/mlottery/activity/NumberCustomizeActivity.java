@@ -1,10 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,7 +17,6 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.NumberDataUtils;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -30,13 +24,17 @@ import com.hhly.mlottery.widget.DragGridView;
 import com.hhly.mlottery.widget.DragGridView.OnChanageListener;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @ClassName: CustomizeActivity
  * @Description: 定制采种界面
  * @author Tenney
  * @date 2015-10-24 下午9:47:31
  */
-public class NumberCustomizeActivity extends Activity implements OnClickListener {
+public class NumberCustomizeActivity extends BaseActivity implements OnClickListener {
 	private Context mContext;
 	private ImageView public_btn_filter;
 	private ImageView public_btn_set;
@@ -375,19 +373,5 @@ public class NumberCustomizeActivity extends Activity implements OnClickListener
 			mDefAdapter.notifyDataSetChanged();
 			break;
 		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart("NumberCustomizeActivity");
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd("NumberCustomizeActivity");
 	}
 }

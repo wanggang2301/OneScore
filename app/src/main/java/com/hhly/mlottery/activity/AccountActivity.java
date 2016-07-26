@@ -156,8 +156,8 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         /**友盟页面统计*/
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("AccountActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("AccountActivity");
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
     }
 
@@ -165,7 +165,7 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     public void onPause() {
         super.onPause();
         /**友盟页面统计*/
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("AccountActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("AccountActivity");
     }
 }

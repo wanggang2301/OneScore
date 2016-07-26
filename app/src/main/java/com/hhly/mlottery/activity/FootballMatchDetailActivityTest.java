@@ -48,6 +48,7 @@ import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
+import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
@@ -230,6 +231,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private OddsFragment mOddsFragment;         //指数
 
     private StatisticsFragment mStatisticsFragment;  //统计
+    private IntelligenceFragment mIntelligenceFragment; // 情报
 
     private int mStartTime;// 获取推送的开赛时间
     private TextView reLoading; //赔率请求失败重新加载
@@ -273,6 +275,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         setContentView(R.layout.activity_football_match_details_test);
 
+        /**当前Activity不统计*/
+        MobclickAgent.openActivityDurationTrack(false);
+
         this.mContext = getApplicationContext();
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
@@ -311,8 +316,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mOddsFragment = OddsFragment.newInstance();
         //统计
         mStatisticsFragment = StatisticsFragment.newInstance();
+        // 情报
+        mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
+        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment,
+                mAnalyzeFragment, mOddsFragment, mStatisticsFragment, mIntelligenceFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -1246,8 +1254,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             };
 
             if (!isStarComputeTimer) {
-                footballTimer.schedule(tt, 15000, 15000);
-                isStarComputeTimer = true;
+                if (tt != null) {
+                    footballTimer.schedule(tt, 15000, 15000);
+                    isStarComputeTimer = true;
+                }
 
             }
         }
@@ -2501,7 +2511,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
-
+        MobclickAgent.onResume(this);
         if (isDetailsRollballFragment) {
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");
             isDetailsRollball = true;
@@ -2532,7 +2542,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onPause() {
         super.onPause();
-
+        MobclickAgent.onPause(this);
         if (isDetailsRollball) {
             MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
             isDetailsRollball = false;

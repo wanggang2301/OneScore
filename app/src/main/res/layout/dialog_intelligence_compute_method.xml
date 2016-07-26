@@ -1,0 +1,241 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/dialog_background"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/share_date_top_bg"
+        android:gravity="center"
+        android:text="@string/diy_compute_method"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_15"/>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/left"
+            style="@style/odds_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rb_left"
+            android:checked="true"
+            android:padding="8dp"
+            android:text="@string/home_win_rate"/>
+
+        <RadioButton
+            android:id="@+id/center"
+            style="@style/odds_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rb_center"
+            android:padding="8dp"
+            android:text="@string/size_win_rate"/>
+
+        <RadioButton
+            android:id="@+id/right"
+            style="@style/odds_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rb_right"
+            android:padding="8dp"
+            android:text="@string/asia_win_rate"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:text="@string/diy_compute_method_message"
+        android:textColor="@color/info_home_progress_color"
+        android:textSize="@dimen/text_size_13"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:theme="@style/edit_text_line">
+
+        <EditText
+            android:id="@+id/history_edt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13"
+            tools:text="0.25"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/symbol_times"
+            android:textColor="@color/loading_txt_color"
+            android:textSize="@dimen/text_size_13"/>
+
+        <TextView
+            android:id="@+id/history_percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13"
+            tools:text="0.25"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/symbol_plus"
+            android:textColor="@color/loading_txt_color"
+            android:textSize="@dimen/text_size_13"/>
+
+        <EditText
+            android:id="@+id/host_edt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13"
+            tools:text="0.25"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/symbol_times"
+            android:textColor="@color/loading_txt_color"
+            android:textSize="@dimen/text_size_13"/>
+
+        <TextView
+            android:id="@+id/host_percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13"
+            tools:text="0.25"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/symbol_plus"
+            android:textColor="@color/loading_txt_color"
+            android:textSize="@dimen/text_size_13"/>
+
+        <EditText
+            android:id="@+id/guest_edt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13"
+            tools:text="0.25"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/symbol_times"
+            android:textColor="@color/loading_txt_color"
+            android:textSize="@dimen/text_size_13"/>
+
+        <TextView
+            android:id="@+id/guest_percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13"
+            tools:text="0.25"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="end|center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="@string/symbol_equal"
+            android:textColor="@color/loading_txt_color"
+            android:textSize="@dimen/text_size_13"/>
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="48dp"
+            android:layout_height="25dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:text="0.52"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/linecolor"/>
+
+    <android.support.percent.PercentFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/close"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/action_close"
+            app:layout_widthPercent="50%"/>
+
+        <TextView
+            android:id="@+id/compute"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="@string/action_compute"
+            android:textColor="@color/colorPrimary"
+            app:layout_widthPercent="50%"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/linecolor"/>
+
+    </android.support.percent.PercentFrameLayout>
+
+</LinearLayout>

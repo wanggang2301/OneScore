@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.umeng.analytics.MobclickAgent;
 
 public class DebugConfigActivity extends BaseActivity{
 
@@ -30,6 +31,9 @@ public class DebugConfigActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_config);
+
+        /**当前Activity界面不统计*/
+        MobclickAgent.openActivityDurationTrack(false);
 
         Button config_submit = (Button) findViewById(R.id.config_submit);
 
