@@ -222,7 +222,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private String[] mSports; // 赛季集
 
     private String mCurrentSports = "";
-    private boolean isLoad = false;
+    private boolean isLoad = false;//赛季是否可筛选
     private void initData(){
 
         // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do?lang=zh&leagueId=2
@@ -238,12 +238,20 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 if (basketDatabaseBean != null) {
                     mSports = basketDatabaseBean.getSeason();
 
-                    if (mSports != null || mSports.length != 0) {
+                    /**
+                     * 判断赛季集合mSports 中有数据时 ，才设为可筛选
+                     */
+                    if (mSports != null && mSports.length != 0) {
                         isLoad = true;
                     }
 
                     if (mCurrentSports.equals("")) {
-                        mSportsText.setText(mSports[0] + getResources().getString(R.string.basket_database_details_season));
+                        //若赛季无数据时 设为"--"
+                        if (mSports == null || mSports.length == 0) {
+                            mSportsText.setText("--");
+                        }else{
+                            mSportsText.setText(mSports[0] + getResources().getString(R.string.basket_database_details_season));
+                        }
                     } else {
                         mSportsText.setText(mCurrentSports + getResources().getString(R.string.basket_database_details_season));
                     }
@@ -262,7 +270,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                isLoad = false;
+                isLoad = false; //不可筛选
             }
         }, BasketDatabaseBean.class);
 
@@ -383,6 +391,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
 
     int currentDialogPosition = 0; // 当前选中的赛季（默认第一个）
+    int currentPosition = 0; // 赛季选择过程中记录（点击确定后才赋值 ， 解决点击筛选不确定后再次进入赛季选择显示不一的情况）
 
     public void setDialog(){
         // Dialog 设置
@@ -415,8 +424,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    currentDialogPosition = position;
-                    mAdapter.updateDatas(currentDialogPosition);
+//                    currentDialogPosition = position;
+                    currentPosition = position;
+                    mAdapter.updateDatas(position);
                     mAdapter.notifyDataSetChanged();
 
                 }
@@ -429,8 +439,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    currentDialogPosition = position;
-                    mAdapter.updateDatas(currentDialogPosition);
+//                    currentDialogPosition = position;
+                    currentPosition = position;
+                    mAdapter.updateDatas(position);
                     mAdapter.notifyDataSetChanged();
 
                 }
@@ -444,6 +455,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             public void onClick(View v) {
                 mAlertDialog.dismiss();
 
+                currentDialogPosition = currentPosition;
                 String newData = mSports[currentDialogPosition];
 
                 mCurrentSports = newData;
