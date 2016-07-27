@@ -147,7 +147,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 if (CommonUtils.isLogin()) {
                     startActivity(new Intent(this, ProfileActivity.class));
                 } else {
-                    UiUtils.toast(MyApp.getInstance(), "请先登录");
+                    startActivity(new Intent(this, LoginActivity.class));
+                    //UiUtils.toast(MyApp.getInstance(), "请先登录");
                 }
 
                 break;
@@ -224,6 +225,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("HomeUserOptionsActivity");
+       // UiUtils.toast(MyApp.getInstance(), "我是个人用户页面");
          /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);

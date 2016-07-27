@@ -776,6 +776,7 @@
     <string name="nickname_format">昵稱:格式爲1-15個字符(不超過七個中文),由中英文數字和字符組成</string>
     <string name="modify_password">修改密碼</string>
     <string name="modifying_password">正在修改密碼...</string>
+    <string name="modifying_nickname">正在修改昵称...</string>
     <string name="modify_password_succ">修改密碼成功</string>
     <string name="modify_password_fail">修改密碼失敗</string>
     <string name="input_password_old">請輸入舊密碼</string>

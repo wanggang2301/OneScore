@@ -77,8 +77,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private Oauth2AccessToken mOauth2AccessToken;
     public static IWXAPI mApi;
     private String mWeixincode;
-    /*定义一个全局变量来判断是否为第三方登录*/
-    public static boolean isThreee_login = false;//默认为false
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -100,7 +98,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("LoginActivity");
         super.onResume();
-        // UiUtils.toast(MyApp.getInstance(), "Onresume我进来了");
+        // UiUtils.toast(MyApp.getInstance(), "我是登录页面LoginActivity");
       /*  // 自动弹出软键盘
         et_username.setFocusable(true);
         et_username.setFocusableInTouchMode(true);
@@ -459,7 +457,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 progressBar.dismiss();
                 L.e(TAG, " 登录失败");
                // UiUtils.toast(LoginActivity.this, R.string.login_peak);
-                UiUtils.toast(LoginActivity.this, exception.toString());
+               // UiUtils.toast(LoginActivity.this, exception.toString());
             }
         }, Register.class);
 

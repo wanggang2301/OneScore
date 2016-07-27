@@ -75,7 +75,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
 
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);
-        progressBar.setMessage(getResources().getString(R.string.logining));
+        progressBar.setMessage(getResources().getString(R.string.modifying_nickname));
 
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.modify_nickname);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
