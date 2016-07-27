@@ -902,5 +902,5 @@
     <string name="action_compute">计算</string>
     <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
     <string name="diy_compute_method_message">历史交锋 × %1$s + 主队 × %2$s + 客队 × %3$s = 概率</string>
-    <string name="insufficient_sampling">采样\n不足</string>
+    <string name="insufficient_sampling">采样不足</string>
 </resources>
