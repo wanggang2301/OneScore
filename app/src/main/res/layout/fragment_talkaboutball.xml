@@ -23,7 +23,6 @@
             <ImageView
                 android:id="@+id/talkball_home_like"
                 style="@style/MatchDetailLike"
-                android:layout_below="@id/football_match_detail_home_name_layout"
                 android:src="@mipmap/like_red"/>
 
             <ImageView
@@ -69,7 +68,6 @@
             <ImageView
                 android:id="@+id/talkball_guest_like"
                 style="@style/MatchDetailLike"
-                android:layout_below="@id/football_match_detail_guest_layout"
                 android:src="@mipmap/like_blue"/>
 
             <ImageView
