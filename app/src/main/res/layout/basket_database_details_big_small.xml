@@ -145,17 +145,14 @@
             android:id="@+id/basket_database_loading_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:paddingTop="15dp"
             android:visibility="gone"
             >
 
             <ProgressBar
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:indeterminateDrawable="@drawable/progress_loading_fb_details"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
         </FrameLayout>
 
         <!--网络不给力提示-->
