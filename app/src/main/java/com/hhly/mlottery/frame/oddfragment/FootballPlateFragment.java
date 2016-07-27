@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 足球详情指数列表
- * <p>
- * Created by loshine on 2016/6/28.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/28.
  */
 public class FootballPlateFragment extends Fragment {
 

@@ -1,9 +1,9 @@
 package com.hhly.mlottery.bean.intelligence;
 
 /**
- * 大数据预测接口返回结果
- * <p/>
- * Created by loshine on 2016/7/19.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/7/19.
  */
 public class BigDataResult {
 

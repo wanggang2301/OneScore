@@ -4,9 +4,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 
 /**
- * 适配器
- * <p>
- * Created by loshine on 2016/7/19.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/7/19.
  */
 public abstract class TextWatcherAdapter implements TextWatcher {
     @Override
