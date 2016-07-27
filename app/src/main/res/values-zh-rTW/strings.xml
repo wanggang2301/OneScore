@@ -842,8 +842,8 @@
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">至少選擇壹家公司</string>
     <string name="new_analyze_let">亞盤走勢</string>
-    <string name="new_analyze_home">主隊</string>
-    <string name="new_analyze_guest">客隊</string>
+    <string name="new_analyze_home">主場</string>
+    <string name="new_analyze_guest">客場</string>
     <string name="new_analyze_win">贏</string>
     <string name="new_analyze_draw">走</string>
     <string name="new_analyze_lose">輸</string>

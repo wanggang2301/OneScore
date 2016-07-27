@@ -140,6 +140,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private LineChartView mChartLetHistory;
     private LineChartView mChartLetHome;
     private LineChartView mChartLetGuest;
+    private TextView mLetHomeTeam;
+    private TextView mLetGuestTeam;
+    private TextView mLetNodata1;
+    private TextView mLetNodata2;
+    private TextView mLetNodata3;
+    private TextView mLetNodata4;
+    private TextView mLetAllNodata;
     //大小球走势
     private LinearLayout mllSize;
     private TextView mTextSize1;
@@ -152,6 +159,14 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private LineChartView mChartSizeHistory;
     private LineChartView mChartSizeHome;
     private LineChartView mChartSizeGuest;
+    private TextView mSizeHomeTeam;
+    private TextView mSizeGuestTeam;
+    private TextView mSizeNodata1;
+    private TextView mSizeNodata2;
+    private TextView mSizeNodata3;
+    private TextView mSizeNodata4;
+    private TextView mSizeAllNodata;
+
 
     /**亚盘里的listView*/
     private AnalyzeAsiaAdapter mLetAdapter;
@@ -289,6 +304,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mChartLetHistory= (LineChartView) mView.findViewById(R.id.chart_let_history);
         mChartLetHome= (LineChartView) mView.findViewById(R.id.chart_let_home);
         mChartLetGuest= (LineChartView) mView.findViewById(R.id.chart_let_guest);
+        mLetHomeTeam= (TextView) mView.findViewById(R.id.let_home_team);
+        mLetGuestTeam= (TextView) mView.findViewById(R.id.let_guest_team);
+        mLetNodata1= (TextView) mView.findViewById(R.id.let_nodata1);
+        mLetNodata2= (TextView) mView.findViewById(R.id.let_nodata2);
+        mLetNodata3= (TextView) mView.findViewById(R.id.let_nodata3);
+        mLetNodata4= (TextView) mView.findViewById(R.id.let_nodata4);
+        mLetAllNodata= (TextView) mView.findViewById(R.id.let_all_nodata);
 
         //大小球走势
         mllSize= (LinearLayout) mView.findViewById(R.id.ll_analyze_size);
@@ -303,6 +325,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mChartSizeHistory= (LineChartView) mView.findViewById(R.id.chart_size_history);
         mChartSizeHome= (LineChartView) mView.findViewById(R.id.chart_size_home);
         mChartSizeGuest= (LineChartView) mView.findViewById(R.id.chart_size_guest);
+        mSizeHomeTeam= (TextView) mView.findViewById(R.id.size_home_team);
+        mSizeGuestTeam= (TextView) mView.findViewById(R.id.size_guest_team);
+        mSizeNodata1= (TextView) mView.findViewById(R.id.size_nodata1);
+        mSizeNodata2= (TextView) mView.findViewById(R.id.size_nodata2);
+        mSizeNodata3= (TextView) mView.findViewById(R.id.size_nodata3);
+        mSizeNodata4= (TextView) mView.findViewById(R.id.size_nodata4);
+        mSizeAllNodata= (TextView) mView.findViewById(R.id.size_all_nodata);
 
     }
 
@@ -324,6 +353,11 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     mAttackNodata.setVisibility(View.VISIBLE);
                     fl_firsPlayers_not.setVisibility(View.VISIBLE);
                     fl_firsPlayers_content.setVisibility(View.GONE);
+                    mllLet.setVisibility(View.GONE);
+                    mllSize.setVerticalGravity(View.GONE);
+                    mLetAllNodata.setVisibility(View.VISIBLE);
+                    mllSize.setVisibility(View.GONE);
+                    mSizeAllNodata.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -336,6 +370,11 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mAttackNodata.setVisibility(View.VISIBLE);
                 fl_firsPlayers_not.setVisibility(View.VISIBLE);
                 fl_firsPlayers_content.setVisibility(View.GONE);
+                mllLet.setVisibility(View.GONE);
+                mllSize.setVerticalGravity(View.GONE);
+                mLetAllNodata.setVisibility(View.VISIBLE);
+                mllSize.setVisibility(View.GONE);
+                mSizeAllNodata.setVisibility(View.VISIBLE);
             }
         }, NewAnalyzeBean.class);
 
@@ -567,8 +606,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
         //心水推荐
 //        Log.e("fuckkkkkk",analyzeBean.getRecommend());
-        if(analyzeBean.getRecommend()!=null){
+        if(analyzeBean.getRecommend()!=null&&analyzeBean.getRecommend()!=""){
+            mRecommend.setTextColor(mContext.getResources().getColor(R.color.team_name_color));
             mRecommend.setText(Html.fromHtml(analyzeBean.getRecommend()));
+        }else{
+            mRecommend.setTextColor(mContext.getResources().getColor(R.color.black_details_ball_textcolor));
+            mRecommend.setText(mChartLetGuest.getResources().getString(R.string.basket_nodata));
         }
 
         //亚盘走势
@@ -593,14 +636,21 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 //            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity3);
 //            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
 //            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
+            mllLet.setVisibility(View.VISIBLE);
+            mLetAllNodata.setVisibility(View.GONE);
 
             if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
                 setLetText1(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
                 setLetText2(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
             }
-            if(getActivity()!=null&&analyzeBean.getAsiaTrend().getBattleHistory()!=null){
+            if(getActivity()!=null&&analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getPointList()!=null){
                 mLetAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getAsiaTrend().getBattleHistory().getPointList(),analyzeBean);
                 mLetListView.setAdapter(mLetAdapter);
+                mLetNodata1.setVisibility(View.GONE);
+                mLetNodata2.setVisibility(View.GONE);
+            }else{
+                mLetNodata1.setVisibility(View.VISIBLE);
+                mLetNodata2.setVisibility(View.VISIBLE);
             }
 
             //亚盘历史交锋
@@ -616,7 +666,11 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     }
                     mChartLetHistory.setLineChartList(asiaHistoryList);
                 }
+                mLetNodata1.setVisibility(View.GONE);
+            }else{
+                mLetNodata1.setVisibility(View.VISIBLE);
             }
+
 
 
             //亚盘近期对比主队
@@ -630,6 +684,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     asiaHomeList.add(list1);
                 }
                 mChartLetHome.setLineChartList(asiaHomeList);
+                mLetNodata3.setVisibility(View.GONE);
+            }else{
+                mLetNodata3.setVisibility(View.VISIBLE);
             }
 
             //亚盘近期对比客队
@@ -642,18 +699,32 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     asiaGuestList.add(list);
                 }
                 mChartLetGuest.setLineChartList(asiaGuestList);
+                mLetNodata4.setVisibility(View.GONE);
             }
+            else{
+                mLetNodata4.setVisibility(View.VISIBLE);
+            }
+
+        }else {
+            mllLet.setVisibility(View.GONE);
+            mLetAllNodata.setVisibility(View.VISIBLE);
         }
 
         //大小球走势
         if(analyzeBean.getSizeTrend()!=null){
+
+            mllSize.setVisibility(View.VISIBLE);
+            mSizeAllNodata.setVisibility(View.GONE);
             if(analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
                 setSizeText1(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
                 setSizeText2(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
             }
-            if(getActivity()!=null&&analyzeBean.getSizeTrend().getBattleHistory()!=null){
+            if(getActivity()!=null&&analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getPointList()!=null){
                 mSizeAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getSizeTrend().getBattleHistory().getPointList(),analyzeBean);
                 mSizeListView.setAdapter(mSizeAdapter);
+            }else{
+                mSizeNodata1.setVisibility(View.VISIBLE);
+                mSizeNodata2.setVisibility(View.VISIBLE);
             }
 
             //大小球历史交锋
@@ -669,6 +740,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     }
                     mChartSizeHistory.setLineChartList(sizeHistoryList);
                 }
+                mSizeNodata1.setVisibility(View.GONE);
+            }else{
+                mSizeNodata1.setVisibility(View.VISIBLE);
             }
             //大小球近期对比主队
             List<List<Integer>> sizeHomeList=new ArrayList<>();
@@ -681,6 +755,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     sizeHomeList.add(list1);
                 }
                 mChartSizeHome.setLineChartList(sizeHomeList);
+            }else{
+                mSizeNodata3.setVisibility(View.VISIBLE);
             }
 
             //大小球近期对比客队
@@ -693,8 +769,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     sizeGuestList.add(list);
                 }
                 mChartSizeGuest.setLineChartList(sizeGuestList);
+            }else{
+                mSizeNodata4.setVisibility(View.VISIBLE);
             }
 
+        }else{
+            mllSize.setVisibility(View.GONE);
+            mSizeAllNodata.setVisibility(View.VISIBLE);
         }
 
     }
@@ -731,6 +812,10 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     public void setTeamName(String home,String guest){
         mHomeTeamName.setText(home);
         mGuestTeamName.setText(guest);
+        mLetHomeTeam.setText(home);
+        mSizeHomeTeam.setText(home);
+        mLetGuestTeam.setText(guest);
+        mSizeGuestTeam.setText(guest);
     }
     /**
      * 设置近期战绩图片  胜平负

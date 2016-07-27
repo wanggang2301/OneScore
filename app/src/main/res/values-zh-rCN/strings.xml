@@ -858,8 +858,8 @@
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">至少选择一家公司</string>
     <string name="new_analyze_let">亚盘走势</string>
-    <string name="new_analyze_home">主队</string>
-    <string name="new_analyze_guest">客队</string>
+    <string name="new_analyze_home">主场</string>
+    <string name="new_analyze_guest">客场</string>
     <string name="new_analyze_win">赢</string>
     <string name="new_analyze_draw">走</string>
     <string name="new_analyze_lose">输</string>

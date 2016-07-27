@@ -748,6 +748,15 @@
                             android:id="@+id/chart_let_history"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/let_nodata1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
                 <View
@@ -793,7 +802,7 @@
                             style="@style/analyze_text_score"
                             />
                     </LinearLayout>
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingTop="10dp"
@@ -803,9 +812,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:listSelector="#00000000"/>
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/let_nodata2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
+                    </RelativeLayout>
                 </LinearLayout>
-
             </LinearLayout>
             <!--近期对比-->
             <LinearLayout
@@ -859,9 +876,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/let_home_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/new_analyze_home"
+                            android:text=""
                             android:textSize="@dimen/text_size_10"
                             android:textColor="@color/black_details_ball_textcolor"
                             android:layout_alignParentTop="true"
@@ -871,6 +889,16 @@
                             android:id="@+id/chart_let_home"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/let_nodata3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
+
                     </RelativeLayout>
                 </LinearLayout>
                 <View
@@ -922,18 +950,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/let_guest_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/new_analyze_guest"
+                            android:text=""
                             android:textSize="@dimen/text_size_10"
                             android:textColor="@color/black_details_ball_textcolor"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             />
                         <com.hhly.mlottery.widget.LineChartView
                             android:id="@+id/chart_let_guest"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/let_nodata4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -976,8 +1014,21 @@
                 android:text="@string/new_analyze_more_messages"
                 android:textColor="@color/more_record"
                 android:textSize="@dimen/text_size_13"/>
+
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/let_all_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
@@ -1122,6 +1173,15 @@
                            android:id="@+id/chart_size_history"
                            android:layout_width="match_parent"
                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/size_nodata1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
                 <View
@@ -1167,7 +1227,7 @@
                             style="@style/analyze_text_score"
                             />
                     </LinearLayout>
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingTop="10dp"
@@ -1177,7 +1237,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:listSelector="#00000000"/>
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/size_nodata2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
+                    </RelativeLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -1233,9 +1302,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/size_home_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/new_analyze_home"
+                            android:text=""
                             android:textSize="@dimen/text_size_10"
                             android:textColor="@color/black_details_ball_textcolor"
                             android:layout_alignParentTop="true"
@@ -1245,6 +1315,15 @@
                             android:id="@+id/chart_size_home"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/size_nodata3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
                 <View
@@ -1296,18 +1375,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/size_guest_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/new_analyze_guest"
+                            android:text=""
                             android:textSize="@dimen/text_size_10"
                             android:textColor="@color/black_details_ball_textcolor"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             />
                         <com.hhly.mlottery.widget.LineChartView
                             android:id="@+id/chart_size_guest"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/size_nodata4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -1351,7 +1440,18 @@
                 android:textColor="@color/more_record"
                 android:textSize="@dimen/text_size_13"/>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/size_all_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
