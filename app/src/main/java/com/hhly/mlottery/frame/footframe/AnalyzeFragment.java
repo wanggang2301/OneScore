@@ -553,10 +553,16 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     }
 
                 }
+                else{
+                    // 显示暂无首发提示
+                    fl_firsPlayers_not.setVisibility(View.VISIBLE);
+                    fl_firsPlayers_content.setVisibility(View.GONE);
+                }
+            }else{
+                // 显示暂无首发提示
+                fl_firsPlayers_not.setVisibility(View.VISIBLE);
+                fl_firsPlayers_content.setVisibility(View.GONE);
             }
-            // 显示暂无首发提示
-            fl_firsPlayers_not.setVisibility(View.VISIBLE);
-            fl_firsPlayers_content.setVisibility(View.GONE);
         }
         //心水推荐
 //        Log.e("fuckkkkkk",analyzeBean.getRecommend());
