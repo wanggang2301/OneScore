@@ -246,7 +246,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                     }
 
                     if (mCurrentSports.equals("")) {
-                        //若赛季无数据时 设为"--"
+                        //若赛季无数据时 设为"--" 防止异常崩溃
                         if (mSports == null || mSports.length == 0) {
                             mSportsText.setText("--");
                         }else{
