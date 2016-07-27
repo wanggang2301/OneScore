@@ -21,9 +21,9 @@ import com.hhly.mlottery.widget.CpiOddsItemView;
 import java.util.List;
 
 /**
- * 足球指数 - 指数列表适配器
- * <p/>
- * Created by loshine on 2016/6/21.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/21.
  */
 public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfoBean> {
 

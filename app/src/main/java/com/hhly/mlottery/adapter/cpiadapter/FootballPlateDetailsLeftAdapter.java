@@ -10,9 +10,9 @@ import com.hhly.mlottery.bean.oddsbean.OddsDataInfo;
 import java.util.List;
 
 /**
- * 足球详情、指数详情、左侧列表适配器
- * <p/>
- * Created by loshine on 2016/6/29.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/29.
  */
 public class FootballPlateDetailsLeftAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddEntity> {
 

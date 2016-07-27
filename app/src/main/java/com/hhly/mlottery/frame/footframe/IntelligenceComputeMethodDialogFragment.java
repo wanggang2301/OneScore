@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.intelligence.BigDataForecast;
+import com.hhly.mlottery.bean.intelligence.BigDataForecastData;
 import com.hhly.mlottery.bean.intelligence.BigDataForecastFactor;
 import com.hhly.mlottery.util.StringFormatUtils;
 import com.hhly.mlottery.util.ToastTools;
@@ -28,7 +29,7 @@ import java.util.Locale;
 
 /**
  * 大数据预测 DIY 算法对话框
- * <p>
+ * <p/>
  * Created by Loshine on 2016/7/19.
  */
 public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
@@ -52,6 +53,8 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
 
     private BigDataForecast mBigDataForecast;
     private BigDataForecastFactor mFactor;
+
+    private int currentPosition = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,11 +84,25 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         return alertDialog;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (currentPosition != 0) {
+            if (currentPosition == 1) mRadioGroup.check(R.id.center);
+            if (currentPosition == 2) mRadioGroup.check(R.id.right);
+        }
+    }
+
     /**
      * 设置数据
      */
     private void setData() {
         if (mBigDataForecast != null) {
+
+            BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
+            BigDataForecastData homeRecent = mBigDataForecast.getHomeRecent();
+            BigDataForecastData guestRecent = mBigDataForecast.getGuestRecent();
+
             switch (getCurrentRadioPosition()) {
                 case 0:
                     mHistoryEditText.setText(StringFormatUtils.toString
@@ -95,12 +112,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getHost().getGuestTemp()));
 
-                    Float historyHomeWin = checkNotNull(
-                            mBigDataForecast.getBattleHistory().getHomeWinPercent());
-                    Float homeRecentHomeWin = checkNotNull(
-                            mBigDataForecast.getHomeRecent().getHomeWinPercent());
-                    Float guestRecentHomeWin = checkNotNull(
-                            mBigDataForecast.getGuestRecent().getHomeWinPercent());
+                    Float historyHomeWin = getHomeWinPercent(battleHistory);
+                    Float homeRecentHomeWin = getHomeWinPercent(homeRecent);
+                    Float guestRecentHomeWin = getHomeWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyHomeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentHomeWin));
@@ -114,12 +128,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getSize().getGuestTemp()));
 
-                    Float historySizeWin = checkNotNull(
-                            mBigDataForecast.getBattleHistory().getSizeWinPercent());
-                    Float homeRecentSizeWin = checkNotNull(
-                            mBigDataForecast.getHomeRecent().getSizeWinPercent());
-                    Float guestRecentSizeWin = checkNotNull(
-                            mBigDataForecast.getGuestRecent().getSizeWinPercent());
+                    Float historySizeWin = getSizeWinPercent(battleHistory);
+                    Float homeRecentSizeWin = getSizeWinPercent(homeRecent);
+                    Float guestRecentSizeWin = getSizeWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historySizeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentSizeWin));
@@ -133,12 +144,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getAsia().getGuestTemp()));
 
-                    Float historyAsiaWin = checkNotNull(
-                            mBigDataForecast.getBattleHistory().getAsiaWinPercent());
-                    Float homeRecentAsiaWin = checkNotNull(
-                            mBigDataForecast.getHomeRecent().getAsiaWinPercent());
-                    Float guestRecentAsiaWin = checkNotNull(
-                            mBigDataForecast.getGuestRecent().getAsiaWinPercent());
+                    Float historyAsiaWin = getAsiaWinPercent(battleHistory);
+                    Float homeRecentAsiaWin = getAsiaWinPercent(homeRecent);
+                    Float guestRecentAsiaWin = getAsiaWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyAsiaWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentAsiaWin));
@@ -152,6 +160,21 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         return f == null ? 0f : f;
     }
 
+    private Float getHomeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0f;
+        return checkNotNull(data.getHomeWinPercent());
+    }
+
+    private Float getAsiaWinPercent(BigDataForecastData data) {
+        if (data == null) return 0f;
+        return checkNotNull(data.getAsiaWinPercent());
+    }
+
+    private Float getSizeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0f;
+        return checkNotNull(data.getSizeWinPercent());
+    }
+
     /**
      * 初始化 Views
      *
@@ -162,6 +185,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                currentPosition = getCurrentRadioPosition();
                 setData();
             }
         });
@@ -173,6 +197,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mHistoryEditText.setText("1");
+                    mHistoryEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setHistoryTemp(aDouble);
@@ -192,6 +221,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mHostEditText.setText("1");
+                    mHostEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setHomeTemp(aDouble);
@@ -211,6 +245,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mGuestEditText.setText("1");
+                    mGuestEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setGuestTemp(aDouble);
@@ -256,7 +295,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                         closeInputMethod(getContext(), mGuestEditText);
                         getDialog().dismiss();
                         mFactor.updateTemp();
-                        ((IntelligenceFragment) getParentFragment()).refreshFactorUI();
+                        ((IntelligenceFragment) getParentFragment()).refreshFactorUI(true);
                     }
                 });
     }
