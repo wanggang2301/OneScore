@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/ll_score"
             android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/x10"
+            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/ll_score"
             android:text="主队"
             android:textColor="@color/white"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/ll_score"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/ll_score"
             android:text="客队"
             android:textColor="@color/white"
@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/iv_home_yc"
                 android:text="0"
                 android:textColor="@color/white"
@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x15"
+                android:layout_marginLeft="7.5dp"
                 android:layout_toRightOf="@+id/tv_home_yc"
                 android:background="@mipmap/rc_big" />
 
@@ -134,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/iv_home_rc"
                 android:text="0"
                 android:textColor="@color/white"
@@ -147,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x15"
+                android:layout_marginLeft="7.5dp"
                 android:layout_toRightOf="@+id/tv_home_rc"
                 android:background="@mipmap/corner" />
 
@@ -156,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/iv_home_corner"
                 android:text="0"
                 android:textColor="@color/white"
@@ -187,7 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/tv_guest_yc"
                 android:background="@mipmap/yc_big" />
 
@@ -197,7 +197,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x15"
+                android:layout_marginRight="7.5dp"
                 android:layout_toLeftOf="@+id/iv_guest_yc"
                 android:text="0"
                 android:textColor="@color/white"
@@ -209,7 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/tv_guest_rc"
                 android:background="@mipmap/rc_big" />
 
@@ -218,7 +218,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x15"
+                android:layout_marginRight="7.5dp"
                 android:layout_toLeftOf="@id/iv_guest_rc"
                 android:text="0"
                 android:textColor="@color/white"
@@ -231,7 +231,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginRight="7.5dp"
                 android:layout_toLeftOf="@id/tv_guest_corner"
                 android:background="@mipmap/corner" />
 
@@ -247,17 +247,17 @@
         <com.hhly.mlottery.widget.FootballEventView
             android:id="@+id/time_layout_top"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y40"
+            android:layout_height="20dp"
             mdy:image_gravity="b"
-            mdy:mdymargin="@dimen/x20"
+            mdy:mdymargin="10dp"
             mdy:midwidth_proportion="30" />
 
         <com.hhly.mlottery.widget.TimeView
             android:id="@+id/time_football"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y25"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
+            android:layout_height="12.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/timeview_bg"
             mdy:time_midwidth_proportion="30"
             mdy:time_textsize="@dimen/text_size_10" />
@@ -265,9 +265,9 @@
         <com.hhly.mlottery.widget.FootballEventView
             android:id="@+id/time_layout_bottom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y40"
+            android:layout_height="20dp"
             mdy:image_gravity="t"
-            mdy:mdymargin="@dimen/x20"
+            mdy:mdymargin="10dp"
             mdy:midwidth_proportion="30" />
     </LinearLayout>
 

@@ -216,8 +216,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     protected void onResume() {
         mWebView.onResume();//继续播放视频
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("WebActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("WebActivity");
     }
 
 
@@ -225,8 +225,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     public void onPause() {
         mWebView.onPause();//暂停播放视频
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("WebActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("WebActivity");
     }
 
     @Override

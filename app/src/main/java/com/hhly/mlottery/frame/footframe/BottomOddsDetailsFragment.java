@@ -27,6 +27,7 @@ import com.hhly.mlottery.bean.footballDetails.BottomOddsDetails;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsDetailsItem;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -52,14 +53,20 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
 
     private static final String PARAM_TYPE = "type";
 
-    public static final int ASIA = 1;
-    public static final int BIG_SMALL_BALL = 3;
+   /* public static final int ASIA = 1;
 
     public static final int EU = 2;
+    public static final int BIG_SMALL_BALL = 3;*/
+
+
+    private static final int ALET = 1;
+    private static final int EUR = 2;
+    private static final int ASIZE = 3;  //大小球
+
 
     private RecyclerView mRecyclerView;
 
-    private int mType = ASIA;
+    private int mType = ALET;
 
     private BottomOddsItem mBottomOddsItem;
 
@@ -102,6 +109,10 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
 
 
     private TextView reLoading;
+
+    private TextView odds_left;
+    private TextView odds_middle;
+    private TextView odds_right;
 
     public static BottomOddsDetailsFragment newInstance(BottomOddsItem b, int type) {
         Bundle args = new Bundle();
@@ -164,20 +175,40 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
             });
         }
 
-        if (mType == ASIA) {
+        if (mType == ALET) {
             odd_title.setText(context.getResources().getString(R.string.alet_first));
-        } else if (mType == BIG_SMALL_BALL) {
+            odds_left.setText(context.getResources().getString(R.string.foot_odds_alet_left));
+            odds_middle.setText(context.getResources().getString(R.string.foot_odds_alet_middle));
+            odds_right.setText(context.getResources().getString(R.string.foot_odds_alet_right));
+
+            if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
+                first_odd.setText("");
+            } else {
+                first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + HandicapUtils.changeHandicap(mBottomOddsItem.getMiddle()) + " " + mBottomOddsItem.getRight());
+            }
+
+        } else if (mType == ASIZE) {
             odd_title.setText(context.getResources().getString(R.string.asize_first));
+            odds_left.setText(context.getResources().getString(R.string.foot_odds_asize_left));
+            odds_middle.setText(context.getResources().getString(R.string.foot_odds_asize_middle));
+            odds_right.setText(context.getResources().getString(R.string.foot_odds_asize_right));
 
-        } else if (mType == EU) {
+            if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
+                first_odd.setText("");
+            } else {
+                first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + HandicapUtils.changeHandicapByBigLittleBall(mBottomOddsItem.getMiddle()) + " " + mBottomOddsItem.getRight());
+            }
+        } else if (mType == EUR) {
             odd_title.setText(context.getResources().getString(R.string.eu_first));
-        }
+            odds_left.setText(context.getResources().getString(R.string.foot_odds_eu_left));
+            odds_middle.setText(context.getResources().getString(R.string.foot_odds_eu_middle));
+            odds_right.setText(context.getResources().getString(R.string.foot_odds_eu_right));
 
-        if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
-            first_odd.setText("");
-
-        } else {
-            first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + mBottomOddsItem.getMiddle() + " " + mBottomOddsItem.getRight());
+            if (isNULLOrEmpty(mBottomOddsItem.getLeft()) || isNULLOrEmpty(mBottomOddsItem.getMiddle()) || isNULLOrEmpty(mBottomOddsItem.getRight())) {
+                first_odd.setText("");
+            } else {
+                first_odd.setText(" " + mBottomOddsItem.getLeft() + " " + mBottomOddsItem.getMiddle() + " " + mBottomOddsItem.getRight());
+            }
         }
 
 
@@ -196,7 +227,6 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
             return true;
         } else {
             return false;
-
         }
     }
 
@@ -246,6 +276,10 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         ll_content = (LinearLayout) mView.findViewById(R.id.ll_content);
         reLoading = (TextView) mView.findViewById(R.id.reLoading);
         bottomview = (View) mView.findViewById(R.id.bottomview);
+
+        odds_left = (TextView) mView.findViewById(R.id.odds_left);
+        odds_middle = (TextView) mView.findViewById(R.id.odds_middle);
+        odds_right = (TextView) mView.findViewById(R.id.odds_right);
 
 
         reLoading.setOnClickListener(new View.OnClickListener() {
@@ -319,7 +353,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
      * 加载数据
      */
     private void loadData() {
-        mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList);
+        mAdapter = new BottomOddsAdapter(context, mBottomOddsDetailsItemList, mType);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mHandler.sendEmptyMessage(SUCCESS);

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/y20"
+    android:paddingTop="10dp"
     >
 
     <LinearLayout
@@ -13,9 +13,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_marginBottom="@dimen/y10"
-            android:layout_marginRight="@dimen/x10"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
             >
             <TextView
                 android:id="@+id/analyze_rank_home"
@@ -45,7 +45,7 @@
             android:id="@+id/analyze_pro"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/y10"
+            android:layout_height="5dp"
             android:max="100"
             android:progress="25"
             android:progressDrawable="@drawable/pro_analyze" />

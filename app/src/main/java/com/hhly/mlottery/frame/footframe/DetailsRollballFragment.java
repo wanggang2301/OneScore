@@ -108,8 +108,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     //亚盘
     private static final int ALET = 1;
-    private static final int ASIZE = 3;
     private static final int EUR = 2;
+    private static final int ASIZE = 3;  //大小球
 
     //赛前view
     private TextView pre_dataTime_txt;//开赛时间
@@ -277,13 +277,13 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                     mBottomOddsDetailsFragment.dismiss();
                 }
                 if (LIVEENDED.equals(mMatchDetail.getLiveStatus())) {
-                    if(finishMatchLiveTextFragment==null){
-                        finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    if (finishMatchLiveTextFragment != null) {
+                        finishMatchLiveTextFragment.dismiss();
                     }
 
-                    if (!finishMatchLiveTextFragment.isAdded()) {
-                        finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
-                    }
+                    finishMatchLiveTextFragment = new FinishMatchLiveTextFragment().newInstance((ArrayList<MatchTextLiveBean>) matchLive, mMatchDetail.getLiveStatus());
+                    finishMatchLiveTextFragment.show(getChildFragmentManager(), "finishLive");
+
 
                 } else {
 
@@ -304,11 +304,10 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 initOdds();
             }
         });
-
-
     }
 
 
+    //下拉刷新
     public void refreshMatch(MatchDetail matchDetail, int type) {
         this.mMatchDetail = matchDetail;
         this.mViewType = type;
@@ -426,23 +425,26 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
 
     private void initItemOdd(final BottomOdds bottomOdds) {
-        odd_alet.setTitle(getString(R.string.set_asialet_txt));
-        odd_asize.setTitle(getString(R.string.set_asiasize_txt));
-        odd_eur.setTitle(getString(R.string.set_euro_txt));
+        if (mContext == null) {
+            return;
+        }
+        odd_alet.setTitle(mContext.getResources().getString(R.string.set_asialet_txt));
+        odd_asize.setTitle(mContext.getResources().getString(R.string.set_asiasize_txt));
+        odd_eur.setTitle(mContext.getResources().getString(R.string.set_euro_txt));
 
 
         //  "-"表示没有数据   null 表封盘
 
-        odd_alet.setTableLayoutData(bottomOdds.getAsianlistOdd());
+        odd_alet.setTableLayoutData(bottomOdds.getAsianlistOdd(), ALET);
 
         aletBottomOddsItem = bottomOdds.getAsianlistOdd().get(1);  //获取即时赔率
 
 
-        odd_asize.setTableLayoutData(bottomOdds.getOverunderlistOdd());
+        odd_asize.setTableLayoutData(bottomOdds.getOverunderlistOdd(), ASIZE);
         asizeBottomOddsItem = bottomOdds.getOverunderlistOdd().get(1);
 
 
-        odd_eur.setTableLayoutData(bottomOdds.getEuropelistOdd());
+        odd_eur.setTableLayoutData(bottomOdds.getEuropelistOdd(), EUR);
         eurBottomOddsItem = bottomOdds.getEuropelistOdd().get(1);
 
 
@@ -452,8 +454,6 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             public void onClick(View v) {
 
                 isRepeatShowDialog();
-
-
                 mBottomOddsDetailsFragment = new BottomOddsDetailsFragment().newInstance(bottomOdds.getAsianlistOdd().get(0), ALET);
                 mBottomOddsDetailsFragment.show(getChildFragmentManager(), "bottomOdds");
             }
@@ -485,6 +485,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         });
 
         mHandler.sendEmptyMessage(SUCCESS);
+
 
     }
 
@@ -620,15 +621,17 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
     public void setLiveText(String msg) {
+
+        L.d(TAG, "推送文字直播LiveText");
         live_text.setText(msg);
     }
 
+    //推送刷新
     public void setLiveTextDetails(List<MatchTextLiveBean> matchLive) {
 
         if (liveTextFragmentTest != null) {
             liveTextFragmentTest.updataLiveTextAdapter(matchLive);
         }
-
     }
 
 
@@ -811,7 +814,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     //心跳时间
     private long pushStartTime;
 
-    private Timer computeWebSocketConnTimer = new Timer();
+    public Timer detailsTimer = new Timer();
 
     /***
      * 计算推送Socket断开重新连接
@@ -833,17 +836,23 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 }
             };
 
-            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
-            isStartTimer = true;
+            if (!isStartTimer) {
+                detailsTimer.schedule(tt, 15000, 15000);
+                isStartTimer = true;
+            }
         }
     }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if (computeWebSocketConnTimer != null) {
-            computeWebSocketConnTimer.cancel();
+        if (detailsTimer != null) {
+            L.d("timer", "detailsRoll定时器");
+            detailsTimer.cancel();
+            detailsTimer.purge();
+            detailsTimer = null;
         }
 
         if (hSocketClient != null) {

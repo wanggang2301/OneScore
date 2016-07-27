@@ -542,6 +542,9 @@
     <color name="basket_score">#0085E1</color>
     <color name="basket_over_score">#FF0000</color>
 
+    <color name="basket_database_details_color">#FF6600</color>
+
+
     <color name="testtitle">#ff00695d</color>
     <color name="tabtitle">#21b11e</color>
     <!--<color name="accent">#eeff41</color>-->
@@ -600,4 +603,13 @@
     <color name="football_analyze_lose_color">#21B11E</color>
     <color name="football_analyze_draw_color">#00aaee</color>
     <color name="football_analyze_default_color">#333333</color>
+    <color name="football_analyze_progress_color1">#00aaee</color>
+    <color name="football_analyze_progress_color2">#E8C129</color>
+    <color name="football_analyze_progress_color3">#7DC050</color>
+
+
+    <color name="odds_title_bg_color">#F3F7F9</color>
+
+    <color name="info_home_progress_color">#FE0100</color>
+    <color name="info_guest_progress_color">#21b11c</color>
 </resources>

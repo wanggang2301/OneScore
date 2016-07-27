@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
+import com.hhly.mlottery.util.HandicapUtils;
 
 import java.util.List;
 
@@ -25,6 +26,11 @@ public class DetailsRollOdd extends FrameLayout {
     private TextView first_left;
     private TextView first_middle;
     private TextView first_right;
+
+
+    private static final int ALET = 1;
+    private static final int EUR = 2;
+    private static final int ASIZE = 3;  //大小球
 
 
     public DetailsRollOdd(Context context) {
@@ -95,7 +101,7 @@ public class DetailsRollOdd extends FrameLayout {
     }
 
 
-    public void setTableLayoutData(List<BottomOddsItem> bottomOddsItem) {
+    public void setTableLayoutData(List<BottomOddsItem> bottomOddsItem, int type) {
 
 
         //初盘
@@ -112,10 +118,22 @@ public class DetailsRollOdd extends FrameLayout {
         } else {
 
             first_left.setText(bottomOddsItem.get(0).getLeft());
-            first_middle.setText(bottomOddsItem.get(0).getMiddle());
+
+            if (type == ALET) {
+                first_middle.setText(HandicapUtils.changeHandicap(bottomOddsItem.get(0).getMiddle()));
+                setTextViewColor(first_middle, 1, bottomOddsItem.get(0).getMiddleUp());
+
+            } else if (type == ASIZE) {
+                first_middle.setText(HandicapUtils.changeHandicapByBigLittleBall(bottomOddsItem.get(0).getMiddle()));
+                setTextViewColor(first_middle, 1, bottomOddsItem.get(0).getMiddleUp());
+
+            } else if (type == EUR) {
+                first_middle.setText(bottomOddsItem.get(0).getMiddle());
+                setTextViewColor(first_middle, 0, bottomOddsItem.get(0).getMiddleUp());
+            }
+
             first_right.setText(bottomOddsItem.get(0).getRight());
             setTextViewColor(first_left, 0, bottomOddsItem.get(0).getLeftUp());
-            setTextViewColor(first_middle, 1, bottomOddsItem.get(0).getMiddleUp());
             setTextViewColor(first_right, 0, bottomOddsItem.get(0).getRightUp());
         }
 
@@ -143,12 +161,24 @@ public class DetailsRollOdd extends FrameLayout {
         } else {
             live_left.setText(bottomOddsItem.get(1).getLeft());
 
-            live_middle.setText(bottomOddsItem.get(1).getMiddle());
+            if (type == ALET) {
+                live_middle.setText(HandicapUtils.changeHandicap(bottomOddsItem.get(1).getMiddle()));
+                setTextViewColor(live_middle, 1, bottomOddsItem.get(1).getMiddleUp());
+
+            } else if (type == ASIZE) {
+                live_middle.setText(HandicapUtils.changeHandicapByBigLittleBall(bottomOddsItem.get(1).getMiddle()));
+                setTextViewColor(live_middle, 1, bottomOddsItem.get(1).getMiddleUp());
+
+            } else if (type == EUR) {
+                live_middle.setText(bottomOddsItem.get(1).getMiddle());
+                setTextViewColor(live_middle, 0, bottomOddsItem.get(1).getMiddleUp());
+
+            }
+
 
             live_right.setText(bottomOddsItem.get(1).getRight());
 
             setTextViewColor(live_left, 0, bottomOddsItem.get(1).getLeftUp());
-            setTextViewColor(live_middle, 1, bottomOddsItem.get(1).getMiddleUp());
             setTextViewColor(live_right, 0, bottomOddsItem.get(1).getRightUp());
         }
     }

@@ -2,7 +2,6 @@
 <resources>
 
 
-
     <!-- 滑动阻尼效果 -->
     <declare-styleable name="ParallaxScrollView">
         <attr name="zoomRatio" format="float" />
@@ -79,12 +78,38 @@
         <item>@string/foot_details_analyze</item>
         <item>@string/foot_details_odds</item>
         <item>@string/foot_details_statistics</item>
+        <item>@string/foot_details_info</item>
     </string-array>
 
     <!--足球篮球切换-->
     <string-array name="ball_select">
         <item>@string/football_frame_txt</item>
         <item>@string/basket_left</item>
+    </string-array>
+
+    <!--环形进度条-->
+    <declare-styleable name="RoundProgressBar">
+        <attr name="roundColor" format="color"/>
+        <attr name="roundProgressColor" format="color"/>
+        <attr name="roundWidth" format="dimension"></attr>
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="max" format="integer"></attr>
+        <attr name="textIsDisplayable" format="boolean"></attr>
+        <attr name="style">
+            <enum name="STROKE" value="0"></enum>
+            <enum name="FILL" value="1"></enum>
+        </attr>
+    </declare-styleable>
+
+
+    <string-array name="basket_info_tabs">
+        <item>@string/basket_info_hot</item>
+        <item>@string/basket_info_eur</item>
+        <item>@string/basket_info_america</item>
+        <item>@string/basket_info_asia</item>
+        <item>@string/basket_info_africa</item>
+        <item>@string/basket_info_inter</item>
     </string-array>
 
 </resources>

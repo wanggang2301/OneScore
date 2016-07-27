@@ -19,7 +19,7 @@
         android:background="@drawable/date_last"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/y20"
+        android:paddingBottom="10dp"
         >
 
         <ListView

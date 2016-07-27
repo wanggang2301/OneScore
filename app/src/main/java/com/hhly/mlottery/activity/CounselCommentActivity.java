@@ -64,14 +64,14 @@ public class CounselCommentActivity extends BaseActivity implements OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("Football_CounselCommentActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("Football_CounselCommentActivity");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("Football_CounselCommentActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("Football_CounselCommentActivity");
     }
 }

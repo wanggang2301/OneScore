@@ -17,15 +17,25 @@
         android:textColor="@color/content_txt_black"
         android:textSize="@dimen/text_size_13" />
 
-    <TextView
-        android:id="@+id/score"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="比分"
-        android:textColor="@color/content_txt_black"
-        android:textSize="@dimen/text_size_13" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="比分"
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/host_team"

@@ -9,10 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.cpiadapter.FootballPlateAdapter;
@@ -21,17 +21,17 @@ import com.hhly.mlottery.bean.enums.StatusEnum;
 import com.hhly.mlottery.bean.oddsbean.OddsDataInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
-import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.EmptyView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * 足球详情指数列表
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/28.
  */
 public class FootballPlateFragment extends Fragment {
@@ -40,6 +40,10 @@ public class FootballPlateFragment extends Fragment {
 
     RecyclerView mRecyclerView;
     EmptyView mEmptyView;
+    View mContentView;
+    TextView mLeftTitle;
+    TextView mCenterTitle;
+    TextView mRightTitle;
 
     private FootballMatchDetailActivityTest mActivity;
 
@@ -75,6 +79,10 @@ public class FootballPlateFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initTitle(view);
+
+        mContentView = view.findViewById(R.id.content);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         items = new ArrayList<>();
         mAdapter = new FootballPlateAdapter(type, items);
@@ -88,15 +96,44 @@ public class FootballPlateFragment extends Fragment {
             }
         });
 
-        initEmptyView();
+        mEmptyView = (EmptyView) view.findViewById(R.id.empty_view);
+        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
 
-        mAdapter.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mActivity = (FootballMatchDetailActivityTest) getActivity();
 
         loadData();
+    }
+
+    private void initTitle(View view) {
+        mLeftTitle = (TextView) view.findViewById(R.id.left);
+        mCenterTitle = (TextView) view.findViewById(R.id.center);
+        mRightTitle = (TextView) view.findViewById(R.id.right);
+
+        switch (type) {
+            case OddsTypeEnum.PLATE:
+                mLeftTitle.setText(R.string.foot_odds_alet_left);
+                mCenterTitle.setText(R.string.foot_odds_alet_middle);
+                mRightTitle.setText(R.string.foot_odds_alet_right);
+                break;
+            case OddsTypeEnum.BIG:
+                mLeftTitle.setText(R.string.foot_odds_asize_left);
+                mCenterTitle.setText(R.string.foot_odds_asize_middle);
+                mRightTitle.setText(R.string.foot_odds_asize_right);
+                break;
+            case OddsTypeEnum.OP:
+                mLeftTitle.setText(R.string.foot_odds_eu_left);
+                mCenterTitle.setText(R.string.foot_odds_eu_middle);
+                mRightTitle.setText(R.string.foot_odds_eu_right);
+                break;
+        }
     }
 
     @Override
@@ -125,7 +162,8 @@ public class FootballPlateFragment extends Fragment {
                     @Override
                     public void onResponse(OddsDataInfo jsonObject) {
                         items.clear();
-                        items.addAll(jsonObject.getListOdd());
+                        List<OddsDataInfo.ListOddEntity> listOdd = jsonObject.getListOdd();
+                        if (listOdd != null) items.addAll(listOdd);
                         mAdapter.notifyDataSetChanged();
                         setStatus(StatusEnum.NORMAL);
                     }
@@ -141,7 +179,17 @@ public class FootballPlateFragment extends Fragment {
                 OddsDataInfo.class);
     }
 
-    public void setStatus(@StatusEnum.Status int status) {
+    private void setStatus(@StatusEnum.Status int status) {
+        if (status == StatusEnum.LOADING || status == StatusEnum.ERROR) {
+            mContentView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else if (status == StatusEnum.NORMAL && items.size() > 0) {
+            mContentView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        } else {
+            mContentView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
         mEmptyView.setStatus(status);
     }
 
@@ -156,23 +204,6 @@ public class FootballPlateFragment extends Fragment {
             default:
                 return "1";
         }
-    }
-
-    /**
-     * 初始化 EmptyView
-     */
-    private void initEmptyView() {
-        mEmptyView = new EmptyView(getContext());
-        mEmptyView.setOnErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData();
-            }
-        });
-        RecyclerView.LayoutParams layoutParams =
-                new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
-        mEmptyView.setLayoutParams(layoutParams);
     }
 
     public static FootballPlateFragment newInstance(@OddsTypeEnum.OddsType String type) {

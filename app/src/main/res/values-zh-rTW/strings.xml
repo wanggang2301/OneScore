@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--篮球资料库-->
+    <string name="basket_info_hot">熱門</string>
+    <string name="basket_info_eur">歐洲</string>
+    <string name="basket_info_america">美洲</string>
+    <string name="basket_info_asia">亞洲</string>
+    <string name="basket_info_africa">非洲</string>
+    <string name="basket_info_inter">國際</string>
+    <string name="basket_info_title">籃球資料庫</string>
+    <string name="basket_info_zhouji">洲際賽事</string>
+    <string name="basket_info_country">國家賽事</string>
+
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滾球</string>
     <string name="foot_details_talkball">聊球</string>
@@ -27,6 +38,22 @@
     <string name="foot_details_focus">關注</string>
     <string name="foot_details_focused">已關注</string>
     <string name="foot_details_share">分享</string>
+
+    <!--亚盘-->
+    <string name="foot_odds_alet_left">主隊</string>
+    <string name="foot_odds_alet_middle">讓球</string>
+    <string name="foot_odds_alet_right">客隊</string>
+
+    <!--大小-->
+    <string name="foot_odds_asize_left">大球</string>
+    <string name="foot_odds_asize_middle">盤口</string>
+    <string name="foot_odds_asize_right">小球</string>
+
+
+    <!--欧赔-->
+    <string name="foot_odds_eu_left">勝</string>
+    <string name="foot_odds_eu_middle">平</string>
+    <string name="foot_odds_eu_right">負</string>
 
 
 
@@ -513,6 +540,18 @@
     <string name="analyze_date">日期</string>
     <string name="analyze_match">賽事</string>
     <string name="analyze_match_result">賽果</string>
+
+    <!--足球分析详情页面 -->
+    <string name="football_analyze_equ">平</string>
+    <string name="football_analyze_win">勝</string>
+    <string name="football_analyze_lost">負</string>
+    <string name="football_analyze_jin">,進</string>
+    <string name="football_analyze_shi">球失</string>
+    <string name="football_analyze_ball">球</string>
+    <string name="football_analyze_winodds">勝率</string>
+    <string name="football_analyze_bigball">,大球率</string>
+    <string name="football_analyze_let_points">,讓分贏盤率</string>
+
     <!-- 篮球界面 -->
     <string name="basket_left">籃球比分</string>
     <string name="basket_tittle">籃球比分</string>
@@ -650,6 +689,24 @@
     <string name="basket_odds_euro_details">歐賠詳情</string>
     <string name="basket_odds_asiaLet_details">亞盤詳情</string>
     <string name="basket_odds_asiaSize_details">大小球詳情</string>
+
+
+    <!--篮球资料库详情-->
+    <string name="basket_database_details_handicapname">讓分盤</string>
+    <string name="basket_database_details_bigsmallname">大小盤</string>
+    <string name="basket_database_details_season">賽季</string>
+    <string name="basket_database_details_all">全部</string>
+    <string name="basket_database_details_home">主場</string>
+    <string name="basket_database_details_guest">客場</string>
+    <string name="basket_database_details_runkingname">排名/球隊</string>
+    <string name="basket_database_details_overgame">已賽</string>
+    <string name="basket_database_details_big">大</string>
+    <string name="basket_database_details_dorw">走</string>
+    <string name="basket_database_details_small">小</string>
+
+    <string name="basket_database_details_up">上盤</string>
+    <string name="basket_database_details_down">下盤</string>
+    <string name="basket_database_details_yzs">贏/走/輸</string>
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
@@ -809,6 +866,8 @@
     <string name="new_analyze_attack_defense">攻防對比</string>
     <string name="new_analyze_bet">大小盤口:</string>
     <string name="new_analyze_player_info">球員信息</string>
+    <string name="new_analyze_recommend">心水推薦</string>
+
 
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滾球</string>
@@ -818,4 +877,17 @@
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">至少選擇壹家公司</string>
+
+    <string name="action_close">關閉</string>
+    <string name="action_compute">計算</string>
+    <string name="asia_win_rate">贏盤率</string>
+    <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
+    <string name="diy_compute_method">DIY算法</string>
+    <string name="diy_compute_method_message">歷史交鋒 × %1$s + 主隊 × %2$s + 客隊 × %3$s = 概率</string>
+    <string name="diy_custom_compute_method">DIY自定義算法</string>
+    <string name="foot_details_info">情報</string>
+    <string name="insufficient_sampling">采樣\n不足</string>
+    <string name="title_big_data_predict">大數據預測</string>
+    <string name="size_win_rate">大球率</string>
+    <string name="home_win_rate">主勝率</string>
 </resources>

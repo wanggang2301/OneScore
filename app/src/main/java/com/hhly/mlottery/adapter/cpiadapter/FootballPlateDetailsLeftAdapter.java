@@ -16,8 +16,10 @@ import java.util.List;
  */
 public class FootballPlateDetailsLeftAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddEntity> {
 
-    int yellow;
-    int transparent;
+    int grey;
+    int white;
+    int blue;
+    int black;
 
     public FootballPlateDetailsLeftAdapter(List<OddsDataInfo.ListOddEntity> items) {
         super(R.layout.item_odds_left, items);
@@ -26,13 +28,24 @@ public class FootballPlateDetailsLeftAdapter extends BaseQuickAdapter<OddsDataIn
     @Override
     protected void convert(BaseViewHolder holder, OddsDataInfo.ListOddEntity listOddEntity) {
         maybeInitColor();
-        holder.setText(R.id.odds_left_txt, listOddEntity.getName());
-        holder.setBackgroundColor(R.id.odds_left_txt, listOddEntity.isChecked() ? yellow : transparent);
+        holder.setText(R.id.odds_left_txt, listOddEntity.getName())
+                .setTextColor(R.id.odds_left_txt, listOddEntity.isChecked() ? blue : black)
+                .setVisible(R.id.left_circle, listOddEntity.isChecked())
+                .setBackgroundColor(R.id.container, listOddEntity.isChecked() ? white : grey);
     }
 
     private void maybeInitColor() {
-        if (yellow == 0) {
-            yellow = ContextCompat.getColor(mContext, R.color.yellow);
+        if (grey == 0) {
+            grey = ContextCompat.getColor(mContext, R.color.whitesmoke);
+        }
+        if (white == 0) {
+            white = ContextCompat.getColor(mContext, R.color.white);
+        }
+        if (blue == 0) {
+            blue = ContextCompat.getColor(mContext, R.color.colorPrimary);
+        }
+        if (black == 0) {
+            black = ContextCompat.getColor(mContext, R.color.content_txt_black);
         }
     }
 }

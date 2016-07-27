@@ -22,7 +22,7 @@ import java.util.Locale;
 
 /**
  * 足球详情 - 指数 - 指数详情右侧列表适配器
- * <p/>
+ * <p>
  * Created by loshine on 2016/6/29.
  */
 public class FootballPlateDetailsRightAdapter
@@ -31,6 +31,8 @@ public class FootballPlateDetailsRightAdapter
 
     int red;
     int green;
+    int black;
+    int white;
     int grey;
 
     private String oddsType;
@@ -62,19 +64,23 @@ public class FootballPlateDetailsRightAdapter
     @Override
     protected void convert(BaseViewHolder holder,
                            OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity dataDetailsEntity) {
-
-        // 时间与比分
+        maybeInitColor();
+        // 时间
         String score = dataDetailsEntity.getScore();
         holder.setText(R.id.odds_details_timeAndscore_txt, dataDetailsEntity.getTime()
                 + (TextUtils.isEmpty(score) ? "" : "\n" + score));
+        holder.setBackgroundColor(R.id.odds_details_timeAndscore_txt,
+                dataDetailsEntity.isScoreChanged() ? red : 0);
+        holder.setTextColor(R.id.odds_details_timeAndscore_txt,
+                dataDetailsEntity.isScoreChanged() ? white : grey);
         // 左侧
         holder.setText(R.id.odds_details_home_txt,
                 String.format(Locale.US, "%.2f", dataDetailsEntity.getHomeOdd()));
-        holder.setTextColor(R.id.odds_details_home_txt, getColor(dataDetailsEntity.getHomeColor()));
+        holder.setTextColor(R.id.odds_details_home_txt, getTextColor(dataDetailsEntity.getHomeColor()));
         // 右侧
         holder.setText(R.id.odds_details_guest_txt,
                 String.format(Locale.US, "%.2f", dataDetailsEntity.getGuestOdd()));
-        holder.setTextColor(R.id.odds_details_guest_txt, getColor(dataDetailsEntity.getGuestColor()));
+        holder.setTextColor(R.id.odds_details_guest_txt, getTextColor(dataDetailsEntity.getGuestColor()));
         // 盘口
         String hand = String.format(Locale.US, "%.2f", dataDetailsEntity.getHand());
         if ("1".equals(oddsType)) {
@@ -87,7 +93,7 @@ public class FootballPlateDetailsRightAdapter
             // 欧赔
             holder.setText(R.id.odds_details_dish_txt, hand);
         }
-        holder.setTextColor(R.id.odds_details_dish_txt, getColor(dataDetailsEntity.getDishColor()));
+        setDishColor(holder, dataDetailsEntity.getDishColor());
     }
 
     /**
@@ -102,6 +108,20 @@ public class FootballPlateDetailsRightAdapter
         handleColor();
     }
 
+    private void setDishColor(BaseViewHolder holder, String color) {
+        if ("1".equals(oddsType) || "3".equals(oddsType)) {
+            holder.setBackgroundColor(R.id.odds_details_dish_txt, getBackgroundColor(color));
+            if ("red".equals(color) || "green".equals(color)) {
+                holder.setTextColor(R.id.odds_details_dish_txt, white);
+            } else {
+                holder.setTextColor(R.id.odds_details_dish_txt, black);
+            }
+
+        } else {
+            holder.setTextColor(R.id.odds_details_dish_txt, getTextColor(color));
+        }
+    }
+
     /**
      * 对数据进行遍历处理设置颜色
      */
@@ -109,6 +129,12 @@ public class FootballPlateDetailsRightAdapter
         for (int i = 0; i < mData.size() - 1; i++) {
             OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity next = mData.get(i);
             OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity pre = mData.get(i + 1);
+            // 处理比分
+            String nextScore = next.getScore();
+            boolean changed = nextScore != null && !nextScore.isEmpty()
+                    && !nextScore.equals(pre.getScore());
+            next.setScoreChanged(changed);
+            // 处理赔率
             double nextHomeOdd = next.getHomeOdd();
             double preHomeOdd = pre.getHomeOdd();
             if (nextHomeOdd > preHomeOdd) {
@@ -145,16 +171,32 @@ public class FootballPlateDetailsRightAdapter
      * @param color color
      * @return intColor
      */
-    private int getColor(String color) {
-        maybeInitColor();
+    private int getTextColor(String color) {
         if ("red".equals(color)) {
             return red;
         } else if ("green".equals(color)) {
             return green;
         } else if ("grey".equals(color)) {
-            return grey;
+            return black;
         }
-        return grey;
+        return black;
+    }
+
+    /**
+     * 根据字符串获取背景色
+     *
+     * @param color color
+     * @return intColor
+     */
+    private int getBackgroundColor(String color) {
+        if ("red".equals(color)) {
+            return red;
+        } else if ("green".equals(color)) {
+            return green;
+        } else if ("grey".equals(color)) {
+            return 0;
+        }
+        return 0;
     }
 
     /**
@@ -162,13 +204,19 @@ public class FootballPlateDetailsRightAdapter
      */
     private void maybeInitColor() {
         if (red == 0) {
-            red = ContextCompat.getColor(mContext, R.color.homwe_lhc_red);
+            red = ContextCompat.getColor(mContext, R.color.odds_details);
         }
         if (green == 0) {
-            green = ContextCompat.getColor(mContext, R.color.tabhost);
+            green = ContextCompat.getColor(mContext, R.color.odds_down_bg);
+        }
+        if (black == 0) {
+            black = ContextCompat.getColor(mContext, R.color.content_txt_black);
+        }
+        if (white == 0) {
+            white = ContextCompat.getColor(mContext, R.color.white);
         }
         if (grey == 0) {
-            grey = ContextCompat.getColor(mContext, R.color.content_txt_dark_grad);
+            grey = ContextCompat.getColor(mContext, R.color.version);
         }
     }
 

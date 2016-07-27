@@ -163,19 +163,19 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
     private void setTitleText(BaseViewHolder holder) {
         switch (type) {
             case OddsTypeEnum.PLATE:
-                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.odd_home_txt));
-                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.odd_dish_txt));
-                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.odd_guest_txt));
+                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_alet_left));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_alet_middle));
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_alet_right));
                 break;
             case OddsTypeEnum.BIG:
-                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.odd_home_big_txt));
-                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.odd_dish_txt));
-                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.odd_guest_big_txt));
+                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_asize_left));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_asize_middle));
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_asize_right));
                 break;
             case OddsTypeEnum.OP:
-                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.odd_home_op_txt));
-                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.odd_dish_op_txt));
-                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.odd_guest_op_txt));
+                holder.setText(R.id.cpi_item_home_txt, mContext.getString(R.string.foot_odds_eu_left));
+                holder.setText(R.id.cpi_item_odds_txt, mContext.getString(R.string.foot_odds_eu_middle));
+                holder.setText(R.id.cpi_item_guest_txt, mContext.getString(R.string.foot_odds_eu_right));
                 break;
         }
     }

@@ -208,6 +208,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_details_activity_test);
+        /**不统计当前的Activity界面，只统计Fragment界面*/
+        MobclickAgent.openActivityDurationTrack(false);
+
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
@@ -330,8 +333,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
      * 初始化界面
      */
     private void initView() {
-        TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_eur),
-                getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_details_talkable)};
+        TITLES = new String[]{getResources().getString(R.string.basket_analyze),
+                getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
@@ -348,7 +351,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
 
-        mTabsAdapter.addFragments(mAnalyzeFragment, mOddsEuro, mOddsLet,mOddsSize, mTalkAboutBallFragment);
+        mTabsAdapter.addFragments(mAnalyzeFragment,mOddsLet,mOddsSize, mOddsEuro,  mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -1243,21 +1246,21 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 isFragment3 = false;
                 isFragment4 = false;
                 break;
-            case 1:// 欧赔
+            case 3:// 欧赔
                 isFragment0 = false;
                 isFragment1 = true;
                 isFragment2 = false;
                 isFragment3 = false;
                 isFragment4 = false;
                 break;
-            case 2:// 亚盘
+            case 1:// 亚盘
                 isFragment0 = false;
                 isFragment1 = false;
                 isFragment2 = true;
                 isFragment3 = false;
                 isFragment4 = false;
                 break;
-            case 3:// 大小
+            case 2:// 大小
                 isFragment0 = false;
                 isFragment1 = false;
                 isFragment2 = false;
@@ -1328,6 +1331,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         if (isFragment0) {
             MobclickAgent.onPageStart("BasketBall_Info_FX");
             is0 = true;
@@ -1358,6 +1362,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         if (is0) {
             MobclickAgent.onPageEnd("BasketBall_Info_FX");
             is0 = false;

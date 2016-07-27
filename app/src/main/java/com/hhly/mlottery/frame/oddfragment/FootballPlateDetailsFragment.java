@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
@@ -30,7 +31,7 @@ import java.util.Map;
 
 /**
  * 足球比赛指数详情
- * <p/>
+ * <p>
  * Created by Loshine on 2016/6/29.
  */
 public class FootballPlateDetailsFragment extends Fragment {
@@ -45,6 +46,11 @@ public class FootballPlateDetailsFragment extends Fragment {
 
     View mLeftFootView;
     EmptyView mEmptyView;
+    View mRightContentLayout;
+
+    TextView mLeftTitle;
+    TextView mCenterTitle;
+    TextView mRightTitle;
 
     private FootballPlateDetailsLeftAdapter mLeftAdapter;
     private FootballPlateDetailsRightAdapter mRightAdapter;
@@ -91,8 +97,12 @@ public class FootballPlateDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initTitle(view);
+
         mLeftRecyclerView = (RecyclerView) view.findViewById(R.id.left_recycler_view);
         mRightRecyclerView = (RecyclerView) view.findViewById(R.id.right_recycler_view);
+
+        mRightContentLayout = view.findViewById(R.id.content);
 
         mLeftAdapter = new FootballPlateDetailsLeftAdapter(leftList);
         mLeftAdapter.addFooterView(mLeftFootView);
@@ -113,7 +123,8 @@ public class FootballPlateDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mParentFragment != null) {
-                    mParentFragment.showList();
+                    mParentFragment.getChildFragmentManager()
+                            .popBackStack();
                 }
             }
         });
@@ -137,6 +148,30 @@ public class FootballPlateDetailsFragment extends Fragment {
         mRightRecyclerView.addItemDecoration(headersDecor);
 
         loadData();
+    }
+
+    private void initTitle(View view) {
+        mLeftTitle = (TextView) view.findViewById(R.id.plate_home_details_txt_id);
+        mCenterTitle = (TextView) view.findViewById(R.id.plate_dish_details_txt_id);
+        mRightTitle = (TextView) view.findViewById(R.id.plate_guest_details_txt_id);
+
+        switch (oddType) {
+            case "1":
+                mLeftTitle.setText(R.string.foot_odds_alet_left);
+                mCenterTitle.setText(R.string.foot_odds_alet_middle);
+                mRightTitle.setText(R.string.foot_odds_alet_right);
+                break;
+            case "3":
+                mLeftTitle.setText(R.string.foot_odds_asize_left);
+                mCenterTitle.setText(R.string.foot_odds_asize_middle);
+                mRightTitle.setText(R.string.foot_odds_asize_right);
+                break;
+            case "2":
+                mLeftTitle.setText(R.string.foot_odds_eu_left);
+                mCenterTitle.setText(R.string.foot_odds_eu_middle);
+                mRightTitle.setText(R.string.foot_odds_eu_right);
+                break;
+        }
     }
 
     private void checkedPosition(int i) {
@@ -197,6 +232,7 @@ public class FootballPlateDetailsFragment extends Fragment {
         }
         mEmptyView.setStatus(status);
         mRightAdapter.notifyDataSetChanged();
+        mRightRecyclerView.scrollToPosition(0);
     }
 
     public static FootballPlateDetailsFragment newInstance(String oddType,

@@ -9,24 +9,24 @@
     <!--时时彩彩票开奖条目-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y220"
+        android:layout_height="110dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_number_ssc_home"
-            android:layout_width="@dimen/x140"
-            android:layout_height="@dimen/x140"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="@dimen/x25"
+            android:paddingLeft="12.5dp"
             android:src="@mipmap/home_number_item_icon_def" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/y20"
-            android:paddingLeft="@dimen/x20"
-            android:paddingTop="@dimen/y30">
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp">
 
             <!--第一行-->
             <LinearLayout
@@ -45,7 +45,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/x20"
+                    android:paddingLeft="10dp"
                     android:text="@string/number_code_di"
                     android:textColor="@color/content_txt_light_grad"
                     android:textSize="@dimen/number_desc" />
@@ -73,10 +73,10 @@
 
                 <TextView
                     android:id="@+id/tv_number_ssc01_home"
-                    android:layout_width="@dimen/x55"
-                    android:layout_height="@dimen/y55"
-                    android:layout_marginBottom="@dimen/y10"
-                    android:layout_marginTop="@dimen/y10"
+                    android:layout_width="27.5dp"
+                    android:layout_height="27.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
                     android:background="@mipmap/number_bg_hk_not"
                     android:gravity="center"
                     android:text=""
@@ -85,11 +85,11 @@
 
                 <TextView
                     android:id="@+id/tv_number_ssc02_home"
-                    android:layout_width="@dimen/x55"
-                    android:layout_height="@dimen/y55"
-                    android:layout_marginBottom="@dimen/y10"
-                    android:layout_marginLeft="@dimen/x10"
-                    android:layout_marginTop="@dimen/y10"
+                    android:layout_width="27.5dp"
+                    android:layout_height="27.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@mipmap/number_bg_hk_not"
                     android:gravity="center"
                     android:text=""
@@ -98,11 +98,11 @@
 
                 <TextView
                     android:id="@+id/tv_number_ssc03_home"
-                    android:layout_width="@dimen/x55"
-                    android:layout_height="@dimen/y55"
-                    android:layout_marginBottom="@dimen/y10"
-                    android:layout_marginLeft="@dimen/x10"
-                    android:layout_marginTop="@dimen/y10"
+                    android:layout_width="27.5dp"
+                    android:layout_height="27.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@mipmap/number_bg_hk_not"
                     android:gravity="center"
                     android:text=""
@@ -111,11 +111,11 @@
 
                 <TextView
                     android:id="@+id/tv_number_ssc04_home"
-                    android:layout_width="@dimen/x55"
-                    android:layout_height="@dimen/y55"
-                    android:layout_marginBottom="@dimen/y10"
-                    android:layout_marginLeft="@dimen/x10"
-                    android:layout_marginTop="@dimen/y10"
+                    android:layout_width="27.5dp"
+                    android:layout_height="27.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@mipmap/number_bg_hk_not"
                     android:gravity="center"
                     android:text=""
@@ -124,11 +124,11 @@
 
                 <TextView
                     android:id="@+id/tv_number_ssc05_home"
-                    android:layout_width="@dimen/x55"
-                    android:layout_height="@dimen/y55"
-                    android:layout_marginBottom="@dimen/y10"
-                    android:layout_marginLeft="@dimen/x10"
-                    android:layout_marginTop="@dimen/y10"
+                    android:layout_width="27.5dp"
+                    android:layout_height="27.5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@mipmap/number_bg_hk_not"
                     android:gravity="center"
                     android:text=""

@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/ll_number_time_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x100"
+        android:layout_height="50dp"
         android:background="#11000000"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -46,15 +46,15 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/y20"
+            android:paddingLeft="10dp"
             android:visibility="gone" >
 
             <!-- 时 -->
 
             <TextView
                 android:id="@+id/tv_number_time_hh"
-                android:layout_width="@dimen/x40"
-                android:layout_height="@dimen/y50"
+                android:layout_width="20dp"
+                android:layout_height="25dp"
                 android:background="@mipmap/number_time_item_bg"
                 android:gravity="center"
                 android:text="07"
@@ -72,8 +72,8 @@
 
             <TextView
                 android:id="@+id/tv_number_time_mm"
-                android:layout_width="@dimen/x40"
-                android:layout_height="@dimen/y50"
+                android:layout_width="20dp"
+                android:layout_height="25dp"
                 android:background="@mipmap/number_time_item_bg"
                 android:gravity="center"
                 android:text="59"
@@ -91,8 +91,8 @@
 
             <TextView
                 android:id="@+id/tv_number_time_ss"
-                android:layout_width="@dimen/x40"
-                android:layout_height="@dimen/y50"
+                android:layout_width="20dp"
+                android:layout_height="25dp"
                 android:background="@mipmap/number_time_item_bg"
                 android:gravity="center"
                 android:text="59"
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/y20"
+            android:paddingLeft="10dp"
             android:visibility="gone" >
 
             <!-- 正在开奖中... -->
@@ -204,8 +204,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:paddingRight="@dimen/x20"
-                android:paddingTop="@dimen/y30"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
                 android:src="@mipmap/number_right_icon" />
         </LinearLayout>
         <!-- 开奖描述信息 -->

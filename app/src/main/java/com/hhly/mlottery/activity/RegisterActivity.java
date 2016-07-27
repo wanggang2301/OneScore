@@ -80,8 +80,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         /**友盟页面统计*/
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("RegisterActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("RegisterActivity");
         super.onResume();
         et_username.setFocusable(true);
         et_username.setFocusableInTouchMode(true);
@@ -101,8 +101,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onPause() {
         super.onPause();
         /**友盟页面统计*/
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("RegisterActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("RegisterActivity");
 
     }
 

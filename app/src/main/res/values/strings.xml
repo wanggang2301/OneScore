@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--篮球资料库-->
+    <string name="basket_info_hot">热门</string>
+    <string name="basket_info_eur">欧洲</string>
+    <string name="basket_info_america">美洲</string>
+    <string name="basket_info_asia">亚洲</string>
+    <string name="basket_info_africa">非洲</string>
+    <string name="basket_info_inter">国际</string>
+    <string name="basket_info_title">篮球资料库</string>
+    <string name="basket_info_zhouji">洲际赛事</string>
+    <string name="basket_info_country">国家赛事</string>
+
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滚球</string>
     <string name="foot_details_talkball">聊球</string>
@@ -27,6 +38,22 @@
     <string name="foot_details_focused">已关注</string>
     <string name="foot_details_share">分享</string>
 
+    <!--亚盘-->
+    <string name="foot_odds_alet_left">主队</string>
+    <string name="foot_odds_alet_middle">让球</string>
+    <string name="foot_odds_alet_right">客队</string>
+
+    <!--大小-->
+    <string name="foot_odds_asize_left">大球</string>
+    <string name="foot_odds_asize_middle">盘口</string>
+    <string name="foot_odds_asize_right">小球</string>
+
+
+    <!--欧赔-->
+    <string name="foot_odds_eu_left">胜</string>
+    <string name="foot_odds_eu_middle">平</string>
+    <string name="foot_odds_eu_right">负</string>
+
 
     <!--分享-->
     <string name="errcode_success">发送成功</string>
@@ -49,8 +76,6 @@
     <string name="share_uninstall_qq">您还未安装QQ客户端</string>
     <string name="share_recommend">推荐</string>
     <string name="share_summary_default">一比分,专业的足球比分直播平台</string>
-
-
 
 
     <!--指数-->
@@ -159,9 +184,9 @@
     <string name="foot_guanzhu_txt">关注</string>
     <string name="foot_setting_txt">设置</string>
     <!-- 下拉刷新 -->
-    <string name="pull_to_refresh_pull_label" >向下拉动可以刷新</string>
-    <string name="pull_to_refresh_release_label" >松开可以刷新</string>
-    <string name="pull_to_refresh_refreshing_label" >加载中&#8230;</string>
+    <string name="pull_to_refresh_pull_label">向下拉动可以刷新</string>
+    <string name="pull_to_refresh_release_label">松开可以刷新</string>
+    <string name="pull_to_refresh_refreshing_label">加载中&#8230;</string>
 
     <!-- 设置 -->
     <string name="set_sound_txt">声音</string>
@@ -436,7 +461,6 @@
     <string name="number_xinqi6">周六</string>
 
 
-
     <!-- 代码中的添加 string -->
 
     <string name="language_select_txt">语种选择</string>
@@ -457,10 +481,7 @@
     <string name="china_vi_txt">tiếng việt</string>
 
 
-
-
     <string name="reload_the_txt">重新加载</string>
-
 
 
     <!-- 首页足球状态 -->
@@ -533,8 +554,16 @@
     <string name="keduijin">客队近</string>
     <string name="nodata">暂无数据</string>
 
-
-
+    <!--足球分析详情页面 -->
+    <string name="football_analyze_equ">平</string>
+    <string name="football_analyze_win">胜</string>
+    <string name="football_analyze_lost">负</string>
+    <string name="football_analyze_jin">,进</string>
+    <string name="football_analyze_shi">球失</string>
+    <string name="football_analyze_ball">球</string>
+    <string name="football_analyze_winodds">胜率</string>
+    <string name="football_analyze_bigball">,大球率</string>
+    <string name="football_analyze_let_points">,让分赢盘率</string>
 
     <!-- 篮球界面 -->
     <string name="basket_left">篮球比分</string>
@@ -569,7 +598,6 @@
     <string name="basket_interrupt">中断</string>
     <string name="basket_cancel">取消</string>
     <string name="basket_postpone">推迟</string>
-
 
 
     <string name="basket_yesterday">昨日</string>
@@ -666,6 +694,23 @@
     <string name="basket_odds_euro_details">欧赔详情</string>
     <string name="basket_odds_asiaLet_details">亚盘详情</string>
     <string name="basket_odds_asiaSize_details">大小球详情</string>
+
+    <!--篮球资料库详情-->
+    <string name="basket_database_details_handicapname">让分盘</string>
+    <string name="basket_database_details_bigsmallname">大小盘</string>
+    <string name="basket_database_details_season">赛季</string>
+    <string name="basket_database_details_all">全部</string>
+    <string name="basket_database_details_home">主场</string>
+    <string name="basket_database_details_guest">客场</string>
+    <string name="basket_database_details_runkingname">排名/球队</string>
+    <string name="basket_database_details_overgame">已赛</string>
+    <string name="basket_database_details_big">大</string>
+    <string name="basket_database_details_dorw">走</string>
+    <string name="basket_database_details_small">小</string>
+
+    <string name="basket_database_details_up">上盘</string>
+    <string name="basket_database_details_down">下盘</string>
+    <string name="basket_database_details_yzs">赢/走/输</string>
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
@@ -832,6 +877,7 @@
     <string name="new_analyze_attack_defense">攻防对比</string>
     <string name="new_analyze_bet">大小盘口:</string>
     <string name="new_analyze_player_info">球员信息</string>
+    <string name="new_analyze_recommend">心水推荐</string>
 
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>
@@ -841,4 +887,20 @@
     <string name="ninety_plus">90+</string>
     <string name="server_busy">系统繁忙</string>
     <string name="at_least_one_company">至少选择一家公司</string>
+
+    <string name="home_win_rate">主胜率</string>
+    <string name="size_win_rate">大球率</string>
+    <string name="asia_win_rate">赢盘率</string>
+    <string name="title_big_data_predict">大数据预测</string>
+    <string name="diy_compute_method">DIY算法</string>
+    <string name="diy_custom_compute_method">DIY自定义算法</string>
+    <string name="foot_details_info">情报</string>
+    <string name="diy_compute_method_message">历史交锋 × %1$s + 主队 × %2$s + 客队 × %3$s = 概率</string>
+    <string name="symbol_times" translatable="false">×</string>
+    <string name="symbol_plus" translatable="false">+</string>
+    <string name="symbol_equal" translatable="false">=</string>
+    <string name="action_close">关闭</string>
+    <string name="action_compute">计算</string>
+    <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
+    <string name="insufficient_sampling">采样\n不足</string>
 </resources>

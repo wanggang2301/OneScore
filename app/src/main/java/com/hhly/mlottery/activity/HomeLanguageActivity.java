@@ -458,14 +458,14 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("HomeLanguageActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("HomeLanguageActivity");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("HomeLanguageActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("HomeLanguageActivity");
     }
 }

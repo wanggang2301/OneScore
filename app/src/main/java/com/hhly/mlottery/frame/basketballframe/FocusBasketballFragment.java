@@ -74,7 +74,7 @@ import java.util.TimerTask;
 import de.greenrobot.event.EventBus;
 
 /**
- * 篮球比分fragment
+ * 篮球比分fragment （关注）
  * Created by yixq on 2015/12/30.
  */
 public class FocusBasketballFragment extends Fragment implements View.OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener, ExpandableListView.OnChildClickListener {
@@ -120,13 +120,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
     private LinearLayout mErrorLayout;
     private TextView mReloadTvBtn;// 刷新 控件
 
-    //    private ImageView mIb_back;//返回按钮
-    //    private TextView mTittle; //标题头
-//    private ImageView mFilterImgBtn = BasketScoresFragment.getmFilterImgBtn();// 筛选
-//    private ImageView mSetting = BasketScoresFragment.getmSetting();//设置按钮
-
-
-
     private Intent mIntent;
 
     private boolean isScroll = false; //是否处于划定状态
@@ -137,7 +130,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
 
     public static final int REQUEST_FILTERCODE = 0x62;//筛选的标记
     public static final int REQUEST_SETTINGCODE = 0x61;//设置的标记
-
     public static final int REQUEST_DETAILSCODE = 0x66;
 
     private BasketFocusClickListener mFocusClickListener; //关注点击监听
@@ -163,11 +155,7 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
     /**
      * 关注事件EventBus
      */
-//    public static EventBus BasketImmedEventBus;
-//    public static EventBus BasketResultEventBus;
-//    public static EventBus BasketScheduleEventBus;
     public static EventBus BasketFocusEventBus;
-
 
     /**
      * 切换后更新显示的fragment
@@ -202,25 +190,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         }
             BasketFocusEventBus = new EventBus();
             BasketFocusEventBus.register(this);
-
-//        switch (mBasketballType){
-//            case TYPE_IMMEDIATE:
-//                BasketImmedEventBus=new EventBus();
-//                BasketImmedEventBus.register(this);
-//                break;
-//            case TYPE_RESULT:
-//                BasketResultEventBus = new EventBus();
-//                BasketResultEventBus.register(this);
-//                break;
-//            case TYPE_SCHEDULE:
-//                BasketScheduleEventBus = new EventBus();
-//                BasketScheduleEventBus.register(this);
-//                break;
-//            case TYPE_FOCUS:
-//                BasketFocusEventBus = new EventBus();
-//                BasketFocusEventBus.register(this);
-//                break;
-//        }
     }
 
     /**
@@ -330,27 +299,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
-//        //标题头部
-//        mTittle = (TextView) mView.findViewById(R.id.public_txt_title);
-//        mTittle.setText(R.string.basket_tittle);
-
-        //设置按钮
-//        mSetting = (ImageView) mView.findViewById(R.id.public_btn_set);
-//        mSetting.setOnClickListener(this);
-
-        // 筛选
-//        mFilterImgBtn = (ImageView) mView.findViewById(R.id.public_btn_filter);
-//        if (mBasketballType == TYPE_FOCUS) {
-//            mFilterImgBtn.setVisibility(View.GONE);
-//        } else {
-//            mFilterImgBtn.setVisibility(View.VISIBLE);
-//            mFilterImgBtn.setOnClickListener(this);
-//        }
-
-        //返回
-//        mIb_back = (ImageView) mView.findViewById(R.id.public_img_back);
-//        mIb_back.setOnClickListener(this);
-
         // 加载状态图标
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_loading);
 
@@ -362,11 +310,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
 
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//        mFilterImgBtn.setClickable(false); // 默认设置不可点击，防止网络差时在数据请求过程中无数据时点击筛选出现空白显示情况
-        /**
-         * 数据访问成功时打开赛选开关
-         */
-//        mFilterImgBtn.setClickable(true);
     }
 
     private int mSize; //记录共有几天的数据
@@ -489,9 +432,10 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 /**
                  * 判断 如果是即时和关注界面 则开启socket服务
                  */
-                if (mBasketballType == TYPE_IMMEDIATE || mBasketballType == TYPE_FOCUS) {
-                    startWebsocket(); //启动socket
-                }
+                startWebsocket(); //启动socket
+//                if (mBasketballType == TYPE_IMMEDIATE || mBasketballType == TYPE_FOCUS) {
+//                    startWebsocket(); //启动socket
+//                }
                 //全部展开
                 for (int i = 0; i < groupDataList.size(); i++) {
                     explistview.expandGroup(i);
@@ -593,15 +537,11 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                         for (int i = 0; i < groupDataList.size(); i++) {
                             explistview.expandGroup(i);
                         }
-//                        ((BasketballFragment) getParentFragment()).focusCallback();
-//                        ((BasketListActivity) getActivity()).focusCallback();
                         ((BasketScoresFragment)getParentFragment()).focusCallback();
                         return;
                     }
                 }
                 updateAdapter();//防止复用
-//                ((BasketballFragment) getParentFragment()).focusCallback();
-//                ((BasketListActivity) getActivity()).focusCallback();
                 ((BasketScoresFragment)getParentFragment()).focusCallback();
             }
         };
@@ -675,7 +615,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
 //                break;
             case R.id.public_img_back:  //返回
                 MobclickAgent.onEvent(mContext, "Basketball_Exit");
-//                ((MainActivity) getActivity()).openLeftLayout();
                 getActivity().finish();
                 break;
 
@@ -700,10 +639,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
 
         adapter.updateDatas(childrenDataList, groupDataList);
         adapter.notifyDataSetChanged();
-        //设置打开全部日期内容
-//        for (int i = 0; i < groupDataList.size(); i++) {
-//            explistview.expandGroup(i);
-//        }
     }
 
     public void LoadData(){
@@ -1104,15 +1039,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         if (!isLoadData) {
             mLoadHandler.postDelayed(mRun, 0);
         }
-//        if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBSECOND, true)) {
-//            mHandicap = 1;
-//        } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_rbSizeBall, false)) {
-//            mHandicap = 2;// 大小球
-//        } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBOCOMPENSATE, false)) {
-//            mHandicap = 3;//欧赔
-//        } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBNOTSHOW, false)) {
-//            mHandicap = 4;//不显示
-//        }
     }
 
     private boolean isDestroy = false;
@@ -1330,135 +1256,4 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
 //        ((BasketScoresFragment)getParentFragment()).focusCallback();
     }
 
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        if (requestCode == REQUEST_DETAILSCODE && resultCode == Activity.RESULT_OK) {
-//
-//            //判断 关注页面重新请求 （详情中取消关注返回时关注页面跟着变化）
-//            if (mBasketballType == TYPE_FOCUS) {
-//                mLoadHandler.postDelayed(mRun, 0);
-//                ((BasketListActivity) getActivity()).focusCallback();
-//            }else{
-//                updateAdapter();
-//                ((BasketListActivity) getActivity()).focusCallback();
-//            }
-//        }
-//        /**
-//         * 判断是设置界面返回
-//         */
-//        if (requestCode == REQUEST_SETTINGCODE && resultCode == Activity.RESULT_OK) {
-//            L.w(TAG, "result ok");
-//
-////            //赔率
-////            if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBSECOND, true)) {
-////                mHandicap = 1; //亚盘
-////            } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_rbSizeBall, false)) {
-////                mHandicap = 2;// 大小球
-////            } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBOCOMPENSATE, false)) {
-////                mHandicap = 3;//欧赔
-////            } else if (PreferenceUtil.getBoolean(MyConstants.BASKETBALL_RBNOTSHOW, false)) {
-////                mHandicap = 4;//不显示
-////            }
-//
-//            /**
-//             * 过滤筛选0场的情况，防止筛选0场时刷新 切换设置时出现异常
-//             */
-//            if (mChickedFilter.size() != 0 || mBasketballType == TYPE_FOCUS){
-//                if (childrenDataList != null) {
-//                    if (childrenDataList.size() != 0) {
-//                        updateAdapter();
-//                        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//                        mSwipeRefreshLayout.setRefreshing(false);
-//                    }else{
-//                        mbasket_unfiltrate.setVisibility(View.VISIBLE);
-//                        mSwipeRefreshLayout.setVisibility(View.GONE);
-//                        mLoadingLayout.setVisibility(View.GONE);
-//                    }
-//                }else{
-//                    mbasket_unfiltrate.setVisibility(View.VISIBLE);
-//                    mSwipeRefreshLayout.setVisibility(View.GONE);
-//                    mLoadingLayout.setVisibility(View.GONE);
-//                }
-//            }else{
-//
-//                mbasket_unfiltrate.setVisibility(View.VISIBLE);
-//                mSwipeRefreshLayout.setVisibility(View.GONE);
-//                mLoadingLayout.setVisibility(View.GONE);
-//            }
-////            updateAdapter();
-////            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-////            mSwipeRefreshLayout.setRefreshing(false);
-//        }
-//        /**
-//         * 筛选界面返回
-//         */
-//        else if (requestCode == REQUEST_FILTERCODE && resultCode == Activity.RESULT_OK) {
-//
-//            String[] checkedIds = (String[]) data.getCharSequenceArrayExtra(BasketFiltrateActivity.CHECKED_CUPS_IDS);// 返回数据是选择后的id字符串数组，数据类型String
-//            isFilter = true;
-//
-//            FiltrateCupsMap.basketImmedateCups = checkedIds;
-//            if (checkedIds.length == 0) {
-//                List<BasketMatchFilter> noCheckedFilters = new ArrayList<>();
-//                mChickedFilter = noCheckedFilters;//筛选0场后，再次进入赛选页面 显示已选中0场（全部不选中）
-//
-//                mbasket_unfiltrate.setVisibility(View.VISIBLE);
-//                mSwipeRefreshLayout.setVisibility(View.GONE);
-//                mLoadingLayout.setVisibility(View.GONE);
-//            } else {
-//
-//                childrenDataList.clear();
-//                groupDataList.clear();
-//                for (List<BasketMatchBean> lists : mAllMatchdata) { // 遍历所有数据 得到筛选后的
-//                    List<BasketMatchBean> checkedMatchs = new ArrayList<>();
-//                    for (BasketMatchBean matchBean : lists) {
-//                        boolean isExistId = false;
-//                        for (String checkedId : checkedIds) {
-//                            if (matchBean.getLeagueId().equals(checkedId)) {
-//                                isExistId = true;
-//                                break;
-//                            }
-//                        }
-//                        if (isExistId) {
-//                            //groupDataList.add(aa.getDate()+","+"day");
-//                            //childrenDataList.add(lists);
-//                            checkedMatchs.add(matchBean);
-//                        }
-//                    }
-//                    if (checkedMatchs.size() != 0) {
-//                        childrenDataList.add(checkedMatchs);
-//                        for (String groupdata : mAllGroupdata) {
-//                            String[] weekdatas = groupdata.split(",");
-//                            String datas = weekdatas[0];
-//                            if (checkedMatchs.get(0).getDate().equals(datas)) {
-//                                groupDataList.add(groupdata);
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//                List<BasketMatchFilter> checkedFilters = new ArrayList<>();
-//           // mChickedFilter.clear(); // 清除原来选中的
-//                for (BasketMatchFilter allFilter : mAllFilter) {
-//                    for (String checkedId : checkedIds) {
-//                        if (allFilter.getLeagueId().equals(checkedId)) {
-//                            checkedFilters.add(allFilter);
-//                        }
-//                    }
-//                }
-//                mChickedFilter = checkedFilters;
-//                mbasket_unfiltrate.setVisibility(View.GONE);
-//                mSwipeRefreshLayout.setRefreshing(false);
-//                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//
-//                updateAdapter();
-//                // 设置打开全部日期内容
-//                for (int i = 0; i < groupDataList.size(); i++) {
-//                    explistview.expandGroup(i);
-//                }
-//            }
-//        }
-//    }
 }

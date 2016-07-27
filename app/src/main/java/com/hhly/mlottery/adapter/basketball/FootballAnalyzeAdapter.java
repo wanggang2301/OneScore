@@ -31,9 +31,9 @@ public class FootballAnalyzeAdapter extends CommonAdapter<FootballAnaylzeHistory
     @Override
     public void convert(ViewHolder holder, FootballAnaylzeHistoryRecent historyBean) {
 
-        if (holder.getPosition()%2 == 0) {
-            holder.setBackgroundRes(R.id.football_analyze_details_item, R.color.home_item_bg);
-        }
+//        if (holder.getPosition()%2 == 0) {
+//            holder.setBackgroundRes(R.id.football_analyze_details_item, R.color.home_item_bg);
+//        }
 
 //        L.d("Position _----------------","Position + ==" +holder.getPosition()%2 + "");
 
@@ -75,11 +75,11 @@ public class FootballAnalyzeAdapter extends CommonAdapter<FootballAnaylzeHistory
                 holder.setText(R.id.football_details_big_small , historyBean.getCtotScore() + "--");
             }else{
                 if (historyBean.getTot().equals("1")) {
-                    holder.setText(R.id.football_details_big_small , historyBean.getCtotScore() + "大");
+                    holder.setText(R.id.football_details_big_small , historyBean.getCtotScore() + mContext.getResources().getString(R.string.basket_handicap_big));
                 }else if(historyBean.getTot().equals("2")){
-                    holder.setText(R.id.football_details_big_small , historyBean.getCtotScore() + "小");
+                    holder.setText(R.id.football_details_big_small , historyBean.getCtotScore() + mContext.getResources().getString(R.string.basket_handicap_small));
                 }else if(historyBean.getTot().equals("0")){
-                    holder.setText(R.id.football_details_big_small , historyBean.getCtotScore() + "走");
+                    holder.setText(R.id.football_details_big_small , historyBean.getCtotScore() + mContext.getResources().getString(R.string.basket_handicap_zou));
                 }
             }
         }
@@ -95,7 +95,7 @@ public class FootballAnalyzeAdapter extends CommonAdapter<FootballAnaylzeHistory
                 }else if (historyBean.getLet().equals("2")) {
                     holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + mContext.getResources().getString(R.string.football_analyze_details_lose));
                 }else if(historyBean.getLet().equals("0")){
-                    holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + "走");
+                    holder.setText(R.id.football_details_concede ,historyBean.getCasLetGoal() + mContext.getResources().getString(R.string.basket_handicap_zou));
                 }
             }
         }

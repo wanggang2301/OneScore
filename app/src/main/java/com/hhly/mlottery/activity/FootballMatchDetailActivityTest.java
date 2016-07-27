@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -48,6 +48,7 @@ import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
+import com.hhly.mlottery.frame.footframe.IntelligenceFragment;
 import com.hhly.mlottery.frame.footframe.LiveHeadInfoFragment;
 import com.hhly.mlottery.frame.footframe.OddsFragment;
 import com.hhly.mlottery.frame.footframe.PreHeadInfoFrament;
@@ -114,6 +115,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private final static String BEFOURLIVE = "0";//直播前
     private final static String ONLIVE = "1";//直播中
     private final static String LIVEENDED = "-1";//直播结束
+
+
+    private final static int ROLLBALL_FG = 0;
+    private final static int TALKBALL_FG = 1;
+    private final static int ANALYZE_FG = 2;
+    private final static int ODDS_FG = 3;
+    private final static int STATISTICS_FG = 4;
+
 
     /**
      * 未开
@@ -222,6 +231,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private OddsFragment mOddsFragment;         //指数
 
     private StatisticsFragment mStatisticsFragment;  //统计
+    private IntelligenceFragment mIntelligenceFragment; // 情报
 
     private int mStartTime;// 获取推送的开赛时间
     private TextView reLoading; //赔率请求失败重新加载
@@ -265,7 +275,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         setContentView(R.layout.activity_football_match_details_test);
 
-        L.d("cccnnn", Build.VERSION.SDK_INT + "====" + Build.VERSION_CODES.KITKAT);
+        /**当前Activity不统计*/
+        MobclickAgent.openActivityDurationTrack(false);
 
         this.mContext = getApplicationContext();
         if (getIntent().getExtras() != null) {
@@ -305,8 +316,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mOddsFragment = OddsFragment.newInstance();
         //统计
         mStatisticsFragment = StatisticsFragment.newInstance();
+        // 情报
+        mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment, mAnalyzeFragment, mOddsFragment, mStatisticsFragment);
+        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment,
+                mAnalyzeFragment, mOddsFragment, mStatisticsFragment, mIntelligenceFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -321,7 +335,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             e.printStackTrace();
         }
     }
-
 
 
     private void initView() {
@@ -431,8 +444,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     public void onRefresh() {
-        L.d("10299", "下拉刷新");
-
         L.d(TAG, "下拉刷新");
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -674,14 +685,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 mHandler.sendEmptyMessage(SUCCESS);
 
-                if (isInitedViewPager) {
-
-                    if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
-                        startWebsocket();
-                        computeWebSocket();
-                    }
-                }
-
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -695,9 +698,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private void initViewPager(MatchDetail matchDetail) {
 
-        L.d(TAG, "状态" + matchDetail.getLiveStatus());
 
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
+
+
+            //赛前进入分析
+            mViewPager.setCurrentItem(ANALYZE_FG);
+
 
             mHeadviewpager.setIsScrollable(false);
             mIndicator.setVisibility(View.GONE);
@@ -718,6 +725,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
         } else {
+
+            mViewPager.setCurrentItem(ROLLBALL_FG);
+
 
             mHeadviewpager.setIsScrollable(true);
             mIndicator.setVisibility(View.VISIBLE);
@@ -759,8 +769,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
 
-
-                L.d(TAG, "统计数据" + mMatchDetail.getLiveStatus());
                 initMatchSatisInfo();
 
 
@@ -850,6 +858,17 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }
 
         mStatisticsFragment.setType(matchDetail.getLiveStatus());
+
+        if (!isInitedViewPager) {
+
+            if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
+                L.d(TAG, "第一次启动socket");
+                startWebsocket();
+                computeWebSocket();
+            }
+        }
+
+
         isInitedViewPager = true;
     }
 
@@ -1109,8 +1128,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (computeWebSocketConnTimer != null) {
-            computeWebSocketConnTimer.cancel();
+
+        if (footballTimer != null) {
+            L.d("timer", "footballdetails定时器");
+            footballTimer.cancel();
+            footballTimer.purge();
+            footballTimer = null;
         }
 
         if (hSocketClient != null) {
@@ -1119,7 +1142,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
+            mReloadTimer.purge();
+
         }
+        this.finish();
     }
 
 
@@ -1202,7 +1228,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     //心跳时间
     private long pushStartTime;
 
-    private Timer computeWebSocketConnTimer = new Timer();
+    private Timer footballTimer = new Timer();
+
 
     private boolean isStarComputeTimer = false;
 
@@ -1214,6 +1241,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             TimerTask tt = new TimerTask() {
                 @Override
                 public void run() {
+                    L.d(TAG, "计算");
+
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                     L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
                     long pushEndTime = System.currentTimeMillis();
@@ -1223,8 +1252,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     }
                 }
             };
-            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
-            isStarComputeTimer = true;
+
+            if (!isStarComputeTimer) {
+                footballTimer.schedule(tt, 15000, 15000);
+                isStarComputeTimer = true;
+
+            }
         }
     }
 
@@ -1270,10 +1303,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 MatchTextLiveBean currMatchTextLiveBean = new MatchTextLiveBean(data.get("code"), data.get("msgId"), data.get("msgPlace"), data.get("showId"), data.get("fontStyle"), data.get("time"), data.get("msgText"), data.get("cancelEnNum"), data.get("enNum"), data.get("state"), data.get("homeScore"), data.get("guestScore"));
                 if (currMatchTextLiveBean != null) {
                     isLostMsgId(currMatchTextLiveBean.getMsgId());
-                }
-                allMatchLiveMsgId.add(0, Integer.parseInt(currMatchTextLiveBean.getMsgId()));
-
-                if (currMatchTextLiveBean != null) {
+                    allMatchLiveMsgId.add(0, Integer.parseInt(currMatchTextLiveBean.getMsgId()));
                     updatePushData(currMatchTextLiveBean);
                 }
             }
@@ -2300,7 +2330,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        popupWindow.showAsDropDown(v);
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - v.getWidth() - v.getPaddingRight(), location[1] + v.getHeight());         //  popupWindow.showAsDropDown(v,-10,0);
 
 
         (mView.findViewById(R.id.football_item_focus)).setOnClickListener(new View.OnClickListener() {
@@ -2472,11 +2505,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private boolean isOdds = false;
     private boolean isStatisticsFragmentTest = false;// 统计
     private boolean isStatistics = false;
+    private boolean isIntelligenceFragment = false;// 情报
+    private boolean isIntelligence = false;
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        MobclickAgent.onResume(this);
         if (isDetailsRollballFragment) {
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");
             isDetailsRollball = true;
@@ -2502,12 +2537,17 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             isStatistics = true;
             L.d("xxx", "StatisticsFragment>>>显示");
         }
+        if (isIntelligenceFragment) {
+            MobclickAgent.onPageStart("Football_IntelligenceFragment");
+            isIntelligence = true;
+            L.d("xxx", "IntelligenceFragment>>>显示");
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
+        MobclickAgent.onPause(this);
         if (isDetailsRollball) {
             MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
             isDetailsRollball = false;
@@ -2533,6 +2573,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             isStatistics = false;
             L.d("xxx", "StatisticsFragment>>>隐藏");
         }
+        if (isIntelligence) {
+            MobclickAgent.onPageEnd("Football_IntelligenceFragment");
+            isIntelligence = false;
+            L.d("xxx", "IntelligenceFragment>>>隐藏");
+        }
     }
 
     /**
@@ -2548,6 +2593,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isAnalyzeFragment = false;
                 isOddsFragment = false;
                 isStatisticsFragmentTest = false;
+                isIntelligenceFragment= false;
                 break;
             case 1:// 聊球
                 isTalkAboutBallFragment = true;
@@ -2555,6 +2601,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isAnalyzeFragment = false;
                 isOddsFragment = false;
                 isStatisticsFragmentTest = false;
+                isIntelligenceFragment= false;
                 break;
             case 2:// 分析
                 isAnalyzeFragment = true;
@@ -2562,6 +2609,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isTalkAboutBallFragment = false;
                 isOddsFragment = false;
                 isStatisticsFragmentTest = false;
+                isIntelligenceFragment= false;
                 break;
             case 3:// 指数
                 isOddsFragment = true;
@@ -2569,9 +2617,19 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isDetailsRollballFragment = false;
                 isTalkAboutBallFragment = false;
                 isStatisticsFragmentTest = false;
+                isIntelligenceFragment= false;
                 break;
             case 4:// 统计
                 isStatisticsFragmentTest = true;
+                isTalkAboutBallFragment = false;
+                isDetailsRollballFragment = false;
+                isAnalyzeFragment = false;
+                isOddsFragment = false;
+                isIntelligenceFragment= false;
+                break;
+            case 5:// 情报
+                isIntelligenceFragment = true;
+                isStatisticsFragmentTest = false;
                 isTalkAboutBallFragment = false;
                 isDetailsRollballFragment = false;
                 isAnalyzeFragment = false;
@@ -2599,6 +2657,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 MobclickAgent.onPageEnd("Football_StatisticsFragmentTest");
                 isStatistics = false;
                 L.d("xxx", "StatisticsFragment>>>隐藏");
+            }
+            if (isIntelligence) {
+                MobclickAgent.onPageEnd("Football_IntelligenceFragment");
+                isIntelligence = false;
+                L.d("xxx", "IntelligenceFragment>>>隐藏");
             }
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");
             isDetailsRollball = true;
@@ -2625,6 +2688,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isStatistics = false;
                 L.d("xxx", "StatisticsFragment>>>隐藏");
             }
+            if (isIntelligence) {
+                MobclickAgent.onPageEnd("Football_IntelligenceFragment");
+                isIntelligence = false;
+                L.d("xxx", "IntelligenceFragment>>>隐藏");
+            }
             MobclickAgent.onPageStart("Football_TalkAboutBallFragment");
             isTalkAboutBall = true;
             L.d("xxx", "TalkAboutBallFragment>>>显示");
@@ -2649,6 +2717,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 MobclickAgent.onPageEnd("Football_StatisticsFragmentTest");
                 isStatistics = false;
                 L.d("xxx", "StatisticsFragment>>>隐藏");
+            }
+            if (isIntelligence) {
+                MobclickAgent.onPageEnd("Football_IntelligenceFragment");
+                isIntelligence = false;
+                L.d("xxx", "IntelligenceFragment>>>隐藏");
             }
             MobclickAgent.onPageStart("Football_AnalyzeFragment");
             isAnalyze = true;
@@ -2675,6 +2748,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isStatistics = false;
                 L.d("xxx", "StatisticsFragment>>>隐藏");
             }
+            if (isIntelligence) {
+                MobclickAgent.onPageEnd("Football_IntelligenceFragment");
+                isIntelligence = false;
+                L.d("xxx", "IntelligenceFragment>>>隐藏");
+            }
             MobclickAgent.onPageStart("Football_OddsFragment");
             isOdds = true;
             L.d("xxx", "OddsFragment>>>显示");
@@ -2700,9 +2778,44 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isOdds = false;
                 L.d("xxx", "OddsFragment>>>隐藏");
             }
+            if (isIntelligence) {
+                MobclickAgent.onPageEnd("Football_IntelligenceFragment");
+                isIntelligence = false;
+                L.d("xxx", "IntelligenceFragment>>>隐藏");
+            }
             MobclickAgent.onPageStart("Football_StatisticsFragmentTest");
             isStatistics = true;
             L.d("xxx", "StatisticsFragment>>>显示");
+        }
+        if (isIntelligenceFragment) {
+            if (isDetailsRollball) {
+                MobclickAgent.onPageEnd("Football_DetailsRollballFragment");
+                isDetailsRollball = false;
+                L.d("xxx", "DetailsRollballFragment>>>隐藏");
+            }
+            if (isTalkAboutBall) {
+                MobclickAgent.onPageEnd("Football_TalkAboutBallFragment");
+                isTalkAboutBall = false;
+                L.d("xxx", "TalkAboutBallFragment>>>隐藏");
+            }
+            if (isAnalyze) {
+                MobclickAgent.onPageEnd("Football_AnalyzeFragment");
+                isAnalyze = false;
+                L.d("xxx", "AnalyzeFragment>>>隐藏");
+            }
+            if (isOdds) {
+                MobclickAgent.onPageEnd("Football_OddsFragment");
+                isOdds = false;
+                L.d("xxx", "OddsFragment>>>隐藏");
+            }
+            if (isStatistics) {
+                MobclickAgent.onPageEnd("Football_StatisticsFragmentTest");
+                isStatistics = false;
+                L.d("xxx", "StatisticsFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("Football_IntelligenceFragment");
+            isIntelligence = true;
+            L.d("xxx", "IntelligenceFragment>>>显示");
         }
     }
 }

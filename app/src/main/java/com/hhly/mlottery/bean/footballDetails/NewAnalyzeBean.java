@@ -7,86 +7,106 @@ import java.util.List;
  */
 public class NewAnalyzeBean {
 
-
     private String result;
+    private String leagueId;
     private int fullScoreRank;
-    private int leagueType;
-    private int leagueId;
-
-    public int getLeagueId() {
-        return leagueId;
-    }
-
-    public void setLeagueId(int leagueId) {
-        this.leagueId = leagueId;
-    }
-
-    public int getLeagueType() {
-        return leagueType;
-    }
-
-    public void setLeagueType(int leagueType) {
-        this.leagueType = leagueType;
-    }
 
     private AttackDefenseEntity attackDefense;
+
     private LineUpEntity lineUp;
-
-
+    private SizeTrendEntity sizeTrend;
     private ScoreRankEntity scoreRank;
-    /**
-     * home : {"historyWin":0,"recentRecord":[0,2,0,2,2,2],"futureMatch":{"team":"皇马","logoUrl":"http://pic.13322.com/logo/123455.png","diffDays":4}}
-     * guest : {"historyWin":2,"recentRecord":[0,1,1,2,2,0],"futureMatch":{"team":"巴萨","logoUrl":"http://pic.13322.com/logo/343455.png","diffDays":10}}
-     */
-
+    private AsiaTrendEntity asiaTrend;
     private BothRecordEntity bothRecord;
+    private String recommend;
+    private Object leagueType;
+
+    public String getResult() {
+        return result;
+    }
 
     public void setResult(String result) {
         this.result = result;
     }
 
-    public void setFullScoreRank(int fullScoreRank) {
-        this.fullScoreRank = fullScoreRank;
+    public Object getLeagueId() {
+        return leagueId;
     }
 
-    public void setAttackDefense(AttackDefenseEntity attackDefense) {
-        this.attackDefense = attackDefense;
-    }
-
-    public void setLineUp(LineUpEntity lineUp) {
-        this.lineUp = lineUp;
-    }
-
-    public void setScoreRank(ScoreRankEntity scoreRank) {
-        this.scoreRank = scoreRank;
-    }
-
-    public void setBothRecord(BothRecordEntity bothRecord) {
-        this.bothRecord = bothRecord;
-    }
-
-    public String getResult() {
-        return result;
+    public void setLeagueId(String leagueId) {
+        this.leagueId = leagueId;
     }
 
     public int getFullScoreRank() {
         return fullScoreRank;
     }
 
+    public void setFullScoreRank(int fullScoreRank) {
+        this.fullScoreRank = fullScoreRank;
+    }
+
     public AttackDefenseEntity getAttackDefense() {
         return attackDefense;
+    }
+
+    public void setAttackDefense(AttackDefenseEntity attackDefense) {
+        this.attackDefense = attackDefense;
     }
 
     public LineUpEntity getLineUp() {
         return lineUp;
     }
 
+    public void setLineUp(LineUpEntity lineUp) {
+        this.lineUp = lineUp;
+    }
+
+    public SizeTrendEntity getSizeTrend() {
+        return sizeTrend;
+    }
+
+    public void setSizeTrend(SizeTrendEntity sizeTrend) {
+        this.sizeTrend = sizeTrend;
+    }
+
     public ScoreRankEntity getScoreRank() {
         return scoreRank;
     }
 
+    public void setScoreRank(ScoreRankEntity scoreRank) {
+        this.scoreRank = scoreRank;
+    }
+
+    public AsiaTrendEntity getAsiaTrend() {
+        return asiaTrend;
+    }
+
+    public void setAsiaTrend(AsiaTrendEntity asiaTrend) {
+        this.asiaTrend = asiaTrend;
+    }
+
     public BothRecordEntity getBothRecord() {
         return bothRecord;
+    }
+
+    public void setBothRecord(BothRecordEntity bothRecord) {
+        this.bothRecord = bothRecord;
+    }
+
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
+    }
+
+    public Object getLeagueType() {
+        return leagueType;
+    }
+
+    public void setLeagueType(Object leagueType) {
+        this.leagueType = leagueType;
     }
 
     public static class AttackDefenseEntity {
@@ -96,44 +116,44 @@ public class NewAnalyzeBean {
         private String homeFieldGoal;
         private String homeFieldLose;
 
-        public void setGuestFieldGoal(String guestFieldGoal) {
-            this.guestFieldGoal = guestFieldGoal;
-        }
-
-        public void setGuestFieldLose(String guestFieldLose) {
-            this.guestFieldLose = guestFieldLose;
-        }
-
-        public void setSizeHandicap(String sizeHandicap) {
-            this.sizeHandicap = sizeHandicap;
-        }
-
-        public void setHomeFieldGoal(String homeFieldGoal) {
-            this.homeFieldGoal = homeFieldGoal;
-        }
-
-        public void setHomeFieldLose(String homeFieldLose) {
-            this.homeFieldLose = homeFieldLose;
-        }
-
         public String getGuestFieldGoal() {
             return guestFieldGoal;
+        }
+
+        public void setGuestFieldGoal(String guestFieldGoal) {
+            this.guestFieldGoal = guestFieldGoal;
         }
 
         public String getGuestFieldLose() {
             return guestFieldLose;
         }
 
+        public void setGuestFieldLose(String guestFieldLose) {
+            this.guestFieldLose = guestFieldLose;
+        }
+
         public String getSizeHandicap() {
             return sizeHandicap;
+        }
+
+        public void setSizeHandicap(String sizeHandicap) {
+            this.sizeHandicap = sizeHandicap;
         }
 
         public String getHomeFieldGoal() {
             return homeFieldGoal;
         }
 
+        public void setHomeFieldGoal(String homeFieldGoal) {
+            this.homeFieldGoal = homeFieldGoal;
+        }
+
         public String getHomeFieldLose() {
             return homeFieldLose;
+        }
+
+        public void setHomeFieldLose(String homeFieldLose) {
+            this.homeFieldLose = homeFieldLose;
         }
     }
 
@@ -157,322 +177,786 @@ public class NewAnalyzeBean {
         public List<PlayerInfo> getGuestLineUp() {
             return guestLineUp;
         }
-       public static class PlayerInfo{
+        public static class PlayerInfo{
             private String name;
 
-           public String getName() {
-               return name;
-           }
+            public String getName() {
+                return name;
+            }
 
-           public void setName(String name) {
-               this.name = name;
-           }
+            public void setName(String name) {
+                this.name = name;
+            }
 
-           public PlayerInfo(String name) {
-               this.name = name;
-           }
-           public PlayerInfo(){}
-       }
+            public PlayerInfo(String name) {
+                this.name = name;
+            }
+            public PlayerInfo(){}
+        }
+    }
+
+    /**
+     * 大小球走势
+     */
+    public static class SizeTrendEntity {
+
+        private BattleHistoryEntity battleHistory;
+        private List<HomeRecentEntity> homeRecent;
+        private List<GuestRecentEntity> guestRecent;
+
+        public BattleHistoryEntity getBattleHistory() {
+            return battleHistory;
+        }
+
+        public void setBattleHistory(BattleHistoryEntity battleHistory) {
+            this.battleHistory = battleHistory;
+        }
+
+        public List<HomeRecentEntity> getHomeRecent() {
+            return homeRecent;
+        }
+
+        public void setHomeRecent(List<HomeRecentEntity> homeRecent) {
+            this.homeRecent = homeRecent;
+        }
+
+        public List<GuestRecentEntity> getGuestRecent() {
+            return guestRecent;
+        }
+
+        public void setGuestRecent(List<GuestRecentEntity> guestRecent) {
+            this.guestRecent = guestRecent;
+        }
+
+        public static class BattleHistoryEntity {
+
+            private StatisticsEntity statistics;
+
+
+            private List<TotListEntity> totList;
+
+
+            private List<PointListEntity> pointList;
+
+            public StatisticsEntity getStatistics() {
+                return statistics;
+            }
+
+            public void setStatistics(StatisticsEntity statistics) {
+                this.statistics = statistics;
+            }
+
+            public List<TotListEntity> getTotList() {
+                return totList;
+            }
+
+            public void setTotList(List<TotListEntity> totList) {
+                this.totList = totList;
+            }
+
+            public List<PointListEntity> getPointList() {
+                return pointList;
+            }
+
+            public void setPointList(List<PointListEntity> pointList) {
+                this.pointList = pointList;
+            }
+
+            public static class StatisticsEntity {
+                private int draw;
+                private String bigPercent;
+                private int vsCount;
+                private int big;
+                private int small;
+
+                public int getDraw() {
+                    return draw;
+                }
+
+                public void setDraw(int draw) {
+                    this.draw = draw;
+                }
+
+                public String getBigPercent() {
+                    return bigPercent;
+                }
+
+                public void setBigPercent(String bigPercent) {
+                    this.bigPercent = bigPercent;
+                }
+
+                public int getVsCount() {
+                    return vsCount;
+                }
+
+                public void setVsCount(int vsCount) {
+                    this.vsCount = vsCount;
+                }
+
+                public int getBig() {
+                    return big;
+                }
+
+                public void setBig(int big) {
+                    this.big = big;
+                }
+
+                public int getSmall() {
+                    return small;
+                }
+
+                public void setSmall(int small) {
+                    this.small = small;
+                }
+            }
+
+            public static class TotListEntity {
+                private int tot;
+                private boolean homeGround;
+
+                public int getTot() {
+                    return tot;
+                }
+
+                public void setTot(int tot) {
+                    this.tot = tot;
+                }
+
+                public boolean isHomeGround() {
+                    return homeGround;
+                }
+
+                public void setHomeGround(boolean homeGround) {
+                    this.homeGround = homeGround;
+                }
+            }
+
+            public static class PointListEntity extends PointList {
+                private String point1;
+                private String point2;
+                private String point3;
+                private String point4;
+                private String point5;
+                private String point6;
+
+                public String getPoint3() {
+                    return point3;
+                }
+
+                public void setPoint3(String point3) {
+                    this.point3 = point3;
+                }
+
+                public String getPoint4() {
+                    return point4;
+                }
+
+                public void setPoint4(String point4) {
+                    this.point4 = point4;
+                }
+
+                public String getPoint5() {
+                    return point5;
+                }
+
+                public void setPoint5(String point5) {
+                    this.point5 = point5;
+                }
+
+                public String getPoint6() {
+                    return point6;
+                }
+
+                public void setPoint6(String point6) {
+                    this.point6 = point6;
+                }
+
+                public String getPoint1() {
+                    return point1;
+                }
+
+                public void setPoint1(String point1) {
+                    this.point1 = point1;
+                }
+
+                public String getPoint2() {
+                    return point2;
+                }
+
+                public void setPoint2(String point2) {
+                    this.point2 = point2;
+                }
+            }
+        }
+
+        public static class HomeRecentEntity {
+            private int tot;
+            private boolean homeGround;
+
+            public int getTot() {
+                return tot;
+            }
+
+            public void setTot(int tot) {
+                this.tot = tot;
+            }
+
+            public boolean isHomeGround() {
+                return homeGround;
+            }
+
+            public void setHomeGround(boolean homeGround) {
+                this.homeGround = homeGround;
+            }
+        }
+
+        public static class GuestRecentEntity {
+            private int tot;
+            private boolean homeGround;
+
+            public int getTot() {
+                return tot;
+            }
+
+            public void setTot(int tot) {
+                this.tot = tot;
+            }
+
+            public boolean isHomeGround() {
+                return homeGround;
+            }
+
+            public void setHomeGround(boolean homeGround) {
+                this.homeGround = homeGround;
+            }
+        }
     }
 
     public static class ScoreRankEntity {
         /**
-         * rank : 15
-         * team : 西布罗姆维奇
-         * vsCount : 37
-         * win : 10
-         * draw : 12
-         * lose : 15
-         * integral : 42
-         * goalDiff : -14
-         * goal : 33
-         * miss : 47
+         * rank : 16
+         * team : 百万富翁
+         * vsCount : 2
+         * win : 1
+         * draw : 0
+         * lose : 1
+         * integral : 3
+         * goalDiff : 0
+         * goal : 1
+         * miss : 1
          */
 
         private HomeEntity home;
         /**
-         * rank : 8
-         * team : 利物浦
-         * vsCount : 37
-         * win : 16
-         * draw : 11
-         * lose : 10
-         * integral : 59
-         * goalDiff : 13
-         * goal : 62
-         * miss : 49
+         * rank : 19
+         * team : 阿利安
+         * vsCount : 2
+         * win : 0
+         * draw : 2
+         * lose : 0
+         * integral : 2
+         * goalDiff : 0
+         * goal : 4
+         * miss : 4
          */
 
         private GuestEntity guest;
 
-        public void setHome(HomeEntity home) {
-            this.home = home;
-        }
-
-        public void setGuest(GuestEntity guest) {
-            this.guest = guest;
-        }
-
         public HomeEntity getHome() {
             return home;
+        }
+
+        public void setHome(HomeEntity home) {
+            this.home = home;
         }
 
         public GuestEntity getGuest() {
             return guest;
         }
 
+        public void setGuest(GuestEntity guest) {
+            this.guest = guest;
+        }
+
         public static class HomeEntity {
-            private int rank;
+            private String rank;
             private String team;
-            private int vsCount;
-            private int win;
-            private int draw;
-            private int lose;
-            private int integral;
-            private int goalDiff;
-            private int goal;
-            private int miss;
+            private String vsCount;
+            private String win;
+            private String draw;
+            private String lose;
+            private String integral;
+            private String goalDiff;
+            private String goal;
+            private String miss;
 
-            public void setRank(int rank) {
-                this.rank = rank;
-            }
-
-            public void setTeam(String team) {
-                this.team = team;
-            }
-
-            public void setVsCount(int vsCount) {
-                this.vsCount = vsCount;
-            }
-
-            public void setWin(int win) {
-                this.win = win;
-            }
-
-            public void setDraw(int draw) {
-                this.draw = draw;
-            }
-
-            public void setLose(int lose) {
-                this.lose = lose;
-            }
-
-            public void setIntegral(int integral) {
-                this.integral = integral;
-            }
-
-            public void setGoalDiff(int goalDiff) {
-                this.goalDiff = goalDiff;
-            }
-
-            public void setGoal(int goal) {
-                this.goal = goal;
-            }
-
-            public void setMiss(int miss) {
-                this.miss = miss;
-            }
-
-            public int getRank() {
+            public String getRank() {
                 return rank;
+            }
+
+            public void setRank(String rank) {
+                this.rank = rank;
             }
 
             public String getTeam() {
                 return team;
             }
 
-            public int getVsCount() {
+            public void setTeam(String team) {
+                this.team = team;
+            }
+
+            public String getVsCount() {
                 return vsCount;
             }
 
-            public int getWin() {
+            public void setVsCount(String vsCount) {
+                this.vsCount = vsCount;
+            }
+
+            public String getWin() {
                 return win;
             }
 
-            public int getDraw() {
+            public void setWin(String win) {
+                this.win = win;
+            }
+
+            public String getDraw() {
                 return draw;
             }
 
-            public int getLose() {
+            public void setDraw(String draw) {
+                this.draw = draw;
+            }
+
+            public String getLose() {
                 return lose;
             }
 
-            public int getIntegral() {
+            public void setLose(String lose) {
+                this.lose = lose;
+            }
+
+            public String getIntegral() {
                 return integral;
             }
 
-            public int getGoalDiff() {
+            public void setIntegral(String integral) {
+                this.integral = integral;
+            }
+
+            public String getGoalDiff() {
                 return goalDiff;
             }
 
-            public int getGoal() {
+            public void setGoalDiff(String goalDiff) {
+                this.goalDiff = goalDiff;
+            }
+
+            public String getGoal() {
                 return goal;
             }
 
-            public int getMiss() {
+            public void setGoal(String goal) {
+                this.goal = goal;
+            }
+
+            public String getMiss() {
                 return miss;
+            }
+
+            public void setMiss(String miss) {
+                this.miss = miss;
             }
         }
 
         public static class GuestEntity {
-            private int rank;
+            private String rank;
             private String team;
-            private int vsCount;
-            private int win;
-            private int draw;
-            private int lose;
-            private int integral;
-            private int goalDiff;
-            private int goal;
-            private int miss;
+            private String vsCount;
+            private String win;
+            private String draw;
+            private String lose;
+            private String integral;
+            private String goalDiff;
+            private String goal;
+            private String miss;
 
-            public void setRank(int rank) {
-                this.rank = rank;
-            }
-
-            public void setTeam(String team) {
-                this.team = team;
-            }
-
-            public void setVsCount(int vsCount) {
-                this.vsCount = vsCount;
-            }
-
-            public void setWin(int win) {
-                this.win = win;
-            }
-
-            public void setDraw(int draw) {
-                this.draw = draw;
-            }
-
-            public void setLose(int lose) {
-                this.lose = lose;
-            }
-
-            public void setIntegral(int integral) {
-                this.integral = integral;
-            }
-
-            public void setGoalDiff(int goalDiff) {
-                this.goalDiff = goalDiff;
-            }
-
-            public void setGoal(int goal) {
-                this.goal = goal;
-            }
-
-            public void setMiss(int miss) {
-                this.miss = miss;
-            }
-
-            public int getRank() {
+            public String getRank() {
                 return rank;
+            }
+
+            public void setRank(String rank) {
+                this.rank = rank;
             }
 
             public String getTeam() {
                 return team;
             }
 
-            public int getVsCount() {
+            public void setTeam(String team) {
+                this.team = team;
+            }
+
+            public String getVsCount() {
                 return vsCount;
             }
 
-            public int getWin() {
+            public void setVsCount(String vsCount) {
+                this.vsCount = vsCount;
+            }
+
+            public String getWin() {
                 return win;
             }
 
-            public int getDraw() {
+            public void setWin(String win) {
+                this.win = win;
+            }
+
+            public String getDraw() {
                 return draw;
             }
 
-            public int getLose() {
+            public void setDraw(String draw) {
+                this.draw = draw;
+            }
+
+            public String getLose() {
                 return lose;
             }
 
-            public int getIntegral() {
+            public void setLose(String lose) {
+                this.lose = lose;
+            }
+
+            public String getIntegral() {
                 return integral;
             }
 
-            public int getGoalDiff() {
+            public void setIntegral(String integral) {
+                this.integral = integral;
+            }
+
+            public String getGoalDiff() {
                 return goalDiff;
             }
 
-            public int getGoal() {
+            public void setGoalDiff(String goalDiff) {
+                this.goalDiff = goalDiff;
+            }
+
+            public String getGoal() {
                 return goal;
             }
 
-            public int getMiss() {
+            public void setGoal(String goal) {
+                this.goal = goal;
+            }
+
+            public String getMiss() {
                 return miss;
+            }
+
+            public void setMiss(String miss) {
+                this.miss = miss;
+            }
+        }
+    }
+
+    public static class AsiaTrendEntity {
+
+        private BattleHistoryEntity battleHistory;
+        /**
+         * let : 1
+         * homeGround : true
+         */
+
+        private List<HomeRecentEntity> homeRecent;
+        /**
+         * let : 1
+         * homeGround : true
+         */
+
+        private List<GuestRecentEntity> guestRecent;
+
+        public BattleHistoryEntity getBattleHistory() {
+            return battleHistory;
+        }
+
+        public void setBattleHistory(BattleHistoryEntity battleHistory) {
+            this.battleHistory = battleHistory;
+        }
+
+        public List<HomeRecentEntity> getHomeRecent() {
+            return homeRecent;
+        }
+
+        public void setHomeRecent(List<HomeRecentEntity> homeRecent) {
+            this.homeRecent = homeRecent;
+        }
+
+        public List<GuestRecentEntity> getGuestRecent() {
+            return guestRecent;
+        }
+
+        public void setGuestRecent(List<GuestRecentEntity> guestRecent) {
+            this.guestRecent = guestRecent;
+        }
+
+        public static class BattleHistoryEntity {
+            private StatisticsEntity statistics;
+
+            private List<PointListEntity> pointList;
+
+
+            private List<LetListEntity> letList;
+
+            public StatisticsEntity getStatistics() {
+                return statistics;
+            }
+
+            public void setStatistics(StatisticsEntity statistics) {
+                this.statistics = statistics;
+            }
+
+            public List<PointListEntity> getPointList() {
+                return pointList;
+            }
+
+            public void setPointList(List<PointListEntity> pointList) {
+                this.pointList = pointList;
+            }
+
+            public List<LetListEntity> getLetList() {
+                return letList;
+            }
+
+            public void setLetList(List<LetListEntity> letList) {
+                this.letList = letList;
+            }
+
+            public static class StatisticsEntity {
+                private int draw;
+                private int lose;
+                private String winPercent;
+                private int vsCount;
+                private int win;
+
+                public int getDraw() {
+                    return draw;
+                }
+
+                public void setDraw(int draw) {
+                    this.draw = draw;
+                }
+
+                public int getLose() {
+                    return lose;
+                }
+
+                public void setLose(int lose) {
+                    this.lose = lose;
+                }
+
+                public String getWinPercent() {
+                    return winPercent;
+                }
+
+                public void setWinPercent(String winPercent) {
+                    this.winPercent = winPercent;
+                }
+
+                public int getVsCount() {
+                    return vsCount;
+                }
+
+                public void setVsCount(int vsCount) {
+                    this.vsCount = vsCount;
+                }
+
+                public int getWin() {
+                    return win;
+                }
+
+                public void setWin(int win) {
+                    this.win = win;
+                }
+            }
+
+            public static class PointListEntity extends PointList{
+                private String point1;
+                private String point2;
+                private String point3;
+                private String point4;
+                private String point5;
+                private String point6;
+
+                public String getPoint3() {
+                    return point3;
+                }
+
+                public void setPoint3(String point3) {
+                    this.point3 = point3;
+                }
+
+                public String getPoint4() {
+                    return point4;
+                }
+
+                public void setPoint4(String point4) {
+                    this.point4 = point4;
+                }
+
+                public String getPoint5() {
+                    return point5;
+                }
+
+                public void setPoint5(String point5) {
+                    this.point5 = point5;
+                }
+
+                public String getPoint6() {
+                    return point6;
+                }
+
+                public void setPoint6(String point6) {
+                    this.point6 = point6;
+                }
+
+                public String getPoint1() {
+                    return point1;
+                }
+
+                public void setPoint1(String point1) {
+                    this.point1 = point1;
+                }
+
+                public String getPoint2() {
+                    return point2;
+                }
+
+                public void setPoint2(String point2) {
+                    this.point2 = point2;
+                }
+            }
+
+            public static class LetListEntity {
+                private int let;
+                private boolean homeGround;
+
+                public int getLet() {
+                    return let;
+                }
+
+                public void setLet(int let) {
+                    this.let = let;
+                }
+
+                public boolean isHomeGround() {
+                    return homeGround;
+                }
+
+                public void setHomeGround(boolean homeGround) {
+                    this.homeGround = homeGround;
+                }
+            }
+        }
+
+        public static class HomeRecentEntity {
+            private int let;
+            private boolean homeGround;
+
+            public int getLet() {
+                return let;
+            }
+
+            public void setLet(int let) {
+                this.let = let;
+            }
+
+            public boolean isHomeGround() {
+                return homeGround;
+            }
+
+            public void setHomeGround(boolean homeGround) {
+                this.homeGround = homeGround;
+            }
+        }
+
+        public static class GuestRecentEntity {
+            private int let;
+            private boolean homeGround;
+
+            public int getLet() {
+                return let;
+            }
+
+            public void setLet(int let) {
+                this.let = let;
+            }
+
+            public boolean isHomeGround() {
+                return homeGround;
+            }
+
+            public void setHomeGround(boolean homeGround) {
+                this.homeGround = homeGround;
             }
         }
     }
 
     public static class BothRecordEntity {
-        /**
-         * historyWin : 0
-         * recentRecord : [0,2,0,2,2,2]
-         * futureMatch : {"team":"皇马","logoUrl":"http://pic.13322.com/logo/123455.png","diffDays":4}
-         */
 
         private HomeEntity home;
-        /**
-         * historyWin : 2
-         * recentRecord : [0,1,1,2,2,0]
-         * futureMatch : {"team":"巴萨","logoUrl":"http://pic.13322.com/logo/343455.png","diffDays":10}
-         */
 
         private GuestEntity guest;
 
-        public void setHome(HomeEntity home) {
-            this.home = home;
-        }
-
-        public void setGuest(GuestEntity guest) {
-            this.guest = guest;
-        }
-
         public HomeEntity getHome() {
             return home;
+        }
+
+        public void setHome(HomeEntity home) {
+            this.home = home;
         }
 
         public GuestEntity getGuest() {
             return guest;
         }
 
+        public void setGuest(GuestEntity guest) {
+            this.guest = guest;
+        }
+
         public static class HomeEntity {
             private int historyWin;
-            /**
-             * team : 皇马
-             * logoUrl : http://pic.13322.com/logo/123455.png
-             * diffDays : 4
-             */
 
             private FutureMatchEntity futureMatch;
             private List<Integer> recentRecord;
 
-            public void setHistoryWin(int historyWin) {
-                this.historyWin = historyWin;
-            }
-
-            public void setFutureMatch(FutureMatchEntity futureMatch) {
-                this.futureMatch = futureMatch;
-            }
-
-            public void setRecentRecord(List<Integer> recentRecord) {
-                this.recentRecord = recentRecord;
-            }
-
             public int getHistoryWin() {
                 return historyWin;
+            }
+
+            public void setHistoryWin(int historyWin) {
+                this.historyWin = historyWin;
             }
 
             public FutureMatchEntity getFutureMatch() {
                 return futureMatch;
             }
 
+            public void setFutureMatch(FutureMatchEntity futureMatch) {
+                this.futureMatch = futureMatch;
+            }
+
             public List<Integer> getRecentRecord() {
                 return recentRecord;
+            }
+
+            public void setRecentRecord(List<Integer> recentRecord) {
+                this.recentRecord = recentRecord;
             }
 
             public static class FutureMatchEntity {
@@ -480,28 +964,28 @@ public class NewAnalyzeBean {
                 private String logoUrl;
                 private int diffDays;
 
-                public void setTeam(String team) {
-                    this.team = team;
-                }
-
-                public void setLogoUrl(String logoUrl) {
-                    this.logoUrl = logoUrl;
-                }
-
-                public void setDiffDays(int diffDays) {
-                    this.diffDays = diffDays;
-                }
-
                 public String getTeam() {
                     return team;
+                }
+
+                public void setTeam(String team) {
+                    this.team = team;
                 }
 
                 public String getLogoUrl() {
                     return logoUrl;
                 }
 
+                public void setLogoUrl(String logoUrl) {
+                    this.logoUrl = logoUrl;
+                }
+
                 public int getDiffDays() {
                     return diffDays;
+                }
+
+                public void setDiffDays(int diffDays) {
+                    this.diffDays = diffDays;
                 }
             }
         }
@@ -509,36 +993,36 @@ public class NewAnalyzeBean {
         public static class GuestEntity {
             private int historyWin;
             /**
-             * team : 巴萨
-             * logoUrl : http://pic.13322.com/logo/343455.png
-             * diffDays : 10
+             * team : 布卡拉曼
+             * logoUrl : http://pic.13322.com/icons/teams/100/2652.png
+             * diffDays : 7
              */
 
             private FutureMatchEntity futureMatch;
             private List<Integer> recentRecord;
 
-            public void setHistoryWin(int historyWin) {
-                this.historyWin = historyWin;
-            }
-
-            public void setFutureMatch(FutureMatchEntity futureMatch) {
-                this.futureMatch = futureMatch;
-            }
-
-            public void setRecentRecord(List<Integer> recentRecord) {
-                this.recentRecord = recentRecord;
-            }
-
             public int getHistoryWin() {
                 return historyWin;
+            }
+
+            public void setHistoryWin(int historyWin) {
+                this.historyWin = historyWin;
             }
 
             public FutureMatchEntity getFutureMatch() {
                 return futureMatch;
             }
 
+            public void setFutureMatch(FutureMatchEntity futureMatch) {
+                this.futureMatch = futureMatch;
+            }
+
             public List<Integer> getRecentRecord() {
                 return recentRecord;
+            }
+
+            public void setRecentRecord(List<Integer> recentRecord) {
+                this.recentRecord = recentRecord;
             }
 
             public static class FutureMatchEntity {
@@ -546,28 +1030,28 @@ public class NewAnalyzeBean {
                 private String logoUrl;
                 private int diffDays;
 
-                public void setTeam(String team) {
-                    this.team = team;
-                }
-
-                public void setLogoUrl(String logoUrl) {
-                    this.logoUrl = logoUrl;
-                }
-
-                public void setDiffDays(int diffDays) {
-                    this.diffDays = diffDays;
-                }
-
                 public String getTeam() {
                     return team;
+                }
+
+                public void setTeam(String team) {
+                    this.team = team;
                 }
 
                 public String getLogoUrl() {
                     return logoUrl;
                 }
 
+                public void setLogoUrl(String logoUrl) {
+                    this.logoUrl = logoUrl;
+                }
+
                 public int getDiffDays() {
                     return diffDays;
+                }
+
+                public void setDiffDays(int diffDays) {
+                    this.diffDays = diffDays;
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,15 @@ import java.util.Map;
  */
 public class OddDetailsLeftAdapter extends BaseAdapter {
 
+    int grey;
+    int white;
+    int blue;
+    int black;
+
     private List<Map<String, String>> oddListLeft;
 
     private Context context;
-    private int defItem;//当前的item的position(用于点击item设置item背景颜色)
+    private int selectPosition;//当前的item的position(用于点击item设置item背景颜色)
 
     public OddDetailsLeftAdapter(Context context, List<Map<String, String>> oddListLeft) {
         super();
@@ -32,42 +38,60 @@ public class OddDetailsLeftAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return oddListLeft.size();
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return oddListLeft.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
-    /**根据选中的position更改item背景颜色*/
-    public void setDefSelect(int position) {
-        this.defItem = position;
+
+    /**
+     * 根据选中的position更改item背景颜色
+     */
+    public void setSelect(int position) {
+        this.selectPosition = position;
         notifyDataSetChanged();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
+        maybeInitColor();
         LayoutInflater _LayoutInflater = LayoutInflater.from(context);
-        convertView = _LayoutInflater.inflate(R.layout.item_odds_left, null);
+        convertView = _LayoutInflater.inflate(R.layout.item_odds_left, parent, false);
+        TextView textView = (TextView) convertView.findViewById(R.id.odds_left_txt);
+        View point = convertView.findViewById(R.id.left_circle);
+        View container = convertView.findViewById(R.id.container);
         if (convertView != null) {
-            ((TextView) convertView.findViewById(R.id.odds_left_txt)).setText(oddListLeft.get(position).get("name"));
+            textView.setText(oddListLeft.get(position).get("name"));
         }
-        if (defItem == position) {//如果点击listview的当前的position相等
-            //设置背景颜色
-            convertView.setBackgroundResource(R.color.yellow);
-            ((TextView) convertView.findViewById(R.id.odds_left_txt)).setTextColor(context.getResources().getColor(R.color.msg));
-        } else {
-            convertView.setBackgroundResource(R.color.transparent);
-        }
+
+        boolean isSelect = position == selectPosition;
+
+        textView.setTextColor(isSelect ? blue : black);
+        point.setVisibility(isSelect ? View.VISIBLE : View.INVISIBLE);
+        container.setBackgroundColor(isSelect ? white : grey);
+
         return convertView;
+    }
+
+    private void maybeInitColor() {
+        if (grey == 0) {
+            grey = ContextCompat.getColor(context, R.color.whitesmoke);
+        }
+        if (white == 0) {
+            white = ContextCompat.getColor(context, R.color.white);
+        }
+        if (blue == 0) {
+            blue = ContextCompat.getColor(context, R.color.colorPrimary);
+        }
+        if (black == 0) {
+            black = ContextCompat.getColor(context, R.color.content_txt_black);
+        }
     }
 }

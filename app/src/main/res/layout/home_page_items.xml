@@ -6,14 +6,14 @@
     <!--首页条目Item布局-->
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y20"
+        android:layout_height="10dp"
         android:background="@color/number_info_two_bg" />
 
     <TextView
         android:id="@+id/tv_home_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/y20"
+        android:padding="10dp"
         android:text=""
         android:textColor="@color/content_txt_light_grad"
         android:textSize="@dimen/home_pager_title" />

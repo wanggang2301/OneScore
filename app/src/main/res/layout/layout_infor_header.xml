@@ -14,7 +14,7 @@
         style="@style/RippleBackgroudBorderless"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/x20"
+        android:paddingLeft="10dp"
         android:paddingRight="20dp"
         android:scaleType="centerInside"
         android:src="@mipmap/back"/>
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/txt_title"
-            android:paddingLeft="@dimen/x20"
+            android:paddingLeft="10dp"
 
 
             >
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="3dp"
-                android:layout_marginTop="@dimen/y4"
+                android:layout_marginTop="2dp"
                 android:src="@mipmap/pull"/>
         </LinearLayout>
     </RelativeLayout>

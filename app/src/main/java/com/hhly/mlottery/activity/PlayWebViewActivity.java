@@ -1,12 +1,10 @@
 package com.hhly.mlottery.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.widget.ProgressWebView;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by 103TJL on 2016/1/13.
@@ -187,15 +183,15 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("PlayWebViewActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("PlayWebViewActivity");
     }
 
     public void onPause() {//继承自Activity
         mWebView.reload();
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("PlayWebViewActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("PlayWebViewActivity");
     }
 
 }

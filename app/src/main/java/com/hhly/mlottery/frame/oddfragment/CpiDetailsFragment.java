@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.OddDetailsLeftAdapter;
 import com.hhly.mlottery.adapter.cpiadapter.CpiDetailsAdatper;
-import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -107,18 +107,25 @@ public class CpiDetailsFragment extends Fragment {
         cpi_dish_details_txt_id = (TextView) mView.findViewById(R.id.cpi_dish_details_txt_id);
         cpi_guest_details_txt_id = (TextView) mView.findViewById(R.id.cpi_guest_details_txt_id);
         cpi_tails_left_listview = (ListView) mView.findViewById(R.id.cpi_tails_left_listview);
-        cpi_odds_tetails_right_listview = (PinnedHeaderExpandableListView) mView.findViewById(R.id.cpi_odds_tetails_right_listview);
-        cpi_odds_tetails_right_listview.setChildDivider(getResources().getDrawable(R.color.line_football_footer));
+        cpi_odds_tetails_right_listview =
+                (PinnedHeaderExpandableListView) mView.findViewById(R.id.cpi_odds_tetails_right_listview);
+        cpi_odds_tetails_right_listview
+                .setChildDivider(ContextCompat.getDrawable(mContext, R.color.line_football_footer));
         if ("3".equals(mParam1)) {
             //大小球
-            cpi_home_details_txt_id.setText(R.string.odd_home_big_txt);
-            cpi_dish_details_txt_id.setText(R.string.odd_dish_big_txt);
-            cpi_guest_details_txt_id.setText(R.string.odd_guest_big_txt);
+            cpi_home_details_txt_id.setText(R.string.foot_odds_asize_left);
+            cpi_dish_details_txt_id.setText(R.string.foot_odds_asize_middle);
+            cpi_guest_details_txt_id.setText(R.string.foot_odds_asize_right);
         } else if ("2".equals(mParam1)) {
             //欧赔
-            cpi_home_details_txt_id.setText(R.string.odd_home_op_txt);
-            cpi_dish_details_txt_id.setText(R.string.odd_dish_op_txt);
-            cpi_guest_details_txt_id.setText(R.string.odd_guest_op_txt);
+            cpi_home_details_txt_id.setText(R.string.foot_odds_eu_left);
+            cpi_dish_details_txt_id.setText(R.string.foot_odds_eu_middle);
+            cpi_guest_details_txt_id.setText(R.string.foot_odds_eu_right);
+        } else if ("1".equals(mParam1)) {
+            //亚盘
+            cpi_home_details_txt_id.setText(R.string.foot_odds_alet_left);
+            cpi_dish_details_txt_id.setText(R.string.foot_odds_alet_middle);
+            cpi_guest_details_txt_id.setText(R.string.foot_odds_alet_right);
         }
         // 访问失败，点击刷新
         cpi_txt_reLoading.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +145,7 @@ public class CpiDetailsFragment extends Fragment {
         oddDetailsLeftAdapter = new OddDetailsLeftAdapter(mContext, mParam2List);
         cpi_tails_left_listview.setAdapter(oddDetailsLeftAdapter);
         //根据传过去的postion更改选中的item选中背景
-        oddDetailsLeftAdapter.setDefSelect(Integer.parseInt(mParamPositionNunber));
+        oddDetailsLeftAdapter.setSelect(Integer.parseInt(mParamPositionNunber));
         // 指数详情右边数据
         RightData(mParamComId);
 
@@ -148,7 +155,7 @@ public class CpiDetailsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //根据传过去的postion更改选中的item选中背景
-                oddDetailsLeftAdapter.setDefSelect(position);
+                oddDetailsLeftAdapter.setSelect(position);
                 //根据position获取list集合里面id
                 stCompanId = mParam2List.get(position).get("id");
                 if (mCpiDetailsAdatper != null) {
@@ -202,7 +209,7 @@ public class CpiDetailsFragment extends Fragment {
                             //添加子view数据(拿子类的DetailsEntity)
                             childDetailsList.add(groupListDetailsEntity.get(i).getDetails());
                             //i=0的时候拿到第一条设置一个标识”初盘“
-                            if(i==0){
+                            if (i == 0) {
                                 groupListDetailsEntity.get(i).getDetails().get(i).setSelectTag("tag");
                             }
 

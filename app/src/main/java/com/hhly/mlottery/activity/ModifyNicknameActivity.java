@@ -54,8 +54,8 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onResume() {
         /**友盟页面统计*/
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("RegisterActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("RegisterActivity");
         super.onResume();
         et_nickname.setFocusable(true);
         et_nickname.setFocusableInTouchMode(true);

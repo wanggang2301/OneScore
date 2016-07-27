@@ -58,7 +58,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x8"
+                android:layout_marginTop="4dp"
                 android:text="@string/exp_net_status_txt"
                 android:textColor="@color/version"
                 android:textSize="@dimen/text_size_14" />
@@ -110,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/x10"
+                android:paddingTop="5dp"
                 android:text="@string/firsPlayers_not"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="18sp" />
@@ -144,20 +144,20 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="@dimen/x50"
-                        android:paddingTop="@dimen/y40">
+                        android:paddingLeft="25dp"
+                        android:paddingTop="20dp">
 
                         <TextView
                             android:id="@+id/tv_homeTeam_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/firstPlayers_homeTeam_bg"
-                            android:drawablePadding="@dimen/x10"
+                            android:drawablePadding="5dp"
                             android:drawableRight="@mipmap/first_players_clothes_bg"
-                            android:paddingBottom="@dimen/x5"
-                            android:paddingLeft="@dimen/x10"
-                            android:paddingRight="@dimen/x10"
-                            android:paddingTop="@dimen/x5"
+                            android:paddingBottom="2.5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="2.5dp"
                             android:text="@string/firsPlayers_rosters_homeTeam"
                             android:textColor="@color/number_info_bg" />
                     </LinearLayout>
@@ -169,8 +169,8 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:orientation="vertical"
-                        android:paddingRight="@dimen/x50"
-                        android:paddingTop="@dimen/y40">
+                        android:paddingRight="25dp"
+                        android:paddingTop="20dp">
 
                         <TextView
                             android:id="@+id/tv_visitingTeam_title"
@@ -178,11 +178,11 @@
                             android:layout_height="wrap_content"
                             android:background="@color/firstPlayers_visitingTeam_bg"
                             android:drawableLeft="@mipmap/first_players_clothes_bg"
-                            android:drawablePadding="@dimen/x10"
-                            android:paddingBottom="@dimen/x5"
-                            android:paddingLeft="@dimen/x10"
-                            android:paddingRight="@dimen/x10"
-                            android:paddingTop="@dimen/x5"
+                            android:drawablePadding="5dp"
+                            android:paddingBottom="2.5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="2.5dp"
                             android:text="@string/firsPlayers_rosters_visitingTeam"
                             android:textColor="@color/number_info_bg" />
                     </LinearLayout>
@@ -194,13 +194,13 @@
                     android:layout_below="@id/ll_content"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/y20">
+                    android:paddingTop="10dp">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:paddingBottom="@dimen/y20"
+                        android:paddingBottom="10dp"
                         android:src="@mipmap/first_players_ball_park_bg" />
                 </LinearLayout>
             </RelativeLayout>
