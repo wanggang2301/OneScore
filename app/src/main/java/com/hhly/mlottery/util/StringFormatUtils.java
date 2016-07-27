@@ -1,5 +1,7 @@
 package com.hhly.mlottery.util;
 
+import android.text.TextUtils;
+
 import java.util.Locale;
 
 /**
@@ -31,7 +33,14 @@ public class StringFormatUtils {
     }
 
     public static double asDouble(String string) {
-        if (string == null || string.isEmpty()) return 0;
-        return Double.parseDouble(string);
+        if (".".equals(string)) return 0;
+        if (TextUtils.isEmpty(string)) return 0;
+        double parseDouble = 0;
+        try {
+            parseDouble = Double.parseDouble(string);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return parseDouble;
     }
 }
