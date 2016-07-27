@@ -605,7 +605,7 @@
     <!--退出登录的 TextView-->
     <style name="login_textview_logout">
         <item name="android:textSize">15sp</item>
-        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/colorPrimary</item>
@@ -617,7 +617,7 @@
         <item name="android:inputType">textPassword</item>
         <item name="android:digits">@string/password_digits</item>
         <item name="android:maxLength">16</item>
-        <item name="android:hint">@string/pwd_format_hint</item>
+        <item name="android:hint">@string/input_password_old</item>
     </style>
     <!--密码号码的格式 TextView-->
     <style name="new_login_edittext_password" parent="login_edittext_newcommon">

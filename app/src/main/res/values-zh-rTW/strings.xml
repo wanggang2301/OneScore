@@ -711,6 +711,7 @@
     <string name="login">登錄</string>
     <string name="logining">正在登錄...</string>
     <string name="login_succ">登錄成功</string>
+    <string name="login_no_weixin">沒有安裝微信，請先安裝微信!</string>
     <string name="login_peak">登入高峰期，請稍後再試</string>
     <string name="login_fail">登錄失敗</string>
     <string name="pwd_format">密碼格式爲6-16位數字和字符組成</string>

@@ -117,7 +117,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         if (!PreferenceUtil.getString("code", "").isEmpty()) {
             mWeixincode = PreferenceUtil.getString("code", "");
-            //  UiUtils.toast(MyApp.getInstance(), "mWeixincode" + mWeixincode);
+             //UiUtils.toast(MyApp.getInstance(), "mWeixincode" + mWeixincode);
             getAccessTokenFromWeiXin();
         }
     }
@@ -167,6 +167,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.public_img_back: // 返回
                 MobclickAgent.onEvent(mContext, "LoginActivity_Exit");
+                PreferenceUtil.commitString("code", "");
                 finish();
                 break;
             case R.id.tv_register: // 注册
@@ -232,7 +233,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         if (!mApi.isWXAppInstalled()) {
             //提醒用户没有按照微信
-            Toast.makeText(LoginActivity.this, "没有安装微信,请先安装微信!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.login_no_weixin, Toast.LENGTH_SHORT).show();
+
             return;
         }
         final SendAuth.Req req = new SendAuth.Req();
@@ -242,14 +244,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         req.state = "wechat_sdk_demo_test";
         //向微信发送请求
         mApi.sendReq(req);
-
+       // getAccessTokenFromWeiXin();
     }
 
     /*获取微信信息
       * 通过授权页面获取相应的code   然后请求微信官方接口 获取相信的token 和 id
       * https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
       * */
-    public void getAccessTokenFromWeiXin() {
+    public void getAccessTokenFromWeiXin(){
 
         String requestUrlAppId = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + ShareConstants.WE_CHAT_APP_ID;
         String requestUrlAppSecret = "&secret=" + ShareConstants.KEY_WEIXIN_APP_SECRET;
@@ -264,6 +266,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onResponse(String jsonObject) {
 
                 JSONObject jo = JSON.parseObject(jsonObject);
+              //UiUtils.toast(MyApp.getInstance(), jo.toString());
                 String access_token = jo.getString("access_token");
                 String openid = jo.getString("openid");
                 Map<String, String> param = new HashMap<>();
@@ -272,7 +275,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 param.put("ip", CommonUtils.getIpAddress());
                 param.put("deviceToken", CommonUtils.getDeviceToken());
                 //调用公共的登录请求
-
                 requestLogin(BaseURLs.URL_WEIXIN_LOGIN, param);
 
             }
@@ -300,7 +302,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void isSinaLogin() {
         // Weibo.
-
         mAuthInfo = new AuthInfo(mContext, ShareConstants.SINA, ShareConstants.REDIRECT_URL1, ShareConstants.SCOPE);
         mSsoHandler = new SsoHandler(LoginActivity.this, mAuthInfo);
         mSsoHandler.authorize(new AuthDialogListener());
@@ -326,7 +327,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
             //进行下一步授权
             mOauth2AccessToken = Oauth2AccessToken.parseAccessToken(bundle);
-
             //验证我们的令牌是否有效
             if (mOauth2AccessToken.isSessionValid()) {
                 // UiUtils.toast(MyApp.getInstance(),"build"+bundle.toString());
@@ -424,7 +424,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     /*公用登录请求*/
     public void requestLogin(String url, Map<String, String> param) {
-
+        progressBar.show();
         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
@@ -435,7 +435,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                 CommonUtils.saveRegisterInfo(register);
                 Log.e(TAG, "register" + register.toString());
-                // UiUtils.toast(MyApp.getInstance(), register.toString());
+                //UiUtils.toast(MyApp.getInstance(), register.toString());
                 PreferenceUtil.commitBoolean("three_login", true);
                 PreferenceUtil.commitString("code", "");
                 setResult(RESULT_OK);
@@ -458,7 +458,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 progressBar.dismiss();
                 L.e(TAG, " 登录失败");
-                UiUtils.toast(LoginActivity.this, R.string.login_peak);
+               // UiUtils.toast(LoginActivity.this, R.string.login_peak);
+                UiUtils.toast(LoginActivity.this, exception.toString());
             }
         }, Register.class);
 
@@ -595,6 +596,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceUtil.commitString("code", "");
     }
 
     @Override
