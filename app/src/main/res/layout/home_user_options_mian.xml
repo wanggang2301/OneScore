@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/center_lan"
-            android:padding="@dimen/y30"
+            android:padding="15dp"
             android:text="@string/language_frame_txt"
             android:textColor="@color/res_name_color"
             android:textSize="@dimen/home_pager_user_title"/>
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingRight="@dimen/x30"
+            android:paddingRight="15dp"
             android:src="@mipmap/unconection_next"/>
     </RelativeLayout>
     <!--分割线-->
@@ -146,7 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/center_feed"
-            android:padding="@dimen/y30"
+            android:padding="15dp"
             android:text="@string/user_feedback"
             android:textColor="@color/res_name_color"
             android:textSize="@dimen/home_pager_user_title"/>
@@ -156,7 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingRight="@dimen/x30"
+            android:paddingRight="15dp"
             android:src="@mipmap/unconection_next"/>
     </RelativeLayout>
     <!--分割线-->
@@ -200,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/center_about"
-            android:padding="@dimen/y30"
+            android:padding="15dp"
             android:text="@string/about_frame_txt"
             android:textColor="@color/res_name_color"
             android:textSize="@dimen/home_pager_user_title"/>
@@ -210,7 +210,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingRight="@dimen/x30"
+            android:paddingRight="15dp"
             android:src="@mipmap/unconection_next"/>
     </RelativeLayout>
     <!--分割线-->

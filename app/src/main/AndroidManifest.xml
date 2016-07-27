@@ -39,7 +39,10 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
-
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -281,8 +284,7 @@
 
         <activity
             android:name=".activity.BasketballInformationActivity"
-            android:theme="@style/AppThemeDark.NoActionBar"
-            android:screenOrientation="portrait">
+            android:theme="@style/AppThemeDark.NoActionBar">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -21,6 +21,7 @@ import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.InformationFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.FragmentUtils;
 import com.hhly.mlottery.util.L;
 import com.umeng.analytics.MobclickAgent;
@@ -47,7 +48,8 @@ public class FootballActivity extends BaseActivity {
     private List<Fragment> fragments = new ArrayList<>();
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
-    private int currentPosition = 0;
+    private int currentPosition = 0;// 足球界面Fragment下标
+    public int basketCurrentPosition = 0;// 篮球界面Fragment下标
     public LinearLayout ly_tab_bar;
     public int fragmentIndex = 0;
 
@@ -58,7 +60,8 @@ public class FootballActivity extends BaseActivity {
         /**当前Activity界面不统计，只统计下面Fragment界面*/
         MobclickAgent.openActivityDurationTrack(false);
 
-        currentPosition = getIntent().getIntExtra("football", 0);
+        currentPosition = getIntent().getIntExtra(AppConstants.FOTTBALL_KEY, 0);// 足球fragment下标
+        basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY,0);// 篮球fragment下标
         initView();
         initData();
     }
@@ -179,5 +182,17 @@ public class FootballActivity extends BaseActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

@@ -112,10 +112,13 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
         mView = View.inflate(mContext, R.layout.frage_new_basketball, null);
+        currentFragmentId = ((FootballActivity)mContext).basketCurrentPosition;
+        L.d("xxx","篮球Fragment:currentFragmentId:" + currentFragmentId);
         initView();
         setupViewPager();
         focusCallback();// 加载关注数
         initEVent();
+        initCurrentFragment(currentFragmentId);
         return mView;
     }
 
@@ -183,6 +186,10 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
         fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
+        mViewPager.setAdapter(pureViewPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mViewPager.setCurrentItem(currentFragmentId);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -225,9 +232,7 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
             public void onPageScrollStateChanged(int state) {
             }
         });
-        mViewPager.setAdapter(pureViewPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
     }
 
     public void focusCallback() {
@@ -387,7 +392,7 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     /**
      * 判断四个Fragment切换显示或隐藏的状态
      */
-    private boolean isImmediateFragment = true;
+    private boolean isImmediateFragment = false;
     private boolean isImmediate = false;
     private boolean isResultFragment = false;
     private boolean isResult = false;
@@ -396,6 +401,26 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     private boolean isFocusFragment = false;
     private boolean isFocus = false;
 
+    /**
+     * 初始化当前显示的Fragment
+     * @param currentId
+     */
+    private void initCurrentFragment(int currentId){
+        switch (currentId){
+            case 0:
+                isImmediateFragment = true;
+                break;
+            case 1:
+                isResultFragment = true;
+                break;
+            case 2:
+                isScheduleFragment = true;
+                break;
+            case 3:
+                isFocusFragment = true;
+                break;
+        }
+    }
     /**
      * 判断四个Fragment切换显示或隐藏的状态
      *

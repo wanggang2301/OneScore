@@ -65,8 +65,8 @@
 
     <!-- 侧滑栏布局图片样式 -->
     <style name="Image_AccountStyle">
-        <item name="android:layout_height">@dimen/y50</item>
-        <item name="android:layout_width">@dimen/x50</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_width">25dp</item>
         <item name="android:layout_gravity">center</item>
     </style>
     <!-- 侧滑栏布局文字样式 -->
@@ -183,7 +183,7 @@
 
     <style name="itemFootballInterOddLayout">
         <item name="android:layout_width">34dp</item>
-        <item name="android:layout_marginRight">@dimen/x20</item>
+        <item name="android:layout_marginRight">10dp</item>
         <item name="android:gravity">right</item>
     </style>
 
@@ -192,14 +192,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">right</item>
         <item name="android:textSize">@dimen/item_football_half_score</item>
-        <item name="android:paddingLeft">@dimen/x2</item>
-        <item name="android:paddingRight">@dimen/x2</item>
-        <item name="android:layout_marginLeft">@dimen/x6</item>
+        <item name="android:paddingLeft">1dp</item>
+        <item name="android:paddingRight">1dp</item>
+        <item name="android:layout_marginLeft">3dp</item>
     </style>
 
     <style name="itemFootballCard">
-        <item name="android:layout_width">@dimen/x20</item>
-        <item name="android:layout_height">@dimen/x28</item>
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">14dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/item_football_international_card</item>
         <item name="android:textColor">@color/white</item>
@@ -214,12 +214,12 @@
         <item name="android:maxWidth">@dimen/item_football_international_teamname_max_width</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:layout_marginRight">@dimen/x10</item>
+        <item name="android:layout_marginRight">5dp</item>
     </style>
 
 
     <style name="itemFootballInterScore">
-        <item name="android:layout_width">@dimen/x46</item>
+        <item name="android:layout_width">23dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/item_football_hometeam</item>
@@ -447,7 +447,7 @@
     <!--指数详情”亚盘样式“详情右边-->
     <style name="plateTableBg3">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/y65</item>
+        <item name="android:layout_height">32.5dp</item>
         <item name="android:textSize">@dimen/item_football_frequency</item>
         <item name="android:background">@color/white</item>
         <item name="android:layout_marginRight">0.2dp</item>
@@ -534,10 +534,10 @@
 
 
     <!--分享-->
-    <style name="popuStyle">
+    <!--<style name="popuStyle">
         <item name="android:windowEnterAnimation">@anim/popup_anim_in</item>
         <item name="android:windowExitAnimation">@anim/popup_anim_out</item>
-    </style>
+    </style>-->
 
 
     <!--登录信息背景-->

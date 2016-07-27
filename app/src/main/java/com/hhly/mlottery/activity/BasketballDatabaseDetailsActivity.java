@@ -31,6 +31,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -40,6 +41,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,6 +100,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basketball_database_details);
+
+        /**不统计当前Activity*/
+        MobclickAgent.openActivityDurationTrack(false);
 
         if(getIntent().getExtras() != null){
             mLeagueId = getIntent().getExtras().getString(LEAGUEID);
@@ -333,42 +338,66 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
     private void isHindShow(int position){
         switch (position) {
-            case 0:
+            case 0:// 让分盘
                 isFragment0 = true;
                 isFragment1 = false;
                 break;
-            case 1:
+            case 1:// 大小盘
                 isFragment0 = false;
                 isFragment1 = true;
                 break;
         }
-        if (is0) {
-            is0 = false;
+        if (isFragment0) {
+            if (is1) {
+                MobclickAgent.onPageEnd("BasketballDatabaseDetailsActivity_DXPFragment");
+                is1 = false;
+                L.d("xxx", "DXPFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("BasketballDatabaseDetailsActivity_RFPFragment");
+            is0 = true;
+            L.d("xxx", "RFPFragment>>>显示");
         }
-        if (is1) {
-            is1 = false;
+        if (isFragment1) {
+            if (is0) {
+                MobclickAgent.onPageEnd("BasketballDatabaseDetailsActivity_RFPFragment");
+                is0 = false;
+                L.d("xxx", "RFPFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("BasketballDatabaseDetailsActivity_DXPFragment");
+            is1 = true;
+            L.d("xxx", "DXPFragment>>>显示");
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         if (isFragment0) {
+            MobclickAgent.onPageStart("BasketballDatabaseDetailsActivity_RFPFragment");
             is0 = true;
+            L.d("xxx", "RFPFragment>>>显示");
         }
         if (isFragment1) {
+            MobclickAgent.onPageStart("BasketballDatabaseDetailsActivity_DXPFragment");
             is1 = true;
+            L.d("xxx", "DXPFragment>>>显示");
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         if (is0) {
+            MobclickAgent.onPageEnd("BasketballDatabaseDetailsActivity_RFPFragment");
             is0 = false;
+            L.d("xxx", "RFPFragment>>>隐藏");
         }
         if (is1) {
+            MobclickAgent.onPageEnd("BasketballDatabaseDetailsActivity_DXPFragment");
             is1 = false;
+            L.d("xxx", "DXPFragment>>>隐藏");
         }
     }
 
@@ -428,7 +457,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                     currentPosition = position;
                     mAdapter.updateDatas(position);
                     mAdapter.notifyDataSetChanged();
-
                 }
             });
             scroll.setVisibility(View.VISIBLE);
@@ -443,7 +471,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                     currentPosition = position;
                     mAdapter.updateDatas(position);
                     mAdapter.notifyDataSetChanged();
-
                 }
             });
             scroll.setVisibility(View.GONE);
@@ -457,6 +484,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
                 currentDialogPosition = currentPosition;
                 String newData = mSports[currentDialogPosition];
+//                Toast.makeText(BasketballDatabaseDetailsActivity.this, "赛季 ：" + newData, Toast.LENGTH_SHORT).show();
 
                 mCurrentSports = newData;
 

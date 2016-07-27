@@ -1246,21 +1246,21 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 isFragment3 = false;
                 isFragment4 = false;
                 break;
-            case 1:// 欧赔
+            case 3:// 欧赔
                 isFragment0 = false;
                 isFragment1 = true;
                 isFragment2 = false;
                 isFragment3 = false;
                 isFragment4 = false;
                 break;
-            case 2:// 亚盘
+            case 1:// 亚盘
                 isFragment0 = false;
                 isFragment1 = false;
                 isFragment2 = true;
                 isFragment3 = false;
                 isFragment4 = false;
                 break;
-            case 3:// 大小
+            case 2:// 大小
                 isFragment0 = false;
                 isFragment1 = false;
                 isFragment2 = false;

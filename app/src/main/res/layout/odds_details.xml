@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y65"
+        android:layout_height="32.5dp"
         android:background="@color/plate_title_bg"
         android:gravity="center"
         android:orientation="horizontal">
@@ -112,10 +112,10 @@
                 android:clickable="true"
                 android:drawableTop="@mipmap/odds_back"
                 android:gravity="center"
-                android:paddingBottom="@dimen/x28"
-                android:paddingLeft="@dimen/x15"
-                android:paddingRight="@dimen/x15"
-                android:paddingTop="@dimen/x28"
+                android:paddingBottom="14dp"
+                android:paddingLeft="7.5dp"
+                android:paddingRight="7.5dp"
+                android:paddingTop="14dp"
                 android:text="返回列表"
                 android:textSize="10sp" />
 
@@ -184,7 +184,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/x8"
+                                android:layout_marginTop="4dp"
                                 android:text="@string/exp_net_status_txt"
                                 android:textColor="@color/version"
                                 android:textSize="@dimen/text_size_14" />

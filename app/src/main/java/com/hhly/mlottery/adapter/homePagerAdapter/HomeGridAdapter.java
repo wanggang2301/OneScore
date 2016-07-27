@@ -149,32 +149,36 @@ public class HomeGridAdapter extends BaseAdapter {
                                         {
                                             Intent intent = new Intent(mContext, FootballActivity.class);
                                             intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_SCORE_KEY);
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Score");
                                         }
                                         break;
                                         case "21":// 篮球赛果
                                         {
-//                                            Intent intent = new Intent(mContext, BasketListActivity.class);
-//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-//                                            mContext.startActivity(intent);
-//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Amidithion");
+                                            Intent intent = new Intent(mContext, FootballActivity.class);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_AMIDITHION_VALUE);
+                                            mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Amidithion");
                                         }
                                         break;
                                         case "22":// 篮球赛程
                                         {
-//                                            Intent intent = new Intent(mContext, BasketListActivity.class);
-//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-//                                            mContext.startActivity(intent);
-//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Competition");
+                                            Intent intent = new Intent(mContext, FootballActivity.class);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_COMPETITION_VALUE);
+                                            mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Competition");
                                         }
                                         break;
                                         case "23":// 篮球关注
                                         {
-//                                            Intent intent = new Intent(mContext, BasketListActivity.class);
-//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
-//                                            mContext.startActivity(intent);
-//                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Attention");
+                                            Intent intent = new Intent(mContext, FootballActivity.class);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.BASKETBALL_SCORE_VALUE);
+                                            intent.putExtra(AppConstants.BASKETBALL_KEY, AppConstants.BASKETBALL_ATTENTION_VALUE);
+                                            mContext.startActivity(intent);
+                                            MobclickAgent.onEvent(mContext, "HomePager_Menu_Basketball_Attention");
                                         }
                                         break;
                                         case "24":// 篮球资讯

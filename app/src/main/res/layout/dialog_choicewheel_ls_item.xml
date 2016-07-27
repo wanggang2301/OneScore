@@ -12,7 +12,7 @@
 
         android:id="@+id/tv_choicewheel_ls_item"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/y65"
+        android:layout_height="32.5dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center"

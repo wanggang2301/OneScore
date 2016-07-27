@@ -594,11 +594,12 @@ public class BaseURLs {
     /**
      * 保存umeng渠道号，提交渠道号
      */
-//	public final static String UMENG_CHANNEL_URL = "http://192.168.10.242:8083/traffic/api";
-    public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";
+    public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";// 体彩正式环境
+//    public final static String UMENG_CHANNEL_URL = "http://183.61.172.88:8343/traffic/api";// 体彩测试环境
 
     //用户留存率分析
-    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";
+    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";// 体彩正式环境
+//    public final static String USER_ACTION_ANALYSIS_URL = "http://183.61.172.88:8343/traffic/api/appRetention";// 体彩测试环境
 
     //指数详情
     public final static String URL_FOOTBALL_MATCHODD_DETAILS = URL_API_HOST + FOOTBALLMATCH_MATCHODD_DETAILS;
