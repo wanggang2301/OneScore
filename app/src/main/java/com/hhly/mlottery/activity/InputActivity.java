@@ -46,6 +46,9 @@ public class InputActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
+        /**当前评论小窗口不统计*/
+        MobclickAgent.openActivityDurationTrack(false);
+
         initWindow();
         initView();
         topicid = getIntent().getLongExtra(CyUtils.INTENT_PARAMS_SID, 0);
