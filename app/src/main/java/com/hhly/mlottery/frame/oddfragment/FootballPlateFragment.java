@@ -172,7 +172,7 @@ public class FootballPlateFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         VolleyError volleyError = exception.getVolleyError();
-                        volleyError.printStackTrace();
+                        if (volleyError != null) volleyError.printStackTrace();
                         setStatus(StatusEnum.ERROR);
                     }
                 },

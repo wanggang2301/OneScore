@@ -202,7 +202,7 @@ public class CPIOddsFragment extends Fragment {
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         setStatus(StatusEnum.ERROR);
                         VolleyError volleyError = exception.getVolleyError();
-                        volleyError.printStackTrace();
+                        if (volleyError != null) volleyError.printStackTrace();
                         refreshOver();
                     }
                 }, NewOddsInfo.class);
