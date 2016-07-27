@@ -17,8 +17,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/x24"
-            android:paddingRight="@dimen/x24"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:src="@mipmap/back" />
         <TextView
             android:id="@+id/basket_odds_details_title"
@@ -27,7 +27,7 @@
             android:text=""
             android:gravity="center"
             android:textColor="#ffffff"
-            android:padding="@dimen/x5"
+            android:padding="2.5dp"
             android:textSize="@dimen/text_size_20"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />

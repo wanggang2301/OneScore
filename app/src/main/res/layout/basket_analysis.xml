@@ -51,7 +51,7 @@
                         <ProgressBar
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/y12"
+                            android:layout_height="6dp"
                             android:id="@+id/basket_progressbar"
                             android:paddingLeft="@dimen/basket_details_item"
                             android:paddingRight="@dimen/basket_details_item"

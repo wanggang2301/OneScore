@@ -9,9 +9,9 @@
         android:text="@string/nodata"
         android:textSize="@dimen/text_size_15"
         android:textColor="@color/version"
-        android:layout_marginTop="@dimen/y50"
-        android:layout_marginBottom="@dimen/y50"
-        android:layout_marginLeft="@dimen/x305"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="152.5dp"
         />
 
 </LinearLayout>

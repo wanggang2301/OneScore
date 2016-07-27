@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="@dimen/y20"
-    android:paddingLeft="@dimen/y20"
-    android:paddingBottom="@dimen/y20"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingBottom="10dp"
     >
     <com.hhly.mlottery.widget.NestedListView
         android:id="@+id/analyze_goal_listview"

@@ -50,7 +50,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/x8"
+                        android:layout_marginTop="4dp"
                         android:text="@string/exp_net_status_txt"
                         android:textColor="@color/version"
                         android:textSize="@dimen/text_size_14" />
@@ -99,9 +99,9 @@
                     <FrameLayout
                         android:id="@+id/fl_main_corner"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/x440"
-                        android:paddingLeft="@dimen/x80"
-                        android:paddingRight="@dimen/x40"></FrameLayout>
+                        android:layout_height="220dp"
+                        android:paddingLeft="40dp"
+                        android:paddingRight="20dp"></FrameLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_time_name_corner"
@@ -109,8 +109,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/fl_main_corner"
                         android:orientation="horizontal"
-                        android:paddingBottom="@dimen/y20"
-                        android:paddingLeft="@dimen/x120">
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="60dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -131,8 +131,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/x30"
-                        android:paddingTop="@dimen/y20"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="10dp"
                         android:text="@string/corner"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/number_desc" />
@@ -142,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@id/ll_time_name_corner"
                         android:layout_alignParentRight="true"
-                        android:paddingRight="@dimen/x140"
+                        android:paddingRight="70dp"
                         android:text="@string/game_time"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/number_desc" />
@@ -158,9 +158,9 @@
                     <FrameLayout
                         android:id="@+id/fl_main"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/x440"
-                        android:paddingLeft="@dimen/x80"
-                        android:paddingRight="@dimen/x40"></FrameLayout>
+                        android:layout_height="220dp"
+                        android:paddingLeft="40dp"
+                        android:paddingRight="20dp"></FrameLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_time_name"
@@ -168,8 +168,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/fl_main"
                         android:orientation="horizontal"
-                        android:paddingBottom="@dimen/y20"
-                        android:paddingLeft="@dimen/x120">
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="60dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -190,8 +190,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/x30"
-                        android:paddingTop="@dimen/y20"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="10dp"
                         android:text="@string/attack"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/number_desc" />
@@ -201,7 +201,7 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@id/ll_time_name"
                         android:layout_alignParentRight="true"
-                        android:paddingRight="@dimen/x140"
+                        android:paddingRight="70dp"
                         android:text="@string/game_time"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/number_desc" />
@@ -251,7 +251,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/x8"
+                        android:layout_marginTop="4dp"
                         android:text="@string/exp_net_status_txt"
                         android:textColor="@color/version"
                         android:textSize="@dimen/text_size_14" />

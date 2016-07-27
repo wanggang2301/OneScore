@@ -89,7 +89,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/y12"
+                    android:layout_marginTop="6dp"
                     android:orientation="horizontal">
 
                     <!-- 时间 -->
@@ -98,7 +98,7 @@
                         android:id="@+id/item_football_international_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/x20"
+                        android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:text="23:00"
                         android:textColor="@color/homwe_lhc_blue"
@@ -120,7 +120,7 @@
                         android:id="@+id/item_football_international_halfscore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/x10"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:text="HT(1-1)"
                         android:textColor="@color/score_red"
@@ -132,7 +132,7 @@
                         android:id="@+id/item_football_international_racename"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/x20"
+                        android:layout_marginRight="10dp"
                         android:gravity="right"
                         android:text="League Type"
                         android:textColor="@color/red"
@@ -142,9 +142,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/x10"
-                    android:layout_marginRight="@dimen/x20"
-                    android:layout_marginTop="@dimen/x10"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal"
                     android:weightSum="20">
 
@@ -152,11 +152,11 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="2.25"
-                        android:paddingLeft="@dimen/x20">
+                        android:paddingLeft="10dp">
 
                         <ImageView
                             android:id="@+id/item_football_international_vs_img"
-                            android:layout_width="@dimen/x46"
+                            android:layout_width="23dp"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
                             android:src="@mipmap/vs_icon" />
@@ -214,7 +214,7 @@
                                 android:id="@+id/item_football_international_home_yc"
                                 style="@style/itemFootballCard"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/x2"
+                                android:layout_marginLeft="1dp"
                                 android:background="@mipmap/card_yellow"
                                 android:text="2" />
                         </LinearLayout>
@@ -245,7 +245,7 @@
                                 android:id="@+id/item_football_international_guest_yc"
                                 style="@style/itemFootballCard"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="@dimen/x2"
+                                android:layout_marginLeft="1dp"
                                 android:background="@mipmap/card_yellow"
                                 android:text="2" />
                         </LinearLayout>

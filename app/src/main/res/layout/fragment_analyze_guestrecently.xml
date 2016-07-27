@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/x20"
+        android:padding="10dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,14 +22,14 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_13"
                 android:textColor="@color/title"
-                android:lineSpacingExtra="@dimen/y4"
+                android:lineSpacingExtra="2dp"
                 android:text=""
                 />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y45"
+                android:layout_height="22.5dp"
                 android:background="@color/tabhost"
-                android:layout_marginTop="@dimen/y20"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 >
                 <LinearLayout

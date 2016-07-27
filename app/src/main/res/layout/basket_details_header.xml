@@ -19,8 +19,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/x15"
-            android:paddingRight="@dimen/x12"
+            android:paddingLeft="7.5dp"
+            android:paddingRight="6dp"
             android:src="@mipmap/basketball_back" />
 
 
@@ -30,13 +30,13 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/x15"
-            android:paddingRight="@dimen/x42"
+            android:paddingLeft="7.5dp"
+            android:paddingRight="21dp"
             android:src="@mipmap/basketball_collect" />
 
             <RelativeLayout
                 android:id="@+id/ll_basket_title_score"
-                android:layout_width="@dimen/x600"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:visibility="visible"
@@ -49,7 +49,7 @@
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     android:textColor="#ffffff"
-                    android:padding="@dimen/x5"
+                    android:padding="2.5dp"
                     android:textSize="@dimen/text_size_16"/>
 
                 <TextView
@@ -60,7 +60,7 @@
                     android:layout_centerInParent="true"
                     android:textColor="#ffffff"
                     android:singleLine="true"
-                    android:layout_marginRight="@dimen/x5"
+                    android:layout_marginRight="2.5dp"
                     android:layout_toLeftOf="@id/title_vs"
                     android:textSize="@dimen/text_size_16"/>
 
@@ -72,7 +72,7 @@
                     android:layout_toRightOf="@id/title_vs"
                     android:textColor="#ffffff"
                     android:singleLine="true"
-                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginLeft="2.5dp"
                     android:layout_centerInParent="true"
                     android:textSize="@dimen/text_size_16" />
             </RelativeLayout>

@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/item_img_checked"
-            android:layout_width="@dimen/y33"
-            android:layout_height="@dimen/y33"
+            android:layout_width="16.5dp"
+            android:layout_height="16.5dp"
             android:src="@drawable/cpi_selected_company_bg"/>
 
     </LinearLayout>

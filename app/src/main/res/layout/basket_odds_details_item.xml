@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y96"
+        android:layout_height="48dp"
         android:orientation="horizontal"
         android:background="@color/black_grounding">
 
@@ -58,8 +58,8 @@
                     android:text="15.5"
                     android:textColor="@color/black_details_ball_textcolor2"
                     android:textSize="@dimen/text_size_11"
-                    android:paddingLeft="@dimen/x3"
-                    android:paddingRight="@dimen/x3"
+                    android:paddingLeft="1.5dp"
+                    android:paddingRight="1.5dp"
                     />
             </LinearLayout>
             <TextView
