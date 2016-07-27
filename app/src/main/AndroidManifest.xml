@@ -281,7 +281,8 @@
 
         <activity
             android:name=".activity.BasketballInformationActivity"
-            android:theme="@style/AppThemeDark.NoActionBar">
+            android:theme="@style/AppThemeDark.NoActionBar"
+            android:screenOrientation="portrait">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
