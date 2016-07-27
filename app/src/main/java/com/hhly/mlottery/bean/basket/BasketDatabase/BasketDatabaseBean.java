@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.basket.BasketDatabase;
+package com.hhly.mlottery.bean.basket.basketdatabase;
 
 /**
  * description:
@@ -7,11 +7,12 @@ package com.hhly.mlottery.bean.basket.BasketDatabase;
  */
 public class BasketDatabaseBean {
 
-    private String leagueId;//:"111",
     private String leagueName;//:"XBA",
+    private String leagueId;//:"111",
     private String[] season; //:[xx,xx,xx,xx],
-    private String bgUrl;//:"xxxxxxxxxx",
     private String leagueLogoUrl;//:"",
+    private String bgUrl;//:"xxxxxxxxxx",
+    private String aa;//test
 
     public String getLeagueId() {
         return leagueId;
