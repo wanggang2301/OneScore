@@ -50,8 +50,8 @@
         <View
             android:id="@+id/cpi_view_id"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y1"
-            android:background="@color/homwe_pk10_grey"
+            android:layout_height="0.5px"
+            android:background="@color/linecolor"
              />
 
         <Button

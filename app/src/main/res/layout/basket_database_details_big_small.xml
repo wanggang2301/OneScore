@@ -212,7 +212,7 @@
                 android:layout_height="300dp"
                 android:gravity="center"
                 android:textSize="20dp"
-                android:text="暂无数据"
+                android:text="@string/nodata"
                 android:visibility="gone"
                 />
     </LinearLayout>

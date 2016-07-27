@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsBigSmallAdapter;
-import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBigSmallBean;
-import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBigSmallDetailsBean;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallBean;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallDetailsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;

@@ -3,8 +3,7 @@ package com.hhly.mlottery.adapter.basketball;
 import android.content.Context;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBigSmallDetailsBean;
-import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseHandicapDetailsBean;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallDetailsBean;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 

@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBean;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
@@ -103,7 +103,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             mLeagueId = getIntent().getExtras().getString(LEAGUEID);
         }
 
-        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1"); //TODO~~~~~~~~~~~~~~~~~~~~~~
+        /**
+         * 第一次加载默认赛季数据，不需要season ==》（-1）
+         */
+        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
         mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId , "-1");
 
         mOptions = new DisplayImageOptions.Builder()
@@ -401,7 +404,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         mAlertDialog.setCanceledOnTouchOutside(true);//设置空白处点击 dialog消失
 
         /**
-         * 根据List数据条数加载不同的view （数据多加载可滑动View）
+         * 根据List数据条数加载不同的ListView （数据多加载可滑动 ScrollTouchListview）
          */
         ScrollView scroll = (ScrollView)view.findViewById(R.id.basket_sports_scroll);//数据多时显示
         ScrollTouchListView  scrollListview = (ScrollTouchListView ) view.findViewById(R.id.sport_date_scroll);
