@@ -96,7 +96,7 @@
                         <TextView
                             android:id="@+id/item_football_home_rc"
                             style="@style/ItemFootballCard"
-                            android:layout_marginLeft="@dimen/x6"
+                            android:layout_marginLeft="3dp"
                             android:layout_toLeftOf="@id/item_football_hometeam"
                             android:background="@mipmap/card_red"
                             android:text="1"
@@ -186,8 +186,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
-                            android:paddingLeft="@dimen/x4"
-                            android:paddingRight="@dimen/x4"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
                             android:text="0.86"
                             android:textColor="@color/version"
                             android:textSize="@dimen/item_football_left_odds" />
@@ -199,8 +199,8 @@
                             android:layout_alignBottom="@id/item_football_left_odds"
                             android:layout_alignTop="@id/item_football_left_odds"
                             android:layout_toRightOf="@id/item_football_left_odds"
-                            android:paddingLeft="@dimen/x4"
-                            android:paddingRight="@dimen/x4"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
                             android:text="*球半/两"
                             android:textColor="@color/msg"
                             android:textSize="@dimen/item_football_handicap_value" />
@@ -212,8 +212,8 @@
                             android:layout_alignBottom="@id/item_football_handicap_value"
                             android:layout_alignTop="@id/item_football_handicap_value"
                             android:layout_toRightOf="@id/item_football_handicap_value"
-                            android:paddingLeft="@dimen/x4"
-                            android:paddingRight="@dimen/x4"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
                             android:text="1.04"
                             android:textColor="@color/version"
                             android:textSize="@dimen/item_football_right_odds" />
@@ -255,7 +255,7 @@
                         <TextView
                             android:id="@+id/item_football_guest_rc"
                             style="@style/ItemFootballCard"
-                            android:layout_marginRight="@dimen/x6"
+                            android:layout_marginRight="3dp"
                             android:layout_toRightOf="@id/item_football_guestteam"
                             android:background="@mipmap/card_red"
                             android:text="1"

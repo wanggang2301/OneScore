@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y300">
+        android:layout_height="150dp">
         <!--广告轮播图-->
         <android.support.v4.view.ViewPager
             android:id="@+id/home_page_item_viewPager"
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/y20"
+            android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
@@ -31,10 +31,10 @@
         android:layout_height="wrap_content"
         android:columnWidth="30dp"
         android:numColumns="4"
-        android:paddingTop="@dimen/y30"
-        android:paddingBottom="@dimen/y30"
-        android:paddingLeft="@dimen/y10"
-        android:paddingRight="@dimen/y10"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:scrollbars="none"
-        android:verticalSpacing="@dimen/y10"></com.hhly.mlottery.widget.MyGridView>
+        android:verticalSpacing="5dp"></com.hhly.mlottery.widget.MyGridView>
 </LinearLayout>

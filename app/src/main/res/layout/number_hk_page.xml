@@ -8,14 +8,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/y40"
+            android:layout_margin="20dp"
             android:orientation="vertical" >
 
             <!-- 特码 -->
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y360"
+                android:layout_height="180dp"
                 android:orientation="horizontal" >
 
                 <LinearLayout
@@ -108,7 +108,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y180"
+                android:layout_height="90dp"
                 android:orientation="horizontal" >
 
                 <LinearLayout

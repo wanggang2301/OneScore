@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x45"
+            android:layout_marginLeft="22.5dp"
             android:text="声音1"
             android:textColor="#000"
             android:textSize="16sp" />
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x45"
+            android:layout_marginRight="22.5dp"
             android:button="@drawable/setting_rd"
             android:clickable="false" />
     </RelativeLayout>
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x45"
+            android:layout_marginLeft="22.5dp"
             android:text="声音2"
             android:textColor="#000"
             android:textSize="16sp" />
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x45"
+            android:layout_marginRight="22.5dp"
             android:button="@drawable/setting_rd"
             android:clickable="false" >
         </RadioButton>
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x45"
+            android:layout_marginLeft="22.5dp"
             android:text="声音3"
             android:textColor="#000"
             android:textSize="16sp" />
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x45"
+            android:layout_marginRight="22.5dp"
             android:button="@drawable/setting_rd"
             android:clickable="false" >
         </RadioButton>
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x45"
+            android:layout_marginLeft="22.5dp"
             android:text="声音4"
             android:textColor="#000"
             android:textSize="16sp" />
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x45"
+            android:layout_marginRight="22.5dp"
             android:button="@drawable/setting_rd"
             android:clickable="false" >
         </RadioButton>
