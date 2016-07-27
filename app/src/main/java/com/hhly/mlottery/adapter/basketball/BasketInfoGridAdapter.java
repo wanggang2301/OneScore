@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author wang gang
  * @date 2016/7/15 10:48
- * @des ${TODO}
+ * @des 篮球资料库洲际赛事Adapter
  */
 public class BasketInfoGridAdapter extends BaseAdapter {
 

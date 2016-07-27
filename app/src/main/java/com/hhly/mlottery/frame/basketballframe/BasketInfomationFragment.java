@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/7/14 17:54
- * @des 篮球资料库列表项
+ * @des 篮球资料库列表项Fragment
  */
 public class BasketInfomationFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
 

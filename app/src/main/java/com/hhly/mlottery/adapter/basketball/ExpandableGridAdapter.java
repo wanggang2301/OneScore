@@ -26,6 +26,12 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author wang gang
+ * @date 2016/7/15 10:48
+ * @des 篮球资料库国家赛事可伸缩Adapter
+ */
+
 public class ExpandableGridAdapter extends BaseExpandableListAdapter implements AdapterView.OnItemClickListener {
 
     private static final int NUM0 = 0;
