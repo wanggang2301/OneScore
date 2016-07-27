@@ -197,6 +197,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mHistoryEditText.setText("1");
+                    mHistoryEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setHistoryTemp(aDouble);
@@ -216,6 +221,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mHostEditText.setText("1");
+                    mHostEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setHomeTemp(aDouble);
@@ -235,6 +245,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mGuestEditText.setText("1");
+                    mGuestEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setGuestTemp(aDouble);
