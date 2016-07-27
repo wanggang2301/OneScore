@@ -553,15 +553,25 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     }
 
                 }
+                else{
+                    // 显示暂无首发提示
+                    fl_firsPlayers_not.setVisibility(View.VISIBLE);
+                    fl_firsPlayers_content.setVisibility(View.GONE);
+                }
+            }else{
+                // 显示暂无首发提示
+                fl_firsPlayers_not.setVisibility(View.VISIBLE);
+                fl_firsPlayers_content.setVisibility(View.GONE);
             }
-            // 显示暂无首发提示
-            fl_firsPlayers_not.setVisibility(View.VISIBLE);
-            fl_firsPlayers_content.setVisibility(View.GONE);
         }
         //心水推荐
 //        Log.e("fuckkkkkk",analyzeBean.getRecommend());
         if(analyzeBean.getRecommend()!=null&&analyzeBean.getRecommend()!=""){
+            mRecommend.setTextColor(mContext.getResources().getColor(R.color.team_name_color));
             mRecommend.setText(Html.fromHtml(analyzeBean.getRecommend()));
+        }else{
+            mRecommend.setTextColor(mContext.getResources().getColor(R.color.black_details_ball_textcolor));
+            mRecommend.setText(mChartLetGuest.getResources().getString(R.string.basket_nodata));
         }
 
         //亚盘走势
