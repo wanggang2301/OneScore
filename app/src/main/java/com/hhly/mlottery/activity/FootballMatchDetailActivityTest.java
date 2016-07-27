@@ -319,8 +319,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         // 情报
         mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment,
-                mAnalyzeFragment, mOddsFragment, mStatisticsFragment, mIntelligenceFragment);
+        mTabsAdapter.addFragments(mDetailsRollballFragment, mStatisticsFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -371,7 +370,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 1) {
+                if (position == 5) {
                     appBarLayout.setExpanded(false);
                 }
 
@@ -1254,8 +1253,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             };
 
             if (!isStarComputeTimer) {
-                footballTimer.schedule(tt, 15000, 15000);
-                isStarComputeTimer = true;
+                if (tt != null) {
+                    footballTimer.schedule(tt, 15000, 15000);
+                    isStarComputeTimer = true;
+                }
 
             }
         }
@@ -2480,7 +2481,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position == 1) {
+                if (position == 5) {
                     appBarLayout.setExpanded(false);
                 }
             }
