@@ -542,6 +542,9 @@
     <color name="basket_score">#0085E1</color>
     <color name="basket_over_score">#FF0000</color>
 
+    <color name="basket_database_details_color">#FF6600</color>
+
+
     <color name="testtitle">#ff00695d</color>
     <color name="tabtitle">#21b11e</color>
     <!--<color name="accent">#eeff41</color>-->
