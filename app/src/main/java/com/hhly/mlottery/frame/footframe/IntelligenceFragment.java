@@ -268,6 +268,12 @@ public class IntelligenceFragment extends Fragment {
      * 刷新DIY算法UI
      */
     public void refreshFactorUI(boolean ignoreNull) {
+        if (mBigDataForecast == null) {
+            hideProgress(mHostProgress, mHostAlert);
+            hideProgress(mSizeProgress, mSizeAlert);
+            hideProgress(mAsiaProgress, mAsiaAlert);
+            return;
+        }
         BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
         if (!ignoreNull) {
             if (battleHistory == null) {
