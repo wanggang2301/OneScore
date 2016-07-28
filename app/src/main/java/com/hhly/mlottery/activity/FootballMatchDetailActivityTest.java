@@ -2596,7 +2596,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isStatisticsFragmentTest = false;
                 isIntelligenceFragment= false;
                 break;
-            case 1:// 聊球
+            case 5:// 聊球
                 isTalkAboutBallFragment = true;
                 isDetailsRollballFragment = false;
                 isAnalyzeFragment = false;
@@ -2612,7 +2612,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isStatisticsFragmentTest = false;
                 isIntelligenceFragment= false;
                 break;
-            case 3:// 指数
+            case 4:// 指数
                 isOddsFragment = true;
                 isAnalyzeFragment = false;
                 isDetailsRollballFragment = false;
@@ -2620,7 +2620,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isStatisticsFragmentTest = false;
                 isIntelligenceFragment= false;
                 break;
-            case 4:// 统计
+            case 1:// 统计
                 isStatisticsFragmentTest = true;
                 isTalkAboutBallFragment = false;
                 isDetailsRollballFragment = false;
@@ -2628,7 +2628,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isOddsFragment = false;
                 isIntelligenceFragment= false;
                 break;
-            case 5:// 情报
+            case 3:// 情报
                 isIntelligenceFragment = true;
                 isStatisticsFragmentTest = false;
                 isTalkAboutBallFragment = false;
