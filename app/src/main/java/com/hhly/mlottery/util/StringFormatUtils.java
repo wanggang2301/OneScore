@@ -17,7 +17,7 @@ public class StringFormatUtils {
      * @param f
      * @return
      */
-    public static String toPercentString(Float f) {
+    public static String toPercentString(Double f) {
         return String.format(Locale.getDefault(), "%.0f%%", f * 100);
     }
 

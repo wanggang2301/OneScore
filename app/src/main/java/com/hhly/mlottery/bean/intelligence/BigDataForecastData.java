@@ -16,31 +16,31 @@ public class BigDataForecastData implements Parcelable {
      * asiaWinPercent : 0.13
      */
 
-    private Float homeWinPercent;
-    private Float sizeWinPercent;
-    private Float asiaWinPercent;
+    private Double homeWinPercent;
+    private Double sizeWinPercent;
+    private Double asiaWinPercent;
 
-    public Float getHomeWinPercent() {
+    public Double getHomeWinPercent() {
         return homeWinPercent;
     }
 
-    public void setHomeWinPercent(Float homeWinPercent) {
+    public void setHomeWinPercent(Double homeWinPercent) {
         this.homeWinPercent = homeWinPercent;
     }
 
-    public Float getSizeWinPercent() {
+    public Double getSizeWinPercent() {
         return sizeWinPercent;
     }
 
-    public void setSizeWinPercent(Float sizeWinPercent) {
+    public void setSizeWinPercent(Double sizeWinPercent) {
         this.sizeWinPercent = sizeWinPercent;
     }
 
-    public Float getAsiaWinPercent() {
+    public Double getAsiaWinPercent() {
         return asiaWinPercent;
     }
 
-    public void setAsiaWinPercent(Float asiaWinPercent) {
+    public void setAsiaWinPercent(Double asiaWinPercent) {
         this.asiaWinPercent = asiaWinPercent;
     }
 
@@ -60,9 +60,9 @@ public class BigDataForecastData implements Parcelable {
     }
 
     protected BigDataForecastData(Parcel in) {
-        this.homeWinPercent = (Float) in.readValue(Float.class.getClassLoader());
-        this.sizeWinPercent = (Float) in.readValue(Float.class.getClassLoader());
-        this.asiaWinPercent = (Float) in.readValue(Float.class.getClassLoader());
+        this.homeWinPercent = (Double) in.readValue(Double.class.getClassLoader());
+        this.sizeWinPercent = (Double) in.readValue(Double.class.getClassLoader());
+        this.asiaWinPercent = (Double) in.readValue(Double.class.getClassLoader());
     }
 
     public static final Creator<BigDataForecastData> CREATOR = new Creator<BigDataForecastData>() {

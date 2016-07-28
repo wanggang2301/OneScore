@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.StringFormatUtils;
 
 /**
  * description: 自定义的ProgressBar
@@ -56,7 +57,7 @@ public class RoundProgressBar extends View {
     /**
      * 当前进度
      */
-    private int progress;
+    private double progress;
     /**
      * 是否显示中间的进度
      */
@@ -127,12 +128,12 @@ public class RoundProgressBar extends View {
         paint.setColor(textColor);
         paint.setTextSize(textSize);
         paint.setTypeface(Typeface.DEFAULT_BOLD); //设置字体
-        int percent = (int) (((float) progress / (float) max) * 100);  //中间的进度百分比，先转换成float在进行除法运算，不然都为0
-        float textWidth = paint.measureText(percent + "%");   //测量字体宽度，我们需要根据字体的宽度设置在圆环中间
+        String percent = StringFormatUtils.toPercentString(progress / (float) max);  //中间的进度百分比，先转换成float在进行除法运算，不然都为0
+        float textWidth = paint.measureText(percent);   //测量字体宽度，我们需要根据字体的宽度设置在圆环中间
 
 //        if(textIsDisplayable && percent != 0 && style == STROKE){
         if (textIsDisplayable && style == STROKE) {
-            canvas.drawText(percent + "%", centre - textWidth / 2, centre + textSize / 2, paint); //画出进度百分比
+            canvas.drawText(percent, centre - textWidth / 2, centre + textSize / 2, paint); //画出进度百分比
         }
 
 
@@ -149,13 +150,13 @@ public class RoundProgressBar extends View {
         switch (style) {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval, 270, 360 * progress / max, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                canvas.drawArc(oval, 270, (int) (360 * progress / max), false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
                 break;
             }
             case FILL: {
                 paint.setStyle(Paint.Style.FILL_AND_STROKE);
                 if (progress != 0)
-                    canvas.drawArc(oval, 0, 360 * progress / max, true, paint);  //根据进度画圆弧
+                    canvas.drawArc(oval, 0, (int) (360 * progress / max), true, paint);  //根据进度画圆弧
                 break;
             }
         }
@@ -184,7 +185,7 @@ public class RoundProgressBar extends View {
      *
      * @return
      */
-    public synchronized int getProgress() {
+    public synchronized double getProgress() {
         return progress;
     }
 
@@ -194,7 +195,7 @@ public class RoundProgressBar extends View {
      *
      * @param progress
      */
-    public synchronized void setProgress(int progress) {
+    public synchronized void setProgress(double progress) {
         if (progress < 0) {
             throw new IllegalArgumentException("progress not less than 0");
         }

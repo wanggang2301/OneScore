@@ -112,9 +112,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getHost().getGuestTemp()));
 
-                    Float historyHomeWin = getHomeWinPercent(battleHistory);
-                    Float homeRecentHomeWin = getHomeWinPercent(homeRecent);
-                    Float guestRecentHomeWin = getHomeWinPercent(guestRecent);
+                    Double historyHomeWin = getHomeWinPercent(battleHistory);
+                    Double homeRecentHomeWin = getHomeWinPercent(homeRecent);
+                    Double guestRecentHomeWin = getHomeWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyHomeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentHomeWin));
@@ -128,9 +128,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getSize().getGuestTemp()));
 
-                    Float historySizeWin = getSizeWinPercent(battleHistory);
-                    Float homeRecentSizeWin = getSizeWinPercent(homeRecent);
-                    Float guestRecentSizeWin = getSizeWinPercent(guestRecent);
+                    Double historySizeWin = getSizeWinPercent(battleHistory);
+                    Double homeRecentSizeWin = getSizeWinPercent(homeRecent);
+                    Double guestRecentSizeWin = getSizeWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historySizeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentSizeWin));
@@ -144,9 +144,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getAsia().getGuestTemp()));
 
-                    Float historyAsiaWin = getAsiaWinPercent(battleHistory);
-                    Float homeRecentAsiaWin = getAsiaWinPercent(homeRecent);
-                    Float guestRecentAsiaWin = getAsiaWinPercent(guestRecent);
+                    Double historyAsiaWin = getAsiaWinPercent(battleHistory);
+                    Double homeRecentAsiaWin = getAsiaWinPercent(homeRecent);
+                    Double guestRecentAsiaWin = getAsiaWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyAsiaWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentAsiaWin));
@@ -156,22 +156,22 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         }
     }
 
-    private Float checkNotNull(Float f) {
+    private Double checkNotNull(Double f) {
         return f == null ? 0f : f;
     }
 
-    private Float getHomeWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getHomeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getHomeWinPercent());
     }
 
-    private Float getAsiaWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getAsiaWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getAsiaWinPercent());
     }
 
-    private Float getSizeWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getSizeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getSizeWinPercent());
     }
 
