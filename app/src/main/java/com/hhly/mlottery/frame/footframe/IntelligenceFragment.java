@@ -112,10 +112,10 @@ public class IntelligenceFragment extends Fragment {
                         if (jsonObject.getResult() != 200 || mBigDataForecast == null) {
                             refreshFactorUI(false);
                             setEmptyAlert();
-                            mDiyComputeMethodView.setVisibility(View.GONE);
+//                            mDiyComputeMethodView.setVisibility(View.GONE);
                             return;
                         }
-                        mDiyComputeMethodView.setVisibility(View.VISIBLE);
+//                        mDiyComputeMethodView.setVisibility(View.VISIBLE);
                         BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
                         BigDataForecastData homeRecent = mBigDataForecast.getHomeRecent();
                         BigDataForecastData guestRecent = mBigDataForecast.getGuestRecent();
