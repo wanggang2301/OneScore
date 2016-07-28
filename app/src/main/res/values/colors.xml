@@ -603,10 +603,9 @@
     <color name="football_analyze_lose_color">#21B11E</color>
     <color name="football_analyze_draw_color">#00aaee</color>
     <color name="football_analyze_default_color">#333333</color>
-    <color name="football_analyze_progress_color1">#00aaee</color>
-    <color name="football_analyze_progress_color2">#E8C129</color>
-    <color name="football_analyze_progress_color3">#7DC050</color>
-
+    <color name="football_analyze_progress_color1">#01A2FE</color>
+    <color name="football_analyze_progress_color2">#FE8F00</color>
+    <color name="football_analyze_progress_color3">#3EAF00</color>
 
     <color name="odds_title_bg_color">#F3F7F9</color>
 

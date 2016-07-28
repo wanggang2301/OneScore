@@ -41,8 +41,7 @@
                 android:drawablePadding="5dp"
                 android:drawableStart="@mipmap/icon_diy_method"
                 android:gravity="center_vertical"
-                android:text="@string/diy_compute_method"
-                android:visibility="gone"/>
+                android:text="@string/diy_compute_method"/>
 
         </LinearLayout>
 

@@ -76,8 +76,6 @@
     <string name="share_summary_default">一比分,专业的足球比分直播平台</string>
 
 
-
-
     <!--指数-->
     <string name="odd_plate_rb_txt">亚盘</string>
     <string name="odd_op_rb_txt">欧赔</string>
@@ -139,7 +137,7 @@
     <string name="oddgone">不显示</string>
     <string name="about_product_msg_txt_simple">一比分，一直专注于体育比分的产品，目前比分、角球响应速度业内领先。</string>
     <string name="frame_home_jieguo_txt">彩票开奖</string>
-  
+
 
     <!--首发阵容 Start-->
     <string name="firsPlayers_not">暂无首发</string>
@@ -184,9 +182,9 @@
     <string name="foot_guanzhu_txt">关注</string>
     <string name="foot_setting_txt">设置</string>
     <!-- 下拉刷新 -->
-    <string name="pull_to_refresh_pull_label" >向下拉动可以刷新</string>
-    <string name="pull_to_refresh_release_label" >松开可以刷新</string>
-    <string name="pull_to_refresh_refreshing_label" >加载中&#8230;</string>
+    <string name="pull_to_refresh_pull_label">向下拉动可以刷新</string>
+    <string name="pull_to_refresh_release_label">松开可以刷新</string>
+    <string name="pull_to_refresh_refreshing_label">加载中&#8230;</string>
 
     <!-- 设置 -->
     <string name="set_sound_txt">声音</string>
@@ -215,16 +213,16 @@
 
 
     <!-- 异常处理 -->
-     <string name="exp_net_status_txt">您当前的网络不给力</string>
-     <string name="exp__check_txt">请检查后</string>
-     <string name="exp_refresh_txt">刷新</string>
+    <string name="exp_net_status_txt">您当前的网络不给力</string>
+    <string name="exp__check_txt">请检查后</string>
+    <string name="exp_refresh_txt">刷新</string>
     <!-- 赛程 -->
-    
+
     <string name="no_data_txt">没有更多数据！</string>
     <string name="data_parsing_exp_txt">数据解析异常！</string>
     <string name="loading_txt">正在加载中......</string>
     <string name="reload_txt">重新加载</string>
-    
+
     <!-- 即时 -->
     <string name="immediate_no_data">您筛选条件下赛事为0场。</string>
     <string name="immediate_no_match">暂无赛事。</string>
@@ -238,10 +236,10 @@
     <string name="immediate_status_mesomere">中断</string>
     <string name="immediate_status_postpone">推迟</string>
     <string name="immediate_unconection">当前网络不给力...</string>
-    
+
     <string name="favourite">关注</string>
     <string name="cancel_favourite">取消关注</string>
-    
+
     <!-- 足球筛选 -->
     <string name="filtrate_match_top">足球筛选</string>
     <string name="filtrate_match_focal">焦点</string>
@@ -258,7 +256,7 @@
     <!-- 关注 -->
     <string name="unfocus">暂无关注</string>
     <string name="unfocus2">左滑赛事，可关注该赛事</string>
-    
+
     <!-- 关于我们 -->
     <string name="about_relation_txt">联系我们</string>
     <string name="about_us_txt">关于我们</string>
@@ -297,11 +295,11 @@
     <string name="information_integral_minute">分</string>
     <string name="information_football_integral">暂无积分信息</string>
     <string name="information_agendal_title">选择轮次</string>
-    
+
     <!-- 所有的标题 -->
     <string name="frame_home_jishi_txt">足球比分</string>
     <string name="frame_home_jiaodian_txt">热门赛事</string>
-    
+
     <!-- 彩票 -->
     <string name="number_info_stopSell">截止销售</string>
     <string name="number_info_countDown">最新开奖倒计时：</string>
@@ -364,7 +362,7 @@
     <string name="number_tm_no2">第二球</string>
     <string name="number_tm_no3">第三球</string>
     <string name="number_tm_no4">第四球</string>
-    
+
     <string name="number_qxc_no1">第一位</string>
     <string name="number_qxc_no2">第二位</string>
     <string name="number_qxc_no3">第三位</string>
@@ -372,7 +370,7 @@
     <string name="number_qxc_no5">第五位</string>
     <string name="number_qxc_no6">第六位</string>
     <string name="number_qxc_no7">第七位</string>
-    
+
     <string name="number_hk_hint">香港开奖倒计时：</string>
     <string name="number_hk_hint2"></string>
     <string name="number_qxc_hint">七星彩开奖倒计时：</string>
@@ -384,7 +382,7 @@
     <string name="number_hk_openjiang">香港开奖</string>
     <string name="number_hk_openjiang_current">最新开奖</string>
     <string name="number_hk_openjiang_history">往期开奖</string>
-    
+
     <string name="number_cz_hk">香港开奖</string>
     <string name="number_cz_cq_ssc">重庆时时彩</string>
     <string name="number_cz_jx_ssc">江西时时彩</string>
@@ -425,10 +423,10 @@
     <string name="number_code_desc_ah_ks">每天80期，10分钟一期，8:30-22:00</string>
     <string name="number_code_desc_js_ks">每天82期，10分钟一期，8:30-22:00</string>
     <string name="number_code_desc_gx_ks">每天78期，10分钟一期，9:30-22:30</string>
-    
+
     <string name="number_code_di">第</string>
     <string name="number_code_qi">期</string>
-    
+
     <string name="number_7">周日</string>
     <string name="number_1">周一</string>
     <string name="number_2">周二</string>
@@ -437,12 +435,12 @@
     <string name="number_5">周五</string>
     <string name="number_6">周六</string>
     <!-- 异常处理 -->
-     <string name="number_exp_net_status_txt">您当前的网络不给力</string>
-     <string name="number_exp__check_txt">请检查后</string>
-     <string name="number_exp_refresh_txt">刷新</string>
-     
+    <string name="number_exp_net_status_txt">您当前的网络不给力</string>
+    <string name="number_exp__check_txt">请检查后</string>
+    <string name="number_exp_refresh_txt">刷新</string>
+
     <!-- 彩票 End-->
-    
+
     <string name="number_xq7">周日</string>
     <string name="number_xq1">周一</string>
     <string name="number_xq2">周二</string>
@@ -450,20 +448,19 @@
     <string name="number_xq4">周四</string>
     <string name="number_xq5">周五</string>
     <string name="number_xq6">周六</string>
-    
-    
-     <string name="number_xinqi7">周日</string>
+
+
+    <string name="number_xinqi7">周日</string>
     <string name="number_xinqi1">周一</string>
     <string name="number_xinqi2">周二</string>
     <string name="number_xinqi3">周三</string>
     <string name="number_xinqi4">周四</string>
     <string name="number_xinqi5">周五</string>
     <string name="number_xinqi6">周六</string>
-    
-    
-    
+
+
     <!-- 代码中的添加 string -->
-    
+
     <string name="language_select_txt">语种选择</string>
     <string name="public_btn_save">保存</string>
     <!-- 简体中文 -->
@@ -480,15 +477,12 @@
     <string name="china_th_txt">ภาษาไทย</string>
     <!-- 越南语 -->
     <string name="china_vi_txt">tiếng việt</string>
-    
-    
-    
-    
+
+
     <string name="reload_the_txt">重新加载</string>
-    
-    
-    
-      <!-- 首页足球状态 -->
+
+
+    <!-- 首页足球状态 -->
     <string name="frame_home_bjsaiche_txt">北京赛车</string>
     <string name="frame_home_hkLHC_txt">香港开奖</string>
     <string name="frame_home_lhckaijiang_txt">彩票开奖</string>
@@ -503,7 +497,7 @@
     <string name="fragme_home_tuichi_text">推迟</string>
     <string name="fragme_home_jiaqiu_text">加时</string>
     <string name="fragme_home_dianqiu_text">点球</string>
-      <string name="fragme_home_fengpan_text">封</string>
+    <string name="fragme_home_fengpan_text">封</string>
 
     <!-- 退出程序 -->
     <string name="main_exit_text">再按一次退出程序</string>
@@ -602,7 +596,6 @@
     <string name="basket_interrupt">中断</string>
     <string name="basket_cancel">取消</string>
     <string name="basket_postpone">推迟</string>
-
 
 
     <string name="basket_yesterday">昨日</string>
@@ -766,7 +759,7 @@
     <string name="chatball">聊球</string>
     <string name="succed_send">发送成功</string>
     <string name="succed_refresh">刷新成功</string>
-<!---->
+    <!---->
     <string name="feedback_submit">提交</string>
     <string name="feedback_edit_hint">请输入留言内容</string>
     <string name="feedback_toast_thx">多谢反馈！</string>
@@ -903,6 +896,9 @@
     <string name="action_close">关闭</string>
     <string name="action_compute">计算</string>
     <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
-    <string name="diy_compute_method_message">历史交锋 × %1$s + 主队 × %2$s + 客队 × %3$s = 概率</string>
+    <string name="diy_compute_method_message">概率=交锋概率×%1$s+主队概率×%2$s+客队概率×%3$s</string>
+    <string name="diy_combat_rate">交锋概率</string>
+    <string name="diy_host_rate">主队概率</string>
+    <string name="diy_guest_rate">客队概率</string>
     <string name="insufficient_sampling">采样不足</string>
 </resources>
