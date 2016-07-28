@@ -311,7 +311,6 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         popupWindow = new PopupWindow(v);
         // 设置弹框的宽度为布局文件的宽
         popupWindow.setWidth(mTxt_title1.getWidth());
-
         // 高度随着内容变化
         popupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         // 设置一个透明的背景，不然无法实现点击弹框外，弹框消失
