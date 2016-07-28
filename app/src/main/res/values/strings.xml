@@ -778,6 +778,7 @@
     <string name="login">登录</string>
     <string name="logining">正在登录...</string>
     <string name="login_succ">登录成功</string>
+    <string name="login_no_weixin">没有安装微信,请先安装微信!</string>
     <string name="login_peak">登录高峰期,请稍后再试</string>
     <string name="login_fail">登录失败</string>
     <string name="pwd_format">密码格式为6-16位数字和字符组成</string>
@@ -842,6 +843,7 @@
     <string name="nickname_format">昵称:格式为1-15个字符(不超过七个中文),由中英文数字和字符组成</string>
     <string name="modify_password">修改密码</string>
     <string name="modifying_password">正在修改密码...</string>
+    <string name="modifying_nickname">正在修改昵称...</string>
     <string name="modify_password_succ">修改密码成功</string>
     <string name="modify_password_fail">修改密码失败</string>
     <string name="input_password_old">请输入旧密码</string>

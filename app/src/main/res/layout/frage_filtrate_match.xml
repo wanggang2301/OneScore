@@ -74,7 +74,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/y10"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -89,8 +89,8 @@
                 android:id="@+id/filtrate_match_hide_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x4"
-                android:layout_marginRight="@dimen/x4"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:text="0"
                 android:textColor="@color/home_dividing_line_red"
                 android:textSize="@dimen/text_size_14" />
@@ -111,8 +111,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="4">
@@ -122,7 +122,7 @@
                 style="@style/filtrate_match_select_btn"
                 android:layout_width="0dp"
                 android:layout_height="29dp"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text="@string/filtrate_match_focal" />
 
@@ -131,8 +131,8 @@
                 style="@style/filtrate_match_select_btn"
                 android:layout_width="0dp"
                 android:layout_height="29dp"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text="@string/filtrate_match_hot" />
 
@@ -141,8 +141,8 @@
                 style="@style/filtrate_match_select_btn"
                 android:layout_width="0dp"
                 android:layout_height="29dp"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text="@string/filtrate_match_all" />
 
@@ -151,7 +151,7 @@
                 style="@style/filtrate_match_select_btn"
                 android:layout_width="0dp"
                 android:layout_height="29dp"
-                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:text="@string/filtrate_match_inverse" />
         </LinearLayout>

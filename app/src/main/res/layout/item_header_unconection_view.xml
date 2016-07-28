@@ -14,11 +14,11 @@
     	android:layout_height="wrap_content"
         android:src="@mipmap/unconection_warn"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/y20"
-        android:layout_marginBottom="@dimen/y20"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         />
     
     <TextView 
@@ -34,7 +34,7 @@
     	android:layout_height="wrap_content"
     	android:layout_alignParentRight="true"
     	android:background="@mipmap/unconection_next"
-    	android:layout_marginRight="@dimen/x10"
+    	android:layout_marginRight="5dp"
     	android:layout_centerVertical="true"
         />
 

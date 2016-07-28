@@ -9,10 +9,10 @@
     <TextView
         android:layout_gravity="center_horizontal"
         android:text="2015-2016"
-        android:textSize="@dimen/x26"
+        android:textSize="13dp"
         android:id="@+id/tv_list_item"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/y80"
+        android:layout_height="40dp"
         android:textColor="@color/res_name_color"
         android:gravity="center_vertical"/>
 

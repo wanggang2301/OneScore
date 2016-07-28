@@ -319,9 +319,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         // 情报
         mIntelligenceFragment = IntelligenceFragment.newInstance(mThirdId);
 
-        mTabsAdapter.addFragments(mDetailsRollballFragment, mTalkAboutBallFragment,
-                mAnalyzeFragment, mOddsFragment, mStatisticsFragment, mIntelligenceFragment);
-        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
+        mTabsAdapter.addFragments(mDetailsRollballFragment, mStatisticsFragment, mAnalyzeFragment, mIntelligenceFragment, mOddsFragment, mTalkAboutBallFragment);
+        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -371,7 +370,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 1) {
+                if (position == 5) {
                     appBarLayout.setExpanded(false);
                 }
 
@@ -1254,8 +1253,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             };
 
             if (!isStarComputeTimer) {
-                footballTimer.schedule(tt, 15000, 15000);
-                isStarComputeTimer = true;
+                if (tt != null) {
+                    footballTimer.schedule(tt, 15000, 15000);
+                    isStarComputeTimer = true;
+                }
 
             }
         }
@@ -2480,7 +2481,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position == 1) {
+                if (position == 5) {
                     appBarLayout.setExpanded(false);
                 }
             }
@@ -2595,7 +2596,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isStatisticsFragmentTest = false;
                 isIntelligenceFragment= false;
                 break;
-            case 1:// 聊球
+            case 5:// 聊球
                 isTalkAboutBallFragment = true;
                 isDetailsRollballFragment = false;
                 isAnalyzeFragment = false;
@@ -2611,7 +2612,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isStatisticsFragmentTest = false;
                 isIntelligenceFragment= false;
                 break;
-            case 3:// 指数
+            case 4:// 指数
                 isOddsFragment = true;
                 isAnalyzeFragment = false;
                 isDetailsRollballFragment = false;
@@ -2619,7 +2620,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isStatisticsFragmentTest = false;
                 isIntelligenceFragment= false;
                 break;
-            case 4:// 统计
+            case 1:// 统计
                 isStatisticsFragmentTest = true;
                 isTalkAboutBallFragment = false;
                 isDetailsRollballFragment = false;
@@ -2627,7 +2628,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isOddsFragment = false;
                 isIntelligenceFragment= false;
                 break;
-            case 5:// 情报
+            case 3:// 情报
                 isIntelligenceFragment = true;
                 isStatisticsFragmentTest = false;
                 isTalkAboutBallFragment = false;

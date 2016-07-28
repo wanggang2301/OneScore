@@ -15,9 +15,9 @@ import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.util.HandicapUtils;
 
 /**
- * 指数 RecyclerView 一条中的一条赔率
- * <p>
- * Created by loshine on 2016/6/21.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/21.
  */
 public class CpiOddsItemView extends LinearLayout {
 

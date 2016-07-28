@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y32"/>
+        android:layout_height="16dp"/>
 	<!--  简体-->
     <RelativeLayout
         android:id="@+id/language_china_layout"
@@ -27,7 +27,7 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             android:gravity="center|left"
-            android:layout_marginLeft="@dimen/x30"/>
+            android:layout_marginLeft="15dp"/>
 
         <ImageView
             android:id="@+id/language_china_img"
@@ -59,7 +59,7 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             android:gravity="center|left"
-            android:layout_marginLeft="@dimen/x30"/>
+            android:layout_marginLeft="15dp"/>
 
         <ImageView
             android:id="@+id/language_tw_img"
@@ -91,7 +91,7 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             android:gravity="center|left"
-            android:layout_marginLeft="@dimen/x30"/>
+            android:layout_marginLeft="15dp"/>
 
         <ImageView
             android:id="@+id/language_en_img"
@@ -122,7 +122,7 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             android:gravity="center|left"
-            android:layout_marginLeft="@dimen/x30"/>
+            android:layout_marginLeft="15dp"/>
 
         <ImageView
             android:id="@+id/language_ko_img"
@@ -153,7 +153,7 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             android:gravity="center|left"
-            android:layout_marginLeft="@dimen/x30"/>
+            android:layout_marginLeft="15dp"/>
 
         <ImageView
             android:id="@+id/language_id_img"
@@ -184,7 +184,7 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             android:gravity="center|left"
-            android:layout_marginLeft="@dimen/x30"/>
+            android:layout_marginLeft="15dp"/>
 
         <ImageView
             android:id="@+id/language_th_img"
@@ -215,7 +215,7 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             android:gravity="center|left"
-            android:layout_marginLeft="@dimen/x30"/>
+            android:layout_marginLeft="15dp"/>
 
         <ImageView
             android:id="@+id/language_vi_img"

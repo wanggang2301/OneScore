@@ -51,7 +51,7 @@
                                 <LinearLayout
                                     android:id="@+id/ll_number_info_countDown"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/x100"
+                                    android:layout_height="50dp"
                                     android:background="#11000000"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal" >
@@ -86,15 +86,15 @@
                                         android:layout_height="wrap_content"
                                         android:gravity="center_vertical"
                                         android:orientation="horizontal"
-                                        android:paddingLeft="@dimen/y20"
+                                        android:paddingLeft="10dp"
                                         android:visibility="visible" >
 
                                         <!-- 天 -->
 
                                         <TextView
                                             android:id="@+id/tv_number_info_time_dd"
-                                            android:layout_width="@dimen/x40"
-                                            android:layout_height="@dimen/y50"
+                                            android:layout_width="20dp"
+                                            android:layout_height="25dp"
                                             android:background="@mipmap/number_time_item_bg"
                                             android:gravity="center"
                                             android:text="-"
@@ -113,8 +113,8 @@
 
                                         <TextView
                                             android:id="@+id/tv_number_info_time_hh"
-                                            android:layout_width="@dimen/x40"
-                                            android:layout_height="@dimen/y50"
+                                            android:layout_width="20dp"
+                                            android:layout_height="25dp"
                                             android:background="@mipmap/number_time_item_bg"
                                             android:gravity="center"
                                             android:text="-"
@@ -133,8 +133,8 @@
 
                                         <TextView
                                             android:id="@+id/tv_number_info_time_mm"
-                                            android:layout_width="@dimen/x40"
-                                            android:layout_height="@dimen/y50"
+                                            android:layout_width="20dp"
+                                            android:layout_height="25dp"
                                             android:background="@mipmap/number_time_item_bg"
                                             android:gravity="center"
                                             android:text="-"
@@ -152,8 +152,8 @@
 
                                         <TextView
                                             android:id="@+id/tv_number_info_time_ss"
-                                            android:layout_width="@dimen/x40"
-                                            android:layout_height="@dimen/y50"
+                                            android:layout_width="20dp"
+                                            android:layout_height="25dp"
                                             android:background="@mipmap/number_time_item_bg"
                                             android:gravity="center"
                                             android:text="-"
@@ -433,7 +433,7 @@
                     <FrameLayout
                         android:id="@+id/fl_current_reLoading"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y1024"
+                        android:layout_height="512dp"
                         android:visibility="gone">
 
                         <TextView
@@ -470,7 +470,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x8"
+                android:layout_marginTop="4dp"
                 android:text="@string/exp_net_status_txt"
                 android:textColor="@color/version"
                 android:textSize="@dimen/text_size_14" />

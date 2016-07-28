@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.bean.basket.BasketDatabase.BasketDatabaseBean;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
@@ -108,7 +108,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             mLeagueId = getIntent().getExtras().getString(LEAGUEID);
         }
 
-        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1"); //TODO~~~~~~~~~~~~~~~~~~~~~~
+        /**
+         * 第一次加载默认赛季数据，不需要season ==》（-1）
+         */
+        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
         mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId , "-1");
 
         mOptions = new DisplayImageOptions.Builder()
@@ -224,7 +227,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private String[] mSports; // 赛季集
 
     private String mCurrentSports = "";
-    private boolean isLoad = false;
+    private boolean isLoad = false;//赛季是否可筛选
     private void initData(){
 
         // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do?lang=zh&leagueId=2
@@ -240,12 +243,20 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 if (basketDatabaseBean != null) {
                     mSports = basketDatabaseBean.getSeason();
 
-                    if (mSports != null || mSports.length != 0) {
+                    /**
+                     * 判断赛季集合mSports 中有数据时 ，才设为可筛选
+                     */
+                    if (mSports != null && mSports.length != 0) {
                         isLoad = true;
                     }
 
                     if (mCurrentSports.equals("")) {
-                        mSportsText.setText(mSports[0] + getResources().getString(R.string.basket_database_details_season));
+                        //若赛季无数据时 设为"--" 防止异常崩溃
+                        if (mSports == null || mSports.length == 0) {
+                            mSportsText.setText("--");
+                        }else{
+                            mSportsText.setText(mSports[0] + getResources().getString(R.string.basket_database_details_season));
+                        }
                     } else {
                         mSportsText.setText(mCurrentSports + getResources().getString(R.string.basket_database_details_season));
                     }
@@ -264,7 +275,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                isLoad = false;
+                isLoad = false; //不可筛选
             }
         }, BasketDatabaseBean.class);
 
@@ -409,6 +420,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
 
     int currentDialogPosition = 0; // 当前选中的赛季（默认第一个）
+    int currentPosition = 0; // 赛季选择过程中记录（点击确定后才赋值 ， 解决点击筛选不确定后再次进入赛季选择显示不一的情况）
 
     public void setDialog(){
         // Dialog 设置
@@ -430,7 +442,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         mAlertDialog.setCanceledOnTouchOutside(true);//设置空白处点击 dialog消失
 
         /**
-         * 根据List数据条数加载不同的view （数据多加载可滑动View）
+         * 根据List数据条数加载不同的ListView （数据多加载可滑动 ScrollTouchListview）
          */
         ScrollView scroll = (ScrollView)view.findViewById(R.id.basket_sports_scroll);//数据多时显示
         ScrollTouchListView  scrollListview = (ScrollTouchListView ) view.findViewById(R.id.sport_date_scroll);
@@ -441,8 +453,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    currentDialogPosition = position;
-                    mAdapter.updateDatas(currentDialogPosition);
+//                    currentDialogPosition = position;
+                    currentPosition = position;
+                    mAdapter.updateDatas(position);
                     mAdapter.notifyDataSetChanged();
                 }
             });
@@ -454,8 +467,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    currentDialogPosition = position;
-                    mAdapter.updateDatas(currentDialogPosition);
+//                    currentDialogPosition = position;
+                    currentPosition = position;
+                    mAdapter.updateDatas(position);
                     mAdapter.notifyDataSetChanged();
                 }
             });
@@ -468,6 +482,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             public void onClick(View v) {
                 mAlertDialog.dismiss();
 
+                currentDialogPosition = currentPosition;
                 String newData = mSports[currentDialogPosition];
 //                Toast.makeText(BasketballDatabaseDetailsActivity.this, "赛季 ：" + newData, Toast.LENGTH_SHORT).show();
 

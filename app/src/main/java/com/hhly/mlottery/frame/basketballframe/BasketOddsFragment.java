@@ -19,7 +19,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketOddsAdapter;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketDetailOddsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;

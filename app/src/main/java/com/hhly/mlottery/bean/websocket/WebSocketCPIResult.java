@@ -6,9 +6,9 @@ import com.alibaba.fastjson.TypeReference;
 import java.util.List;
 
 /**
- * 指数
- * <p/>
- * Created by loshine on 2016/6/22.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/22.
  */
 public class WebSocketCPIResult<T> {
 

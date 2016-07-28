@@ -15,7 +15,7 @@ import com.hhly.mlottery.frame.basketballframe.BasketInfomationFragment;
 /**
  * @author wang gang
  * @date 2016/7/14 17:07
- * @des 篮球资料库Activity
+ * @des 篮球资料库入口列表Activity
  */
 public class BasketballInformationActivity extends BaseActivity implements View.OnClickListener {
     private static final String HOT = "hot";            //热门

@@ -9,23 +9,23 @@
     <!--默认加载彩票开奖条目-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y220"
+        android:layout_height="110dp"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="@dimen/x140"
-            android:layout_height="@dimen/x140"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="@dimen/x25"
+            android:paddingLeft="12.5dp"
             android:src="@mipmap/home_number_item_icon_def" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/y20"
-            android:paddingLeft="@dimen/x20"
-            android:paddingTop="@dimen/y30">
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/x20"
+                    android:paddingLeft="10dp"
                     android:text="@string/number_code_di"
                     android:textColor="@color/content_txt_light_grad"
                     android:textSize="@dimen/number_desc" />

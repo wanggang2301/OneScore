@@ -6,23 +6,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingLeft="10dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="12dp"
         android:paddingRight="10dp"
         >
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2">
+            android:layout_weight="2.5">
 
             <TextView
                 android:id="@+id/basket_database_datails_ranking_big_small"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:gravity="center"
-                android:textSize="10sp"
+                android:textSize="13sp"
                 android:text="1"
                 android:textColor="@color/content_txt_black"/>
             <TextView
@@ -31,8 +33,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:text="凯尔特人"
-                android:textSize="10sp"
-                android:paddingLeft="5dp"
+                android:textSize="13sp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
                 android:textColor="@color/content_txt_black"/>
         </LinearLayout>
         <TextView

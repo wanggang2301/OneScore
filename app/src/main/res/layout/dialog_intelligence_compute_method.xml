@@ -74,6 +74,23 @@
         android:paddingRight="10dp"
         android:theme="@style/edit_text_line">
 
+        <TextView
+            android:id="@+id/history_percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/content_txt_black"
+            android:textSize="@dimen/text_size_13"
+            tools:text="0.25"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/symbol_times"
+            android:textColor="@color/loading_txt_color"
+            android:textSize="@dimen/text_size_13"/>
+
         <EditText
             android:id="@+id/history_edt"
             android:layout_width="0dp"
@@ -88,12 +105,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/symbol_times"
+            android:text="@string/symbol_plus"
             android:textColor="@color/loading_txt_color"
             android:textSize="@dimen/text_size_13"/>
 
         <TextView
-            android:id="@+id/history_percent"
+            android:id="@+id/host_percent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -105,7 +122,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/symbol_plus"
+            android:text="@string/symbol_times"
             android:textColor="@color/loading_txt_color"
             android:textSize="@dimen/text_size_13"/>
 
@@ -123,12 +140,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/symbol_times"
+            android:text="@string/symbol_plus"
             android:textColor="@color/loading_txt_color"
             android:textSize="@dimen/text_size_13"/>
 
         <TextView
-            android:id="@+id/host_percent"
+            android:id="@+id/guest_percent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -140,7 +157,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/symbol_plus"
+            android:text="@string/symbol_times"
             android:textColor="@color/loading_txt_color"
             android:textSize="@dimen/text_size_13"/>
 
@@ -151,23 +168,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:inputType="numberDecimal"
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13"
-            tools:text="0.25"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/symbol_times"
-            android:textColor="@color/loading_txt_color"
-            android:textSize="@dimen/text_size_13"/>
-
-        <TextView
-            android:id="@+id/guest_percent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
             android:textColor="@color/content_txt_black"
             android:textSize="@dimen/text_size_13"
             tools:text="0.25"/>

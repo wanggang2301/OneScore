@@ -46,9 +46,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 重构版 CPIFragment
- * <p>
- * Created by loshine on 2016/6/21.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/21.
  */
 public class CPIFragment extends Fragment implements
         HappySocketClient.SocketResponseCloseListener,
