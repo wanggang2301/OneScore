@@ -1,6 +1,4 @@
-package com.hhly.mlottery.bean.basket.BasketDetails;
-
-import com.hhly.mlottery.util.L;
+package com.hhly.mlottery.bean.basket.basketdetails;
 
 import java.util.List;
 

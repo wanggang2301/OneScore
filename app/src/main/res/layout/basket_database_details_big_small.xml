@@ -62,20 +62,21 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="12dp"
                 android:paddingRight="10dp">
 
                 <TextView
                     android:id="@+id/basket_database_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="2.5"
                     android:gravity="left"
                     android:text="@string/basket_database_details_runkingname"
                     android:textSize="10sp"
-                    android:paddingLeft="10dp"
                     android:textColor="@color/black_details_ball_textcolor"/>
 
                 <TextView
@@ -212,7 +213,7 @@
                 android:layout_height="300dp"
                 android:gravity="center"
                 android:textSize="20dp"
-                android:text="暂无数据"
+                android:text="@string/nodata"
                 android:visibility="gone"
                 />
     </LinearLayout>

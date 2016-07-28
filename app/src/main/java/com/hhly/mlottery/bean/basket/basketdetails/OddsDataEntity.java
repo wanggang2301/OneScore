@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.basket.BasketDetails;
+package com.hhly.mlottery.bean.basket.basketdetails;
 
 /**
  * Created by andy on 2016/4/12 16:00.

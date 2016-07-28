@@ -13,7 +13,7 @@ import android.view.View;
 import com.hhly.mlottery.R;
 
 /**
- * description:
+ * description: 自定义的ProgressBar
  * author: yixq
  * Created by A on 2016/7/8.
  */

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author wang gang
  * @date 2016/7/21 10:42
- * @des ${TODO}
+ * @des 篮球资料库列表Bean
  */
 public class LeagueAllBean {
 

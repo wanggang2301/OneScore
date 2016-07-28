@@ -16,8 +16,8 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketOddsDetailsActivity;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.OddsDataEntity;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketDetailOddsBean;
+import com.hhly.mlottery.bean.basket.basketdetails.OddsDataEntity;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
