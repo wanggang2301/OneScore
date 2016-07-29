@@ -37,7 +37,6 @@ import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
-import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
@@ -83,7 +82,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -1236,7 +1234,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
      */
     private void computeWebSocket() {
         if (!isStarComputeTimer) {
-            TimerTask tt = new TimerTask() {
+            TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     L.d(TAG, "计算");
@@ -1252,8 +1250,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             };
 
             if (!isStarComputeTimer) {
-                if (tt != null) {
-                    footballTimer.schedule(tt, 15000, 15000);
+                if (timerTask != null) {
+                    footballTimer.schedule(timerTask, 15000, 30000);
                     isStarComputeTimer = true;
                 }
 
@@ -2589,7 +2587,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isAnalyzeFragment = false;
                 isOddsFragment = false;
                 isStatisticsFragmentTest = false;
-                isIntelligenceFragment= false;
+                isIntelligenceFragment = false;
                 break;
             case 5:// 聊球
                 isTalkAboutBallFragment = true;
@@ -2597,7 +2595,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isAnalyzeFragment = false;
                 isOddsFragment = false;
                 isStatisticsFragmentTest = false;
-                isIntelligenceFragment= false;
+                isIntelligenceFragment = false;
                 break;
             case 2:// 分析
                 isAnalyzeFragment = true;
@@ -2605,7 +2603,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isTalkAboutBallFragment = false;
                 isOddsFragment = false;
                 isStatisticsFragmentTest = false;
-                isIntelligenceFragment= false;
+                isIntelligenceFragment = false;
                 break;
             case 4:// 指数
                 isOddsFragment = true;
@@ -2613,7 +2611,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isDetailsRollballFragment = false;
                 isTalkAboutBallFragment = false;
                 isStatisticsFragmentTest = false;
-                isIntelligenceFragment= false;
+                isIntelligenceFragment = false;
                 break;
             case 1:// 统计
                 isStatisticsFragmentTest = true;
@@ -2621,7 +2619,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isDetailsRollballFragment = false;
                 isAnalyzeFragment = false;
                 isOddsFragment = false;
-                isIntelligenceFragment= false;
+                isIntelligenceFragment = false;
                 break;
             case 3:// 情报
                 isIntelligenceFragment = true;
