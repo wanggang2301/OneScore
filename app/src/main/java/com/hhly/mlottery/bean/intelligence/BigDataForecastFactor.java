@@ -65,11 +65,11 @@ public class BigDataForecastFactor implements Parcelable {
 
         Double historyHomeWinPercent = getHomeWinPercent(forecast.getBattleHistory());
         Double hostHomeWinPercent = getHomeWinPercent(forecast.getHomeRecent());
-        Double guestHomeWinPercent = getHomeWinPercent(forecast.getGuestRecent());
+        Double guestHomeLosePercent = getHomeLosePercent(forecast.getGuestRecent());
 
         return historyHomeWinPercent * (useTemp ? host.getHistoryTemp() : host.getHistory())
                 + hostHomeWinPercent * (useTemp ? host.getHomeTemp() : host.getHome())
-                + guestHomeWinPercent * (useTemp ? host.getGuestTemp() : host.getGuest());
+                + guestHomeLosePercent * (useTemp ? host.getGuestTemp() : host.getGuest());
     }
 
     /**
@@ -125,11 +125,11 @@ public class BigDataForecastFactor implements Parcelable {
 
         Double historyAsiaWinPercent = getAsiaWinPercent(battleHistory);
         Double hostAsiaWinPercent = getAsiaWinPercent(homeRecent);
-        Double guestAsiaWinPercent = getAsiaWinPercent(guestRecent);
+        Double guestAsiaLosePercent = getAsiaLosePercent(guestRecent);
 
         return historyAsiaWinPercent * (useTemp ? asia.getHistoryTemp() : asia.getHistory())
                 + hostAsiaWinPercent * (useTemp ? asia.getHomeTemp() : asia.getHome())
-                + guestAsiaWinPercent * (useTemp ? asia.getGuestTemp() : asia.getGuest());
+                + guestAsiaLosePercent * (useTemp ? asia.getGuestTemp() : asia.getGuest());
     }
 
     /**
@@ -159,14 +159,29 @@ public class BigDataForecastFactor implements Parcelable {
         return checkNotNull(data.getHomeWinPercent());
     }
 
-    private Double getAsiaWinPercent(BigDataForecastData data) {
+    private Double getHomeLosePercent(BigDataForecastData data) {
         if (data == null) return 0D;
-        return checkNotNull(data.getAsiaWinPercent());
+        return checkNotNull(data.getHomeLosePercent());
     }
 
     private Double getSizeWinPercent(BigDataForecastData data) {
         if (data == null) return 0D;
         return checkNotNull(data.getSizeWinPercent());
+    }
+
+    private Double getSizeLosePercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getSizeLosePercent());
+    }
+
+    private Double getAsiaWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getAsiaWinPercent());
+    }
+
+    private Double getAsiaLosePercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getAsiaLosePercent());
     }
 
     @Override

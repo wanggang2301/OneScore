@@ -39,6 +39,7 @@ public class IntelligenceFragment extends Fragment {
 
     ImageView mDottedLine1;
     ImageView mDottedLine2;
+    ImageView mDottedLine3;
 
     View mDiyComputeMethodView;
 
@@ -120,13 +121,13 @@ public class IntelligenceFragment extends Fragment {
                         BigDataForecastData homeRecent = mBigDataForecast.getHomeRecent();
                         BigDataForecastData guestRecent = mBigDataForecast.getGuestRecent();
 
-                        setWinRate(battleHistory,
+                        setWinRate(battleHistory, false,
                                 mHistoryHostWin, mHistorySizeWin, mHistoryAsiaWin,
                                 mHistoryHostWinProgress, mHistorySizeWinProgress, mHistoryAsiaWinProgress);
-                        setWinRate(homeRecent,
+                        setWinRate(homeRecent, false,
                                 mHostRecentHostWin, mHostRecentSizeWin, mHostRecentAsiaWin,
                                 mHostRecentHostWinProgress, mHostRecentSizeWinProgress, mHostRecentAsiaWinProgress);
-                        setWinRate(guestRecent,
+                        setWinRate(guestRecent, true,
                                 mGuestRecentHostWin, mGuestRecentSizeWin, mGuestRecentAsiaWin,
                                 mGuestRecentHostWinProgress, mGuestRecentSizeWinProgress, mGuestRecentAsiaWinProgress);
                         refreshFactorUI(false);
@@ -169,10 +170,12 @@ public class IntelligenceFragment extends Fragment {
 
         mDottedLine1 = (ImageView) view.findViewById(R.id.dotted_line1);
         mDottedLine2 = (ImageView) view.findViewById(R.id.dotted_line2);
+        mDottedLine3 = (ImageView) view.findViewById(R.id.dotted_line3);
 
         // 关闭硬件加速才显示虚线
         mDottedLine1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mDottedLine2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        mDottedLine3.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         mHostProgress = (RoundProgressBar) view.findViewById(R.id.home_progress);
         mSizeProgress = (RoundProgressBar) view.findViewById(R.id.size_progress);
@@ -233,18 +236,29 @@ public class IntelligenceFragment extends Fragment {
      * @param sizeTextView 大球
      * @param asiaTextView 赢盘
      */
-    private void setWinRate(BigDataForecastData oddsInfo,
+    private void setWinRate(BigDataForecastData oddsInfo, boolean isLose,
                             TextView hostTextView, TextView sizeTextView, TextView asiaTextView,
                             ProgressBar hostProgress, ProgressBar sizeProgress, ProgressBar asiaProgress) {
         if (oddsInfo != null) {
 
-            Double homeWinPercent = oddsInfo.getHomeWinPercent();
-            Double sizeWinPercent = oddsInfo.getSizeWinPercent();
-            Double asiaWinPercent = oddsInfo.getAsiaWinPercent();
+            Double homePercent;
+            if (isLose) {
+                homePercent = oddsInfo.getHomeLosePercent();
+            } else {
+                homePercent = oddsInfo.getHomeWinPercent();
+            }
 
-            setWinRate(homeWinPercent, hostTextView, hostProgress);
+            Double sizeWinPercent = oddsInfo.getSizeWinPercent();
+            Double asiaPercent;
+            if (isLose) {
+                asiaPercent = oddsInfo.getAsiaLosePercent();
+            } else {
+                asiaPercent = oddsInfo.getAsiaWinPercent();
+            }
+
+            setWinRate(homePercent, hostTextView, hostProgress);
             setWinRate(sizeWinPercent, sizeTextView, sizeProgress);
-            setWinRate(asiaWinPercent, asiaTextView, asiaProgress);
+            setWinRate(asiaPercent, asiaTextView, asiaProgress);
         }
     }
 
