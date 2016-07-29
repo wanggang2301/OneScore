@@ -1232,7 +1232,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     /***
      * 计算推送Socket断开重新连接
      */
-    private void computeWebSocket() {
+    private synchronized void computeWebSocket() {
         if (!isStarComputeTimer) {
             TimerTask timerTask = new TimerTask() {
                 @Override
@@ -1254,7 +1254,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     footballTimer.schedule(timerTask, 15000, 30000);
                     isStarComputeTimer = true;
                 }
-
             }
         }
     }
