@@ -11,14 +11,78 @@ import android.os.Parcelable;
 public class BigDataForecastData implements Parcelable {
 
     /**
-     * homeWinPercent : 0.2
-     * sizeWinPercent : 0.07
-     * asiaWinPercent : 0.13
+     * homeWinPercent: 0.67,
+     * homeLosePercent: 0.27,
+     * sizeWinPercent: 0.5,
+     * sizeLosePercent: 0.42,
+     * asiaWinPercent: 0.58,
+     * asiaLosePercent: 0.42
      */
 
     private Double homeWinPercent;
+    private Double homeLosePercent;
     private Double sizeWinPercent;
+    private Double sizeLosePercent;
     private Double asiaWinPercent;
+    private Double asiaLosePercent;
+
+    private static Double checkNotNull(Double f) {
+        return f == null ? 0f : f;
+    }
+
+    public static Double getHomeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getHomeWinPercent());
+    }
+
+    public static Double getHomeLosePercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getHomeLosePercent());
+    }
+
+    public static Double getSizeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getSizeWinPercent());
+    }
+
+    public static Double getSizeLosePercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getSizeLosePercent());
+    }
+
+    public static Double getAsiaWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getAsiaWinPercent());
+    }
+
+    public static Double getAsiaLosePercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getAsiaLosePercent());
+    }
+
+    public Double getHomeLosePercent() {
+        return homeLosePercent;
+    }
+
+    public void setHomeLosePercent(Double homeLosePercent) {
+        this.homeLosePercent = homeLosePercent;
+    }
+
+    public Double getSizeLosePercent() {
+        return sizeLosePercent;
+    }
+
+    public void setSizeLosePercent(Double sizeLosePercent) {
+        this.sizeLosePercent = sizeLosePercent;
+    }
+
+    public Double getAsiaLosePercent() {
+        return asiaLosePercent;
+    }
+
+    public void setAsiaLosePercent(Double asiaLosePercent) {
+        this.asiaLosePercent = asiaLosePercent;
+    }
 
     public Double getHomeWinPercent() {
         return homeWinPercent;

@@ -10,48 +10,13 @@
               android:paddingRight="13dp"
               tools:showIn="@layout/fragment_intelligence">
 
-    <FrameLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/basket_analyze_recent"
-            android:textColor="@color/gray"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:drawableLeft="@drawable/home_team_color_square"
-                android:drawablePadding="5dp"
-                android:drawableStart="@drawable/home_team_color_square"
-                android:text="@string/foot_details_home"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/text_size_12"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/guest_team_color_square"
-                android:drawablePadding="5dp"
-                android:drawableStart="@drawable/guest_team_color_square"
-                android:text="@string/foot_details_guest"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/text_size_12"/>
-
-        </LinearLayout>
-
-    </FrameLayout>
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/host_recent"
+        android:textColor="@color/gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,24 +48,7 @@
                 android:layout_height="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_red"/>
-
-            <TextView
-                android:id="@+id/guest_recent_home_win_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/info_home_progress_color"
-                android:textSize="@dimen/text_size_13"
-                tools:text="55%"/>
-
-            <android.support.v4.widget.ContentLoadingProgressBar
-                android:id="@+id/guest_recent_home_win_rate_progress"
-                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_green"/>
+                android:progressDrawable="@drawable/info_progress_yellow"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -136,24 +84,7 @@
                 android:layout_height="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_red"/>
-
-            <TextView
-                android:id="@+id/guest_recent_size_win_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/info_home_progress_color"
-                android:textSize="@dimen/text_size_13"
-                tools:text="55%"/>
-
-            <android.support.v4.widget.ContentLoadingProgressBar
-                android:id="@+id/guest_recent_size_win_rate_progress"
-                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_green"/>
+                android:progressDrawable="@drawable/info_progress_yellow"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -188,24 +119,7 @@
                 android:layout_height="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_red"/>
-
-            <TextView
-                android:id="@+id/guest_recent_asia_win_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/info_home_progress_color"
-                android:textSize="@dimen/text_size_13"
-                tools:text="55%"/>
-
-            <android.support.v4.widget.ContentLoadingProgressBar
-                android:id="@+id/guest_recent_asia_win_rate_progress"
-                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_green"/>
+                android:progressDrawable="@drawable/info_progress_yellow"/>
 
             <TextView
                 android:layout_width="match_parent"
