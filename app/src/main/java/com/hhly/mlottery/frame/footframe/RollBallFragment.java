@@ -288,7 +288,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         }
     }
 
-    private void restoreSocketClient() {
+    private synchronized void restoreSocketClient() {
         if (socketClient != null) {
             socketClient.close();
             socketClient = null;

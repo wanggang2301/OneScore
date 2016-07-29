@@ -25,9 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 情报 Fragment
- * <p>
- * Created by loshine on 2016/7/18.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/7/18.
  */
 public class IntelligenceFragment extends Fragment {
 
@@ -71,6 +71,8 @@ public class IntelligenceFragment extends Fragment {
     ContentLoadingProgressBar mGuestRecentSizeWinProgress;
     ContentLoadingProgressBar mGuestRecentAsiaWinProgress;
 
+    private IntelligenceComputeMethodDialogFragment mDialog;
+
     private String mThirdId;
     private BigDataForecast mBigDataForecast;
     private BigDataForecastFactor mFactor;
@@ -108,7 +110,7 @@ public class IntelligenceFragment extends Fragment {
                     public void onResponse(BigDataResult jsonObject) {
                         mBigDataForecast = jsonObject.getBigDataForecast();
                         if (jsonObject.getResult() != 200 || mBigDataForecast == null) {
-                            refreshFactorUI();
+                            refreshFactorUI(false);
                             setEmptyAlert();
                             mDiyComputeMethodView.setVisibility(View.GONE);
                             return;
@@ -127,7 +129,7 @@ public class IntelligenceFragment extends Fragment {
                         setWinRate(guestRecent,
                                 mGuestRecentHostWin, mGuestRecentSizeWin, mGuestRecentAsiaWin,
                                 mGuestRecentHostWinProgress, mGuestRecentSizeWinProgress, mGuestRecentAsiaWinProgress);
-                        refreshFactorUI();
+                        refreshFactorUI(false);
                     }
                 },
                 new VolleyContentFast.ResponseErrorListener() {
@@ -213,8 +215,11 @@ public class IntelligenceFragment extends Fragment {
         mDiyComputeMethodView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntelligenceComputeMethodDialogFragment.newInstance(mBigDataForecast, mFactor)
-                        .show(getChildFragmentManager(), "computeMethod");
+                if (mDialog == null) {
+                    mDialog = IntelligenceComputeMethodDialogFragment
+                            .newInstance(mBigDataForecast, mFactor);
+                }
+                mDialog.show(getChildFragmentManager(), "computeMethod");
             }
         });
 
@@ -233,9 +238,9 @@ public class IntelligenceFragment extends Fragment {
                             ProgressBar hostProgress, ProgressBar sizeProgress, ProgressBar asiaProgress) {
         if (oddsInfo != null) {
 
-            Float homeWinPercent = oddsInfo.getHomeWinPercent();
-            Float sizeWinPercent = oddsInfo.getSizeWinPercent();
-            Float asiaWinPercent = oddsInfo.getAsiaWinPercent();
+            Double homeWinPercent = oddsInfo.getHomeWinPercent();
+            Double sizeWinPercent = oddsInfo.getSizeWinPercent();
+            Double asiaWinPercent = oddsInfo.getAsiaWinPercent();
 
             setWinRate(homeWinPercent, hostTextView, hostProgress);
             setWinRate(sizeWinPercent, sizeTextView, sizeProgress);
@@ -250,7 +255,7 @@ public class IntelligenceFragment extends Fragment {
      * @param textView
      * @param progressBar
      */
-    private void setWinRate(Float winRate, TextView textView, ProgressBar progressBar) {
+    private void setWinRate(Double winRate, TextView textView, ProgressBar progressBar) {
         if (winRate != null) {
             textView.setText(StringFormatUtils.toPercentString(winRate));
             progressBar.setProgress((int) (winRate * 100));
@@ -262,10 +267,41 @@ public class IntelligenceFragment extends Fragment {
     /**
      * 刷新DIY算法UI
      */
-    public void refreshFactorUI() {
-        setProgress(mHostProgress, mHostAlert, TYPE_HOST);
-        setProgress(mSizeProgress, mSizeAlert, TYPE_SIZE);
-        setProgress(mAsiaProgress, mAsiaAlert, TYPE_ASIA);
+    public void refreshFactorUI(boolean ignoreNull) {
+        if (mBigDataForecast == null) {
+            hideProgress(mHostProgress, mHostAlert);
+            hideProgress(mSizeProgress, mSizeAlert);
+            hideProgress(mAsiaProgress, mAsiaAlert);
+            return;
+        }
+        BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
+        if (!ignoreNull) {
+            if (battleHistory == null) {
+                hideProgress(mHostProgress, mHostAlert);
+                hideProgress(mSizeProgress, mSizeAlert);
+                hideProgress(mAsiaProgress, mAsiaAlert);
+                return;
+            }
+            if (battleHistory.getHomeWinPercent() != null) {
+                showProgress(mHostProgress, mHostAlert, TYPE_HOST);
+            } else {
+                hideProgress(mHostProgress, mHostAlert);
+            }
+            if (battleHistory.getSizeWinPercent() != null) {
+                showProgress(mSizeProgress, mSizeAlert, TYPE_SIZE);
+            } else {
+                hideProgress(mSizeProgress, mSizeAlert);
+            }
+            if (battleHistory.getAsiaWinPercent() != null) {
+                showProgress(mAsiaProgress, mAsiaAlert, TYPE_ASIA);
+            } else {
+                hideProgress(mAsiaProgress, mAsiaAlert);
+            }
+        } else {
+            showProgress(mHostProgress, mHostAlert, TYPE_HOST);
+            showProgress(mSizeProgress, mSizeAlert, TYPE_SIZE);
+            showProgress(mAsiaProgress, mAsiaAlert, TYPE_ASIA);
+        }
     }
 
     /**
@@ -274,23 +310,23 @@ public class IntelligenceFragment extends Fragment {
      * @param progressBar
      * @param type        数据类型 0-Host，1-Size，2-Asia
      */
-    private void setProgress(RoundProgressBar progressBar, View alertView, int type) {
-        try {
-            double winRate;
-            if (type == TYPE_HOST) {
-                winRate = mFactor.computeHostWinRate(mBigDataForecast);
-            } else if (type == TYPE_SIZE) {
-                winRate = mFactor.computeSizeWinRate(mBigDataForecast);
-            } else {
-                winRate = mFactor.computeAsiaWinRate(mBigDataForecast);
-            }
-            progressBar.setProgress((int) (winRate * 100));
-            progressBar.setTextIsDisplayable(true);
-            alertView.setVisibility(View.GONE);
-        } catch (Exception e) {
-            progressBar.setTextIsDisplayable(false);
-            alertView.setVisibility(View.VISIBLE);
+    private void showProgress(RoundProgressBar progressBar, View alertView, int type) {
+        double winRate;
+        if (type == TYPE_HOST) {
+            winRate = mFactor.computeHostWinRate(mBigDataForecast);
+        } else if (type == TYPE_SIZE) {
+            winRate = mFactor.computeSizeWinRate(mBigDataForecast);
+        } else {
+            winRate = mFactor.computeAsiaWinRate(mBigDataForecast);
         }
+        progressBar.setProgress(winRate * 100);
+        progressBar.setTextIsDisplayable(true);
+        alertView.setVisibility(View.GONE);
+    }
+
+    private void hideProgress(RoundProgressBar progressBar, View alertView) {
+        progressBar.setTextIsDisplayable(false);
+        alertView.setVisibility(View.VISIBLE);
     }
 
     public static IntelligenceFragment newInstance(String thirdId) {

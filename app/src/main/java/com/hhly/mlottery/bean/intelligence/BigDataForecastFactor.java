@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 自定义算法加成系数
- * <p>
- * Created by loshine on 2016/7/19.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/7/19.
  */
 public class BigDataForecastFactor implements Parcelable {
 
@@ -63,13 +63,9 @@ public class BigDataForecastFactor implements Parcelable {
      */
     public double computeHostWinRate(BigDataForecast forecast, boolean useTemp) {
 
-        BigDataForecastData battleHistory = forecast.getBattleHistory();
-        BigDataForecastData homeRecent = forecast.getHomeRecent();
-        BigDataForecastData guestRecent = forecast.getGuestRecent();
-
-        Float historyHomeWinPercent = checkNotNull(battleHistory.getHomeWinPercent());
-        Float hostHomeWinPercent = checkNotNull(homeRecent.getHomeWinPercent());
-        Float guestHomeWinPercent = checkNotNull(guestRecent.getHomeWinPercent());
+        Double historyHomeWinPercent = getHomeWinPercent(forecast.getBattleHistory());
+        Double hostHomeWinPercent = getHomeWinPercent(forecast.getHomeRecent());
+        Double guestHomeWinPercent = getHomeWinPercent(forecast.getGuestRecent());
 
         return historyHomeWinPercent * (useTemp ? host.getHistoryTemp() : host.getHistory())
                 + hostHomeWinPercent * (useTemp ? host.getHomeTemp() : host.getHome())
@@ -95,13 +91,9 @@ public class BigDataForecastFactor implements Parcelable {
      */
     public double computeSizeWinRate(BigDataForecast forecast, boolean useTemp) {
 
-        BigDataForecastData battleHistory = forecast.getBattleHistory();
-        BigDataForecastData homeRecent = forecast.getHomeRecent();
-        BigDataForecastData guestRecent = forecast.getGuestRecent();
-
-        Float historySizeWinPercent = checkNotNull(battleHistory.getSizeWinPercent());
-        Float hostSizeWinPercent = checkNotNull(homeRecent.getSizeWinPercent());
-        Float guestSizeWinPercent = checkNotNull(guestRecent.getSizeWinPercent());
+        Double historySizeWinPercent = getSizeWinPercent(forecast.getBattleHistory());
+        Double hostSizeWinPercent = getSizeWinPercent(forecast.getHomeRecent());
+        Double guestSizeWinPercent = getSizeWinPercent(forecast.getGuestRecent());
 
         return historySizeWinPercent * (useTemp ? size.getHistoryTemp() : size.getHistory())
                 + hostSizeWinPercent * (useTemp ? size.getHomeTemp() : size.getHome())
@@ -131,9 +123,9 @@ public class BigDataForecastFactor implements Parcelable {
         BigDataForecastData homeRecent = forecast.getHomeRecent();
         BigDataForecastData guestRecent = forecast.getGuestRecent();
 
-        Float historyAsiaWinPercent = checkNotNull(battleHistory.getAsiaWinPercent());
-        Float hostAsiaWinPercent = checkNotNull(homeRecent.getAsiaWinPercent());
-        Float guestAsiaWinPercent = checkNotNull(guestRecent.getAsiaWinPercent());
+        Double historyAsiaWinPercent = getAsiaWinPercent(battleHistory);
+        Double hostAsiaWinPercent = getAsiaWinPercent(homeRecent);
+        Double guestAsiaWinPercent = getAsiaWinPercent(guestRecent);
 
         return historyAsiaWinPercent * (useTemp ? asia.getHistoryTemp() : asia.getHistory())
                 + hostAsiaWinPercent * (useTemp ? asia.getHomeTemp() : asia.getHome())
@@ -158,8 +150,23 @@ public class BigDataForecastFactor implements Parcelable {
         asia.refreshTemp();
     }
 
-    private Float checkNotNull(Float f) {
-        return f == null ? 0f : f;
+    private Double checkNotNull(Double d) {
+        return d == null ? 0D : d;
+    }
+
+    private Double getHomeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getHomeWinPercent());
+    }
+
+    private Double getAsiaWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getAsiaWinPercent());
+    }
+
+    private Double getSizeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getSizeWinPercent());
     }
 
     @Override

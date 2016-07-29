@@ -56,8 +56,6 @@
     <string name="foot_odds_eu_right">負</string>
 
 
-
-
     <!--分享-->
     <string name="errcode_success">發送成功</string>
     <string name="errcode_cancel">發送取消</string>
@@ -79,7 +77,6 @@
     <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
     <string name="share_recommend">推薦</string>
     <string name="share_summary_default">壹比分,專業的足球比分直播平台</string>
-
 
 
     <!--指数-->
@@ -768,6 +765,7 @@
     <string name="login">登錄</string>
     <string name="logining">正在登錄...</string>
     <string name="login_succ">登錄成功</string>
+    <string name="login_no_weixin">沒有安裝微信，請先安裝微信!</string>
     <string name="login_peak">登入高峰期，請稍後再試</string>
     <string name="login_fail">登錄失敗</string>
     <string name="pwd_format">密碼格式爲6-16位數字和字符組成</string>
@@ -832,6 +830,7 @@
     <string name="nickname_format">昵稱:格式爲1-15個字符(不超過七個中文),由中英文數字和字符組成</string>
     <string name="modify_password">修改密碼</string>
     <string name="modifying_password">正在修改密碼...</string>
+    <string name="modifying_nickname">正在修改昵称...</string>
     <string name="modify_password_succ">修改密碼成功</string>
     <string name="modify_password_fail">修改密碼失敗</string>
     <string name="input_password_old">請輸入舊密碼</string>
@@ -881,11 +880,16 @@
     <string name="asia_win_rate">贏盤率</string>
     <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
     <string name="diy_compute_method">DIY算法</string>
-    <string name="diy_compute_method_message">歷史交鋒 × %1$s + 主隊 × %2$s + 客隊 × %3$s = 概率</string>
+    <string name="diy_compute_method_message">概率=交鋒概率×%1$s+主隊概率×%2$s+客隊概率×%3$s</string>
+    <string name="diy_combat_rate">交鋒概率</string>
+    <string name="diy_host_rate">主隊概率</string>
+    <string name="diy_guest_rate">客隊概率</string>
     <string name="diy_custom_compute_method">DIY自定義算法</string>
     <string name="foot_details_info">情報</string>
-    <string name="insufficient_sampling">采樣\n不足</string>
+    <string name="insufficient_sampling">采樣不足</string>
     <string name="title_big_data_predict">大數據預測</string>
     <string name="size_win_rate">大球率</string>
     <string name="home_win_rate">主勝率</string>
+    <string name="probability">概率</string>
+    <string name="percent_factor">比例因子</string>
 </resources>

@@ -6,9 +6,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * 赔率类型
- * <p/>
- * Created by loshine on 2016/6/28.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/28.
  */
 public interface OddsTypeEnum {
     String PLATE = "plate"; // 亚盘

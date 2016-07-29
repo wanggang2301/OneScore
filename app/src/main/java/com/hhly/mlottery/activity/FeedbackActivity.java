@@ -22,8 +22,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -225,12 +227,11 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
                     params.put("osVersion", systemVersion);
                     params.put("deviceBrand", facturer);
                     params.put("deviceModel", model);
-                    params.put("deviceBrand", facturer);
                     params.put("sendTime", currentTime);
                     params.put("content", contentEt.getText().toString());
                     params.put("deviceToken", id);
                     params.put("appVersion", versionName);
-
+                    params.put("userId", PreferenceUtil.getString(AppConstants.SPKEY_USERID, ""));
 
                     VolleyContentFast.requestStringByPost(BaseURLs.URL_FEEDBACK_ADD, params, new VolleyContentFast.ResponseSuccessListener<String>() {
                         @Override

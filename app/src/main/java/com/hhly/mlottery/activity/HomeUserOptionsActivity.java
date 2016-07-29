@@ -46,7 +46,6 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     public static final int NOT_LOGGED_ON = 33;
     public static final int LOGGED_ON = 44;
     private TextView mTv_nickname;
-    private TextView mLogin;
     private ImageView mUser_image;
     private TextView mTv_logout;
     private Handler mViewHandler = new Handler() {
@@ -56,12 +55,12 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
 
                     break;
                 case LOGGED_ON:
-                    mUser_image.setImageResource(R.mipmap.bighead);
-                    mTv_nickname.setVisibility(View.VISIBLE);
+                    //mTv_nickname.setVisibility(View.VISIBLE);
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-                    mTv_nickname.setVisibility(View.VISIBLE);
-                    mLogin.setVisibility(View.GONE);
+                    mTv_nickname.setEnabled(false);
                     mTv_logout.setVisibility(View.VISIBLE);
+                    findViewById(R.id.view_top).setVisibility(View.VISIBLE);
+                    findViewById(R.id.view_botom).setVisibility(View.VISIBLE);
                     break;
                 default:
                     break;
@@ -75,7 +74,6 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
 
         initView();
     }
-
     /**
      * 初始化控件
      */
@@ -91,8 +89,9 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.public_img_back).setOnClickListener(this);
         //昵称
         mTv_nickname = (TextView) findViewById(R.id.tv_nickname);
-        mLogin = (TextView) findViewById(R.id.login);
-        mLogin.setOnClickListener(this);
+        mTv_nickname.setOnClickListener(this);
+        /*mLogin = (TextView) findViewById(R.id.login);
+        mLogin.setOnClickListener(this);*/
         //头像
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
@@ -104,6 +103,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         rl_about_frame.setOnClickListener(this);
         rl_user_feedback = (RelativeLayout) findViewById(R.id.rl_user_feedback);
         rl_user_feedback.setOnClickListener(this);
+
+
 
     }
 
@@ -129,7 +130,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 finish();
                 MobclickAgent.onEvent(mContext, "HomePagerUserSetting_Exit");
                 break;
-            case R.id.login:// 登录
+            case R.id.tv_nickname:// 登录
                 MobclickAgent.onEvent(mContext, "LoginActivity_Start");
 
                 goToLoginActivity();
@@ -150,7 +151,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 if (CommonUtils.isLogin()) {
                     startActivity(new Intent(this, ProfileActivity.class));
                 } else {
-                    UiUtils.toast(MyApp.getInstance(), "请先登录");
+                    startActivity(new Intent(this, LoginActivity.class));
+                    //UiUtils.toast(MyApp.getInstance(), "请先登录");
                 }
 
                 break;
@@ -225,8 +227,9 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("HomeUserOptionsActivity");
+        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("HomeUserOptionsActivity");
+       // UiUtils.toast(MyApp.getInstance(), "我是个人用户页面");
          /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
@@ -238,8 +241,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     @Override
     public void onPause() {
         super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("HomeUserOptionsActivity");
+        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("HomeUserOptionsActivity");
     }
 
     @Override

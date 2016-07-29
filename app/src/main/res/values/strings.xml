@@ -778,6 +778,7 @@
     <string name="login">登录</string>
     <string name="logining">正在登录...</string>
     <string name="login_succ">登录成功</string>
+    <string name="login_no_weixin">没有安装微信,请先安装微信!</string>
     <string name="login_peak">登录高峰期,请稍后再试</string>
     <string name="login_fail">登录失败</string>
     <string name="pwd_format">密码格式为6-16位数字和字符组成</string>
@@ -842,6 +843,7 @@
     <string name="nickname_format">昵称:格式为1-15个字符(不超过七个中文),由中英文数字和字符组成</string>
     <string name="modify_password">修改密码</string>
     <string name="modifying_password">正在修改密码...</string>
+    <string name="modifying_nickname">正在修改昵称...</string>
     <string name="modify_password_succ">修改密码成功</string>
     <string name="modify_password_fail">修改密码失败</string>
     <string name="input_password_old">请输入旧密码</string>
@@ -893,12 +895,17 @@
     <string name="diy_compute_method">DIY算法</string>
     <string name="diy_custom_compute_method">DIY自定义算法</string>
     <string name="foot_details_info">情报</string>
-    <string name="diy_compute_method_message">历史交锋 × %1$s + 主队 × %2$s + 客队 × %3$s = 概率</string>
+    <string name="diy_compute_method_message">概率=交锋概率×%1$s+主队概率×%2$s+客队概率×%3$s</string>
+    <string name="diy_combat_rate">交锋概率</string>
+    <string name="diy_host_rate">主队概率</string>
+    <string name="diy_guest_rate">客队概率</string>
     <string name="symbol_times" translatable="false">×</string>
     <string name="symbol_plus" translatable="false">+</string>
     <string name="symbol_equal" translatable="false">=</string>
     <string name="action_close">关闭</string>
     <string name="action_compute">计算</string>
     <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
-    <string name="insufficient_sampling">采样\n不足</string>
+    <string name="insufficient_sampling">采样不足</string>
+    <string name="probability">概率</string>
+    <string name="percent_factor">比例因子</string>
 </resources>
