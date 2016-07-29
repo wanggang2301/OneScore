@@ -901,4 +901,6 @@
     <string name="diy_host_rate">主队概率</string>
     <string name="diy_guest_rate">客队概率</string>
     <string name="insufficient_sampling">采样不足</string>
+    <string name="probability">概率</string>
+    <string name="percent_factor">比例因子</string>
 </resources>

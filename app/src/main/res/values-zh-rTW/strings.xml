@@ -890,4 +890,6 @@
     <string name="title_big_data_predict">大數據預測</string>
     <string name="size_win_rate">大球率</string>
     <string name="home_win_rate">主勝率</string>
+    <string name="probability">概率</string>
+    <string name="percent_factor">比例因子</string>
 </resources>
