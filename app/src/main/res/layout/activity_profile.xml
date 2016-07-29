@@ -41,7 +41,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/tv_pic"
-            android:src="@mipmap/smallhead"
+            android:src="@mipmap/center_head"
             />
 
 

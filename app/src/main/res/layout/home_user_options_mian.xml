@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingTop="20dp"
+            android:paddingTop="25dp"
             android:scaleType="centerInside"
             android:src="@mipmap/back"/>
 
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:src="@mipmap/center_head"
             />
 
@@ -207,8 +207,9 @@
         android:layout_height="0.5dp"
         android:background="@color/linecolor"/>
 
-
     <View
+        android:visibility="gone"
+        android:id="@+id/view_top"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="50dp"
@@ -222,6 +223,8 @@
         android:text="@string/logout"/>
 
     <View
+        android:visibility="gone"
+        android:id="@+id/view_botom"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/linecolor"/>
