@@ -137,7 +137,7 @@
 
                 <View
                     android:layout_width="40dp"
-                    android:layout_height="1px"
+                    android:layout_height="2px"
                     android:layout_gravity="center"
                     android:background="@color/linecolor"/>
 
@@ -188,7 +188,7 @@
 
                 <View
                     android:layout_width="40dp"
-                    android:layout_height="1px"
+                    android:layout_height="2px"
                     android:layout_gravity="center"
                     android:background="@color/linecolor"/>
 
@@ -239,7 +239,7 @@
 
                 <View
                     android:layout_width="40dp"
-                    android:layout_height="1px"
+                    android:layout_height="2px"
                     android:layout_gravity="center"
                     android:background="@color/linecolor"/>
 

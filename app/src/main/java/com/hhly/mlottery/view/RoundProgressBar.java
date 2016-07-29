@@ -111,15 +111,15 @@ public class RoundProgressBar extends View {
         /**
          * 画最外层的大圆环
          */
-        int centre = getWidth() / 2; //获取圆心的x坐标
-        int radius = (int) (centre - roundWidth / 2); //圆环的半径
+        int center = getWidth() / 2; //获取圆心的x坐标
+        int radius = (int) (center - roundWidth / 2); //圆环的半径
         paint.setColor(roundColor); //设置圆环的颜色
         paint.setStyle(Paint.Style.STROKE); //设置空心
         paint.setStrokeWidth(roundWidth); //设置圆环的宽度
         paint.setAntiAlias(true);  //消除锯齿
-        canvas.drawCircle(centre, centre, radius, paint); //画出圆环
+        canvas.drawCircle(center, center, radius, paint); //画出圆环
 
-//        Log.e("log", centre + "");
+//        Log.e("log", center + "");
 
         /**
          * 画进度百分比
@@ -130,9 +130,12 @@ public class RoundProgressBar extends View {
         paint.setTypeface(Typeface.DEFAULT_BOLD); //设置字体
         String percent = StringFormatUtils.toPercentString(progress / (float) max);  //中间的进度百分比，先转换成float在进行除法运算，不然都为0
         float textWidth = paint.measureText(percent);   //测量字体宽度，我们需要根据字体的宽度设置在圆环中间
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        float textCenterVerticalBaselineY =
+                center - fontMetrics.descent + (fontMetrics.descent - fontMetrics.ascent) / 2;
 //        if(textIsDisplayable && percent != 0 && style == STROKE){
         if (textIsDisplayable && style == STROKE) {
-            canvas.drawText(percent, centre - textWidth / 2, centre + textSize / 2, paint); //画出进度百分比
+            canvas.drawText(percent, center - textWidth / 2, textCenterVerticalBaselineY, paint); //画出进度百分比
         }
 
         /**
@@ -142,8 +145,8 @@ public class RoundProgressBar extends View {
         //设置进度是实心还是空心
         paint.setStrokeWidth(roundWidth); //设置圆环的宽度
         paint.setColor(roundProgressColor);  //设置进度的颜色
-        RectF oval = new RectF(centre - radius, centre - radius, centre
-                + radius, centre + radius);  //用于定义的圆弧的形状和大小的界限
+        RectF oval = new RectF(center - radius, center - radius, center
+                + radius, center + radius);  //用于定义的圆弧的形状和大小的界限
 
         switch (style) {
             case STROKE: {
