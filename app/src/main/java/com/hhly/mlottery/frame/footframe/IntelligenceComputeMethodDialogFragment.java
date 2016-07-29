@@ -306,10 +306,10 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     public void onClick(View v) {
                         closeInputMethod(getContext(), mGuestEditText);
                         getDialog().dismiss();
-                        mFactor.refreshTemp();
+//                        mFactor.refreshTemp();
                     }
                 });
-
+/*
         view.findViewById(R.id.compute)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -326,7 +326,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                         mFactor.updateTemp();
                         ((IntelligenceFragment) getParentFragment()).refreshFactorUI(true);
                     }
-                });
+                });*/
     }
 
     /**
