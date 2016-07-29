@@ -763,7 +763,7 @@
 
     <!-- 登录注册 begin-->
     <string name="my">個人中心</string>
-    <string name="register">注冊</string>
+    <string name="register">快速注冊</string>
     <string name="registering">正在注冊...</string>
     <string name="login">登錄</string>
     <string name="logining">正在登錄...</string>
@@ -838,6 +838,7 @@
     <string name="modify_password_fail">修改密碼失敗</string>
     <string name="input_password_old">請輸入舊密碼</string>
     <string name="input_password_new">請輸入新密碼（由６－１６位數字和字符組成）</string>
+    <string name="input_password_new_no">請輸入新密碼</string>
     <string name="input_password_confirm">請保持和新密碼壹致</string>
     <string name="show_password">顯示密碼</string>
     <string name="old_pw">舊</string>
