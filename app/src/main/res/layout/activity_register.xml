@@ -63,7 +63,7 @@
         android:layout_marginTop="15dp"
         android:hint="@string/verify_code"
         android:gravity="center_vertical"
-        android:textSize="@dimen/text_size_13"
+        android:textSize="@dimen/text_size_15"
         android:inputType="number"
         android:maxLength="6"
         />
@@ -81,6 +81,7 @@
             style="@style/login_edittext_password"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:hint="@string/pwd_empty"
             android:layout_weight="1"/>
 
 

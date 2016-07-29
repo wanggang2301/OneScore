@@ -771,7 +771,7 @@
 
     <!-- 登录注册 begin-->
     <string name="my">个人中心</string>
-    <string name="register">注册</string>
+    <string name="register">快速注册</string>
     <string name="registering">正在注册...</string>
     <string name="login">登录</string>
     <string name="logining">正在登录...</string>
@@ -844,7 +844,8 @@
     <string name="modify_password_succ">修改密码成功</string>
     <string name="modify_password_fail">修改密码失败</string>
     <string name="input_password_old">请输入旧密码</string>
-    <string name="input_password_new">请输入新密码（由６－１６位数字和字符组成）</string>
+    <string name="input_password_new">请输入新密码(由６－１６位数字和字符组成)</string>
+    <string name="input_password_new_no">请输入新密码</string>
     <string name="input_password_confirm">请保持和新密码一致</string>
     <string name="show_password">显示密码</string>
     <string name="old_pw">旧</string>
