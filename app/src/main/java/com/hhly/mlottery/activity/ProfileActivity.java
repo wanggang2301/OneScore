@@ -59,14 +59,14 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         //设置头像
         mHead_portrait = (ImageView) findViewById(R.id.head_portrait);
         mHead_portrait.setOnClickListener(this);
-        if (Environment
+       /* if (Environment
                 .getExternalStoragePublicDirectory(IMAGE_STORAGGEID).exists()) {
             Bitmap bm = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(IMAGE_STORAGGEID).toString());
             mHead_portrait.setImageBitmap(bm);
         } else {
             mHead_portrait.setImageResource(R.mipmap.smallhead);
 
-        }
+        }*/
         ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.profile);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);

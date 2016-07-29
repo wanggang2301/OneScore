@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -48,8 +49,11 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     private static final String HOT_MATCH = "hot";
     private static final String INTEL_MATCH = "intl";
     private static final int DATA_STATUS_LOADING = 1;
-    private static final int DATA_STATUS_SUCCESS = 2;
-    private static final int DATA_STATUS_ERROR = 3;
+    private static final int DATA_STATUS_NODATA_INTER = 2;
+    private static final int DATA_STATUS_NODATA_COUNRTY = 3;
+    private static final int DATA_STATUS_SUCCESS_INTER = 4;
+    private static final int DATA_STATUS_SUCCESS_COUNTRY = 5;
+    private static final int DATA_STATUS_ERROR = -1;
     private static final int NUM0 = 0;
     private static final int NUM1 = 1;
     private static final int NUM2 = 2;
@@ -68,6 +72,11 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
     private LinearLayout ll_loading;
     private LinearLayout ll_net_error;
+    private LinearLayout ll_nodata_country;
+    private LinearLayout ll_nodata_inter;
+
+    private FrameLayout fl_inter;
+    private FrameLayout fl_country;
 
     private TextView network_exception_reload_btn;
 
@@ -120,6 +129,11 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
         ll_loading = (LinearLayout) mView.findViewById(R.id.info_loading_ll);
         ll_net_error = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
+        ll_nodata_inter = (LinearLayout) mView.findViewById(R.id.info_nodata_inter);
+        ll_nodata_country = (LinearLayout) mView.findViewById(R.id.info_nodata_country);
+
+        fl_inter=(FrameLayout)mView.findViewById(R.id.fl_inter);
+        fl_country=(FrameLayout)mView.findViewById(R.id.fl_country);
 
         network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
 
@@ -179,12 +193,12 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
                     case R.id.info_inter_match:
-                        gridviewInter.setVisibility(View.VISIBLE);
-                        expandableGridView.setVisibility(View.GONE);
+                        fl_inter.setVisibility(View.VISIBLE);
+                        fl_country.setVisibility(View.GONE);
                         break;
                     case R.id.info_country_match:
-                        gridviewInter.setVisibility(View.GONE);
-                        expandableGridView.setVisibility(View.VISIBLE);
+                        fl_inter.setVisibility(View.GONE);
+                        fl_country.setVisibility(View.VISIBLE);
                         break;
                     default:
                         break;
@@ -223,24 +237,72 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                     mExactSwipeRefrashLayout.setVisibility(View.GONE);
                     ll_net_error.setVisibility(View.GONE);
                     mExactSwipeRefrashLayout.setRefreshing(true);
-
                     break;
 
-                case DATA_STATUS_SUCCESS:
+
+                case DATA_STATUS_NODATA_INTER:
                     ll_loading.setVisibility(View.GONE);
                     if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
                     mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    gridviewInter.setVisibility(View.GONE);
+
                     ll_net_error.setVisibility(View.GONE);
+                    ll_nodata_inter.setVisibility(View.VISIBLE);
+
+                    mExactSwipeRefrashLayout.setRefreshing(false);
+
+                    break;
+
+                case DATA_STATUS_NODATA_COUNRTY:
+                    if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
+                        radioGroup.setVisibility(View.VISIBLE);
+                    }
+
+                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    expandableGridView.setVisibility(View.GONE);
+
+                    ll_net_error.setVisibility(View.GONE);
+                    ll_nodata_country.setVisibility(View.VISIBLE);
+
+                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    break;
+
+                case DATA_STATUS_SUCCESS_INTER:
+                    ll_loading.setVisibility(View.GONE);
+                    if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
+                        radioGroup.setVisibility(View.VISIBLE);
+                    }
+
+                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    gridviewInter.setVisibility(View.VISIBLE);
+                    ll_net_error.setVisibility(View.GONE);
+                    ll_nodata_inter.setVisibility(View.GONE);
+
+                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    break;
+
+
+                case DATA_STATUS_SUCCESS_COUNTRY:
+                    ll_loading.setVisibility(View.GONE);
+                    if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
+                        radioGroup.setVisibility(View.VISIBLE);
+                    }
+
+                    mExactSwipeRefrashLayout.setVisibility(View.VISIBLE);
+                    expandableGridView.setVisibility(View.VISIBLE);
+
+                    ll_net_error.setVisibility(View.GONE);
+                    ll_nodata_country.setVisibility(View.GONE);
+
                     mExactSwipeRefrashLayout.setRefreshing(false);
                     break;
 
                 case DATA_STATUS_ERROR:
                     ll_loading.setVisibility(View.GONE);
                     radioGroup.setVisibility(View.GONE);
-
                     mExactSwipeRefrashLayout.setVisibility(View.GONE);
                     ll_net_error.setVisibility(View.VISIBLE);
                     mExactSwipeRefrashLayout.setRefreshing(false);
@@ -270,7 +332,8 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
             @Override
             public void onResponse(LeagueAllBean json) {
 
-                if (json.getSpecificLeague() != null) {
+
+                if (json.getSpecificLeague() != null && json.getSpecificLeague().size() > 0) {
                     hotLeagues = json.getSpecificLeague();
 
                     int size = hotLeagues.size() % ROWNUM == 0 ? 0 : ROWNUM - hotLeagues.size() % ROWNUM;
@@ -280,7 +343,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 }
 
 
-                if (json.getNationalLeague() != null) {
+                if (json.getNationalLeague() != null && json.getNationalLeague().size() > 0) {
                     interLeagues = new ArrayList<List<NationalLeague>>();
                     for (int t = 0; t < Math.ceil((double) json.getNationalLeague().size() / ROWNUM); t++) {
                         List<NationalLeague> list = new ArrayList<>();
@@ -296,7 +359,6 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
 
                 initViewData();
-                mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS);
 
 
             }
@@ -324,6 +386,15 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
             if (hotLeagues != null && hotLeagues.size() > 0) {
                 mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(mContext, hotLeagues);
                 gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
+                L.d("123456", "热门或国际有数据");
+
+                mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_INTER);
+
+            } else {
+                L.d("123456", "热门或国际");
+
+                mHandler.sendEmptyMessage(DATA_STATUS_NODATA_INTER);
+
             }
 
         } else { //欧洲、美洲、亚洲等
@@ -332,6 +403,14 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
             if (hotLeagues != null && hotLeagues.size() > 0) {
                 mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(mContext, hotLeagues);
                 gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
+                L.d("123456", "洲际有数据");
+
+                mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_INTER);
+
+            } else {
+                L.d("123456", "洲际无数据");
+                mHandler.sendEmptyMessage(DATA_STATUS_NODATA_INTER);
+
             }
 
             basketInfomationCallBack = new BasketInfomationCallBack() {
@@ -378,9 +457,19 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 mExpandableGridAdapter = new ExpandableGridAdapter(mContext, interLeagues);
                 mExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
                 expandableGridView.setAdapter(mExpandableGridAdapter);
+                L.d("123456", "国家有数据");
+
+                mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_COUNTRY);
+               // mHandler.sendEmptyMessage(DATA_STATUS_NODATA_COUNRTY);
+
+            } else {
+                 mHandler.sendEmptyMessage(DATA_STATUS_NODATA_COUNRTY);
+                L.d("123456", "国家无数据");
 
             }
         }
+
+
     }
 
     @Override

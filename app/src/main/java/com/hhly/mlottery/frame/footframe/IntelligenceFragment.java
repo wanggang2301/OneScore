@@ -238,9 +238,9 @@ public class IntelligenceFragment extends Fragment {
                             ProgressBar hostProgress, ProgressBar sizeProgress, ProgressBar asiaProgress) {
         if (oddsInfo != null) {
 
-            Float homeWinPercent = oddsInfo.getHomeWinPercent();
-            Float sizeWinPercent = oddsInfo.getSizeWinPercent();
-            Float asiaWinPercent = oddsInfo.getAsiaWinPercent();
+            Double homeWinPercent = oddsInfo.getHomeWinPercent();
+            Double sizeWinPercent = oddsInfo.getSizeWinPercent();
+            Double asiaWinPercent = oddsInfo.getAsiaWinPercent();
 
             setWinRate(homeWinPercent, hostTextView, hostProgress);
             setWinRate(sizeWinPercent, sizeTextView, sizeProgress);
@@ -255,7 +255,7 @@ public class IntelligenceFragment extends Fragment {
      * @param textView
      * @param progressBar
      */
-    private void setWinRate(Float winRate, TextView textView, ProgressBar progressBar) {
+    private void setWinRate(Double winRate, TextView textView, ProgressBar progressBar) {
         if (winRate != null) {
             textView.setText(StringFormatUtils.toPercentString(winRate));
             progressBar.setProgress((int) (winRate * 100));
@@ -268,6 +268,12 @@ public class IntelligenceFragment extends Fragment {
      * 刷新DIY算法UI
      */
     public void refreshFactorUI(boolean ignoreNull) {
+        if (mBigDataForecast == null) {
+            hideProgress(mHostProgress, mHostAlert);
+            hideProgress(mSizeProgress, mSizeAlert);
+            hideProgress(mAsiaProgress, mAsiaAlert);
+            return;
+        }
         BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
         if (!ignoreNull) {
             if (battleHistory == null) {
@@ -313,7 +319,7 @@ public class IntelligenceFragment extends Fragment {
         } else {
             winRate = mFactor.computeAsiaWinRate(mBigDataForecast);
         }
-        progressBar.setProgress((int) (winRate * 100));
+        progressBar.setProgress(winRate * 100);
         progressBar.setTextIsDisplayable(true);
         alertView.setVisibility(View.GONE);
     }

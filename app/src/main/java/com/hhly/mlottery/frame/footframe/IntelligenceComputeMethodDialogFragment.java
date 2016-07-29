@@ -8,8 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +27,7 @@ import com.hhly.mlottery.bean.intelligence.BigDataForecastData;
 import com.hhly.mlottery.bean.intelligence.BigDataForecastFactor;
 import com.hhly.mlottery.util.StringFormatUtils;
 import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.TextWatcherAdapter;
 
 import java.util.Locale;
@@ -37,6 +42,8 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     private static final String KEY_BIG_DATA_FORECAST = "bigDataForecast";
     private static final String KEY_BIG_DATA_FACTOR = "bigDataFactor";
 
+    RoundProgressBar mRoundProgressBar;
+
     TextView mMessage;
 
     RadioGroup mRadioGroup;
@@ -49,10 +56,18 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     TextView mHostTextView;
     TextView mGuestTextView;
 
-    TextView mResultTextView;
 
     private BigDataForecast mBigDataForecast;
     private BigDataForecastFactor mFactor;
+
+    private String messageString;
+    private String combatString;
+    private String hostString;
+    private String guestString;
+
+    private int combatColor;
+    private int hostColor;
+    private int guestColor;
 
     private int currentPosition = 0;
 
@@ -79,10 +94,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
 
         initViews(view);
 
+        initRes();
+
         setData();
 
         return alertDialog;
     }
+
 
     @Override
     public void onResume() {
@@ -91,6 +109,17 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             if (currentPosition == 1) mRadioGroup.check(R.id.center);
             if (currentPosition == 2) mRadioGroup.check(R.id.right);
         }
+    }
+
+    private void initRes() {
+        messageString = getString(R.string.diy_compute_method_message);
+        combatString = getString(R.string.diy_combat_rate);
+        hostString = getString(R.string.diy_host_rate);
+        guestString = getString(R.string.diy_guest_rate);
+
+        combatColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color1);
+        hostColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color2);
+        guestColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color3);
     }
 
     /**
@@ -112,9 +141,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getHost().getGuestTemp()));
 
-                    Float historyHomeWin = getHomeWinPercent(battleHistory);
-                    Float homeRecentHomeWin = getHomeWinPercent(homeRecent);
-                    Float guestRecentHomeWin = getHomeWinPercent(guestRecent);
+                    Double historyHomeWin = getHomeWinPercent(battleHistory);
+                    Double homeRecentHomeWin = getHomeWinPercent(homeRecent);
+                    Double guestRecentHomeWin = getHomeWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyHomeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentHomeWin));
@@ -128,9 +157,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getSize().getGuestTemp()));
 
-                    Float historySizeWin = getSizeWinPercent(battleHistory);
-                    Float homeRecentSizeWin = getSizeWinPercent(homeRecent);
-                    Float guestRecentSizeWin = getSizeWinPercent(guestRecent);
+                    Double historySizeWin = getSizeWinPercent(battleHistory);
+                    Double homeRecentSizeWin = getSizeWinPercent(homeRecent);
+                    Double guestRecentSizeWin = getSizeWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historySizeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentSizeWin));
@@ -144,9 +173,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getAsia().getGuestTemp()));
 
-                    Float historyAsiaWin = getAsiaWinPercent(battleHistory);
-                    Float homeRecentAsiaWin = getAsiaWinPercent(homeRecent);
-                    Float guestRecentAsiaWin = getAsiaWinPercent(guestRecent);
+                    Double historyAsiaWin = getAsiaWinPercent(battleHistory);
+                    Double homeRecentAsiaWin = getAsiaWinPercent(homeRecent);
+                    Double guestRecentAsiaWin = getAsiaWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyAsiaWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentAsiaWin));
@@ -156,22 +185,22 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         }
     }
 
-    private Float checkNotNull(Float f) {
+    private Double checkNotNull(Double f) {
         return f == null ? 0f : f;
     }
 
-    private Float getHomeWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getHomeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getHomeWinPercent());
     }
 
-    private Float getAsiaWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getAsiaWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getAsiaWinPercent());
     }
 
-    private Float getSizeWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getSizeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getSizeWinPercent());
     }
 
@@ -181,6 +210,8 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
      * @param view view
      */
     private void initViews(View view) {
+        mRoundProgressBar = (RoundProgressBar) view.findViewById(R.id.progress);
+
         mRadioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -269,18 +300,16 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         mHostTextView = (TextView) view.findViewById(R.id.host_percent);
         mGuestTextView = (TextView) view.findViewById(R.id.guest_percent);
 
-        mResultTextView = (TextView) view.findViewById(R.id.result);
-
         view.findViewById(R.id.close)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         closeInputMethod(getContext(), mGuestEditText);
                         getDialog().dismiss();
-                        mFactor.refreshTemp();
+//                        mFactor.refreshTemp();
                     }
                 });
-
+/*
         view.findViewById(R.id.compute)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -297,7 +326,7 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                         mFactor.updateTemp();
                         ((IntelligenceFragment) getParentFragment()).refreshFactorUI(true);
                     }
-                });
+                });*/
     }
 
     /**
@@ -343,7 +372,16 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                 guest = StringFormatUtils.toString(mFactor.getAsia().getGuestTemp());
                 break;
         }
-        mMessage.setText(String.format(Locale.getDefault(), message, history, home, guest));
+        String unColoredMsg = String.format(Locale.getDefault(), messageString, history, home, guest);
+        SpannableStringBuilder style = new SpannableStringBuilder(unColoredMsg);
+
+        style.setSpan(new ForegroundColorSpan(combatColor), messageString.indexOf(combatString),
+                messageString.indexOf(combatString) + combatString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(hostColor), messageString.indexOf(hostString),
+                messageString.indexOf(hostString) + hostString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(guestColor), messageString.indexOf(guestString),
+                messageString.indexOf(guestString) + guestString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mMessage.setText(style);
         setResult();
     }
 
@@ -353,16 +391,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     private void setResult() {
         switch (getCurrentRadioPosition()) {
             case 0:
-                mResultTextView.setText(StringFormatUtils.toString(
-                        mFactor.computeHostWinRate(mBigDataForecast, true)));
+                mRoundProgressBar.setProgress(mFactor.computeHostWinRate(mBigDataForecast, true) * 100);
                 break;
             case 1:
-                mResultTextView.setText(StringFormatUtils.toString(
-                        mFactor.computeSizeWinRate(mBigDataForecast, true)));
+                mRoundProgressBar.setProgress(mFactor.computeSizeWinRate(mBigDataForecast, true) * 100);
                 break;
             case 2:
-                mResultTextView.setText(StringFormatUtils.toString(
-                        mFactor.computeAsiaWinRate(mBigDataForecast, true)));
+                mRoundProgressBar.setProgress(mFactor.computeAsiaWinRate(mBigDataForecast, true) * 100);
                 break;
         }
     }
