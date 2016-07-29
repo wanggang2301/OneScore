@@ -760,7 +760,7 @@
 
     <!-- 登录注册 begin-->
     <string name="my">個人中心</string>
-    <string name="register">注冊</string>
+    <string name="register">快速注冊</string>
     <string name="registering">正在注冊...</string>
     <string name="login">登錄</string>
     <string name="logining">正在登錄...</string>
@@ -835,6 +835,7 @@
     <string name="modify_password_fail">修改密碼失敗</string>
     <string name="input_password_old">請輸入舊密碼</string>
     <string name="input_password_new">請輸入新密碼（由６－１６位數字和字符組成）</string>
+    <string name="input_password_new_no">請輸入新密碼</string>
     <string name="input_password_confirm">請保持和新密碼壹致</string>
     <string name="show_password">顯示密碼</string>
     <string name="old_pw">舊</string>
@@ -877,10 +878,11 @@
 
     <string name="action_close">關閉</string>
     <string name="action_compute">計算</string>
-    <string name="asia_win_rate">贏盤率</string>
     <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
     <string name="diy_compute_method">DIY算法</string>
-    <string name="diy_compute_method_message">概率=交鋒概率×%1$s+主隊概率×%2$s+客隊概率×%3$s</string>
+    <string name="diy_compute_method_message1">概率=交鋒概率×%1$s+主勝概率×%2$s+客負概率×%3$s</string>
+    <string name="diy_compute_method_message2">概率=交鋒概率×%1$s+主隊概率×%2$s+客隊概率×%3$s</string>
+    <string name="diy_compute_method_message3">概率=交鋒概率×%1$s+主贏概率×%2$s+客輸概率×%3$s</string>
     <string name="diy_combat_rate">交鋒概率</string>
     <string name="diy_host_rate">主隊概率</string>
     <string name="diy_guest_rate">客隊概率</string>
@@ -888,8 +890,13 @@
     <string name="foot_details_info">情報</string>
     <string name="insufficient_sampling">采樣不足</string>
     <string name="title_big_data_predict">大數據預測</string>
-    <string name="size_win_rate">大球率</string>
     <string name="home_win_rate">主勝率</string>
     <string name="probability">概率</string>
     <string name="percent_factor">比例因子</string>
+    <string name="home_lose_rate">主負率</string>
+    <string name="size_win_rate">大球率</string>
+    <string name="size_lose_rate">小球率</string>
+    <string name="asia_win_rate">贏盤率</string>
+    <string name="asia_lose_rate">輸盤率</string>
+    <string name="host_recent">主隊近期</string>
 </resources>

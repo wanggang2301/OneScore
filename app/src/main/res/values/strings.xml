@@ -847,7 +847,8 @@
     <string name="modify_password_succ">修改密码成功</string>
     <string name="modify_password_fail">修改密码失败</string>
     <string name="input_password_old">请输入旧密码</string>
-    <string name="input_password_new">请输入新密码（由６－１６位数字和字符组成）</string>
+    <string name="input_password_new">请输入新密码(由６－１６位数字和字符组成)</string>
+    <string name="input_password_new_no">请输入新密码</string>
     <string name="input_password_confirm">请保持和新密码一致</string>
     <string name="show_password">显示密码</string>
     <string name="old_pw">旧</string>
@@ -889,13 +890,18 @@
     <string name="at_least_one_company">至少选择一家公司</string>
 
     <string name="home_win_rate">主胜率</string>
+    <string name="home_lose_rate">主负率</string>
     <string name="size_win_rate">大球率</string>
+    <string name="size_lose_rate">小球率</string>
     <string name="asia_win_rate">赢盘率</string>
+    <string name="asia_lose_rate">输盘率</string>
     <string name="title_big_data_predict">大数据预测</string>
     <string name="diy_compute_method">DIY算法</string>
     <string name="diy_custom_compute_method">DIY自定义算法</string>
     <string name="foot_details_info">情报</string>
-    <string name="diy_compute_method_message">概率=交锋概率×%1$s+主队概率×%2$s+客队概率×%3$s</string>
+    <string name="diy_compute_method_message1">概率=交锋概率×%1$s+主胜概率×%2$s+客负概率×%3$s</string>
+    <string name="diy_compute_method_message2">概率=交锋概率×%1$s+主队概率×%2$s+客队概率×%3$s</string>
+    <string name="diy_compute_method_message3">概率=交锋概率×%1$s+主赢概率×%2$s+客输概率×%3$s</string>
     <string name="diy_combat_rate">交锋概率</string>
     <string name="diy_host_rate">主队概率</string>
     <string name="diy_guest_rate">客队概率</string>
@@ -908,4 +914,5 @@
     <string name="insufficient_sampling">采样不足</string>
     <string name="probability">概率</string>
     <string name="percent_factor">比例因子</string>
+    <string name="host_recent">主队近期</string>
 </resources>

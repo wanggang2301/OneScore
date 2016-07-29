@@ -264,7 +264,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onResponse(String jsonObject) {
 
                 JSONObject jo = JSON.parseObject(jsonObject);
-              //UiUtils.toast(MyApp.getInstance(), jo.toString());
+                //UiUtils.toast(MyApp.getInstance(), jo.toString());
                 String access_token = jo.getString("access_token");
                 String openid = jo.getString("openid");
                 Map<String, String> param = new HashMap<>();
@@ -348,7 +348,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 // String code = values.getString("code");
 
             }
-
 
         }
 
