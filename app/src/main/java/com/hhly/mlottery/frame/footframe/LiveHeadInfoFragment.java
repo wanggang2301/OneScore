@@ -424,9 +424,10 @@ public class LiveHeadInfoFragment extends Fragment {
     /**
      * 取消对应的足球事件
      *
-     * @param iterator
+     *
      */
-    public void cancelFootBallEvent(Iterator<MatchTimeLiveBean> iterator, MatchTextLiveBean matchTextLiveBean) {
+    public void cancelFootBallEvent( MatchTextLiveBean matchTextLiveBean) {
+        Iterator<MatchTimeLiveBean> iterator =xMatchLive.iterator();
         while (iterator.hasNext()) {
             MatchTimeLiveBean bean = iterator.next();
             if (bean.getMsgId().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断

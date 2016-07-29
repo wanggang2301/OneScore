@@ -59,6 +59,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
                     mTv_nickname.setEnabled(false);
                     mTv_logout.setVisibility(View.VISIBLE);
+                    findViewById(R.id.view_top).setVisibility(View.VISIBLE);
+                    findViewById(R.id.view_botom).setVisibility(View.VISIBLE);
                     break;
                 default:
                     break;
@@ -101,6 +103,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         rl_about_frame.setOnClickListener(this);
         rl_user_feedback = (RelativeLayout) findViewById(R.id.rl_user_feedback);
         rl_user_feedback.setOnClickListener(this);
+
+
 
     }
 
