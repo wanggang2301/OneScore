@@ -12,6 +12,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,25 +68,71 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <GridView
-                android:id="@+id/gridview_inter"
+            <FrameLayout
+                android:id="@+id/fl_inter"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:numColumns="4"></GridView>
+                android:layout_height="match_parent">
 
-            <ExpandableListView
-                android:id="@+id/listview"
+                <GridView
+                    android:id="@+id/gridview_inter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:numColumns="4"></GridView>
+
+                <LinearLayout
+                    android:id="@+id/info_nodata_inter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/basket_unfiltrate"
+                        android:textColor="@color/loading_txt_color" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/fl_country"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
-                android:childDivider="#c8c7cc"
-                android:divider="@null"
-                android:gravity="center"
-                android:groupIndicator="@null"
-                android:listSelector="#00000000"
-                android:scrollbars="none"
-                android:visibility="gone" />
+                android:visibility="gone">
+
+                <ExpandableListView
+                    android:id="@+id/listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:childDivider="#c8c7cc"
+                    android:divider="@null"
+                    android:gravity="center"
+                    android:groupIndicator="@null"
+                    android:listSelector="#00000000"
+                    android:scrollbars="none" />
+
+                <LinearLayout
+                    android:id="@+id/info_nodata_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/basket_unfiltrate"
+                        android:textColor="@color/loading_txt_color" />
+                </LinearLayout>
+            </FrameLayout>
+
+
         </FrameLayout>
 
     </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
