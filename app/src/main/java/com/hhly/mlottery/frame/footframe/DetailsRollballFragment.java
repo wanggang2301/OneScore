@@ -645,6 +645,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         if (hSocketClient != null) {
             if (!hSocketClient.isClosed()) {
                 hSocketClient.close();
+                hSocketClient = null;
             }
 
             L.d(TAG, "hSocketClient=" + hSocketClient);
@@ -655,8 +656,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             hSocketClient.setSocketResponseErrorListener(this);
             try {
                 hSocketClient.connect();
-            } catch (IllegalThreadStateException e) {
+            } catch (Exception e) {
                 hSocketClient.close();
+                hSocketClient = null;
             }
         } else {
             hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
@@ -665,8 +667,9 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
             hSocketClient.setSocketResponseErrorListener(this);
             try {
                 hSocketClient.connect();
-            } catch (IllegalThreadStateException e) {
+            } catch (Exception e) {
                 hSocketClient.close();
+                hSocketClient = null;
             }
         }
     }
@@ -857,6 +860,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
         if (hSocketClient != null) {
             hSocketClient.close();
+            hSocketClient = null;
         }
     }
 
