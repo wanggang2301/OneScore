@@ -63,9 +63,9 @@ public class BigDataForecastFactor implements Parcelable {
      */
     public double computeHostWinRate(BigDataForecast forecast, boolean useTemp) {
 
-        Float historyHomeWinPercent = getHomeWinPercent(forecast.getBattleHistory());
-        Float hostHomeWinPercent = getHomeWinPercent(forecast.getHomeRecent());
-        Float guestHomeWinPercent = getHomeWinPercent(forecast.getGuestRecent());
+        Double historyHomeWinPercent = getHomeWinPercent(forecast.getBattleHistory());
+        Double hostHomeWinPercent = getHomeWinPercent(forecast.getHomeRecent());
+        Double guestHomeWinPercent = getHomeWinPercent(forecast.getGuestRecent());
 
         return historyHomeWinPercent * (useTemp ? host.getHistoryTemp() : host.getHistory())
                 + hostHomeWinPercent * (useTemp ? host.getHomeTemp() : host.getHome())
@@ -91,9 +91,9 @@ public class BigDataForecastFactor implements Parcelable {
      */
     public double computeSizeWinRate(BigDataForecast forecast, boolean useTemp) {
 
-        Float historySizeWinPercent = getSizeWinPercent(forecast.getBattleHistory());
-        Float hostSizeWinPercent = getSizeWinPercent(forecast.getHomeRecent());
-        Float guestSizeWinPercent = getSizeWinPercent(forecast.getGuestRecent());
+        Double historySizeWinPercent = getSizeWinPercent(forecast.getBattleHistory());
+        Double hostSizeWinPercent = getSizeWinPercent(forecast.getHomeRecent());
+        Double guestSizeWinPercent = getSizeWinPercent(forecast.getGuestRecent());
 
         return historySizeWinPercent * (useTemp ? size.getHistoryTemp() : size.getHistory())
                 + hostSizeWinPercent * (useTemp ? size.getHomeTemp() : size.getHome())
@@ -123,9 +123,9 @@ public class BigDataForecastFactor implements Parcelable {
         BigDataForecastData homeRecent = forecast.getHomeRecent();
         BigDataForecastData guestRecent = forecast.getGuestRecent();
 
-        Float historyAsiaWinPercent = getAsiaWinPercent(battleHistory);
-        Float hostAsiaWinPercent = getAsiaWinPercent(homeRecent);
-        Float guestAsiaWinPercent = getAsiaWinPercent(guestRecent);
+        Double historyAsiaWinPercent = getAsiaWinPercent(battleHistory);
+        Double hostAsiaWinPercent = getAsiaWinPercent(homeRecent);
+        Double guestAsiaWinPercent = getAsiaWinPercent(guestRecent);
 
         return historyAsiaWinPercent * (useTemp ? asia.getHistoryTemp() : asia.getHistory())
                 + hostAsiaWinPercent * (useTemp ? asia.getHomeTemp() : asia.getHome())
@@ -150,22 +150,22 @@ public class BigDataForecastFactor implements Parcelable {
         asia.refreshTemp();
     }
 
-    private Float checkNotNull(Float f) {
-        return f == null ? 0f : f;
+    private Double checkNotNull(Double d) {
+        return d == null ? 0D : d;
     }
 
-    private Float getHomeWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getHomeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getHomeWinPercent());
     }
 
-    private Float getAsiaWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getAsiaWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getAsiaWinPercent());
     }
 
-    private Float getSizeWinPercent(BigDataForecastData data) {
-        if (data == null) return 0f;
+    private Double getSizeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
         return checkNotNull(data.getSizeWinPercent());
     }
 

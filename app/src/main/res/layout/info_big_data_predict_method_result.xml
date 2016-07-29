@@ -38,7 +38,7 @@
                 android:layout_gravity="center"
                 android:text="@string/insufficient_sampling"
                 android:textColor="@color/info_home_progress_color"
-                android:textSize="@dimen/text_size_13"
+                android:textSize="@dimen/text_size_10"
                 android:visibility="gone"/>
 
         </FrameLayout>
@@ -79,7 +79,7 @@
                 android:layout_gravity="center"
                 android:text="@string/insufficient_sampling"
                 android:textColor="@color/info_home_progress_color"
-                android:textSize="@dimen/text_size_13"
+                android:textSize="@dimen/text_size_10"
                 android:visibility="gone"/>
 
         </FrameLayout>
@@ -120,7 +120,7 @@
                 android:layout_gravity="center"
                 android:text="@string/insufficient_sampling"
                 android:textColor="@color/info_home_progress_color"
-                android:textSize="@dimen/text_size_13"
+                android:textSize="@dimen/text_size_10"
                 android:visibility="gone"/>
 
         </FrameLayout>
