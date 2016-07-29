@@ -184,7 +184,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private List<MatchTextLiveBean> matchLive;
     private List<Integer> allMatchLiveMsgId;
-    private List<MatchTimeLiveBean> xMatchLive;
 
 
     /**
@@ -1318,10 +1317,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
      */
     private synchronized void updatePushData(MatchTextLiveBean matchTextLiveBean) {
 
-        Iterator<MatchTimeLiveBean> iterator = null;
-        if (xMatchLive != null && xMatchLive.size() > 0) {
-            iterator = xMatchLive.iterator();//时间轴直播数据的iterator
-        }
         liveTextTime = StadiumUtils.convertStringToInt(matchTextLiveBean.getTime());
 
         if (NOTOPEN.equals(matchTextLiveBean.getState())) { //未开
