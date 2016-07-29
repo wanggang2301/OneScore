@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -58,20 +59,24 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         //设置头像
         mHead_portrait = (ImageView) findViewById(R.id.head_portrait);
         mHead_portrait.setOnClickListener(this);
-        if (Environment
+       /* if (Environment
                 .getExternalStoragePublicDirectory(IMAGE_STORAGGEID).exists()) {
             Bitmap bm = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(IMAGE_STORAGGEID).toString());
             mHead_portrait.setImageBitmap(bm);
         } else {
             mHead_portrait.setImageResource(R.mipmap.smallhead);
 
-        }
+        }*/
         ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.profile);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.rl_nickname).setOnClickListener(this);
         findViewById(R.id.rl_modifypass).setOnClickListener(this);
+        //第三方登录时隐藏修改密码栏
+        if(PreferenceUtil.getBoolean("three_login",false)){
+            findViewById(R.id.rl_modifypass).setVisibility(View.GONE);
+        }
         tv_nickname = ((TextView) findViewById(R.id.tv_nickname));
         ((TextView) findViewById(R.id.tv_account_real)).setText(AppConstants.register.getData().getUser().getLoginAccount());
     }
@@ -87,7 +92,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 MobclickAgent.onEvent(mContext, "ModifyNicknameActivity_Start");
                 // startActivity(new Intent(this, ModifyNicknameActivity.class));
                 Intent intent = new Intent(ProfileActivity.this, ModifyNicknameActivity.class);
-                intent.putExtra("nickname", tv_nickname.getText().toString());//传递联赛ID
+                intent.putExtra("nickname", tv_nickname.getText().toString());
                 startActivity(intent);
                 break;
             case R.id.rl_modifypass: // 修改密码
@@ -106,38 +111,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    /**
-     * 设置头像
-     *//*
-    private void setHeadView() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(
-                ProfileActivity.this, R.style.AppThemeDialog);
-        String[] strs = {"拍照上传", "相册选取", "取消"};
-        builder.setItems(strs, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        camera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.
-                                getExternalStorageDirectory(), "temp.jpg")));
-                        startActivityForResult(camera, CAMERA_REQUEST_CODE);
-                        break;
-                    case 1:
-                        Intent picture = new Intent(Intent.ACTION_PICK, null);
-                        picture.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
-                        startActivityForResult(picture, ALBUM_REQUEST_CODE);
-                        break;
-                    case 2:
-                        UiUtils.toast(MyApp.getInstance(), "取消设置");
-                        break;
-                }
-            }
-        });
-        builder.setCancelable(false);
-        builder.create().show();
 
-    }*/
 
     File outFile = null;
     Bitmap bitmap = null;

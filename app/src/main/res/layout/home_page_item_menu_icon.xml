@@ -7,9 +7,9 @@
     <!--种类入口-->
     <ImageView
         android:id="@+id/iv_menu_icon_home"
-        android:layout_width="@dimen/y80"
-        android:layout_height="@dimen/y80"
-        android:layout_margin="@dimen/y5"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="2.5dp"
         android:src="@mipmap/home_menu_icon_def" />
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:layout_marginBottom="@dimen/y10"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/content_txt_dark_grad"
         android:textSize="@dimen/item_football_half_score" />
 </LinearLayout>

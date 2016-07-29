@@ -1,16 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/y254"
-              android:orientation="vertical"
-              tools:context="com.example.new_2demo.MainActivity">
+              android:layout_height="127dp"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x10"
-        android:paddingLeft="@dimen/x20"
-        android:paddingRight="@dimen/x20">
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <TextView
             android:id="@+id/backetball_matches_name"
@@ -27,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/backetball_matches_name"
-            android:paddingLeft="@dimen/x20"
+            android:paddingLeft="10dp"
             android:text="10:00"
             android:textColor="#666666"
             android:textSize="@dimen/text_size_12"/>
@@ -38,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/backetball_game_time"
-            android:paddingLeft="@dimen/x20"
+            android:paddingLeft="10dp"
             android:text="1st"
             android:textColor="#1CDA4A"
             android:textSize="@dimen/text_size_12"/>
@@ -49,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/backetball_st_time"
-            android:paddingLeft="@dimen/x10"
+            android:paddingLeft="5dp"
             android:text="00:50.6"
             android:textColor="#1CDA4A"
             android:textSize="@dimen/text_size_12"/>
@@ -61,7 +60,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/backetball_ongoing_time"
             android:text="&apos;"
-            android:layout_marginLeft="@dimen/x6"
+            android:layout_marginLeft="3dp"
             android:textColor="#1CDA4A"
             android:textSize="@dimen/text_size_12"/>
 
@@ -80,7 +79,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="13"
-            android:paddingLeft="@dimen/x6"
+            android:paddingLeft="3dp"
             android:textColor="#666666"
             android:textSize="@dimen/text_size_12"/>
 
@@ -91,7 +90,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/backetball_score_differ"
             android:text="@string/basket_differ"
-            android:paddingLeft="@dimen/x10"
+            android:paddingLeft="5dp"
             android:textColor="#666666"
             android:textSize="@dimen/text_size_12"/>
 
@@ -119,19 +118,19 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x14"
+        android:layout_marginTop="7dp"
         >
         <RelativeLayout
             android:id="@+id/rl_iv"
-            android:layout_width="@dimen/x210"
+            android:layout_width="105dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/guest_icon"
-                android:layout_width="@dimen/x80"
-                android:layout_height="@dimen/x80"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
@@ -156,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingTop="@dimen/x6"
+                android:paddingTop="3dp"
                 android:singleLine="true"
                 android:text="客队客队客队客队客队客队"
                 android:textColor="#333333"
@@ -167,14 +166,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingBottom="@dimen/x10"
+                android:paddingBottom="5dp"
                 android:text="[西二]"
                 android:textColor="#999999"
                 android:textSize="@dimen/text_size_10"/>
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="@dimen/x280"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical"
@@ -188,8 +187,8 @@
                     android:textColor="#0085E1"
                     android:textSize="@dimen/text_size_25"
                     android:layout_marginTop="-3dp"
-                    android:paddingRight="@dimen/x16"
-                    android:paddingLeft="@dimen/x16"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"/>
 
@@ -228,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/x6"
+                android:paddingBottom="3dp"
                 android:layout_below="@id/basket_half_score"
                 android:layout_centerHorizontal="true">
 
@@ -244,8 +243,8 @@
                     android:id="@+id/tv_a"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/x6"
-                    android:layout_marginRight="@dimen/x6"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
                     android:text="@string/basket_tv"
                     android:textColor="#666666"/>
 
@@ -262,8 +261,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/basket_tv"
-                    android:layout_marginLeft="@dimen/x6"
-                    android:layout_marginRight="@dimen/x6"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
                     android:textColor="#666666"/>
 
                 <TextView
@@ -278,7 +277,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_iv2"
-            android:layout_width="@dimen/x210"
+            android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginRight="-32dp"
@@ -287,8 +286,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/home_icon"
-                android:layout_width="@dimen/x80"
-                android:layout_height="@dimen/x80"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
@@ -310,7 +309,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingTop="@dimen/x6"
+                android:paddingTop="3dp"
                 android:singleLine="true"
                 android:text="主队主队主队主队主队主队"
                 android:textColor="#333333"
@@ -321,7 +320,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingBottom="@dimen/x10"
+                android:paddingBottom="5dp"
                 android:text="[东二]"
                 android:textColor="#999999"
                 android:textSize="@dimen/text_size_10"/>

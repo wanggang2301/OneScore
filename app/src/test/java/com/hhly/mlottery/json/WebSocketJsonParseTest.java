@@ -10,9 +10,9 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * Json 泛型转换单元测试
- * <p/>
- * Created by loshine on 2016/6/23.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/23.
  */
 public class WebSocketJsonParseTest {
 

@@ -38,9 +38,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/basket_hot_cup"
-                android:paddingTop="@dimen/x16"
-                android:paddingLeft="@dimen/x10"
-                android:paddingBottom="@dimen/x16"
+                android:paddingTop="8dp"
+                android:paddingLeft="5dp"
+                android:paddingBottom="8dp"
                 android:background="#f5f5f5"
                 android:textSize="@dimen/text_size_14"
                 android:textColor="#999999"/>
@@ -50,13 +50,13 @@
                 android:layout_height="wrap_content"
                 android:columnWidth="0dp"
                 android:gravity="center"
-                android:horizontalSpacing="@dimen/x15"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
+                android:horizontalSpacing="7.5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:numColumns="4"
                 android:scrollbars="none"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="@dimen/x18">
+                android:verticalSpacing="9dp">
             </com.hhly.mlottery.view.GrapeGridview>
 
            <!-- <GridView
@@ -73,9 +73,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/basket_other_cup"
                 android:background="#f5f5f5"
-                android:paddingTop="@dimen/x16"
-                android:paddingBottom="@dimen/x16"
-                android:paddingLeft="@dimen/x10"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="5dp"
                 android:textSize="@dimen/text_size_14"
                 android:textColor="#999999"/>
 
@@ -85,13 +85,13 @@
                 android:layout_height="wrap_content"
                 android:columnWidth="0dp"
                 android:gravity="center"
-                android:horizontalSpacing="@dimen/x15"
-                android:layout_marginLeft="@dimen/x12"
-                android:layout_marginRight="@dimen/x12"
+                android:horizontalSpacing="7.5dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
                 android:numColumns="4"
                 android:scrollbars="none"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="@dimen/x18" >
+                android:verticalSpacing="9dp" >
             </com.hhly.mlottery.view.GrapeGridview>
         </LinearLayout>
     </ScrollView>
@@ -109,10 +109,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/x32"
-            android:layout_marginRight="@dimen/x32"
-            android:layout_marginTop="@dimen/x12"
-            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal"
             android:weightSum="4" >
 
@@ -121,7 +121,7 @@
                 style="@style/filtrate_match_select_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/x16"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:text="@string/basket_hot" />
             <TextView
@@ -129,8 +129,8 @@
                 style="@style/filtrate_match_select_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text="@string/basket_all_checked" />
             <TextView
@@ -138,8 +138,8 @@
                 style="@style/filtrate_match_select_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text="@string/basket_negate" />
             <TextView
@@ -147,7 +147,7 @@
                 style="@style/filtrate_match_select_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:text="@string/basket_reset" />
         </LinearLayout>
@@ -157,7 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="@dimen/x20"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:orientation="horizontal" >
 
@@ -166,8 +166,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/filtrate_submit_btn_bg"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="@string/basket_isok"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_18"

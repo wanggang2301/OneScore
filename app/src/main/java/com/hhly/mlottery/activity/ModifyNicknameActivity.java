@@ -54,8 +54,8 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onResume() {
         /**友盟页面统计*/
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("RegisterActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("RegisterActivity");
         super.onResume();
         et_nickname.setFocusable(true);
         et_nickname.setFocusableInTouchMode(true);
@@ -75,7 +75,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
 
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);
-        progressBar.setMessage(getResources().getString(R.string.logining));
+        progressBar.setMessage(getResources().getString(R.string.modifying_nickname));
 
         ((TextView)findViewById(R.id.public_txt_title)).setText(R.string.modify_nickname);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);

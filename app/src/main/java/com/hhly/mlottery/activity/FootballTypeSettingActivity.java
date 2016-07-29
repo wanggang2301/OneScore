@@ -25,7 +25,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 
 /**
- * 彩票种类设置
+ * 足球设置
  */
 public class FootballTypeSettingActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
 
@@ -374,14 +374,14 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("FootballTypeSettingActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("FootballTypeSettingActivity");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("FootballTypeSettingActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("FootballTypeSettingActivity");
     }
 }

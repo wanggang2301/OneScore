@@ -15,19 +15,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketAnalyzeAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketAnalyzeFutureAdapter;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreFutureBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreRecentHistoryBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeMoreBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeMoreFutureBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeMoreRecentHistoryBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NestedListView;
@@ -40,7 +38,7 @@ import java.util.Map;
 
 /**
  * @ClassName: BasketAnalyzeMoreRecordActivity
- * @Description: 篮球分析详情Activity
+ * @Description: 篮球分析详情Activity  双方战绩
  * @author yixq
  */
 public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -778,8 +776,8 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("BasketAnalyzeMoreRecordActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("BasketAnalyzeMoreRecordActivity");
     }
 
     @Override
@@ -796,7 +794,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("BasketAnalyzeMoreRecordActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("BasketAnalyzeMoreRecordActivity");
     }
 }

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:minHeight="@dimen/profile_item_minheight"
+        android:minHeight="60dp"
         android:orientation="horizontal"
         >
 
@@ -41,7 +41,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/tv_pic"
-            android:src="@mipmap/smallhead"
+            android:src="@mipmap/center_head"
             />
 
 
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:minHeight="@dimen/profile_item_minheight"
+        android:minHeight="60dp"
         android:orientation="horizontal">
 
 
@@ -108,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:minHeight="@dimen/profile_item_minheight"
+        android:minHeight="60dp"
         android:orientation="horizontal">
 
 
@@ -161,7 +161,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:minHeight="@dimen/profile_item_minheight"
+        android:minHeight="60dp"
         android:orientation="horizontal">
 
 

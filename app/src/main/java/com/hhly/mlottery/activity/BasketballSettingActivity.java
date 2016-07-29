@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.R.string;
@@ -288,14 +287,14 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	@Override
 	protected void onResume() {
 		super.onResume();
-		MobclickAgent.onResume(this);
-		MobclickAgent.onPageStart("BasketballSettingActivity");
+//		MobclickAgent.onResume(this);
+//		MobclickAgent.onPageStart("BasketballSettingActivity");
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		MobclickAgent.onPause(this);
-		MobclickAgent.onPageEnd("BasketballSettingActivity");
+//		MobclickAgent.onPause(this);
+//		MobclickAgent.onPageEnd("BasketballSettingActivity");
 	}
 }

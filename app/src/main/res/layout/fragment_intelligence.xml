@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/home_item_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/home_item_bg"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/title_big_data_predict"
+                android:textColor="@color/analyze_title"
+                android:textSize="@dimen/sp_14"/>
+
+            <TextView
+                android:id="@+id/diy_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:drawableLeft="@mipmap/icon_diy_method"
+                android:drawablePadding="5dp"
+                android:drawableStart="@mipmap/icon_diy_method"
+                android:gravity="center_vertical"
+                android:text="@string/diy_compute_method"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/linecolor"/>
+
+        <include layout="@layout/info_big_data_predict_method_result"/>
+
+        <ImageView
+            android:id="@+id/dotted_line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/grey_dotted_line"/>
+
+        <include layout="@layout/info_big_data_predict_history"/>
+
+        <ImageView
+            android:id="@+id/dotted_line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/grey_dotted_line"/>
+
+        <include layout="@layout/info_big_data_predict_host_recent_combat"/>
+
+        <ImageView
+            android:id="@+id/dotted_line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/grey_dotted_line"/>
+
+        <include layout="@layout/info_big_data_predict_guest_recent_combat"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -79,8 +80,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         /**友盟页面统计*/
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("RegisterActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("RegisterActivity");
         super.onResume();
         et_username.setFocusable(true);
         et_username.setFocusableInTouchMode(true);
@@ -100,8 +101,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onPause() {
         super.onPause();
         /**友盟页面统计*/
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("RegisterActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("RegisterActivity");
 
     }
 
@@ -129,6 +130,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         et_username.addTextChangedListener(this);
 
         et_password = (EditText) findViewById(R.id.et_password);
+        et_password.setTypeface(Typeface.SANS_SERIF);
         et_verifycode = (EditText) findViewById(R.id.et_verifycode);
         tv_verycode = (TextView) findViewById(R.id.tv_verycode);
         tv_verycode.setOnClickListener(this);
@@ -205,6 +207,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     iv_eye.setImageResource(R.mipmap.open_eye);
                 }
+                et_password.setTypeface(Typeface.SANS_SERIF);
                 // 光标移动到结尾
                 CommonUtils.selectionLast(et_password);
 

@@ -166,7 +166,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                     reloadwhenfail.setVisibility(View.GONE);
                     //dataloding_ornodata.setVisibility(View.VISIBLE);
                     // dataloding_ornodata.setText(getActivity().getString(R.string.loading_txt));
-//                    ToastTools.ShowQuickCenter(getActivity(), "赛程正在下载");
+//                    ToastTools.showQuickCenter(getActivity(), "赛程正在下载");
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(true);
                     mGo_down.setEnabled(false);
@@ -191,7 +191,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                     mlay_agendafg_lv.setVisibility(View.GONE);
                     dataloding_ornodata.setVisibility(View.GONE);
                     reloadwhenfail.setVisibility(View.VISIBLE);
-//                    ToastTools.ShowQuickCenter(getActivity(), "赛程网络错误");
+//                    ToastTools.showQuickCenter(getActivity(), "赛程网络错误");
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mtv_agendafg_wheelcount.setEnabled(true);
@@ -216,7 +216,7 @@ public class AgendalFragment extends Fragment implements View.OnClickListener, S
                     mlay_agendafg_lv.setVisibility(View.GONE);
                     dataloding_ornodata.setVisibility(View.GONE);
                     reloadwhenfail.setVisibility(View.VISIBLE);
-//                    ToastTools.ShowQuickCenter(getActivity(), "赛程下载失败");
+//                    ToastTools.showQuickCenter(getActivity(), "赛程下载失败");
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mGo_down.setEnabled(true);

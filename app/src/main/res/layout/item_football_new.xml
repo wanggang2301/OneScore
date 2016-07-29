@@ -80,8 +80,8 @@
                     android:id="@+id/item_football_left_odds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/x4"
-                    android:paddingRight="@dimen/x4"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
                     android:text="0.75"
                     android:textColor="@color/version"
                     android:textSize="@dimen/item_football_left_odds" />
@@ -92,8 +92,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/item_football_left_odds"
-                    android:paddingLeft="@dimen/x4"
-                    android:paddingRight="@dimen/x4"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
                     android:textColor="@color/msg"
                     android:text="两球半/三"
                     android:textSize="@dimen/item_football_handicap_value" />
@@ -104,8 +104,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/item_football_handicap_value"
-                    android:paddingLeft="@dimen/x4"
-                    android:paddingRight="@dimen/x4"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
                     android:textColor="@color/version"
                     android:text="1.07"
                     android:textSize="@dimen/item_football_right_odds" />

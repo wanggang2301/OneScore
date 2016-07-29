@@ -297,14 +297,14 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("HomeAboutActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("HomeAboutActivity");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("HomeAboutActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("HomeAboutActivity");
     }
 }

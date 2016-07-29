@@ -123,7 +123,8 @@ public class FootballPlateDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mParentFragment != null) {
-                    mParentFragment.showList();
+                    mParentFragment.getChildFragmentManager()
+                            .popBackStack();
                 }
             }
         });

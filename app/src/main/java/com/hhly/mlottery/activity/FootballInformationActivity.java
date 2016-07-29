@@ -26,6 +26,7 @@ import com.hhly.mlottery.bean.footballDetails.IntegralBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.AgendalFragment;
 import com.hhly.mlottery.frame.footframe.IntegralFragment;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -77,6 +78,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.football_infor_library);
+        /**不统计当前Activity，统计下面的Fragment*/
         MobclickAgent.openActivityDurationTrack(false);
         //获取联赛ID
         Intent i = getIntent();
@@ -113,6 +115,24 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         mFragment_Tablayout.setTabMode(TabLayout.MODE_FIXED);
         //TabLayout加载viewpager
         mFragment_Tablayout.setupWithViewPager(mFragment_pager);
+
+        mFragment_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                /**判断两个Fragment切换显示或隐藏的状态 */
+                isHindShow(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
@@ -291,7 +311,6 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         popupWindow = new PopupWindow(v);
         // 设置弹框的宽度为布局文件的宽
         popupWindow.setWidth(mTxt_title1.getWidth());
-
         // 高度随着内容变化
         popupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         // 设置一个透明的背景，不然无法实现点击弹框外，弹框消失
@@ -366,6 +385,84 @@ public class FootballInformationActivity extends BaseActivity implements View.On
 
             default:
                 break;
+        }
+    }
+
+    /**
+     * 判断三个Fragment切换显示或隐藏的状态
+     *
+     */
+    private boolean isIntegralFragment = true;
+    private boolean isIntegral = false;
+    private boolean isAgendalFragment = false;
+    private boolean isAgendal = false;
+    /**
+     * 判断三个Fragment切换显示或隐藏的状态
+     *
+     * @param position
+     */
+    private void isHindShow(int position) {
+        switch (position) {
+            case 0:
+                isIntegralFragment = true;
+                isAgendalFragment = false;
+                break;
+            case 1:
+                isAgendalFragment = true;
+                isIntegralFragment = false;
+                break;
+        }
+        if (isIntegralFragment) {
+            if (isAgendal) {
+                MobclickAgent.onPageEnd("FootballInformationActivity_AgendalFragment");
+                isAgendal = false;
+                L.d("xxx", "AgendalFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("FootballInformationActivity_IntegralFragment");
+            isIntegral = true;
+            L.d("xxx", "IntegralFragment>>>显示");
+        }
+        if (isAgendalFragment) {
+            if (isIntegral) {
+                MobclickAgent.onPageEnd("FootballInformationActivity_IntegralFragment");
+                isIntegral = false;
+                L.d("xxx", "IntegralFragment>>>隐藏");
+            }
+            MobclickAgent.onPageStart("FootballInformationActivity_AgendalFragment");
+            isAgendal = true;
+            L.d("xxx", "AgendalFragment>>>显示");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+        if (isIntegralFragment) {
+            MobclickAgent.onPageStart("FootballInformationActivity_IntegralFragment");
+            isIntegral = true;
+            L.d("xxx", "IntegralFragment>>>显示");
+        }
+        if (isAgendalFragment) {
+            MobclickAgent.onPageStart("FootballInformationActivity_AgendalFragment");
+            isAgendal = true;
+            L.d("xxx", "AgendalFragment>>>显示");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+        if (isIntegral) {
+            MobclickAgent.onPageEnd("FootballInformationActivity_IntegralFragment");
+            isIntegral = false;
+            L.d("xxx", "IntegralFragment>>>隐藏");
+        }
+        if (isAgendal) {
+            MobclickAgent.onPageEnd("FootballInformationActivity_AgendalFragment");
+            isAgendal = false;
+            L.d("xxx", "AgendalFragment>>>隐藏");
         }
     }
 }
