@@ -208,6 +208,7 @@ public class FootballPlateDetailsFragment extends Fragment {
                             mRightAdapter.refreshData();
                             setStatus(StatusEnum.NORMAL);
                         }
+                        setStatus(StatusEnum.NORMAL);
                     }
                 },
                 new VolleyContentFast.ResponseErrorListener() {
