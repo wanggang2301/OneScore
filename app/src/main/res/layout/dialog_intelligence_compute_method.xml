@@ -317,36 +317,12 @@
         android:layout_height="1px"
         android:background="@color/linecolor"/>
 
-    <android.support.percent.PercentFrameLayout
+    <TextView
+        android:id="@+id/close"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
-
-        <TextView
-            android:id="@+id/close"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:text="@string/action_close"
-            app:layout_widthPercent="50%"/>
-
-        <TextView
-            android:id="@+id/compute"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:text="@string/action_compute"
-            android:textColor="@color/colorPrimary"
-            app:layout_widthPercent="50%"/>
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/linecolor"/>
-
-    </android.support.percent.PercentFrameLayout>
+        android:layout_height="40dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="@string/action_close"/>
 
 </LinearLayout>
