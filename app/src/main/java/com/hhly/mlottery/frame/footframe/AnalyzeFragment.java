@@ -397,8 +397,10 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 progress = homeWin * 100 / (guestWin+homeWin);
             }
             mProgressBar.setProgress(progress);
-            mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
-            mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
+            if(getActivity()!=null){
+                mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
+                mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
+            }
         }
 
         //近期战绩
@@ -427,12 +429,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
 
         //未来三场
-        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null&&getActivity()!=null){
+        if(getActivity()!=null&&analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null&&getActivity()!=null){
             mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+getActivity().getResources().getString(R.string.number_hk_dd));
             mHomeFutureName.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getTeam());
             mImageLoader.displayImage(analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(), mHomeFutureLogo, mOptions);
         }
-        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null&&getActivity()!=null){
+        if(getActivity()!=null&&analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null&&getActivity()!=null){
             mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + getActivity().getResources().getString(R.string.number_hk_dd));
             mGuestFutureName.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getTeam());
             mImageLoader.displayImage(analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),mGuestFutureLogo,mOptions);
