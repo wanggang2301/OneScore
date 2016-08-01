@@ -589,7 +589,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
                     DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
                     Uri uri = Uri.parse(mUpdateInfo.getUrl());
                     DownloadManager.Request request = new DownloadManager.Request(uri);

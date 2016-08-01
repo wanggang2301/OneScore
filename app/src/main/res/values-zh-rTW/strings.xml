@@ -901,5 +901,5 @@
     <string name="size_lose_rate">小球率</string>
     <string name="asia_win_rate">贏盤率</string>
     <string name="asia_lose_rate">輸盤率</string>
-    <string name="host_recent">主隊近期</string>
+    <string name="version_update_title">升級包下載中，請稍後...</string>
 </resources>

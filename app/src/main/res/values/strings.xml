@@ -917,4 +917,5 @@
     <string name="percent_factor">比例因子</string>
     <string name="intelligence_host_recent">主队近期</string>
     <string name="intelligence_guest_recent">客队近期</string>
+    <string name="version_update_title">升级包下载中，请稍后...</string>
 </resources>
