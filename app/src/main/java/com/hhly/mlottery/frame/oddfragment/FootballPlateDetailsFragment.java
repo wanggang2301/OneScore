@@ -202,9 +202,12 @@ public class FootballPlateDetailsFragment extends Fragment {
                 new VolleyContentFast.ResponseSuccessListener<OddsDetailsDataInfo>() {
                     @Override
                     public void onResponse(OddsDetailsDataInfo jsonObject) {
-                        rightList.clear();
-                        rightList.addAll(jsonObject.getDetails());
-                        mRightAdapter.refreshData();
+                        if (jsonObject.getDetails() != null) {
+                            rightList.clear();
+                            rightList.addAll(jsonObject.getDetails());
+                            mRightAdapter.refreshData();
+                            setStatus(StatusEnum.NORMAL);
+                        }
                         setStatus(StatusEnum.NORMAL);
                     }
                 },

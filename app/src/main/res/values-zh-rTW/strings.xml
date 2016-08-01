@@ -887,6 +887,8 @@
     <string name="diy_combat_rate">交鋒概率</string>
     <string name="diy_host_rate">主隊概率</string>
     <string name="diy_guest_rate">客隊概率</string>
+    <string name="intelligence_host_recent">主隊近期</string>
+    <string name="intelligence_guest_recent">客隊近期</string>
     <string name="diy_custom_compute_method">DIY自定義算法</string>
     <string name="foot_details_info">情報</string>
     <string name="insufficient_sampling">采樣不足</string>

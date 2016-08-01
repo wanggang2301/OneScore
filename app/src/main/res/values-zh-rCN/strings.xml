@@ -911,4 +911,6 @@
     <string name="probability">概率</string>
     <string name="percent_factor">比例因子</string>
     <string name="host_recent">主队近期</string>
+    <string name="intelligence_host_recent">主队近期</string>
+    <string name="intelligence_guest_recent">客队近期</string>
 </resources>
