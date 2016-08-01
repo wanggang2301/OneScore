@@ -15,6 +15,9 @@ public class TabsAdapter extends BasePagerAdapter {
     private List<Tab> mTabs;
     private String[] mTitles;
 
+
+
+
     public void setTitles(String[] titles) {
         mTitles = titles;
         if (mTabs.size() > 0) mTabs.clear();
@@ -26,6 +29,8 @@ public class TabsAdapter extends BasePagerAdapter {
     public TabsAdapter(FragmentManager fm) {
         super(fm);
         mTabs = new ArrayList<>();
+
+
     }
 
     @Override

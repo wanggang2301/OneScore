@@ -266,6 +266,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private boolean isRquestSuccess = true;
 
+    private TimerTask timerTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -320,6 +322,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setCurrentItem(ANALYZE_FG);
 
 
         loadData();
@@ -1130,6 +1133,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             footballTimer.cancel();
             footballTimer.purge();
             footballTimer = null;
+            timerTask = null;
         }
 
         if (hSocketClient != null) {
@@ -1234,7 +1238,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
      */
     private synchronized void computeWebSocket() {
         if (!isStarComputeTimer) {
-            TimerTask timerTask = new TimerTask() {
+            timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     L.d(TAG, "计算");
