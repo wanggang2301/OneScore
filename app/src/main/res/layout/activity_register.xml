@@ -25,6 +25,7 @@
             >
 
             <EditText
+                android:textSize="@dimen/text_size_13"
                 style="@style/login_edittext_phonenumber"
                 android:id="@+id/et_username"
                 android:layout_width="0dp"
@@ -56,6 +57,7 @@
     </LinearLayout>
 
     <EditText
+
         style="@style/login_item_bg"
         android:id="@+id/et_verifycode"
         android:layout_height="48dp"
@@ -63,7 +65,7 @@
         android:layout_marginTop="15dp"
         android:hint="@string/verify_code"
         android:gravity="center_vertical"
-        android:textSize="@dimen/text_size_15"
+        android:textSize="@dimen/text_size_13"
         android:inputType="number"
         android:maxLength="6"
         />
@@ -77,11 +79,12 @@
         >
 
         <EditText
+            android:textSize="@dimen/text_size_13"
             android:id="@+id/et_password"
             style="@style/login_edittext_password"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:hint="@string/pwd_empty"
+            android:hint="@string/pwd_empty_new"
             android:layout_weight="1"/>
 
 
