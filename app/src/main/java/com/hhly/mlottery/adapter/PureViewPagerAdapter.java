@@ -39,7 +39,7 @@ public class PureViewPagerAdapter extends PagerAdapter {
         if (!fragment.isAdded()) { // 如果fragment还没有added
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.add(fragment, fragment.getClass().getSimpleName());
-            ft.commit();
+            ft.commitAllowingStateLoss();
             /**
              * 在用FragmentTransaction.commit()方法提交FragmentTransaction对象后
              * 会在进程的主线程中，用异步的方式来执行。
