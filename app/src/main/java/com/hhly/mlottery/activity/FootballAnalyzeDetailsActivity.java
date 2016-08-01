@@ -25,6 +25,7 @@ import com.hhly.mlottery.bean.footballDetails.FootballAnaylzeHistoryRecent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -575,7 +576,10 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
         //所显示的总场数
 //        String matchNum;
-        int matchNum = 0;
+        int matchNum = 0; //总场数
+
+        int letmatchNum = 0;//让分开盘场数
+        int totmatchNum = 0;//大小开盘场数
 
         double countWin = 0 ; //胜
         double countLose = 0 ; //负
@@ -589,9 +593,22 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
 
         if (mData.isEmpty() || mData.size()==0) {
             matchNum = 0;
+            letmatchNum = 0;
+            totmatchNum = 0;
         }else{
             matchNum = mData.size();
             for (FootballAnaylzeHistoryRecent history : mData) {
+
+                //统计 让分开盘数
+                if (history.getCasLetGoal() != null && !history.getCasLetGoal().equals("")) {
+                    letmatchNum++;
+                }
+                //统计 大小盘开盘数
+                if (history.getCtotScore() != null && !history.getCtotScore().equals("")) {
+                    totmatchNum++;
+                }
+
+
                 if (history.getResult() == 1) {
                     countWin++;
                 }else if (history.getResult() == -1){
@@ -622,20 +639,24 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         }
 
         int winning , totWinning , letWinnging;
+
+        //胜率
         if (matchNum == 0) {
             winning = 0;
+        }else{
+            winning = (int)((countWin*100)/(matchNum)+0.5); // (+0.5 四舍五入)
+        }
+        //大球胜率
+        if (totmatchNum == 0) {
             totWinning = 0;
+        }else{
+            totWinning = (int)(((countTot*100)/(totmatchNum))+0.5);
+        }
+        //让分球胜率
+        if (letmatchNum == 0) {
             letWinnging = 0;
         }else{
-            //胜率
-            winning = (int)((countWin*100)/(matchNum)+0.5); // (+0.5 四舍五入)
-
-            //大球胜率
-            totWinning = (int)((countTot*100)/(matchNum)+0.5);
-
-            //让分球胜率
-            letWinnging = (int)((countLet*100)/(matchNum)+0.5);
-
+            letWinnging = (int)(((countLet*100)/(letmatchNum))+0.5);
         }
 
         homeWin = (int)countWin + "" + getResources().getText(R.string.football_analyze_win);

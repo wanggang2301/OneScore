@@ -771,7 +771,7 @@
 
     <!-- 登录注册 begin-->
     <string name="my">个人中心</string>
-    <string name="register">注册</string>
+    <string name="register">快速注册</string>
     <string name="registering">正在注册...</string>
     <string name="login">登录</string>
     <string name="logining">正在登录...</string>
@@ -782,6 +782,7 @@
     <string name="pwd_format">密码格式为6-16位数字和字符组成</string>
     <string name="pwd_format_hint">6-16位字符,区分大小写</string>
     <string name="pwd_empty">请输入密码</string>
+    <string name="pwd_empty_new">请输入密码(由6-16位数字和字符组成)</string>
     <string name="phone_empty">请输入手机号码</string>
     <string name="phone_error">请输入正确手机号码</string>
     <string name="verify_code">请输入验证码</string>
@@ -844,7 +845,8 @@
     <string name="modify_password_succ">修改密码成功</string>
     <string name="modify_password_fail">修改密码失败</string>
     <string name="input_password_old">请输入旧密码</string>
-    <string name="input_password_new">请输入新密码（由６－１６位数字和字符组成）</string>
+    <string name="input_password_new">请输入新密码(由6-16位数字和字符组成)</string>
+    <string name="input_password_new_no">请输入新密码(由6-16位数字和字符组成)</string>
     <string name="input_password_confirm">请保持和新密码一致</string>
     <string name="show_password">显示密码</string>
     <string name="old_pw">旧</string>
@@ -908,6 +910,7 @@
     <string name="insufficient_sampling">采样不足</string>
     <string name="probability">概率</string>
     <string name="percent_factor">比例因子</string>
+    <string name="host_recent">主队近期</string>
     <string name="intelligence_host_recent">主队近期</string>
     <string name="intelligence_guest_recent">客队近期</string>
 </resources>

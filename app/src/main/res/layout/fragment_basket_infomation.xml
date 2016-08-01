@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@string/loading_txt"
             android:textColor="@color/loading_txt_color" />
+
     </LinearLayout>
 
 
