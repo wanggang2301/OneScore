@@ -1,6 +1,7 @@
 package com.hhly.mlottery.wxapi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -41,14 +42,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     }
 
 
- /*   @Override
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        MyApp.mApi.handleIntent(getIntent(),this);
+        api.handleIntent(getIntent(),this);
 
     }
-*/
     @Override
     public void onResp(BaseResp resp) {
 

@@ -220,6 +220,7 @@
         android:id="@+id/tv_logout"
         style="@style/login_textview_logout"
         android:layout_gravity="center"
+        android:textSize="@dimen/home_pager_user_title"
         android:text="@string/logout"/>
 
     <View
