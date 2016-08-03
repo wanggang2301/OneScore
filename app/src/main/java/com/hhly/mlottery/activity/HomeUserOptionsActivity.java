@@ -143,11 +143,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
             case R.id.user_info_image: //用户信息
                 MobclickAgent.onEvent(mContext, "ProfileActivity_Start");
 
-             /*   if (CommonUtils.isLogin()&&PreferenceUtil.getBoolean("three_login",false)) {
-                    startActivity(new Intent(this, ProfileActivity.class));
-                } else {
-                   // UiUtils.toast(MyApp.getInstance(), "请先登录");
-                }*/
+
                 if (CommonUtils.isLogin()) {
                     startActivity(new Intent(this, ProfileActivity.class));
                 } else {
