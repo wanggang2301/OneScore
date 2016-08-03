@@ -38,7 +38,7 @@ public class BaseURLs {
         }
 
         //return "m.1332255.com";测试环境。
-        return  "m.13322.com";//发布版本
+        return "m.13322.com";//发布版本
 
     }
 
@@ -594,11 +594,12 @@ public class BaseURLs {
     /**
      * 保存umeng渠道号，提交渠道号
      */
-//	public final static String UMENG_CHANNEL_URL = "http://192.168.10.242:8083/traffic/api";
-    public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";
+    public final static String UMENG_CHANNEL_URL = "http://kj.13322.com/traffic/api";// 体彩正式环境
+//    public final static String UMENG_CHANNEL_URL = "http://183.61.172.88:8343/traffic/api";// 体彩测试环境
 
     //用户留存率分析
-    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";
+    public final static String USER_ACTION_ANALYSIS_URL = "http://union.13322.com/traffic/api/appRetention";// 体彩正式环境
+//    public final static String USER_ACTION_ANALYSIS_URL = "http://183.61.172.88:8343/traffic/api/appRetention";// 体彩测试环境
 
     //指数详情
     public final static String URL_FOOTBALL_MATCHODD_DETAILS = URL_API_HOST + FOOTBALLMATCH_MATCHODD_DETAILS;
@@ -645,6 +646,17 @@ public class BaseURLs {
     /**
      * 篮球详情接口
      */
+
+    //篮球资料库
+    public final static String URL_BASKET_INFOMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
+
+    //篮球资料库详情
+    public final static String URL_BASKET_DATABASE_DETAILS = URL_API_HOST + "basketballData.findLeagueHeader.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do
+    //让分盘
+    public final static String URL_BASKET_DATABASE_HANDICP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
+    //大小盘
+    public final static String URL_BASKET_DATABASE_BIG_SMALL_DETAILS = URL_API_HOST + "basketballData.findAsiaSize.do"; // "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
+
     public final static String URL_BASKET_FINDANALYSIS = "basketballDetail.findAnalysis.do";
     public final static String URL_BASKET_FINDANALYSISDETAIL = "basketballDetail.findAnalysisDetail.do";
     public final static String URL_BASKET_FINDODDSDETAIL = "basketballDetail.findOddsDetail.do";
@@ -683,31 +695,57 @@ public class BaseURLs {
      * 新版指数
      */
     public final static String URL_NEW_ODDS = URL_API_HOST + "footBallIndexCenter.findAndroidIndexCenter.do";
-    /**指数推送*/
+    /**
+     * 指数推送
+     */
     public final static String URL_CPI_SOCKET = WS_SERVICE;
-    /**新版足球分析接口*/
-    public final static String URL_NEW_ANALYZE=URL_API_HOST+"footBallMatch.findAnalysisOverview.do";
+    /**
+     * 新版足球分析接口
+     */
+    public final static String URL_NEW_ANALYZE = URL_API_HOST + "footBallMatch.findAnalysisOverview.do";
 
     //开机屏地址获取
     public final static String STARTPIC = "mainPage.findAndroidStartupPic.do";
     public final static String URL_STARTPIC = URL_API_HOST + STARTPIC;
-    /**发送验证码*/
+    /**
+     * 发送验证码
+     */
     public final static String URL_SENDSMSCODE = URL_API_HOST + "androidUserCenter.sendSmsCode.do";
-    /**注册*/
+    /**
+     * 注册
+     */
     public final static String URL_REGISTER = URL_API_HOST + "androidUserCenter.register.do";
-    /**登录*/
+    /**
+     * 登录
+     */
     public final static String URL_LOGIN = URL_API_HOST + "androidUserCenter.login.do";
-    /**登出*/
+    /**
+     * 登出
+     */
     public final static String URL_LOGOUT = URL_API_HOST + "androidUserCenter.logout.do";
-    /**重置密码*/
+    /**
+     * 重置密码
+     */
     public final static String URL_RESETPASSWORD = URL_API_HOST + "androidUserCenter.resetPassword.do";
-    /**修改昵称*/
+    /**
+     * 修改昵称
+     */
     public final static String URL_EDITNICKNAME = URL_API_HOST + "androidUserCenter.editNickname.do";
-    /**修改密码*/
+    /**
+     * 修改密码
+     */
     public final static String URL_CHANGEPASSWORD = URL_API_HOST + "androidUserCenter.changePassword.do";
 
-    /**资讯Id查询*/
+    /**
+     * 资讯Id查询
+     */
     public final static String URL_INFORMATION_BY_THIRDID = URL_API_HOST + "info.findSingleInfo.do";
+    /*QQ登录*/
+    public final static String URL_QQ_LOGIN = URL_API_HOST + "androidUserCenter. loginQQ.do";
+    /*QQ登录*/
+    public final static String URL_SINA_LOGIN = URL_API_HOST + "androidUserCenter.loginWeibo.do";
 
-
+    public final static String URL_WEIXIN_LOGIN = URL_API_HOST + "androidUserCenter.loginWeChat.do";
+    /**足球情报 - 大数据预测*/
+    public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
 }

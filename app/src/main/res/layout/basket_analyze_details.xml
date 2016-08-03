@@ -713,7 +713,7 @@
                     android:background="@color/black_grounding"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/y400"
+                    android:paddingTop="200dp"
                     android:visibility="gone">
 
                     <ImageView
@@ -761,7 +761,7 @@
                     android:gravity="center"
                     android:textColor="@color/version"
                     android:background="@color/black_grounding"
-                    android:paddingTop="@dimen/y500"
+                    android:paddingTop="250dp"
                     android:visibility="gone"
                     />
             </RelativeLayout>

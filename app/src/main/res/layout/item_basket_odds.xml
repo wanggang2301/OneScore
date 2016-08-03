@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/black_title"
-    android:layout_marginLeft="@dimen/x15"
-    android:layout_marginRight="@dimen/x15"
+    android:layout_marginLeft="7.5dp"
+    android:layout_marginRight="7.5dp"
     android:layout_height="@dimen/item_height">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/x15"
+        android:paddingLeft="7.5dp"
         android:gravity="center_vertical"
         >
         <ImageView
@@ -18,13 +18,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/basket_odds_more"
-            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginLeft="5dp"
             />
         <TextView
             android:id="@+id/item_basket_odds_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x8"
+            android:layout_marginLeft="4dp"
             android:textColor="@color/white"
             android:text=""
             android:singleLine="true"
@@ -40,8 +40,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingTop="@dimen/y10"
-        android:paddingBottom="@dimen/y10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         >
         <!--客胜-->
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginBottom="@dimen/y15"
+                android:layout_marginBottom="7.5dp"
                 android:textSize="@dimen/text_size_11"
                 android:textColor="@color/white"
                 android:gravity="center"
@@ -88,12 +88,12 @@
                            android:layout_width="wrap_content"
                            android:layout_height="0dp"
                            android:layout_weight="1"
-                           android:layout_marginBottom="@dimen/y15"
+                           android:layout_marginBottom="7.5dp"
                            android:textSize="@dimen/text_size_11"
                            android:textColor="@color/white"
                            android:gravity="center"
-                           android:paddingRight="@dimen/x3"
-                           android:paddingLeft="@dimen/x3"
+                           android:paddingRight="1.5dp"
+                           android:paddingLeft="1.5dp"
                            android:text=""
                            />
 
@@ -105,8 +105,8 @@
                            android:textSize="@dimen/text_size_11"
                            android:textColor="@color/white"
                            android:gravity="center"
-                           android:paddingRight="@dimen/x3"
-                           android:paddingLeft="@dimen/x3"
+                           android:paddingRight="1.5dp"
+                           android:paddingLeft="1.5dp"
                            android:text=""
                            />
 
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginBottom="@dimen/y15"
+                android:layout_marginBottom="7.5dp"
                 android:textSize="@dimen/text_size_11"
                 android:textColor="@color/white"
                 android:gravity="center"

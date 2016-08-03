@@ -26,12 +26,13 @@ import com.hhly.mlottery.widget.EmptyView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * 足球详情指数列表
- * <p/>
- * Created by loshine on 2016/6/28.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/28.
  */
 public class FootballPlateFragment extends Fragment {
 
@@ -161,7 +162,8 @@ public class FootballPlateFragment extends Fragment {
                     @Override
                     public void onResponse(OddsDataInfo jsonObject) {
                         items.clear();
-                        items.addAll(jsonObject.getListOdd());
+                        List<OddsDataInfo.ListOddEntity> listOdd = jsonObject.getListOdd();
+                        if (listOdd != null) items.addAll(listOdd);
                         mAdapter.notifyDataSetChanged();
                         setStatus(StatusEnum.NORMAL);
                     }
@@ -170,7 +172,7 @@ public class FootballPlateFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         VolleyError volleyError = exception.getVolleyError();
-                        volleyError.printStackTrace();
+                        if (volleyError != null) volleyError.printStackTrace();
                         setStatus(StatusEnum.ERROR);
                     }
                 },

@@ -5,10 +5,7 @@ import android.text.Html;
 import android.view.View;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreFutureBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketDetailOddsDetailsBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.OddsDataEntity;
-import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.bean.basket.basketdetails.OddsDataEntity;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 

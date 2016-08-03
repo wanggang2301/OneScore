@@ -19,13 +19,10 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
+import com.hhly.mlottery.activity.BasketballInformationActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
-import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
-import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallSelectArrayAdapter;
@@ -74,6 +71,8 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
         return mFilterImgBtn;
     }
 
+    private ImageView ivInfomation;
+
     /**
      * 设置
      */
@@ -87,6 +86,7 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
      * 中间标题
      */
     private TextView mTittle;// 标题
+
 
     /**
      * 当前处于哪个比赛fg
@@ -112,10 +112,13 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
         mView = View.inflate(mContext, R.layout.frage_new_basketball, null);
+        currentFragmentId = ((FootballActivity)mContext).basketCurrentPosition;
+        L.d("xxx","篮球Fragment:currentFragmentId:" + currentFragmentId);
         initView();
         setupViewPager();
         focusCallback();// 加载关注数
         initEVent();
+        initCurrentFragment(currentFragmentId);
         return mView;
     }
 
@@ -161,6 +164,11 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
         //设置按钮
         mSetting = (ImageView) mView.findViewById(R.id.public_btn_set);
         mSetting.setOnClickListener(this);
+
+
+        ivInfomation = (ImageView) mView.findViewById(R.id.public_btn_infomation);
+        ivInfomation.setVisibility(View.VISIBLE);
+        ivInfomation.setOnClickListener(this);
     }
 
     private void setupViewPager() {
@@ -178,6 +186,10 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
         fragments.add(FocusBasketballFragment.newInstance(FOCUS_FRAGMENT));
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
+        mViewPager.setAdapter(pureViewPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mViewPager.setCurrentItem(currentFragmentId);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -220,9 +232,7 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
             public void onPageScrollStateChanged(int state) {
             }
         });
-        mViewPager.setAdapter(pureViewPagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
     }
 
     public void focusCallback() {
@@ -369,13 +379,20 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
                     L.d("mBasketballType shaicheng >>>>>>>>>>>", "mBasketballType == >" + SCHEDULE_FRAGMENT);
                 }
                 break;
+
+
+            case R.id.public_btn_infomation:
+                Intent intent = new Intent(getActivity(), BasketballInformationActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                break;
         }
     }
 
     /**
      * 判断四个Fragment切换显示或隐藏的状态
      */
-    private boolean isImmediateFragment = true;
+    private boolean isImmediateFragment = false;
     private boolean isImmediate = false;
     private boolean isResultFragment = false;
     private boolean isResult = false;
@@ -384,6 +401,26 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     private boolean isFocusFragment = false;
     private boolean isFocus = false;
 
+    /**
+     * 初始化当前显示的Fragment
+     * @param currentId
+     */
+    private void initCurrentFragment(int currentId){
+        switch (currentId){
+            case 0:
+                isImmediateFragment = true;
+                break;
+            case 1:
+                isResultFragment = true;
+                break;
+            case 2:
+                isScheduleFragment = true;
+                break;
+            case 3:
+                isFocusFragment = true;
+                break;
+        }
+    }
     /**
      * 判断四个Fragment切换显示或隐藏的状态
      *

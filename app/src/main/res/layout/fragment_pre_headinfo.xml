@@ -47,8 +47,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/football_match_detail_matchtype_bg_img"
-                    android:layout_alignRight="@id/football_match_detail_matchtype_bg_img"
+
                     android:gravity="center"
                     android:orientation="vertical">
 

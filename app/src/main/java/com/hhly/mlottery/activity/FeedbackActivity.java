@@ -22,8 +22,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -38,6 +40,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author chenml
+ * @Desc 用户反馈界面
  */
 public class FeedbackActivity extends BaseActivity implements View.OnClickListener {
 
@@ -169,8 +172,8 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart("FeedbackActivity");
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart("FeedbackActivity");
         //进入界面弹出键盘，输入域获取焦点。
         contentEt.setFocusable(true);
         contentEt.setFocusableInTouchMode(true);
@@ -224,12 +227,11 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
                     params.put("osVersion", systemVersion);
                     params.put("deviceBrand", facturer);
                     params.put("deviceModel", model);
-                    params.put("deviceBrand", facturer);
                     params.put("sendTime", currentTime);
                     params.put("content", contentEt.getText().toString());
                     params.put("deviceToken", id);
                     params.put("appVersion", versionName);
-
+                    params.put("userId", PreferenceUtil.getString(AppConstants.SPKEY_USERID, ""));
 
                     VolleyContentFast.requestStringByPost(BaseURLs.URL_FEEDBACK_ADD, params, new VolleyContentFast.ResponseSuccessListener<String>() {
                         @Override
@@ -326,7 +328,7 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
-        MobclickAgent.onPageEnd("FeedbackActivity");
+//        MobclickAgent.onPause(this);
+//        MobclickAgent.onPageEnd("FeedbackActivity");
     }
 }

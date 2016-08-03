@@ -7,11 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,15 +18,14 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.CpiCompanyAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ToastTools;
 
 import java.util.ArrayList;
 
 /**
- * 公司选择
- * <p/>
- * Created by loshine on 2016/6/23.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/23.
  */
 public class CompanyChooseDialogFragment extends DialogFragment {
 
@@ -109,7 +105,7 @@ public class CompanyChooseDialogFragment extends DialogFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NewOddsInfo.CompanyBean company = companyList.get(position);
                 if (getCheckedNum() == 1 && company.isChecked()) {
-                    ToastTools.ShowQuick(MyApp.getContext(), getString(R.string.at_least_one_company));
+                    ToastTools.showQuick(MyApp.getContext(), getString(R.string.at_least_one_company));
                     return;
                 }
 

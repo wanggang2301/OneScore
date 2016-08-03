@@ -19,8 +19,8 @@
         android:gravity="center"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
-        android:layout_marginTop="@dimen/y8"
-        android:layout_marginBottom="@dimen/y8"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:textSize="@dimen/item_filtrate_match_text"
         android:text="英超"
         />

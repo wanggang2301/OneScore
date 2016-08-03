@@ -71,8 +71,8 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         /**友盟页面统计*/
-        MobclickAgent.onResume(this);
-        MobclickAgent.onPageStart(TAG);
+//        MobclickAgent.onResume(this);
+//        MobclickAgent.onPageStart(TAG);
         super.onResume();
         et_username.setFocusable(true);
         et_username.setFocusableInTouchMode(true);

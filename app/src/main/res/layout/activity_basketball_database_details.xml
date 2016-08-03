@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hhly.mlottery.widget.ExactSwipeRefrashLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/basket_database_details_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/basket_database_details_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/basket_score"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <!--<include layout="@layout/layout_basket_header"/>-->
+                <ImageView
+                    android:id="@+id/image_background"
+                    style="@style/isFitsSystemWindows"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:id="@+id/basket_database_details_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/rl_iv"-->
+                    <!--android:layout_width="110dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical"-->
+
+                    <!-->-->
+
+                    <ImageView
+                        android:id="@+id/basket_details_guest_icon"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/basket_default" />
+                    <!--</RelativeLayout>-->
+
+                    <TextView
+                        android:id="@+id/basket_database_leaguename"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:text="--"
+                        android:textColor="@color/headtitle_color"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/basket_database_details_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@color/transparency"
+                    app:contentInsetStart="0dp"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                    <!--<include layout="@layout/basket_details_header" />-->
+                    <LinearLayout
+                        android:id="@+id/basket_database_details_header_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/basket_database_details_back"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:paddingLeft="8dp"
+                                android:paddingRight="8dp"
+                                android:src="@mipmap/basketball_back" />
+
+                            <LinearLayout
+                                android:id="@+id/basket_database_details_collect"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:paddingRight="20dp">
+
+                                <TextView
+                                    android:id="@+id/basket_database_datails_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:gravity="center"
+                                    android:paddingRight="8dp"
+                                    android:text="--"
+                                    android:textColor="@color/home_default_icon_coloer"
+                                    android:textSize="15sp" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@mipmap/basket_database_details_pencel" />
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/basket_database_details_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@color/white"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/basket_text_color"
+                app:tabTextColor="@color/unselected_tab_color" />
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/basket_details_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.design.widget.CoordinatorLayout>
+
+</com.hhly.mlottery.widget.ExactSwipeRefrashLayout>

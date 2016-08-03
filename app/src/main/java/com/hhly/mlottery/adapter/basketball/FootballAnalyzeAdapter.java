@@ -1,12 +1,9 @@
 package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
-import android.text.Html;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreRecentHistoryBean;
 import com.hhly.mlottery.bean.footballDetails.FootballAnaylzeHistoryRecent;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 

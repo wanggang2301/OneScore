@@ -945,7 +945,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/y400"
+                    android:paddingTop="200dp"
                     android:visibility="gone"
                     >
 
@@ -993,7 +993,7 @@
                     android:textSize="20sp"
                     android:gravity="center"
                     android:textColor="@color/version"
-                    android:paddingTop="@dimen/y500"
+                    android:paddingTop="250dp"
                     android:visibility="gone"
                     />
             </RelativeLayout>
