@@ -861,7 +861,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                 L.d(TAG, "第一次启动socket");
-                L.d("456789","第一次启动socket");
+                L.d("456789", "第一次启动socket");
 
                 startWebsocket();
                 computeWebSocket();
@@ -1146,6 +1146,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mReloadTimer.purge();
 
         }
+
         this.finish();
     }
 
@@ -1258,7 +1259,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
             if (footballTimer != null) {
-                L.d("456789","footballTimer");
+                L.d("456789", "footballTimer");
                 footballTimer.schedule(timerTask, 15000, 30000);
                 isStarComputeTimer = true;
             }
