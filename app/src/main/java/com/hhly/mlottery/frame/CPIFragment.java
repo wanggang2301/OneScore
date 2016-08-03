@@ -441,7 +441,7 @@ public class CPIFragment extends Fragment implements
      */
     private void updateTimeAndStatus(String jsonString) {
         //时间模拟数据
-//            jsonString = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'338827','type':1}  ";
+        jsonString = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'349114','type':1}  ";
         WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result =
                 WebSocketCPIResult.getTimeAndStatusFromJson(jsonString);
         // 更新三个 Fragment 中对应的 List 中的对应 thirdId 的比赛的数据
