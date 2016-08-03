@@ -878,14 +878,13 @@
     <string name="new_analyze_player_info">球员信息</string>
     <string name="new_analyze_recommend">心水推荐</string>
 
-
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>
     <string name="only_five_eachday">同一个手机号每天只能发送5次短信</string>
     <string name="login_username">请输入账号或者注册手机号</string>
-    <string name="server_busy">系统繁忙</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
+    <string name="server_busy">系统繁忙</string>
     <string name="at_least_one_company">至少选择一家公司</string>
 
     <string name="home_win_rate">主胜率</string>
@@ -896,17 +895,20 @@
     <string name="asia_lose_rate">输盘率</string>
     <string name="title_big_data_predict">大数据预测</string>
     <string name="diy_compute_method">DIY算法</string>
-    <string name="foot_details_info">情报</string>
     <string name="diy_custom_compute_method">DIY自定义算法</string>
-    <string name="action_close">关闭</string>
-    <string name="action_compute">计算</string>
-    <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
+    <string name="foot_details_info">情报</string>
     <string name="diy_compute_method_message1">概率=交锋概率×%1$s+主胜概率×%2$s+客负概率×%3$s</string>
     <string name="diy_compute_method_message2">概率=交锋概率×%1$s+主队概率×%2$s+客队概率×%3$s</string>
     <string name="diy_compute_method_message3">概率=交锋概率×%1$s+主赢概率×%2$s+客输概率×%3$s</string>
     <string name="diy_combat_rate">交锋概率</string>
     <string name="diy_host_rate">主队概率</string>
     <string name="diy_guest_rate">客队概率</string>
+    <string name="symbol_times" translatable="false">×</string>
+    <string name="symbol_plus" translatable="false">+</string>
+    <string name="symbol_equal" translatable="false">=</string>
+    <string name="action_close">关闭</string>
+    <string name="action_compute">计算</string>
+    <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
     <string name="insufficient_sampling">采样不足</string>
     <string name="probability">概率</string>
     <string name="percent_factor">比例因子</string>
