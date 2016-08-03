@@ -328,7 +328,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         try {
             hSocketUri = new URI(BaseURLs.WS_SERVICE);
-            System.out.println(">>>>>" + hSocketUri);
+           // System.out.println(">>>>>" + hSocketUri);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
