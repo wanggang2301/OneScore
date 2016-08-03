@@ -116,17 +116,10 @@ public class PreHeadInfoFrament extends Fragment {
         mMatchType2 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype2);
 
 
-     /*   options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.home_pager_score_football02_bg)   //默认图片
-                .showImageForEmptyUri(R.mipmap.home_pager_score_football02_bg)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.home_pager_score_football02_bg)// 加载失败显示的图片
-                .displayer(new FadeInBitmapDisplayer(5000))
-                .resetViewBeforeLoading(true)
-                .build();*/
+    }
 
+
+    public void initData(MatchDetail mMatchDetail, boolean flag) {
 
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -141,17 +134,10 @@ public class PreHeadInfoFrament extends Fragment {
         universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
         universalImageLoader.init(config);
 
-    }
-
-
-    public void initData(MatchDetail mMatchDetail, boolean flag) {
-
         if (flag) {
             int random = new Random().nextInt(20);
             String url = baseUrl + random + ".png";
-            if (universalImageLoader != null) {
-                universalImageLoader.displayImage(url, iv_bg, options);
-            }
+            universalImageLoader.displayImage(url, iv_bg, options);
         }
 
 
