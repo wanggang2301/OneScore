@@ -194,6 +194,13 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
         TextView second = holder.getView(R.id.cpi_item_seconds_txt);
         // 上半场 > 45 显示 45+
         // 下半场 > 90 显示 90+
+
+        if (status == 2) {
+            timeTextView.setVisibility(View.GONE);
+        } else {
+            timeTextView.setVisibility(View.VISIBLE);
+        }
+
         if (status > 0) {
             try {
                 String openTime = matchInfo.getOpenTime();
@@ -209,10 +216,8 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
                 }
 
                 if (status == 2) {
-                    timeTextView.setVisibility(View.GONE);
                     second.setText("");
                 } else {
-                    timeTextView.setVisibility(View.VISIBLE);
                     second.setText("\'");
                 }
 
