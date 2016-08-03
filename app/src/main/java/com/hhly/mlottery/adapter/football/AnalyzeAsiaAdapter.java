@@ -92,13 +92,13 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
                     List<NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity> listLet=analyzeBean.getAsiaTrend().getBattleHistory().getLetList();
                     for(int i=0;i<listLet.size();i++){
                         if(listLet.get(i).getLet()==0){ //第i场比赛 走
-                            tvList.get(i).setText("走");
+                            tvList.get(i).setText(mContext.getString(R.string.new_analyze_draw));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.more_record));
                         }else if(listLet.get(i).getLet()==1){
-                            tvList.get(i).setText("赢");
+                            tvList.get(i).setText(mContext.getString(R.string.new_analyze_win));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_win_color));
                         }else if(listLet.get(i).getLet()==2){
-                            tvList.get(i).setText("输");
+                            tvList.get(i).setText(mContext.getString(R.string.new_analyze_lose));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_lose_color));
                         }
                     }

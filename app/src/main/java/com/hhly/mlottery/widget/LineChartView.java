@@ -98,25 +98,20 @@ public class LineChartView extends View{
         mPaint.setAntiAlias(true);
         mPaint.setColor(getResources().getColor(R.color.login_et_color));
         mPaint.setStrokeWidth(1);
+
+        drawLine();
+
         if(eventList!=null){
             drawTriangleAndCircular(eventList);
         }
 
-        drawLine();
     }
 
     /**
-     * 图形与图形之间的实线
+     * 三条虚线
      */
     private void drawLine() {
 
-    }
-
-    /**
-     * 三角形与圆形的绘制
-     */
-    private void drawTriangleAndCircular(List<List<Integer>>eventList) {
-//        //三条横虚线
         Paint paint=new Paint();
         paint.setColor(getResources().getColor(R.color.login_et_color));
         paint.setStyle(Paint.Style.STROKE);
@@ -138,6 +133,13 @@ public class LineChartView extends View{
         mCanvas.drawPath(path1,paint);
         mCanvas.drawPath(path2,paint);
         mCanvas.drawPath(path3,paint);
+    }
+
+    /**
+     * 三角形与圆形的绘制
+     */
+    private void drawTriangleAndCircular(List<List<Integer>>eventList) {
+//        //三条横虚线
 
         int j;
 
