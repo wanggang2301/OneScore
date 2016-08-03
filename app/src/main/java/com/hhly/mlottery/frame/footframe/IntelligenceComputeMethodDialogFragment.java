@@ -60,11 +60,6 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     private BigDataForecast mBigDataForecast;
     private BigDataForecastFactor mFactor;
 
-    private String messageString;
-    private String combatString;
-    private String hostString;
-    private String guestString;
-
     private int combatColor;
     private int hostColor;
     private int guestColor;
@@ -112,11 +107,6 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     }
 
     private void initRes() {
-        messageString = getString(R.string.diy_compute_method_message);
-        combatString = getString(R.string.diy_combat_rate);
-        hostString = getString(R.string.diy_host_rate);
-        guestString = getString(R.string.diy_guest_rate);
-
         combatColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color1);
         hostColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color2);
         guestColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color3);
@@ -141,13 +131,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getHost().getGuestTemp()));
 
-                    Double historyHomeWin = getHomeWinPercent(battleHistory);
-                    Double homeRecentHomeWin = getHomeWinPercent(homeRecent);
-                    Double guestRecentHomeWin = getHomeWinPercent(guestRecent);
+                    Double historyHomeWin = BigDataForecastData.getHomeWinPercent(battleHistory);
+                    Double homeRecentHomeWin = BigDataForecastData.getHomeWinPercent(homeRecent);
+                    Double guestRecentHomeLose = BigDataForecastData.getHomeLosePercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyHomeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentHomeWin));
-                    mGuestTextView.setText(StringFormatUtils.toString(guestRecentHomeWin));
+                    mGuestTextView.setText(StringFormatUtils.toString(guestRecentHomeLose));
                     break;
                 case 1:
                     mHistoryEditText.setText(StringFormatUtils.toString
@@ -157,9 +147,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getSize().getGuestTemp()));
 
-                    Double historySizeWin = getSizeWinPercent(battleHistory);
-                    Double homeRecentSizeWin = getSizeWinPercent(homeRecent);
-                    Double guestRecentSizeWin = getSizeWinPercent(guestRecent);
+                    Double historySizeWin = BigDataForecastData.getSizeWinPercent(battleHistory);
+                    Double homeRecentSizeWin = BigDataForecastData.getSizeWinPercent(homeRecent);
+                    Double guestRecentSizeWin = BigDataForecastData.getSizeWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historySizeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentSizeWin));
@@ -173,35 +163,16 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getAsia().getGuestTemp()));
 
-                    Double historyAsiaWin = getAsiaWinPercent(battleHistory);
-                    Double homeRecentAsiaWin = getAsiaWinPercent(homeRecent);
-                    Double guestRecentAsiaWin = getAsiaWinPercent(guestRecent);
+                    Double historyAsiaWin = BigDataForecastData.getAsiaWinPercent(battleHistory);
+                    Double homeRecentAsiaWin = BigDataForecastData.getAsiaWinPercent(homeRecent);
+                    Double guestRecentAsiaLose = BigDataForecastData.getAsiaLosePercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyAsiaWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentAsiaWin));
-                    mGuestTextView.setText(StringFormatUtils.toString(guestRecentAsiaWin));
+                    mGuestTextView.setText(StringFormatUtils.toString(guestRecentAsiaLose));
                     break;
             }
         }
-    }
-
-    private Double checkNotNull(Double f) {
-        return f == null ? 0f : f;
-    }
-
-    private Double getHomeWinPercent(BigDataForecastData data) {
-        if (data == null) return 0D;
-        return checkNotNull(data.getHomeWinPercent());
-    }
-
-    private Double getAsiaWinPercent(BigDataForecastData data) {
-        if (data == null) return 0D;
-        return checkNotNull(data.getAsiaWinPercent());
-    }
-
-    private Double getSizeWinPercent(BigDataForecastData data) {
-        if (data == null) return 0D;
-        return checkNotNull(data.getSizeWinPercent());
     }
 
     /**
@@ -351,36 +322,39 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
      * 更新提示信息
      */
     public void updateMessage() {
-        String message = getString(R.string.diy_compute_method_message);
         String history = "";
         String home = "";
         String guest = "";
+        String messageString = "";
         switch (getCurrentRadioPosition()) {
             case 0:
                 history = StringFormatUtils.toString(mFactor.getHost().getHistoryTemp());
                 home = StringFormatUtils.toString(mFactor.getHost().getHomeTemp());
                 guest = StringFormatUtils.toString(mFactor.getHost().getGuestTemp());
+                messageString = getString(R.string.diy_compute_method_message1);
                 break;
             case 1:
                 history = StringFormatUtils.toString(mFactor.getSize().getHistoryTemp());
                 home = StringFormatUtils.toString(mFactor.getSize().getHomeTemp());
                 guest = StringFormatUtils.toString(mFactor.getSize().getGuestTemp());
+                messageString = getString(R.string.diy_compute_method_message2);
                 break;
             case 2:
                 history = StringFormatUtils.toString(mFactor.getAsia().getHistoryTemp());
                 home = StringFormatUtils.toString(mFactor.getAsia().getHomeTemp());
                 guest = StringFormatUtils.toString(mFactor.getAsia().getGuestTemp());
+                messageString = getString(R.string.diy_compute_method_message3);
                 break;
         }
         String unColoredMsg = String.format(Locale.getDefault(), messageString, history, home, guest);
         SpannableStringBuilder style = new SpannableStringBuilder(unColoredMsg);
 
-        style.setSpan(new ForegroundColorSpan(combatColor), messageString.indexOf(combatString),
-                messageString.indexOf(combatString) + combatString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        style.setSpan(new ForegroundColorSpan(hostColor), messageString.indexOf(hostString),
-                messageString.indexOf(hostString) + hostString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        style.setSpan(new ForegroundColorSpan(guestColor), messageString.indexOf(guestString),
-                messageString.indexOf(guestString) + guestString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(combatColor), messageString.indexOf("交"),
+                messageString.indexOf("交") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(hostColor), messageString.indexOf("主"),
+                messageString.indexOf("主") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(guestColor), messageString.indexOf("客"),
+                messageString.indexOf("客") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mMessage.setText(style);
         setResult();
     }

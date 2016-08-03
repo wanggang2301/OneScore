@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.UpdateInfo;
@@ -197,7 +198,8 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     MobclickAgent.onEvent(mContext, "AboutWe_UpdateVersion_Click");
-                    //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
                     DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
                     Uri uri = Uri.parse(mUpdateInfo.getUrl());
                     DownloadManager.Request request = new DownloadManager.Request(uri);

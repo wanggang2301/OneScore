@@ -443,8 +443,10 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 progress = homeWin * 100 / (guestWin+homeWin);
             }
             mProgressBar.setProgress(progress);
-            mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
-            mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
+            if(getActivity()!=null){
+                mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
+                mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
+            }
         }
 
         //近期战绩
@@ -473,12 +475,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
 
         //未来三场
-        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null&&getActivity()!=null){
+        if(getActivity()!=null&&analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null&&getActivity()!=null){
             mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+getActivity().getResources().getString(R.string.number_hk_dd));
             mHomeFutureName.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getTeam());
             mImageLoader.displayImage(analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(), mHomeFutureLogo, mOptions);
         }
-        if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null&&getActivity()!=null){
+        if(getActivity()!=null&&analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null&&getActivity()!=null){
             mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + getActivity().getResources().getString(R.string.number_hk_dd));
             mGuestFutureName.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getTeam());
             mImageLoader.displayImage(analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),mGuestFutureLogo,mOptions);
@@ -554,6 +556,16 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
         if(getActivity()!=null){
             mContext=getActivity();
+            //心水推荐
+//        Log.e("fuckkkkkk",analyzeBean.getRecommend());
+            if(analyzeBean.getRecommend()!=null&&analyzeBean.getRecommend()!=""){
+                mRecommend.setTextColor(mContext.getResources().getColor(R.color.team_name_color));
+                mRecommend.setText(Html.fromHtml(analyzeBean.getRecommend()));
+            }else{
+                mRecommend.setTextColor(mContext.getResources().getColor(R.color.black_details_ball_textcolor));
+                mRecommend.setText(mChartLetGuest.getResources().getString(R.string.basket_nodata));
+            }
+
             if (homeLineUpList != null && guestLineUpList != null) {
                 if (homeLineUpList.size() > 0) {
                     // 显示首发内容
@@ -611,15 +623,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 fl_firsPlayers_content.setVisibility(View.GONE);
             }
 
-        }
-        //心水推荐
-//        Log.e("fuckkkkkk",analyzeBean.getRecommend());
-        if(analyzeBean.getRecommend()!=null&&analyzeBean.getRecommend()!=""){
-            mRecommend.setTextColor(mContext.getResources().getColor(R.color.team_name_color));
-            mRecommend.setText(Html.fromHtml(analyzeBean.getRecommend()));
-        }else{
-            mRecommend.setTextColor(mContext.getResources().getColor(R.color.black_details_ball_textcolor));
-            mRecommend.setText(mChartLetGuest.getResources().getString(R.string.basket_nodata));
         }
 
         //亚盘走势

@@ -84,6 +84,7 @@
             style="@style/login_edittext_password"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:hint="@string/input_password_new_no"
             android:layout_weight="1"/>
 
 
