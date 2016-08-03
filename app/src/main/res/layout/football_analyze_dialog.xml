@@ -4,17 +4,24 @@
     android:layout_width="337dp"
     android:layout_height="240dp"
     android:orientation="vertical"
+    android:layout_gravity="center"
     >
 
-    <TextView
-        android:id="@+id/screen_titleView"
-        android:layout_width="337dp"
-        android:layout_height="38dip"
-        android:background="@drawable/football_screen_title"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="@drawable/share_date_top_bg"
         android:gravity="center"
-        android:text="@string/basket_analyze_screen"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        >
+
+        <TextView
+            android:id="@+id/screen_titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/basket_analyze_screen"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"

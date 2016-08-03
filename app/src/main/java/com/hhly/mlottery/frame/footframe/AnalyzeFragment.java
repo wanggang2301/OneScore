@@ -614,6 +614,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     fl_firsPlayers_not.setVisibility(View.VISIBLE);
                     fl_firsPlayers_content.setVisibility(View.GONE);
                 }
+
             }else{
                 // 显示暂无首发提示
                 fl_firsPlayers_not.setVisibility(View.VISIBLE);

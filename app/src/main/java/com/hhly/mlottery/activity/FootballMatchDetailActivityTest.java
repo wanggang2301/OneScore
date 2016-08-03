@@ -266,6 +266,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private boolean isRquestSuccess = true;
 
+    private TimerTask timerTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -326,7 +328,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         try {
             hSocketUri = new URI(BaseURLs.WS_SERVICE);
-            System.out.println(">>>>>" + hSocketUri);
+            // System.out.println(">>>>>" + hSocketUri);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -859,6 +861,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                 L.d(TAG, "第一次启动socket");
+                L.d("456789","第一次启动socket");
+
                 startWebsocket();
                 computeWebSocket();
             }
@@ -1130,6 +1134,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             footballTimer.cancel();
             footballTimer.purge();
             footballTimer = null;
+            timerTask = null;
         }
 
         if (hSocketClient != null) {
@@ -1233,8 +1238,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
      * 计算推送Socket断开重新连接
      */
     private synchronized void computeWebSocket() {
+
+
         if (!isStarComputeTimer) {
-            TimerTask timerTask = new TimerTask() {
+            timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     L.d(TAG, "计算");
@@ -1249,12 +1256,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             };
 
-            if (!isStarComputeTimer) {
-                if (timerTask != null) {
-                    footballTimer.schedule(timerTask, 15000, 30000);
-                    isStarComputeTimer = true;
-                }
+
+            if (footballTimer != null) {
+                L.d("456789","footballTimer");
+                footballTimer.schedule(timerTask, 15000, 30000);
+                isStarComputeTimer = true;
             }
+
         }
     }
 
