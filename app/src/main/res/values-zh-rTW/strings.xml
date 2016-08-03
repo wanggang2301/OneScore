@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--篮球资料库-->
-    <string name="basket_info_hot">熱門</string>
-    <string name="basket_info_eur">歐洲</string>
-    <string name="basket_info_america">美洲</string>
-    <string name="basket_info_asia">亞洲</string>
-    <string name="basket_info_africa">非洲</string>
-    <string name="basket_info_inter">國際</string>
-    <string name="basket_info_title">籃球資料庫</string>
-    <string name="basket_info_zhouji">洲際賽事</string>
-    <string name="basket_info_country">國家賽事</string>
-
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滾球</string>
     <string name="foot_details_talkball">聊球</string>
@@ -56,6 +45,8 @@
     <string name="foot_odds_eu_right">負</string>
 
 
+
+
     <!--分享-->
     <string name="errcode_success">發送成功</string>
     <string name="errcode_cancel">發送取消</string>
@@ -77,6 +68,7 @@
     <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
     <string name="share_recommend">推薦</string>
     <string name="share_summary_default">壹比分,專業的足球比分直播平台</string>
+
 
 
     <!--指数-->
@@ -687,24 +679,6 @@
     <string name="basket_odds_asiaLet_details">亞盤詳情</string>
     <string name="basket_odds_asiaSize_details">大小球詳情</string>
 
-
-    <!--篮球资料库详情-->
-    <string name="basket_database_details_handicapname">讓分盤</string>
-    <string name="basket_database_details_bigsmallname">大小盤</string>
-    <string name="basket_database_details_season">賽季</string>
-    <string name="basket_database_details_all">全部</string>
-    <string name="basket_database_details_home">主場</string>
-    <string name="basket_database_details_guest">客場</string>
-    <string name="basket_database_details_runkingname">排名/球隊</string>
-    <string name="basket_database_details_overgame">已賽</string>
-    <string name="basket_database_details_big">大</string>
-    <string name="basket_database_details_dorw">走</string>
-    <string name="basket_database_details_small">小</string>
-
-    <string name="basket_database_details_up">上盤</string>
-    <string name="basket_database_details_down">下盤</string>
-    <string name="basket_database_details_yzs">贏/走/輸</string>
-
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
     <string name="football_analyze_details_time">時間</string>
@@ -765,13 +739,10 @@
     <string name="login">登錄</string>
     <string name="logining">正在登錄...</string>
     <string name="login_succ">登錄成功</string>
-    <string name="login_no_weixin">沒有安裝微信，請先安裝微信!</string>
-    <string name="login_peak">登入高峰期，請稍後再試</string>
     <string name="login_fail">登錄失敗</string>
     <string name="pwd_format">密碼格式爲6-16位數字和字符組成</string>
     <string name="pwd_format_hint">6-16位字符,區分大小寫</string>
     <string name="pwd_empty">請輸入密碼</string>
-    <string name="pwd_empty_new">請輸入密碼(由6-16位數字和字符組成)</string>
     <string name="phone_empty">請輸入手機號碼</string>
     <string name="phone_error">請輸入正確手機號碼</string>
     <string name="verify_code">請輸入驗證碼</string>
@@ -811,10 +782,6 @@
 
 
     <!--1.1.2 begin-->
-    <string name="weixin_installed">請先安裝微信用戶端!</string>
-    <string name="Login_register">登入/注册</string>
-    <string name="personal_center">個人中心</string>
-    <string name="social_account_login">社交帳號快速登錄</string>
     <string name="forget_pwd">忘記密碼?</string>
     <string name="next_step">下一步</string>
     <string name="find_pw">找回密碼</string>
@@ -831,12 +798,11 @@
     <string name="nickname_format">昵稱:格式爲1-15個字符(不超過七個中文),由中英文數字和字符組成</string>
     <string name="modify_password">修改密碼</string>
     <string name="modifying_password">正在修改密碼...</string>
-    <string name="modifying_nickname">正在修改昵称...</string>
     <string name="modify_password_succ">修改密碼成功</string>
     <string name="modify_password_fail">修改密碼失敗</string>
     <string name="input_password_old">請輸入舊密碼</string>
-    <string name="input_password_new">請輸入新密碼(由6-16位數字和字符組成)</string>
-    <string name="input_password_new_no">請輸入新密碼(由6-16位數字和字符組成)</string>
+    <string name="input_password_new">請輸入新密碼（由６－１６位數字和字符組成）</string>
+    <string name="input_password_new_no">請輸入新密碼</string>
     <string name="input_password_confirm">請保持和新密碼壹致</string>
     <string name="show_password">顯示密碼</string>
     <string name="old_pw">舊</string>
@@ -887,8 +853,6 @@
     <string name="diy_combat_rate">交鋒概率</string>
     <string name="diy_host_rate">主隊概率</string>
     <string name="diy_guest_rate">客隊概率</string>
-    <string name="intelligence_host_recent">主隊近期</string>
-    <string name="intelligence_guest_recent">客隊近期</string>
     <string name="diy_custom_compute_method">DIY自定義算法</string>
     <string name="foot_details_info">情報</string>
     <string name="insufficient_sampling">采樣不足</string>
@@ -901,5 +865,26 @@
     <string name="size_lose_rate">小球率</string>
     <string name="asia_win_rate">贏盤率</string>
     <string name="asia_lose_rate">輸盤率</string>
-    <string name="version_update_title">升級包下載中，請稍後...</string>
+    <string name="host_recent">主隊近期</string>
+    <string name="new_analyze_let">亞盤走勢</string>
+    <string name="new_analyze_home">主場</string>
+    <string name="new_analyze_guest">客場</string>
+    <string name="new_analyze_win">贏</string>
+    <string name="new_analyze_draw">走</string>
+    <string name="new_analyze_lose">輸</string>
+    <string name="new_analyze_score">比分</string>
+    <string name="new_analyze_first_let">初盤</string>
+    <string name="new_analyze_result">結果</string>
+    <string name="new_analyze_more_messages">更多信息>></string>
+    <string name="new_analyze_big_small_ball">大小球</string>
+    <string name="new_analyze_recent_compare">近期對比</string>
+    <string name="new_analyze_liangduijin">兩隊近</string>
+    <string name="new_analyze_changjiaofeng">場交鋒，主隊</string>
+    <string name="new_analyze_ciyingpan">次贏盤</string>
+    <string name="new_analyze_cishupan">次輸盤</string>
+    <string name="new_analyze_cizoupan">次走盤</string>
+    <string name="new_analyze_yingpanlv">贏盤率</string>
+    <string name="new_analyze_cidaqiu">次大球</string>
+    <string name="new_analyze_cixiaoqiu">次小球</string>
+    <string name="new_analyze_daqiulv">大球率</string>
 </resources>

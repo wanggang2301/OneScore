@@ -622,7 +622,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 fl_firsPlayers_not.setVisibility(View.VISIBLE);
                 fl_firsPlayers_content.setVisibility(View.GONE);
             }
-
         }
 
         //亚盘走势
