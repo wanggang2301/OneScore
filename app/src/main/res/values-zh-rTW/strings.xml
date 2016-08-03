@@ -691,6 +691,7 @@
     <!--篮球资料库详情-->
     <string name="basket_database_details_handicapname">讓分盤</string>
     <string name="basket_database_details_bigsmallname">大小盤</string>
+    <string name="basket_database_details_schedule">賽程</string>
     <string name="basket_database_details_season">賽季</string>
     <string name="basket_database_details_all">全部</string>
     <string name="basket_database_details_home">主場</string>
