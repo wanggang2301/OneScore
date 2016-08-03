@@ -322,7 +322,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setCurrentItem(ANALYZE_FG);
 
 
         loadData();
