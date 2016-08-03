@@ -328,7 +328,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         try {
             hSocketUri = new URI(BaseURLs.WS_SERVICE);
-           // System.out.println(">>>>>" + hSocketUri);
+            // System.out.println(">>>>>" + hSocketUri);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -1252,8 +1252,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             };
 
+
+
             if (!isStarComputeTimer) {
-                if (timerTask != null) {
+                if (footballTimer != null) {
                     footballTimer.schedule(timerTask, 15000, 30000);
                     isStarComputeTimer = true;
                 }
