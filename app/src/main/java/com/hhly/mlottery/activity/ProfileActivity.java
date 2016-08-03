@@ -76,6 +76,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         //第三方登录时隐藏修改密码栏
         if(PreferenceUtil.getBoolean("three_login",false)){
             findViewById(R.id.rl_modifypass).setVisibility(View.GONE);
+            findViewById(R.id.account_number).setVisibility(View.GONE);
         }
         tv_nickname = ((TextView) findViewById(R.id.tv_nickname));
         ((TextView) findViewById(R.id.tv_account_real)).setText(AppConstants.register.getData().getUser().getLoginAccount());
