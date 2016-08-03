@@ -191,14 +191,16 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
         TextView timeTextView = holder.getView(R.id.cpi_item_time_txt);
         TextView statusTextView = holder.getView(R.id.tv_tag);
         // 上半场 > 45 显示 45+
-        // 下班场 > 90 显示 90+
+        // 下半场 > 90 显示 90+
         if (status > 0) {
             try {
                 int minute = Integer.parseInt(matchInfo.getOpenTime());
-                if (minute > 45) {
+                if (status == 1 && minute > 45) {
                     timeTextView.setText(R.string.forty_five_plus);
-                } else if (minute > 90) {
+                } else if (status == 2 && minute > 90) {
                     timeTextView.setText(R.string.ninety_plus);
+                } else {
+                    timeTextView.setText(matchInfo.getOpenTime());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
