@@ -10,7 +10,7 @@ public class AppConstants {
 	/** true是国际版|false内地版 */
 	public static final boolean isGOKeyboard = false;
 	/** true是纯净版|false完整版 */
-	public static final boolean fullORsimple = true;
+	public static final boolean fullORsimple = false;
 	/** 是否是测试连接，测试连接用于阶段测试使用 */
 	public static final boolean isTestLink = false;
 	/**
