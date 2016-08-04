@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -128,6 +129,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private LinearLayout fl_firsPlayers_content;// 首发内容容器
     //心水推荐
     private TextView mRecommend;
+    private TextView mRecommendNoData;
+    private RelativeLayout mLiRecommend;
     //亚盘走势
     private LinearLayout mllLet;
     private TextView mTextLet1;
@@ -272,6 +275,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
         //心水推荐
         mRecommend= (TextView) mView.findViewById(R.id.tv_analyze_recommend);
+        mRecommendNoData= (TextView) mView.findViewById(R.id.football_recommend_nodata);
+        mLiRecommend= (RelativeLayout) mView.findViewById(R.id.ll_recommend);
 
         //亚盘走势
         mllLet= (LinearLayout) mView.findViewById(R.id.ll_analyze_let);
@@ -317,6 +322,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     mAttackNodata.setVisibility(View.VISIBLE);
                     fl_firsPlayers_not.setVisibility(View.VISIBLE);
                     fl_firsPlayers_content.setVisibility(View.GONE);
+                    mLiRecommend.setVisibility(View.GONE);
+                    mRecommendNoData.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -329,6 +336,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mAttackNodata.setVisibility(View.VISIBLE);
                 fl_firsPlayers_not.setVisibility(View.VISIBLE);
                 fl_firsPlayers_content.setVisibility(View.GONE);
+                mLiRecommend.setVisibility(View.GONE);
+                mRecommendNoData.setVisibility(View.VISIBLE);
             }
         }, NewAnalyzeBean.class);
 
@@ -510,16 +519,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
         if(getActivity()!=null){
             mContext=getActivity();
-            //心水推荐
-//        Log.e("fuckkkkkk",analyzeBean.getRecommend());
-            if(analyzeBean.getRecommend()!=null&&analyzeBean.getRecommend()!=""){
-                mRecommend.setTextColor(mContext.getResources().getColor(R.color.team_name_color));
-                mRecommend.setText(Html.fromHtml(analyzeBean.getRecommend()));
-            }else{
-                mRecommend.setTextColor(mContext.getResources().getColor(R.color.black_details_ball_textcolor));
-                mRecommend.setText(mChartLetGuest.getResources().getString(R.string.basket_nodata));
-            }
-
             if (homeLineUpList != null && guestLineUpList != null) {
                 if (homeLineUpList.size() > 0) {
                     // 显示首发内容
@@ -575,6 +574,15 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 fl_firsPlayers_not.setVisibility(View.VISIBLE);
                 fl_firsPlayers_content.setVisibility(View.GONE);
             }
+        }
+
+        //心水推荐
+        if(analyzeBean.getRecommend()!=null&&analyzeBean.getRecommend()!=""){
+            mRecommend.setText(Html.fromHtml(analyzeBean.getRecommend()));
+            mRecommendNoData.setVisibility(View.GONE);
+        }else{
+            mLiRecommend.setVisibility(View.GONE);
+            mRecommendNoData.setVisibility(View.VISIBLE);
         }
 
         //亚盘走势
