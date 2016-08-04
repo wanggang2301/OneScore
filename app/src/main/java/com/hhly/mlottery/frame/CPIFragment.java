@@ -216,7 +216,9 @@ public class CPIFragment extends Fragment implements
      */
     private void showDateChooseDialog() {
         maybeInitDateChooseDialog();
-        mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
+        if (!mDateChooseDialogFragment.isVisible()) {
+            mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
+        }
     }
 
     /**
@@ -329,7 +331,10 @@ public class CPIFragment extends Fragment implements
      */
     public void showCompanyChooseDialog() {
         maybeInitCompanyChooseDialog();
-        mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+        if (!mCompanyChooseDialogFragment.isVisible()) {
+            mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+        }
+
     }
 
     /**
