@@ -222,7 +222,9 @@ public class IntelligenceFragment extends Fragment {
                     mDialog = IntelligenceComputeMethodDialogFragment
                             .newInstance(mBigDataForecast, mFactor);
                 }
-                mDialog.show(getChildFragmentManager(), "computeMethod");
+                if (!mDialog.isVisible()) {
+                    mDialog.show(getChildFragmentManager(), "computeMethod");
+                }
             }
         });
 
