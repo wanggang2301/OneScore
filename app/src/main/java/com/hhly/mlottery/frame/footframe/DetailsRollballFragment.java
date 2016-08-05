@@ -233,6 +233,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         allMatchLiveMsgId = new ArrayList<>();
         for (MatchTextLiveBean ml : matchLive) {
 
+
             if (ml.getMsgId() != null && !"".equals(ml.getMsgId())) {
                 allMatchLiveMsgId.add(Integer.parseInt(ml.getMsgId()));
             }
