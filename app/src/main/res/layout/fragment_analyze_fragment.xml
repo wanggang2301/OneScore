@@ -1764,6 +1764,7 @@
             android:background="@color/line_football_footer"
             />
         <RelativeLayout
+            android:id="@+id/ll_recommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
@@ -1776,6 +1777,18 @@
                 android:text="@string/basket_nodata"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
+        <TextView
+            android:id="@+id/football_recommend_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
 
         <View
             android:layout_width="match_parent"

@@ -54,6 +54,7 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
     private boolean resetColor;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private List<Match> topLists;
 
     public RollBallAdapter(Context context) {
         super();
@@ -493,12 +494,15 @@ public class RollBallAdapter extends BaseRecyclerViewAdapter {
 
     // 置顶操作
     private void transformMapper(int position) {
-        List<Match> list = getList();
-        Match data = list.get(position);
-        list.remove(data);
-        list.add(0, data);
-        Collections.sort(list, new Match());
+        topLists = getList();
+        Match data = topLists.get(position);
+        topLists.remove(data);
+        topLists.add(0, data);
+        Collections.sort(topLists, new Match());
         notifyDataSetChanged();
+    }
+    public List<Match> getTopLists() {
+        return topLists;
     }
 
     // WebSocket推送消息分发处理
