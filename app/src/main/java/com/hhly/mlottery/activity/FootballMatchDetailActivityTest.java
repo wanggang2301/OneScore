@@ -44,6 +44,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footframe.AnimHeadLiveFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
@@ -220,6 +221,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private PreHeadInfoFrament mPreHeadInfoFrament;
     private LiveHeadInfoFragment mLiveHeadInfoFragment;
 
+    private AnimHeadLiveFragment mAnimHeadLiveFragment;
+
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
 
     private TalkAboutBallFragment mTalkAboutBallFragment;
@@ -293,7 +296,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
          */
         mPreHeadInfoFrament = PreHeadInfoFrament.newInstance();
         mLiveHeadInfoFragment = new LiveHeadInfoFragment().newInstance();
-        basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment);
+        mAnimHeadLiveFragment = new AnimHeadLiveFragment().newInstance();
+        basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment, mAnimHeadLiveFragment);
         mHeadviewpager.setAdapter(basePagerAdapter);
         mIndicator.setViewPager(mHeadviewpager);
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
@@ -1044,29 +1048,82 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
      */
     private ArrayList<Integer> initMatchTrend(String code, String code2, int time) {
         ArrayList<Integer> list = new ArrayList<Integer>();
-        int time15 = 0, time30 = 0, time45 = 0, time60 = 0, time75 = 0, time90 = 0;
+        // int time15 = 0, time30 = 0, time45 = 0, time60 = 0, time75 = 0, time90 = 0;
+        int time5 = 0, time10 = 0, time15 = 0, time20 = 0, time25 = 0, time30 = 0, time35 = 0, time40 = 0, time45 = 0, time50 = 0, time55 = 0, time60 = 0, time65 = 0, time70 = 0, time75 = 0, time80 = 0, time85 = 0, time90 = 0;
 
         for (MatchTextLiveBean matchTextLiveBean : matchLive) {
             Integer dd = StadiumUtils.convertStringToInt(matchTextLiveBean.getTime());
             if (code.equals(matchTextLiveBean.getCode())) {  //主队角球
                 if (FIRSTHALF.equals(matchTextLiveBean.getState()) || HALFTIME.equals(matchTextLiveBean.getState())) {// 上半场和中场
-                    if (dd >= 0 && dd <= 15 && time >= 15) {
+                    if (dd >= 0 && dd <= 5 && time >= 5) {
+                        time5++;
+                    }
+
+                    if (dd >= 5 && dd <= 10 && time >= 10) {
+                        time10++;
+                    }
+
+                    if (dd >= 10 && dd <= 15 && time >= 15) {
                         time15++;
                     }
-                    if (dd > 15 && dd <= 30 && time >= 30) {
+
+                    if (dd >= 15 && dd <= 20 && time >= 20) {
+                        time20++;
+                    }
+
+                    if (dd > 20 && dd <= 25 && time >= 25) {
+                        time25++;
+                    }
+
+                    if (dd >= 25 && dd <= 30 && time >= 30) {
                         time30++;
                     }
-                    if (dd > 30 && time >= 45) {
+
+                    if (dd > 30 && dd <= 35 && time >= 35) {
+                        time35++;
+                    }
+
+                    if (dd > 35 && dd <= 40 && time >= 40) {
+                        time40++;
+                    }
+
+                    if (dd > 40 && time >= 45) {
                         time45++;
                     }
                 } else if (SECONDHALF.equals(matchTextLiveBean.getState())) {// 下半场
-                    if (dd >= 0 && dd <= 60 && time >= 60) {
+
+                    if (dd >= 0 && dd <= 50 && time >= 50) {
+                        time50++;
+                    }
+                    if (dd > 50 && dd <= 55 && time >= 55) {
+                        time55++;
+                    }
+
+                    if (dd > 55 && dd <= 60 && time >= 60) {
                         time60++;
                     }
-                    if (dd > 60 && dd <= 75 && time >= 75) {
+
+                    if (dd > 60 && dd <= 65 && time >= 65) {
+                        time65++;
+                    }
+
+                    if (dd > 65 && dd <= 70 && time >= 70) {
+                        time70++;
+                    }
+
+                    if (dd > 70 && dd <= 75 && time >= 75) {
                         time75++;
                     }
-                    if (dd > 75 && time >= 90) {
+
+                    if (dd > 75 && dd <= 80 && time >= 80) {
+                        time80++;
+                    }
+
+                    if (dd > 80 && dd <= 85 && time >= 85) {
+                        time85++;
+                    }
+
+                    if (dd > 85 && time >= 90) {
                         time90++;
                     }
                 }
@@ -1077,48 +1134,131 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             for (MatchTextLiveBean matchTextLiveBean : matchLive) {
                 if (code2.equals(matchTextLiveBean.getCode())) {  //主队角球
                     if (FIRSTHALF.equals(matchTextLiveBean.getState()) || HALFTIME.equals(matchTextLiveBean.getState())) {// 上半场和中场
-                        if (time >= 0 && time <= 15) {
+                        if (time >= 0 && time <= 5) {
+                            time5--;
+                        }
+                        if (time > 5 && time <= 10) {
+                            time10--;
+                        }
+
+                        if (time >= 10 && time <= 15) {
                             time15--;
                         }
-                        if (time > 15 && time <= 30) {
+                        if (time > 15 && time <= 20) {
+                            time20--;
+                        }
+
+                        if (time >= 20 && time <= 25) {
+                            time25--;
+                        }
+                        if (time > 25 && time <= 30) {
                             time30--;
                         }
-                        if (time > 30) {
+
+                        if (time >= 30 && time <= 35) {
+                            time35--;
+                        }
+                        if (time > 35 && time <= 40) {
+                            time40--;
+                        }
+
+                        if (time > 40) {
                             time45--;
                         }
                     } else if (SECONDHALF.equals(matchTextLiveBean.getState())) {// 下半场
-                        if (time >= 0 && time <= 60) {
+                        if (time >= 0 && time <= 50) {
+                            time50--;
+                        }
+                        if (time > 50 && time <= 55) {
+                            time55--;
+                        }
+
+                        if (time > 55 && time <= 60) {
                             time60--;
                         }
-                        if (time > 60 && time <= 75) {
+
+                        if (time > 60 && time <= 65) {
+                            time65--;
+                        }
+
+                        if (time > 65 && time <= 70) {
+                            time70--;
+                        }
+
+                        if (time > 70 && time <= 75) {
                             time75--;
                         }
-                        if (time > 75) {
+
+                        if (time > 75 && time <= 80) {
+                            time80--;
+                        }
+
+                        if (time > 80 && time <= 85) {
+                            time85--;
+                        }
+
+                        if (time > 85) {
                             time90--;
                         }
                     }
                 }
             }
         }
-
-
+        if (time >= 5) {
+            list.add(time5);
+        }
+        if (time >= 10) {
+            list.add(time10+time5);
+        }
         if (time >= 15) {
-            list.add(time15);
+            list.add(time15+time10+time5);
+        }
+        if (time >= 20) {
+            list.add(time20 + time15+time10+time5);
+        }
+
+        if (time >= 25) {
+            list.add(time25+time20 + time15+time10+time5);
         }
         if (time >= 30) {
-            list.add(time30 + time15);
+            list.add(time30 + time25+time20 + time15+time10+time5);
+        }
+        if (time >= 35) {
+            list.add(time35 + time30 + time25+time20 + time15+time10+time5);
+        }
+        if (time >= 40) {
+            list.add(time40 +time35 + time30 + time25+time20 + time15+time10+time5);
         }
         if (time >= 45) {
-            list.add(time45 + time30 + time15);
+            list.add(time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
+        }
+        if (time >= 50) {
+            list.add(time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
+        }
+
+        if (time >= 55) {
+            list.add(time55 + time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
         }
         if (time >= 60) {
-            list.add(time60 + time45 + time30 + time15);
+            list.add(time60 + time55 + time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
+        }
+        if (time >= 65) {
+            list.add(time65 + time60 + time55 + time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
+        }
+        if (time >= 70) {
+            list.add(time70 + time65 + time60 + time55 + time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
         }
         if (time >= 75) {
-            list.add(time75 + time60 + time45 + time30 + time15);
+            list.add(time75 + time70 + time65 + time60 + time55 + time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
+        }
+        if (time >= 80) {
+            list.add(time80+time75 + time70 + time65 + time60 + time55 +time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
+        }
+        if (time >= 85) {
+            list.add(time85 + time80+time75 + time70 + time65 + time60 + time55 +time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
         }
         if (time >= 90) {
-            list.add(time90 + time75 + time60 + time45 + time30 + time15);
+            list.add(time90 +time85+ time80+time75 + time70 + time65 + time60 + time55 +time50 + time45 + time40 +time35 + time30 + time25+time20 + time15+time10+time5);
         }
 
         return list;
