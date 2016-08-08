@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/chatballcontainer"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chatballcontainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -23,7 +22,7 @@
             <ImageView
                 android:id="@+id/talkball_home_like"
                 style="@style/MatchDetailLike"
-                android:src="@mipmap/like_red"/>
+                android:src="@mipmap/like_red" />
 
             <ImageView
                 android:id="@+id/talkball_like_anim_img"
@@ -34,8 +33,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="7dp"
-                android:src="@mipmap/like_anim_left"
-                />
+                android:src="@mipmap/like_anim_left" />
 
             <TextView
                 android:id="@+id/talkball_like_count"
@@ -46,7 +44,7 @@
                 android:layout_marginBottom="4dp"
                 android:text="0"
                 android:textColor="@color/black"
-                android:textSize="10sp"/>
+                android:textSize="10sp" />
         </RelativeLayout>
 
         <ProgressBar
@@ -58,7 +56,7 @@
             android:layout_weight="4"
             android:max="100"
             android:progress="50"
-            android:progressDrawable="@drawable/pro_analyze"/>
+            android:progressDrawable="@drawable/pro_analyze" />
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -68,7 +66,7 @@
             <ImageView
                 android:id="@+id/talkball_guest_like"
                 style="@style/MatchDetailLike"
-                android:src="@mipmap/like_blue"/>
+                android:src="@mipmap/like_blue" />
 
             <ImageView
                 android:id="@+id/talkbail_guest_like_anim_img"
@@ -79,8 +77,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="7dp"
-                android:src="@mipmap/like_anim_right"
-                />
+                android:src="@mipmap/like_anim_right" />
 
             <TextView
                 android:id="@+id/talkbail_guest_like_count"
@@ -91,21 +88,62 @@
                 android:layout_marginBottom="4dp"
                 android:text="0"
                 android:textColor="@color/black"
-                android:textSize="10sp"/>
+                android:textSize="10sp" />
         </RelativeLayout>
+    </LinearLayout>
+
+    <!--评论 和 聊天 按钮-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评论" />
+
+        <Button
+            android:id="@+id/bt_chart_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="聊天" />
+
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/comment_lv"
+        <!--评论区-->
+        <FrameLayout
+            android:id="@+id/fl_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        </android.support.v7.widget.RecyclerView>
+            android:visibility="visible">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comment_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+        </FrameLayout>
+        <!--聊天室区-->
+        <FrameLayout
+            android:id="@+id/fl_chart_room"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <fragment
+                android:id="@+id/fm_chart_room"
+                android:name="io.rong.imkit.fragment.ConversationFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
 
         <ProgressBar
             android:id="@+id/pull_to_refresh_progress"
@@ -114,8 +152,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:indeterminate="true"
-            />
+            android:indeterminate="true" />
     </FrameLayout>
     <!-- <android.support.v4.widget.NestedScrollView
          android:id="@+id/nestedscrollview"
@@ -246,7 +283,7 @@
         android:gravity="center"
         android:text="@string/comment_contentnull"
         android:visibility="gone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!--   <RelativeLayout
            android:id="@+id/www"
@@ -261,16 +298,15 @@
         android:id="@+id/comment_inputcontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#dddddd"/>
+            android:background="#dddddd" />
 
         <LinearLayout
-
+            android:id="@+id/ll_scanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#f5f5f5"
@@ -292,8 +328,7 @@
                 android:paddingLeft="10dp"
                 android:textColor="#333333"
                 android:textColorHint="#999999"
-                android:textSize="13sp"
-                />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tv_commentcount"
@@ -305,8 +340,7 @@
                 android:gravity="center"
                 android:textColor="#F55E4D"
                 android:textSize="13sp"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

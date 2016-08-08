@@ -1,9 +1,12 @@
 package com.hhly.mlottery.frame.footframe;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -28,11 +31,13 @@ import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.ChatballAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.ConversationFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.Comment;
@@ -46,6 +51,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.rong.imlib.model.Conversation;
+
+
 /**
  * @author hhly204
  * @ClassName: TalkAboutBallFragment
@@ -53,6 +61,8 @@ import java.util.Map;
  * @date 2016-6-2
  */
 public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+    private static final String TAG = "TalkAboutBallFragment";
+    private Context mContext;
     private View mView;
     private ProgressBar talkballpro;//客队Vs主队点赞的比例
     private ImageView ivHomeLike;//点赞主队
@@ -101,18 +111,21 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private View view;
     private View emptyView;
     private ProgressBar mProgressBarRefresh;
+    private LinearLayout ll_scanner;
+    private FrameLayout fl_comment;
+    private FrameLayout fl_chart_room;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity();
 //        L.d(TAG, "______________onCreate");
         if (getArguments() != null) {
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
         }
-
     }
 
     @Override
@@ -238,7 +251,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         ivGuestLike.setVisibility(View.INVISIBLE);
         setClickableLikeBtn(true);
         //评论相关
-        sdk = CyanSdk.getInstance(getActivity());
+        sdk = CyanSdk.getInstance(mContext);
         if (CommonUtils.isLogin()) {
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
@@ -252,6 +265,13 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //        nestedscrollview = (NestedScrollView) mView.findViewById(R.id.nestedscrollview);
 
         mCommentCount.setVisibility(View.VISIBLE);
+
+        mView.findViewById(R.id.bt_comment).setOnClickListener(this);// 评论按钮
+        mView.findViewById(R.id.bt_chart_room).setOnClickListener(this);// 聊天按钮
+        ll_scanner = (LinearLayout) mView.findViewById(R.id.ll_scanner);// 评论窗口
+        fl_comment = (FrameLayout) mView.findViewById(R.id.fl_comment);// 评论区
+        fl_chart_room = (FrameLayout) mView.findViewById(R.id.fl_chart_room); // 聊天室区
+        mView.findViewById(R.id.fm_chart_room).setBackgroundResource(R.mipmap.welcome1);
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -319,7 +339,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
     private void initRecyclerView() {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.comment_lv);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         //设置布局管理器
         mRecyclerView.setLayoutManager(layoutManager);
         //设置为垂直布局，这也是默认的
@@ -467,7 +487,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
         } else {
             //获取评论的一切信息
-            if (!TextUtils.isEmpty(mThirdId)&&mCommentArrayList==null) {
+            if (!TextUtils.isEmpty(mThirdId) && mCommentArrayList == null) {
                 loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }
@@ -486,17 +506,17 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             case R.id.et_comment:
                 if (!CommonUtils.isLogin()) {
                     //跳转登录界面
-                    Intent intent1 = new Intent(getActivity(), LoginActivity.class);
+                    Intent intent1 = new Intent(mContext, LoginActivity.class);
                     startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                 } else {//跳转输入评论页面
-                    Intent intent2 = new Intent(getActivity(), InputActivity.class);
+                    Intent intent2 = new Intent(mContext, InputActivity.class);
                     intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
                     startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
                     mLinearLayout.setVisibility(View.GONE);
                     System.out.println("lzftalk跳" + topicid);
                     //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
                     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
-                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(getActivity(), 60));
+                    lp.setMargins(0, 0, 0, DisplayUtil.dip2px(mContext, 60));
                     mRecyclerView.requestLayout();
 
                 }
@@ -515,10 +535,25 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
                 requestLikeData(ADDKEYGUEST, "1", type);
                 break;
+
+            case R.id.bt_comment:// 评论
+                mRecyclerView.setVisibility(View.VISIBLE);
+                ll_scanner.setVisibility(View.VISIBLE);
+                fl_comment.setVisibility(View.VISIBLE);
+                fl_chart_room.setVisibility(View.GONE);
+                break;
+            case R.id.bt_chart_room:// 聊天室
+                mRecyclerView.setVisibility(View.GONE);// 隐藏评论内容
+                ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口 TODO
+                fl_comment.setVisibility(View.GONE);
+                fl_chart_room.setVisibility(View.VISIBLE);
+                RongYunUtils.intoChartRoom(mContext,mThirdId);// 进入聊天室
+                break;
         }
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
+
 }

@@ -18,7 +18,9 @@ import com.android.volley.toolbox.Volley;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.RongYunUtils;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -507,4 +509,87 @@ public class VolleyContentFast {
         }
     }
 
+    /**
+     *  融云请求
+     * @param url
+     * @param params
+     * @param successlistener
+     * @param errorListener
+     * @param clazz
+     * @param <T>
+     */
+    public static <T> void requestRongYun(final String url, final Map<String, String> params,
+                                          final ResponseSuccessListener<T> successlistener,
+                                          final ResponseErrorListener errorListener, final Class clazz) {
+
+        String tempUrl = url;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                L.d(TAG, "request success.");
+                if (L.isDebug) {//会导致内存泄漏
+                    L.i(TAG, "[ response = " + response + " ]");
+                }
+
+                if (response == null) {
+                    VolleyException volleyException = new VolleyException();
+                    volleyException.setErrorCode(ERROR_CODE_RESPONSE_NULL);
+                    errorListener.onErrorResponse(volleyException);
+                    return;
+                }
+
+                Object object = null;
+                try {
+                    object = JSON.parseObject(response, clazz);
+
+                } catch (Exception e) {
+                    L.e(TAG, e.getMessage());
+                    VolleyException volleyException = new VolleyException();
+                    volleyException.setErrorCode(ERROR_CODE_JSON_PARSE);
+                    errorListener.onErrorResponse(volleyException);
+                    return;
+                }
+                successlistener.onResponse((T) object);
+
+
+                L.e(TAG, "┗—————————————————————————————————————————————————————————————————————————————");
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                L.e(TAG, "request [ " + url + " ] error,error msg = [ " + volleyError.getMessage() + " ].");
+                VolleyException volleyException = new VolleyException();
+                volleyException.setErrorCode(ERROR_CODE_VOLLEY_ERROR);
+                volleyException.setVolleyError(volleyError);
+                errorListener.onErrorResponse(volleyException);
+                L.e(TAG, "┗—————————————————————————————————————————————————————————————————————————————");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String nonce = String.valueOf(Math.random() * 1000000);
+                String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+                String sha1 = "";
+                try {
+                    sha1 = RongYunUtils.sha1(RongYunUtils.APPSECRET + nonce + timestamp);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                headers.put("App-Key", RongYunUtils.APPKEY);
+                headers.put("Nonce", nonce);
+                headers.put("Timestamp", timestamp);
+                headers.put("Signature", sha1);
+                System.out.println("lzfccc" + "nonce=" + nonce + "Timestamp=" + timestamp + "sha1=" + sha1);
+                return headers;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
+        mQueue.add(stringRequest);
+    }
 }

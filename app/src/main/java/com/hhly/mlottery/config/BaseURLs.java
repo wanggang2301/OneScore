@@ -748,4 +748,9 @@ public class BaseURLs {
     public final static String URL_WEIXIN_LOGIN = URL_API_HOST + "androidUserCenter.loginWeChat.do";
     /**足球情报 - 大数据预测*/
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
+
+    /**--融云 获取用户Token URL--*/
+    public final static String RONG_USER_TOKEN = "https://api.cn.ronghub.com/user/getToken.json";
+    /**--融云 获取聊天室ID URL--*/
+    public final static String RONG_CHARTROOM_ID = "https://api.cn.ronghub.com/chatroom/create.json";
 }

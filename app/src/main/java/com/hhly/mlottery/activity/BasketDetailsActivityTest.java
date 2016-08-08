@@ -350,7 +350,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
-
+        // TODO
         mTabsAdapter.addFragments(mAnalyzeFragment,mOddsLet,mOddsSize, mOddsEuro,  mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
