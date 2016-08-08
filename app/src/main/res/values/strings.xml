@@ -917,5 +917,25 @@
     <string name="percent_factor">比例因子</string>
     <string name="intelligence_host_recent">主队近期</string>
     <string name="intelligence_guest_recent">客队近期</string>
-    <string name="version_update_title">升级包下载中，请稍后...</string>
+    <string name="new_analyze_let">亚盘走势</string>
+    <string name="new_analyze_home">主场</string>
+    <string name="new_analyze_guest">客场</string>
+    <string name="new_analyze_win">赢</string>
+    <string name="new_analyze_draw">走</string>
+    <string name="new_analyze_lose">输</string>
+    <string name="new_analyze_score">比分</string>
+    <string name="new_analyze_first_let">初盘</string>
+    <string name="new_analyze_result">结果</string>
+    <string name="new_analyze_more_messages">更多信息>></string>
+    <string name="new_analyze_big_small_ball">大小球</string>
+    <string name="new_analyze_recent_compare">近期对比</string>
+    <string name="new_analyze_liangduijin">两队近</string>
+    <string name="new_analyze_changjiaofeng">场交锋，主队</string>
+    <string name="new_analyze_ciyingpan">次赢盘</string>
+    <string name="new_analyze_cishupan">次输盘</string>
+    <string name="new_analyze_cizoupan">次走盘</string>
+    <string name="new_analyze_yingpanlv">赢盘率</string>
+    <string name="new_analyze_cidaqiu">次大球</string>
+    <string name="new_analyze_cixiaoqiu">次小球</string>
+    <string name="new_analyze_daqiulv">大球率</string>
 </resources>
