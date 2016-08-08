@@ -840,7 +840,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                 }
             };
 
-            if (!isStartTimer) {
+            if (detailsTimer != null) {
                 detailsTimer.schedule(tt, 15000, 15000);
                 isStartTimer = true;
             }
