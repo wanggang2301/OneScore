@@ -423,10 +423,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
                 mBasketDatasaseHandicapFragment.upDate();
                 mBasketDatabaseBigSmallFragment.upDate();
+                mBasketDatabaseScheduleFragment.update();
             }
         }, 1000);
     }
-
 
     int currentDialogPosition = 0; // 当前选中的赛季（默认第一个）
     int currentPosition = 0; // 赛季选择过程中记录（点击确定后才赋值 ， 解决点击筛选不确定后再次进入赛季选择显示不一的情况）

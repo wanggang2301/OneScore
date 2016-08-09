@@ -940,4 +940,5 @@
     <string name="new_analyze_cixiaoqiu">次小球</string>
     <string name="new_analyze_daqiulv">大球率</string>
     <string name="version_update_title">升级包下载中，请稍后...</string>
+    <string name="label_line" translatable="false">-</string>
 </resources>
