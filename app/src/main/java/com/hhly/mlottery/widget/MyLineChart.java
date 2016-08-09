@@ -45,7 +45,10 @@ public class MyLineChart extends View {
     private int Xscale = 20;
     private int Yscale = 20;
     // X,Y轴上面的显示文字
-    private String[] Xlabel = {"0", "", "", "", "","", "","", "","45'", "", "","", "","", "","", "", "90'"};
+    //private String[] Xlabel = {"0", "", "", "", "","", "","", "","45'", "", "","", "","", "","", "", "90'"};
+    private String[] Xlabel = {"0","5","10","15","45'", "", "", "90'"};
+
+
     private String[] Ylabel = {"0", "2", "4", "6", "8"};
     // 标题文本
     //private String Title;

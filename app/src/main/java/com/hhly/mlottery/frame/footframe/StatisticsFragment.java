@@ -203,7 +203,9 @@ public class StatisticsFragment extends Fragment {
         reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新走势图
         // 攻防走势图控件
         myLineChartAttack = new MyLineChart(mContext);
-        myLineChartAttack.setXlabel(new String[]{"0", "", "", "", "","", "","", "","45'", "", "","", "","", "","", "", "90'"});// 设置X轴刻度值
+      //  myLineChartAttack.setXlabel(new String[]{"0", "", "", "", "","", "","", "","45'", "", "","", "","", "","", "", "90'"});// 设置X轴刻度值
+        myLineChartAttack.setXlabel(new String[]{"0", "5", "10",  "40", "45'", "", "", "90'"});// 设置X轴刻度值
+
         myLineChartAttack.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
         myLineChartAttack.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
         myLineChartAttack.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
@@ -215,9 +217,13 @@ public class StatisticsFragment extends Fragment {
         myLineChartAttack.setmTextSize(DisplayUtil.dip2px(mContext, 10));// XY轴字体大小
         myLineChartAttack.setmLineWidth(DisplayUtil.dip2px(mContext, 1));// 线条宽度
         myLineChartAttack.setmCircleSize(DisplayUtil.dip2px(mContext, 3));// 圆点大小
+
+
         // 角球走势图控件
         myLineChartCorner = new MyLineChart(mContext);
-        myLineChartCorner.setXlabel(new String[]{"0", "", "", "", "","", "","", "","45'", "", "","", "","", "","", "", "90'"});// 设置X轴刻度值
+        //myLineChartCorner.setXlabel(new String[]{"0", "", "", "", "","", "","", "","45'", "", "","", "","", "","", "", "90'"});// 设置X轴刻度值
+        myLineChartCorner.setXlabel(new String[]{"0","5","10","40","45'", "", "", "90'"});// 设置X轴刻度值
+
         myLineChartCorner.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
         myLineChartCorner.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
         myLineChartCorner.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
