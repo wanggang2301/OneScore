@@ -606,12 +606,16 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/home_item_bg"/>
+            android:background="@color/home_item_bg"
+            android:visibility="gone"
+            />
 
         <!--亚盘走势-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -665,6 +669,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
+            android:visibility="gone"
             />
 
         <LinearLayout
@@ -674,6 +679,7 @@
             android:orientation="vertical"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
+            android:visibility="gone"
             >
             <TextView
                 android:id="@+id/tv_analyze_let1"
@@ -1032,12 +1038,16 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/home_item_bg"/>
+            android:background="@color/home_item_bg"
+            android:visibility="gone"
+            />
 
         <!--大小球走势-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -1091,6 +1101,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
+            android:visibility="gone"
             />
 
         <LinearLayout
@@ -1100,6 +1111,7 @@
             android:orientation="vertical"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
+            android:visibility="gone"
             >
             <TextView
                 android:id="@+id/tv_analyze_size1"

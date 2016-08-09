@@ -633,167 +633,167 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
 
         //亚盘走势
-        if(analyzeBean.getAsiaTrend()!=null){
-            //假数据
-//            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity1=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
-//            entity1.setLet(0);entity1.setHomeGround(true);
+//        if(analyzeBean.getAsiaTrend()!=null){
+//            //假数据
+////            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity1=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
+////            entity1.setLet(0);entity1.setHomeGround(true);
+////
+////            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity2=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
+////            entity2.setLet(2);entity2.setHomeGround(true);
+////
+////            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity3=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
+////            entity3.setLet(0);entity3.setHomeGround(false);
+////
+////            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity4=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
+////            entity4.setLet(1);entity4.setHomeGround(true);
+////
+////
+////
+////            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity1);
+////            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity2);
+////            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity3);
+////            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
+////            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
+//            mllLet.setVisibility(View.VISIBLE);
+//            mLetAllNodata.setVisibility(View.GONE);
 //
-//            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity2=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
-//            entity2.setLet(2);entity2.setHomeGround(true);
+//            if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
+//                setLetText1(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
+//                setLetText2(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
+//            }
+//            if(getActivity()!=null&&analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getPointList()!=null){
+//                mLetAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getAsiaTrend().getBattleHistory().getPointList(),analyzeBean);
+//                mLetListView.setAdapter(mLetAdapter);
+//                mLetNodata1.setVisibility(View.GONE);
+//                mLetNodata2.setVisibility(View.GONE);
+//            }else{
+//                mLetNodata1.setVisibility(View.VISIBLE);
+//                mLetNodata2.setVisibility(View.VISIBLE);
+//            }
 //
-//            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity3=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
-//            entity3.setLet(0);entity3.setHomeGround(false);
+//            //亚盘历史交锋
+//            List<List<Integer>> asiaHistoryList=new ArrayList<>();
+//            if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getLetList()!=null){
+//                if(analyzeBean.getAsiaTrend().getBattleHistory().getLetList().size()!=0){
+//                    for(NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity:analyzeBean.getAsiaTrend().getBattleHistory().getLetList()){
 //
-//            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity4=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
-//            entity4.setLet(1);entity4.setHomeGround(true);
+//                        List<Integer> list1=new ArrayList<>();
+//                        list1.add(entity.getLet());
+//                        list1.add(entity.isHomeGround()? 1:2); //主队是1 客队是2
+//                        asiaHistoryList.add(list1);
+//                    }
+//                    mChartLetHistory.setLineChartList(asiaHistoryList);
+//                }
+//                mLetNodata1.setVisibility(View.GONE);
+//            }else{
+//                mLetNodata1.setVisibility(View.VISIBLE);
+//            }
 //
 //
+//            //亚盘近期对比主队
+//            List<List<Integer>> asiaHomeList=new ArrayList<>();
+//            if(analyzeBean.getAsiaTrend().getHomeRecent().size()!=0){
+//                for(NewAnalyzeBean.AsiaTrendEntity.HomeRecentEntity entity:analyzeBean.getAsiaTrend().getHomeRecent()){
 //
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity1);
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity2);
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity3);
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
-            mllLet.setVisibility(View.VISIBLE);
-            mLetAllNodata.setVisibility(View.GONE);
-
-            if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
-                setLetText1(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
-                setLetText2(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
-            }
-            if(getActivity()!=null&&analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getPointList()!=null){
-                mLetAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getAsiaTrend().getBattleHistory().getPointList(),analyzeBean);
-                mLetListView.setAdapter(mLetAdapter);
-                mLetNodata1.setVisibility(View.GONE);
-                mLetNodata2.setVisibility(View.GONE);
-            }else{
-                mLetNodata1.setVisibility(View.VISIBLE);
-                mLetNodata2.setVisibility(View.VISIBLE);
-            }
-
-            //亚盘历史交锋
-            List<List<Integer>> asiaHistoryList=new ArrayList<>();
-            if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getLetList()!=null){
-                if(analyzeBean.getAsiaTrend().getBattleHistory().getLetList().size()!=0){
-                    for(NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity:analyzeBean.getAsiaTrend().getBattleHistory().getLetList()){
-
-                        List<Integer> list1=new ArrayList<>();
-                        list1.add(entity.getLet());
-                        list1.add(entity.isHomeGround()? 1:2); //主队是1 客队是2
-                        asiaHistoryList.add(list1);
-                    }
-                    mChartLetHistory.setLineChartList(asiaHistoryList);
-                }
-                mLetNodata1.setVisibility(View.GONE);
-            }else{
-                mLetNodata1.setVisibility(View.VISIBLE);
-            }
-
-
-            //亚盘近期对比主队
-            List<List<Integer>> asiaHomeList=new ArrayList<>();
-            if(analyzeBean.getAsiaTrend().getHomeRecent().size()!=0){
-                for(NewAnalyzeBean.AsiaTrendEntity.HomeRecentEntity entity:analyzeBean.getAsiaTrend().getHomeRecent()){
-
-                    List<Integer> list1=new ArrayList<>();
-                    list1.add(entity.getLet());
-                    list1.add(entity.isHomeGround()?1:2);
-                    asiaHomeList.add(list1);
-                }
-                mChartLetHome.setLineChartList(asiaHomeList);
-                mLetNodata3.setVisibility(View.GONE);
-            }else{
-                mLetNodata3.setVisibility(View.VISIBLE);
-            }
-
-            //亚盘近期对比客队
-            List<List<Integer>> asiaGuestList=new ArrayList<>();
-            if(analyzeBean.getAsiaTrend().getGuestRecent().size()!=0){
-                for(NewAnalyzeBean.AsiaTrendEntity.GuestRecentEntity entity:analyzeBean.getAsiaTrend().getGuestRecent()){
-                    List<Integer> list=new ArrayList<>();
-                    list.add(entity.getLet()==1?2:entity.getLet()==2?1:entity.getLet()); //因为主队是赢走输 客队是输走赢 。是对称的。所以客队的在这里直接 赢变输，输变赢。然后控件中就可以不处理了。
-                    list.add(entity.isHomeGround()?1:2);
-                    asiaGuestList.add(list);
-                }
-                mChartLetGuest.setLineChartList(asiaGuestList);
-                mLetNodata4.setVisibility(View.GONE);
-            }
-            else{
-                mLetNodata4.setVisibility(View.VISIBLE);
-            }
-
-        }else {
-            mllLet.setVisibility(View.GONE);
-            mLetAllNodata.setVisibility(View.VISIBLE);
-        }
-
-        //大小球走势
-        if(analyzeBean.getSizeTrend()!=null){
-
-            mllSize.setVisibility(View.VISIBLE);
-            mSizeAllNodata.setVisibility(View.GONE);
-            if(analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
-                setSizeText1(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
-                setSizeText2(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
-            }
-            if(getActivity()!=null&&analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getPointList()!=null){
-                mSizeAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getSizeTrend().getBattleHistory().getPointList(),analyzeBean);
-                mSizeListView.setAdapter(mSizeAdapter);
-            }else{
-                mSizeNodata1.setVisibility(View.VISIBLE);
-                mSizeNodata2.setVisibility(View.VISIBLE);
-            }
-
-            //大小球历史交锋
-            List<List<Integer>> sizeHistoryList=new ArrayList<>();
-            if(analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getTotList()!=null){
-                if(analyzeBean.getSizeTrend().getBattleHistory().getTotList().size()!=0){
-                    for(NewAnalyzeBean.SizeTrendEntity.BattleHistoryEntity.TotListEntity entity:analyzeBean.getSizeTrend().getBattleHistory().getTotList()){
-
-                        List<Integer> list1=new ArrayList<>();
-                        list1.add(entity.getTot());
-                        list1.add(entity.isHomeGround()? 1:2); //主队是1 客队是2
-                        sizeHistoryList.add(list1);
-                    }
-                    mChartSizeHistory.setLineChartList(sizeHistoryList);
-                }
-                mSizeNodata1.setVisibility(View.GONE);
-            }else{
-                mSizeNodata1.setVisibility(View.VISIBLE);
-            }
-            //大小球近期对比主队
-            List<List<Integer>> sizeHomeList=new ArrayList<>();
-            if(analyzeBean.getSizeTrend().getHomeRecent().size()!=0){
-                for(NewAnalyzeBean.SizeTrendEntity.HomeRecentEntity entity:analyzeBean.getSizeTrend().getHomeRecent()){
-
-                    List<Integer> list1=new ArrayList<>();
-                    list1.add(entity.getTot());
-                    list1.add(entity.isHomeGround()?1:2);
-                    sizeHomeList.add(list1);
-                }
-                mChartSizeHome.setLineChartList(sizeHomeList);
-            }else{
-                mSizeNodata3.setVisibility(View.VISIBLE);
-            }
-
-            //大小球近期对比客队
-            List<List<Integer>> sizeGuestList=new ArrayList<>();
-            if(analyzeBean.getSizeTrend().getGuestRecent().size()!=0){
-                for(NewAnalyzeBean.SizeTrendEntity.GuestRecentEntity entity:analyzeBean.getSizeTrend().getGuestRecent()){
-                    List<Integer> list=new ArrayList<>();
-                    list.add(entity.getTot()==1?2:entity.getTot()==2?1:entity.getTot()); //因为主队是赢走输 客队是输走赢 。是对称的。所以客队的在这里直接 赢变输，输变赢。然后控件中就可以不处理了。
-                    list.add(entity.isHomeGround()?1:2);
-                    sizeGuestList.add(list);
-                }
-                mChartSizeGuest.setLineChartList(sizeGuestList);
-            }else{
-                mSizeNodata4.setVisibility(View.VISIBLE);
-            }
-
-        }else{
-            mllSize.setVisibility(View.GONE);
-            mSizeAllNodata.setVisibility(View.VISIBLE);
-        }
+//                    List<Integer> list1=new ArrayList<>();
+//                    list1.add(entity.getLet());
+//                    list1.add(entity.isHomeGround()?1:2);
+//                    asiaHomeList.add(list1);
+//                }
+//                mChartLetHome.setLineChartList(asiaHomeList);
+//                mLetNodata3.setVisibility(View.GONE);
+//            }else{
+//                mLetNodata3.setVisibility(View.VISIBLE);
+//            }
+//
+//            //亚盘近期对比客队
+//            List<List<Integer>> asiaGuestList=new ArrayList<>();
+//            if(analyzeBean.getAsiaTrend().getGuestRecent().size()!=0){
+//                for(NewAnalyzeBean.AsiaTrendEntity.GuestRecentEntity entity:analyzeBean.getAsiaTrend().getGuestRecent()){
+//                    List<Integer> list=new ArrayList<>();
+//                    list.add(entity.getLet()==1?2:entity.getLet()==2?1:entity.getLet()); //因为主队是赢走输 客队是输走赢 。是对称的。所以客队的在这里直接 赢变输，输变赢。然后控件中就可以不处理了。
+//                    list.add(entity.isHomeGround()?1:2);
+//                    asiaGuestList.add(list);
+//                }
+//                mChartLetGuest.setLineChartList(asiaGuestList);
+//                mLetNodata4.setVisibility(View.GONE);
+//            }
+//            else{
+//                mLetNodata4.setVisibility(View.VISIBLE);
+//            }
+//
+//        }else {
+//            mllLet.setVisibility(View.GONE);
+//            mLetAllNodata.setVisibility(View.VISIBLE);
+//        }
+//
+//        //大小球走势
+//        if(analyzeBean.getSizeTrend()!=null){
+//
+//            mllSize.setVisibility(View.VISIBLE);
+//            mSizeAllNodata.setVisibility(View.GONE);
+//            if(analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
+//                setSizeText1(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
+//                setSizeText2(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
+//            }
+//            if(getActivity()!=null&&analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getPointList()!=null){
+//                mSizeAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getSizeTrend().getBattleHistory().getPointList(),analyzeBean);
+//                mSizeListView.setAdapter(mSizeAdapter);
+//            }else{
+//                mSizeNodata1.setVisibility(View.VISIBLE);
+//                mSizeNodata2.setVisibility(View.VISIBLE);
+//            }
+//
+//            //大小球历史交锋
+//            List<List<Integer>> sizeHistoryList=new ArrayList<>();
+//            if(analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getTotList()!=null){
+//                if(analyzeBean.getSizeTrend().getBattleHistory().getTotList().size()!=0){
+//                    for(NewAnalyzeBean.SizeTrendEntity.BattleHistoryEntity.TotListEntity entity:analyzeBean.getSizeTrend().getBattleHistory().getTotList()){
+//
+//                        List<Integer> list1=new ArrayList<>();
+//                        list1.add(entity.getTot());
+//                        list1.add(entity.isHomeGround()? 1:2); //主队是1 客队是2
+//                        sizeHistoryList.add(list1);
+//                    }
+//                    mChartSizeHistory.setLineChartList(sizeHistoryList);
+//                }
+//                mSizeNodata1.setVisibility(View.GONE);
+//            }else{
+//                mSizeNodata1.setVisibility(View.VISIBLE);
+//            }
+//            //大小球近期对比主队
+//            List<List<Integer>> sizeHomeList=new ArrayList<>();
+//            if(analyzeBean.getSizeTrend().getHomeRecent().size()!=0){
+//                for(NewAnalyzeBean.SizeTrendEntity.HomeRecentEntity entity:analyzeBean.getSizeTrend().getHomeRecent()){
+//
+//                    List<Integer> list1=new ArrayList<>();
+//                    list1.add(entity.getTot());
+//                    list1.add(entity.isHomeGround()?1:2);
+//                    sizeHomeList.add(list1);
+//                }
+//                mChartSizeHome.setLineChartList(sizeHomeList);
+//            }else{
+//                mSizeNodata3.setVisibility(View.VISIBLE);
+//            }
+//
+//            //大小球近期对比客队
+//            List<List<Integer>> sizeGuestList=new ArrayList<>();
+//            if(analyzeBean.getSizeTrend().getGuestRecent().size()!=0){
+//                for(NewAnalyzeBean.SizeTrendEntity.GuestRecentEntity entity:analyzeBean.getSizeTrend().getGuestRecent()){
+//                    List<Integer> list=new ArrayList<>();
+//                    list.add(entity.getTot()==1?2:entity.getTot()==2?1:entity.getTot()); //因为主队是赢走输 客队是输走赢 。是对称的。所以客队的在这里直接 赢变输，输变赢。然后控件中就可以不处理了。
+//                    list.add(entity.isHomeGround()?1:2);
+//                    sizeGuestList.add(list);
+//                }
+//                mChartSizeGuest.setLineChartList(sizeGuestList);
+//            }else{
+//                mSizeNodata4.setVisibility(View.VISIBLE);
+//            }
+//
+//        }else{
+//            mllSize.setVisibility(View.GONE);
+//            mSizeAllNodata.setVisibility(View.VISIBLE);
+//        }
 
     }
 
