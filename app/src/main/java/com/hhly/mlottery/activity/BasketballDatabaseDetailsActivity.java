@@ -9,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketDatabaseRankingFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseScheduleFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
 import com.hhly.mlottery.util.L;
@@ -84,9 +86,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
-    private BasketDatabaseScheduleFragment mBasketDatabaseScheduleFragment;
-    private BasketDatasaseHandicapFragment mBasketDatasaseHandicapFragment;
-    private BasketDatabaseBigSmallFragment mBasketDatabaseBigSmallFragment;
+    private BasketDatabaseScheduleFragment mScheduleFragment;
+    private BasketDatasaseHandicapFragment mHandicapFragment;
+    private BasketDatabaseBigSmallFragment mBigSmallFragment;
+    private BasketDatabaseRankingFragment mRankingFragment;
 
     private DisplayImageOptions mOptions;
     private DisplayImageOptions mOptionsHead;
@@ -96,7 +99,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private TextView mLeaguename;
     private TextView mSportsText;
     private String mLeagueId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,9 +115,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         /**
          * 第一次加载默认赛季数据，不需要season ==》（-1）
          */
-        mBasketDatabaseScheduleFragment = BasketDatabaseScheduleFragment.newInstance();
-        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
-        mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId, "-1");
+        mScheduleFragment = BasketDatabaseScheduleFragment.newInstance();
+        mRankingFragment = BasketDatabaseRankingFragment.newInstance();
+        mHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
+        mBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId, "-1");
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true)
@@ -158,6 +161,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private void initView() {
         TITLES = new String[]{
                 getString(R.string.basket_database_details_schedule),
+                getString(R.string.basket_database_details_ranking),
                 getString(R.string.basket_database_details_handicapname),
                 getString(R.string.basket_database_details_bigsmallname)
         };
@@ -182,9 +186,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
-        mTabsAdapter.addFragments(mBasketDatabaseScheduleFragment,
-                mBasketDatasaseHandicapFragment,
-                mBasketDatabaseBigSmallFragment);
+        mTabsAdapter.addFragments(mScheduleFragment,
+                mRankingFragment,
+                mHandicapFragment,
+                mBigSmallFragment);
         mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -330,9 +335,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             mRefreshLayout.setEnabled(true);
         }
         if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
-            headLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            headLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         } else {
-            headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
+            headLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.transparency));
         }
 
     }
@@ -421,9 +426,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mRefreshLayout.setRefreshing(false);
 
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
-                mBasketDatasaseHandicapFragment.upDate();
-                mBasketDatabaseBigSmallFragment.upDate();
-                mBasketDatabaseScheduleFragment.update();
+                mHandicapFragment.upDate();
+                mBigSmallFragment.upDate();
+                mScheduleFragment.update();
             }
         }, 1000);
     }
@@ -498,12 +503,12 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
 
                 //让分盘
-                mBasketDatasaseHandicapFragment.setSeason(newData); //切换赛季
-                mBasketDatasaseHandicapFragment.upDate();
+                mHandicapFragment.setSeason(newData); //切换赛季
+                mHandicapFragment.upDate();
 
                 //大小盘
-                mBasketDatabaseBigSmallFragment.setSeason(newData);
-                mBasketDatabaseBigSmallFragment.upDate();
+                mBigSmallFragment.setSeason(newData);
+                mBigSmallFragment.upDate();
 
             }
         });

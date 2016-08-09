@@ -15,8 +15,10 @@ import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketballDatabaseScheduleSectionAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchDay;
+import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
+import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -39,7 +41,10 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     private List<BasketballDatabaseScheduleSectionAdapter.Section> mSections;
+    private List<MatchStage> mStageList;
     private BasketballDatabaseScheduleSectionAdapter mAdapter;
+
+    private CupMatchStageChooseDialogFragment mCupDialog;
 
     @Nullable
     @Override
@@ -58,6 +63,17 @@ public class BasketDatabaseScheduleFragment extends Fragment {
 
         initRecycler();
 
+        mStageList = new ArrayList<>();
+
+        mTitleTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CupMatchStageChooseDialogFragment dialog =
+                        CupMatchStageChooseDialogFragment.newInstance(new ArrayList<>(mStageList));
+                dialog.show(getChildFragmentManager(), "stageChoose");
+            }
+        });
+
         loadData();
     }
 
@@ -69,13 +85,14 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     }
 
     private void loadData() {
-        VolleyContentFast.requestJsonByGet("http://192.168.31.72:3000/basketball",
+        // http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016
+        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016",
                 new VolleyContentFast.ResponseSuccessListener<ScheduleResult>() {
                     @Override
                     public void onResponse(ScheduleResult result) {
                         int type = result.getMatchType();
                         List<MatchDay> matchData = result.getMatchData();
-                        if (matchData != null && matchData.size() > 0) {
+                        if (CollectionUtils.notEmpty(matchData)) {
                             mSections.clear();
                             for (MatchDay matchDay : matchData) {
                                 mSections.add(new BasketballDatabaseScheduleSectionAdapter
@@ -85,6 +102,13 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                                             .Section(match));
                                 }
                             }
+                        }
+                        List<MatchStage> searchCondition = result.getSearchCondition();
+                        if (CollectionUtils.notEmpty(searchCondition)) {
+                            mStageList.clear();
+                            mStageList.addAll(searchCondition);
+                            MatchStage matchStage = mStageList.get(result.getFirstStageIndex());
+                            mTitleTextView.setText(matchStage.getStageName());
                         }
                         mAdapter.notifyDataSetChanged();
                     }

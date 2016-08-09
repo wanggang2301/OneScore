@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @Description: 篮球内页的base fragment
  * @author yixq
  */
-public abstract class BaksketBaseFragment extends Fragment {
+public abstract class BasketBaseFragment extends Fragment {
     public static ArrayList<String> getDummyData() {
         return BasketBaseActivity.getDummyData();
     }
