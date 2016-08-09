@@ -451,7 +451,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 progressBar.dismiss();
                 L.e(TAG, " 登录失败");
-                // UiUtils.toast(LoginActivity.this, R.string.login_peak);
+                UiUtils.toast(LoginActivity.this, R.string.login_peak);
                 // UiUtils.toast(LoginActivity.this, exception.toString());
             }
         }, Register.class);

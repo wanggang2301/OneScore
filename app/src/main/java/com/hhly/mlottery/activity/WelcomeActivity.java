@@ -134,7 +134,7 @@ public class WelcomeActivity extends BaseActivity {
         criteria.setCostAllowed(true);
         criteria.setPowerRequirement(Criteria.POWER_LOW);
         String provider = locationManager.getBestProvider(criteria, true);
-        if(!TextUtils.isEmpty(provider)){
+        if (!TextUtils.isEmpty(provider)) {
             location = locationManager.getLastKnownLocation(provider);
         }
 
@@ -235,15 +235,9 @@ public class WelcomeActivity extends BaseActivity {
 
         RequestParams params = new RequestParams();
         params.addBodyParameter("REQTYPE", REQTYPE);
-
-
-        if (readOAuth2() == null) {
-
-            params.addBodyParameter("TERID", TERID);
-        } else if (readOAuth2() != null) {
-            params.addBodyParameter("TERID", readOAuth2());
-
-        }
+        TERID = PreferenceUtil.getString(AppConstants.TERID, "");// 端口id
+        System.out.println("WelcomeActivity:TERID: >" + TERID);
+        params.addBodyParameter("TERID", TERID);
         params.addBodyParameter("IMEI", DeviceInfo.getDeviceId(mContext));
         params.addBodyParameter("IMSI", DeviceInfo.getSubscriberId(mContext));
         params.addBodyParameter("DN", DeviceInfo.getManufacturer());// 手机厂商
@@ -276,18 +270,16 @@ public class WelcomeActivity extends BaseActivity {
             httpUtils.send(HttpMethod.POST, BaseURLs.UMENG_CHANNEL_URL, params, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    if (responseInfo != null) {
-                        String text = responseInfo.result;
-//                        System.out.println(">>>>text"+text);
-
-                        try {
+                    try {
+                        if (responseInfo != null) {
+                            String text = responseInfo.result;
                             mUmengInfo = JSONObject.parseObject(text, UmengInfo.class);
-                        } catch (Exception e) {
+                            System.out.println("WelcomeActivity:mUmengInfo.getTERID(): >" + mUmengInfo.getTERID());
+                            PreferenceUtil.commitString(AppConstants.TERID, mUmengInfo.getTERID());
 
                         }
-                        if (readOAuth2() == null) {// 如果终端id为空
-                            fileSave(mUmengInfo.getTERID());
-                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
 
@@ -312,7 +304,7 @@ public class WelcomeActivity extends BaseActivity {
             public synchronized void onResponse(final WelcomeUrl json) {
                 if ("200".equals(json.getResult() + "") && json != null) {
 
-                    if (json.getUrl().isEmpty()&& json.getUrl()==null) {
+                    if (json.getUrl().isEmpty() && json.getUrl() == null) {
                         //没有图片 不显示
                         imageHandler.sendEmptyMessage(GET_IMAGE_NODATA);
                     } else {
@@ -409,9 +401,9 @@ public class WelcomeActivity extends BaseActivity {
     /**
      * 保存端口id到sd卡
      *
-     * @param treID
+     * @param
      */
-    public void fileSave(String treID) {
+    /*public void fileSave(String treID) {
         // 保存在本地
         try {
             // 通过openFileOutput方法得到一个输出流，方法参数为创建的文件名（不能有斜杠），操作模式
@@ -448,7 +440,7 @@ public class WelcomeActivity extends BaseActivity {
             // Toast.makeText(this, "成功保存到sd卡", Toast.LENGTH_LONG).show();
 
         }
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
@@ -465,7 +457,7 @@ public class WelcomeActivity extends BaseActivity {
      *
      * @return
      */
-    public String readOAuth2() {
+    /*public String readOAuth2() {
         String oAuth_1 = null;
         File sdCardDir = Environment.getExternalStorageDirectory();// 获取SDCard目录
         File sdFile = new File(sdCardDir, ".TERID.out");
@@ -491,5 +483,5 @@ public class WelcomeActivity extends BaseActivity {
             e.printStackTrace();
         }
         return oAuth_1;
-    }
+    }*/
 }
