@@ -60,7 +60,7 @@ public class RongYunUtils {
         // 判断有没有创建
         if (!TextUtils.isEmpty(mRoomId) && roomId.equals(mRoomId)) {
             // 有--直接进入聊天室
-            RongIM.getInstance().startConversation(MyApp.getContext(), Conversation.ConversationType.CHATROOM, CHART_ROOM_ID, null);
+            joinChatRoom(mContext,roomId);
         } else {
             // 没有——创建
             Map<String, String> map = new HashMap<>();
@@ -70,9 +70,11 @@ public class RongYunUtils {
                 public void onResponse(RongTokenBean jsonObject) {
                     System.out.println(TAG + "创建聊天室成功getCode==" + jsonObject.getCode());
                     if (jsonObject.getCode() == 200) {
-                        // 进入聊天室
-                        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, CHART_ROOM_ID, null);
-                        PreferenceUtil.commitString("CHART_ROOM_ID", roomId);
+
+                        joinChatRoom(mContext,roomId);// 进入聊天室
+                        PreferenceUtil.commitString(CHART_ROOM_ID, roomId);
+                        L.d("xxx","保存聊天室id：" + PreferenceUtil.getString(CHART_ROOM_ID, "xxx"));
+
                     }
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
@@ -82,6 +84,32 @@ public class RongYunUtils {
                 }
             }, RongTokenBean.class);
         }
+    }
+
+    /**
+     * 进入聊天室
+     * @param mContext 上下文
+     */
+    private static void joinChatRoom(Context mContext,String roomId){
+        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, roomId, null);
+        L.d("xxx","joinChatRoom...");
+    }
+
+    /**
+     * 退出聊天室
+     */
+    public static void quitChatRoom(){
+        RongIM.getInstance().quitChatRoom(PreferenceUtil.getString(CHART_ROOM_ID,""), new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                L.d("xxx","exit chartRoom Ok");
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                L.d("xxx","exit chartRoom Error");
+            }
+        });
     }
 
     /**
@@ -120,6 +148,8 @@ public class RongYunUtils {
         map.put("userId", AppConstants.register.getData().getUser().getUserId());
         map.put("name", AppConstants.register.getData().getUser().getNickName());
         map.put("portraitUri", "xxx");// 头像暂时无
+        L.d("xxx","userId: " +  AppConstants.register.getData().getUser().getUserId());
+        L.d("xxx","name: " + AppConstants.register.getData().getUser().getNickName());
         VolleyContentFast.requestRongYun(BaseURLs.RONG_USER_TOKEN, map, new VolleyContentFast.ResponseSuccessListener<RongTokenBean>() {
             @Override
             public void onResponse(RongTokenBean jsonObject) {

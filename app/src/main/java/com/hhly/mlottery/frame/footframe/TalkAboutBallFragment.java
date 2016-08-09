@@ -271,7 +271,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         ll_scanner = (LinearLayout) mView.findViewById(R.id.ll_scanner);// 评论窗口
         fl_comment = (FrameLayout) mView.findViewById(R.id.fl_comment);// 评论区
         fl_chart_room = (FrameLayout) mView.findViewById(R.id.fl_chart_room); // 聊天室区
-        mView.findViewById(R.id.fm_chart_room).setBackgroundResource(R.mipmap.welcome1);
+//        mView.findViewById(R.id.fm_chart_room).setBackgroundResource(R.mipmap.welcome1);
     }
 
     public void setClickableLikeBtn(boolean clickable) {
@@ -537,17 +537,24 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 break;
 
             case R.id.bt_comment:// 评论
-                mRecyclerView.setVisibility(View.VISIBLE);
-                ll_scanner.setVisibility(View.VISIBLE);
-                fl_comment.setVisibility(View.VISIBLE);
-                fl_chart_room.setVisibility(View.GONE);
+//                mRecyclerView.setVisibility(View.VISIBLE);
+//                ll_scanner.setVisibility(View.VISIBLE);
+//                fl_comment.setVisibility(View.VISIBLE);
+//                fl_chart_room.setVisibility(View.GONE);
                 break;
             case R.id.bt_chart_room:// 聊天室
-                mRecyclerView.setVisibility(View.GONE);// 隐藏评论内容
-                ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口 TODO
-                fl_comment.setVisibility(View.GONE);
-                fl_chart_room.setVisibility(View.VISIBLE);
-                RongYunUtils.intoChartRoom(mContext,mThirdId);// 进入聊天室
+//                mRecyclerView.setVisibility(View.GONE);// 隐藏评论内容
+//                ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口 TODO
+//                fl_comment.setVisibility(View.GONE);
+//                fl_chart_room.setVisibility(View.VISIBLE);
+
+                if(CommonUtils.isLogin()) {// 是否有登录
+                    RongYunUtils.intoChartRoom(mContext,mThirdId);// 进入聊天室
+                }else{
+                    //跳转登录界面
+                    Intent intent1 = new Intent(mContext, LoginActivity.class);
+                    startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+                }
                 break;
         }
     }

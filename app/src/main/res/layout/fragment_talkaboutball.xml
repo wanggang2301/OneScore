@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/chatballcontainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -129,6 +130,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+
+            <ProgressBar
+                android:id="@+id/pull_to_refresh_progress"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:indeterminate="true" />
+
         </FrameLayout>
         <!--聊天室区-->
         <FrameLayout
@@ -137,22 +148,25 @@
             android:layout_height="match_parent"
             android:visibility="gone">
 
-            <fragment
+            <!--<fragment
                 android:id="@+id/fm_chart_room"
                 android:name="io.rong.imkit.fragment.ConversationFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:tag="fragment_main"
+                tools:layout="@layout/rc_fr_conversation"
+                />-->
+
+            <!--<TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="聊天室"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:background="#3300ff00"/>-->
 
         </FrameLayout>
 
-        <ProgressBar
-            android:id="@+id/pull_to_refresh_progress"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:indeterminate="true" />
     </FrameLayout>
     <!-- <android.support.v4.widget.NestedScrollView
          android:id="@+id/nestedscrollview"

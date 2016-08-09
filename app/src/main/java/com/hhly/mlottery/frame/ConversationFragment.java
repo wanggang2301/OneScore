@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.RongYunUtils;
 
 /**
  * 描  述：融云会话界面
@@ -19,5 +20,11 @@ public class ConversationFragment extends FragmentActivity {
         setContentView(R.layout.conversationlist);
         // 设置聊天室背景图
 //        findViewById(R.id.conversation).setBackgroundResource(R.mipmap.back);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongYunUtils.quitChatRoom();// 退出聊天室
     }
 }

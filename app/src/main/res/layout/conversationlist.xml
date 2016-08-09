@@ -4,6 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="聊天室"
+        android:textSize="16sp"
+        android:textColor="@color/basket_default_color"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="@color/colorPrimary"/>
+
     <fragment
         android:id="@+id/conversation"
         android:name="io.rong.imkit.fragment.ConversationFragment"
