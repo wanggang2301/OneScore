@@ -228,11 +228,15 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
                     break;
                 case NODATA:
                     mLiveTextAdapter.notifyDataChangedAfterLoadMore(false);
-                    Toast.makeText(getActivity(), mContext.getResources().getString(R.string.no_data_txt), Toast.LENGTH_SHORT).show();
+                    if (mContext != null) {
+                        Toast.makeText(getActivity(), mContext.getResources().getString(R.string.no_data_txt), Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case ERROR:
                     mLiveTextAdapter.notifyDataChangedAfterLoadMore(true);
-                    Toast.makeText(getActivity(), mContext.getResources().getString(R.string.exp_net_status_txt), Toast.LENGTH_SHORT).show();
+                    if (mContext != null) {
+                        Toast.makeText(getActivity(), mContext.getResources().getString(R.string.exp_net_status_txt), Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 default:
                     break;
