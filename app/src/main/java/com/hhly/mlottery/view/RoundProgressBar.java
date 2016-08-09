@@ -274,6 +274,9 @@ public class RoundProgressBar extends View {
             L.d("progress==***=>" , progress + "");
             L.d("d==***=>" , d + "");
 
+//            float textWidths = paint.measureText("777");
+//            float textWidths2 = paint.measureText("777");
+//            float textWidths3 = paint.measureText("777");
             if (prossgressData1 != null && !prossgressData1.equals("")) {
                 float textWidths = paint.measureText(prossgressData1);
                 canvas.drawText(prossgressData1, (float) tx - textWidths/2, (float) ty, paint);//画出进度百分比
