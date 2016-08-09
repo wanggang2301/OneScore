@@ -31,6 +31,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketDatasaseStatisticsFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -85,6 +86,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
     private BasketDatasaseHandicapFragment mBasketDatasaseHandicapFragment;
     private BasketDatabaseBigSmallFragment mBasketDatabaseBigSmallFragment;
+    private BasketDatasaseStatisticsFragment mBasketDatasaseStatisticsFragment;
 
     private DisplayImageOptions mOptions;
     private DisplayImageOptions mOptionsHead;
@@ -113,6 +115,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
          */
         mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
         mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId , "-1");
+        mBasketDatasaseStatisticsFragment = BasketDatasaseStatisticsFragment.newInstance(mLeagueId , "-1");
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
@@ -153,7 +156,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
      * 初始化界面
      */
     private void initView() {
-        TITLES = new String[]{getResources().getString(R.string.basket_database_details_handicapname),getResources().getString(R.string.basket_database_details_bigsmallname)};
+        TITLES = new String[]{getResources().getString(R.string.basket_database_details_handicapname),getResources().getString(R.string.basket_database_details_bigsmallname) , "统计"};
 
         toolbar = (Toolbar) findViewById(R.id.basket_database_details_toolbar);
         setSupportActionBar(toolbar);
@@ -176,7 +179,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
 
-        mTabsAdapter.addFragments(mBasketDatasaseHandicapFragment, mBasketDatabaseBigSmallFragment);
+        mTabsAdapter.addFragments(mBasketDatasaseHandicapFragment, mBasketDatabaseBigSmallFragment , mBasketDatasaseStatisticsFragment);
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
