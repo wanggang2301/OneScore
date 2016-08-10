@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="15dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="H"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_9" />
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="30dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/football_event"
+            android:gravity="center"
+            android:text="1 : 2"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_10" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="1dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#dddddd"
+        android:textColor="@color/red"
+        android:textSize="@dimen/text_size_5" />
+</LinearLayout>

@@ -6,19 +6,24 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.adapter.football.EventAdapter;
 import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.TrendAllBean;
 import com.hhly.mlottery.config.BaseURLs;
@@ -42,6 +47,21 @@ public class StatisticsFragment extends Fragment {
 
 
     private static String STA_PARM = "STA_PARM";
+
+    private static final String HOME = "1"; //主队
+    private static final String GUEST = "0"; //客队
+
+
+    //主队事件
+    private static final String SCORE = "1029";//主队进球
+    private static final String RED_CARD = "1032";
+    private static final String YELLOW_CARD = "1034";
+    private static final String CORNER = "1025";
+    //客队事件
+    private static final String SCORE1 = "2053";//客队进球
+    private static final String RED_CARD1 = "2056";
+    private static final String YELLOW_CARD1 = "2058";
+    private static final String CORNER1 = "2049";
 
     private String type = "";
     private View mView;
@@ -87,6 +107,19 @@ public class StatisticsFragment extends Fragment {
     private MathchStatisInfo mMathchStatisInfo;
 
 
+    private RadioGroup radioGroup;
+
+    private LinearLayout rl_event;
+    private RelativeLayout ll_statistics;
+
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+
+    private EventAdapter eventAdapter;
+
+    private List<MatchTimeLiveBean> eventMatchLive = new ArrayList<>();
+
+
     public static StatisticsFragment newInstance() {
 
 
@@ -125,7 +158,6 @@ public class StatisticsFragment extends Fragment {
         this.type = type;
         loadData();
         initEvent();
-
     }
 
 
@@ -138,7 +170,6 @@ public class StatisticsFragment extends Fragment {
             initData(type);
             initJson(type);
         }
-
     }
 
     /**
@@ -193,6 +224,37 @@ public class StatisticsFragment extends Fragment {
      * 初始化界面
      */
     private void initView() {
+
+        radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
+
+        rl_event = (LinearLayout) mView.findViewById(R.id.rl_event);
+        ll_statistics = (RelativeLayout) mView.findViewById(R.id.ll_statistics);
+
+        recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
+        layoutManager = new LinearLayoutManager(mContext);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int radioButtonId = radioGroup.getCheckedRadioButtonId();
+                switch (radioButtonId) {
+                    case R.id.live_event:
+                        rl_event.setVisibility(View.VISIBLE);
+                        ll_statistics.setVisibility(View.GONE);
+                        break;
+                    case R.id.live_statistics:
+                        rl_event.setVisibility(View.GONE);
+                        ll_statistics.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+
         ll_trend_main = (LinearLayout) mView.findViewById(R.id.ll_trend_main);
         ff = (FrameLayout) mView.findViewById(R.id.fl_main);
         ff_corner = (FrameLayout) mView.findViewById(R.id.fl_main_corner);
@@ -203,9 +265,7 @@ public class StatisticsFragment extends Fragment {
         reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新走势图
         // 攻防走势图控件
         myLineChartAttack = new MyLineChart(mContext);
-      //  myLineChartAttack.setXlabel(new String[]{"0", "", "", "", "","", "","", "","45'", "", "","", "","", "","", "", "90'"});// 设置X轴刻度值
-        myLineChartAttack.setXlabel(new String[]{"0", "5", "10",  "40", "45'", "", "", "90'"});// 设置X轴刻度值
-
+        myLineChartAttack.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
         myLineChartAttack.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
         myLineChartAttack.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
         myLineChartAttack.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
@@ -217,13 +277,9 @@ public class StatisticsFragment extends Fragment {
         myLineChartAttack.setmTextSize(DisplayUtil.dip2px(mContext, 10));// XY轴字体大小
         myLineChartAttack.setmLineWidth(DisplayUtil.dip2px(mContext, 1));// 线条宽度
         myLineChartAttack.setmCircleSize(DisplayUtil.dip2px(mContext, 3));// 圆点大小
-
-
         // 角球走势图控件
         myLineChartCorner = new MyLineChart(mContext);
-        //myLineChartCorner.setXlabel(new String[]{"0", "", "", "", "","", "","", "","45'", "", "","", "","", "","", "", "90'"});// 设置X轴刻度值
-        myLineChartCorner.setXlabel(new String[]{"0","5","10","40","45'", "", "", "90'"});// 设置X轴刻度值
-
+        myLineChartCorner.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
         myLineChartCorner.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
         myLineChartCorner.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
         myLineChartCorner.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
@@ -281,6 +337,69 @@ public class StatisticsFragment extends Fragment {
         home_lineout_txt = (TextView) mView.findViewById(R.id.home_lineout_txt);
         guest_lineout_txt = (TextView) mView.findViewById(R.id.guest_lineout_txt);
 
+    }
+
+
+    //事件数据
+
+    public void setEventMatchLive(String status, List<MatchTimeLiveBean> eventMatchLive) {
+
+        //统计事件个数
+
+        this.eventMatchLive = eventMatchLive;
+        if ("0".equals(status)) {
+
+        } else if ("1".equals(status)) {
+
+        } else if ("-1".equals(status)) {
+            computeEventNum();
+            eventAdapter = new EventAdapter(mContext, eventMatchLive);
+            recyclerView.setAdapter(eventAdapter);
+        }
+    }
+
+    private void computeEventNum() {
+        int homeGoal = 0;
+        int homeRc = 0;
+        int homeYc = 0;
+        int homeCorner = 0;
+        int guestGoal = 0;
+        int guestRc = 0;
+        int guestYc = 0;
+        int guestCorner = 0;
+
+        for (MatchTimeLiveBean m : eventMatchLive) {
+            if (HOME.equals(m.getIsHome())) {
+                if (SCORE.equals(m.getCode())) {
+                    homeGoal++;
+                    m.setEventnum(homeGoal);
+                } else if (YELLOW_CARD.equals(m.getCode())) {
+                    homeYc++;
+                    m.setEventnum(homeYc);
+                } else if (RED_CARD.equals(m.getCode())) {
+                    homeRc++;
+                    m.setEventnum(homeRc);
+                } else if (CORNER.equals(m.getCode())) {
+                    homeCorner++;
+                    m.setEventnum(homeCorner);
+                }
+            } else {
+                if (SCORE1.equals(m.getCode())) {
+                    guestGoal++;
+                    m.setEventnum(guestGoal);
+                } else if (YELLOW_CARD1.equals(m.getCode())) {
+                    guestYc++;
+                    m.setEventnum(guestYc);
+                } else if (RED_CARD1.equals(m.getCode())) {
+                    guestRc++;
+                    m.setEventnum(guestRc);
+                } else if (CORNER1.equals(m.getCode())) {
+                    guestCorner++;
+                    m.setEventnum(guestCorner);
+                }
+            }
+
+        }
     }
 
 

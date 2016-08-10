@@ -42,7 +42,7 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 	}
 
 	/**
-	 * set the on item click listener
+	 * set the on item_event_half_finish click listener
 	 * 设置Item的点击事件
 	 *
 	 * @param listener listener
@@ -61,7 +61,7 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 	}
 
 	/**
-	 * set the on item long click listener
+	 * set the on item_event_half_finish long click listener
 	 * 设置Item的长点击事件
 	 *
 	 * @param listener listener
@@ -86,7 +86,7 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 	 */
 	public interface OnItemClickListener {
 		/**
-		 * on item click call back
+		 * on item_event_half_finish click call back
 		 *
 		 * @param convertView convertView
 		 * @param position    position
@@ -100,7 +100,7 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 	 */
 	public interface OnItemLongClickListener {
 		/**
-		 * on item long click call back
+		 * on item_event_half_finish long click call back
 		 *
 		 * @param convertView convertView
 		 * @param position    position
