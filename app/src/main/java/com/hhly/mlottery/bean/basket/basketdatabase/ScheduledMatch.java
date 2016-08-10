@@ -1,11 +1,14 @@
 package com.hhly.mlottery.bean.basket.basketdatabase;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 描    述：赛程赛事
  * 作    者：longs@13322.com
  * 时    间：2016/8/9
  */
-public class ScheduledMatch {
+public class ScheduledMatch implements Parcelable {
     /**
      * guestScore : 87
      * homeScore : 107
@@ -89,4 +92,47 @@ public class ScheduledMatch {
     public void setGuestTeamName(String guestTeamName) {
         this.guestTeamName = guestTeamName;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.guestScore);
+        dest.writeInt(this.homeScore);
+        dest.writeInt(this.guestTeamId);
+        dest.writeString(this.homeTeamIconUrl);
+        dest.writeInt(this.homeTeamId);
+        dest.writeString(this.guestTeamIconUrl);
+        dest.writeString(this.homeTeamName);
+        dest.writeString(this.guestTeamName);
+    }
+
+    public ScheduledMatch() {
+    }
+
+    protected ScheduledMatch(Parcel in) {
+        this.guestScore = in.readInt();
+        this.homeScore = in.readInt();
+        this.guestTeamId = in.readInt();
+        this.homeTeamIconUrl = in.readString();
+        this.homeTeamId = in.readInt();
+        this.guestTeamIconUrl = in.readString();
+        this.homeTeamName = in.readString();
+        this.guestTeamName = in.readString();
+    }
+
+    public static final Parcelable.Creator<ScheduledMatch> CREATOR = new Parcelable.Creator<ScheduledMatch>() {
+        @Override
+        public ScheduledMatch createFromParcel(Parcel source) {
+            return new ScheduledMatch(source);
+        }
+
+        @Override
+        public ScheduledMatch[] newArray(int size) {
+            return new ScheduledMatch[size];
+        }
+    };
 }

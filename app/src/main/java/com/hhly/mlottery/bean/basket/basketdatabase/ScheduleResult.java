@@ -1,5 +1,8 @@
 package com.hhly.mlottery.bean.basket.basketdatabase;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  * 作    者：longs@13322.com
  * 时    间：2016/8/9
  */
-public class ScheduleResult {
+public class ScheduleResult implements Parcelable {
 
     /**
      * firstStageIndex : 1
@@ -60,4 +63,41 @@ public class ScheduleResult {
     public void setMatchType(int matchType) {
         this.matchType = matchType;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.firstStageIndex);
+        dest.writeInt(this.secondStageIndex);
+        dest.writeInt(this.matchType);
+        dest.writeTypedList(this.searchCondition);
+        dest.writeTypedList(this.matchData);
+    }
+
+    public ScheduleResult() {
+    }
+
+    protected ScheduleResult(Parcel in) {
+        this.firstStageIndex = in.readInt();
+        this.secondStageIndex = in.readInt();
+        this.matchType = in.readInt();
+        this.searchCondition = in.createTypedArrayList(MatchStage.CREATOR);
+        this.matchData = in.createTypedArrayList(MatchDay.CREATOR);
+    }
+
+    public static final Parcelable.Creator<ScheduleResult> CREATOR = new Parcelable.Creator<ScheduleResult>() {
+        @Override
+        public ScheduleResult createFromParcel(Parcel source) {
+            return new ScheduleResult(source);
+        }
+
+        @Override
+        public ScheduleResult[] newArray(int size) {
+            return new ScheduleResult[size];
+        }
+    };
 }

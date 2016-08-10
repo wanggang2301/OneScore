@@ -23,7 +23,16 @@ public class MatchStage implements Parcelable {
     private String stageId;
     private String stageName;
     private boolean hasSecondStage;
+    private boolean selected;
     private List<MatchStage> stages;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     public String getStageId() {
         return stageId;
@@ -57,6 +66,9 @@ public class MatchStage implements Parcelable {
         this.stages = stages;
     }
 
+    public MatchStage() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -67,21 +79,19 @@ public class MatchStage implements Parcelable {
         dest.writeString(this.stageId);
         dest.writeString(this.stageName);
         dest.writeByte(this.hasSecondStage ? (byte) 1 : (byte) 0);
-        dest.writeList(this.stages);
-    }
-
-    public MatchStage() {
+        dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.stages);
     }
 
     protected MatchStage(Parcel in) {
         this.stageId = in.readString();
         this.stageName = in.readString();
         this.hasSecondStage = in.readByte() != 0;
-        this.stages = new ArrayList<MatchStage>();
-        in.readList(this.stages, MatchStage.class.getClassLoader());
+        this.selected = in.readByte() != 0;
+        this.stages = in.createTypedArrayList(MatchStage.CREATOR);
     }
 
-    public static final Parcelable.Creator<MatchStage> CREATOR = new Parcelable.Creator<MatchStage>() {
+    public static final Creator<MatchStage> CREATOR = new Creator<MatchStage>() {
         @Override
         public MatchStage createFromParcel(Parcel source) {
             return new MatchStage(source);

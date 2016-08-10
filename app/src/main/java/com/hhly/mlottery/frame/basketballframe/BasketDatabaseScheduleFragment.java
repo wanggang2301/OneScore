@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.basketballframe;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
 import com.hhly.mlottery.util.CollectionUtils;
+import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -29,7 +31,6 @@ import java.util.List;
  * 作    者：longs@13322.com
  * 时    间：2016/8/3
  */
-
 public class BasketDatabaseScheduleFragment extends Fragment {
 
     private static final int MATCH_TYPE_LEAGUE = 1; // 联赛
@@ -40,11 +41,10 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     ImageView mRightButton;
     RecyclerView mRecyclerView;
 
+    private ScheduleResult mResult;
     private List<BasketballDatabaseScheduleSectionAdapter.Section> mSections;
     private List<MatchStage> mStageList;
     private BasketballDatabaseScheduleSectionAdapter mAdapter;
-
-    private CupMatchStageChooseDialogFragment mCupDialog;
 
     @Nullable
     @Override
@@ -68,9 +68,19 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         mTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CupMatchStageChooseDialogFragment dialog =
-                        CupMatchStageChooseDialogFragment.newInstance(new ArrayList<>(mStageList));
-                dialog.show(getChildFragmentManager(), "stageChoose");
+                if (mResult != null) {
+                    DialogFragment dialog = null;
+                    if (mResult.getMatchType() == MATCH_TYPE_CUP) {
+                        dialog = CupMatchStageChooseDialogFragment.newInstance(mResult);
+                    } else if (mResult.getMatchType() == MATCH_TYPE_LEAGUE) {
+                        dialog = LeagueMatchStageChooseDialogFragment.newInstance(mResult);
+                    }
+                    if (dialog != null) {
+                        dialog.show(getChildFragmentManager(), "stageChoose");
+                    }
+                } else {
+                    ToastTools.showQuick(getContext(), "稍候，获取数据中");
+                }
             }
         });
 
@@ -90,7 +100,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                 new VolleyContentFast.ResponseSuccessListener<ScheduleResult>() {
                     @Override
                     public void onResponse(ScheduleResult result) {
-                        int type = result.getMatchType();
+                        mResult = result;
                         List<MatchDay> matchData = result.getMatchData();
                         if (CollectionUtils.notEmpty(matchData)) {
                             mSections.clear();

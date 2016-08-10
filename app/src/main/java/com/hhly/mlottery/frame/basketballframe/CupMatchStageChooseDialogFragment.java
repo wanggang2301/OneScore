@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,8 +18,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
+import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,12 +29,12 @@ import java.util.List;
  */
 public class CupMatchStageChooseDialogFragment extends DialogFragment {
 
-    private static final String KEY_STAGES = "stages";
+    private static final String KEY_RESULT = "scheduled_result";
 
     TextView mTextView;
     RecyclerView mRecyclerView;
 
-    private List<MatchStage> mStageList;
+    private ScheduleResult mResult;
     private DialogAdapter mAdapter;
 
     @Override
@@ -41,7 +42,7 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            mStageList = args.getParcelableArrayList(KEY_STAGES);
+            mResult = args.getParcelable(KEY_RESULT);
         }
     }
 
@@ -58,7 +59,7 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
         mTextView.setText(R.string.basket_database_details_stage);
         mRecyclerView = (RecyclerView) dialog.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new DialogAdapter(mStageList);
+        mAdapter = new DialogAdapter(mResult.getSearchCondition());
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
@@ -71,10 +72,10 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    public static CupMatchStageChooseDialogFragment newInstance(ArrayList<MatchStage> stages) {
+    public static CupMatchStageChooseDialogFragment newInstance(ScheduleResult result) {
 
         Bundle args = new Bundle();
-        args.putParcelableArrayList(KEY_STAGES, stages);
+        args.putParcelable(KEY_RESULT, result);
         CupMatchStageChooseDialogFragment fragment = new CupMatchStageChooseDialogFragment();
         fragment.setArguments(args);
         return fragment;
@@ -90,6 +91,13 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
         protected void convert(BaseViewHolder holder, MatchStage matchStage) {
             holder.setText(R.id.dialog_txt_cancel_list, matchStage.getStageName())
                     .setVisible(R.id.line, true);
+            if (holder.getAdapterPosition() == mResult.getFirstStageIndex()) {
+                holder.setTextColor(R.id.dialog_txt_cancel_list,
+                        ContextCompat.getColor(mContext, R.color.colorPrimary));
+            } else {
+                holder.setTextColor(R.id.dialog_txt_cancel_list,
+                        ContextCompat.getColor(mContext, R.color.msg));
+            }
         }
     }
 }
