@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,12 +24,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.activity.InputActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.ChatballAdapter;
+import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ConversationFragment;
@@ -51,6 +55,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
 import io.rong.imlib.model.Conversation;
 
 
@@ -126,6 +131,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             type = getArguments().getInt("type", -1);
             state = getArguments().getString("state");
         }
+        EventBus.getDefault().register(this);//注册EventBus
     }
 
     @Override
@@ -537,19 +543,26 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 break;
 
             case R.id.bt_comment:// 评论
-//                mRecyclerView.setVisibility(View.VISIBLE);
-//                ll_scanner.setVisibility(View.VISIBLE);
-//                fl_comment.setVisibility(View.VISIBLE);
-//                fl_chart_room.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                ll_scanner.setVisibility(View.VISIBLE);
+                fl_comment.setVisibility(View.VISIBLE);
+                fl_chart_room.setVisibility(View.GONE);
+
+                mView.setBackgroundResource(R.color.transparency);// 设置评论背景
+
                 break;
             case R.id.bt_chart_room:// 聊天室
-//                mRecyclerView.setVisibility(View.GONE);// 隐藏评论内容
-//                ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口 TODO
-//                fl_comment.setVisibility(View.GONE);
-//                fl_chart_room.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);// 隐藏评论内容
+                ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口 TODO
+                fl_comment.setVisibility(View.GONE);
+                fl_chart_room.setVisibility(View.VISIBLE);
+                mView.setBackgroundResource(R.mipmap.chart_room_bg);// 设置聊天室背景
+
+                ((FootballMatchDetailActivityTest)mContext).appBarLayout.setExpanded(false);// 隐藏头部内容
 
                 if(CommonUtils.isLogin()) {// 是否有登录
                     RongYunUtils.intoChartRoom(mContext,mThirdId);// 进入聊天室
+
                 }else{
                     //跳转登录界面
                     Intent intent1 = new Intent(mContext, LoginActivity.class);
@@ -563,4 +576,40 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         this.title = title;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);//取消注册EventBus
+    }
+
+    /**
+     * EvenBus接收消息
+     * @param event
+     */
+    public void onEventMainThread(FirstEvent event) {
+        switch (event.getMsg()){
+            case "1":
+                Toast.makeText(mContext, "主队点赞>>>>>>", Toast.LENGTH_SHORT).show();
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_HomeLike");
+                ivHomeLike.setVisibility(View.VISIBLE);
+                ivHomeLike.startAnimation(mRiseHomeAnim);
+                requestLikeData(ADDKEYHOME, "1", type);
+                break;
+            case "2":
+                Toast.makeText(mContext, "客队点赞>>>>>", Toast.LENGTH_SHORT).show();
+                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_GuestLike");
+                ivGuestLike.setVisibility(View.VISIBLE);
+                ivGuestLike.startAnimation(mRiseGuestAnim);
+                requestLikeData(ADDKEYGUEST, "1", type);
+                break;
+            case "3":
+                Toast.makeText(mContext, "评论按钮>>>>>", Toast.LENGTH_SHORT).show();
+                mRecyclerView.setVisibility(View.VISIBLE);
+                ll_scanner.setVisibility(View.VISIBLE);
+                fl_comment.setVisibility(View.VISIBLE);
+                fl_chart_room.setVisibility(View.GONE);
+                mView.setBackgroundResource(R.color.transparency);// 设置评论背景
+                break;
+        }
+    }
 }

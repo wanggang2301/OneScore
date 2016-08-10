@@ -861,7 +861,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@color/home_item_bg</item>
     </style>
-   <!--分析界面 比分 初盘 结果-->
+    <!--分析界面 比分 初盘 结果-->
     <style name="analyze_text_score">
         <item name="android:textSize">@dimen/text_size_13</item>
         <item name="android:textColor">@color/basket_vs</item>
@@ -879,5 +879,17 @@
         <item name="colorControlNormal">@color/linecolor</item>
         <item name="colorControlActivated">@color/linecolor</item>
         <item name="colorControlHighlight">@color/linecolor</item>
+    </style>
+
+    <!--聊天室样式-->
+    <!--<style name="chart_room">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>-->
+    <style name="chart_room" parent="@android:style/Theme.Holo.DialogWhenLarge">// @android:style/Theme.Holo.DialogWhenLarge
+        <item name="android:windowBackground">@drawable/aaaaa_test</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 </resources>
