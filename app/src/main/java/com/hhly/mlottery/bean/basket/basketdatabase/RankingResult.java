@@ -19,7 +19,7 @@ public class RankingResult {
 
     @IntDef({SINGLE_LEAGUE, MULTI_PART_LEAGUE, CUP})
     @Retention(RetentionPolicy.SOURCE)
-    @interface Type {
+    public @interface Type {
     }
 
     private int rankingType;

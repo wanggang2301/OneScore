@@ -943,4 +943,10 @@
     <string name="new_analyze_daqiulv">大球率</string>
     <string name="version_update_title">升级包下载中，请稍后...</string>
     <string name="label_line" translatable="false">-</string>
+    <string name="basket_database_details_ranking_title">排名/球队</string>
+    <string name="basket_database_details_match_num_title">赛</string>
+    <string name="basket_database_details_win_lose_title">胜/负</string>
+    <string name="basket_database_details_winrate_title">胜率</string>
+    <string name="basket_database_details_win_offset_title">胜差</string>
+    <string name="basket_database_details_recent_title">近况</string>
 </resources>

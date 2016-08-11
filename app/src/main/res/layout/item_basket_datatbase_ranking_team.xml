@@ -1,0 +1,95 @@
+<android.support.percent.PercentFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        app:layout_widthPercent="50%">
+
+        <TextView
+            android:id="@+id/rank"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:gravity="center"
+            android:textColor="@color/content_txt_dark_grad"
+            android:textSize="@dimen/text_size_13"
+            tools:text="1"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:text="骑士"
+            android:textColor="@color/content_txt_dark_grad"
+            android:textSize="@dimen/text_size_13"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end|center_vertical"
+        app:layout_widthPercent="50%">
+
+        <TextView
+            android:id="@+id/match_num"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="90"
+            android:textColor="@color/content_txt_dark_grad"
+            android:textSize="@dimen/text_size_10"/>
+
+        <TextView
+            android:id="@+id/win_lose"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="45/45"
+            android:textColor="@color/content_txt_dark_grad"
+            android:textSize="@dimen/text_size_10"/>
+
+        <TextView
+            android:id="@+id/win_rate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="21"
+            android:textColor="@color/content_txt_dark_grad"
+            android:textSize="@dimen/text_size_10"/>
+
+        <TextView
+            android:id="@+id/win_offset"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="50"
+            android:textColor="@color/content_txt_dark_grad"
+            android:textSize="@dimen/text_size_10"/>
+
+        <TextView
+            android:id="@+id/recent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="4W"
+            android:textColor="@color/content_txt_dark_grad"
+            android:textSize="@dimen/text_size_10"/>
+
+    </LinearLayout>
+
+</android.support.percent.PercentFrameLayout>

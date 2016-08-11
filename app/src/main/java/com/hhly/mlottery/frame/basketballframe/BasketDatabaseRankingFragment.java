@@ -3,6 +3,7 @@ package com.hhly.mlottery.frame.basketballframe;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.basketball.BasketballDatabaseRankingAdapter;
+import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 描    述：篮球资料库 - 排行
@@ -20,6 +26,9 @@ public class BasketDatabaseRankingFragment extends Fragment {
 
     TextView mTitleTextView;
     RecyclerView mRecyclerView;
+
+    private List<BasketballDatabaseRankingAdapter.Section> mSections;
+    private BasketballDatabaseRankingAdapter mAdapter;
 
     @Nullable
     @Override
@@ -33,12 +42,22 @@ public class BasketDatabaseRankingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mTitleTextView = (TextView) view.findViewById(R.id.title_button);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+
+        initRecycler();
+    }
+
+    private void initRecycler() {
+        mSections = new ArrayList<>();
+        mAdapter = new BasketballDatabaseRankingAdapter(RankingResult.CUP, mSections);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(manager);
     }
 
     public static BasketDatabaseRankingFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         BasketDatabaseRankingFragment fragment = new BasketDatabaseRankingFragment();
         fragment.setArguments(args);
         return fragment;

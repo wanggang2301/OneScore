@@ -17,7 +17,8 @@ import java.util.List;
  * 时    间：2016/8/9
  */
 
-public class BasketballDatabaseScheduleSectionAdapter extends BaseSectionQuickAdapter<BasketballDatabaseScheduleSectionAdapter.Section> {
+public class BasketballDatabaseScheduleSectionAdapter
+        extends BaseSectionQuickAdapter<BasketballDatabaseScheduleSectionAdapter.Section> {
 
     private ImageLoader mImageLoader;
 
