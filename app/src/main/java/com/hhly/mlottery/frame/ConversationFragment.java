@@ -45,7 +45,9 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
     public void finish() {
         L.d("xxx","关闭聊天界面!!!!");
         super.finish();
+        EventBus.getDefault().post(new FirstEvent("3"));
         this.overridePendingTransition(R.anim.slide_in_from_top, 0);// 关闭动画
+
     }
 
     @Override
@@ -65,7 +67,6 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
                 break;
             case R.id.bt_comment: // 评论按钮
             case R.id.ll_other: // 点击外部，关闭聊天界面
-                EventBus.getDefault().post(new FirstEvent("3"));
                 this.finish();
                 break;
         }

@@ -589,21 +589,21 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     public void onEventMainThread(FirstEvent event) {
         switch (event.getMsg()){
             case "1":
-                Toast.makeText(mContext, "主队点赞>>>>>>", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "主队点赞>>>>>>", Toast.LENGTH_SHORT).show();
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_HomeLike");
                 ivHomeLike.setVisibility(View.VISIBLE);
                 ivHomeLike.startAnimation(mRiseHomeAnim);
                 requestLikeData(ADDKEYHOME, "1", type);
                 break;
             case "2":
-                Toast.makeText(mContext, "客队点赞>>>>>", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "客队点赞>>>>>", Toast.LENGTH_SHORT).show();
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_GuestLike");
                 ivGuestLike.setVisibility(View.VISIBLE);
                 ivGuestLike.startAnimation(mRiseGuestAnim);
                 requestLikeData(ADDKEYGUEST, "1", type);
                 break;
             case "3":
-                Toast.makeText(mContext, "评论按钮>>>>>", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "评论按钮>>>>>", Toast.LENGTH_SHORT).show();
                 mRecyclerView.setVisibility(View.VISIBLE);
                 ll_scanner.setVisibility(View.VISIBLE);
                 fl_comment.setVisibility(View.VISIBLE);
