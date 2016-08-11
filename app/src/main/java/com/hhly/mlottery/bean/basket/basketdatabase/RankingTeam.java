@@ -22,8 +22,9 @@ public class RankingTeam {
     private int loseMatch;
     private int finishedMatch;
     private double winRate;
-    private int gameBehind;
+    private int gameBehind; // 胜差
     private int ranking;
+    private String recent; // 近况
 
     public String getTeamName() {
         return teamName;
@@ -79,5 +80,13 @@ public class RankingTeam {
 
     public void setRanking(int ranking) {
         this.ranking = ranking;
+    }
+
+    public String getRecent() {
+        return recent;
+    }
+
+    public void setRecent(String recent) {
+        this.recent = recent;
     }
 }

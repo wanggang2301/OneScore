@@ -18,7 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
-import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
+import com.hhly.mlottery.bean.basket.basketdatabase.StageResult;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
     TextView mTextView;
     RecyclerView mRecyclerView;
 
-    private ScheduleResult mResult;
+    private StageResult mResult;
     private DialogAdapter mAdapter;
 
     @Override
@@ -72,7 +72,7 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    public static CupMatchStageChooseDialogFragment newInstance(ScheduleResult result) {
+    public static CupMatchStageChooseDialogFragment newInstance(StageResult result) {
 
         Bundle args = new Bundle();
         args.putParcelable(KEY_RESULT, result);
@@ -91,7 +91,7 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
         protected void convert(BaseViewHolder holder, MatchStage matchStage) {
             holder.setText(R.id.dialog_txt_cancel_list, matchStage.getStageName())
                     .setVisible(R.id.line, true);
-            if (holder.getAdapterPosition() == mResult.getFirstStageIndex()) {
+            if (holder.getAdapterPosition() == mResult.getFirstStageId()) {
                 holder.setTextColor(R.id.dialog_txt_cancel_list,
                         ContextCompat.getColor(mContext, R.color.colorPrimary));
             } else {

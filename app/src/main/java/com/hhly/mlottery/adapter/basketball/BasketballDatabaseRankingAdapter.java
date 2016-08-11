@@ -20,8 +20,10 @@ import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.StringUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 描    述：篮球数据库排行适配器
@@ -64,10 +66,11 @@ public class BasketballDatabaseRankingAdapter
     protected void convert(BaseViewHolder holder, Section section) {
         RankingGroup rankingGroup = section.t;
         LinearLayout teamContainer = holder.getView(R.id.team_container);
+        teamContainer.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        List<RankingTeam> datas = rankingGroup.getDatas();
-        if (CollectionUtils.notEmpty(datas)) {
-            for (RankingTeam team : datas) {
+        List<RankingTeam> teams = rankingGroup.getDatas();
+        if (CollectionUtils.notEmpty(teams)) {
+            for (RankingTeam team : teams) {
                 teamContainer.addView(produceTeamItemView(inflater, teamContainer, team));
             }
         }
@@ -82,13 +85,21 @@ public class BasketballDatabaseRankingAdapter
         TextView winRate = (TextView) view.findViewById(R.id.win_rate);
         TextView winOffset = (TextView) view.findViewById(R.id.win_offset);
         TextView recent = (TextView) view.findViewById(R.id.recent);
-        rank.setText(team.getRanking() + "");
+        int ranking = team.getRanking();
+        if (ranking <= 3) {
+            rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            rank.setBackgroundResource(R.drawable.basket_databae_round_dra);
+            name.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
+        }
+        rank.setText(String.format(Locale.getDefault(), "%d", ranking));
         name.setText(team.getTeamName());
-        matchNum.setText(team.getFinishedMatch() + "");
+        matchNum.setText(String.format(Locale.getDefault(), "%d", team.getFinishedMatch()));
         winLose.setText(team.getWinMatch() + "/" + team.getLoseMatch());
-        winRate.setText(team.getWinRate() + "");
-        winOffset.setText(team.getGameBehind() + "");
-        recent.setText(team.getGameBehind() + "");
+        winRate.setText(String.format(Locale.getDefault(), "%.1f", team.getWinRate() * 100));
+        winOffset.setText(String.format(Locale.getDefault(), "%d", team.getGameBehind()));
+        if (StringUtils.isNotEmpty(team.getRecent())) {
+            recent.setText(team.getRecent());
+        }
         return view;
     }
 

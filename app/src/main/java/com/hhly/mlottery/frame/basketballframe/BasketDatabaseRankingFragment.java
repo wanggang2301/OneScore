@@ -10,9 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketballDatabaseRankingAdapter;
+import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
+import com.hhly.mlottery.bean.basket.basketdatabase.RankingGroup;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
+import com.hhly.mlottery.util.CollectionUtils;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +49,8 @@ public class BasketDatabaseRankingFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         initRecycler();
+
+        load();
     }
 
     private void initRecycler() {
@@ -52,6 +59,36 @@ public class BasketDatabaseRankingFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(manager);
+    }
+
+    private void load() {
+        // http://192.168.31.72:3000/basketball/ranking
+        VolleyContentFast.requestJsonByGet("http://192.168.31.72:3000/basketball/ranking",
+                new VolleyContentFast.ResponseSuccessListener<RankingResult>() {
+                    @Override
+                    public void onResponse(RankingResult result) {
+                        List<RankingGroup> groupList = result.getRankingObj();
+                        List<MatchStage> matchStages = result.getSearchCondition();
+                        if (CollectionUtils.notEmpty(matchStages)) {
+                            mTitleTextView.setText(matchStages.get(result.getFirstStageId()).getStageName());
+                        }
+                        mSections.clear();
+                        if (CollectionUtils.notEmpty(groupList)) {
+                            for (RankingGroup group : groupList) {
+                                mSections.add(new BasketballDatabaseRankingAdapter.Section(
+                                        true, group.getGroupName()));
+                                mSections.add(new BasketballDatabaseRankingAdapter.Section(group));
+                            }
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                        VolleyError error = exception.getVolleyError();
+                        if (error != null) error.printStackTrace();
+                    }
+                }, RankingResult.class);
     }
 
     public static BasketDatabaseRankingFragment newInstance() {

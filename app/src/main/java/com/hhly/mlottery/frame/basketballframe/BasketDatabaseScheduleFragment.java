@@ -71,7 +71,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                 if (mResult != null) {
                     DialogFragment dialog = null;
                     if (mResult.getMatchType() == MATCH_TYPE_CUP) {
-                        dialog = CupMatchStageChooseDialogFragment.newInstance(mResult);
+                        dialog = CupMatchStageChooseDialogFragment.newInstance(mResult.getStageResult());
                     } else if (mResult.getMatchType() == MATCH_TYPE_LEAGUE) {
                         dialog = LeagueMatchStageChooseDialogFragment.newInstance(mResult);
                     }

@@ -100,4 +100,17 @@ public class ScheduleResult implements Parcelable {
             return new ScheduleResult[size];
         }
     };
+
+    /**
+     * 获取 StageResult
+     *
+     * @return
+     */
+    public StageResult getStageResult() {
+        StageResult stageResult = new StageResult();
+        stageResult.setFirstStageId(this.firstStageIndex);
+        stageResult.setSecondStageId(this.secondStageIndex);
+        stageResult.setSearchCondition(this.searchCondition);
+        return stageResult;
+    }
 }

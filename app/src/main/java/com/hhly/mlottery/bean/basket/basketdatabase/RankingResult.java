@@ -68,4 +68,17 @@ public class RankingResult {
     public void setSearchCondition(List<MatchStage> searchCondition) {
         this.searchCondition = searchCondition;
     }
+
+    /**
+     * 获取 StageResult
+     *
+     * @return
+     */
+    public StageResult getStageResult() {
+        StageResult stageResult = new StageResult();
+        stageResult.setFirstStageId(this.firstStageId);
+        stageResult.setSecondStageId(this.secondStageId);
+        stageResult.setSearchCondition(this.searchCondition);
+        return stageResult;
+    }
 }

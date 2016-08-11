@@ -713,6 +713,13 @@
     <string name="basket_database_details_down">下盘</string>
     <string name="basket_database_details_yzs">赢/走/输</string>
 
+    <string name="basket_database_details_ranking_title">排名/球队</string>
+    <string name="basket_database_details_match_num_title">赛</string>
+    <string name="basket_database_details_win_lose_title">胜/负</string>
+    <string name="basket_database_details_winrate_title">胜率</string>
+    <string name="basket_database_details_win_offset_title">胜差</string>
+    <string name="basket_database_details_recent_title">近况</string>
+
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
     <string name="football_analyze_details_time">时间</string>
