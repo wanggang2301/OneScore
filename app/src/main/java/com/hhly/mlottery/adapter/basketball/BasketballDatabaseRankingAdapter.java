@@ -94,7 +94,7 @@ public class BasketballDatabaseRankingAdapter
         rank.setText(String.format(Locale.getDefault(), "%d", ranking));
         name.setText(team.getTeamName());
         matchNum.setText(String.format(Locale.getDefault(), "%d", team.getFinishedMatch()));
-        winLose.setText(team.getWinMatch() + "/" + team.getLoseMatch());
+        winLose.setText(String.format(Locale.getDefault(), "%d/%d", team.getWinMatch(), team.getLoseMatch()));
         winRate.setText(String.format(Locale.getDefault(), "%.1f", team.getWinRate() * 100));
         winOffset.setText(String.format(Locale.getDefault(), "%d", team.getGameBehind()));
         if (StringUtils.isNotEmpty(team.getRecent())) {

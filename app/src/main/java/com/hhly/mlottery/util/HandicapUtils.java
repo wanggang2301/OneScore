@@ -133,10 +133,8 @@ public class HandicapUtils {
         } else if (handicapF == (int) handicapF) {
             return ((int) handicapF) + "";
         } else {
-            handicap = handicap.substring(0, 3);
+            return handicap;
         }
-
-        return handicap;
     }
 
     public static String[] interChangeHandicap(String handicap) {
