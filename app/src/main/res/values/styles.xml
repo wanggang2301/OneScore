@@ -888,7 +888,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>-->
     <style name="chart_room" parent="@android:style/Theme.Holo.DialogWhenLarge">// @android:style/Theme.Holo.DialogWhenLarge
-        <item name="android:windowBackground">@drawable/aaaaa_test</item>
+        <item name="android:windowBackground">@drawable/rong_chart_room_dialog</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>

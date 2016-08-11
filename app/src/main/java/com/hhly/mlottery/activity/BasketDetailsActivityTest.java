@@ -122,7 +122,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
+    public AppBarLayout appBarLayout;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;

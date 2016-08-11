@@ -26,10 +26,10 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        this.setFinishOnTouchOutside(true);//设置为true点击区域外消失
+        this.setFinishOnTouchOutside(true);//设置为true点击区域外消失
 
         setContentView(R.layout.conversationlist);
-        // 设置聊天室背景色
+        // 设置聊天室背景色为透明
         findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.transparency));
 
         this.overridePendingTransition(R.anim.slide_in_from_bottom, 0);// 开启动画

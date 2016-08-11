@@ -102,20 +102,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingTop="30dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="30dp">
 
-            <Button
-                android:id="@+id/bt_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="评论" />
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/rong_chart_bg_selector"
+                android:gravity="center"
+                android:text="@string/rong_comment"
+                android:textColor="@color/rong_chart_text_color" />
 
-            <Button
-                android:id="@+id/bt_chart_room"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="聊天" />
+            <TextView
+                android:id="@+id/tv_chart_room"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/rong_chart_bg_selector"
+                android:gravity="center"
+                android:text="@string/rong_chart_room"
+                android:textColor="@color/rong_chart_text_color" />
 
         </LinearLayout>
     </RelativeLayout>
@@ -153,24 +161,7 @@
             android:id="@+id/fl_chart_room"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <!--<fragment
-                android:id="@+id/fm_chart_room"
-                android:name="io.rong.imkit.fragment.ConversationFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />-->
-
-            <!--<TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="聊天室"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:background="#3300ff00"/>-->
-
-        </FrameLayout>
+            android:visibility="gone" />
 
     </FrameLayout>
     <!-- <android.support.v4.widget.NestedScrollView

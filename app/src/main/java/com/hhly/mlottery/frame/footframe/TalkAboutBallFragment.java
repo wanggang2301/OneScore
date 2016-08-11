@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.activity.InputActivity;
 import com.hhly.mlottery.activity.LoginActivity;
@@ -51,11 +52,15 @@ import com.sohu.cyan.android.sdk.http.response.TopicCommentsResp;
 import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
 import com.umeng.analytics.MobclickAgent;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 
@@ -119,6 +124,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private LinearLayout ll_scanner;
     private FrameLayout fl_comment;
     private FrameLayout fl_chart_room;
+    private TextView tv_comment;
+    private TextView tv_chart_room;
 
 
     @Override
@@ -132,6 +139,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             state = getArguments().getString("state");
         }
         EventBus.getDefault().register(this);//注册EventBus
+        RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
     }
 
     @Override
@@ -272,11 +280,14 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
         mCommentCount.setVisibility(View.VISIBLE);
 
-        mView.findViewById(R.id.bt_comment).setOnClickListener(this);// 评论按钮
-        mView.findViewById(R.id.bt_chart_room).setOnClickListener(this);// 聊天按钮
-        ll_scanner = (LinearLayout) mView.findViewById(R.id.ll_scanner);// 评论窗口
-        fl_comment = (FrameLayout) mView.findViewById(R.id.fl_comment);// 评论区
-        fl_chart_room = (FrameLayout) mView.findViewById(R.id.fl_chart_room); // 聊天室区
+        tv_comment = (TextView) mView.findViewById(R.id.tv_comment);
+        tv_comment.setSelected(true);
+        tv_comment.setOnClickListener(this);// 评论按钮
+        tv_chart_room = (TextView) mView.findViewById(R.id.tv_chart_room);
+        tv_chart_room.setOnClickListener(this);// 聊天按钮
+        ll_scanner = (LinearLayout) mView.findViewById(R.id.ll_scanner);// 评论输入窗
+        fl_comment = (FrameLayout) mView.findViewById(R.id.fl_comment);// 评论显示区
+        fl_chart_room = (FrameLayout) mView.findViewById(R.id.fl_chart_room);// 聊天显示区
 //        mView.findViewById(R.id.fm_chart_room).setBackgroundResource(R.mipmap.welcome1);
     }
 
@@ -542,7 +553,9 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 requestLikeData(ADDKEYGUEST, "1", type);
                 break;
 
-            case R.id.bt_comment:// 评论
+            case R.id.tv_comment:// 评论
+                tv_comment.setSelected(true);
+                tv_chart_room.setSelected(false);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 ll_scanner.setVisibility(View.VISIBLE);
                 fl_comment.setVisibility(View.VISIBLE);
@@ -551,19 +564,24 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 mView.setBackgroundResource(R.color.transparency);// 设置评论背景
 
                 break;
-            case R.id.bt_chart_room:// 聊天室
+            case R.id.tv_chart_room:// 聊天室
+                tv_comment.setSelected(false);
+                tv_chart_room.setSelected(true);
                 mRecyclerView.setVisibility(View.GONE);// 隐藏评论内容
                 ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口 TODO
                 fl_comment.setVisibility(View.GONE);
                 fl_chart_room.setVisibility(View.VISIBLE);
-                mView.setBackgroundResource(R.mipmap.chart_room_bg);// 设置聊天室背景
 
-                ((FootballMatchDetailActivityTest)mContext).appBarLayout.setExpanded(false);// 隐藏头部内容
+                if (type == 0) {
+                    ((FootballMatchDetailActivityTest) mContext).appBarLayout.setExpanded(false);// 隐藏足球头部内容
+                } else if (type == 1) {
+                    ((BasketDetailsActivityTest) mContext).appBarLayout.setExpanded(false);// 隐藏篮球头部内容
+                }
 
-                if(CommonUtils.isLogin()) {// 是否有登录
-                    RongYunUtils.intoChartRoom(mContext,mThirdId);// 进入聊天室
-
-                }else{
+                if (CommonUtils.isLogin()) {// 是否有登录
+                    mView.setBackgroundResource(R.mipmap.chart_room_bg);// 设置聊天室背景
+                    RongYunUtils.joinChatRoom(mContext,mThirdId);  // 进入聊天室
+                } else {
                     //跳转登录界面
                     Intent intent1 = new Intent(mContext, LoginActivity.class);
                     startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
@@ -584,10 +602,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
     /**
      * EvenBus接收消息
+     *
      * @param event
      */
     public void onEventMainThread(FirstEvent event) {
-        switch (event.getMsg()){
+        switch (event.getMsg()) {
             case "1":
 //                Toast.makeText(mContext, "主队点赞>>>>>>", Toast.LENGTH_SHORT).show();
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_HomeLike");
@@ -604,6 +623,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 break;
             case "3":
 //                Toast.makeText(mContext, "评论按钮>>>>>", Toast.LENGTH_SHORT).show();
+                tv_comment.setSelected(true);
+                tv_chart_room.setSelected(false);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 ll_scanner.setVisibility(View.VISIBLE);
                 fl_comment.setVisibility(View.VISIBLE);

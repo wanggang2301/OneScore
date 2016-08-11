@@ -918,4 +918,7 @@
     <string name="intelligence_host_recent">主队近期</string>
     <string name="intelligence_guest_recent">客队近期</string>
     <string name="version_update_title">升级包下载中，请稍后...</string>
+
+    <string name="rong_comment">评论</string>
+    <string name="rong_chart_room">聊天</string>
 </resources>
