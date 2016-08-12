@@ -57,6 +57,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.rong.imkit.RongIM;
+
 
 /**
  * 登录界面
@@ -443,6 +445,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                     sendUserInfoToServer(register);
                     finish();
+                    RongYunUtils.initRongIMConnect(mContext);// 登录成功后初始化融云
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }

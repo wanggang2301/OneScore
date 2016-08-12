@@ -19,6 +19,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
@@ -26,6 +27,9 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * 首页用户设置选项
@@ -206,6 +210,11 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                     PreferenceUtil.commitBoolean("three_login",false);
                     setResult(RESULT_OK);
                     finish();
+
+                    RongIM.getInstance().logout();// 退出融云账号
+                    RongIM.getInstance().disconnect();// 断开融云连接
+                    PreferenceUtil.commitString(RongYunUtils.USER_TOKEN, "");// 清除用户本地token
+                    PreferenceUtil.commitString(RongYunUtils.USER_ID, "");// 清除用户本地id
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }

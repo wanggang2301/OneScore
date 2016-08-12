@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
@@ -9,18 +10,23 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.FirstEvent;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.RongYunUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import de.greenrobot.event.EventBus;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * 描  述：融云会话界面
  * 作  者：tangrr@13322.com
  * 时  间：2016/8/5
  */
-public class ConversationFragment extends FragmentActivity implements View.OnClickListener {
+public class ConversationFragment extends FragmentActivity implements View.OnClickListener, RongIM.UserInfoProvider {
+
+    private UserInfo mUserInfo;// 当前用户信息
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,11 +45,18 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         findViewById(R.id.bt_comment).setOnClickListener(this);
         findViewById(R.id.ll_other).setOnClickListener(this);
 
+        String userTestPhoto = "http://m.1332255.com/news/upload/shortcut/69c426f0f0974d4b8aae0826da71f751.png";// 用户使用测试头像
+//        String userTestPhoto = "http://m.1332255.com/oms/upload/shortcut/90b503d1d34d4bc19d4f2e8a0ee43b63.png";// 用户使用测试头像
+        mUserInfo = new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(userTestPhoto));
+
+        RongIM.setUserInfoProvider(this, true);
+        RongIM.getInstance().setCurrentUserInfo(mUserInfo);
+        RongIM.getInstance().setMessageAttachedUserInfo(true);
     }
 
     @Override
     public void finish() {
-        L.d("xxx","关闭聊天界面!!!!");
+        L.d("xxx", "关闭聊天界面!!!!");
         super.finish();
         EventBus.getDefault().post(new FirstEvent("3"));
         this.overridePendingTransition(R.anim.slide_in_from_top, 0);// 关闭动画
@@ -58,7 +71,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.home_like: // 主队点赞
                 EventBus.getDefault().post(new FirstEvent("1"));
                 break;
@@ -74,6 +87,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
 
     /**
      * 如果向右滑动，也关闭聊天界面
+     *
      * @param event
      * @return
      */
@@ -82,5 +96,16 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
 
 
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * 返回用户信息
+     *
+     * @param s
+     * @return
+     */
+    @Override
+    public UserInfo getUserInfo(String s) {
+        return mUserInfo;
     }
 }

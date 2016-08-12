@@ -146,15 +146,6 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
 
-            <ProgressBar
-                android:id="@+id/pull_to_refresh_progress"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:indeterminate="true" />
-
         </FrameLayout>
         <!--聊天室区-->
         <FrameLayout
@@ -162,6 +153,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/pull_to_refresh_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:indeterminate="true" />
 
     </FrameLayout>
     <!-- <android.support.v4.widget.NestedScrollView

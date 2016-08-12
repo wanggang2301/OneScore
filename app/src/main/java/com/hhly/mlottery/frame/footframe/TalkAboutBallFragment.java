@@ -2,12 +2,9 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
@@ -36,7 +32,6 @@ import com.hhly.mlottery.adapter.ChatballAdapter;
 import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.ConversationFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
@@ -52,16 +47,11 @@ import com.sohu.cyan.android.sdk.http.response.TopicCommentsResp;
 import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
 import com.umeng.analytics.MobclickAgent;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 
 
 /**
@@ -132,7 +122,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
-//        L.d(TAG, "______________onCreate");
+        L.d(TAG, "______________onCreate");
         if (getArguments() != null) {
             mThirdId = getArguments().getString(ARG_PARAM1);
             type = getArguments().getInt("type", -1);
@@ -510,11 +500,45 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         }
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
+     * 客队点赞方法
      */
+    private void guestLike() {
+        MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_GuestLike");
+        ivGuestLike.setVisibility(View.VISIBLE);
+        ivGuestLike.startAnimation(mRiseGuestAnim);
+        //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
+        requestLikeData(ADDKEYGUEST, "1", type);
+    }
+
+    /**
+     * 主队点赞方法
+     */
+    private void homeLike() {
+        MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_HomeLike");
+        ivHomeLike.setVisibility(View.VISIBLE);
+        ivHomeLike.startAnimation(mRiseHomeAnim);
+//                //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
+        requestLikeData(ADDKEYHOME, "1", type);
+    }
+
+    /**
+     * 点击评论后的方法
+     */
+    private void commentClick() {
+        tv_comment.setSelected(true);
+        tv_chart_room.setSelected(false);
+        ll_scanner.setVisibility(View.VISIBLE);
+        fl_comment.setVisibility(View.VISIBLE);
+        fl_chart_room.setVisibility(View.GONE);
+
+        mView.setBackgroundResource(R.color.transparency);// 设置评论背景
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -535,41 +559,22 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
                     lp.setMargins(0, 0, 0, DisplayUtil.dip2px(mContext, 60));
                     mRecyclerView.requestLayout();
-
                 }
                 break;
             case R.id.talkball_home_like:
-                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_HomeLike");
-                ivHomeLike.setVisibility(View.VISIBLE);
-                ivHomeLike.startAnimation(mRiseHomeAnim);
-//                //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
-                requestLikeData(ADDKEYHOME, "1", type);
+                homeLike();
                 break;
             case R.id.talkball_guest_like:
-                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_GuestLike");
-                ivGuestLike.setVisibility(View.VISIBLE);
-                ivGuestLike.startAnimation(mRiseGuestAnim);
-                //String url = "http://192.168.10.242:8181/mlottery/core/footBallMatch.updLike.do";
-                requestLikeData(ADDKEYGUEST, "1", type);
+                guestLike();
                 break;
-
             case R.id.tv_comment:// 评论
-                tv_comment.setSelected(true);
-                tv_chart_room.setSelected(false);
-                mRecyclerView.setVisibility(View.VISIBLE);
-                ll_scanner.setVisibility(View.VISIBLE);
-                fl_comment.setVisibility(View.VISIBLE);
-                fl_chart_room.setVisibility(View.GONE);
-
-                mView.setBackgroundResource(R.color.transparency);// 设置评论背景
-
+                commentClick();
                 break;
             case R.id.tv_chart_room:// 聊天室
                 tv_comment.setSelected(false);
                 tv_chart_room.setSelected(true);
-                mRecyclerView.setVisibility(View.GONE);// 隐藏评论内容
-                ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口 TODO
-                fl_comment.setVisibility(View.GONE);
+                ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口
+                fl_comment.setVisibility(View.GONE);// 隐藏评论内容
                 fl_chart_room.setVisibility(View.VISIBLE);
 
                 if (type == 0) {
@@ -580,7 +585,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
                 if (CommonUtils.isLogin()) {// 是否有登录
                     mView.setBackgroundResource(R.mipmap.chart_room_bg);// 设置聊天室背景
-                    RongYunUtils.joinChatRoom(mContext,mThirdId);  // 进入聊天室
+                    RongYunUtils.joinChatRoom(mContext, mThirdId);  // 进入聊天室
                 } else {
                     //跳转登录界面
                     Intent intent1 = new Intent(mContext, LoginActivity.class);
@@ -588,10 +593,6 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 }
                 break;
         }
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @Override
@@ -607,30 +608,27 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      */
     public void onEventMainThread(FirstEvent event) {
         switch (event.getMsg()) {
-            case "1":
-//                Toast.makeText(mContext, "主队点赞>>>>>>", Toast.LENGTH_SHORT).show();
-                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_HomeLike");
-                ivHomeLike.setVisibility(View.VISIBLE);
-                ivHomeLike.startAnimation(mRiseHomeAnim);
-                requestLikeData(ADDKEYHOME, "1", type);
+            case "1":// 主队点赞调用
+                homeLike();
                 break;
-            case "2":
-//                Toast.makeText(mContext, "客队点赞>>>>>", Toast.LENGTH_SHORT).show();
-                MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivityTest_GuestLike");
-                ivGuestLike.setVisibility(View.VISIBLE);
-                ivGuestLike.startAnimation(mRiseGuestAnim);
-                requestLikeData(ADDKEYGUEST, "1", type);
+            case "2"://  客队点赞调用
+                guestLike();
                 break;
-            case "3":
-//                Toast.makeText(mContext, "评论按钮>>>>>", Toast.LENGTH_SHORT).show();
-                tv_comment.setSelected(true);
-                tv_chart_room.setSelected(false);
-                mRecyclerView.setVisibility(View.VISIBLE);
-                ll_scanner.setVisibility(View.VISIBLE);
-                fl_comment.setVisibility(View.VISIBLE);
-                fl_chart_room.setVisibility(View.GONE);
-                mView.setBackgroundResource(R.color.transparency);// 设置评论背景
+            case "3":// 评论点赞调用
+                commentClick();
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        L.d(TAG, "______________onResume");
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        L.d(TAG, "______________onPause");
+        super.onPause();
     }
 }

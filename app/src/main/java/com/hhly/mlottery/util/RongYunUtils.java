@@ -2,6 +2,7 @@ package com.hhly.mlottery.util;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
@@ -38,7 +39,6 @@ public class RongYunUtils {
     public static final String USER_TOKEN = "userToken";// 用户Token key
     public static final String USER_ID = "userId";// 用户id
 
-
     /**
      * 初始化融云服务器连接
      *
@@ -48,6 +48,8 @@ public class RongYunUtils {
         String mToken = PreferenceUtil.getString(USER_TOKEN, "");// 获取本地用户Token
         String userid = PreferenceUtil.getString(USER_ID, "");// 获取本地用户id
         String currentUserid = AppConstants.register.getData().getUser().getUserId();// 获取当前登录的用户id
+        L.d(TAG, "userid: "+userid);
+        L.d(TAG, "currentUserid: "+currentUserid);
         if (TextUtils.isEmpty(userid) || !currentUserid.equals(userid) || TextUtils.isEmpty(mToken)) {
             postToken(mContext, currentUserid);// 获取用户Token
         } else {
@@ -62,9 +64,9 @@ public class RongYunUtils {
         if (TextUtils.isEmpty(roomId)) {
             return;
         }
-        String mRoomId = PreferenceUtil.getString(CHART_ROOM_ID, "");// 获取本地聊天室id
+//        String mRoomId = PreferenceUtil.getString(CHART_ROOM_ID, "");// 获取本地聊天室id
         // 判断有没有创建
-        if (TextUtils.isEmpty(mRoomId) || !roomId.equals(mRoomId)) {
+//        if (TextUtils.isEmpty(mRoomId) || !roomId.equals(mRoomId)) {
             // 没有——创建
             Map<String, String> map = new HashMap<>();
             map.put("chatroom[" + CHART_ROOM_ID + "]", CHART_ROOM_NAME);// 传入聊天室id 和 名称
@@ -75,8 +77,8 @@ public class RongYunUtils {
                     if (jsonObject.getCode() == 200) {
                         PreferenceUtil.commitString(CHART_ROOM_ID, roomId);
                         L.d("xxx", "保存聊天室id：" + PreferenceUtil.getString(CHART_ROOM_ID, "xxx"));
-
                     }
+
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
                 @Override
@@ -84,7 +86,7 @@ public class RongYunUtils {
                     System.err.println(TAG + "创建聊天室失败getCode==error" + JSON.toJSONString(exception));
                 }
             }, RongTokenBean.class);
-        }
+//        }
     }
 
     /**
@@ -121,6 +123,7 @@ public class RongYunUtils {
      * @param token
      */
     private static void connect(final Context mContext, String token) {
+        L.d(TAG + "token: " + token);
         if (mContext.getApplicationInfo().packageName.equals(MyApp.getCurProcessName(mContext.getApplicationContext()))) {
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
@@ -146,10 +149,11 @@ public class RongYunUtils {
      * 从融云服务器 获取用户token
      */
     private static void postToken(final Context mContext, final String currentUserid) {
+        String userTestPhoto = "http://m.1332255.com/news/upload/shortcut/3daaffb1bf5e427b84313de5bd9181bd.png";// 用户使用测试头像
         Map<String, String> map = new HashMap<>();
         map.put("userId", AppConstants.register.getData().getUser().getUserId());
         map.put("name", AppConstants.register.getData().getUser().getNickName());
-        map.put("portraitUri", "xxx");// 头像暂时无
+        map.put("portraitUri", userTestPhoto);// 头像
         L.d("xxx", "userId: " + AppConstants.register.getData().getUser().getUserId());
         L.d("xxx", "name: " + AppConstants.register.getData().getUser().getNickName());
         VolleyContentFast.requestRongYun(BaseURLs.RONG_USER_TOKEN, map, new VolleyContentFast.ResponseSuccessListener<RongTokenBean>() {
