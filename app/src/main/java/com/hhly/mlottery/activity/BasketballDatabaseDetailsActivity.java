@@ -417,6 +417,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                     mHandlerData.postDelayed(mRun, 500); // 加载数据
                     mBasketDatasaseHandicapFragment.upDate();
                     mBasketDatabaseBigSmallFragment.upDate();
+                    mBasketDatasaseStatisticsFragment.upData();
                 }
             }, 1000);
     }
@@ -500,6 +501,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 //大小盘
                 mBasketDatabaseBigSmallFragment.setSeason(newData);
                 mBasketDatabaseBigSmallFragment.upDate();
+
+                //统计
+                mBasketDatasaseStatisticsFragment.setSeason(newData);
+                mBasketDatasaseStatisticsFragment.upData();
 
             }
         });

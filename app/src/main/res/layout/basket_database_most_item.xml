@@ -9,19 +9,19 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="胜负统计"
-            android:textSize="@dimen/text_size_13"/>
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:text="胜负统计"-->
+            <!--android:textSize="@dimen/text_size_13"/>-->
 
-        <!--分割线-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/content_txt_light_grad" />
+        <!--&lt;!&ndash;分割线&ndash;&gt;-->
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:background="@color/content_txt_light_grad" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,9 +42,9 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center"
-                    android:background="@color/ampm_text_color"
                     />
                 <TextView
+                    android:id="@+id/basket_database_most_item_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="队名"
@@ -76,6 +76,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:id="@+id/basket_database_most_item_total_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
@@ -88,11 +89,13 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:id="@+id/basket_database_most_item_avg_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/content_txt_black"
-                        android:text="场均分 : 100"/>
+                        android:text="场均分 : 100"
+                        />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

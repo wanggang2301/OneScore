@@ -1,29 +1,46 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseMostDat;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseStatisticsBean;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabsseLeagueStatistics;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.adapter.CommonAdapter;
+import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
+import com.hhly.mlottery.widget.NoScrollListView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Administrator on 2016/8/5.
  */
 
-public class BasketDatasaseStatisticsFragment extends Fragment{
+public class BasketDatasaseStatisticsFragment extends Fragment implements View.OnClickListener {
 
     private static final String PARAM_ID = "leagueId";
     private static final String PARAM2_SEASON = "season";
@@ -57,6 +74,37 @@ public class BasketDatasaseStatisticsFragment extends Fragment{
     private TextView mTextGpNum;
     private TextView mTextNoGpNum;
     private TextView mTextAllNum;
+    private NoScrollListView mListView1;
+    private NoScrollListView mListView2;
+    private NoScrollListView mListView3;
+    private NoScrollListView mListView4;
+    private MostAdapter mAdapter1;
+    private MostAdapter mAdapter2;
+    private MostAdapter mAdapter3;
+    private MostAdapter mAdapter4;
+    private DisplayImageOptions mOptions;
+    private ImageLoader mImageLoader;
+    private LinearLayout mStatisticLinear;
+    private LinearLayout mMostLinear;
+    private RadioGroup mRadioGroup;
+    private RadioButton mStatisticButton;
+    private RadioButton mMostButton;
+    private FrameLayout mLoading;
+    private LinearLayout mLoadRefresh;
+    private TextView mNodata;
+    private LinearLayout mData;
+
+    private final static int VIEW_STATUS_LOADING = 1; //加载中
+    private final static int VIEW_STATUS_SUCCESS = 2; // 加载成功
+    private final static int VIEW_STATUS_NET_ERROR = 3; // 请求失败
+    private final static int VIEW_STATUS_NET_NODATA = 4; // 暂无数据
+    Handler mHandlerData = new Handler();
+    private TextView mRefresh;
+
+    private String mSeason; // 赛季
+    private String mLeagueId; // 联赛ID
+
+    private boolean isUpdata = true;//[true:统计  false:之最 ]
 
     public static BasketDatasaseStatisticsFragment newInstance(String leagueId , String season) {
         BasketDatasaseStatisticsFragment fragment = new BasketDatasaseStatisticsFragment();
@@ -72,7 +120,21 @@ public class BasketDatasaseStatisticsFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageForEmptyUri(R.mipmap.basket_default)
+                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext()).build();
+        mImageLoader = ImageLoader.getInstance();
+        mImageLoader.init(config);
+
+        mSeason = getArguments().getString(PARAM2_SEASON);
+        mLeagueId = getArguments().getString(PARAM_ID);
         //TODO-----
+
     }
 
     @Nullable
@@ -82,9 +144,17 @@ public class BasketDatasaseStatisticsFragment extends Fragment{
         mView = inflater.inflate(R.layout.basket_database_details_statistics , container , false);
 
         initView();
-        initData();
+        mHandlerData.postDelayed(mRun , 500);
 
         return mView;
+    }
+
+    public void upData(){
+        mHandlerData.postDelayed(mRun , 500);
+    }
+
+    public void setSeason(String season){
+        this.mSeason = season;
     }
 
     private void initView(){
@@ -161,38 +231,128 @@ public class BasketDatasaseStatisticsFragment extends Fragment{
         //场次统计总场数
         mTextAllNum = (TextView)mView.findViewById(R.id.basket_database_statistic_all);
 
+        mListView1 = (NoScrollListView)mView.findViewById(R.id.basket_database_leagueMost_list1);
+        mListView2 = (NoScrollListView)mView.findViewById(R.id.basket_database_leagueMost_list2);
+        mListView3 = (NoScrollListView)mView.findViewById(R.id.basket_database_leagueMost_list3);
+        mListView4 = (NoScrollListView)mView.findViewById(R.id.basket_database_leagueMost_list4);
+
+        mListView1.setFocusable(false);
+        mListView2.setFocusable(false);
+        mListView3.setFocusable(false);
+        mListView4.setFocusable(false);
+
+        //统计
+        mStatisticLinear = (LinearLayout)mView.findViewById(R.id.basket_database_statistic_ll);
+        //之最
+        mMostLinear = (LinearLayout) mView.findViewById(R.id.basket_database_most_ll);
+
+        mRadioGroup = (RadioGroup)mView.findViewById(R.id.head_radiogroup);
+        mStatisticButton = (RadioButton)mView.findViewById(R.id.basket_database_details_statistics);
+        mMostButton = (RadioButton)mView.findViewById(R.id.basket_database_details_most);
+
+        //加载成功
+        mData = (LinearLayout)mView.findViewById(R.id.basket_database_details_data);
+        mData.setVisibility(View.GONE);
+        //加载中...
+        mLoading = (FrameLayout) mView.findViewById(R.id.basket_database_loading_details);
+        //网络异常
+        mLoadRefresh = (LinearLayout) mView.findViewById(R.id.basket_database_details_refresh);
+        //暂无数据
+        mNodata = (TextView) mView.findViewById(R.id.basket_database_details_nodata);
+
+        mRefresh = (TextView)mView.findViewById(R.id.reLoadin);
+        mRefresh.setOnClickListener(this);
+        setRadioOnClick();
     }
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case VIEW_STATUS_LOADING:
+                    mLoading.setVisibility(View.VISIBLE);
+                    mData.setVisibility(View.GONE);
+                    mLoadRefresh.setVisibility(View.GONE);
+                    mNodata.setVisibility(View.GONE);
+                    break;
+                case VIEW_STATUS_SUCCESS:
+                    mLoading.setVisibility(View.GONE);
+                    mData.setVisibility(View.VISIBLE);
+                    mLoadRefresh.setVisibility(View.GONE);
+                    mNodata.setVisibility(View.GONE);
+                    break;
+                case VIEW_STATUS_NET_ERROR:
+                    mLoading.setVisibility(View.GONE);
+                    mData.setVisibility(View.GONE);
+                    mLoadRefresh.setVisibility(View.VISIBLE);
+                    mNodata.setVisibility(View.GONE);
+                    break;
+                case VIEW_STATUS_NET_NODATA:
+                    mLoading.setVisibility(View.GONE);
+                    mData.setVisibility(View.GONE);
+                    mLoadRefresh.setVisibility(View.GONE);
+                    mNodata.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
+    private Runnable mRun = new Runnable() {
+        @Override
+        public void run() {
+            initData();
+        }
+    };
 
     private void initData(){
 
+        mHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         //http://192.168.31.115:8080/mlottery/core/basketballData.findStatistic.do?lang=zh&leagueId=123456&season=2016-2017
         String url = "http://192.168.31.115:8888/mlottery/core/basketballData.findStatistic.do" ;
-
         Map<String , String> params = new HashMap<>();
-        params.put("leagueId" , "123456");
-        params.put("season" , "2016-2017");
+        if (!mSeason.equals("-1")) {
+            params.put("season" , mSeason);
+        }
+        params.put("leagueId" , mLeagueId);
+
+        L.d("params======>" , params.get("season") + "*****");
+        L.d("params======>" , params.get("leagueId") + "*****");
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseStatisticsBean>() {
 
             @Override
             public void onResponse(BasketDatabaseStatisticsBean bean) {
-
                 if (bean == null) {
-
+                    mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA);
                     return;
                 }
+                //统计
                 BasketDatabsseLeagueStatistics data ;
                 data = bean.getLeagueStatistics();
-
                 setData(data);
 
-                Toast.makeText(getContext(), "**** ok ****", Toast.LENGTH_SHORT).show();
+                //之最
+                mAdapter1 = new MostAdapter(getContext() , bean.getLeagueMost().getBestOffensive(), R.layout.basket_database_most_item);
+                mAdapter2 = new MostAdapter(getContext() , bean.getLeagueMost().getUnoffsensive(), R.layout.basket_database_most_item);
+                mAdapter3 = new MostAdapter(getContext() , bean.getLeagueMost().getBestDefensive(), R.layout.basket_database_most_item);
+                mAdapter4 = new MostAdapter(getContext() , bean.getLeagueMost().getUndefended(), R.layout.basket_database_most_item);
+                mListView1.setAdapter(mAdapter1);
+                mListView2.setAdapter(mAdapter2);
+                mListView3.setAdapter(mAdapter3);
+                mListView4.setAdapter(mAdapter4);
+
+                mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                if (isUpdata) {
+                    setSelect(true);
+                }else{
+                    setSelect(false);
+                }
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                Toast.makeText(getContext(), "**** no ****", Toast.LENGTH_SHORT).show();
+                mHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
             }
         }, BasketDatabaseStatisticsBean.class);
     }
@@ -272,8 +432,72 @@ public class BasketDatasaseStatisticsFragment extends Fragment{
         mTextNoGpNum.setText("未赛 " + (int)data.getUnfinishedMatch() + "");
         mTextAllNum.setText("总赛场次 " + (int)data.getTotalMatch() + "");
 
+    }
+
+    private void setSelect(boolean statistic){
+        if (statistic) {
+            mStatisticLinear.setVisibility(View.VISIBLE);
+            mMostLinear.setVisibility(View.GONE);
+        }else{
+            mStatisticLinear.setVisibility(View.GONE);
+            mMostLinear.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setRadioOnClick(){
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == mStatisticButton.getId()) {
+
+                    setSelect(true);
+                    isUpdata = true;
+
+                }else if(checkedId == mMostButton.getId()){
+
+                    setSelect(false);
+                    isUpdata = false;
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.reLoadin:
+                mHandlerData.postDelayed(mRun , 500);
+                break;
+        }
+    }
+
+    class MostAdapter extends CommonAdapter<BasketDatabaseMostDat>{
 
 
+        public MostAdapter(Context context, List<BasketDatabaseMostDat> datas, int layoutId) {
+            super(context, datas, layoutId);
+
+            this.mContext = context;
+        }
+
+        @Override
+        public void convert(ViewHolder holder, BasketDatabaseMostDat basketDatabaseMostDat) {
+
+            if (basketDatabaseMostDat == null) {
+                return;
+            }
+
+            ImageView mIcon= (ImageView)holder.getConvertView().findViewById(R.id.progress_statistic);
+
+            holder.setText(R.id.basket_database_most_item_name , basketDatabaseMostDat.getTeamName());
+            holder.setText(R.id.basket_database_most_item_total_score , "总得分 : " + basketDatabaseMostDat.getTotalScore()+"");
+            holder.setText(R.id.basket_database_most_item_avg_score ,"场均得分 : " + basketDatabaseMostDat.getAvgScore() + "");
+
+            mImageLoader.displayImage(basketDatabaseMostDat.getTeamIconUrl(), mIcon , mOptions);
+
+
+        }
     }
 
 }

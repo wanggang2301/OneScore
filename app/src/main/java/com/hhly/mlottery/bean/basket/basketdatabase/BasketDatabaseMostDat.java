@@ -10,6 +10,7 @@ public class BasketDatabaseMostDat {
     private double recordType;	//1
     private String teamIconUrl;//	http://en.13322.com/basket/images/logo_team/18.jpg
     private String teamName;//	马刺
+    private double totalScore; // 	7618
 
     public double getTotalScore() {
         return totalScore;
@@ -50,6 +51,4 @@ public class BasketDatabaseMostDat {
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
-
-    private double totalScore; // 	7618
 }

@@ -185,7 +185,9 @@ public class RoundProgressBar extends View {
         switch (style) {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval, 270, (360 * (int)(progress) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                if (progress > 0) {
+                    canvas.drawArc(oval, 270, (360 * (int)(progress) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                }
                 break;
             }
             case FILL: {
@@ -207,7 +209,9 @@ public class RoundProgressBar extends View {
         switch (style) {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval2, 270+(360 * (int)(progress + 0.5) / 100),  (360 * (int)(progress2) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                if (progress2 > 0) {
+                    canvas.drawArc(oval2, 270+(360 * (int)(progress + 0.5) / 100),  (360 * (int)(progress2) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                }
                 break;
             }
             case FILL: {
@@ -229,7 +233,9 @@ public class RoundProgressBar extends View {
         switch (style) {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(oval3, 270 + (360 * ((int)(progress + 0.5) + (int)(progress2 + 0.5)) / 100),  (360 * (int)(progress3) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                if (progress3 > 0) {
+                    canvas.drawArc(oval3, 270 + (360 * ((int)(progress + 0.5) + (int)(progress2 + 0.5)) / 100),  (360 * (int)(progress3) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                }
                 break;
             }
             case FILL: {
@@ -419,4 +425,5 @@ public class RoundProgressBar extends View {
         this.textIsDisplayable = b;
         postInvalidate();
     }
+
 }
