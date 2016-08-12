@@ -217,7 +217,10 @@
             android:screenOrientation="portrait" />
 
         <!-- 登录注册 end -->
-
+        <!-- 模糊搜索页面 -->
+        <activity
+            android:name=".activity.BasketballInformationSerachActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 畅言的配置项 -->
         <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity" />

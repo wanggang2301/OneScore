@@ -66,6 +66,7 @@ public class CpiDateAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.mTextView.setText(cpiDateList.get(position).get("date"));
+
         if (defItem == position) {//如果点击listview的当前的position相等
             // 设置背景颜色
             convertView.setBackgroundResource(R.color.whitesmoke);

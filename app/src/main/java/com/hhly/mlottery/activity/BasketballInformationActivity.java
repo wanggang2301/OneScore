@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -53,8 +54,9 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         publicImgBack.setOnClickListener(this);
         publicBtnSet.setOnClickListener(this);
 
-        publicBtnSet.setVisibility(View.GONE); //模糊搜索隐藏
+        publicBtnSet.setVisibility(View.VISIBLE); //模糊搜索隐藏
 
+        publicBtnSet.setOnClickListener(this);
 
         publicTxtTitle.setText(getApplicationContext().getResources().getString(R.string.basket_info_title));
         publicBtnFilter.setVisibility(View.GONE);
@@ -81,6 +83,8 @@ public class BasketballInformationActivity extends BaseActivity implements View.
                 finish();
                 break;
             case R.id.public_btn_set:
+                Intent intent = new Intent(getApplicationContext(), BasketballInformationSerachActivity.class);
+                startActivity(intent);
                 break;
         }
     }

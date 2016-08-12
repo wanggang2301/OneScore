@@ -302,6 +302,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         // 设置listView的适配器
 
         if (mAdapter == null) {
+
             mAdapter = new InforPopuWindowdapter(this, mListDatas);
         }
 

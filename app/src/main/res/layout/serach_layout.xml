@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:paddingTop="20dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:paddingLeft="10dp"
+                android:id="@+id/et_keyword"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:drawableLeft="@mipmap/dark_serach"
+                android:drawablePadding="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/serach_edit_shape"
+                android:textSize="@dimen/home_pager_title"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:textColorHint="@color/content_txt_light_grad"
+                android:hint="请输入联赛名"/>
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/dark_delete"
+                android:id="@+id/search_iv_delete"
+                android:layout_gravity="right|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/search_btn_back"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:text="取消"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/no_serach_tv"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="找不到相关信息"
+        android:textSize="15sp"
+        android:textColor="@color/res_pl_color"
+        />
+    <ListView
+        android:visibility="visible"
+        android:gravity="center"
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="信息展示区1"
+              >
+    </ListView>
+</LinearLayout>
