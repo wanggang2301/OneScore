@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,14 +14,14 @@ import java.util.List;
  */
 public class MatchDay implements Parcelable {
 
-    private String day;
+    private Date day;
     private List<ScheduledMatch> datas;
 
-    public String getDay() {
+    public Date getDay() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setDay(Date day) {
         this.day = day;
     }
 
@@ -32,6 +33,9 @@ public class MatchDay implements Parcelable {
         this.datas = datas;
     }
 
+    public MatchDay() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -39,20 +43,17 @@ public class MatchDay implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.day);
-        dest.writeList(this.datas);
-    }
-
-    public MatchDay() {
+        dest.writeLong(this.day != null ? this.day.getTime() : -1);
+        dest.writeTypedList(this.datas);
     }
 
     protected MatchDay(Parcel in) {
-        this.day = in.readString();
-        this.datas = new ArrayList<ScheduledMatch>();
-        in.readList(this.datas, ScheduledMatch.class.getClassLoader());
+        long tmpDay = in.readLong();
+        this.day = tmpDay == -1 ? null : new Date(tmpDay);
+        this.datas = in.createTypedArrayList(ScheduledMatch.CREATOR);
     }
 
-    public static final Parcelable.Creator<MatchDay> CREATOR = new Parcelable.Creator<MatchDay>() {
+    public static final Creator<MatchDay> CREATOR = new Creator<MatchDay>() {
         @Override
         public MatchDay createFromParcel(Parcel source) {
             return new MatchDay(source);

@@ -23,8 +23,10 @@ import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 描    述：篮球资料库赛程
@@ -36,9 +38,11 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     private static final int MATCH_TYPE_LEAGUE = 1; // 联赛
     private static final int MATCH_TYPE_CUP = 2; // 杯赛
 
+    View mButtonFrame;
     TextView mTitleTextView;
     ImageView mLeftButton;
     ImageView mRightButton;
+
     RecyclerView mRecyclerView;
 
     private ScheduleResult mResult;
@@ -56,15 +60,25 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mTitleTextView = (TextView) view.findViewById(R.id.title_button);
-        mLeftButton = (ImageView) view.findViewById(R.id.left_button);
-        mRightButton = (ImageView) view.findViewById(R.id.right_button);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mButtonFrame = LayoutInflater.from(view.getContext())
+                .inflate(R.layout.layout_basket_database_choose, (ViewGroup) view, false);
 
-        initRecycler();
+        mTitleTextView = (TextView) mButtonFrame.findViewById(R.id.title_button);
+        mLeftButton = (ImageView) mButtonFrame.findViewById(R.id.left_button);
+        mRightButton = (ImageView) mButtonFrame.findViewById(R.id.right_button);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         mStageList = new ArrayList<>();
 
+        initRecycler();
+
+        initListener();
+
+        loadData();
+    }
+
+    private void initListener() {
         mTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,20 +97,18 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                 }
             }
         });
-
-//        loadData();
     }
 
     /**
      * 刷新数据
      */
     public void update() {
-//        loadData();
+        loadData();
     }
 
     private void loadData() {
         // http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016
-        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016",
+        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=2&matchType=1&firstStageId=1&secondStageId=2015-04",
                 new VolleyContentFast.ResponseSuccessListener<ScheduleResult>() {
                     @Override
                     public void onResponse(ScheduleResult result) {
@@ -105,8 +117,9 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                         if (CollectionUtils.notEmpty(matchData)) {
                             mSections.clear();
                             for (MatchDay matchDay : matchData) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd E", Locale.CHINA);
                                 mSections.add(new BasketballDatabaseScheduleSectionAdapter
-                                        .Section(true, matchDay.getDay()));
+                                        .Section(true, dateFormat.format(matchDay.getDay())));
                                 for (ScheduledMatch match : matchDay.getDatas()) {
                                     mSections.add(new BasketballDatabaseScheduleSectionAdapter
                                             .Section(match));
@@ -134,6 +147,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     private void initRecycler() {
         mSections = new ArrayList<>();
         mAdapter = new BasketballDatabaseScheduleSectionAdapter(mSections);
+        mAdapter.addHeaderView(mButtonFrame);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(manager);
