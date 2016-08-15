@@ -68,7 +68,7 @@
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="攻击力最强"
+                    android:text="@string/basket_database_details_leagueMost_strongestAttack"
                     android:textSize="@dimen/text_size_13"/>
 
                 <!--分割线-->
@@ -101,7 +101,7 @@
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="攻击力最弱"
+                    android:text="@string/basket_database_details_leagueMost_weakestAttack"
                     android:textSize="@dimen/text_size_13"/>
 
                 <!--分割线-->
@@ -133,7 +133,7 @@
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="防守最强"
+                    android:text="@string/basket_database_details_leagueMost_strongestDefense"
                     android:textSize="@dimen/text_size_13"/>
 
                 <!--分割线-->
@@ -165,7 +165,7 @@
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="防守最弱"
+                    android:text="@string/basket_database_details_leagueMost_weakestDefense"
                     android:textSize="@dimen/text_size_13"/>
 
                 <!--分割线-->

@@ -156,7 +156,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
      * 初始化界面
      */
     private void initView() {
-        TITLES = new String[]{getResources().getString(R.string.basket_database_details_handicapname),getResources().getString(R.string.basket_database_details_bigsmallname) , "统计"};
+        TITLES = new String[]{getResources().getString(R.string.basket_database_details_handicapname),getResources().getString(R.string.basket_database_details_bigsmallname) , getResources().getString(R.string.basket_database_details_statistic)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_database_details_toolbar);
         setSupportActionBar(toolbar);

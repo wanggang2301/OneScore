@@ -45,7 +45,7 @@
                     android:background="@drawable/odds_selected_plate"
                     android:checked="true"
                     android:textSize="@dimen/text_size_15"
-                    android:text="联赛统计"/>
+                    android:text="@string/basket_database_details_league_statistic"/>
                 <!--联赛之最-->
                 <RadioButton
                     android:id="@+id/basket_database_details_most"
@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/odds_selected_big"
-                    android:text="联赛之最"
+                    android:text="@string/basket_database_details_leagueMost"
                     android:textSize="@dimen/text_size_15"
                     />
             </RadioGroup>
@@ -77,7 +77,7 @@
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="胜负统计"
+                        android:text="@string/basket_database_details_victory_defeat"
                         android:textSize="@dimen/text_size_15"
                         android:id="@+id/textView9" />
                     <!--分割线-->
@@ -198,7 +198,7 @@
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="欧赔统计"
+                        android:text="@string/basket_database_details_statistic_euro"
                         android:textSize="@dimen/text_size_15"/>
 
                     <!--分割线-->
@@ -338,7 +338,7 @@
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="让分统计"
+                        android:text="@string/basket_database_details_statistic_let"
                         android:textSize="@dimen/text_size_15"/>
 
                     <!--分割线-->
@@ -475,7 +475,7 @@
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="大小球统计"
+                        android:text="@string/basket_database_details_statistic_big_small"
                         android:textSize="@dimen/text_size_15"/>
 
                     <!--分割线-->
@@ -613,7 +613,7 @@
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="得分统计"
+                        android:text="@string/basket_database_details_statistic_score"
                         android:textSize="@dimen/text_size_15"/>
 
                     <!--分割线-->
@@ -703,7 +703,7 @@
                             android:gravity="center"
                             android:textSize="10sp"
                             android:textColor="#666666"
-                            android:text="总得分"/>
+                            android:text="@string/basket_database_details_statistic_all_score"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -720,7 +720,7 @@
                             android:gravity="center"
                             android:textSize="10sp"
                             android:textColor="#666666"
-                            android:text="已赛场次"/>
+                            android:text="@string/basket_database_details_statistic_gp_num"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -737,7 +737,7 @@
                             android:gravity="center"
                             android:textSize="10sp"
                             android:textColor="#666666"
-                            android:text="平均得分"/>
+                            android:text="@string/basket_database_details_statistic_average"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -762,7 +762,7 @@
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="场次统计"
+                        android:text="@string/basket_database_details_statistic_num_score"
                         android:textSize="@dimen/text_size_15"/>
 
                     <!--分割线-->

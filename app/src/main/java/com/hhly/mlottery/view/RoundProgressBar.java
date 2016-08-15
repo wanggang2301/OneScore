@@ -11,8 +11,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.Match;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StringFormatUtils;
 
 /**
@@ -274,21 +272,21 @@ public class RoundProgressBar extends View {
             double tx3 = centerX + r * Math.cos((d3-90) * 3.14 /180);
             double ty3 = centerY + r * Math.sin((d3-90) * 3.14 /180);
 
-            L.d("tx==***=>" , tx + "");
-            L.d("ty==***=>" , ty + "");
+//            L.d("tx==***=>" , tx + "");
+//            L.d("ty==***=>" , ty + "");
+//
+//            L.d("progress==***=>" , progress + "");
+//            L.d("d==***=>" , d + "");
 
-            L.d("progress==***=>" , progress + "");
-            L.d("d==***=>" , d + "");
-
-            if (prossgressData1 != null && !prossgressData1.equals("")) {
+            if (prossgressData1 != null && !prossgressData1.equals("") && !prossgressData1.equals("0")) {
                 float textWidths = paint.measureText(prossgressData1);
                 canvas.drawText(prossgressData1, (float) tx - textWidths/2, (float) ty, paint);//画出进度百分比
             }
-            if (prossgressData2 != null && !prossgressData2.equals("")) {
+            if (prossgressData2 != null && !prossgressData2.equals("") && !prossgressData2.equals("0")) {
                 float textWidths2 = paint.measureText(prossgressData2);
                 canvas.drawText(prossgressData2, (float) tx2 - textWidths2/2, (float) ty2, paint);//画出进度百分比
             }
-            if (prossgressData3 != null && !prossgressData3.equals("")) {
+            if (prossgressData3 != null && !prossgressData3.equals("") && !prossgressData3.equals("0")) {
                 float textWidths3 = paint.measureText(prossgressData3);
                 canvas.drawText(prossgressData3, (float) tx3 - textWidths3/2, (float) ty3, paint);//画出进度百分比
             }

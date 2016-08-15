@@ -8,41 +8,40 @@ import java.util.List;
 
 public class BasketDatabaseLeagueMost {
 
-    private List<BasketDatabaseMostDat> bestDefensive; //	Array
-    private List<BasketDatabaseMostDat> bestOffensive;//	Array
-    private List<BasketDatabaseMostDat> undefended;//	Array
-    private List<BasketDatabaseMostDat> unoffsensive;//	Array
+    private List<BasketDatabaseMostDat> strongestDefense; //	Array
+    private List<BasketDatabaseMostDat> weakestDefense;//	Array
+    private List<BasketDatabaseMostDat> strongestAttack;//	Array
+    private List<BasketDatabaseMostDat> weakestAttack;//	Array
 
-
-    public List<BasketDatabaseMostDat> getUnoffsensive() {
-        return unoffsensive;
+    public List<BasketDatabaseMostDat> getStrongestDefense() {
+        return strongestDefense;
     }
 
-    public void setUnoffsensive(List<BasketDatabaseMostDat> unoffsensive) {
-        this.unoffsensive = unoffsensive;
+    public void setStrongestDefense(List<BasketDatabaseMostDat> strongestDefense) {
+        this.strongestDefense = strongestDefense;
     }
 
-    public List<BasketDatabaseMostDat> getBestDefensive() {
-        return bestDefensive;
+    public List<BasketDatabaseMostDat> getWeakestDefense() {
+        return weakestDefense;
     }
 
-    public void setBestDefensive(List<BasketDatabaseMostDat> bestDefensive) {
-        this.bestDefensive = bestDefensive;
+    public void setWeakestDefense(List<BasketDatabaseMostDat> weakestDefense) {
+        this.weakestDefense = weakestDefense;
     }
 
-    public List<BasketDatabaseMostDat> getBestOffensive() {
-        return bestOffensive;
+    public List<BasketDatabaseMostDat> getStrongestAttack() {
+        return strongestAttack;
     }
 
-    public void setBestOffensive(List<BasketDatabaseMostDat> bestOffensive) {
-        this.bestOffensive = bestOffensive;
+    public void setStrongestAttack(List<BasketDatabaseMostDat> strongestAttack) {
+        this.strongestAttack = strongestAttack;
     }
 
-    public List<BasketDatabaseMostDat> getUndefended() {
-        return undefended;
+    public List<BasketDatabaseMostDat> getWeakestAttack() {
+        return weakestAttack;
     }
 
-    public void setUndefended(List<BasketDatabaseMostDat> undefended) {
-        this.undefended = undefended;
+    public void setWeakestAttack(List<BasketDatabaseMostDat> weakestAttack) {
+        this.weakestAttack = weakestAttack;
     }
 }
