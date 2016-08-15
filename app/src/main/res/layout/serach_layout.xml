@@ -30,7 +30,7 @@
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:textColorHint="@color/content_txt_light_grad"
-                android:hint="请输入联赛名"/>
+                android:hint="@string/fuzzy_search"/>
 
             <ImageView
                 android:visibility="gone"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="18sp"
-            android:text="取消"
+            android:text="@string/fottball_home_quxiao"
             android:textColor="@color/white"/>
     </LinearLayout>
 
@@ -61,7 +61,7 @@
         android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="找不到相关信息"
+        android:text="@string/not_find_search"
         android:textSize="15sp"
         android:textColor="@color/res_pl_color"
         />
