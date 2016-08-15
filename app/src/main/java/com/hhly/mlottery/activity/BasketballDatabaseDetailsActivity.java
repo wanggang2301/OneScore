@@ -429,6 +429,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mHandicapFragment.upDate();
                 mBigSmallFragment.upDate();
                 mScheduleFragment.update();
+                mRankingFragment.update();
             }
         }, 1000);
     }

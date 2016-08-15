@@ -1,51 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/whitesmoke"
               android:orientation="vertical">
-
-    <FrameLayout
-        android:id="@+id/button_frame"
-        android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/title_button"
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@drawable/blue_round_button"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_11"
-            tools:text="决赛"/>
-
-        <ImageView
-            android:id="@+id/left_button"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:src="@mipmap/inforgo"/>
-
-        <ImageView
-            android:id="@+id/right_button"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/inforback"/>
-
-    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

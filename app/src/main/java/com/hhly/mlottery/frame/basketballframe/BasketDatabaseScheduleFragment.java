@@ -84,14 +84,14 @@ public class BasketDatabaseScheduleFragment extends Fragment {
             }
         });
 
-        loadData();
+//        loadData();
     }
 
     /**
      * 刷新数据
      */
     public void update() {
-        loadData();
+//        loadData();
     }
 
     private void loadData() {

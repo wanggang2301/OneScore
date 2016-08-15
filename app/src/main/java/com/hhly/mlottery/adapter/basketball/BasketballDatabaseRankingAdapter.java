@@ -5,20 +5,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.SectionEntity;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.basketdatabase.RankingGroup;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
-import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.StringUtils;
 
@@ -33,14 +29,23 @@ import java.util.Locale;
 public class BasketballDatabaseRankingAdapter
         extends BaseSectionQuickAdapter<BasketballDatabaseRankingAdapter.Section> {
 
+    private static final int TYPE_FORM_TITLE = 1;
+
     private int type = RankingResult.SINGLE_LEAGUE;
 
     public BasketballDatabaseRankingAdapter(List<Section> data) {
-        super(R.layout.item_basket_datatbase_ranking, R.layout.item_basket_datatbase_ranking_title, data);
+        super(R.layout.item_basket_datatbase_ranking_team, R.layout.item_basket_datatbase_ranking_title, data);
     }
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    protected int getDefItemViewType(int position) {
+        Section section = (Section) getData().get(position);
+        if (!section.isHeader && section.t == null) return TYPE_FORM_TITLE;
+        return super.getDefItemViewType(position);
     }
 
     @Override
@@ -69,50 +74,35 @@ public class BasketballDatabaseRankingAdapter
 
     @Override
     protected void convert(BaseViewHolder holder, Section section) {
-        RankingGroup rankingGroup = section.t;
-        LinearLayout teamContainer = holder.getView(R.id.team_container);
-        teamContainer.removeAllViews();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        List<RankingTeam> teams = rankingGroup.getDatas();
-        if (CollectionUtils.notEmpty(teams)) {
-            for (RankingTeam team : teams) {
-                teamContainer.addView(produceTeamItemView(inflater, teamContainer, team));
-            }
-        }
-    }
+        RankingTeam team = section.t;
+        if (team == null) return;
 
-    /**
-     * 生产每一条 Item
-     *
-     * @param inflater  inflater
-     * @param container container
-     * @param team      队伍信息
-     * @return ItemView
-     */
-    private View produceTeamItemView(LayoutInflater inflater, ViewGroup container, RankingTeam team) {
-        View view = inflater.inflate(R.layout.item_basket_datatbase_ranking_team, container, false);
-        TextView rank = (TextView) view.findViewById(R.id.rank);
-        TextView name = (TextView) view.findViewById(R.id.name);
-        TextView matchNum = (TextView) view.findViewById(R.id.match_num);
-        TextView winLose = (TextView) view.findViewById(R.id.win_lose);
-        TextView winRate = (TextView) view.findViewById(R.id.win_rate);
-        TextView winOffset = (TextView) view.findViewById(R.id.win_offset);
-        TextView recent = (TextView) view.findViewById(R.id.recent);
+        TextView rank = holder.getView(R.id.rank);
+        TextView name = holder.getView(R.id.name);
+        TextView recent = holder.getView(R.id.recent);
+
         int ranking = team.getRanking();
+        String teamRecent = team.getRecent();
+
+        holder.setText(R.id.rank, String.format(Locale.getDefault(), "%d", ranking))
+                .setText(R.id.name, team.getTeamName())
+                .setText(R.id.match_num, String.format(Locale.getDefault(), "%d", team.getFinishedMatch()))
+                .setText(R.id.win_lose, String.format(Locale.getDefault(), "%d/%d", team.getWinMatch(), team.getLoseMatch()))
+                .setText(R.id.win_rate, String.format(Locale.getDefault(), "%.1f", team.getWinRate()))
+                .setText(R.id.win_offset, String.format(Locale.getDefault(), "%d", team.getGameBehind()))
+                .setText(R.id.recent, "0".equals(teamRecent) ? "-" : teamRecent);
+
         if (ranking <= 3) {
             rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             rank.setBackgroundResource(R.drawable.basket_databae_round_dra);
             name.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
+        } else {
+            rank.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
+            rank.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
+            name.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
         }
-        rank.setText(String.format(Locale.getDefault(), "%d", ranking));
-        name.setText(team.getTeamName());
-        matchNum.setText(String.format(Locale.getDefault(), "%d", team.getFinishedMatch()));
-        winLose.setText(String.format(Locale.getDefault(), "%d/%d", team.getWinMatch(), team.getLoseMatch()));
-        winRate.setText(String.format(Locale.getDefault(), "%.1f", team.getWinRate() * 100));
-        winOffset.setText(String.format(Locale.getDefault(), "%d", team.getGameBehind()));
-        String teamRecent = team.getRecent();
+
         if (StringUtils.isNotEmpty(teamRecent)) {
-            recent.setText(teamRecent);
             if (teamRecent.contains("W")) {
                 recent.setTextColor(ContextCompat.getColor(mContext, R.color.database_win_color));
             } else if (teamRecent.contains("L")) {
@@ -121,17 +111,29 @@ public class BasketballDatabaseRankingAdapter
                 recent.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
             }
         }
-        return view;
     }
 
-    public static class Section extends SectionEntity<RankingGroup> {
+    @Override
+    protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_FORM_TITLE)
+            return new FormTitleViewHolder(getItemView(R.layout.item_basket_datatbase_ranking, parent));
+        return super.onCreateDefViewHolder(parent, viewType);
+    }
+
+    public static class Section extends SectionEntity<RankingTeam> {
 
         public Section(boolean isHeader, String header) {
             super(isHeader, header);
         }
 
-        public Section(RankingGroup group) {
-            super(group);
+        public Section(RankingTeam team) {
+            super(team);
+        }
+    }
+
+    public class FormTitleViewHolder extends BaseViewHolder {
+        public FormTitleViewHolder(View view) {
+            super(view);
         }
     }
 }

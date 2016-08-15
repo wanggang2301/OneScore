@@ -5,7 +5,9 @@
               android:layout_height="wrap_content"
               android:background="@color/white"
               android:orientation="vertical"
-              android:padding="10dp">
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="10dp">
 
     <android.support.percent.PercentFrameLayout
         android:layout_width="match_parent"
@@ -79,11 +81,5 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/linecolor"/>
-
-    <LinearLayout
-        android:id="@+id/team_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
 
 </LinearLayout>
