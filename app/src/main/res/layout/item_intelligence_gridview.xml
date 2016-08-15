@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <ImageView
+            android:id="@+id/item_result_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/season_handicap_win"
+            />
+        <TextView
+            android:id="@+id/item_tv_home_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14%"
+            style="@style/intelligent_rate_text" />
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/item_pro_home_rate"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:progress="50"
+            android:progressDrawable="@drawable/intelligent_pro_home"/>
+        <TextView
+            android:id="@+id/item_tv_guest_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14%"
+            style="@style/intelligent_rate_text" />
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/item_pro_guest_rate"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:progress="50"
+            android:progressDrawable="@drawable/intelligent_pro_guest"/>
+        <TextView
+            android:id="@+id/item_tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="赢盘率"
+            android:paddingTop="5dp"
+            android:textColor="@color/mdy_333"
+            android:textSize="@dimen/text_size_13"
+            />
+    </LinearLayout>
+</LinearLayout>
