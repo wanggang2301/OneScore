@@ -18,8 +18,8 @@ public class ScheduleResult implements Parcelable {
      * matchType : 1
      */
 
-    private int firstStageIndex;
-    private int secondStageIndex;
+    private Integer firstStageIndex;
+    private Integer secondStageIndex;
     private int matchType;
     private List<MatchStage> searchCondition;
     private List<MatchDay> matchData;
@@ -40,19 +40,19 @@ public class ScheduleResult implements Parcelable {
         this.matchData = matchData;
     }
 
-    public int getFirstStageIndex() {
+    public Integer getFirstStageIndex() {
         return firstStageIndex;
     }
 
-    public void setFirstStageIndex(int firstStageIndex) {
+    public void setFirstStageIndex(Integer firstStageIndex) {
         this.firstStageIndex = firstStageIndex;
     }
 
-    public int getSecondStageIndex() {
+    public Integer getSecondStageIndex() {
         return secondStageIndex;
     }
 
-    public void setSecondStageIndex(int secondStageIndex) {
+    public void setSecondStageIndex(Integer secondStageIndex) {
         this.secondStageIndex = secondStageIndex;
     }
 

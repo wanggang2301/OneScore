@@ -16,15 +16,16 @@ public class RankingResult {
     public static final int SINGLE_LEAGUE = 1;
     public static final int MULTI_PART_LEAGUE = 2;
     public static final int CUP = 3;
+    public static final int CUP_MULTI_STAGE = 4;
 
-    @IntDef({SINGLE_LEAGUE, MULTI_PART_LEAGUE, CUP})
+    @IntDef({SINGLE_LEAGUE, MULTI_PART_LEAGUE, CUP, CUP_MULTI_STAGE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Type {
     }
 
     private int rankingType;
-    private int firstStageId;
-    private int secondStageId;
+    private Integer firstStageIndex;
+    private Integer secondStageIndex;
     private List<MatchStage> searchCondition;
     private List<RankingGroup> rankingObj;
 
@@ -45,20 +46,20 @@ public class RankingResult {
         this.rankingType = rankingType;
     }
 
-    public int getFirstStageId() {
-        return firstStageId;
+    public Integer getFirstStageIndex() {
+        return firstStageIndex;
     }
 
-    public void setFirstStageId(int firstStageId) {
-        this.firstStageId = firstStageId;
+    public void setFirstStageIndex(Integer firstStageIndex) {
+        this.firstStageIndex = firstStageIndex;
     }
 
-    public int getSecondStageId() {
-        return secondStageId;
+    public Integer getSecondStageIndex() {
+        return secondStageIndex;
     }
 
-    public void setSecondStageId(int secondStageId) {
-        this.secondStageId = secondStageId;
+    public void setSecondStageIndex(Integer secondStageIndex) {
+        this.secondStageIndex = secondStageIndex;
     }
 
     public List<MatchStage> getSearchCondition() {
@@ -76,8 +77,8 @@ public class RankingResult {
      */
     public StageResult getStageResult() {
         StageResult stageResult = new StageResult();
-        stageResult.setFirstStageId(this.firstStageId);
-        stageResult.setSecondStageId(this.secondStageId);
+        stageResult.setFirstStageId(this.firstStageIndex);
+        stageResult.setSecondStageId(this.secondStageIndex);
         stageResult.setSearchCondition(this.searchCondition);
         return stageResult;
     }

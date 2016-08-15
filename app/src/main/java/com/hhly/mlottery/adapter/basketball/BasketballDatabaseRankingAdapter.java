@@ -33,10 +33,13 @@ import java.util.Locale;
 public class BasketballDatabaseRankingAdapter
         extends BaseSectionQuickAdapter<BasketballDatabaseRankingAdapter.Section> {
 
-    private int type;
+    private int type = RankingResult.SINGLE_LEAGUE;
 
-    public BasketballDatabaseRankingAdapter(@RankingResult.Type int type, List<Section> data) {
+    public BasketballDatabaseRankingAdapter(List<Section> data) {
         super(R.layout.item_basket_datatbase_ranking, R.layout.item_basket_datatbase_ranking_title, data);
+    }
+
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -46,11 +49,13 @@ public class BasketballDatabaseRankingAdapter
         textView.setText(section.header);
         switch (type) {
             case RankingResult.CUP:
+            case RankingResult.CUP_MULTI_STAGE:
                 textView.setGravity(Gravity.CENTER);
                 textView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                 RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) textView.getLayoutParams();
                 layoutParams.topMargin = DisplayUtil.dip2px(mContext, 10);
+                textView.setLayoutParams(layoutParams);
                 break;
             case RankingResult.MULTI_PART_LEAGUE:
                 textView.setGravity(GravityCompat.START);
@@ -76,6 +81,14 @@ public class BasketballDatabaseRankingAdapter
         }
     }
 
+    /**
+     * 生产每一条 Item
+     *
+     * @param inflater  inflater
+     * @param container container
+     * @param team      队伍信息
+     * @return ItemView
+     */
     private View produceTeamItemView(LayoutInflater inflater, ViewGroup container, RankingTeam team) {
         View view = inflater.inflate(R.layout.item_basket_datatbase_ranking_team, container, false);
         TextView rank = (TextView) view.findViewById(R.id.rank);
@@ -97,8 +110,16 @@ public class BasketballDatabaseRankingAdapter
         winLose.setText(String.format(Locale.getDefault(), "%d/%d", team.getWinMatch(), team.getLoseMatch()));
         winRate.setText(String.format(Locale.getDefault(), "%.1f", team.getWinRate() * 100));
         winOffset.setText(String.format(Locale.getDefault(), "%d", team.getGameBehind()));
-        if (StringUtils.isNotEmpty(team.getRecent())) {
-            recent.setText(team.getRecent());
+        String teamRecent = team.getRecent();
+        if (StringUtils.isNotEmpty(teamRecent)) {
+            recent.setText(teamRecent);
+            if (teamRecent.contains("W")) {
+                recent.setTextColor(ContextCompat.getColor(mContext, R.color.database_win_color));
+            } else if (teamRecent.contains("L")) {
+                recent.setTextColor(ContextCompat.getColor(mContext, R.color.database_lose_color));
+            } else {
+                recent.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
+            }
         }
         return view;
     }

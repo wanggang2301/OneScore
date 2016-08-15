@@ -14,7 +14,7 @@ public class RankingTeam {
      * finishedMatch : 30
      * winRate : 0.733
      * gameBehind : 0
-     * ranking : 1
+     * ranking : 1W
      */
 
     private String teamName;

@@ -612,4 +612,7 @@
     <color name="info_home_progress_color">#FE0100</color>
     <color name="info_guest_progress_color">#21b11c</color>
     <color name="progress_yellow">#EEC72C</color>
+    
+    <color name="database_win_color">#DD2F1C</color>
+    <color name="database_lose_color">#21B11E</color>
 </resources>
