@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.BasketballInforSerachAdapter;
 import com.hhly.mlottery.bean.BasketSerach;
+import com.hhly.mlottery.config.BaseURLs;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
     private EditText et_keyword;
     private ListView mTv_result;
     private TextView mNo_serach_tv;
-
+    private static final String SEARCHKEYWORD= "searchKeyword";
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.serach_layout);
@@ -47,14 +48,13 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
         //ButterKnife.bind(this);
 
 
-        RestAdapter retrofit = new RestAdapter.Builder().setEndpoint("http://192.168.31.43:8888")
+        RestAdapter retrofit = new RestAdapter.Builder().setEndpoint(BaseURLs.URL_API_HOST)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter(new Gson()))
                 .build();
 
         final SearchService service = retrofit.create(SearchService.class);
         //保存数据源
-
         RxTextView.textChanges(et_keyword)
                 // 上面的对 tv_result 的操作需要在主线程
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -94,8 +94,9 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                 })
 
                 // 发生错误后不要调用 onError，而是转到 onErrorResumeNext
-           /*     .onErrorResumeNext((Func1<Throwable, ? extends Observable<? extends List<BasketSerach.ResultListBean>>>) new Func1<Throwable, Observable<? extends String>>() {
-                    @Override public Observable<? extends String> call(Throwable throwable) {
+/*
+                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<BasketSerach.ResultListBean>>>() {
+                    @Override public Observable<? extends List<BasketSerach.ResultListBean>> call(Throwable throwable) {
                         return Observable.just("error result");
                     }
                 })*/
@@ -178,7 +179,7 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
 
     interface SearchService {
         //@GET("/sug") Observable<Data> searchProdcut(@Query("code") String code, @Query("q") String keyword);
-        @GET("/mlottery/core/basketballData.fuzzySearch.do") rx.Observable<BasketSerach> searchProdcut(@Query("lang") String code, @Query("searchKeyword") String keyword);
+        @GET(BaseURLs.FUZZYSEARCH) rx.Observable<BasketSerach> searchProdcut(@Query("lang") String code, @Query(SEARCHKEYWORD) String keyword);
     }
 
 
