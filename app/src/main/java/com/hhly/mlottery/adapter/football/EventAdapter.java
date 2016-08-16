@@ -142,36 +142,33 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
             iv_right.setVisibility(View.INVISIBLE);
             if (SCORE.equals(m.getCode())) {
 
-                msg_left.setText(m.getPlayInfo() + "第" + m.getEventnum() + "个进球");
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + mContext.getResources().getString(R.string.foot_event_goal));
                 iv_left.setImageResource(R.mipmap.event_goal);
             } else if (YELLOW_CARD.equals(m.getCode())) {
-
-                msg_left.setText(m.getPlayInfo() + "第" + m.getEventnum() + "张黄牌");
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + mContext.getResources().getString(R.string.foot_event_yc));
                 iv_left.setImageResource(R.mipmap.event_yc);
 
             } else if (RED_CARD.equals(m.getCode())) {
-
-                msg_left.setText(m.getPlayInfo() + "第" + m.getEventnum() + "张红牌");
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + mContext.getResources().getString(R.string.foot_event_rc));
                 iv_left.setImageResource(R.mipmap.event_rc);
             } else if (SUBSTITUTION.equals(m.getCode())) {
                 // No:人名|No:人名(前上后下)
                 if (m.getPlayInfo() != null && !"".equals(m.getPlayInfo())) {
                     if (m.getPlayInfo().contains("|")) {
-                        msg_left.setText(m.getPlayInfo().split("|")[0] + "上场 " + m.getPlayInfo().split("|")[1] + "下场");
+                        msg_left.setText(m.getPlayInfo().split("|")[0] + mContext.getResources().getString(R.string.foot_event_in) + m.getPlayInfo().split("|")[1] + mContext.getResources().getString(R.string.foot_event_out));
                     } else {
-                        msg_left.setText(m.getPlayInfo().split(":")[0] + "号上场 " + m.getPlayInfo().split(":")[1] + "号下场");
+                        msg_left.setText(m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
                     }
                 } else {
-                    msg_left.setText("换人");
+                    msg_left.setText(mContext.getResources().getString(R.string.foot_event_player));
                 }
 
                 iv_left.setImageResource(R.mipmap.event_player);
             } else if (CORNER.equals(m.getCode())) {
-
-                msg_left.setText(m.getPlayInfo() + "第" + m.getEventnum() + "个角球");
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + mContext.getResources().getString(R.string.foot_event_corner));
                 iv_left.setImageResource(R.mipmap.event_corner);
             } else if (YTORED.equals(m.getCode())) {
-                msg_left.setText(m.getPlayInfo() + "两黄变一红");
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_ychanger));
                 iv_left.setImageResource(R.mipmap.event_ytor);
             }
 
@@ -183,26 +180,35 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
 
             if (SCORE1.equals(m.getCode())) {
 
-                msg_right.setText("第" + m.getEventnum() + "个进球" + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + mContext.getResources().getString(R.string.foot_event_goal) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_goal);
             } else if (YELLOW_CARD1.equals(m.getCode())) {
 
-                msg_right.setText("第" + m.getEventnum() + "张黄牌" + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + mContext.getResources().getString(R.string.foot_event_yc) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_yc);
 
             } else if (RED_CARD1.equals(m.getCode())) {
 
-                msg_right.setText("第" + m.getEventnum() + "张红牌" + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + mContext.getResources().getString(R.string.foot_event_rc) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_rc);
             } else if (SUBSTITUTION1.equals(m.getCode())) {
-                msg_right.setText("换人");
+
+                if (m.getPlayInfo() != null && !"".equals(m.getPlayInfo())) {
+                    if (m.getPlayInfo().contains("|")) {
+                        msg_right.setText(m.getPlayInfo().split("|")[0] + mContext.getResources().getString(R.string.foot_event_in) + m.getPlayInfo().split("|")[1] + mContext.getResources().getString(R.string.foot_event_out));
+                    } else {
+                        msg_right.setText(m.getPlayInfo().split(":")[0] + mContext.getResources().getString(R.string.foot_event_num_in) + m.getPlayInfo().split(":")[1] + mContext.getResources().getString(R.string.foot_event_num_out));
+                    }
+                } else {
+                    msg_right.setText(mContext.getResources().getString(R.string.foot_event_player));
+                }
                 iv_right.setImageResource(R.mipmap.event_player);
             } else if (CORNER1.equals(m.getCode())) {
 
-                msg_right.setText("第" + m.getEventnum() + "个角球" + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + mContext.getResources().getString(R.string.foot_event_corner) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_corner);
             } else if (YTORED1.equals(m.getCode())) {
-                msg_right.setText("两黄变一红" + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_ychanger) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_ytor);
             }
         }
@@ -223,9 +229,9 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
     public int getRecycleViewItemType(int position) {
         if ("2".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState()) && "1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
             return VIEW_TYPE_HALF_FINISH;
-        }else if ("-1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState())){
+        } else if ("-1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState())) {
             return VIEW_TYPE_HALF_FINISH;
-        }else {
+        } else {
             return VIEW_TYPE_DEFAULT;
         }
     }

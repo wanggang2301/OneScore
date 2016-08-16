@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!--足球事件直播-->
+    <string name="foot_event">事件</string>
+    <string name="foot_statictics">統計</string>
+    <string name="foot_event_goal">進球</string>
+    <string name="foot_event_rc">紅牌</string>
+    <string name="foot_event_yc">黃牌</string>
+    <string name="foot_event_ytor">兩黃一紅</string>
+    <string name="foot_event_ychanger">兩黃變一紅</string>
+    <string name="foot_event_player">換人</string>
+    <string name="foot_event_corner">角球</string>
+    <string name="foot_event_half">半場</string>
+    <string name="foot_event_finish">全場</string>
+    <string name="foot_event_di">第</string>
+    <string name="foot_event_ge">個</string>
+    <string name="foot_event_zhang">張</string>
+    <string name="foot_event_nomatchstate">暫無比賽動態</string>
+    <string name="foot_event_in">上場</string>
+    <string name="foot_event_out">下場</string>
+    <string name="foot_event_num_out">號下場</string>
+    <string name="foot_event_num_in">號上場</string>
+
     <!--篮球资料库-->
     <string name="basket_info_hot">熱門</string>
     <string name="basket_info_eur">歐洲</string>
@@ -17,7 +39,7 @@
     <string name="foot_details_talkball">聊球</string>
     <string name="foot_details_analyze">分析</string>
     <string name="foot_details_odds">指數</string>
-    <string name="foot_details_statistics">統計</string>
+    <string name="foot_details_statistics">直播</string>
 
     <string name="foot_details_time">時間</string>
     <string name="foot_details_score">比分</string>
@@ -56,8 +78,6 @@
     <string name="foot_odds_eu_right">負</string>
 
 
-
-
     <!--分享-->
     <string name="errcode_success">發送成功</string>
     <string name="errcode_cancel">發送取消</string>
@@ -79,7 +99,6 @@
     <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
     <string name="share_recommend">推薦</string>
     <string name="share_summary_default">壹比分,專業的足球比分直播平台</string>
-
 
 
     <!--指数-->

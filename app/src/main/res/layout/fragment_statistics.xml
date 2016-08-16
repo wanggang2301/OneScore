@@ -22,7 +22,7 @@
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/shape_basketball_infomation_left"
             android:checked="true"
-            android:text="事件"
+            android:text="@string/foot_event"
             android:textColor="@drawable/info_text_color" />
 
         <RadioButton
@@ -33,7 +33,7 @@
             android:layout_marginLeft="-0.25dp"
             android:background="@drawable/shape_basketball_infomation_right"
             android:checked="false"
-            android:text="统计"
+            android:text="@string/foot_statictics"
             android:textColor="@drawable/info_text_color" />
     </RadioGroup>
 
@@ -55,7 +55,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="暂无比赛动态" />
+                android:text="@string/foot_event_nomatchstate" />
 
         </android.support.v4.widget.NestedScrollView>
 
@@ -101,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="进球"
+                        android:text="@string/foot_event_goal"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
 
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="红牌"
+                        android:text="@string/foot_event_rc"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
 
@@ -129,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="黄牌"
+                        android:text="@string/foot_event_yc"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
 
@@ -143,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="两黄一红"
+                        android:text="@string/foot_event_ytor"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
 
@@ -157,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="换人"
+                        android:text="@string/foot_event_player"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
 
@@ -171,7 +171,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="角球"
+                        android:text="@string/foot_event_corner"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
 
@@ -185,7 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="半场"
+                        android:text="@string/foot_event_half"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
 
@@ -199,7 +199,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="全场"
+                        android:text="@string/foot_event_finish"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
                 </LinearLayout>
