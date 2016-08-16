@@ -70,7 +70,17 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/grey_dotted_line"/>
 
-        <include layout="@layout/info_big_data_predict_recent_combat"/>
+        <include layout="@layout/info_big_data_predict_host_recent_combat"/>
+
+        <ImageView
+            android:id="@+id/dotted_line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/grey_dotted_line"/>
+
+        <include layout="@layout/info_big_data_predict_guest_recent_combat"/>
 
     </LinearLayout>
 

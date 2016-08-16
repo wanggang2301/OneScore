@@ -78,21 +78,6 @@ public class AccountActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showDialog() {
-       /* AlertDialog dialog = new AlertDialog.Builder(AccountActivity.this)
-                .setMessage(getResources().getString(R.string.logout_check))
-                .setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        logout();
-                    }
-                })
-                .setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .create();
-        dialog.show();*/
 
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
         builder.setCancelable(false);// 设置对话框以外不可点击

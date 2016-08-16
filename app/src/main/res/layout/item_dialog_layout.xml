@@ -4,17 +4,23 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_gravity="center_vertical"
-              android:gravity="center"
-              android:orientation="horizontal"
-              android:paddingBottom="15dp"
-              android:paddingTop="15dp">
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/dialog_txt_cancel_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         android:textColor="@color/msg"
         tools:text="test"/>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:visibility="gone"
+        android:background="@color/linecolor"/>
 
 </LinearLayout>

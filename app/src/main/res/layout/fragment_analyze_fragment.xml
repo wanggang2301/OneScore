@@ -84,7 +84,7 @@
                     android:gravity="center"
                     android:text="--"
                     android:textColor="@color/history_win"
-                    android:textSize="@dimen/text_size_12"/>
+                    android:textSize="@dimen/text_size_13"/>
 
                 <TextView
                     android:id="@+id/football_progressbar_guest"
@@ -496,7 +496,7 @@
                     android:gravity="center"
                     android:text="--"
                     android:textColor="@color/history_win"
-                    android:textSize="@dimen/text_size_11"/>
+                    android:textSize="@dimen/text_size_13"/>
 
                 <TextView
                     android:id="@+id/football_analyze_home_integral"
@@ -506,7 +506,7 @@
                     android:gravity="center"
                     android:text="--"
                     android:textColor="@color/history_win"
-                    android:textSize="@dimen/text_size_11"/>
+                    android:textSize="@dimen/text_size_13"/>
             </LinearLayout>
 
             <LinearLayout
@@ -564,7 +564,7 @@
                     android:gravity="center"
                     android:text="--"
                     android:textColor="@color/history_win"
-                    android:textSize="@dimen/text_size_11"/>
+                    android:textSize="@dimen/text_size_13"/>
 
                 <TextView
                     android:id="@+id/football_analyze_guest_integral"
@@ -574,7 +574,7 @@
                     android:gravity="center"
                     android:text="--"
                     android:textColor="@color/history_win"
-                    android:textSize="@dimen/text_size_11"/>
+                    android:textSize="@dimen/text_size_13"/>
             </LinearLayout>
             <!--完整积分榜-->
             <TextView
@@ -611,9 +611,7 @@
         <!--亚盘走势-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -621,7 +619,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="亚盘走势"
+                android:text="@string/new_analyze_let"
                 android:textColor="@color/analyze_title"
                 android:textSize="@dimen/text_size_13"
                 />
@@ -631,7 +629,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
-                android:text="客队"
+                android:text="@string/new_analyze_guest"
                 android:textSize="@dimen/text_size_10"
                 android:textColor="@color/history_win"
                 android:id="@+id/textView3" />
@@ -649,7 +647,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="主队"
+                android:text="@string/new_analyze_home"
                 android:textSize="@dimen/text_size_10"
                 android:textColor="@color/history_win"
                 android:layout_toLeftOf="@id/image_small_circular"
@@ -667,7 +665,6 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
-            android:visibility="gone"
             />
 
         <LinearLayout
@@ -677,7 +674,6 @@
             android:orientation="vertical"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
-            android:visibility="gone"
             >
             <TextView
                 android:id="@+id/tv_analyze_let1"
@@ -720,7 +716,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="赢"
+                            android:text="@string/new_analyze_win"
                             android:gravity="top"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/football_analyze_win_color"
@@ -729,7 +725,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="走"
+                            android:text="@string/new_analyze_draw"
                             android:gravity="center"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/more_record"
@@ -738,7 +734,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="输"
+                            android:text="@string/new_analyze_lose"
                             android:gravity="bottom"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/football_analyze_lose_color"
@@ -752,6 +748,15 @@
                             android:id="@+id/chart_let_history"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/let_nodata1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
                 <View
@@ -776,7 +781,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="比分"
+                            android:text="@string/new_analyze_score"
                             android:gravity="center"
                             style="@style/analyze_text_score"
                             />
@@ -784,7 +789,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="初盘"
+                            android:text="@string/new_analyze_first_let"
                             android:gravity="center"
                             style="@style/analyze_text_score"
                             />
@@ -792,12 +797,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="结果"
+                            android:text="@string/new_analyze_result"
                             android:gravity="center"
                             style="@style/analyze_text_score"
                             />
                     </LinearLayout>
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingTop="10dp"
@@ -807,9 +812,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:listSelector="#00000000"/>
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/let_nodata2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
+                    </RelativeLayout>
                 </LinearLayout>
-
             </LinearLayout>
             <!--近期对比-->
             <LinearLayout
@@ -835,7 +848,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="赢"
+                            android:text="@string/new_analyze_win"
                             android:gravity="top"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/football_analyze_win_color"
@@ -844,7 +857,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="走"
+                            android:text="@string/new_analyze_draw"
                             android:gravity="center"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/more_record"
@@ -853,7 +866,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="输"
+                            android:text="@string/new_analyze_lose"
                             android:gravity="bottom"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/football_analyze_lose_color"
@@ -863,9 +876,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/let_home_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="主队"
+                            android:text=""
                             android:textSize="@dimen/text_size_10"
                             android:textColor="@color/black_details_ball_textcolor"
                             android:layout_alignParentTop="true"
@@ -875,6 +889,16 @@
                             android:id="@+id/chart_let_home"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/let_nodata3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
+
                     </RelativeLayout>
                 </LinearLayout>
                 <View
@@ -897,7 +921,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="输"
+                            android:text="@string/new_analyze_lose"
                             android:gravity="top"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/football_analyze_lose_color"
@@ -906,7 +930,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="走"
+                            android:text="@string/new_analyze_draw"
                             android:gravity="center"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/more_record"
@@ -916,7 +940,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="赢"
+                            android:text="@string/new_analyze_win"
                             android:gravity="bottom"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/football_analyze_win_color"
@@ -926,18 +950,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/let_guest_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="客队"
+                            android:text=""
                             android:textSize="@dimen/text_size_10"
                             android:textColor="@color/black_details_ball_textcolor"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             />
                         <com.hhly.mlottery.widget.LineChartView
                             android:id="@+id/chart_let_guest"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/let_nodata4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -959,7 +993,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/analyze_selected_left"
                     android:checked="true"
-                    android:text="历史交锋"/>
+                    android:text="@string/basket_analyze_history"/>
 
                 <!--近期对比-->
                 <RadioButton
@@ -968,7 +1002,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/analyze_selected_right"
-                    android:text="近期对比"/>
+                    android:text="@string/new_analyze_recent_compare"/>
 
             </RadioGroup>
             <TextView
@@ -977,24 +1011,33 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingBottom="15dp"
-                android:text="更多信息>>"
+                android:text="@string/new_analyze_more_messages"
                 android:textColor="@color/more_record"
                 android:textSize="@dimen/text_size_13"/>
+
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/let_all_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/home_item_bg"
-            android:visibility="gone"
-            />
+            android:background="@color/home_item_bg"/>
 
         <!--大小球走势-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -1002,7 +1045,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="大小球"
+                android:text="@string/new_analyze_big_small_ball"
                 android:textColor="@color/analyze_title"
                 android:textSize="@dimen/text_size_13"
                 />
@@ -1012,7 +1055,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
-                android:text="客队"
+                android:text="@string/new_analyze_guest"
                 android:textSize="@dimen/text_size_10"
                 android:textColor="@color/history_win"
                 android:id="@+id/textView5" />
@@ -1030,7 +1073,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="主队"
+                android:text="@string/new_analyze_home"
                 android:textSize="@dimen/text_size_10"
                 android:textColor="@color/history_win"
                 android:layout_toLeftOf="@id/image_small_circular1"
@@ -1048,7 +1091,6 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_football_footer"
-            android:visibility="gone"
             />
 
         <LinearLayout
@@ -1058,7 +1100,6 @@
             android:orientation="vertical"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
-            android:visibility="gone"
             >
             <TextView
                 android:id="@+id/tv_analyze_size1"
@@ -1128,15 +1169,17 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+                       <com.hhly.mlottery.widget.LineChartView
+                           android:id="@+id/chart_size_history"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent" />
                         <TextView
+                            android:id="@+id/size_nodata1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="主队"
-                            android:textSize="@dimen/text_size_10"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
                             android:textColor="@color/black_details_ball_textcolor"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true"
                             android:visibility="gone"
                             />
                     </RelativeLayout>
@@ -1163,7 +1206,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="比分"
+                            android:text="@string/new_analyze_score"
                             android:gravity="center"
                             style="@style/analyze_text_score"
                             />
@@ -1171,7 +1214,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="初盘"
+                            android:text="@string/new_analyze_first_let"
                             android:gravity="center"
                             style="@style/analyze_text_score"
                             />
@@ -1179,12 +1222,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="结果"
+                            android:text="@string/new_analyze_result"
                             android:gravity="center"
                             style="@style/analyze_text_score"
                             />
                     </LinearLayout>
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingTop="10dp"
@@ -1194,7 +1237,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:listSelector="#00000000"/>
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/size_nodata2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
+                            />
+                    </RelativeLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -1250,13 +1302,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/size_home_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="主队"
+                            android:text=""
                             android:textSize="@dimen/text_size_10"
                             android:textColor="@color/black_details_ball_textcolor"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentRight="true"
+                            />
+                        <com.hhly.mlottery.widget.LineChartView
+                            android:id="@+id/chart_size_home"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/size_nodata3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
                             />
                     </RelativeLayout>
                 </LinearLayout>
@@ -1309,13 +1375,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <TextView
+                            android:id="@+id/size_guest_team"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="客队"
+                            android:text=""
                             android:textSize="@dimen/text_size_10"
                             android:textColor="@color/black_details_ball_textcolor"
-                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
+                            />
+                        <com.hhly.mlottery.widget.LineChartView
+                            android:id="@+id/chart_size_guest"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/size_nodata4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/basket_nodata"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/black_details_ball_textcolor"
+                            android:visibility="gone"
                             />
                     </RelativeLayout>
                 </LinearLayout>
@@ -1338,7 +1418,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/analyze_selected_left"
                     android:checked="true"
-                    android:text="历史交锋"/>
+                    android:text="@string/basket_analyze_history"/>
 
                 <!--近期对比-->
                 <RadioButton
@@ -1347,7 +1427,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/analyze_selected_right"
-                    android:text="近期对比"/>
+                    android:text="@string/new_analyze_recent_compare"/>
 
             </RadioGroup>
             <TextView
@@ -1356,17 +1436,26 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingBottom="15dp"
-                android:text="更多信息>>"
+                android:text="@string/new_analyze_more_messages"
                 android:textColor="@color/more_record"
                 android:textSize="@dimen/text_size_13"/>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/size_all_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/home_item_bg"
-            android:visibility="gone"
-            />
+            android:background="@color/home_item_bg"/>
         <!--攻防对比-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -1675,6 +1764,7 @@
             android:background="@color/line_football_footer"
             />
         <RelativeLayout
+            android:id="@+id/ll_recommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
@@ -1688,6 +1778,18 @@
                 android:textColor="@color/team_name_color"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
+        <TextView
+            android:id="@+id/football_recommend_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basket_analyze_nodata_hight"
+            android:paddingBottom="@dimen/basket_details_item_height"
+            android:paddingTop="@dimen/basket_details_item_height"
+            android:textSize="@dimen/text_size_13"
+            android:text="@string/basket_nodata"
+            android:textColor="@color/black_details_ball_textcolor"
+            android:gravity="center"
+            android:visibility="gone"
+            />
 
         <View
             android:layout_width="match_parent"

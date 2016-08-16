@@ -47,7 +47,7 @@
                 android:layout_height="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_red"/>
+                android:progressDrawable="@drawable/info_progress_yellow"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                 android:layout_height="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_red"/>
+                android:progressDrawable="@drawable/info_progress_yellow"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
                 android:layout_height="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:progressDrawable="@drawable/info_progress_red"/>
+                android:progressDrawable="@drawable/info_progress_yellow"/>
 
             <TextView
                 android:layout_width="wrap_content"

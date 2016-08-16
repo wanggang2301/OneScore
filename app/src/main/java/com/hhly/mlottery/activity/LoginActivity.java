@@ -115,7 +115,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         if (!PreferenceUtil.getString("code", "").isEmpty()) {
             mWeixincode = PreferenceUtil.getString("code", "");
-             //UiUtils.toast(MyApp.getInstance(), "mWeixincode" + mWeixincode);
+            //UiUtils.toast(MyApp.getInstance(), "mWeixincode" + mWeixincode);
             getAccessTokenFromWeiXin();
         }
     }
@@ -147,10 +147,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         et_password = (EditText) findViewById(R.id.et_password);
         et_password.setTypeface(Typeface.SANS_SERIF);
         findViewById(R.id.tv_register).setOnClickListener(this);
-     /*   View tv_register = findViewById(R.id.tv_right);
-        tv_register.setVisibility(View.VISIBLE);
-        tv_register.setOnClickListener(this);
-*/
+
         //第三方qq登录
         findViewById(R.id.login_qq).setOnClickListener(this);
         findViewById(R.id.tv_forgetpw).setOnClickListener(this);
@@ -179,7 +176,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.iv_eye:  // 显示密码
                 MobclickAgent.onEvent(mContext, "LoginActivity_PassWord_isHide");
                 int inputType = et_password.getInputType();
-                et_password.setHint(mContext.getString(R.string.pwd_format_hint));
                 if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
                     et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     iv_eye.setImageResource(R.mipmap.new_close_eye);
@@ -187,7 +183,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
                     iv_eye.setImageResource(R.mipmap.new_open_eye);
-                }
+                       }
                 et_password.setTypeface(Typeface.SANS_SERIF);
                 // 光标移动到结尾
                 CommonUtils.selectionLast(et_password);
@@ -232,7 +228,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (!mApi.isWXAppInstalled()) {
             //提醒用户没有按照微信
             Toast.makeText(LoginActivity.this, R.string.login_no_weixin, Toast.LENGTH_SHORT).show();
-
             return;
         }
         final SendAuth.Req req = new SendAuth.Req();
@@ -242,14 +237,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         req.state = "wechat_sdk_demo_test";
         //向微信发送请求
         mApi.sendReq(req);
-       // getAccessTokenFromWeiXin();
+        // getAccessTokenFromWeiXin();
     }
 
     /*获取微信信息
       * 通过授权页面获取相应的code   然后请求微信官方接口 获取相信的token 和 id
       * https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
-      * */
-    public void getAccessTokenFromWeiXin(){
+      *
+      */
+    public void getAccessTokenFromWeiXin() {
 
         String requestUrlAppId = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + ShareConstants.WE_CHAT_APP_ID;
         String requestUrlAppSecret = "&secret=" + ShareConstants.KEY_WEIXIN_APP_SECRET;
@@ -264,7 +260,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onResponse(String jsonObject) {
 
                 JSONObject jo = JSON.parseObject(jsonObject);
-              //UiUtils.toast(MyApp.getInstance(), jo.toString());
+                //UiUtils.toast(MyApp.getInstance(), jo.toString());
                 String access_token = jo.getString("access_token");
                 String openid = jo.getString("openid");
                 Map<String, String> param = new HashMap<>();
@@ -348,7 +344,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 // String code = values.getString("code");
 
             }
-
 
         }
 
@@ -456,8 +451,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 progressBar.dismiss();
                 L.e(TAG, " 登录失败");
-               // UiUtils.toast(LoginActivity.this, R.string.login_peak);
-               // UiUtils.toast(LoginActivity.this, exception.toString());
+                UiUtils.toast(LoginActivity.this, R.string.login_peak);
+                // UiUtils.toast(LoginActivity.this, exception.toString());
             }
         }, Register.class);
 
