@@ -23,6 +23,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.util.CollectionUtils;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.LocaleFactory;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -98,6 +99,9 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mButtonFrame = LayoutInflater.from(view.getContext())
                 .inflate(R.layout.layout_basket_database_choose, (ViewGroup) view, false);
+        ViewGroup.LayoutParams layoutParams = mEmptyView.getLayoutParams();
+        layoutParams.height = DisplayUtil.dip2px(getContext(), 178);
+        mEmptyView.setLayoutParams(layoutParams);
 
         mTitleTextView = (TextView) mButtonFrame.findViewById(R.id.title_button);
         mLeftButton = (ImageView) mButtonFrame.findViewById(R.id.left_button);
