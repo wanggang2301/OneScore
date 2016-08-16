@@ -21,6 +21,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.MatchDay;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -42,6 +43,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     private static final int MATCH_TYPE_LEAGUE = 1; // 联赛
     private static final int MATCH_TYPE_CUP = 2; // 杯赛
 
+    private static final String LEAGUE = "league";
     private static final String PARAM_ID = "leagueId";
     private static final String PARAM_SEASON = "season";
     private static final String PARAM_MATCH_TYPE = "matchType";
@@ -65,9 +67,8 @@ public class BasketDatabaseScheduleFragment extends Fragment {
 
     RecyclerView mRecyclerView;
 
-    private String leagueId;
+    private LeagueBean league;
     private String season;
-    private String matchType;
 
     private ScheduleResult mResult;
     private List<BasketballDatabaseScheduleSectionAdapter.Section> mSections;
@@ -79,9 +80,8 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            leagueId = args.getString(PARAM_ID);
+            league = args.getParcelable(LEAGUE);
             season = args.getString(PARAM_SEASON);
-            matchType = args.getString(PARAM_MATCH_TYPE);
         }
     }
 
@@ -222,7 +222,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         setStatus(STATUS_LOADING);
 
         // http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016
-        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do",
+        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8080/mlottery/core/basketballData.findSchedule.do",
                 produceParams(firstStageId, secondStageId),
                 new VolleyContentFast.ResponseSuccessListener<ScheduleResult>() {
                     @Override
@@ -244,13 +244,11 @@ public class BasketDatabaseScheduleFragment extends Fragment {
 
     private Map<String, String> produceParams(String firstStageId, String secondStageId) {
         Map<String, String> params = new HashMap<>();
-//        params.put(PARAM_ID, leagueId);
-        params.put(PARAM_ID, "1");
+        params.put(PARAM_ID, league.getLeagueId());
         putIfNotNull(params, PARAM_SEASON, season);
         putIfNotNull(params, PARAM_FIRST_STAGE_ID, firstStageId);
         putIfNotNull(params, PARAM_SECOND_STAGE_ID, secondStageId);
-//        params.put(PARAM_MATCH_TYPE, matchType);
-        params.put(PARAM_MATCH_TYPE, "1");
+        params.put(PARAM_MATCH_TYPE, league.getMatchType().toString());
         return params;
     }
 
@@ -302,10 +300,10 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         mRecyclerView.setLayoutManager(manager);
     }
 
-    public static BasketDatabaseScheduleFragment newInstance(String leagueId, String season) {
+    public static BasketDatabaseScheduleFragment newInstance(LeagueBean leagueBean, String season) {
 
         Bundle args = new Bundle();
-        args.putString(PARAM_ID, leagueId);
+        args.putParcelable(LEAGUE, leagueBean);
         args.putString(PARAM_SEASON, season);
         BasketDatabaseScheduleFragment fragment = new BasketDatabaseScheduleFragment();
         fragment.setArguments(args);

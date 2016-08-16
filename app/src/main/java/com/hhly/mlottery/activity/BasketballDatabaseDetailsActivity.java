@@ -29,12 +29,13 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketDatabaseHandicapFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseRankingFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseScheduleFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
-import com.hhly.mlottery.frame.basketballframe.BasketDatasaseStatisticsFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketDatabaseStatisticsFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -60,7 +61,7 @@ import java.util.Map;
  */
 public class BasketballDatabaseDetailsActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String LEAGUEID = "leagueId";
+    public static final String LEAGUE = "league";
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -71,8 +72,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private LinearLayout mBasketLayoutHeader;
     private CoordinatorLayout mCoordinatorLayout;
     Handler mHandlerData = new Handler();
-
-    private String[] TITLES;
 
     /**
      * 返回按钮
@@ -87,22 +86,20 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
-    private BasketDatabaseScheduleFragment mScheduleFragment;
-    private BasketDatasaseHandicapFragment mHandicapFragment;
-    private BasketDatabaseBigSmallFragment mBigSmallFragment;
-    private BasketDatabaseRankingFragment mRankingFragment;
-    private BasketDatasaseHandicapFragment mBasketDatasaseHandicapFragment;
-    private BasketDatabaseBigSmallFragment mBasketDatabaseBigSmallFragment;
-    private BasketDatasaseStatisticsFragment mBasketDatasaseStatisticsFragment;
+    private BasketDatabaseScheduleFragment mScheduleFragment; // 赛程
+    private BasketDatabaseRankingFragment mRankingFragment; // 排行
+    private BasketDatabaseHandicapFragment mHandicapFragment; // 让分
+    private BasketDatabaseBigSmallFragment mBigSmallFragment; // 大小球
+    private BasketDatabaseStatisticsFragment mStatisticsFragment; // 统计
 
     private DisplayImageOptions mOptions;
     private DisplayImageOptions mOptionsHead;
     private ImageLoader mImageLoader;
     private ImageView mIcon;
     private ImageView mBackground;
-    private TextView mLeaguename;
+    private TextView mLeagueName;
     private TextView mSportsText;
-    private String mLeagueId;
+    private LeagueBean mLeague;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,19 +110,18 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         MobclickAgent.openActivityDurationTrack(false);
 
         if (getIntent().getExtras() != null) {
-            mLeagueId = getIntent().getExtras().getString(LEAGUEID);
+            mLeague = getIntent().getExtras().getParcelable(LEAGUE);
         }
 
         /**
          * 第一次加载默认赛季数据，不需要season ==》（-1）
          */
-        mScheduleFragment = BasketDatabaseScheduleFragment.newInstance(mLeagueId, null);
-        mRankingFragment = BasketDatabaseRankingFragment.newInstance(mLeagueId, null);
-        mHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
-        mBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId, "-1");
-        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
-        mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId , "-1");
-        mBasketDatasaseStatisticsFragment = BasketDatasaseStatisticsFragment.newInstance(mLeagueId , "-1");
+        String leagueId = mLeague == null ? null : mLeague.getLeagueId();
+        mScheduleFragment = BasketDatabaseScheduleFragment.newInstance(mLeague, null);
+        mRankingFragment = BasketDatabaseRankingFragment.newInstance(mLeague, null);
+        mHandicapFragment = BasketDatabaseHandicapFragment.newInstance(leagueId, "-1");
+        mBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(leagueId, "-1");
+        mStatisticsFragment = BasketDatabaseStatisticsFragment.newInstance(leagueId, "-1");
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true)
@@ -166,11 +162,12 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
      * 初始化界面
      */
     private void initView() {
-        TITLES = new String[]{
+        String[] titles = new String[]{
                 getString(R.string.basket_database_details_schedule),
                 getString(R.string.basket_database_details_ranking),
                 getString(R.string.basket_database_details_handicapname),
-                getString(R.string.basket_database_details_bigsmallname)
+                getString(R.string.basket_database_details_bigsmallname),
+                getString(R.string.basket_database_details_statistic)
         };
 
         toolbar = (Toolbar) findViewById(R.id.basket_database_details_toolbar);
@@ -178,7 +175,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
 
         mIcon = (ImageView) findViewById(R.id.basket_details_guest_icon);
         mBackground = (ImageView) findViewById(R.id.image_background);
-        mLeaguename = (TextView) findViewById(R.id.basket_database_leaguename);
+        mLeagueName = (TextView) findViewById(R.id.basket_database_leaguename);
 
         mSportsText = (TextView) findViewById(R.id.basket_database_datails_tv);
 
@@ -189,18 +186,16 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         appBarLayout = (AppBarLayout) findViewById(R.id.basket_database_details_appbar);
         mTabLayout = (TabLayout) findViewById(R.id.basket_database_details_tab_layout);
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
-        mTabsAdapter.setTitles(TITLES);
+        mTabsAdapter.setTitles(titles);
 
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
         mTabsAdapter.addFragments(mScheduleFragment,
                 mRankingFragment,
                 mHandicapFragment,
-                mBigSmallFragment);
-        mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
-
-        mTabsAdapter.addFragments(mBasketDatasaseHandicapFragment, mBasketDatabaseBigSmallFragment , mBasketDatasaseStatisticsFragment);
-        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+                mBigSmallFragment,
+                mStatisticsFragment);
+        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -259,7 +254,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         String url = BaseURLs.URL_BASKET_DATABASE_DETAILS;
         Map<String, String> params = new HashMap<>();
 //        params.put("leagueId", "2");
-        params.put("leagueId", mLeagueId);
+        params.put("leagueId", mLeague.getLeagueId());
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBean>() {
 
             @Override
@@ -286,9 +281,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                     }
 
                     if (basketDatabaseBean.getLeagueName() == null || basketDatabaseBean.getLeagueName().equals("")) {
-                        mLeaguename.setText("--");
+                        mLeagueName.setText("--");
                     } else {
-                        mLeaguename.setText(basketDatabaseBean.getLeagueName());
+                        mLeagueName.setText(basketDatabaseBean.getLeagueName());
                     }
                     //图标
                     mImageLoader.displayImage(basketDatabaseBean.getLeagueLogoUrl(), mIcon, mOptions);
@@ -440,14 +435,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mBigSmallFragment.upDate();
                 mScheduleFragment.update();
                 mRankingFragment.update();
+                mStatisticsFragment.upData();
             }
         }, 1000);
-                    mHandlerData.postDelayed(mRun, 500); // 加载数据
-                    mBasketDatasaseHandicapFragment.upDate();
-                    mBasketDatabaseBigSmallFragment.upDate();
-                    mBasketDatasaseStatisticsFragment.upData();
-                }
-            }, 1000);
     }
 
     int currentDialogPosition = 0; // 当前选中的赛季（默认第一个）
@@ -528,8 +518,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mBigSmallFragment.upDate();
 
                 //统计
-                mBasketDatasaseStatisticsFragment.setSeason(newData);
-                mBasketDatasaseStatisticsFragment.upData();
+                mStatisticsFragment.setSeason(newData);
+                mStatisticsFragment.upData();
 
             }
         });

@@ -20,6 +20,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingGroup;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -36,6 +37,7 @@ import java.util.Map;
  */
 public class BasketDatabaseRankingFragment extends Fragment {
 
+    private static final String LEAGUE = "league";
     private static final String PARAM_ID = "leagueId";
     private static final String PARAM_SEASON = "season";
     private static final String PARAM_MATCH_TYPE = "matchType";
@@ -58,9 +60,8 @@ public class BasketDatabaseRankingFragment extends Fragment {
 
     RecyclerView mRecyclerView;
 
-    private String leagueId;
+    private LeagueBean league;
     private String season;
-    private String matchType;
 
     private RankingResult mResult;
 
@@ -72,9 +73,8 @@ public class BasketDatabaseRankingFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            leagueId = args.getString(PARAM_ID);
+            league = args.getParcelable(LEAGUE);
             season = args.getString(PARAM_SEASON);
-            matchType = args.getString(PARAM_MATCH_TYPE);
         }
     }
 
@@ -199,11 +199,10 @@ public class BasketDatabaseRankingFragment extends Fragment {
         setStatus(STATUS_LOADING);
 
         Map<String, String> params = new HashMap<>();
-        params.put(PARAM_ID, leagueId);
+        params.put(PARAM_ID, league.getLeagueId());
         putIfNotNull(params, PARAM_SEASON, season);
         putIfNotNull(params, PARAM_FIRST_STAGE_ID, firstStageId);
-//        params.put(PARAM_MATCH_TYPE, matchType);
-        params.put(PARAM_MATCH_TYPE, "2");
+        params.put(PARAM_MATCH_TYPE, league.getMatchType().toString());
         // http://192.168.31.72:3000/basketball/ranking
         // http://192.168.31.115:8888/mlottery/core/basketballData.findRanking.do?lang=zh&leagueId=7&season=2014-2015&matchType=2
         VolleyContentFast.requestJsonByGet("http://192.168.31.115:8888/mlottery/core/basketballData.findRanking.do",
@@ -287,10 +286,10 @@ public class BasketDatabaseRankingFragment extends Fragment {
         }
     }
 
-    public static BasketDatabaseRankingFragment newInstance(String leagueId, String season) {
+    public static BasketDatabaseRankingFragment newInstance(LeagueBean league, String season) {
 
         Bundle args = new Bundle();
-        args.putString(PARAM_ID, leagueId);
+        args.putParcelable(LEAGUE, league);
         args.putString(PARAM_SEASON, season);
         BasketDatabaseRankingFragment fragment = new BasketDatabaseRankingFragment();
         fragment.setArguments(args);
