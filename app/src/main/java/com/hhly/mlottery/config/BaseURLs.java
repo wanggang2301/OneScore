@@ -753,4 +753,6 @@ public class BaseURLs {
     public final static String RONG_USER_TOKEN = "https://api.cn.ronghub.com/user/getToken.json";
     /**--融云 获取聊天室ID URL--*/
     public final static String RONG_CHARTROOM_ID = "https://api.cn.ronghub.com/chatroom/create.json";
+    /**--融去 获取聊天室人数 URL--*/
+    public final static String RONG_CHARTROOM_COUNT = "https://api.cn.ronghub.com/chatroom/user/query.json";
 }

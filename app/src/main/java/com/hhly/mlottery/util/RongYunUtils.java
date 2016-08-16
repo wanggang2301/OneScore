@@ -2,10 +2,11 @@ package com.hhly.mlottery.util;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
+import com.hhly.mlottery.bean.FirstEvent;
+import com.hhly.mlottery.bean.RongChatRoomInfoBean;
 import com.hhly.mlottery.bean.RongTokenBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.receiver.RongMessageReceive;
@@ -16,9 +17,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.ChatRoomInfo;
 import io.rong.imlib.model.Conversation;
 
 
@@ -38,6 +39,18 @@ public class RongYunUtils {
     public static final String CHART_ROOM_NAME = "chartBall";// 聊天室名称
     public static final String USER_TOKEN = "userToken";// 用户Token key
     public static final String USER_ID = "userId";// 用户id
+    public static final String HOME_LIKE = "homeLike";// 主队点赞
+    public static final String GUEST_LIKE = "guestLike";// 客队点赞
+    public static final String TALK_COMMENT = "talkComment";// 评论
+    public static final String RONG_CONNENT_OK = "RongConnentOK";// 连接融云服务器
+    public static final String CREATE_CHARTROOM_OK = "CreateChartRoomOK";// 创建聊天室
+    public static final String CHART_ROOM_COUNT_OK = "chartRoomCountOK";// 获取到聊天室人数
+
+    public static boolean isRongConnent = false;// 连接融云服务器状态
+    public static boolean isCreateChartRoom = false;// 创建聊天室状态
+    public static boolean isJoinChartRoom = false;// 进入聊天室状态
+
+    public static int chartRoomCount;// 聊天室在线人数
 
     /**
      * 初始化融云服务器连接
@@ -48,13 +61,40 @@ public class RongYunUtils {
         String mToken = PreferenceUtil.getString(USER_TOKEN, "");// 获取本地用户Token
         String userid = PreferenceUtil.getString(USER_ID, "");// 获取本地用户id
         String currentUserid = AppConstants.register.getData().getUser().getUserId();// 获取当前登录的用户id
-        L.d(TAG, "userid: "+userid);
-        L.d(TAG, "currentUserid: "+currentUserid);
+        L.d(TAG, "userid: " + userid);
+        L.d(TAG, "currentUserid: " + currentUserid);
         if (TextUtils.isEmpty(userid) || !currentUserid.equals(userid) || TextUtils.isEmpty(mToken)) {
             postToken(mContext, currentUserid);// 获取用户Token
         } else {
             connect(mContext, mToken);
         }
+    }
+
+    /**
+     * 获取当前聊天室在线人数
+     */
+    public static void getChatRoomCount(String chatRoomId){
+        Map<String, String> map = new HashMap<>();
+        map.put("chatroomId",chatRoomId);
+        map.put("count","500");
+        map.put("order","1");
+
+        VolleyContentFast.requestRongYun(BaseURLs.RONG_CHARTROOM_COUNT, map, new VolleyContentFast.ResponseSuccessListener<RongChatRoomInfoBean>() {
+            @Override
+            public void onResponse(RongChatRoomInfoBean jsonObject) {
+                System.out.println(TAG + "获取当前聊天室在线人数成功getCode==" + jsonObject.getCode());
+                if (jsonObject.getCode() == 200) {
+                    chartRoomCount = jsonObject.getTotal();
+                    EventBus.getDefault().post(new FirstEvent(CHART_ROOM_COUNT_OK));
+                    System.out.println(TAG + "当前聊天室人数为：==" + jsonObject.getTotal());
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                System.err.println(TAG + "获取当前聊天室在线人数失败getCode==error" + JSON.toJSONString(exception));
+            }
+        }, RongChatRoomInfoBean.class);
     }
 
     /**
@@ -64,9 +104,9 @@ public class RongYunUtils {
         if (TextUtils.isEmpty(roomId)) {
             return;
         }
-//        String mRoomId = PreferenceUtil.getString(CHART_ROOM_ID, "");// 获取本地聊天室id
+        String mRoomId = PreferenceUtil.getString(CHART_ROOM_ID, "");// 获取本地聊天室id
         // 判断有没有创建
-//        if (TextUtils.isEmpty(mRoomId) || !roomId.equals(mRoomId)) {
+        if (TextUtils.isEmpty(mRoomId) || !roomId.equals(mRoomId)) {
             // 没有——创建
             Map<String, String> map = new HashMap<>();
             map.put("chatroom[" + CHART_ROOM_ID + "]", CHART_ROOM_NAME);// 传入聊天室id 和 名称
@@ -75,10 +115,12 @@ public class RongYunUtils {
                 public void onResponse(RongTokenBean jsonObject) {
                     System.out.println(TAG + "创建聊天室成功getCode==" + jsonObject.getCode());
                     if (jsonObject.getCode() == 200) {
+                        isCreateChartRoom = true;
+                        EventBus.getDefault().post(new FirstEvent(CREATE_CHARTROOM_OK));
+                        getChatRoomCount(roomId);
                         PreferenceUtil.commitString(CHART_ROOM_ID, roomId);
                         L.d("xxx", "保存聊天室id：" + PreferenceUtil.getString(CHART_ROOM_ID, "xxx"));
                     }
-
                 }
             }, new VolleyContentFast.ResponseErrorListener() {
                 @Override
@@ -86,7 +128,11 @@ public class RongYunUtils {
                     System.err.println(TAG + "创建聊天室失败getCode==error" + JSON.toJSONString(exception));
                 }
             }, RongTokenBean.class);
-//        }
+        }else{
+            isCreateChartRoom = true;
+            EventBus.getDefault().post(new FirstEvent(CREATE_CHARTROOM_OK));
+            getChatRoomCount(roomId);
+        }
     }
 
     /**
@@ -95,7 +141,9 @@ public class RongYunUtils {
      * @param mContext 上下文
      */
     public static void joinChatRoom(Context mContext, String roomId) {
-        if(TextUtils.isEmpty(roomId)){return;}
+        if (TextUtils.isEmpty(roomId)) {
+            return;
+        }
         RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, roomId, null);
         L.d("xxx", "joinChatRoom...");
     }
@@ -133,6 +181,8 @@ public class RongYunUtils {
 
                 @Override
                 public void onSuccess(String s) {
+                    isRongConnent = true;
+                    EventBus.getDefault().post(new FirstEvent(RONG_CONNENT_OK));
                     System.out.println(TAG + "连接融云成功--onSuccess  s:" + s);
                     RongIM.setOnReceiveMessageListener(new RongMessageReceive());// 消息接收监听
                 }

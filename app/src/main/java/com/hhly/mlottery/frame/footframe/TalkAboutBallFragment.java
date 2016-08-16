@@ -2,7 +2,9 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
@@ -116,7 +119,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private FrameLayout fl_chart_room;
     private TextView tv_comment;
     private TextView tv_chart_room;
-
+    private ProgressBar pb_chart_room_loading;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -242,6 +245,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     private void initView(ViewGroup container) {
         mProgressBarRefresh = (ProgressBar) mView.findViewById(R.id.pull_to_refresh_progress);
         mProgressBarRefresh.setVisibility(View.GONE);
+        pb_chart_room_loading = (ProgressBar) mView.findViewById(R.id.pb_chart_room_loading);
         talkballpro = (ProgressBar) mView.findViewById(R.id.talkball_pro);
         ivHomeLike = (ImageView) mView.findViewById(R.id.talkball_like_anim_img);
         ivGuestLike = (ImageView) mView.findViewById(R.id.talkbail_guest_like_anim_img);
@@ -281,7 +285,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //        mView.findViewById(R.id.fm_chart_room).setBackgroundResource(R.mipmap.welcome1);
     }
 
+    private boolean isClickable;
+
     public void setClickableLikeBtn(boolean clickable) {
+        isClickable = clickable;
         mHomeLike.setClickable(clickable);
         mGuestLike.setClickable(clickable);
         if (clickable) {
@@ -460,12 +467,14 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 //                mCommentCount.setText(commentcount);
 //            }
 //        }
-//
         if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
             switch (resultCode) {
                 case CyUtils.RESULT_OK:
                     if (CommonUtils.isLogin()) { //接收登录华海成功返回
                         CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+                    }
+                    if (tv_chart_room.isSelected()) {
+                        joinChartRoom();
                     }
                     break;
                 case CyUtils.RESULT_CODE://接收评论输入页面返回
@@ -481,6 +490,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     lp1.setMargins(0, 0, 0, 0);
                     mRecyclerView.requestLayout();
                     break;
+                case 0:// 未登录，直接返回
+                    Toast.makeText(mContext, mContext.getResources().getString(R.string.rong_prompt_login), Toast.LENGTH_SHORT).show();
+                    commentClick();
+                    break;
             }
         }
     }
@@ -492,11 +505,16 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         //此处还没关联activity  所以getacitivty为空
         if (!getUserVisibleHint()) {
             MyApp.getContext().sendBroadcast(new Intent("closeself"));
+            isExit = true;
         } else {
             //获取评论的一切信息
             if (!TextUtils.isEmpty(mThirdId) && mCommentArrayList == null) {
                 loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
             }
+
+            isExit = false;
+            isRoomCount = false;
+            refreshRoomCount();
         }
     }
 
@@ -535,7 +553,8 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         ll_scanner.setVisibility(View.VISIBLE);
         fl_comment.setVisibility(View.VISIBLE);
         fl_chart_room.setVisibility(View.GONE);
-
+        tvHomeLikeCount.setTextColor(Color.BLACK);
+        tvGuestLikeCount.setTextColor(Color.BLACK);
         mView.setBackgroundResource(R.color.transparency);// 设置评论背景
     }
 
@@ -576,22 +595,42 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 ll_scanner.setVisibility(View.GONE); // 隐藏评论输入窗口
                 fl_comment.setVisibility(View.GONE);// 隐藏评论内容
                 fl_chart_room.setVisibility(View.VISIBLE);
-
+                tvHomeLikeCount.setTextColor(Color.WHITE);
+                tvGuestLikeCount.setTextColor(Color.WHITE);
+                RongYunUtils.isJoinChartRoom = true;
+                mView.setBackgroundResource(R.mipmap.chart_room_bg);// 设置聊天室背景
                 if (type == 0) {
                     ((FootballMatchDetailActivityTest) mContext).appBarLayout.setExpanded(false);// 隐藏足球头部内容
                 } else if (type == 1) {
                     ((BasketDetailsActivityTest) mContext).appBarLayout.setExpanded(false);// 隐藏篮球头部内容
                 }
-
-                if (CommonUtils.isLogin()) {// 是否有登录
-                    mView.setBackgroundResource(R.mipmap.chart_room_bg);// 设置聊天室背景
-                    RongYunUtils.joinChatRoom(mContext, mThirdId);  // 进入聊天室
-                } else {
-                    //跳转登录界面
-                    Intent intent1 = new Intent(mContext, LoginActivity.class);
-                    startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
-                }
+                pb_chart_room_loading.setVisibility(View.VISIBLE);// 显示加载框
+                L.d("xxx", "显示加载框");
+                joinChartRoom();
                 break;
+        }
+    }
+
+    /**
+     * 进入聊天室
+     */
+    private void joinChartRoom() {
+        if (CommonUtils.isLogin()) {// 是否有登录
+            if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
+                L.d("xxx", "隐藏加载框");
+                // 隐藏加载框
+                if(pb_chart_room_loading != null){
+                    pb_chart_room_loading.setVisibility(View.GONE);
+                }
+                // 进入聊天室
+                if(RongYunUtils.isJoinChartRoom){
+                    RongYunUtils.joinChatRoom(mContext, mThirdId);
+                }
+            }
+        } else {
+            //跳转登录界面
+            Intent intent1 = new Intent(mContext, LoginActivity.class);
+            startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
         }
     }
 
@@ -599,6 +638,28 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);//取消注册EventBus
+        isExit = true;
+    }
+
+    private boolean isRoomCount = false;
+    private boolean isExit = false;// 当前界面是否退出
+    /**
+     * 刷新聊天室在线人数
+     */
+    private void refreshRoomCount(){
+        if(!isRoomCount){
+            new Thread(){
+                @Override
+                public void run() {
+                    isRoomCount = true;
+                    while (!isExit){
+                        RongYunUtils.getChatRoomCount(mThirdId);// 获取在线人数
+                        L.d("xxx","获取在线人数....");
+                        SystemClock.sleep(5000);
+                    }
+                }
+            }.start();
+        }
     }
 
     /**
@@ -608,27 +669,38 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      */
     public void onEventMainThread(FirstEvent event) {
         switch (event.getMsg()) {
-            case "1":// 主队点赞调用
-                homeLike();
+            case RongYunUtils.HOME_LIKE:// 主队点赞调用
+                if (isClickable) {
+                    homeLike();
+                }
                 break;
-            case "2"://  客队点赞调用
-                guestLike();
+            case RongYunUtils.GUEST_LIKE://  客队点赞调用
+                if (isClickable) {
+                    guestLike();
+                }
                 break;
-            case "3":// 评论点赞调用
+            case RongYunUtils.TALK_COMMENT:// 评论点赞调用
                 commentClick();
                 break;
+            case RongYunUtils.RONG_CONNENT_OK:// 连接融云服务器成功
+                if (RongYunUtils.isCreateChartRoom) {
+                    joinChartRoom();
+                }
+                break;
+            case RongYunUtils.CREATE_CHARTROOM_OK:// 创建聊天室成功
+                if (RongYunUtils.isRongConnent) {
+                    joinChartRoom();
+                }
+                break;
+            case RongYunUtils.CHART_ROOM_COUNT_OK:// 获取聊天室人数成功
+                if(tv_chart_room != null){
+                    if(RongYunUtils.chartRoomCount >= 500){// 超过 500 时最多返回 500 个成员
+                        tv_chart_room.setText(mContext.getResources().getString(R.string.rong_chart_room) + "(" + RongYunUtils.chartRoomCount + "+)");
+                    }else{
+                        tv_chart_room.setText(mContext.getResources().getString(R.string.rong_chart_room) + "(" + RongYunUtils.chartRoomCount + ")");
+                    }
+                }
+                break;
         }
-    }
-
-    @Override
-    public void onResume() {
-        L.d(TAG, "______________onResume");
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        L.d(TAG, "______________onPause");
-        super.onPause();
     }
 }

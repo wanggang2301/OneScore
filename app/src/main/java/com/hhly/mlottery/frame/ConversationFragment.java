@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -31,7 +32,6 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.setFinishOnTouchOutside(true);//设置为true点击区域外消失
 
         setContentView(R.layout.conversationlist);
@@ -58,25 +58,20 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
     public void finish() {
         L.d("xxx", "关闭聊天界面!!!!");
         super.finish();
-        EventBus.getDefault().post(new FirstEvent("3"));
-        this.overridePendingTransition(R.anim.slide_in_from_top, 0);// 关闭动画
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         RongYunUtils.quitChatRoom();// 退出聊天室
+        RongYunUtils.isJoinChartRoom = false;
+        EventBus.getDefault().post(new FirstEvent(RongYunUtils.TALK_COMMENT));
+        this.overridePendingTransition(R.anim.slide_in_from_top, 0);// 关闭动画
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_like: // 主队点赞
-                EventBus.getDefault().post(new FirstEvent("1"));
+                EventBus.getDefault().post(new FirstEvent(RongYunUtils.HOME_LIKE));
                 break;
             case R.id.guest_like: // 客队点赞
-                EventBus.getDefault().post(new FirstEvent("2"));
+                EventBus.getDefault().post(new FirstEvent(RongYunUtils.GUEST_LIKE));
                 break;
             case R.id.bt_comment: // 评论按钮
             case R.id.ll_other: // 点击外部，关闭聊天界面

@@ -213,6 +213,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
 
                     RongIM.getInstance().logout();// 退出融云账号
                     RongIM.getInstance().disconnect();// 断开融云连接
+                    RongYunUtils.isRongConnent = false;// 设置融云断开状态
                     PreferenceUtil.commitString(RongYunUtils.USER_TOKEN, "");// 清除用户本地token
                     PreferenceUtil.commitString(RongYunUtils.USER_ID, "");// 清除用户本地id
                 } else {

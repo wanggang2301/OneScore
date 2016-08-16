@@ -916,4 +916,5 @@
 
     <string name="rong_comment">评论</string>
     <string name="rong_chart_room">聊天</string>
+    <string name="rong_prompt_login">请先登录</string>
 </resources>
