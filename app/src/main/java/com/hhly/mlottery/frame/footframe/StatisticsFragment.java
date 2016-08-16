@@ -163,7 +163,7 @@ public class StatisticsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_statistics2, container, false);
+        mView = inflater.inflate(R.layout.fragment_statistics, container, false);
         mContext = getActivity();
        /* Bundle args = getArguments();
         if (args != null) {
