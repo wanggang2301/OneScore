@@ -14,7 +14,7 @@ import com.hhly.mlottery.util.StadiumUtils;
 import java.util.List;
 
 /**
- * 描述:  足球内页事件
+ * 描述:  足球内页事件直播Adpter
  * 作者:  wangg@13322.com
  * 时间:  2016/8/9 15:40
  */

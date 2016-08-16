@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/12 11:21
- * @des 足球内页改版统计
+ * @des 足球内页改版直播(足球事件直播, 走勢統計)
  */
 public class StatisticsFragment extends Fragment {
 
@@ -137,15 +137,10 @@ public class StatisticsFragment extends Fragment {
     private EventAdapter eventAdapter;
 
     private List<MatchTimeLiveBean> eventMatchLive = new ArrayList<>();
-    private String halfScore;
-    private String finishScore;
 
 
     public static StatisticsFragment newInstance() {
-
-
         StatisticsFragment fragment = new StatisticsFragment();
-
         return fragment;
     }
 
@@ -245,13 +240,7 @@ public class StatisticsFragment extends Fragment {
      * 初始化界面
      */
     private void initView() {
-
-
         radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
-
-     /*   rl_event = (LinearLayout) mView.findViewById(R.id.rl_event);
-        ll_statistics = (RelativeLayout) mView.findViewById(R.id.ll_statistics);*/
-
         mNestedScrollView_event = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_event);
         mNestedScrollView_trend = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_trend);
         mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
@@ -276,12 +265,10 @@ public class StatisticsFragment extends Fragment {
 
                         break;
                     case R.id.live_statistics:
-
                         if (!eventType.equals("0")) {
                             mNestedScrollView_event.setVisibility(View.GONE);
                             mNestedScrollView_trend.setVisibility(View.VISIBLE);
                         }
-
                         break;
                     default:
                         break;
@@ -375,31 +362,30 @@ public class StatisticsFragment extends Fragment {
     }
 
 
-    //事件数据
-
+    /**
+     * 足球事件直播
+     *
+     * @param livestatus
+     * @param matchTimeLiveBeanMs
+     */
     public void setEventMatchLive(String livestatus, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
         //统计事件个数
         this.eventMatchLive = matchTimeLiveBeanMs;
         eventType = livestatus;
 
         if ("0".equals(livestatus)) {
-
             mNestedScrollView_nodata.setVisibility(View.VISIBLE);
             mNestedScrollView_event.setVisibility(View.GONE);
             mNestedScrollView_trend.setVisibility(View.GONE);
-
         } else if ("1".equals(livestatus) || "-1".equals(livestatus)) {   //-1代表完场  1代表直播中
-
             mNestedScrollView_nodata.setVisibility(View.GONE);
             mNestedScrollView_event.setVisibility(View.VISIBLE);
             mNestedScrollView_trend.setVisibility(View.VISIBLE);
-
             computeEventNum(livestatus);
             eventAdapter = new EventAdapter(mContext, eventMatchLive);
             recyclerView.setAdapter(eventAdapter);
         }
     }
-
 
     public void updateRecycleView(String status) {
         computeEventNum(status);
