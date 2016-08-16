@@ -115,7 +115,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         /**
          * 第一次加载默认赛季数据，不需要season ==》（-1）
          */
-        mScheduleFragment = BasketDatabaseScheduleFragment.newInstance();
+        mScheduleFragment = BasketDatabaseScheduleFragment.newInstance(mLeagueId, null);
         mRankingFragment = BasketDatabaseRankingFragment.newInstance(mLeagueId, null);
         mHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
         mBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId, "-1");

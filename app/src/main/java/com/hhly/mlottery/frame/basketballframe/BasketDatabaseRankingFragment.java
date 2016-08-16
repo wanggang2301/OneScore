@@ -41,6 +41,10 @@ public class BasketDatabaseRankingFragment extends Fragment {
     private static final String PARAM_MATCH_TYPE = "matchType";
     private static final String PARAM_FIRST_STAGE_ID = "firstStageId";
 
+    private static final int STATUS_LOADING = 1;
+    private static final int STATUS_ERROR = 2;
+    private static final int STATUS_NO_DATA = 3;
+
     View mButtonFrame;
     TextView mTitleTextView;
     ImageView mLeftButton;
@@ -117,8 +121,22 @@ public class BasketDatabaseRankingFragment extends Fragment {
         });
     }
 
+    /**
+     * 更新
+     */
     public void update() {
         load(null);
+    }
+
+    /**
+     * 设置状态
+     *
+     * @param status
+     */
+    public void setStatus(int status) {
+        mNoDataTextView.setVisibility(status == STATUS_NO_DATA ? View.VISIBLE : View.GONE);
+        mProgressBar.setVisibility(status == STATUS_LOADING ? View.VISIBLE : View.GONE);
+        mErrorLayout.setVisibility(status == STATUS_ERROR ? View.VISIBLE : View.GONE);
     }
 
     private void initListener() {
@@ -176,17 +194,14 @@ public class BasketDatabaseRankingFragment extends Fragment {
     }
 
     private void load(String firstStageId) {
-        mNoDataTextView.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-        mErrorLayout.setVisibility(View.GONE);
+        mSections.clear();
+        mAdapter.notifyDataSetChanged();
+        setStatus(STATUS_LOADING);
+
         Map<String, String> params = new HashMap<>();
         params.put(PARAM_ID, leagueId);
-        if (season != null) {
-            params.put(PARAM_SEASON, season);
-        }
-        if (firstStageId != null) {
-            params.put(PARAM_FIRST_STAGE_ID, firstStageId);
-        }
+        putIfNotNull(params, PARAM_SEASON, season);
+        putIfNotNull(params, PARAM_FIRST_STAGE_ID, firstStageId);
 //        params.put(PARAM_MATCH_TYPE, matchType);
         params.put(PARAM_MATCH_TYPE, "2");
         // http://192.168.31.72:3000/basketball/ranking
@@ -208,15 +223,23 @@ public class BasketDatabaseRankingFragment extends Fragment {
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         VolleyError error = exception.getVolleyError();
                         if (error != null) error.printStackTrace();
-                        mNoDataTextView.setVisibility(View.GONE);
-                        mProgressBar.setVisibility(View.GONE);
-                        mErrorLayout.setVisibility(View.VISIBLE);
+                        setStatus(STATUS_ERROR);
                     }
                 }, RankingResult.class);
     }
 
+    private void putIfNotNull(Map<String, String> map, String key, String val) {
+        if (val != null) {
+            map.put(key, val);
+        }
+    }
+
+    /**
+     * 处理数据
+     *
+     * @param groupList
+     */
     private void handleData(List<RankingGroup> groupList) {
-        mSections.clear();
         if (CollectionUtils.notEmpty(groupList)) {
             for (RankingGroup group : groupList) {
                 if (mResult.getRankingType() != RankingResult.SINGLE_LEAGUE) {
@@ -232,9 +255,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
                 }
             }
         } else {
-            mNoDataTextView.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
-            mErrorLayout.setVisibility(View.GONE);
+            setStatus(STATUS_NO_DATA);
         }
     }
 
@@ -254,6 +275,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
             if (RankingResult.CUP == mResult.getRankingType()
                     && matchStages.size() > 1 && mAdapter.getHeaderViewsCount() == 0) {
                 mAdapter.addHeaderView(mButtonFrame);
+                mAdapter.setEmptyView(true, mEmptyView);
             }
 
             if (firstStageIndex != null) {
