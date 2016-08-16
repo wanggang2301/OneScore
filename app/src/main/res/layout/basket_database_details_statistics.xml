@@ -2,7 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,13 +26,16 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/selected_bg">
+                android:background="@color/home_item_bg">
 
             <RadioGroup
                 android:id="@+id/head_radiogroup"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:layout_margin="13dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 >
@@ -124,7 +127,6 @@
                                 android:layout_height="100dp"
                                 android:layout_gravity="center"
                                 />
-
                         </FrameLayout>
 
                         <LinearLayout
