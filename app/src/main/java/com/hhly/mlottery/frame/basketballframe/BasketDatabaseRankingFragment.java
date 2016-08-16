@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -45,6 +46,12 @@ public class BasketDatabaseRankingFragment extends Fragment {
     ImageView mLeftButton;
     ImageView mRightButton;
 
+    View mEmptyView;
+    ProgressBar mProgressBar;
+    View mErrorLayout;
+    TextView mRefreshTextView;
+    TextView mNoDataTextView;
+
     RecyclerView mRecyclerView;
 
     private String leagueId;
@@ -71,6 +78,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mEmptyView = inflater.inflate(R.layout.basket_database_empty_layout, container, false);
         return inflater.inflate(R.layout.fragment_basket_database_ranking, container, false);
     }
 
@@ -86,11 +94,27 @@ public class BasketDatabaseRankingFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
+        initEmptyView();
+
         initListener();
 
         initRecycler();
 
         load(null);
+    }
+
+    private void initEmptyView() {
+        mProgressBar = (ProgressBar) mEmptyView.findViewById(R.id.progress);
+        mErrorLayout = mEmptyView.findViewById(R.id.error_layout);
+        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.reloading_txt);
+        mNoDataTextView = (TextView) mEmptyView.findViewById(R.id.no_data_txt);
+
+        mRefreshTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                load(null);
+            }
+        });
     }
 
     public void update() {
@@ -145,12 +169,16 @@ public class BasketDatabaseRankingFragment extends Fragment {
     private void initRecycler() {
         mSections = new ArrayList<>();
         mAdapter = new BasketballDatabaseRankingAdapter(mSections);
+        mAdapter.setEmptyView(mEmptyView);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(manager);
     }
 
     private void load(String firstStageId) {
+        mNoDataTextView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mErrorLayout.setVisibility(View.GONE);
         Map<String, String> params = new HashMap<>();
         params.put(PARAM_ID, leagueId);
         if (season != null) {
@@ -180,6 +208,9 @@ public class BasketDatabaseRankingFragment extends Fragment {
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                         VolleyError error = exception.getVolleyError();
                         if (error != null) error.printStackTrace();
+                        mNoDataTextView.setVisibility(View.GONE);
+                        mProgressBar.setVisibility(View.GONE);
+                        mErrorLayout.setVisibility(View.VISIBLE);
                     }
                 }, RankingResult.class);
     }
@@ -200,6 +231,10 @@ public class BasketDatabaseRankingFragment extends Fragment {
                     }
                 }
             }
+        } else {
+            mNoDataTextView.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
+            mErrorLayout.setVisibility(View.GONE);
         }
     }
 
