@@ -9,6 +9,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
+import com.hhly.mlottery.util.StadiumUtils;
 
 import java.util.List;
 
@@ -42,6 +43,20 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
     private static final String YTORED1 = "2069";//两黄变一红
 
 
+    /**
+     * 上半场
+     */
+    private static final String FIRSTHALF = "1";
+    /**
+     * 中场
+     */
+    private static final String HALFTIME = "2";
+
+    /**
+     * 下班场
+     */
+    private static final String SECONDTIME = "3";
+
     private Context mContext;
 
     private List<MatchTimeLiveBean> matchTimeLiveBeans;
@@ -58,17 +73,29 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
 
         switch (itemViewType) {
             case VIEW_TYPE_DEFAULT:
-                BindRecycleViewData(viewHolder, matchTimeLiveBeans.size() - position - 1);
+                BindRecycleViewData(viewHolder, getItemCount() - position - 1);
 
                 break;
             case VIEW_TYPE_HALF_FINISH:
-                TextView tv_score = viewHolder.findViewById(R.id.tv_score);
-                TextView tv_status = viewHolder.findViewById(R.id.tv_status);
-
+                BindRecycleViewMatchStatus(viewHolder, getItemCount() - position - 1);
                 break;
         }
     }
 
+    private void BindRecycleViewMatchStatus(BaseRecyclerViewHolder viewHolder, int position) {
+        TextView tv_score = viewHolder.findViewById(R.id.tv_score);
+        TextView tv_status = viewHolder.findViewById(R.id.tv_status);
+        MatchTimeLiveBean m = matchTimeLiveBeans.get(position);
+
+
+        if ("2".equals(matchTimeLiveBeans.get(position).getState())) {
+            tv_score.setText(m.getIsHome());
+            tv_status.setText("H");
+        } else if ("-1".equals(matchTimeLiveBeans.get(position).getState())) {
+            tv_score.setText(m.getIsHome());
+            tv_status.setText("F");
+        }
+    }
 
     private void BindRecycleViewData(BaseRecyclerViewHolder viewHolder, int position) {
         TextView tv_time = viewHolder.findViewById(R.id.tv_time);
@@ -92,62 +119,91 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
         msg_right.setVisibility(View.VISIBLE);
         iv_right.setVisibility(View.VISIBLE);
 
-        if (HOME.equals(m.getIsHome())) {
-            tv_time.setText(m.getTime() + "'");
-            msg_left.setVisibility(View.INVISIBLE);
-            iv_left.setVisibility(View.INVISIBLE);
+        if (FIRSTHALF.equals(m.getState()) && StadiumUtils.convertStringToInt(m.getTime()) > 45) {
+            tv_time.setText("45+'");
+            tv_time.setBackgroundResource(R.drawable.live_text_time);
 
+        } else if (SECONDTIME.equals(m.getState()) && StadiumUtils.convertStringToInt(m.getTime()) > 90) {
+            tv_time.setText("90+" + (StadiumUtils.convertStringToInt(m.getTime()) - 90) + "'");
+            tv_time.setBackgroundResource(R.drawable.live_text_ot);
+        } else {
+            tv_time.setText(StadiumUtils.convertStringToInt(m.getTime()) + "'");
+            tv_time.setBackgroundResource(R.drawable.live_text_time);
+
+        }
+
+        if (m.getPlayInfo() == null) {
+            m.setPlayInfo("");
+        }
+
+        if (HOME.equals(m.getIsHome())) {
+
+            msg_right.setVisibility(View.INVISIBLE);
+            iv_right.setVisibility(View.INVISIBLE);
             if (SCORE.equals(m.getCode())) {
 
-                msg_right.setText("第" + m.getEventnum() + "个进球");
-                iv_right.setImageResource(R.mipmap.event_goal);
+                msg_left.setText(m.getPlayInfo() + "第" + m.getEventnum() + "个进球");
+                iv_left.setImageResource(R.mipmap.event_goal);
             } else if (YELLOW_CARD.equals(m.getCode())) {
 
-                msg_right.setText("第" + m.getEventnum() + "个黄牌");
-                iv_right.setImageResource(R.mipmap.event_yc);
+                msg_left.setText(m.getPlayInfo() + "第" + m.getEventnum() + "张黄牌");
+                iv_left.setImageResource(R.mipmap.event_yc);
 
             } else if (RED_CARD.equals(m.getCode())) {
 
-                msg_right.setText("第" + m.getEventnum() + "个红牌");
-                iv_right.setImageResource(R.mipmap.event_rc);
+                msg_left.setText(m.getPlayInfo() + "第" + m.getEventnum() + "张红牌");
+                iv_left.setImageResource(R.mipmap.event_rc);
             } else if (SUBSTITUTION.equals(m.getCode())) {
-                msg_right.setText("换人");
-                iv_right.setImageResource(R.mipmap.event_player);
+                // No:人名|No:人名(前上后下)
+                if (m.getPlayInfo() != null && !"".equals(m.getPlayInfo())) {
+                    if (m.getPlayInfo().contains("|")) {
+                        msg_left.setText(m.getPlayInfo().split("|")[0] + "上场 " + m.getPlayInfo().split("|")[1] + "下场");
+                    } else {
+                        msg_left.setText(m.getPlayInfo().split(":")[0] + "号上场 " + m.getPlayInfo().split(":")[1] + "号下场");
+                    }
+                } else {
+                    msg_left.setText("换人");
+                }
+
+                iv_left.setImageResource(R.mipmap.event_player);
             } else if (CORNER.equals(m.getCode())) {
 
-                msg_right.setText("第" + m.getEventnum() + "个角球");
-                iv_right.setImageResource(R.mipmap.event_corner);
+                msg_left.setText(m.getPlayInfo() + "第" + m.getEventnum() + "个角球");
+                iv_left.setImageResource(R.mipmap.event_corner);
             } else if (YTORED.equals(m.getCode())) {
-                msg_right.setText("两黄变一红");
-                iv_right.setImageResource(R.mipmap.event_ytor);
+                msg_left.setText(m.getPlayInfo() + "两黄变一红");
+                iv_left.setImageResource(R.mipmap.event_ytor);
             }
+
+
         } else {
-            tv_time.setText(m.getTime() + "'");
-            msg_right.setVisibility(View.INVISIBLE);
-            iv_right.setVisibility(View.INVISIBLE);
+
+            msg_left.setVisibility(View.INVISIBLE);
+            iv_left.setVisibility(View.INVISIBLE);
+
             if (SCORE1.equals(m.getCode())) {
 
-                msg_left.setText("第" + m.getEventnum() + "个进球");
-                iv_left.setImageResource(R.mipmap.event_goal);
+                msg_right.setText("第" + m.getEventnum() + "个进球" + m.getPlayInfo());
+                iv_right.setImageResource(R.mipmap.event_goal);
             } else if (YELLOW_CARD1.equals(m.getCode())) {
 
-                msg_left.setText("第" + m.getEventnum() + "个黄牌");
-                iv_left.setImageResource(R.mipmap.event_yc);
+                msg_right.setText("第" + m.getEventnum() + "张黄牌" + m.getPlayInfo());
+                iv_right.setImageResource(R.mipmap.event_yc);
 
             } else if (RED_CARD1.equals(m.getCode())) {
 
-                msg_left.setText("第" + m.getEventnum() + "个红牌");
-                iv_left.setImageResource(R.mipmap.event_rc);
+                msg_right.setText("第" + m.getEventnum() + "张红牌" + m.getPlayInfo());
+                iv_right.setImageResource(R.mipmap.event_rc);
             } else if (SUBSTITUTION1.equals(m.getCode())) {
-                msg_left.setText("换人");
-                iv_left.setImageResource(R.mipmap.event_player);
+                msg_right.setText("换人");
+                iv_right.setImageResource(R.mipmap.event_player);
             } else if (CORNER1.equals(m.getCode())) {
 
-                msg_left.setText("第" + m.getEventnum() + "个角球");
-                iv_left.setImageResource(R.mipmap.event_corner);
+                msg_right.setText("第" + m.getEventnum() + "个角球" + m.getPlayInfo());
+                iv_right.setImageResource(R.mipmap.event_corner);
             } else if (YTORED1.equals(m.getCode())) {
-                msg_left.setText("两黄变一红");
-                iv_left.setImageResource(R.mipmap.event_ytor);
+                msg_right.setText("两黄变一红" + m.getPlayInfo());
+                iv_right.setImageResource(R.mipmap.event_ytor);
             }
         }
     }
@@ -165,9 +221,11 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getRecycleViewItemType(int position) {
-        if ("2".equals(matchTimeLiveBeans.get(matchTimeLiveBeans.size() - position - 1).getState())) {
+        if ("2".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState()) && "1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getCode())) {
             return VIEW_TYPE_HALF_FINISH;
-        } else {
+        }else if ("-1".equals(matchTimeLiveBeans.get(getItemCount() - position - 1).getState())){
+            return VIEW_TYPE_HALF_FINISH;
+        }else {
             return VIEW_TYPE_DEFAULT;
         }
     }

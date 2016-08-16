@@ -38,18 +38,20 @@
 
     </RadioGroup>
 
+
     <LinearLayout
         android:id="@+id/rl_event"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:visibility="visible"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
     </LinearLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -59,7 +61,7 @@
         <RelativeLayout
             android:id="@+id/ll_statistics"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="gone">
 
             <RelativeLayout

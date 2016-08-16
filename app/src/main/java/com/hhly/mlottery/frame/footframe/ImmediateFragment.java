@@ -465,6 +465,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
         // Log.e(TAG, "url:"+BaseURLs.URL_ImmediateMatchs);
 //        isStartInitData = true;
+        L.d("imedia","dddd");
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ImmediateMatchs, new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
             @Override

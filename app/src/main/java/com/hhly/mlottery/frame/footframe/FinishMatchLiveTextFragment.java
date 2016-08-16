@@ -188,7 +188,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         if (matchTextLiveBeansList.size() > 0) {
             if ("3".equals(matchTextLiveBeansList.get(0).getCode())) {
                 //999代表完场  time位置显示黄色“完场”
-                matchTextLiveBeansList.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt) + "", "", "", "0", "", ""));
+                matchTextLiveBeansList.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt) + "", "", "", "0", "", "","",""));
             }
         }
         filterLiveText(matchTextLiveBeansList);

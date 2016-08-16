@@ -27,7 +27,7 @@ public class MatchTextLiveBean implements Parcelable {
 
     private String cancelEnNum; //取消消息ID
 
-    private  String enNum;     //原始消息Id
+    private String enNum;     //原始消息Id
 
     private String state;
 
@@ -35,21 +35,41 @@ public class MatchTextLiveBean implements Parcelable {
 
     private String guestScore;
 
+    private String playInfo;
 
+    private String eventReNum;
 
-    public MatchTextLiveBean(String code, String msgId, String msgPlace, String showId,String fontStyle, String time, String msgText,String cancelEnNum,String enNum,String state,String homeScore,String guestScore) {
+    public String getPlayInfo() {
+        return playInfo;
+    }
+
+    public void setPlayInfo(String playInfo) {
+        this.playInfo = playInfo;
+    }
+
+    public String getEventReNum() {
+        return eventReNum;
+    }
+
+    public void setEventReNum(String eventReNum) {
+        this.eventReNum = eventReNum;
+    }
+
+    public MatchTextLiveBean(String code, String msgId, String msgPlace, String showId, String fontStyle, String time, String msgText, String cancelEnNum, String enNum, String state, String homeScore, String guestScore, String playInfo, String eventReNum) {
         this.code = code;
         this.msgId = msgId;
         this.msgPlace = msgPlace;
         this.showId = showId;
-        this.fontStyle=fontStyle;
+        this.fontStyle = fontStyle;
         this.time = time;
         this.msgText = msgText;
-        this.cancelEnNum=cancelEnNum;
-        this.enNum=enNum;
-        this.state=state;
-        this.homeScore=homeScore;
-        this.guestScore=guestScore;
+        this.cancelEnNum = cancelEnNum;
+        this.enNum = enNum;
+        this.state = state;
+        this.homeScore = homeScore;
+        this.guestScore = guestScore;
+        this.playInfo = playInfo;
+        this.eventReNum = eventReNum;
     }
 
     public String getMsgId() {
@@ -145,15 +165,18 @@ public class MatchTextLiveBean implements Parcelable {
         code = in.readString();
         msgId = in.readString();
         msgPlace = in.readString();
-        showId=in.readString();
-        fontStyle=in.readString();
+        showId = in.readString();
+        fontStyle = in.readString();
         time = in.readString();
         msgText = in.readString();
-        cancelEnNum=in.readString();
-        enNum=in.readString();
-        state=in.readString();
-        homeScore=in.readString();
-        guestScore=in.readString();
+        cancelEnNum = in.readString();
+        enNum = in.readString();
+        state = in.readString();
+        homeScore = in.readString();
+        guestScore = in.readString();
+        playInfo = in.readString();
+        eventReNum = in.readString();
+
     }
 
     @Override
@@ -175,6 +198,8 @@ public class MatchTextLiveBean implements Parcelable {
         dest.writeString(state);
         dest.writeString(homeScore);
         dest.writeString(guestScore);
+        dest.writeString(playInfo);
+        dest.writeString(eventReNum);
 
     }
 

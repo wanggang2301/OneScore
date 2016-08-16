@@ -14,26 +14,24 @@ public class MatchDetail implements Parcelable {
     private String result;
 
     //赛事状态  0:未开, 1:上半场, 2:中场, 3:下半场, 4:加时, 5:点球, -1:完场, -10:取消, -11:待定, -12:腰斩,  -13:中断, -14:推迟
-    private  String matchStatus;
+    private String matchStatus;
 
     //直播状态 0:未开 1:进行中（赛事状态在未开的情况下，但是进入文字直播，比如比赛还未开始，但是需要直播队员入场。） -1:完场
     private String liveStatus;
 
 
     //比赛类型  西甲，德甲 世界杯等
-    private  String matchType1;
+    private String matchType1;
 
     //第10轮  1/4决赛等
-    private  String matchType2;
+    private String matchType2;
 
     //赛事信息
     private MatchInfo matchInfo;
 
-    private  TeamInfo homeTeamInfo;
+    private TeamInfo homeTeamInfo;
 
-    private  TeamInfo guestTeamInfo;
-
-
+    private TeamInfo guestTeamInfo;
 
 
     public String getResult() {
@@ -102,11 +100,12 @@ public class MatchDetail implements Parcelable {
         this.liveStatus = liveStatus;
     }
 
-    public MatchDetail(){
+    public MatchDetail() {
 
     }
 
-    public MatchDetail(Parcel in){
+
+    public MatchDetail(Parcel in) {
         result = in.readString();
         matchType1 = in.readString();
         matchType2 = in.readString();

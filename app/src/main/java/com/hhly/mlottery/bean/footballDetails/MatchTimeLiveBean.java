@@ -28,6 +28,17 @@ public class MatchTimeLiveBean implements Parcelable {
     private String playInfo;
 
 
+    public String getEnNum() {
+        return enNum;
+    }
+
+    public void setEnNum(String enNum) {
+        this.enNum = enNum;
+    }
+
+    private String enNum;
+
+
     private int eventnum;
 
     public int getEventnum() {
@@ -46,13 +57,14 @@ public class MatchTimeLiveBean implements Parcelable {
         this.state = state;
     }
 
-    public MatchTimeLiveBean(String time, String code, String isHome, String msgId, String state, String playInfo, int eventnum) {
+    public MatchTimeLiveBean(String time, String code, String isHome, String msgId, String state, String playInfo, String enNum, int eventnum) {
         this.time = time;
         this.code = code;
         this.isHome = isHome;
         this.msgId = msgId;
         this.state = state;
         this.playInfo = playInfo;
+        this.enNum = enNum;
         this.eventnum = eventnum;
     }
 
@@ -124,6 +136,7 @@ public class MatchTimeLiveBean implements Parcelable {
         msgId = in.readString();
         state = in.readString();
         playInfo = in.readString();
+        enNum = in.readString();
         eventnum = in.readInt();
     }
 
@@ -140,6 +153,7 @@ public class MatchTimeLiveBean implements Parcelable {
         dest.writeString(msgId);
         dest.writeString(state);
         dest.writeString(playInfo);
+        dest.writeString(enNum);
         dest.writeInt(eventnum);
 
 

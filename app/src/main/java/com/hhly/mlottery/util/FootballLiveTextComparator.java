@@ -12,7 +12,7 @@ public class FootballLiveTextComparator implements Comparator<MatchTextLiveBean>
     public int compare(MatchTextLiveBean o1, MatchTextLiveBean o2) {
 
         int compare = 0;
-        compare =  Integer.parseInt(o2.getMsgId())-Integer.parseInt(o1.getMsgId());//先按照时间排序
+        compare =  Integer.parseInt(o2.getMsgId())-Integer.parseInt(o1.getMsgId());//先按msgid排序
         return compare;
     }
 }

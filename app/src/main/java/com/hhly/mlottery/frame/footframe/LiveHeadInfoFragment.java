@@ -365,8 +365,9 @@ public class LiveHeadInfoFragment extends Fragment {
                 if (place.equals("2")) {//客队
                     place = "0";//isHome=0客队
                 }
+
                 MatchTimeLiveBean timeLiveBean = new MatchTimeLiveBean(secondToMInute(bean1) + "", bean1.getCode(),//这里时间直接转换为分钟，就会一样了
-                        place, bean1.getEnNum(), bean1.getState(), "", 0);
+                        place, bean1.getEnNum(), bean1.getState(), "", bean1.getEnNum(), 0);
                 xMatchLive.add(timeLiveBean);
 
             }
@@ -419,12 +420,13 @@ public class LiveHeadInfoFragment extends Fragment {
         }
 
         xMatchLive.add(new MatchTimeLiveBean(secondToMInute(matchTextLiveBean) + "",
-                matchTextLiveBean.getCode(), place, matchTextLiveBean.getEnNum(), matchTextLiveBean.getState(), "", 0));
+                matchTextLiveBean.getCode(), place, matchTextLiveBean.getEnNum(), matchTextLiveBean.getState(), "", matchTextLiveBean.getEnNum(), 0));
     }
 
     /**
      * 取消对应的足球事件
      */
+
     public void cancelFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
         Iterator<MatchTimeLiveBean> iterator = xMatchLive.iterator();
         while (iterator.hasNext()) {
