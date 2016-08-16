@@ -36,6 +36,11 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
 
     private StageResult mResult;
     private DialogAdapter mAdapter;
+    private BaseQuickAdapter.OnRecyclerViewItemClickListener mOnRecyclerViewItemClickListener;
+
+    public void setOnRecyclerViewItemClickListener(BaseQuickAdapter.OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
+        mOnRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +68,9 @@ public class CupMatchStageChooseDialogFragment extends DialogFragment {
         mAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
+                if (mOnRecyclerViewItemClickListener != null) {
+                    mOnRecyclerViewItemClickListener.onItemClick(view, i);
+                }
                 dialog.dismiss();
             }
         });

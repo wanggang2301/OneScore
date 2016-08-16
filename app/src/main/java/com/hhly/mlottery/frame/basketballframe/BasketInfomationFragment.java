@@ -25,7 +25,6 @@ import com.hhly.mlottery.bean.basket.infomation.LeagueAllBean;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
-import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -132,8 +131,8 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         ll_nodata_inter = (LinearLayout) mView.findViewById(R.id.info_nodata_inter);
         ll_nodata_country = (LinearLayout) mView.findViewById(R.id.info_nodata_country);
 
-        fl_inter=(FrameLayout)mView.findViewById(R.id.fl_inter);
-        fl_country=(FrameLayout)mView.findViewById(R.id.fl_country);
+        fl_inter = (FrameLayout) mView.findViewById(R.id.fl_inter);
+        fl_country = (FrameLayout) mView.findViewById(R.id.fl_country);
 
         network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
 
@@ -327,11 +326,10 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         //String url = BaseURLs.URL_BASKET_INFOMATION;
         // String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
 
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_INFOMATION, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
+        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8080/mlottery/core/basketballData.findLeagueHierarchy.do", params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
 
             @Override
             public void onResponse(LeagueAllBean json) {
-
 
                 if (json.getSpecificLeague() != null && json.getSpecificLeague().size() > 0) {
                     hotLeagues = json.getSpecificLeague();
@@ -341,7 +339,6 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                         hotLeagues.add(new LeagueBean("", "", ""));
                     }
                 }
-
 
                 if (json.getNationalLeague() != null && json.getNationalLeague().size() > 0) {
                     interLeagues = new ArrayList<List<NationalLeague>>();
@@ -356,22 +353,15 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                         interLeagues.add(list);
                     }
                 }
-
-
                 initViewData();
-
-
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
                 mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
             }
         }, LeagueAllBean.class);
-
     }
-
 
     private void initViewData() {
 
@@ -387,14 +377,10 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(mContext, hotLeagues);
                 gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
                 L.d("123456", "热门或国际有数据");
-
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_INTER);
-
             } else {
                 L.d("123456", "热门或国际");
-
                 mHandler.sendEmptyMessage(DATA_STATUS_NODATA_INTER);
-
             }
 
         } else { //欧洲、美洲、亚洲等
@@ -404,13 +390,10 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(mContext, hotLeagues);
                 gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
                 L.d("123456", "洲际有数据");
-
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_INTER);
-
             } else {
                 L.d("123456", "洲际无数据");
                 mHandler.sendEmptyMessage(DATA_STATUS_NODATA_INTER);
-
             }
 
             basketInfomationCallBack = new BasketInfomationCallBack() {
@@ -438,7 +421,6 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                         expandableGridView.collapseGroup(sign);
                         //view.
 
-
                         // 展开被选的group
                         expandableGridView.expandGroup(groupPosition);
                         // 设置被选中的group置于顶端
@@ -452,7 +434,6 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 }
             };
 
-
             if (interLeagues != null && interLeagues.size() > 0) {
                 mExpandableGridAdapter = new ExpandableGridAdapter(mContext, interLeagues);
                 mExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
@@ -460,16 +441,13 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 L.d("123456", "国家有数据");
 
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_COUNTRY);
-               // mHandler.sendEmptyMessage(DATA_STATUS_NODATA_COUNRTY);
+                // mHandler.sendEmptyMessage(DATA_STATUS_NODATA_COUNRTY);
 
             } else {
-                 mHandler.sendEmptyMessage(DATA_STATUS_NODATA_COUNRTY);
+                mHandler.sendEmptyMessage(DATA_STATUS_NODATA_COUNRTY);
                 L.d("123456", "国家无数据");
-
             }
         }
-
-
     }
 
     @Override

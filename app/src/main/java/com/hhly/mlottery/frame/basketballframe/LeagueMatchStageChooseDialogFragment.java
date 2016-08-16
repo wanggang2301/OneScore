@@ -39,6 +39,12 @@ public class LeagueMatchStageChooseDialogFragment extends DialogFragment {
     private ScheduleResult mResult;
     private List<MatchStage> mSecondStageList;
 
+    private OnChooseOkListener mOnChooseOkListener;
+
+    public void setOnChooseOkListener(OnChooseOkListener onChooseOkListener) {
+        mOnChooseOkListener = onChooseOkListener;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +72,8 @@ public class LeagueMatchStageChooseDialogFragment extends DialogFragment {
         clearSecondSelected();
         // 将选中的设为 selected
         firstStages.get(mResult.getFirstStageIndex()).setSelected(true);
-        mSecondStageList.get(mResult.getSecondStageIndex()).setSelected(true);
+        if (CollectionUtils.notEmpty(mSecondStageList))
+            mSecondStageList.get(mResult.getSecondStageIndex()).setSelected(true);
 
         mFirstRecyclerView = (RecyclerView) view.findViewById(R.id.first_recycler_view);
         GridLayoutManager firstGridLayoutManager =
@@ -120,6 +127,23 @@ public class LeagueMatchStageChooseDialogFragment extends DialogFragment {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (mOnChooseOkListener != null) {
+                            List<MatchStage> searchCondition = mResult.getSearchCondition();
+                            String firstStageId = null;
+                            String secondStageId = null;
+                            for (MatchStage stage : searchCondition) {
+                                if (stage.isSelected()) {
+                                    firstStageId = stage.getStageId();
+                                    if (stage.isHasSecondStage()) {
+                                        for (MatchStage matchStage : stage.getStages()) {
+                                            if (matchStage.isSelected())
+                                                secondStageId = matchStage.getStageId();
+                                        }
+                                    }
+                                }
+                            }
+                            mOnChooseOkListener.onChooseOk(firstStageId, secondStageId);
+                        }
                         dismiss();
                     }
                 });
@@ -220,5 +244,9 @@ public class LeagueMatchStageChooseDialogFragment extends DialogFragment {
 
     public interface OnItemClickListener {
         void onItemClick(MatchStage stage);
+    }
+
+    public interface OnChooseOkListener {
+        void onChooseOk(String firstStageId, String secondStageId);
     }
 }

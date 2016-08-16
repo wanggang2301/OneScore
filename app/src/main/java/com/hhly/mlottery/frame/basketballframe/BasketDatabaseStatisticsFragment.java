@@ -42,7 +42,7 @@ import java.util.Map;
  * Created by Administrator on 2016/8/5.
  */
 
-public class BasketDatasaseStatisticsFragment extends Fragment implements View.OnClickListener {
+public class BasketDatabaseStatisticsFragment extends Fragment implements View.OnClickListener {
 
     private static final String PARAM_ID = "leagueId";
     private static final String PARAM2_SEASON = "season";
@@ -108,8 +108,8 @@ public class BasketDatasaseStatisticsFragment extends Fragment implements View.O
 
     private boolean isUpdata = true;//[true:统计  false:之最 ]
 
-    public static BasketDatasaseStatisticsFragment newInstance(String leagueId , String season) {
-        BasketDatasaseStatisticsFragment fragment = new BasketDatasaseStatisticsFragment();
+    public static BasketDatabaseStatisticsFragment newInstance(String leagueId , String season) {
+        BasketDatabaseStatisticsFragment fragment = new BasketDatabaseStatisticsFragment();
         Bundle args = new Bundle();
         args.putString(PARAM_ID, leagueId);
         args.putString(PARAM2_SEASON, season);

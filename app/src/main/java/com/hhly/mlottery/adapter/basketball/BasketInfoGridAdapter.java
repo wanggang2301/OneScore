@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class BasketInfoGridAdapter extends BaseAdapter {
 
-    private static final String LEAGUEID = "leagueId";
+    private static final String LEAGUE = "league";
 
     private DisplayImageOptions options; //
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
@@ -92,7 +92,7 @@ public class BasketInfoGridAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
-                intent.putExtra(LEAGUEID, mList.get(position).getLeagueId());
+                intent.putExtra(LEAGUE, mList.get(position));
                 mContext.startActivity(intent);
                 //Toast.makeText(mContext, "当前选中的是:" + mList.get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
 

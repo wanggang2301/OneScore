@@ -12,23 +12,23 @@ import java.util.List;
  */
 public class StageResult implements Parcelable {
 
-    private int firstStageId;
-    private int secondStageId;
+    private Integer firstStageId;
+    private Integer secondStageId;
     private List<MatchStage> searchCondition;
 
-    public int getFirstStageId() {
+    public Integer getFirstStageId() {
         return firstStageId;
     }
 
-    public void setFirstStageId(int firstStageId) {
+    public void setFirstStageId(Integer firstStageId) {
         this.firstStageId = firstStageId;
     }
 
-    public int getSecondStageId() {
+    public Integer getSecondStageId() {
         return secondStageId;
     }
 
-    public void setSecondStageId(int secondStageId) {
+    public void setSecondStageId(Integer secondStageId) {
         this.secondStageId = secondStageId;
     }
 

@@ -696,6 +696,9 @@
     <!--篮球资料库详情-->
     <string name="basket_database_details_handicapname">让分盘</string>
     <string name="basket_database_details_bigsmallname">大小盘</string>
+    <string name="basket_database_details_schedule">赛程</string>
+    <string name="basket_database_details_stage">阶段</string>
+    <string name="basket_database_details_ranking">排行</string>
     <string name="basket_database_details_season">赛季</string>
     <string name="basket_database_details_all">全部</string>
     <string name="basket_database_details_home">主场</string>
@@ -709,6 +712,13 @@
     <string name="basket_database_details_up">上盘</string>
     <string name="basket_database_details_down">下盘</string>
     <string name="basket_database_details_yzs">赢/走/输</string>
+
+    <string name="basket_database_details_ranking_title">排名/球队</string>
+    <string name="basket_database_details_match_num_title">赛</string>
+    <string name="basket_database_details_win_lose_title">胜/负</string>
+    <string name="basket_database_details_winrate_title">胜率</string>
+    <string name="basket_database_details_win_offset_title">胜差</string>
+    <string name="basket_database_details_recent_title">近况</string>
 
     <string name="basket_database_details_statistic">统计</string>
     <string name="basket_database_details_league_statistic">联赛统计</string>
@@ -805,7 +815,7 @@
 
     <!-- 登录注册 begin-->
     <string name="my">个人中心</string>
-    <string name="register">注册</string>
+    <string name="register">快速注册</string>
     <string name="registering">正在注册...</string>
     <string name="login">登录</string>
     <string name="logining">正在登录...</string>
@@ -816,6 +826,7 @@
     <string name="pwd_format">密码格式为6-16位数字和字符组成</string>
     <string name="pwd_format_hint">6-16位字符,区分大小写</string>
     <string name="pwd_empty">请输入密码</string>
+    <string name="pwd_empty_new">请输入密码(由6-16位数字和字符组成)</string>
     <string name="phone_empty">请输入手机号码</string>
     <string name="phone_error">请输入正确手机号码</string>
     <string name="verify_code">请输入验证码</string>
@@ -878,7 +889,8 @@
     <string name="modify_password_succ">修改密码成功</string>
     <string name="modify_password_fail">修改密码失败</string>
     <string name="input_password_old">请输入旧密码</string>
-    <string name="input_password_new">请输入新密码（由６－１６位数字和字符组成）</string>
+    <string name="input_password_new">请输入新密码(由6-16位数字和字符组成)</string>
+    <string name="input_password_new_no">请输入新密码(由6-16位数字和字符组成)</string>
     <string name="input_password_confirm">请保持和新密码一致</string>
     <string name="show_password">显示密码</string>
     <string name="old_pw">旧</string>
@@ -920,9 +932,12 @@
     <string name="ninety_plus">90+</string>
     <string name="at_least_one_company">至少选择一家公司</string>
 
-    <string name="asia_win_rate">赢盘率</string>
     <string name="home_win_rate">主胜率</string>
+    <string name="home_lose_rate">主负率</string>
     <string name="size_win_rate">大球率</string>
+    <string name="size_lose_rate">小球率</string>
+    <string name="asia_win_rate">赢盘率</string>
+    <string name="asia_lose_rate">输盘率</string>
     <string name="title_big_data_predict">大数据预测</string>
     <string name="diy_compute_method">DIY算法</string>
     <string name="foot_details_info">情报</string>
@@ -930,11 +945,37 @@
     <string name="action_close">关闭</string>
     <string name="action_compute">计算</string>
     <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
-    <string name="diy_compute_method_message">概率=交锋概率×%1$s+主队概率×%2$s+客队概率×%3$s</string>
+    <string name="diy_compute_method_message1">概率=交锋概率×%1$s+主胜概率×%2$s+客负概率×%3$s</string>
+    <string name="diy_compute_method_message2">概率=交锋概率×%1$s+主队概率×%2$s+客队概率×%3$s</string>
+    <string name="diy_compute_method_message3">概率=交锋概率×%1$s+主赢概率×%2$s+客输概率×%3$s</string>
     <string name="diy_combat_rate">交锋概率</string>
     <string name="diy_host_rate">主队概率</string>
     <string name="diy_guest_rate">客队概率</string>
     <string name="insufficient_sampling">采样不足</string>
     <string name="probability">概率</string>
     <string name="percent_factor">比例因子</string>
+    <string name="new_analyze_let">亚盘走势</string>
+    <string name="new_analyze_home">主场</string>
+    <string name="new_analyze_guest">客场</string>
+    <string name="new_analyze_win">赢</string>
+    <string name="new_analyze_draw">走</string>
+    <string name="new_analyze_lose">输</string>
+    <string name="new_analyze_score">比分</string>
+    <string name="new_analyze_first_let">初盘</string>
+    <string name="new_analyze_result">结果</string>
+    <string name="new_analyze_more_messages"><![CDATA[更多信息>>]]></string>
+    <string name="new_analyze_big_small_ball">大小球</string>
+    <string name="new_analyze_recent_compare">近期对比</string>
+    <string name="new_analyze_liangduijin">两队近</string>
+    <string name="new_analyze_changjiaofeng">场交锋，主队</string>
+    <string name="new_analyze_ciyingpan">次赢盘</string>
+    <string name="new_analyze_cishupan">次输盘</string>
+    <string name="new_analyze_cizoupan">次走盘</string>
+    <string name="new_analyze_yingpanlv">赢盘率</string>
+    <string name="new_analyze_cidaqiu">次大球</string>
+    <string name="new_analyze_cixiaoqiu">次小球</string>
+    <string name="new_analyze_daqiulv">大球率</string>
+    <string name="intelligence_host_recent">主队近期</string>
+    <string name="intelligence_guest_recent">客队近期</string>
+    <string name="version_update_title">升级包下载中，请稍后...</string>
 </resources>

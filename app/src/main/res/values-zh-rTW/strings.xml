@@ -488,7 +488,7 @@
     <string name="fragme_home_dianqiu_text">點球</string>
     <string name="fragme_home_fengpan_text">封</string>
     <!-- 退出程序 -->
-    <string name="main_exit_text">再按一次退出程序</string>
+    <string name="main_exit_text">再按壹次退出程序</string>
     <!-- 提示复制成功 -->
     <string name="about_copy_success">文本已複制</string>
 
@@ -687,10 +687,12 @@
     <string name="basket_odds_asiaLet_details">亞盤詳情</string>
     <string name="basket_odds_asiaSize_details">大小球詳情</string>
 
-
     <!--篮球资料库详情-->
     <string name="basket_database_details_handicapname">讓分盤</string>
     <string name="basket_database_details_bigsmallname">大小盤</string>
+    <string name="basket_database_details_schedule">賽程</string>
+    <string name="basket_database_details_stage">階段</string>
+    <string name="basket_database_details_ranking">排行</string>
     <string name="basket_database_details_season">賽季</string>
     <string name="basket_database_details_all">全部</string>
     <string name="basket_database_details_home">主場</string>
@@ -704,6 +706,13 @@
     <string name="basket_database_details_up">上盤</string>
     <string name="basket_database_details_down">下盤</string>
     <string name="basket_database_details_yzs">贏/走/輸</string>
+
+    <string name="basket_database_details_ranking_title">排名/球隊</string>
+    <string name="basket_database_details_match_num_title">賽</string>
+    <string name="basket_database_details_win_lose_title">勝/負</string>
+    <string name="basket_database_details_winrate_title">勝率</string>
+    <string name="basket_database_details_win_offset_title">勝差</string>
+    <string name="basket_database_details_recent_title">近況</string>
 
     <string name="basket_database_details_statistic">統計</string>
     <string name="basket_database_details_league_statistic">聯賽統計</string>
@@ -794,13 +803,14 @@
 
     <!-- 登录注册 begin-->
     <string name="my">個人中心</string>
-    <string name="register">注冊</string>
+    <string name="register">快速注冊</string>
     <string name="registering">正在注冊...</string>
     <string name="login">登錄</string>
     <string name="logining">正在登錄...</string>
     <string name="login_succ">登錄成功</string>
-    <string name="login_no_weixin">沒有安裝微信，請先安裝微信!</string>
-    <string name="login_peak">登入高峰期，請稍後再試</string>
+    <string name="login_no_weixin">沒有安裝微信,請先安裝微信!</string>
+    <string name="login_peak">登錄高峰期,請稍後再試</string>
+    <string name="pwd_empty_new">請輸入密碼(由6-16位數字和字符組成)</string>
     <string name="login_fail">登錄失敗</string>
     <string name="pwd_format">密碼格式爲6-16位數字和字符組成</string>
     <string name="pwd_format_hint">6-16位字符,區分大小寫</string>
@@ -844,12 +854,12 @@
 
 
     <!--1.1.2 begin-->
-    <string name="weixin_installed">請先安裝微信用戶端!</string>
-    <string name="Login_register">登入/注册</string>
+    <string name="weixin_installed">請先安裝微信客戶端!</string>
+    <string name="Login_register">登錄/註冊</string>
     <string name="personal_center">個人中心</string>
-    <string name="social_account_login">社交帳號快速登錄</string>
+    <string name="social_account_login">社交賬號快速登錄</string>
     <string name="forget_pwd">忘記密碼?</string>
-    <string name="next_step">下一步</string>
+    <string name="next_step">下壹步</string>
     <string name="find_pw">找回密碼</string>
     <string name="reset_password">重置密碼</string>
     <string name="reseting_password">正在重置密碼...</string>
@@ -864,11 +874,12 @@
     <string name="nickname_format">昵稱:格式爲1-15個字符(不超過七個中文),由中英文數字和字符組成</string>
     <string name="modify_password">修改密碼</string>
     <string name="modifying_password">正在修改密碼...</string>
-    <string name="modifying_nickname">正在修改昵称...</string>
+    <string name="modifying_nickname">正在修改昵稱...</string>
     <string name="modify_password_succ">修改密碼成功</string>
     <string name="modify_password_fail">修改密碼失敗</string>
     <string name="input_password_old">請輸入舊密碼</string>
     <string name="input_password_new">請輸入新密碼（由６－１６位數字和字符組成）</string>
+    <string name="input_password_new_no">請輸入新密碼</string>
     <string name="input_password_confirm">請保持和新密碼壹致</string>
     <string name="show_password">顯示密碼</string>
     <string name="old_pw">舊</string>
@@ -889,9 +900,10 @@
     <string name="home_pager_version_update">忽略此版本</string>
     <string name="frame_cpi_chupan_txt">初盤</string>
     <string name="cpi_select_company">請選擇公司</string>
+
     <!--新版分析-->
     <string name="new_analyze_goal_lose">得/失球</string>
-    <string name="new_analyze_goal_differ">淨勝球</string>
+    <string name="new_analyze_goal_differ">凈勝球</string>
     <string name="new_analyze_integral">積分</string>
     <string name="new_analyze_complete_table">完整積分榜>></string>
     <string name="new_analyze_attack_defense">攻防對比</string>
@@ -899,31 +911,59 @@
     <string name="new_analyze_player_info">球員信息</string>
     <string name="new_analyze_recommend">心水推薦</string>
 
-
     <string name="immediate_status_end">完</string>
-    <string name="foot_rollball_txt">滾球</string>
+    <string name="foot_rollball_txt">滚球</string>
     <string name="only_five_eachday">同壹個手機號每天只能發送5次短信</string>
-    <string name="login_username">請輸入帳號或者注册手機號</string>
-    <string name="server_busy">系統繁忙</string>
+    <string name="login_username">請輸入賬號或者註冊手機號</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
+    <string name="server_busy">系统繁忙</string>
     <string name="at_least_one_company">至少選擇壹家公司</string>
 
-    <string name="action_close">關閉</string>
-    <string name="action_compute">計算</string>
+    <string name="home_win_rate">主勝率</string>
+    <string name="home_lose_rate">主負率</string>
+    <string name="size_win_rate">大球率</string>
+    <string name="size_lose_rate">小球率</string>
     <string name="asia_win_rate">贏盤率</string>
-    <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
+    <string name="asia_lose_rate">輸盤率</string>
+    <string name="title_big_data_predict">大數據預測</string>
     <string name="diy_compute_method">DIY算法</string>
-    <string name="diy_compute_method_message">概率=交鋒概率×%1$s+主隊概率×%2$s+客隊概率×%3$s</string>
+    <string name="diy_custom_compute_method">DIY自定義算法</string>
+    <string name="foot_details_info">情報</string>
+    <string name="diy_compute_method_message1">概率=交鋒概率×%1$s+主勝概率×%2$s+客負概率×%3$s</string>
+    <string name="diy_compute_method_message2">概率=交鋒概率×%1$s+主隊概率×%2$s+客隊概率×%3$s</string>
+    <string name="diy_compute_method_message3">概率=交鋒概率×%1$s+主贏概率×%2$s+客輸概率×%3$s</string>
     <string name="diy_combat_rate">交鋒概率</string>
     <string name="diy_host_rate">主隊概率</string>
     <string name="diy_guest_rate">客隊概率</string>
-    <string name="diy_custom_compute_method">DIY自定義算法</string>
-    <string name="foot_details_info">情報</string>
+    <string name="action_close">關閉</string>
+    <string name="action_compute">計算</string>
+    <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
     <string name="insufficient_sampling">采樣不足</string>
-    <string name="title_big_data_predict">大數據預測</string>
-    <string name="size_win_rate">大球率</string>
-    <string name="home_win_rate">主勝率</string>
     <string name="probability">概率</string>
     <string name="percent_factor">比例因子</string>
+    <string name="intelligence_host_recent">主隊近期</string>
+    <string name="intelligence_guest_recent">客隊近期</string>
+    <string name="version_update_title">升級包下載中，請稍後...</string>
+    <string name="new_analyze_big_small_ball">大小球</string>
+    <string name="new_analyze_changjiaofeng">場交鋒，主隊</string>
+    <string name="new_analyze_cidaqiu">次大球</string>
+    <string name="new_analyze_cixiaoqiu">次小球</string>
+    <string name="new_analyze_ciyingpan">次贏盤</string>
+    <string name="new_analyze_cishupan">次輸盤</string>
+    <string name="new_analyze_cizoupan">次走盤</string>
+    <string name="new_analyze_daqiulv">大球率</string>
+    <string name="new_analyze_draw">走</string>
+    <string name="new_analyze_first_let">初盤</string>
+    <string name="new_analyze_home">主場</string>
+    <string name="new_analyze_guest">客場</string>
+    <string name="new_analyze_let">亞盤走勢</string>
+    <string name="new_analyze_liangduijin">兩隊近</string>
+    <string name="new_analyze_lose">輸</string>
+    <string name="new_analyze_more_messages"><![CDATA[更多信息>>]]></string>
+    <string name="new_analyze_recent_compare">近期對比</string>
+    <string name="new_analyze_result">结果</string>
+    <string name="new_analyze_score">比分</string>
+    <string name="new_analyze_win">贏</string>
+    <string name="new_analyze_yingpanlv">贏盤率</string>
 </resources>
