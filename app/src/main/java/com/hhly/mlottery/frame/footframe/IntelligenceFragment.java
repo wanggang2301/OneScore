@@ -322,6 +322,16 @@ public class IntelligenceFragment extends Fragment {
         mGvRecentHalf= (MyGridView) view.findViewById(R.id.gv_recent_half_game);
         mRecentHalfAdapter=new IntelligenceRecentAdapter(getActivity(),halfRecentList);
         mGvRecentHalf.setAdapter(mRecentHalfAdapter);
+
+        mGvResultFull.setFocusable(false);
+        mGvResultHalf.setFocusable(false);
+        mGvResultGoal.setFocusable(false);
+        mGvSeasonHandicapFull.setFocusable(false);
+        mGvSeasonHandicapHalf.setFocusable(false);
+        mGvRecentFull.setFocusable(false);
+        mGvRecentHalf.setFocusable(false);
+        mGvTodayHandicapFull.setFocusable(false);
+        mGvTodayHandicapHalf.setFocusable(false);
     }
 
     private void initData(){
