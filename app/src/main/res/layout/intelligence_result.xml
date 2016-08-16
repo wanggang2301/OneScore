@@ -132,7 +132,7 @@
             android:src="@drawable/grey_dotted_line"/>
     </LinearLayout>
 
-    <!--进球、净胜球-->
+    <!--进球、result_goal_difference-->
     <LinearLayout
         android:id="@+id/ll_result_goal"
         android:layout_width="match_parent"

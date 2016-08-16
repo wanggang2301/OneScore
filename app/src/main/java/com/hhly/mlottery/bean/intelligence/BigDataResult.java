@@ -264,6 +264,15 @@ public class BigDataResult {
         private String home;
         private String guest;
         private int type;
+        private String handicap;
+
+        public String getHandicap() {
+            return handicap;
+        }
+
+        public void setHandicap(String handicap) {
+            this.handicap = handicap;
+        }
 
         public String getHome() {
             return home;

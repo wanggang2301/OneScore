@@ -25,7 +25,6 @@ public class IntelligenceResultAdapter extends BaseAdapter{
     private LayoutInflater inflater;
     private Context context;
     private List<BigDataResult.GridViewEntity> list;
-    private List<String> handicaps=new ArrayList<>();
 
     public IntelligenceResultAdapter(Context context, List<BigDataResult.GridViewEntity> list) {
         this.context = context;
@@ -36,13 +35,6 @@ public class IntelligenceResultAdapter extends BaseAdapter{
         this.list = list;
     }
 
-    /**
-     * 把handicaps的值传过来
-     * @param handicaps
-     */
-    public void setHandicaps(List<String> handicaps){
-        this.handicaps=handicaps;
-    }
     @Override
     public int getCount() {
         return list.size();
@@ -126,44 +118,33 @@ public class IntelligenceResultAdapter extends BaseAdapter{
                     break;
                 case 10:
                     holder.imageView.setImageResource(R.mipmap.season_handicap_win); //赢盘率
-
+                    holder.description.setText(context.getString(R.string.intelligent_rang)+list.get(position).getHandicap()+context.getString(R.string.intelligent_ball_win_rate));
                     break;
                 case 11:
                     holder.imageView.setImageResource(R.mipmap.season_handicap_win); //输盘率
+                    holder.description.setText(context.getString(R.string.intelligent_rang)+list.get(position).getHandicap()+context.getString(R.string.intelligent_ball_lose_rate));
                     break;
                 case 12:
                     holder.imageView.setImageResource(R.mipmap.result_big_rate);
+                    holder.description.setText(list.get(position).getHandicap()+context.getString(R.string.intelligent_big_rate));
                     break;
                 case 13:
                     holder.imageView.setImageResource(R.mipmap.result_small_rate);
+                    holder.description.setText(list.get(position).getHandicap()+context.getString(R.string.intelligent_small_rate));
                     break;
                 case 14:
                     holder.imageView.setImageResource(R.mipmap.handicap_win);
+                    holder.description.setText(context.getString(R.string.intelligent_rang)+list.get(position).getHandicap()+context.getString(R.string.intelligent_qiushenglv));
                     break;
                 case 15:
                     holder.imageView.setImageResource(R.mipmap.handicap_draw);
-
+                    holder.description.setText(context.getString(R.string.intelligent_rang)+list.get(position).getHandicap()+context.getString(R.string.intelligent_qiupinglv));
                     break;
                 case 16:
                     holder.imageView.setImageResource(R.mipmap.handicap_lose);
+                    holder.description.setText(context.getString(R.string.intelligent_rang)+list.get(position).getHandicap()+context.getString(R.string.intelligent_qiufulv));
                     break;
 
-                case 20:
-                    holder.imageView.setImageResource(R.mipmap.recent_win_number);
-                    holder.description.setText("连胜数");
-                    break;
-                case 21:
-                    holder.imageView.setImageResource(R.mipmap.handicap_win_number);
-                    holder.description.setText("亚盘连赢");
-                    break;
-                case 22:
-                    holder.imageView.setImageResource(R.mipmap.continue_big_ball);
-                    holder.description.setText("连续大球");
-                    break;
-                case 23:
-                    holder.imageView.setImageResource(R.mipmap.continue_small_ball);
-                    holder.description.setText("连续小球");
-                    break;
             }
 
         return convertView;

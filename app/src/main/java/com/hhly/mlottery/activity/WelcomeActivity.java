@@ -215,7 +215,7 @@ public class WelcomeActivity extends BaseActivity {
         //如果是已经启动了 是“YES”
         //如果本地保存的versionname等于应用的版本号（例：1.0.4）
         if (PreferenceUtil.getString("isFirst", "").equals("YES") && PreferenceUtil.getString("versionName", "").equals(mPackageInfo.versionName)) {
-            startActivity(new Intent(this, FootballActivity.class));
+            startActivity(new Intent(this, HomePagerActivity.class));
             this.finish();
         }
 

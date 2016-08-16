@@ -955,4 +955,14 @@
     <string name="intelligent_first_goal_win">先进球获胜概率</string>
     <string name="intelligent_last_goal_win">后进球获胜概率</string>
     <string name="intelligent_no_goal_rate">不进球概率</string>
+    <string name="intelligent_win_num">连胜数</string>
+    <string name="intelligent_let_win">亚盘连赢</string>
+    <string name="intelligent_continue_big">连续大球</string>
+    <string name="intelligent_continue_small">连续小球</string>
+    <string name="intelligent_rang">让</string>
+    <string name="intelligent_ball_win_rate">球赢盘率</string>
+    <string name="intelligent_ball_lose_rate">球输盘率</string>
+    <string name="intelligent_qiushenglv">球胜率</string>
+    <string name="intelligent_qiupinglv">球平率</string>
+    <string name="intelligent_qiufulv">球负率</string>
 </resources>
