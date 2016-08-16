@@ -210,6 +210,10 @@ public class BasketDatabaseRankingFragment extends Fragment {
                 new VolleyContentFast.ResponseSuccessListener<RankingResult>() {
                     @Override
                     public void onResponse(RankingResult result) {
+                        if (result == null) {
+                            setStatus(STATUS_NO_DATA);
+                            return;
+                        }
                         mResult = result;
                         Integer firstStageIndex = result.getFirstStageIndex();
                         mAdapter.setType(result.getRankingType());
@@ -294,5 +298,11 @@ public class BasketDatabaseRankingFragment extends Fragment {
         BasketDatabaseRankingFragment fragment = new BasketDatabaseRankingFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+        Bundle args = getArguments();
+        if (args != null) args.putString(PARAM_SEASON, season);
     }
 }
