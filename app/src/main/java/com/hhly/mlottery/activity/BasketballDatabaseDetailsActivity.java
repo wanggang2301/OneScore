@@ -34,6 +34,7 @@ import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseRankingFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseScheduleFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatasaseHandicapFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketDatasaseStatisticsFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -90,6 +91,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
     private BasketDatasaseHandicapFragment mHandicapFragment;
     private BasketDatabaseBigSmallFragment mBigSmallFragment;
     private BasketDatabaseRankingFragment mRankingFragment;
+    private BasketDatasaseHandicapFragment mBasketDatasaseHandicapFragment;
+    private BasketDatabaseBigSmallFragment mBasketDatabaseBigSmallFragment;
+    private BasketDatasaseStatisticsFragment mBasketDatasaseStatisticsFragment;
 
     private DisplayImageOptions mOptions;
     private DisplayImageOptions mOptionsHead;
@@ -119,6 +123,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
         mRankingFragment = BasketDatabaseRankingFragment.newInstance(mLeagueId, null);
         mHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
         mBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId, "-1");
+        mBasketDatasaseHandicapFragment = BasketDatasaseHandicapFragment.newInstance(mLeagueId, "-1");
+        mBasketDatabaseBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(mLeagueId , "-1");
+        mBasketDatasaseStatisticsFragment = BasketDatasaseStatisticsFragment.newInstance(mLeagueId , "-1");
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true)
@@ -191,6 +198,9 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mHandicapFragment,
                 mBigSmallFragment);
         mViewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
+
+        mTabsAdapter.addFragments(mBasketDatasaseHandicapFragment, mBasketDatabaseBigSmallFragment , mBasketDatasaseStatisticsFragment);
+        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -432,6 +442,12 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 mRankingFragment.update();
             }
         }, 1000);
+                    mHandlerData.postDelayed(mRun, 500); // 加载数据
+                    mBasketDatasaseHandicapFragment.upDate();
+                    mBasketDatabaseBigSmallFragment.upDate();
+                    mBasketDatasaseStatisticsFragment.upData();
+                }
+            }, 1000);
     }
 
     int currentDialogPosition = 0; // 当前选中的赛季（默认第一个）
@@ -510,6 +526,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
                 //大小盘
                 mBigSmallFragment.setSeason(newData);
                 mBigSmallFragment.upDate();
+
+                //统计
+                mBasketDatasaseStatisticsFragment.setSeason(newData);
+                mBasketDatasaseStatisticsFragment.upData();
 
             }
         });

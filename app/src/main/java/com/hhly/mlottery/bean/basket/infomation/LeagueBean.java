@@ -10,6 +10,15 @@ public class LeagueBean {
     private String leagueId;
     private String leagueName;
     private String leagueLogoUrl;
+    private Integer matchType;
+
+    public Integer getMatchType() {
+        return matchType;
+    }
+
+    public void setMatchType(Integer matchType) {
+        this.matchType = matchType;
+    }
 
 
     public LeagueBean() {

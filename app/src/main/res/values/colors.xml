@@ -612,7 +612,13 @@
     <color name="info_home_progress_color">#FE0100</color>
     <color name="info_guest_progress_color">#21b11c</color>
     <color name="progress_yellow">#EEC72C</color>
-    
+
     <color name="database_win_color">#DD2F1C</color>
     <color name="database_lose_color">#21B11E</color>
+
+    <!--篮球统计-->
+    <color name="basket_database_statistics_progress">#A5CF32</color>
+    <color name="basket_database_statistics_background_h">#F15353</color>
+    <color name="basket_database_statistics_background_g">#0090FF</color>
+    <color name="basket_database_statistics_background_d">#F1CA43</color>
 </resources>

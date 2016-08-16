@@ -56,8 +56,6 @@
     <string name="foot_odds_eu_right">負</string>
 
 
-
-
     <!--分享-->
     <string name="errcode_success">發送成功</string>
     <string name="errcode_cancel">發送取消</string>
@@ -79,7 +77,6 @@
     <string name="share_uninstall_qq">您還未安裝QQ客戶端</string>
     <string name="share_recommend">推薦</string>
     <string name="share_summary_default">壹比分,專業的足球比分直播平台</string>
-
 
 
     <!--指数-->
@@ -716,6 +713,40 @@
     <string name="basket_database_details_winrate_title">勝率</string>
     <string name="basket_database_details_win_offset_title">勝差</string>
     <string name="basket_database_details_recent_title">近況</string>
+
+    <string name="basket_database_details_statistic">統計</string>
+    <string name="basket_database_details_league_statistic">聯賽統計</string>
+    <string name="basket_database_details_leagueMost">聯賽之最</string>
+    <string name="basket_database_details_victory_defeat">勝負統計</string>
+    <string name="basket_database_details_statistic_num">場次</string>
+    <string name="basket_database_details_statistic_euro">歐賠統計</string>
+    <string name="basket_database_details_statistic_let">讓分統計</string>
+    <string name="basket_database_details_statistic_big_small">大小球統計</string>
+    <string name="basket_database_details_statistic_score">得分統計</string>
+    <string name="basket_database_details_statistic_num_score">場次統計</string>
+    <string name="basket_database_details_statistic_all_score">總得分</string>
+    <string name="basket_database_details_statistic_gp_num">已賽場次</string>
+    <string name="basket_database_details_statistic_average">平均得分</string>
+
+    <string name="basket_database_details_statistic_home_win">主勝 : </string>
+    <string name="basket_database_details_statistic_guest_win">客勝 : </string>
+    <string name="basket_database_details_statistic_draw">走水 : </string>
+    <string name="basket_database_details_statistic_euro_v1">賽果與歐賠壹致 </string>
+    <string name="basket_database_details_statistic_euro_v2">賽果與歐賠相反 </string>
+    <string name="basket_database_details_statistic_big">大球 : </string>
+    <string name="basket_database_details_statistic_small">小球 : </string>
+    <string name="basket_database_details_statistic_gp">已賽 </string>
+    <string name="basket_database_details_statistic_nogp">未賽 </string>
+    <string name="basket_database_details_statistic_allgp">總賽場次 </string>
+
+    <string name="basket_database_details_leagueMost_strongestAttack">攻擊力最強</string>
+    <string name="basket_database_details_leagueMost_weakestAttack">攻擊力最弱</string>
+    <string name="basket_database_details_leagueMost_strongestDefense">防守最強</string>
+    <string name="basket_database_details_leagueMost_weakestDefense">防守最弱</string>
+    <string name="basket_database_details_leagueMost_all_score">總得分 : </string>
+    <string name="basket_database_details_leagueMost_avg_score">場均得分 : </string>
+
+    <string name="basket_database_details_leagueMost_allmatch">全部比賽</string>
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
