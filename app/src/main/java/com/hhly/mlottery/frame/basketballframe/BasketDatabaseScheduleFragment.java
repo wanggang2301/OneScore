@@ -293,6 +293,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
             }
         } else {
             setStatus(STATUS_NO_DATA);
+            mButtonFrame.setVisibility(View.GONE);
         }
     }
 
