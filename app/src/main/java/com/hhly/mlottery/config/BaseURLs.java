@@ -638,22 +638,26 @@ public class BaseURLs {
     public final static String URL_BASKET_ODDS = HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDODDS;
 
     //篮球推送
-//	public final static String URL_BASKET_SCOKET = "ws://192.168.10.242:61634/ws";
-//	public final static String URL_BASKET_SCOKET = "ws://m.1332255.com/ws";
-//	public final static String URL_BASKET_SCOKET = "ws://"+ HOST + "/ws";
-    public final static String URL_BASKET_SCOKET = "ws://" + WS_HOST;
+//	public final static String URL_BASKET_SOCKET = "ws://192.168.10.242:61634/ws";
+//	public final static String URL_BASKET_SOCKET = "ws://m.1332255.com/ws";
+//	public final static String URL_BASKET_SOCKET = "ws://"+ HOST + "/ws";
+    public final static String URL_BASKET_SOCKET = "ws://" + WS_HOST;
 
     /**
      * 篮球详情接口
      */
 
     //篮球资料库
-    public final static String URL_BASKET_INFOMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
+    public final static String URL_BASKET_INFORMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
 
     //篮球资料库详情
     public final static String URL_BASKET_DATABASE_DETAILS = URL_API_HOST + "basketballData.findLeagueHeader.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do
+    // 赛程
+    public final static String URL_BASKET_DATABASE_SCHEDULE = URL_API_HOST + "basketballData.findSchedule.do";
+    // 排行
+    public final static String URL_BASKET_DATABASE_RANKING = URL_API_HOST + "basketballData.findRanking.do";
     //让分盘
-    public final static String URL_BASKET_DATABASE_HANDICP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
+    public final static String URL_BASKET_DATABASE_HANDICAP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
     //大小盘
     public final static String URL_BASKET_DATABASE_BIG_SMALL_DETAILS = URL_API_HOST + "basketballData.findAsiaSize.do"; // "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
 
@@ -749,6 +753,8 @@ public class BaseURLs {
     public final static String URL_SINA_LOGIN = URL_API_HOST + "androidUserCenter.loginWeibo.do";
 
     public final static String URL_WEIXIN_LOGIN = URL_API_HOST + "androidUserCenter.loginWeChat.do";
-    /**足球情报 - 大数据预测*/
+    /**
+     * 足球情报 - 大数据预测
+     */
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
 }

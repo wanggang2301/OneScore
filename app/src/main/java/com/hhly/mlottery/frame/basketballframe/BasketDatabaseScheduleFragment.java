@@ -22,6 +22,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.LocaleFactory;
@@ -224,10 +225,10 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         mSections.clear();
         mAdapter.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
+        Map<String, String> params = produceParams(firstStageId, secondStageId);
 
         // http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016
-        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8080/mlottery/core/basketballData.findSchedule.do",
-                produceParams(firstStageId, secondStageId),
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DATABASE_SCHEDULE, params,
                 new VolleyContentFast.ResponseSuccessListener<ScheduleResult>() {
                     @Override
                     public void onResponse(ScheduleResult result) {

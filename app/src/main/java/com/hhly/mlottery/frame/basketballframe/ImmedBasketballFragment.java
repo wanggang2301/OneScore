@@ -259,7 +259,7 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
         initBroadCase();//添加监听
         try {
 //            mScoketuri = new URI("ws://192.168.10.242:61634/ws");//推送 URI  "ws://m.1332255.com/ws"
-            mScoketuri = new URI(BaseURLs.URL_BASKET_SCOKET);//推送 URI
+            mScoketuri = new URI(BaseURLs.URL_BASKET_SOCKET);//推送 URI
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
