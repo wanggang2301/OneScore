@@ -6,7 +6,7 @@ package com.hhly.mlottery.bean.basket.basketdatabase;
 
 public class BasketDatabaseStatisticsBean {
 
-    private BasketDatabsseLeagueStatistics leagueStatistics; // 	Object
+    private BasketDatabaseLeagueStatistics leagueStatistics; // 	Object
     private BasketDatabaseLeagueMost leagueMost; // 	Object
 
     public BasketDatabaseLeagueMost getLeagueMost() {
@@ -17,11 +17,11 @@ public class BasketDatabaseStatisticsBean {
         this.leagueMost = leagueMost;
     }
 
-    public BasketDatabsseLeagueStatistics getLeagueStatistics() {
+    public BasketDatabaseLeagueStatistics getLeagueStatistics() {
         return leagueStatistics;
     }
 
-    public void setLeagueStatistics(BasketDatabsseLeagueStatistics leagueStatistics) {
+    public void setLeagueStatistics(BasketDatabaseLeagueStatistics leagueStatistics) {
         this.leagueStatistics = leagueStatistics;
     }
 

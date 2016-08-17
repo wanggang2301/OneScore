@@ -4,7 +4,7 @@ package com.hhly.mlottery.bean.basket.basketdatabase;
  * Created by Administrator on 2016/8/8.
  */
 
-public class BasketDatabsseLeagueStatistics {
+public class BasketDatabaseLeagueStatistics {
 
     public double getAsiaSizeDraw() {
         return asiaSizeDraw;

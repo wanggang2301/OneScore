@@ -21,7 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueMost;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseMostDat;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseStatisticsBean;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabsseLeagueStatistics;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueStatistics;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
@@ -330,7 +330,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
                     return;
                 }
                 //统计
-                BasketDatabsseLeagueStatistics data ;
+                BasketDatabaseLeagueStatistics data ;
                 data = bean.getLeagueStatistics();
                 setData(data);
 
@@ -367,7 +367,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         }, BasketDatabaseStatisticsBean.class);
     }
 
-    private void setData( BasketDatabsseLeagueStatistics data){
+    private void setData( BasketDatabaseLeagueStatistics data){
 
         /**
          * 胜负统计
