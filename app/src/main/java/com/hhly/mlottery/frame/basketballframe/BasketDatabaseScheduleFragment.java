@@ -22,7 +22,10 @@ import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CollectionUtils;
+import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.LocaleFactory;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -30,7 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -98,6 +100,9 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mButtonFrame = LayoutInflater.from(view.getContext())
                 .inflate(R.layout.layout_basket_database_choose, (ViewGroup) view, false);
+        ViewGroup.LayoutParams layoutParams = mEmptyView.getLayoutParams();
+        layoutParams.height = DisplayUtil.dip2px(getContext(), 178);
+        mEmptyView.setLayoutParams(layoutParams);
 
         mTitleTextView = (TextView) mButtonFrame.findViewById(R.id.title_button);
         mLeftButton = (ImageView) mButtonFrame.findViewById(R.id.left_button);
@@ -220,13 +225,19 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         mSections.clear();
         mAdapter.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
+        Map<String, String> params = produceParams(firstStageId, secondStageId);
 
         // http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016
-        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8080/mlottery/core/basketballData.findSchedule.do",
-                produceParams(firstStageId, secondStageId),
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DATABASE_SCHEDULE, params,
                 new VolleyContentFast.ResponseSuccessListener<ScheduleResult>() {
                     @Override
                     public void onResponse(ScheduleResult result) {
+                        if (result == null) {
+                            setStatus(STATUS_NO_DATA);
+                            mButtonFrame.setVisibility(View.GONE);
+                            return;
+                        }
+                        mButtonFrame.setVisibility(View.VISIBLE);
                         mResult = result;
                         handleData(result.getMatchData());
                         handleHeadView(result.getSearchCondition(), result.getFirstStageIndex());
@@ -277,7 +288,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     private void handleData(List<MatchDay> matchData) {
         if (CollectionUtils.notEmpty(matchData)) {
             for (MatchDay matchDay : matchData) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd E", Locale.CHINA);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd E", LocaleFactory.get());
                 mSections.add(new BasketballDatabaseScheduleSectionAdapter
                         .Section(true, dateFormat.format(matchDay.getDay())));
                 for (ScheduledMatch match : matchDay.getDatas()) {
@@ -287,6 +298,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
             }
         } else {
             setStatus(STATUS_NO_DATA);
+            mButtonFrame.setVisibility(View.GONE);
         }
     }
 
@@ -308,5 +320,11 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         BasketDatabaseScheduleFragment fragment = new BasketDatabaseScheduleFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+        Bundle args = getArguments();
+        if (args != null) args.putString(PARAM_SEASON, season);
     }
 }

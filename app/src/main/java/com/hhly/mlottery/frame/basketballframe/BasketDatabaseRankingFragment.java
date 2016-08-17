@@ -21,6 +21,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.RankingGroup;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -205,11 +206,14 @@ public class BasketDatabaseRankingFragment extends Fragment {
         params.put(PARAM_MATCH_TYPE, league.getMatchType().toString());
         // http://192.168.31.72:3000/basketball/ranking
         // http://192.168.31.115:8888/mlottery/core/basketballData.findRanking.do?lang=zh&leagueId=7&season=2014-2015&matchType=2
-        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8888/mlottery/core/basketballData.findRanking.do",
-                params,
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DATABASE_RANKING, params,
                 new VolleyContentFast.ResponseSuccessListener<RankingResult>() {
                     @Override
                     public void onResponse(RankingResult result) {
+                        if (result == null) {
+                            setStatus(STATUS_NO_DATA);
+                            return;
+                        }
                         mResult = result;
                         Integer firstStageIndex = result.getFirstStageIndex();
                         mAdapter.setType(result.getRankingType());
@@ -294,5 +298,11 @@ public class BasketDatabaseRankingFragment extends Fragment {
         BasketDatabaseRankingFragment fragment = new BasketDatabaseRankingFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+        Bundle args = getArguments();
+        if (args != null) args.putString(PARAM_SEASON, season);
     }
 }

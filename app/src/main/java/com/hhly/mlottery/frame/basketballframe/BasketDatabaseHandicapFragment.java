@@ -171,7 +171,7 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
 
         //http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do?lang=zh&season=10-11&leagueId=138
 //        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do";
-        String url = BaseURLs.URL_BASKET_DATABASE_HANDICP_DETAILS;
+        String url = BaseURLs.URL_BASKET_DATABASE_HANDICAP_DETAILS;
         Map<String, String> params = new HashMap<>();
         if (!mSeason.equals("-1")) {
             params.put("season" , mSeason);

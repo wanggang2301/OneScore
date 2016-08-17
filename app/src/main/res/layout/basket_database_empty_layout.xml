@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/basket_database_loading_details"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="300dp">
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:paddingTop="15dp"
         android:visibility="gone"
         tools:visibility="visible"/>
 
@@ -17,7 +18,7 @@
     <LinearLayout
         android:id="@+id/error_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
@@ -69,7 +70,7 @@
     <TextView
         android:id="@+id/no_data_txt"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/nodata"
         android:textSize="@dimen/text_size_20"

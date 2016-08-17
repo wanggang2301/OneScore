@@ -25,6 +25,7 @@ import com.hhly.mlottery.bean.basket.infomation.LeagueAllBean;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -41,7 +42,7 @@ import java.util.Map;
  * @date 2016/7/14 17:54
  * @des 篮球资料库列表项Fragment
  */
-public class BasketInfomationFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
+public class BasketInformationFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
 
     private static final String TAG = "BasketInfomationFragment";
     private static final String TYPE_PARM = "TYPE_PARM";
@@ -89,12 +90,12 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
 
     private Context mContext;
 
-    public static BasketInfomationFragment newInstance(String type) {
+    public static BasketInformationFragment newInstance(String type) {
         Bundle bundle = new Bundle();
         bundle.putString(TYPE_PARM, type);
-        BasketInfomationFragment basketInfomationFragment = new BasketInfomationFragment();
-        basketInfomationFragment.setArguments(bundle);
-        return basketInfomationFragment;
+        BasketInformationFragment basketInformationFragment = new BasketInformationFragment();
+        basketInformationFragment.setArguments(bundle);
+        return basketInformationFragment;
     }
 
     @Override
@@ -323,10 +324,10 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
         params.put("type", mType);
         L.d(TAG, mType);
 
-        //String url = BaseURLs.URL_BASKET_INFOMATION;
+        String url = BaseURLs.URL_BASKET_INFORMATION;
         // String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
 
-        VolleyContentFast.requestJsonByGet("http://192.168.31.115:8080/mlottery/core/basketballData.findLeagueHierarchy.do", params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
 
             @Override
             public void onResponse(LeagueAllBean json) {
@@ -341,7 +342,7 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
                 }
 
                 if (json.getNationalLeague() != null && json.getNationalLeague().size() > 0) {
-                    interLeagues = new ArrayList<List<NationalLeague>>();
+                    interLeagues = new ArrayList<>();
                     for (int t = 0; t < Math.ceil((double) json.getNationalLeague().size() / ROWNUM); t++) {
                         List<NationalLeague> list = new ArrayList<>();
                         for (int j = 0; j < ROWNUM; j++) {
@@ -458,11 +459,10 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     }
 
     private boolean isTop(GridView listView) {
-        View firstView = null;
         if (listView.getCount() == 0) {
             return true;
         }
-        firstView = listView.getChildAt(0);
+        View firstView = listView.getChildAt(0);
         if (firstView != null) {
             if (listView.getFirstVisiblePosition() == 0 && firstView.getTop() == listView.getListPaddingTop()) {
                 return true;
@@ -474,11 +474,10 @@ public class BasketInfomationFragment extends Fragment implements ExactSwipeRefr
     }
 
     private boolean isTop(ListView listView) {
-        View firstView = null;
         if (listView.getCount() == 0) {
             return true;
         }
-        firstView = listView.getChildAt(0);
+        View firstView = listView.getChildAt(0);
         if (firstView != null) {
             if (listView.getFirstVisiblePosition() == 0 && firstView.getTop() == listView.getListPaddingTop()) {
                 return true;
