@@ -871,7 +871,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/analyze_radio_text_color</item>
+        <item name="android:textColor">@color/radio_text_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
 
