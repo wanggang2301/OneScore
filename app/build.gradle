@@ -81,6 +81,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'me.relex:circleindicator:1.2.1@aar'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'io.reactivex:rxjava:1.1.2'
