@@ -880,4 +880,11 @@
         <item name="colorControlActivated">@color/linecolor</item>
         <item name="colorControlHighlight">@color/linecolor</item>
     </style>
+    <!---->
+    <style name="intelligent_rate_text">
+        <item name="android:textColor">@color/mdy_999</item>
+        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
 </resources>

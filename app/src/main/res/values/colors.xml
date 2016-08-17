@@ -612,4 +612,13 @@
     <color name="info_home_progress_color">#FE0100</color>
     <color name="info_guest_progress_color">#21b11c</color>
     <color name="progress_yellow">#EEC72C</color>
+
+    <!--mdy 颜色若干-->
+    <color name="mdy_333">#333333</color>
+    <color name="mdy_999">#999999</color>
+    <color name="mdy_ddd">#dddddd</color>
+    <!--情报界面颜色-->
+    <color name="shape_stoke_color">#7c99d6</color>
+    <color name="result_home_pro">#ff6a6a</color>
+    <color name="result_guest_pro">#00Db1a</color>
 </resources>

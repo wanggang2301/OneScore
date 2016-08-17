@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    >
+    <ImageView
+        android:id="@+id/item_recent_imageview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/result_no_goal"
+        android:layout_gravity="center"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="10dp"
+        >
+        <RelativeLayout
+            android:id="@+id/ll_pro1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <ProgressBar
+                android:id="@+id/item_recent_home_pro"
+                android:layout_width="25dp"
+                android:layout_height="68dp"
+                android:indeterminateOnly="false"
+                android:max="100"
+                android:progress="70"
+                android:progressDrawable="@drawable/intelligent_recent_progressbar_red"
+                />
+            <TextView
+                android:id="@+id/item_recent_home_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/mdy_333"
+                android:layout_below="@+id/item_recent_home_pro"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/ll_pro2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/ll_pro1">
+                <ProgressBar
+                    android:id="@+id/item_recent_guest_pro"
+                    android:layout_width="25dp"
+                    android:layout_height="68dp"
+                    android:indeterminateOnly="false"
+                    android:max="100"
+                    android:progress="60"
+                    android:progressDrawable="@drawable/intelligent_recent_progressbar_blue"
+                    />
+
+                <TextView
+                    android:id="@+id/item_recent_guest_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:textColor="@color/mdy_333"
+                    android:layout_marginTop="3dp"
+                    android:layout_below="@+id/item_recent_guest_pro"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_recent_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="亚盘连赢"
+        android:paddingTop="5dp"
+        android:layout_gravity="center"
+        android:textSize="13sp"/>
+</LinearLayout>

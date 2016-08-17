@@ -939,4 +939,35 @@
     <string name="intelligence_host_recent">主队近期</string>
     <string name="intelligence_guest_recent">客队近期</string>
     <string name="version_update_title">升级包下载中，请稍后...</string>
+    <!--情报分析-->
+    <string name="intelligent_all_game">全部比赛</string>
+    <string name="intelligent_same_game">相同主客场</string>
+    <string name="intelligent_result">本赛季赛果赛报</string>
+    <string name="intelligent_guest">客队</string>
+    <string name="intelligent_home">主队</string>
+    <string name="intelligent_full">全场</string>
+    <string name="intelligent_half">半场</string>
+    <string name="intelligent_goal">进球、净胜球</string>
+    <string name="intelligent_season_handicap">本赛季盘口情报</string>
+    <string name="intelligent_recent">近期比赛情报</string>
+    <string name="intelligent_today_handicap">今日结束比赛盘口情报</string>
+    <string name="intelligent_win_rate">赢盘率</string>
+    <string name="intelligent_lose_rate">输盘率</string>
+    <string name="intelligent_big_rate">大球率</string>
+    <string name="intelligent_small_rate">小球率</string>
+    <string name="intelligent_goad_defference"><![CDATA[净胜球>1]]></string>
+    <string name="intellegent_lose_goal_def"><![CDATA[负净胜球>1]]></string>
+    <string name="intelligent_first_goal_win">先进球获胜概率</string>
+    <string name="intelligent_last_goal_win">后进球获胜概率</string>
+    <string name="intelligent_no_goal_rate">不进球概率</string>
+    <string name="intelligent_win_num">连胜数</string>
+    <string name="intelligent_let_win">亚盘连赢</string>
+    <string name="intelligent_continue_big">连续大球</string>
+    <string name="intelligent_continue_small">连续小球</string>
+    <string name="intelligent_rang">让</string>
+    <string name="intelligent_ball_win_rate">球赢盘率</string>
+    <string name="intelligent_ball_lose_rate">球输盘率</string>
+    <string name="intelligent_qiushenglv">球胜率</string>
+    <string name="intelligent_qiupinglv">球平率</string>
+    <string name="intelligent_qiufulv">球负率</string>
 </resources>
