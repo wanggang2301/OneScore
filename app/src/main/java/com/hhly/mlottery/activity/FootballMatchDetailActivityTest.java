@@ -44,6 +44,7 @@ import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
+import com.hhly.mlottery.frame.footframe.AnimHeadLiveFragment;
 import com.hhly.mlottery.frame.footframe.DetailsRollballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
@@ -220,6 +221,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private PreHeadInfoFrament mPreHeadInfoFrament;
     private LiveHeadInfoFragment mLiveHeadInfoFragment;
 
+    private AnimHeadLiveFragment mAnimHeadLiveFragment;
+
     private DetailsRollballFragment mDetailsRollballFragment; //滚球
 
     private TalkAboutBallFragment mTalkAboutBallFragment;
@@ -293,7 +296,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
          */
         mPreHeadInfoFrament = PreHeadInfoFrament.newInstance();
         mLiveHeadInfoFragment = new LiveHeadInfoFragment().newInstance();
-        basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment);
+        mAnimHeadLiveFragment = new AnimHeadLiveFragment().newInstance(mThirdId);
+
+        basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment, mAnimHeadLiveFragment);
         mHeadviewpager.setAdapter(basePagerAdapter);
         mIndicator.setViewPager(mHeadviewpager);
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
