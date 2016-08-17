@@ -499,7 +499,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
             ImageView mIcon= (ImageView)holder.getConvertView().findViewById(R.id.progress_statistic);
 
             holder.setText(R.id.basket_database_most_item_name , basketDatabaseMostDat.getTeamName());
-            holder.setText(R.id.basket_database_most_item_total_score , getResources().getString(R.string.basket_database_details_leagueMost_all_score) + basketDatabaseMostDat.getTotalScore()+"");
+            holder.setText(R.id.basket_database_most_item_total_score , getResources().getString(R.string.basket_database_details_leagueMost_all_score) + (int)basketDatabaseMostDat.getTotalScore()+"");
             holder.setText(R.id.basket_database_most_item_avg_score ,getResources().getString(R.string.basket_database_details_leagueMost_avg_score) + basketDatabaseMostDat.getAvgScore() + "");
 
             mImageLoader.displayImage(basketDatabaseMostDat.getTeamIconUrl(), mIcon , mOptions);
