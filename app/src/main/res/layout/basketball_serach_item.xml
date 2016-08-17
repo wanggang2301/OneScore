@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="41dp"
+                             >
+    <com.hhly.mlottery.view.SpecifiedTextsColorTextView
+        android:id="@+id/serach_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="英格兰超级联赛"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/res_name_color"
+        android:textSize="@dimen/text_size_15"
+
+        />
+
+</RelativeLayout>

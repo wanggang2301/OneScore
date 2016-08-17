@@ -85,6 +85,8 @@ public class BaseURLs {
     public final static String WS_SERVICE = WS + WS_HOST;
 
     public final static String URL_API_HOST = HTTP + HOST + URL_SPLITTER + "mlottery/core/";
+    /*新搜索特制url*/
+    public final static String NEW_URL_API_HOST = HTTP + HOST + URL_SPLITTER + "mlottery/core";
     //视频直播
     private final static String URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
 
@@ -748,4 +750,6 @@ public class BaseURLs {
     public final static String URL_WEIXIN_LOGIN = URL_API_HOST + "androidUserCenter.loginWeChat.do";
     /**足球情报 - 大数据预测*/
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
+    /*模糊搜索*/
+    public final static String FUZZYSEARCH ="/basketballData.fuzzySearch.do";
 }

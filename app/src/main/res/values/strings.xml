@@ -821,9 +821,10 @@
     <string name="username_pass_error">登录名或者密码错误</string>
     <string name="username_original_pass_error">请输入正确的原始密码</string>
     <string name="logout_check">确认退出登录?</string>
-
+    <!--模糊搜索-->
+    <string name="fuzzy_search">请输入联赛名</string>
+    <string name="not_find_search">找不到相关信息</string>
     <!--1.1.2 begin-->Login / register
-
     <string name="weixin_installed">请先安装微信客户端!</string>
     <string name="Login_register">登录/注册</string>
     <string name="personal_center">个人中心</string>

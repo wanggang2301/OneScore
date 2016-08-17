@@ -136,6 +136,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
+            android:paddingTop="3dp"
             android:scaleType="centerInside"
             android:src="@mipmap/icon_config_btn" />
 

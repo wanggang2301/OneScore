@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.hhly.mlottery.bean.BasketSerach;
+
 import java.util.List;
 
 /**
@@ -32,6 +34,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter
 		this.mDatas = datas;
 		this.layoutId = layoutId;
 	}
+
 
 	public void addData(List<T>  lis){
 		mDatas.clear();
