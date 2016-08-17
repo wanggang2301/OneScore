@@ -659,6 +659,9 @@ public class BaseURLs {
     //大小盘
     public final static String URL_BASKET_DATABASE_BIG_SMALL_DETAILS = URL_API_HOST + "basketballData.findAsiaSize.do"; // "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
 
+    //统计
+    public final static String URL_BASKET_DATABASE_STATISTIC_DETAILS = URL_API_HOST + "basketballData.findStatistic.do"; // "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
+
     public final static String URL_BASKET_FINDANALYSIS = "basketballDetail.findAnalysis.do";
     public final static String URL_BASKET_FINDANALYSISDETAIL = "basketballDetail.findAnalysisDetail.do";
     public final static String URL_BASKET_FINDODDSDETAIL = "basketballDetail.findOddsDetail.do";

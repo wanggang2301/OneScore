@@ -32,7 +32,7 @@ import java.util.Map;
  * author: yixq
  * Created by A on 2016/7/15.
  */
-public class BasketDatasaseHandicapFragment extends Fragment implements View.OnClickListener {
+public class BasketDatabaseHandicapFragment extends Fragment implements View.OnClickListener {
 
     Handler mHandlerData = new Handler();
     private View mView;
@@ -63,8 +63,8 @@ public class BasketDatasaseHandicapFragment extends Fragment implements View.OnC
     private String mLeagueId; // 联赛ID
     private TextView mRefresh;
 
-    public static BasketDatasaseHandicapFragment newInstance(String leagueId , String season) {
-        BasketDatasaseHandicapFragment fragment = new BasketDatasaseHandicapFragment();
+    public static BasketDatabaseHandicapFragment newInstance(String leagueId , String season) {
+        BasketDatabaseHandicapFragment fragment = new BasketDatabaseHandicapFragment();
         Bundle args = new Bundle();
         args.putString(PARAM_ID, leagueId);
         args.putString(PARAM2_SEASON, season);

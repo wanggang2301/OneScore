@@ -2,13 +2,13 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#f5f5f5"
         >
 
         <LinearLayout
@@ -21,7 +21,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/selected_bg">
+                android:background="@color/home_item_bg">
 
                 <RadioGroup
                     android:id="@+id/gendergroup"
@@ -228,7 +228,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="@string/nodata"
                 android:visibility="gone"
                 />
