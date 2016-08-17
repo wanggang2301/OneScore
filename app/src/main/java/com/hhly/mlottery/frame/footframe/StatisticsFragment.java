@@ -6,19 +6,26 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.adapter.football.EventAdapter;
 import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
+import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
+import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.TrendAllBean;
 import com.hhly.mlottery.config.BaseURLs;
@@ -30,18 +37,44 @@ import com.hhly.mlottery.widget.MyLineChart;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author wang gang
  * @date 2016/6/12 11:21
- * @des 足球内页改版统计
+ * @des 足球内页改版直播(足球事件直播, 走勢統計)
  */
 public class StatisticsFragment extends Fragment {
 
 
     private static String STA_PARM = "STA_PARM";
+
+    private static final String HOME = "1"; //主队
+    private static final String GUEST = "0"; //客队
+
+
+    //主队事件
+    private static final String SCORE = "1029";//主队进球
+    private static final String RED_CARD = "1032";
+    private static final String YELLOW_CARD = "1034";
+    private static final String CORNER = "1025";
+    //客队事件
+    private static final String SCORE1 = "2053";//客队进球
+    private static final String RED_CARD1 = "2056";
+    private static final String YELLOW_CARD1 = "2058";
+    private static final String CORNER1 = "2049";
+
+    /**
+     * 上半场
+     */
+    private static final String FIRSTHALF = "1";
+    /**
+     * 中场
+     */
+    private static final String HALFTIME = "2";
+
 
     private String type = "";
     private View mView;
@@ -66,6 +99,8 @@ public class StatisticsFragment extends Fragment {
     private MyLineChart myLineChartAttack;// 攻防图表对象
     private MyLineChart myLineChartCorner;// 角球图表对象
 
+    private String eventType;
+
 
     /***
      * 统计
@@ -87,11 +122,25 @@ public class StatisticsFragment extends Fragment {
     private MathchStatisInfo mMathchStatisInfo;
 
 
+    private RadioGroup radioGroup;
+
+    private LinearLayout rl_event;
+    private RelativeLayout ll_statistics;
+
+    private NestedScrollView mNestedScrollView_trend;
+    private NestedScrollView mNestedScrollView_event;
+    private NestedScrollView mNestedScrollView_nodata;
+
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+
+    private EventAdapter eventAdapter;
+
+    private List<MatchTimeLiveBean> eventMatchLive = new ArrayList<>();
+
+
     public static StatisticsFragment newInstance() {
-
-
         StatisticsFragment fragment = new StatisticsFragment();
-
         return fragment;
     }
 
@@ -125,7 +174,6 @@ public class StatisticsFragment extends Fragment {
         this.type = type;
         loadData();
         initEvent();
-
     }
 
 
@@ -138,7 +186,6 @@ public class StatisticsFragment extends Fragment {
             initData(type);
             initJson(type);
         }
-
     }
 
     /**
@@ -193,6 +240,43 @@ public class StatisticsFragment extends Fragment {
      * 初始化界面
      */
     private void initView() {
+        radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
+        mNestedScrollView_event = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_event);
+        mNestedScrollView_trend = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_trend);
+        mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
+
+        recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
+        layoutManager = new LinearLayoutManager(mContext);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
+
+        mNestedScrollView_event.setFillViewport(true);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int radioButtonId = radioGroup.getCheckedRadioButtonId();
+                switch (radioButtonId) {
+                    case R.id.live_event:
+                        if (!eventType.equals("0")) {
+                            mNestedScrollView_event.setVisibility(View.VISIBLE);
+                            mNestedScrollView_trend.setVisibility(View.GONE);
+                        }
+
+                        break;
+                    case R.id.live_statistics:
+                        if (!eventType.equals("0")) {
+                            mNestedScrollView_event.setVisibility(View.GONE);
+                            mNestedScrollView_trend.setVisibility(View.VISIBLE);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+
         ll_trend_main = (LinearLayout) mView.findViewById(R.id.ll_trend_main);
         ff = (FrameLayout) mView.findViewById(R.id.fl_main);
         ff_corner = (FrameLayout) mView.findViewById(R.id.fl_main_corner);
@@ -274,6 +358,142 @@ public class StatisticsFragment extends Fragment {
 
         home_lineout_txt = (TextView) mView.findViewById(R.id.home_lineout_txt);
         guest_lineout_txt = (TextView) mView.findViewById(R.id.guest_lineout_txt);
+
+    }
+
+
+    /**
+     * 足球事件直播
+     *
+     * @param livestatus
+     * @param matchTimeLiveBeanMs
+     */
+    public void setEventMatchLive(String livestatus, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
+        //统计事件个数
+        this.eventMatchLive = matchTimeLiveBeanMs;
+        eventType = livestatus;
+
+        if ("0".equals(livestatus)) {
+            mNestedScrollView_nodata.setVisibility(View.VISIBLE);
+            mNestedScrollView_event.setVisibility(View.GONE);
+            mNestedScrollView_trend.setVisibility(View.GONE);
+        } else if ("1".equals(livestatus) || "-1".equals(livestatus)) {   //-1代表完场  1代表直播中
+            mNestedScrollView_nodata.setVisibility(View.GONE);
+            mNestedScrollView_event.setVisibility(View.VISIBLE);
+            mNestedScrollView_trend.setVisibility(View.VISIBLE);
+            computeEventNum(livestatus);
+            eventAdapter = new EventAdapter(mContext, eventMatchLive);
+            recyclerView.setAdapter(eventAdapter);
+        }
+    }
+
+    public void updateRecycleView(String status) {
+        computeEventNum(status);
+        eventAdapter.notifyDataSetChanged();
+    }
+
+
+    /***
+     * code=261时,取playinfo信息
+     */
+
+    public void setPlayInfo(MatchTextLiveBean matchTextLiveBean) {
+        Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
+        while (iterator.hasNext()) {
+            MatchTimeLiveBean bean = iterator.next();
+            if (bean.getEnNum().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
+                iterator.remove();//用xMatchLive.remove会有异常
+            }
+        }
+    }
+
+    /**
+     * 增加对应的事件直播
+     * <p/>
+     * eventMatchTimeLiveList.add(new MatchTimeLiveBean(matchTextLiveBean.getTime(), matchTextLiveBean.getCode(), matchTextLiveBean.getHomeScore() + " : " + matchTextLiveBean.getGuestScore(), matchTextLiveBean.getMsgId(), HALFTIME, matchTextLiveBean.getPlayInfo(), 0));
+     */
+    public void addFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
+        String place = matchTextLiveBean.getMsgPlace();
+        if (matchTextLiveBean.getMsgPlace().equals("2")) {//客队
+            place = "0";  //客队
+        }
+        if ("1".equals(matchTextLiveBean.getCode())) {   //code=1时,上班场结束status=2
+            eventMatchLive.add(new MatchTimeLiveBean(matchTextLiveBean.getTime(), matchTextLiveBean.getCode(), matchTextLiveBean.getHomeScore() + " : " + matchTextLiveBean.getGuestScore(), matchTextLiveBean.getMsgId(), HALFTIME, matchTextLiveBean.getPlayInfo(), matchTextLiveBean.getEnNum(), 0));
+        } else if ("3".equals(matchTextLiveBean.getCode())) { //code=3时，下半场结束  status=-1
+            eventMatchLive.add(new MatchTimeLiveBean(matchTextLiveBean.getTime(), matchTextLiveBean.getCode(), matchTextLiveBean.getHomeScore() + " : " + matchTextLiveBean.getGuestScore(), matchTextLiveBean.getMsgId(), "-1", matchTextLiveBean.getPlayInfo(), matchTextLiveBean.getEnNum(), 0));
+        } else {
+            eventMatchLive.add(new MatchTimeLiveBean(matchTextLiveBean.getTime(), matchTextLiveBean.getCode(), place, matchTextLiveBean.getMsgId(), matchTextLiveBean.getState(), matchTextLiveBean.getPlayInfo(), matchTextLiveBean.getEnNum(), 0));
+        }
+    }
+
+
+    /**
+     * 取消对应的事件直播
+     */
+    public void cancelFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
+        Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
+        while (iterator.hasNext()) {
+            MatchTimeLiveBean bean = iterator.next();
+            if (bean.getEnNum().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
+                iterator.remove();//用xMatchLive.remove会有异常
+            }
+        }
+    }
+
+    private void computeEventNum(String status) {
+        int homeGoal = 0;
+        int homeRc = 0;
+        int homeYc = 0;
+        int homeCorner = 0;
+        int guestGoal = 0;
+        int guestRc = 0;
+        int guestYc = 0;
+        int guestCorner = 0;
+        int statusEqual2 = 0; //计算List里面出现的state=2 code=1多次出现，只需要一个
+
+        Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
+        while (iterator.hasNext()) {
+            MatchTimeLiveBean m = iterator.next();
+
+            if (HALFTIME.equals(m.getState()) && "1".equals(m.getCode())) {
+                if (statusEqual2 == 1) {
+                    iterator.remove();
+                } else {
+                    statusEqual2++;
+                }
+
+            } else {
+                if (HOME.equals(m.getIsHome())) {
+                    if (SCORE.equals(m.getCode())) {
+                        homeGoal++;
+                        m.setEventnum(homeGoal);
+                    } else if (YELLOW_CARD.equals(m.getCode())) {
+                        homeYc++;
+                        m.setEventnum(homeYc);
+                    } else if (RED_CARD.equals(m.getCode())) {
+                        homeRc++;
+                        m.setEventnum(homeRc);
+                    } else if (CORNER.equals(m.getCode())) {
+                        homeCorner++;
+                        m.setEventnum(homeCorner);
+                    }
+                } else {
+                    if (SCORE1.equals(m.getCode())) {
+                        guestGoal++;
+                        m.setEventnum(guestGoal);
+                    } else if (YELLOW_CARD1.equals(m.getCode())) {
+                        guestYc++;
+                        m.setEventnum(guestYc);
+                    } else if (RED_CARD1.equals(m.getCode())) {
+                        guestRc++;
+                        m.setEventnum(guestRc);
+                    } else if (CORNER1.equals(m.getCode())) {
+                        guestCorner++;
+                        m.setEventnum(guestCorner);
+                    }
+                }
+            }
+        }
 
     }
 

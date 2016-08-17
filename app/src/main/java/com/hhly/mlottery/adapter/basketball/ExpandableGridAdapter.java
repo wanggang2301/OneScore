@@ -463,7 +463,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
         convertView = View.inflate(mContext, R.layout.basket_info_country_item_child, null);
         gridview = (MyGridViewInfo) convertView.findViewById(R.id.gridview_child);
 
-        // Log.d("112", "getchilview" + "gro=" + groupPosition + "item=" + parentItem);
+        // Log.d("112", "getchilview" + "gro=" + groupPosition + "item_event_half_finish=" + parentItem);
         child_array = new ArrayList<>();
 
         for (LeagueBean leagueBean : allDatas.get(groupPosition).get(parentItem).getLeagueData()) {

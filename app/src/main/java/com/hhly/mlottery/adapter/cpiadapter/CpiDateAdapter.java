@@ -45,7 +45,7 @@ public class CpiDateAdapter extends BaseAdapter {
     }
 
     /**
-     * 根据选中的 position 更改 item 背景颜色
+     * 根据选中的 position 更改 item_event_half_finish 背景颜色
      */
     public void setDefSelect(int position) {
         this.defItem = position;

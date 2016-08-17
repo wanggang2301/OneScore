@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!--足球事件直播-->
+    <string name="foot_event">事件</string>
+    <string name="foot_statictics">统计</string>
+    <string name="foot_event_goal">进球</string>
+    <string name="foot_event_rc">红牌</string>
+    <string name="foot_event_yc">黄牌</string>
+    <string name="foot_event_ytor">两黄一红</string>
+    <string name="foot_event_ychanger">两黄变一红</string>
+    <string name="foot_event_player">换人</string>
+    <string name="foot_event_corner">角球</string>
+    <string name="foot_event_half">半场</string>
+    <string name="foot_event_finish">全场</string>
+    <string name="foot_event_di">第</string>
+    <string name="foot_event_ge">个</string>
+    <string name="foot_event_zhang">张</string>
+    <string name="foot_event_nomatchstate">暂无比赛动态</string>
+    <string name="foot_event_in">上场</string>
+    <string name="foot_event_out">下场</string>
+    <string name="foot_event_num_out">号下场</string>
+    <string name="foot_event_num_in">号上场</string>
+
+
     <!--篮球资料库-->
     <string name="basket_info_hot">热门</string>
     <string name="basket_info_eur">欧洲</string>
@@ -17,7 +40,7 @@
     <string name="foot_details_talkball">聊球</string>
     <string name="foot_details_analyze">分析</string>
     <string name="foot_details_odds">指数</string>
-    <string name="foot_details_statistics">统计</string>
+    <string name="foot_details_statistics">直播</string>
 
     <string name="foot_details_time">时间</string>
     <string name="foot_details_score">比分</string>
