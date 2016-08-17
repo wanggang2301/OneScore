@@ -378,7 +378,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mProgressStatistic.setProgress2(data.getGuestWinRate());
         mProgressStatistic.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mProgressStatistic.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
-        mProgressStatistic.setRoundWidth(60);
+        mProgressStatistic.setRoundWidth(40);
         mProgressStatistic.setDatas((int)data.getHomeWin() + "" ,(int)data.getGuestWin() + "" , "");
         mHomeWin.setText(getResources().getString(R.string.basket_database_details_statistic_home_win) + (int)(data.getHomeWinRate())+"%");
         mGuestWin.setText(getResources().getString(R.string.basket_database_details_statistic_guest_win) + (int)(data.getGuestWinRate())+"%");
@@ -403,7 +403,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mLetProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mLetProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
         mLetProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
-        mLetProgress.setRoundWidth(60);
+        mLetProgress.setRoundWidth(40);
         mLetProgress.setDatas((int)data.getLetHomeWin() + "" ,(int)data.getLetGuestWin() + "" , (int)data.getLetDraw() + "");
         mLetText.setText((int)(data.getLetHomeWin() + data.getLetGuestWin() + data.getLetDraw()) + "");
         mLetHome.setText(getResources().getString(R.string.basket_database_details_statistic_home_win) + (int)(data.getLetHomeWinRate()) + "%");
@@ -420,7 +420,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mBigSmallProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
         mBigSmallProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
         mBigSmallProgress.setDatas((int)data.getAsiaSizeOver() + "" ,(int)data.getAsiaSizeUnder() + "" , (int)data.getAsiaSizeDraw() + "");
-        mBigSmallProgress.setRoundWidth(60);
+        mBigSmallProgress.setRoundWidth(40);
         mBigSmallText.setText((int)(data.getAsiaSizeOver() + data.getAsiaSizeUnder() + data.getAsiaSizeDraw()) + "");
         mBigSmallHome.setText(getResources().getString(R.string.basket_database_details_statistic_big) + (int)(data.getAsiaSizeOverRate()) + "%");
         mBigSmallGuest.setText(getResources().getString(R.string.basket_database_details_statistic_small) + (int)(data.getAsiaSizeUnderRate()) + "%");

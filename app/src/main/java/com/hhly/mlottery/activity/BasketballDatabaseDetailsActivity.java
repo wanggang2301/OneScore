@@ -212,9 +212,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity impleme
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position == 4) {
-                    appBarLayout.setExpanded(false);
-                }
             }
 
             @Override
