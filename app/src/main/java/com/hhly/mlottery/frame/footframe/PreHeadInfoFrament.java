@@ -137,7 +137,9 @@ public class PreHeadInfoFrament extends Fragment {
         if (flag) {
             int random = new Random().nextInt(20);
             String url = baseUrl + random + ".png";
-            universalImageLoader.displayImage(url, iv_bg, options);
+            if (universalImageLoader != null) {
+                universalImageLoader.displayImage(url, iv_bg, options);
+            }
         }
 
 
