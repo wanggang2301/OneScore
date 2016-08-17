@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_nopage"
+        <TextView
+            android:id="@+id/tv_nopage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="暂无比赛直播"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="暂无比赛直播"
-        android:visibility="gone" />
+        android:background="@color/green"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
-    <com.wg.webview.ProgressWebView
-        android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:nestedScrollingEnabled="false"
-        android:scrollbars="none"></com.wg.webview.ProgressWebView>
-
-</FrameLayout>
+        <com.hhly.mlottery.widget.ProgressWebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:nestedScrollingEnabled="false"
+            android:scrollbars="none"></com.hhly.mlottery.widget.ProgressWebView>0
+    </LinearLayout>
+</LinearLayout>
