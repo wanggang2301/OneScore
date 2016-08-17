@@ -882,12 +882,7 @@
     </style>
 
     <!--聊天室样式-->
-    <!--<style name="chart_room">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>-->
-    <style name="chart_room" parent="@android:style/Theme.Holo.DialogWhenLarge">// @android:style/Theme.Holo.DialogWhenLarge
+    <style name="chart_room" parent="@android:style/Theme.Holo.DialogWhenLarge">
         <item name="android:windowBackground">@drawable/rong_chart_room_dialog</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
