@@ -39,7 +39,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
-            <!--<intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
@@ -217,10 +217,7 @@
             android:screenOrientation="portrait" />
 
         <!-- 登录注册 end -->
-        <!-- 模糊搜索页面 -->
-        <activity
-            android:name=".activity.BasketballInformationSerachActivity"
-            android:screenOrientation="portrait" />
+
 
         <!-- 畅言的配置项 -->
         <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity" />

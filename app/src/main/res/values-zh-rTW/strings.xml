@@ -1020,4 +1020,15 @@
     <string name="intelligent_qiushenglv">球勝率</string>
     <string name="intelligent_qiupinglv">球平率</string>
     <string name="intelligent_qiufulv">球負率</string>
+
+    <string name="rong_comment">評論</string>
+    <string name="rong_chart_room">聊天</string>
+    <string name="rong_prompt_login">請先登錄</string>
+
+    <string name="rong_input_prompt1">珍愛生命,遠離噴子！</string>
+    <string name="rong_input_prompt2">路見不平壹聲吼！！！</string>
+    <string name="rong_input_prompt3">我來聊兩句...</string>
+    <string name="rong_input_prompt4">我從不說謊，除啦這句話以外。</string>
+    <string name="rong_input_prompt5">沈默是金.沈默久了就會有很多金子嗎？</string>
+    <string name="rong_input_prompt6">元芳怎麽看？</string>
 </resources>

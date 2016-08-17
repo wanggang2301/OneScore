@@ -61,6 +61,7 @@ import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -173,7 +174,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private CustomViewpager mHeadviewpager;
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
+    public AppBarLayout appBarLayout;
     private FragmentAdapter fragmentAdapter;
     private BasePagerAdapter basePagerAdapter;
     private TabLayout mTabLayout;

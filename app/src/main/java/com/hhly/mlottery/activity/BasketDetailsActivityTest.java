@@ -44,6 +44,7 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
@@ -121,7 +122,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
+    public AppBarLayout appBarLayout;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
@@ -350,7 +351,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
-
+        // TODO
         mTabsAdapter.addFragments(mAnalyzeFragment,mOddsLet,mOddsSize, mOddsEuro,  mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);

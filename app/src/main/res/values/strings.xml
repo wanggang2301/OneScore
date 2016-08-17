@@ -1042,4 +1042,16 @@
     <string name="version_update_title">升级包下载中，请稍后...</string>
     <string name="label_line" translatable="false">-</string>
 
+
+    <string name="rong_comment">评论</string>
+    <string name="rong_chart_room">聊天</string>
+    <string name="rong_prompt_login">请先登录</string>
+
+    <string name="rong_input_prompt1">珍爱生命,远离喷子！</string>
+    <string name="rong_input_prompt2">路见不平一声吼！！！</string>
+    <string name="rong_input_prompt3">我来聊两句...</string>
+    <string name="rong_input_prompt4">我从不说谎，除啦这句话以外。</string>
+    <string name="rong_input_prompt5">沉默是金.沉默久了就会有很多金子吗？</string>
+    <string name="rong_input_prompt6">元芳怎么看？</string>
+
 </resources>
