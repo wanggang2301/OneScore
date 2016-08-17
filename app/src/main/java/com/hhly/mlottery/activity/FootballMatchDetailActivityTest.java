@@ -100,7 +100,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
     private final static String TAG = "FootballMatchDetailActivityTest";
-    private final static String URL_DEFAULT = "http://m.13322.com";
+    private final static String URL_DEFAULT = "http://m.13322.com/live/bifen/index.html?id=";
 
     private final static int IMMEDIA_FRAGMENT = 0;
     private final static int RESULT_FRAGMENT = 1;
@@ -2585,9 +2585,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 String summary = getString(R.string.share_summary);
                 shareBean.setTitle(title != null ? title : getString(R.string.share_to_qq_app_name));
                 shareBean.setSummary(summary);
-                shareBean.setTarget_url(URL_DEFAULT);
+                shareBean.setTarget_url(URL_DEFAULT + mThirdId);
                 shareBean.setImage_url(shareHomeIconUrl != null ? shareHomeIconUrl : "");
-                shareBean.setCopy(URL_DEFAULT);
+                shareBean.setCopy(URL_DEFAULT + mThirdId);
                 mShareFragment = ShareFragment.newInstance(shareBean);
                 mShareFragment.show(getSupportFragmentManager(), "bottomShare");
             }

@@ -271,7 +271,7 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
 
         params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
         params.putString(QQShare.SHARE_TO_QQ_SUMMARY, summary);
-        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://m.13322.com");
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, mShareBean.getTarget_url());
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, mShareBean.getImage_url());
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, appname);
         params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, flag);
