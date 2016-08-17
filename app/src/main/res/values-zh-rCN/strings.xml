@@ -970,4 +970,5 @@
     <string name="intelligent_qiushenglv">球胜率</string>
     <string name="intelligent_qiupinglv">球平率</string>
     <string name="intelligent_qiufulv">球负率</string>
+    <string name="version_update_title">升级包下载中，请稍后...</string>
 </resources>
