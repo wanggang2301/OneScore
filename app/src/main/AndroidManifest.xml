@@ -288,6 +288,23 @@
             </intent-filter>-->
 
         </activity>
+
+        <!--融云会话列表-->
+        <activity
+            android:name=".frame.ConversationFragment"
+            android:theme="@style/chart_room"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.hhly.mlottery"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
