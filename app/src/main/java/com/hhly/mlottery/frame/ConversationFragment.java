@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -16,8 +17,12 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.RongYunUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
+import java.util.Random;
+
 import de.greenrobot.event.EventBus;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.widget.provider.TextInputProvider;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -28,6 +33,7 @@ import io.rong.imlib.model.UserInfo;
 public class ConversationFragment extends FragmentActivity implements View.OnClickListener, RongIM.UserInfoProvider {
 
     private UserInfo mUserInfo;// 当前用户信息
+    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         this.setFinishOnTouchOutside(true);//设置为true点击区域外消失
 
         setContentView(R.layout.conversationlist);
+        mContext = this;
         // 设置聊天室背景色为透明
         findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.transparency));
 
@@ -52,6 +59,26 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         RongIM.setUserInfoProvider(this, true);
         RongIM.getInstance().setCurrentUserInfo(mUserInfo);
         RongIM.getInstance().setMessageAttachedUserInfo(true);
+
+        initInput();
+    }
+
+    /**
+     * 初始化输入框提示语
+     */
+    private void initInput() {
+        String[] prompts = {mContext.getResources().getString(R.string.rong_input_prompt1),
+                mContext.getResources().getString(R.string.rong_input_prompt2),
+                mContext.getResources().getString(R.string.rong_input_prompt3),
+                mContext.getResources().getString(R.string.rong_input_prompt4),
+                mContext.getResources().getString(R.string.rong_input_prompt5),
+                mContext.getResources().getString(R.string.rong_input_prompt6)};
+
+        Random random = new Random();
+
+        // 设置默认输入语
+        TextInputProvider textInputProvider = (TextInputProvider) RongContext.getInstance().getPrimaryInputProvider();
+        textInputProvider.setEditTextContent(prompts[random.nextInt(prompts.length)]);
     }
 
     @Override
