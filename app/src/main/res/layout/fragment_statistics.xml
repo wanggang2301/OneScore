@@ -100,7 +100,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/foot_event_goal"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
@@ -108,13 +108,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_rc" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/foot_event_rc"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
@@ -122,13 +122,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_yc" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/foot_event_yc"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
@@ -136,13 +136,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_ytor" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/foot_event_ytor"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
@@ -150,13 +150,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_player" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/foot_event_player"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
@@ -164,13 +164,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_corner" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/foot_event_corner"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
@@ -178,13 +178,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_half" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/foot_event_half"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
@@ -192,13 +192,13 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_finish" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:layout_marginLeft="2dp"
                         android:text="@string/foot_event_finish"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
