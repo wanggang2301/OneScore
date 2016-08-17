@@ -939,7 +939,6 @@
     <string name="new_analyze_cidaqiu">次大球</string>
     <string name="new_analyze_cixiaoqiu">次小球</string>
     <string name="new_analyze_daqiulv">大球率</string>
-    <string name="version_update_title">升级包下载中，请稍后...</string>
     <!--情报分析-->
     <string name="intelligent_all_game">全部比赛</string>
     <string name="intelligent_same_game">相同主客场</string>
