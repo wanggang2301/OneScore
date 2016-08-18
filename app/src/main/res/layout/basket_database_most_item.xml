@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/basket_database_most_item_match"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/basket_database_details_leagueMost_allmatch"

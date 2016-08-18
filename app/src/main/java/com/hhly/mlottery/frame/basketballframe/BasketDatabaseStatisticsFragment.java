@@ -502,6 +502,14 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
             holder.setText(R.id.basket_database_most_item_total_score , getResources().getString(R.string.basket_database_details_leagueMost_all_score) + (int)basketDatabaseMostDat.getTotalScore()+"");
             holder.setText(R.id.basket_database_most_item_avg_score ,getResources().getString(R.string.basket_database_details_leagueMost_avg_score) + basketDatabaseMostDat.getAvgScore() + "");
 
+            if (holder.getPosition() == 0) {
+                holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_allmatch));
+            }else if(holder.getPosition() == 1){
+                holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_homematch));
+            }else if(holder.getPosition() == 2){
+                holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_guestmatch));
+            }
+
             mImageLoader.displayImage(basketDatabaseMostDat.getTeamIconUrl(), mIcon , mOptions);
 
 
