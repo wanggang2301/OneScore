@@ -9,15 +9,45 @@ import android.os.Parcelable;
  */
 public class MatchTimeLiveBean implements Parcelable {
 
-    private  String time;
+    private String time;
 
-    private  String code;
+    private String code;
 
-    private  String isHome;
-    /**从文字直播中存进来的Enum 用来取消对应事件*/
+    private String isHome;
+
+
+    /**
+     * 从文字直播中存进来的Enum 用来取消对应事件
+     */
     private String msgId;
-    /**赛事状态*/
+    /**
+     * 赛事状态
+     */
     private String state;
+
+    private String playInfo;
+
+
+    public String getEnNum() {
+        return enNum;
+    }
+
+    public void setEnNum(String enNum) {
+        this.enNum = enNum;
+    }
+
+    private String enNum;
+
+
+    private int eventnum;
+
+    public int getEventnum() {
+        return eventnum;
+    }
+
+    public void setEventnum(int eventnum) {
+        this.eventnum = eventnum;
+    }
 
     public String getState() {
         return state;
@@ -27,16 +57,24 @@ public class MatchTimeLiveBean implements Parcelable {
         this.state = state;
     }
 
-    public MatchTimeLiveBean(String time, String code, String isHome,String msgId,String state) {
+    public MatchTimeLiveBean(String time, String code, String isHome, String msgId, String state, String playInfo, String enNum, int eventnum) {
         this.time = time;
         this.code = code;
         this.isHome = isHome;
-        this.msgId=msgId;
-        this.state=state;
+        this.msgId = msgId;
+        this.state = state;
+        this.playInfo = playInfo;
+        this.enNum = enNum;
+        this.eventnum = eventnum;
     }
 
+    public String getPlayInfo() {
+        return playInfo;
+    }
 
-
+    public void setPlayInfo(String playInfo) {
+        this.playInfo = playInfo;
+    }
 
     public String getIsHome() {
         return isHome;
@@ -86,14 +124,20 @@ public class MatchTimeLiveBean implements Parcelable {
             return new MatchTimeLiveBean[size];
         }
     };
-    public MatchTimeLiveBean(){
+
+    public MatchTimeLiveBean() {
 
     }
-    public MatchTimeLiveBean(Parcel in){
+
+    public MatchTimeLiveBean(Parcel in) {
         time = in.readString();
         code = in.readString();
         isHome = in.readString();
-        msgId=in.readString();
+        msgId = in.readString();
+        state = in.readString();
+        playInfo = in.readString();
+        enNum = in.readString();
+        eventnum = in.readInt();
     }
 
     @Override
@@ -107,6 +151,12 @@ public class MatchTimeLiveBean implements Parcelable {
         dest.writeString(code);
         dest.writeString(isHome);
         dest.writeString(msgId);
+        dest.writeString(state);
+        dest.writeString(playInfo);
+        dest.writeString(enNum);
+        dest.writeInt(eventnum);
+
+
     }
 
 

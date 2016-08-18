@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+        <TextView
+            android:id="@+id/msg_left"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="111116666666555ddddd"
+            android:textColor="#666"
+            android:textSize="@dimen/text_size_12"
+            />
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/rc"
+            />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/live_text_time"
+            android:gravity="center_horizontal"
+            android:text="time"
+            android:textColor="#fff"
+            android:textSize="@dimen/text_size_10" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/yc"
+            />
+
+        <TextView
+            android:id="@+id/msg_right"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="msg_rightmsg_rightm"
+            android:textSize="@dimen/text_size_12"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="1dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#dddddd"
+        android:textColor="@color/red"
+        android:textSize="@dimen/text_size_5" />
+</LinearLayout>
