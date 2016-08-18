@@ -20,6 +20,10 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.football.EventAdapter;
@@ -27,7 +31,9 @@ import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
-import com.hhly.mlottery.bean.footballDetails.TrendAllBean;
+import com.hhly.mlottery.bean.footballDetails.trend.Bean;
+import com.hhly.mlottery.bean.footballDetails.trend.FootballTrendBean;
+import com.hhly.mlottery.bean.footballDetails.trend.TrendFormBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -137,6 +143,58 @@ public class StatisticsFragment extends Fragment {
     private EventAdapter eventAdapter;
 
     private List<MatchTimeLiveBean> eventMatchLive = new ArrayList<>();
+
+
+    /***
+     * 走势图
+     */
+
+    private static final String TREND_DEFAULT = "0"; //维度
+    private static final String TREND_CORNER = "1"; //角球
+    private static final String TREND_GOAL = "2";  //进球
+
+
+    private LineChart chart_shoot;  //射正  //射正+进球
+    private LineChart chart_shootAside; //射偏   //射偏
+    private LineChart chart_dangerousAttack; //危险进攻  //危险进攻
+    private LineChart chart_attack;  //进攻  //进攻
+
+
+    private List<Entry> shootHomeValues;
+    private List<Entry> shootGuestValues;
+    private List<Entry> shootAsideHomeValues;
+    private List<Entry> shootAsideGuestValues;
+    private List<Entry> dangerousAttackHomeValues;
+    private List<Entry> dangerousAttackGuestValues;
+    private List<Entry> attackHomeValues;
+    private List<Entry> attackGuestValues;
+
+    private List<Integer> shootHomeColors;
+    private List<Integer> shootGuestColors;
+    private List<Integer> shootAsideHomeColors;
+    private List<Integer> shootAsideGuestColors;
+    private List<Integer> dangerousAttackHomeColors;
+    private List<Integer> dangerousAttackGuestColors;
+    private List<Integer> attackHomeColors;
+    private List<Integer> attackGuestColors;
+
+
+    private TrendFormBean trendFormBean;
+
+
+    private XAxis shotXAxis;
+    private YAxis shotYAxis;
+
+    private XAxis shotAsideXAxis;
+    private YAxis shotAsideYAxis;
+
+    private XAxis dangerousAttackXAxis;
+    private YAxis dangerousAttackYAxis;
+
+    private XAxis attackXAxis;
+    private YAxis attackYAxis;
+
+
 
 
     public static StatisticsFragment newInstance() {
@@ -356,6 +414,42 @@ public class StatisticsFragment extends Fragment {
         home_lineout_txt = (TextView) mView.findViewById(R.id.home_lineout_txt);
         guest_lineout_txt = (TextView) mView.findViewById(R.id.guest_lineout_txt);
 
+
+        /**
+         * 走势图
+         */
+
+        chart_shoot = (LineChart) mView.findViewById(R.id.chart_shoot);
+        chart_shootAside = (LineChart) mView.findViewById(R.id.chart_shootAside);
+        chart_dangerousAttack = (LineChart) mView.findViewById(R.id.chart_dangerousAttack);
+        chart_attack = (LineChart) mView.findViewById(R.id.chart_attack);
+
+
+
+       /* mChart.setDrawGridBackground(false);
+        mChart.setDescription("时间(T)");
+        mChart.setNoDataTextDescription("You need to provide data for the chart.");
+        mChart.setTouchEnabled(true);
+        mChart.setDragEnabled(false);
+        mChart.setScaleEnabled(false);
+        mChart.setPinchZoom(true);
+
+        leftAxis = mChart.getAxisLeft();
+        leftAxis.setAxisMinValue(0f);
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        leftAxis.setDrawZeroLine(false);
+
+
+        bottomAxis = mChart.getXAxis();   //x轴
+        bottomAxis.enableGridDashedLine(10f, 10f, 0f);
+        bottomAxis.setAxisMaxValue(5f);
+        bottomAxis.setLabelCount(1);
+
+        leftAxis.setDrawLimitLinesBehindData(true);
+
+        mChart.getAxisRight().setEnabled(false);
+        mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);*/
+
     }
 
 
@@ -524,6 +618,127 @@ public class StatisticsFragment extends Fragment {
     }
 
     /**
+     * 改版走势图
+     */
+
+
+    private int getLabelCount(float yMax) {
+        return (int) yMax / (int) Math.ceil(yMax / 8f) + 1;
+    }
+
+    private float getYMaxValue(float yMax) {
+        return ((int) Math.ceil(yMax / 8f)) * getLabelCount(yMax);
+    }
+
+    private int getXLabelCount(float xMax) {
+        return xMax % 5f == 0 ? (int) Math.ceil(xMax / 5f) + 1 : (int) Math.ceil(xMax / 5f);
+    }
+
+    private float getXMaxValue(float xMax) {
+        return getXLabelCount(xMax) * 5f;
+    }
+
+
+    private void computeTrendData() {
+
+        /**
+         * x轴为分钟  y轴为个数
+         */
+
+        //射正
+        Iterator<Bean> shotHomeIterator = trendFormBean.getShot().getHome().iterator();
+        int shotHome = 0;
+        while (shotHomeIterator.hasNext()) {
+            Bean bean = shotHomeIterator.next();
+            if (TREND_DEFAULT.equals(bean.getFlag()) || TREND_GOAL.equals(bean.getFlag())) {
+                shotHome++;
+            }
+            shootHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotHome));
+        }
+
+        Iterator<Bean> shotGuestIterator = trendFormBean.getShot().getGuest().iterator();
+        int shotGuest = 0;
+        while (shotGuestIterator.hasNext()) {
+            Bean bean = shotGuestIterator.next();
+            if (TREND_DEFAULT.equals(bean.getFlag()) || TREND_GOAL.equals(bean.getFlag())) {
+                shotGuest++;
+            }
+            shootGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotGuest));
+        }
+
+
+        //射偏
+        Iterator<Bean> shotAsideHomeIterator = trendFormBean.getShepian().getHome().iterator();
+        int shotAsideHome = 0;
+        while (shotAsideHomeIterator.hasNext()) {
+            Bean bean = shotAsideHomeIterator.next();
+            if (TREND_DEFAULT.equals(bean.getFlag())) {
+                shotAsideHome++;
+            }
+            shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
+        }
+
+
+        Iterator<Bean> shotAsideGuestIterator = trendFormBean.getShepian().getGuest().iterator();
+        int shotAsideGuest = 0;
+        while (shotAsideGuestIterator.hasNext()) {
+            Bean bean = shotAsideGuestIterator.next();
+            if (TREND_DEFAULT.equals(bean.getFlag())) {
+                shotAsideGuest++;
+            }
+            shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
+        }
+
+        //危险进攻
+        Iterator<Bean> dangerAttackHomeIterator = trendFormBean.getDangerousAttack().getHome().iterator();
+        int dangerAttackHome = 0;
+        while (dangerAttackHomeIterator.hasNext()) {
+            Bean bean = dangerAttackHomeIterator.next();
+            if (TREND_DEFAULT.equals(bean.getFlag())) {
+                dangerAttackHome++;
+            }
+            dangerousAttackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackHome));
+        }
+
+        Iterator<Bean> dangerAttackGusetIterator = trendFormBean.getDangerousAttack().getGuest().iterator();
+        int dangerAttackGuest = 0;
+        while (dangerAttackGusetIterator.hasNext()) {
+            Bean bean = dangerAttackGusetIterator.next();
+            if (TREND_DEFAULT.equals(bean.getFlag())) {
+                dangerAttackGuest++;
+            }
+            dangerousAttackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackGuest));
+        }
+
+        //进攻
+        Iterator<Bean> attackHomeIterator = trendFormBean.getAttack().getHome().iterator();
+        int attackHome = 0;
+        while (attackHomeIterator.hasNext()) {
+            Bean bean = attackHomeIterator.next();
+            if (TREND_DEFAULT.equals(bean.getFlag())) {
+                attackHome++;
+            }
+            attackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), attackHome));
+        }
+
+        Iterator<Bean> attackGusetIterator = trendFormBean.getAttack().getGuest().iterator();
+        int attackGuest = 0;
+        while (attackGusetIterator.hasNext()) {
+            Bean bean = attackGusetIterator.next();
+            if (TREND_DEFAULT.equals(bean.getFlag())) {
+                attackGuest++;
+            }
+            attackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), attackGuest));
+        }
+    }
+
+
+    private void showTrendData() {
+
+    }
+
+
+    /**
      * 显示数据走势图
      */
     private void showData(List<Integer> mHDList, List<Integer> mGDList, MyLineChart myLineChart, FrameLayout mff) {
@@ -582,14 +797,25 @@ public class StatisticsFragment extends Fragment {
         String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
         // 设置参数
         Map<String, String> myPostParams = new HashMap<>();
-        myPostParams.put("thirdId", mThirdId);
-        L.d("xxxx", "mThirdId   " + mThirdId);
-        // 请求数据
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<TrendAllBean>() {
+        myPostParams.put("matchId", mThirdId);
+
+        //BaseURLs.URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER_INFO
+
+        String url = "http://192.168.10.242:8181/mlottery/core/trendForm.findTrendForm.do";
+
+        VolleyContentFast.requestJsonByPost(url, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
             @Override
-            public void onResponse(TrendAllBean jsonObject) {
+            public void onResponse(FootballTrendBean jsonObject) {
                 if (jsonObject != null) {
-                    mHomeCorners.clear();
+                    if (!"200".equals(jsonObject.getResult())) {
+                        return;
+                    }
+
+                    trendFormBean = jsonObject.getTrendForm();
+
+
+
+                   /* mHomeCorners.clear();
                     mGuestCorners.clear();
                     mHomeDangers.clear();
                     mGuestDangers.clear();
@@ -606,7 +832,7 @@ public class StatisticsFragment extends Fragment {
                         mHandler.sendEmptyMessage(SUCCESS);// 访问成功
                     } else {
                         mHandler.sendEmptyMessage(ERROR);
-                    }
+                    }*/
                 } else {
                     // 后台没请求到数据
                     mHandler.sendEmptyMessage(ERROR);
@@ -617,7 +843,7 @@ public class StatisticsFragment extends Fragment {
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mHandler.sendEmptyMessage(ERROR);// 访问失败
             }
-        }, TrendAllBean.class);
+        }, FootballTrendBean.class);
     }
 
 
@@ -743,16 +969,22 @@ public class StatisticsFragment extends Fragment {
 
             switch (msg.what) {
                 case STARTLOADING:// 正在加载中
-                    fl_attackTrend_loading.setVisibility(View.VISIBLE);
+                    /*fl_attackTrend_loading.setVisibility(View.VISIBLE);
                     fl_attackTrend_networkError.setVisibility(View.GONE);
-                    ll_trend_main.setVisibility(View.GONE);
+                    ll_trend_main.setVisibility(View.GONE);*/
+
+                    fl_attackTrend_loading.setVisibility(View.GONE);
+                    fl_attackTrend_networkError.setVisibility(View.GONE);
+                    ll_trend_main.setVisibility(View.VISIBLE);
+
                     break;
                 case SUCCESS:// 加载成功
                     fl_attackTrend_loading.setVisibility(View.GONE);
                     fl_attackTrend_networkError.setVisibility(View.GONE);
                     ll_trend_main.setVisibility(View.VISIBLE);
-                    showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
-                    showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
+
+                    // showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
+                    // showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
                     break;
                 case ERROR:// 加载失败
                     fl_attackTrend_loading.setVisibility(View.GONE);
@@ -820,6 +1052,33 @@ public class StatisticsFragment extends Fragment {
         guest_lineout_txt.setText(mGuestStatisEntity.getLineOut() + "");
         home_lineout_txt.setText(mHomeStatisEntity.getLineOut() + "");
 
+    }
+
+
+    private float convertStringToFloat(String time) {
+        return (float) Double.parseDouble(time) / 60000;
+    }
+
+    public static class Axis {
+
+        private float x;
+        private float y;
+
+        public float getX() {
+            return x;
+        }
+
+        public void setX(float x) {
+            this.x = x;
+        }
+
+        public float getY() {
+            return y;
+        }
+
+        public void setY(float y) {
+            this.y = y;
+        }
     }
 
 }
