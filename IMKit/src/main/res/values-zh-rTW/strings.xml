@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="rc_join_chatroom_failure">加入聊天室失敗\n請勿在多臺設備登錄</string>
+</resources>

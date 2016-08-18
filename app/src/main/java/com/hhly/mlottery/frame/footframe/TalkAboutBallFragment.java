@@ -548,14 +548,16 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      * 点击评论后的方法
      */
     private void commentClick() {
-        tv_comment.setSelected(true);
-        tv_chart_room.setSelected(false);
-        ll_scanner.setVisibility(View.VISIBLE);
-        fl_comment.setVisibility(View.VISIBLE);
-        fl_chart_room.setVisibility(View.GONE);
-        tvHomeLikeCount.setTextColor(Color.BLACK);
-        tvGuestLikeCount.setTextColor(Color.BLACK);
-        mView.setBackgroundResource(R.color.transparency);// 设置评论背景
+        if (!RongYunUtils.isJoinChartRoom) {
+            tv_comment.setSelected(true);
+            tv_chart_room.setSelected(false);
+            ll_scanner.setVisibility(View.VISIBLE);
+            fl_comment.setVisibility(View.VISIBLE);
+            fl_chart_room.setVisibility(View.GONE);
+            tvHomeLikeCount.setTextColor(Color.BLACK);
+            tvGuestLikeCount.setTextColor(Color.BLACK);
+            mView.setBackgroundResource(R.color.transparency);// 设置评论背景
+        }
     }
 
     @Override
@@ -619,11 +621,11 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 L.d("xxx", "隐藏加载框");
                 // 隐藏加载框
-                if(pb_chart_room_loading != null){
+                if (pb_chart_room_loading != null) {
                     pb_chart_room_loading.setVisibility(View.GONE);
                 }
                 // 进入聊天室
-                if(RongYunUtils.isJoinChartRoom){
+                if (RongYunUtils.isJoinChartRoom) {
                     RongYunUtils.joinChatRoom(mContext, mThirdId);
                 }
             }
@@ -643,18 +645,19 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
 
     private boolean isRoomCount = false;
     private boolean isExit = false;// 当前界面是否退出
+
     /**
      * 刷新聊天室在线人数
      */
-    private void refreshRoomCount(){
-        if(!isRoomCount){
-            new Thread(){
+    private void refreshRoomCount() {
+        if (!isRoomCount) {
+            new Thread() {
                 @Override
                 public void run() {
                     isRoomCount = true;
-                    while (!isExit){
+                    while (!isExit) {
                         RongYunUtils.getChatRoomCount(mThirdId);// 获取在线人数
-                        L.d("xxx","获取在线人数....");
+                        L.d("xxx", "获取在线人数....");
                         SystemClock.sleep(5000);
                     }
                 }
@@ -683,20 +686,24 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 commentClick();
                 break;
             case RongYunUtils.RONG_CONNENT_OK:// 连接融云服务器成功
-                if (RongYunUtils.isCreateChartRoom) {
-                    joinChartRoom();
+                if (tv_chart_room != null) {
+                    if (RongYunUtils.isCreateChartRoom && tv_chart_room.isSelected()) {
+                        joinChartRoom();
+                    }
                 }
                 break;
             case RongYunUtils.CREATE_CHARTROOM_OK:// 创建聊天室成功
-                if (RongYunUtils.isRongConnent) {
-                    joinChartRoom();
+                if (tv_chart_room != null) {
+                    if (RongYunUtils.isRongConnent && tv_chart_room.isSelected()) {
+                        joinChartRoom();
+                    }
                 }
                 break;
             case RongYunUtils.CHART_ROOM_COUNT_OK:// 获取聊天室人数成功
-                if(tv_chart_room != null){
-                    if(RongYunUtils.chartRoomCount >= 500){// 超过 500 时最多返回 500 个成员
+                if (tv_chart_room != null) {
+                    if (RongYunUtils.chartRoomCount >= 500) {// 超过 500 时最多返回 500 个成员
                         tv_chart_room.setText(mContext.getResources().getString(R.string.rong_chart_room) + "(" + RongYunUtils.chartRoomCount + "+)");
-                    }else{
+                    } else {
                         tv_chart_room.setText(mContext.getResources().getString(R.string.rong_chart_room) + "(" + RongYunUtils.chartRoomCount + ")");
                     }
                 }
