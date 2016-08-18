@@ -30,6 +30,7 @@ import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseBigSmallFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseHandicapFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseRankingFragment;
@@ -247,8 +248,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
     private void initData() {
 
         // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do?lang=zh&leagueId=2
-        String url = "http://192.168.31.115:8080/mlottery/core/basketballData.findLeagueHeader.do";
-//        String url = BaseURLs.URL_BASKET_DATABASE_DETAILS;
+//        String url = "http://192.168.31.115:8080/mlottery/core/basketballData.findLeagueHeader.do";
+        String url = BaseURLs.URL_BASKET_DATABASE_DETAILS;
         Map<String, String> params = new HashMap<>();
 //        params.put("leagueId", "2");
         params.put("leagueId", mLeague.getLeagueId());

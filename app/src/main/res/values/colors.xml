@@ -630,4 +630,5 @@
     <color name="basket_database_statistics_background_h">#F15353</color>
     <color name="basket_database_statistics_background_g">#0090FF</color>
     <color name="basket_database_statistics_background_d">#F1CA43</color>
+    <color name="basket_database_statistics_background">#DDDDDD</color>
 </resources>
