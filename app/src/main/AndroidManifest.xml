@@ -289,6 +289,10 @@
 
         </activity>
 
+        <!--篮球资料库模糊搜索-->
+        <activity android:name=".activity.BasketballInformationSerachActivity"
+            android:screenOrientation="portrait"/>
+
         <!--融云会话列表-->
         <activity
             android:name=".frame.ConversationFragment"
