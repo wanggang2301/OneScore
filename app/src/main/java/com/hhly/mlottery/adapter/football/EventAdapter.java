@@ -142,14 +142,14 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
             iv_right.setVisibility(View.INVISIBLE);
             if (SCORE.equals(m.getCode())) {
 
-                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + mContext.getResources().getString(R.string.foot_event_goal));
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge));
                 iv_left.setImageResource(R.mipmap.event_goal);
             } else if (YELLOW_CARD.equals(m.getCode())) {
-                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + mContext.getResources().getString(R.string.foot_event_yc));
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang));
                 iv_left.setImageResource(R.mipmap.event_yc);
 
             } else if (RED_CARD.equals(m.getCode())) {
-                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + mContext.getResources().getString(R.string.foot_event_rc));
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang));
                 iv_left.setImageResource(R.mipmap.event_rc);
             } else if (SUBSTITUTION.equals(m.getCode())) {
                 // No:人名|No:人名(前上后下)
@@ -165,7 +165,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
 
                 iv_left.setImageResource(R.mipmap.event_player);
             } else if (CORNER.equals(m.getCode())) {
-                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + mContext.getResources().getString(R.string.foot_event_corner));
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge));
                 iv_left.setImageResource(R.mipmap.event_corner);
             } else if (YTORED.equals(m.getCode())) {
                 msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_ychanger));
@@ -180,16 +180,16 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
 
             if (SCORE1.equals(m.getCode())) {
 
-                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + mContext.getResources().getString(R.string.foot_event_goal) + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge));
                 iv_right.setImageResource(R.mipmap.event_goal);
             } else if (YELLOW_CARD1.equals(m.getCode())) {
 
-                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + mContext.getResources().getString(R.string.foot_event_yc) + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_yc);
 
             } else if (RED_CARD1.equals(m.getCode())) {
 
-                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + mContext.getResources().getString(R.string.foot_event_rc) + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_rc);
             } else if (SUBSTITUTION1.equals(m.getCode())) {
 
@@ -205,7 +205,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
                 iv_right.setImageResource(R.mipmap.event_player);
             } else if (CORNER1.equals(m.getCode())) {
 
-                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + mContext.getResources().getString(R.string.foot_event_corner) + m.getPlayInfo());
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_corner);
             } else if (YTORED1.equals(m.getCode())) {
                 msg_right.setText(mContext.getResources().getString(R.string.foot_event_ychanger) + m.getPlayInfo());
