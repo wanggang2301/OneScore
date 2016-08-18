@@ -38,7 +38,7 @@ import java.util.Map;
  * @date 2016/6/12 11:21
  * @des 足球内页改版统计
  */
-public class StatisticsFragment extends Fragment {
+public class StatisticsFragment2 extends Fragment {
 
 
     private static String STA_PARM = "STA_PARM";
