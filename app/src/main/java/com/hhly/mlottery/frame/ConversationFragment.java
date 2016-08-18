@@ -59,6 +59,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         RongIM.setUserInfoProvider(this, true);
         RongIM.getInstance().setCurrentUserInfo(mUserInfo);
         RongIM.getInstance().setMessageAttachedUserInfo(true);
+        RongIM.getInstance().refreshUserInfoCache(mUserInfo);// 刷新本地用户缓存
 
         initInput();
     }
