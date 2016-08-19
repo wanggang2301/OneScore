@@ -84,6 +84,8 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.squareup.okio:okio:1.5.0'
     compile 'io.reactivex:rxjava:1.1.2'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.4'
