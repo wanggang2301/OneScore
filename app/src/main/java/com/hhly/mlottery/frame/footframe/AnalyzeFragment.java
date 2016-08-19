@@ -634,32 +634,16 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
         //亚盘走势
         if(analyzeBean.getAsiaTrend()!=null){
-            //假数据
-//            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity1=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
-//            entity1.setLet(0);entity1.setHomeGround(true);
-//
-//            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity2=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
-//            entity2.setLet(2);entity2.setHomeGround(true);
-//
-//            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity3=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
-//            entity3.setLet(0);entity3.setHomeGround(false);
-//
-//            NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity entity4=new NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity();
-//            entity4.setLet(1);entity4.setHomeGround(true);
-//
-//
-//
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity1);
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity2);
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity3);
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
-//            analyzeBean.getAsiaTrend().getBattleHistory().getLetList().add(entity4);
+
             mllLet.setVisibility(View.VISIBLE);
             mLetAllNodata.setVisibility(View.GONE);
 
             if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
-                setLetText1(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
-                setLetText2(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
+                if(getActivity()!=null){
+                    mContext=getActivity();
+                    setLetText1(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
+                    setLetText2(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
+                }
             }
             if(getActivity()!=null&&analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getPointList()!=null){
                 mLetAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getAsiaTrend().getBattleHistory().getPointList(),analyzeBean);
