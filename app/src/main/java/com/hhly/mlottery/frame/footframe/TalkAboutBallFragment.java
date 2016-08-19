@@ -548,7 +548,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
      * 点击评论后的方法
      */
     private void commentClick() {
-        if (!RongYunUtils.isJoinChartRoom) {
+//        if (!RongYunUtils.isJoinChartRoom) {
             tv_comment.setSelected(true);
             tv_chart_room.setSelected(false);
             ll_scanner.setVisibility(View.VISIBLE);
@@ -557,7 +557,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             tvHomeLikeCount.setTextColor(Color.BLACK);
             tvGuestLikeCount.setTextColor(Color.BLACK);
             mView.setBackgroundResource(R.color.transparency);// 设置评论背景
-        }
+//        }
     }
 
     @Override
@@ -624,6 +624,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                 if (pb_chart_room_loading != null) {
                     pb_chart_room_loading.setVisibility(View.GONE);
                 }
+                // 禁止点击评论按钮
+                if(tv_comment != null){
+                    tv_comment.setClickable(false);
+                }
                 // 进入聊天室
                 if (RongYunUtils.isJoinChartRoom) {
                     RongYunUtils.joinChatRoom(mContext, mThirdId);
@@ -682,7 +686,10 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     guestLike();
                 }
                 break;
-            case RongYunUtils.TALK_COMMENT:// 评论点赞调用
+            case RongYunUtils.TALK_COMMENT:// 评论调用
+                if(tv_comment != null){
+                    tv_comment.setClickable(true);
+                }
                 commentClick();
                 break;
             case RongYunUtils.RONG_CONNENT_OK:// 连接融云服务器成功
