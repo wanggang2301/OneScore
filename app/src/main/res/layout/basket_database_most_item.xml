@@ -69,7 +69,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/basket_database_details_leagueMost_allmatch"
                         android:textSize="@dimen/text_size_13"
-                        android:textColor="@color/content_txt_black"/>
+                        android:textColor="@color/content_txt_black"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
