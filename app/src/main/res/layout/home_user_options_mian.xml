@@ -202,17 +202,14 @@
 
     <!----> 分割线
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/linecolor"/>
+
 
     <View
         android:visibility="gone"
         android:id="@+id/view_top"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="13dp"
         android:background="@color/linecolor"/>
 
     <TextView

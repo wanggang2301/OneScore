@@ -301,9 +301,9 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         final ListView listView = (ListView) layout.findViewById(R.id.lv_popup_list);
         // 设置listView的适配器
 
-        if (mAdapter == null) {
+            if (mAdapter == null) {
 
-            mAdapter = new InforPopuWindowdapter(this, mListDatas);
+                mAdapter = new InforPopuWindowdapter(this, mListDatas);
         }
 
         listView.setAdapter(mAdapter);
