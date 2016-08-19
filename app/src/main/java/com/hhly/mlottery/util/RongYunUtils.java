@@ -1,6 +1,8 @@
 package com.hhly.mlottery.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -34,6 +36,7 @@ public class RongYunUtils {
     //测试appkey和appsecret
     public static final String APPKEY = "3argexb6r6c1e";
     public static final String APPSECRET = "l0Fu9Kn0uqO";
+    public static final int CHART_ROOM_QUESTCODE = 5;// 跳转登录界面的请求码
 
     public static final String CHART_ROOM_ID = "chartRoomId";// 聊天室id  key
     public static final String CHART_ROOM_NAME = "chartBall";// 聊天室名称
@@ -117,7 +120,7 @@ public class RongYunUtils {
                     if (jsonObject.getCode() == 200) {
                         isCreateChartRoom = true;
                         EventBus.getDefault().post(new FirstEvent(CREATE_CHARTROOM_OK));
-                        getChatRoomCount(roomId);
+//                        getChatRoomCount(roomId);
                         PreferenceUtil.commitString(CHART_ROOM_ID, roomId);
                         L.d("xxx", "保存聊天室id：" + PreferenceUtil.getString(CHART_ROOM_ID, "xxx"));
                     }
@@ -131,7 +134,7 @@ public class RongYunUtils {
         }else{
             isCreateChartRoom = true;
             EventBus.getDefault().post(new FirstEvent(CREATE_CHARTROOM_OK));
-            getChatRoomCount(roomId);
+//            getChatRoomCount(roomId);
         }
     }
 
@@ -144,7 +147,11 @@ public class RongYunUtils {
         if (TextUtils.isEmpty(roomId)) {
             return;
         }
-        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, roomId, null);
+        Uri uri = Uri.parse("rong://" + mContext.getApplicationInfo().processName).buildUpon().appendPath("conversation").appendPath(Conversation.ConversationType.CHATROOM.getName().toLowerCase()).appendQueryParameter("targetId", roomId).appendQueryParameter("title", "").build();
+        Intent intent = new Intent("android.intent.action.VIEW", uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+//        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, roomId, null);
         L.d("xxx", "joinChatRoom...");
     }
 
