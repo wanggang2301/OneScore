@@ -658,8 +658,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             mLetAllNodata.setVisibility(View.GONE);
 
             if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
-                setLetText1(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
-                setLetText2(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
+               // setLetText1(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
+              //  setLetText2(analyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
             }
             if(getActivity()!=null&&analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getPointList()!=null){
                 mLetAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getAsiaTrend().getBattleHistory().getPointList(),analyzeBean);
@@ -733,8 +733,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             mllSize.setVisibility(View.VISIBLE);
             mSizeAllNodata.setVisibility(View.GONE);
             if(analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
-                setSizeText1(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
-                setSizeText2(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
+               // setSizeText1(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
+               // setSizeText2(analyzeBean.getSizeTrend().getBattleHistory().getStatistics());
             }
             if(getActivity()!=null&&analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getPointList()!=null){
                 mSizeAdapter=new AnalyzeAsiaAdapter(getActivity(),analyzeBean.getSizeTrend().getBattleHistory().getPointList(),analyzeBean);
