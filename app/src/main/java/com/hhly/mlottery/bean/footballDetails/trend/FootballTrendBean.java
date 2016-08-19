@@ -9,7 +9,7 @@ public class FootballTrendBean {
 
     private TrendFormBean trendForm;
 
-    private int result;
+    private String result;
 
     public TrendFormBean getTrendForm() {
         return trendForm;
@@ -19,11 +19,11 @@ public class FootballTrendBean {
         this.trendForm = trendForm;
     }
 
-    public int getResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(int result) {
+    public void setResult(String result) {
         this.result = result;
     }
 }

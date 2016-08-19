@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footframe;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,9 +22,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.football.EventAdapter;
@@ -194,7 +199,8 @@ public class StatisticsFragment extends Fragment {
     private XAxis attackXAxis;
     private YAxis attackYAxis;
 
-
+    private static final float HALFMATCH = 5f;
+    private static final float FINISHMATCH = 10f;
 
 
     public static StatisticsFragment newInstance() {
@@ -234,7 +240,39 @@ public class StatisticsFragment extends Fragment {
 
     private void loadData() {
         if ("-1".equals(type)) {
+
+
             getVolleyData();
+
+         /*   shootHomeValues = new ArrayList<>();
+            shootHomeValues.add(new Entry(0f, 0f));
+            shootHomeValues.add(new Entry(2f, 3f));
+            shootHomeValues.add(new Entry(3f, 4f));
+            shootHomeValues.add(new Entry(6f, 5f));
+            shootHomeValues.add(new Entry(10f, 7f));
+            shootHomeValues.add(new Entry(17f, 9f));
+
+            shootGuestValues = new ArrayList<>();
+            shootGuestValues.add(new Entry(0f, 0f));
+
+            shootGuestValues.add(new Entry(1f, 1f));
+            shootGuestValues.add(new Entry(3f, 1f));
+            shootGuestValues.add(new Entry(5f, 3f));
+            shootGuestValues.add(new Entry(10f, 7f));
+            shootGuestValues.add(new Entry(15f, 7f));
+            shootGuestValues.add(new Entry(21f, 10f));
+
+            shotXAxis.setAxisMaxValue(getXMaxValue(21f, HALFMATCH));
+            shotXAxis.setLabelCount(getXLabelCount(21f, HALFMATCH));
+
+
+            shotYAxis.setAxisMaxValue(getYMaxValue(10f));
+            shotYAxis.setLabelCount(getLabelCount(10f));
+
+
+            showTrendData(chart_shoot, shootHomeValues, shootGuestValues);*/
+
+
             getVolleyDataStatic();
 
         } else { //未完场
@@ -425,30 +463,64 @@ public class StatisticsFragment extends Fragment {
         chart_attack = (LineChart) mView.findViewById(R.id.chart_attack);
 
 
+        initChartView(chart_shoot, "暂无射正球门数据.");
+        initChartView(chart_shootAside, "暂无射偏球门数据.");
+        initChartView(chart_dangerousAttack, "暂无危险进攻数据.");
+        initChartView(chart_attack, "暂无进攻数据.");
 
-       /* mChart.setDrawGridBackground(false);
+
+        shotYAxis = chart_shoot.getAxisLeft();
+        shotYAxis.setAxisMinValue(0f);
+        shotYAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        shotYAxis.setDrawZeroLine(false);
+        shotYAxis.setAxisLineColor(Color.BLACK);
+        shotXAxis = chart_shoot.getXAxis();   //x轴
+        shotXAxis.setAxisLineColor(Color.BLACK);
+        shotXAxis.enableGridDashedLine(10f, 10f, 0f);
+        shotXAxis.setAxisMinValue(0f);
+
+
+        shotAsideYAxis = chart_shootAside.getAxisLeft();
+        shotAsideYAxis.setAxisMinValue(0f);
+        shotAsideYAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        shotAsideYAxis.setDrawZeroLine(false);
+        shotAsideXAxis = chart_shootAside.getXAxis();   //x轴
+        shotAsideXAxis.enableGridDashedLine(10f, 10f, 0f);
+        shotAsideXAxis.setAxisMinValue(0f);
+
+        dangerousAttackYAxis = chart_dangerousAttack.getAxisLeft();
+        dangerousAttackYAxis.setAxisMinValue(0f);
+        dangerousAttackYAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        dangerousAttackYAxis.setDrawZeroLine(false);
+        dangerousAttackXAxis = chart_dangerousAttack.getXAxis();   //x轴
+        dangerousAttackXAxis.enableGridDashedLine(10f, 10f, 0f);
+        dangerousAttackXAxis.setAxisMinValue(0f);
+
+        attackYAxis = chart_attack.getAxisLeft();
+        attackYAxis.setAxisMinValue(0f);
+        attackYAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        attackYAxis.setDrawZeroLine(false);
+        attackXAxis = chart_attack.getXAxis();   //x轴
+        attackXAxis.enableGridDashedLine(10f, 10f, 0f);
+        attackXAxis.setAxisMinValue(0f);
+
+    }
+
+
+    private void initChartView(LineChart mChart, String msg) {
+        mChart.setDrawGridBackground(false);
         mChart.setDescription("时间(T)");
-        mChart.setNoDataTextDescription("You need to provide data for the chart.");
+        mChart.setNoDataTextDescription(msg);
         mChart.setTouchEnabled(true);
         mChart.setDragEnabled(false);
         mChart.setScaleEnabled(false);
         mChart.setPinchZoom(true);
-
-        leftAxis = mChart.getAxisLeft();
-        leftAxis.setAxisMinValue(0f);
-        leftAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
-        leftAxis.setDrawZeroLine(false);
-
-
-        bottomAxis = mChart.getXAxis();   //x轴
-        bottomAxis.enableGridDashedLine(10f, 10f, 0f);
-        bottomAxis.setAxisMaxValue(5f);
-        bottomAxis.setLabelCount(1);
-
-        leftAxis.setDrawLimitLinesBehindData(true);
-
         mChart.getAxisRight().setEnabled(false);
-        mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);*/
+        mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        mChart.getAxisLeft().setAxisLineWidth(1f);
+        mChart.getXAxis().setAxisLineWidth(1f);
+        Legend l_shoot = mChart.getLegend();
+        l_shoot.setForm(Legend.LegendForm.LINE);
 
     }
 
@@ -630,13 +702,18 @@ public class StatisticsFragment extends Fragment {
         return ((int) Math.ceil(yMax / 8f)) * getLabelCount(yMax);
     }
 
-    private int getXLabelCount(float xMax) {
-        return xMax % 5f == 0 ? (int) Math.ceil(xMax / 5f) + 1 : (int) Math.ceil(xMax / 5f);
+    private int getXLabelCount(float xMax, float range) {
+        return xMax % range == 0 ? (int) Math.ceil(xMax / range) + 1 : (int) Math.ceil(xMax / range);
     }
 
-    private float getXMaxValue(float xMax) {
-        return getXLabelCount(xMax) * 5f;
+    private float getXMaxValue(float xMax, float range) {
+        return getXLabelCount(xMax, range) * range;
     }
+
+
+    /**
+     * 走势图计算数据
+     */
 
 
     private void computeTrendData() {
@@ -648,28 +725,70 @@ public class StatisticsFragment extends Fragment {
         //射正
         Iterator<Bean> shotHomeIterator = trendFormBean.getShot().getHome().iterator();
         int shotHome = 0;
+        shootHomeValues = new ArrayList<>();
+        shootHomeColors = new ArrayList<>();
+
+        shootHomeValues.add(new Entry(0f, 0f));
+        shootHomeColors.add(Color.TRANSPARENT);
+
         while (shotHomeIterator.hasNext()) {
             Bean bean = shotHomeIterator.next();
-            if (TREND_DEFAULT.equals(bean.getFlag()) || TREND_GOAL.equals(bean.getFlag())) {
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                shootHomeColors.add(Color.GREEN);
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
                 shotHome++;
+                shootHomeColors.add(Color.BLACK);
+            } else {
+                shotHome++;
+                shootHomeColors.add(Color.TRANSPARENT);
             }
+
             shootHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotHome));
         }
 
+
         Iterator<Bean> shotGuestIterator = trendFormBean.getShot().getGuest().iterator();
         int shotGuest = 0;
+        shootGuestValues = new ArrayList<>();
+        shootGuestColors = new ArrayList<>();
+
+        shootGuestValues.add(new Entry(0f, 0f));
+        shootGuestColors.add(Color.TRANSPARENT);
+
         while (shotGuestIterator.hasNext()) {
             Bean bean = shotGuestIterator.next();
-            if (TREND_DEFAULT.equals(bean.getFlag()) || TREND_GOAL.equals(bean.getFlag())) {
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                shootGuestColors.add(Color.GREEN);
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
                 shotGuest++;
+                shootGuestColors.add(Color.BLACK);
+            } else {
+                shotGuest++;
+                shootGuestColors.add(Color.TRANSPARENT);
             }
             shootGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotGuest));
         }
 
 
+        shotXAxis.setAxisMaxValue(getXMaxValue(90f, FINISHMATCH));
+        shotXAxis.setLabelCount(getXLabelCount(90f, FINISHMATCH));
+
+
+        if (shotHome > shotGuest) {
+            shotYAxis.setAxisMaxValue(getYMaxValue(shotHome));
+            shotYAxis.setLabelCount(getLabelCount(shotHome));
+        } else {
+            shotYAxis.setAxisMaxValue(getYMaxValue(shotGuest));
+            shotYAxis.setLabelCount(getLabelCount(shotGuest));
+        }
+
+        showTrendData(chart_shoot, shootHomeValues, shootGuestValues, shootHomeColors, shootGuestColors);
+
+
         //射偏
         Iterator<Bean> shotAsideHomeIterator = trendFormBean.getShepian().getHome().iterator();
         int shotAsideHome = 0;
+        shootAsideHomeValues = new ArrayList<>();
         while (shotAsideHomeIterator.hasNext()) {
             Bean bean = shotAsideHomeIterator.next();
             if (TREND_DEFAULT.equals(bean.getFlag())) {
@@ -681,6 +800,7 @@ public class StatisticsFragment extends Fragment {
 
         Iterator<Bean> shotAsideGuestIterator = trendFormBean.getShepian().getGuest().iterator();
         int shotAsideGuest = 0;
+        shootAsideGuestValues = new ArrayList<>();
         while (shotAsideGuestIterator.hasNext()) {
             Bean bean = shotAsideGuestIterator.next();
             if (TREND_DEFAULT.equals(bean.getFlag())) {
@@ -692,6 +812,7 @@ public class StatisticsFragment extends Fragment {
         //危险进攻
         Iterator<Bean> dangerAttackHomeIterator = trendFormBean.getDangerousAttack().getHome().iterator();
         int dangerAttackHome = 0;
+        dangerousAttackHomeValues = new ArrayList<>();
         while (dangerAttackHomeIterator.hasNext()) {
             Bean bean = dangerAttackHomeIterator.next();
             if (TREND_DEFAULT.equals(bean.getFlag())) {
@@ -702,6 +823,7 @@ public class StatisticsFragment extends Fragment {
 
         Iterator<Bean> dangerAttackGusetIterator = trendFormBean.getDangerousAttack().getGuest().iterator();
         int dangerAttackGuest = 0;
+        dangerousAttackGuestValues = new ArrayList<>();
         while (dangerAttackGusetIterator.hasNext()) {
             Bean bean = dangerAttackGusetIterator.next();
             if (TREND_DEFAULT.equals(bean.getFlag())) {
@@ -713,6 +835,7 @@ public class StatisticsFragment extends Fragment {
         //进攻
         Iterator<Bean> attackHomeIterator = trendFormBean.getAttack().getHome().iterator();
         int attackHome = 0;
+        attackHomeValues = new ArrayList<>();
         while (attackHomeIterator.hasNext()) {
             Bean bean = attackHomeIterator.next();
             if (TREND_DEFAULT.equals(bean.getFlag())) {
@@ -723,6 +846,7 @@ public class StatisticsFragment extends Fragment {
 
         Iterator<Bean> attackGusetIterator = trendFormBean.getAttack().getGuest().iterator();
         int attackGuest = 0;
+        attackGuestValues = new ArrayList<>();
         while (attackGusetIterator.hasNext()) {
             Bean bean = attackGusetIterator.next();
             if (TREND_DEFAULT.equals(bean.getFlag())) {
@@ -733,7 +857,51 @@ public class StatisticsFragment extends Fragment {
     }
 
 
-    private void showTrendData() {
+    private void showTrendData(LineChart mChart, List<Entry> homeEntry, List<Entry> guestEntry, List<Integer> homeColors, List<Integer> guestColors) {
+        LineDataSet mHomeLineDataSet;
+        LineDataSet mGuestLineDataSet;
+
+        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
+           /* mHomeLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+            mHomeLineDataSet.setValues(homeEntry);
+
+
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();*/
+        } else {
+
+
+            mHomeLineDataSet = new LineDataSet(homeEntry, "DataSet1");
+            mHomeLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+            mHomeLineDataSet.setColor(Color.RED);
+            mHomeLineDataSet.setCircleColor(Color.BLACK);
+            mHomeLineDataSet.setLineWidth(0.7f);
+            mHomeLineDataSet.setCircleRadius(3f);
+            mHomeLineDataSet.setDrawCircleHole(false);
+            mHomeLineDataSet.setValueTextSize(9f);
+            mHomeLineDataSet.setDrawValues(false);
+            mHomeLineDataSet.setCircleColors(homeColors);
+
+
+            mGuestLineDataSet = new LineDataSet(guestEntry, "DataSet2");
+            mGuestLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+            mGuestLineDataSet.setColor(Color.BLUE);
+            mGuestLineDataSet.setCircleColor(Color.BLACK);
+            mGuestLineDataSet.setLineWidth(0.7f);
+            mGuestLineDataSet.setCircleRadius(3f);
+            mGuestLineDataSet.setDrawCircleHole(false);
+            mGuestLineDataSet.setValueTextSize(9f);
+            mGuestLineDataSet.setDrawValues(false);
+            mGuestLineDataSet.setCircleColors(guestColors);
+
+
+            ArrayList<ILineDataSet> dataSetsList = new ArrayList<ILineDataSet>();
+            dataSetsList.add(mHomeLineDataSet);
+            dataSetsList.add(mGuestLineDataSet);
+
+            LineData lineData = new LineData(dataSetsList);
+            mChart.setData(lineData);
+        }
 
     }
 
@@ -795,6 +963,8 @@ public class StatisticsFragment extends Fragment {
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // 获取对象ID
         String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
+
+        L.d("112233", mThirdId);
         // 设置参数
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("matchId", mThirdId);
@@ -810,29 +980,9 @@ public class StatisticsFragment extends Fragment {
                     if (!"200".equals(jsonObject.getResult())) {
                         return;
                     }
-
                     trendFormBean = jsonObject.getTrendForm();
+                    mHandler.sendEmptyMessage(SUCCESS);
 
-
-
-                   /* mHomeCorners.clear();
-                    mGuestCorners.clear();
-                    mHomeDangers.clear();
-                    mGuestDangers.clear();
-                    mHomeCorners = jsonObject.getHomeCorner();
-                    mGuestCorners = jsonObject.getGuestCorner();
-                    mHomeDangers = jsonObject.getHomeDanger();
-                    mGuestDangers = jsonObject.getGuestDanger();
-                    if (mHomeCorners != null && mGuestCorners != null && mHomeDangers != null && mGuestDangers != null) {
-                        mHomeCorners.add(0, 0);
-                        mGuestCorners.add(0, 0);
-
-                        mHomeDangers.add(0, 0);
-                        mGuestDangers.add(0, 0);
-                        mHandler.sendEmptyMessage(SUCCESS);// 访问成功
-                    } else {
-                        mHandler.sendEmptyMessage(ERROR);
-                    }*/
                 } else {
                     // 后台没请求到数据
                     mHandler.sendEmptyMessage(ERROR);
@@ -969,19 +1119,20 @@ public class StatisticsFragment extends Fragment {
 
             switch (msg.what) {
                 case STARTLOADING:// 正在加载中
-                    /*fl_attackTrend_loading.setVisibility(View.VISIBLE);
+                    fl_attackTrend_loading.setVisibility(View.VISIBLE);
                     fl_attackTrend_networkError.setVisibility(View.GONE);
-                    ll_trend_main.setVisibility(View.GONE);*/
-
-                    fl_attackTrend_loading.setVisibility(View.GONE);
-                    fl_attackTrend_networkError.setVisibility(View.GONE);
-                    ll_trend_main.setVisibility(View.VISIBLE);
+                    ll_trend_main.setVisibility(View.GONE);
 
                     break;
                 case SUCCESS:// 加载成功
                     fl_attackTrend_loading.setVisibility(View.GONE);
                     fl_attackTrend_networkError.setVisibility(View.GONE);
                     ll_trend_main.setVisibility(View.VISIBLE);
+
+                    L.d("112233", "请求成功");
+
+
+                    computeTrendData();
 
                     // showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
                     // showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
