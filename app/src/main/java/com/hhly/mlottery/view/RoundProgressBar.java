@@ -122,10 +122,8 @@ public class RoundProgressBar extends View {
 
         //获取自定义属性和默认值
         roundColor = mTypedArray.getColor(R.styleable.RoundProgressBar_roundColor, getResources().getColor(R.color.home_item_bg));
-//        roundColor = mTypedArray.getColor(R.styleable.RoundProgressBar_roundColor, Color.GREEN);
         roundProgressColor = mTypedArray.getColor(R.styleable.RoundProgressBar_roundProgressColor, Color.RED);
         textColor = mTypedArray.getColor(R.styleable.RoundProgressBar_textColor, Color.RED);
-//        textSize = mTypedArray.getDimension(R.styleable.RoundProgressBar_textSize, 30);
         textSize = mTypedArray.getDimension(R.styleable.RoundProgressBar_textSize, getResources().getDimensionPixelOffset(R.dimen.text_size_13));
         roundWidth = mTypedArray.getDimension(R.styleable.RoundProgressBar_roundWidth, 10);
         max = mTypedArray.getInteger(R.styleable.RoundProgressBar_max, 100);
@@ -152,8 +150,6 @@ public class RoundProgressBar extends View {
         paint.setAntiAlias(true);  //消除锯齿
         canvas.drawCircle(centerX, centerX, radius, paint); //画出圆环
 
-//        Log.e("log", center + "");
-
         /**
          * 画进度百分比
          */
@@ -166,7 +162,6 @@ public class RoundProgressBar extends View {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float textCenterVerticalBaselineY =
                 centerX - fontMetrics.bottom + (fontMetrics.bottom - fontMetrics.top) / 2;
-//        if(textIsDisplayable && percent != 0 && style == STROKE){
         if (textIsDisplayable && style == STROKE) {
             canvas.drawText(percent, centerX - textWidth / 2, textCenterVerticalBaselineY, paint); //画出进度百分比
         }
@@ -271,12 +266,6 @@ public class RoundProgressBar extends View {
 
             double tx3 = centerX + r * Math.cos((d3-90) * 3.14 /180);
             double ty3 = centerY + r * Math.sin((d3-90) * 3.14 /180);
-
-//            L.d("tx==***=>" , tx + "");
-//            L.d("ty==***=>" , ty + "");
-//
-//            L.d("progress==***=>" , progress + "");
-//            L.d("d==***=>" , d + "");
 
             if (prossgressData1 != null && !prossgressData1.equals("") && !prossgressData1.equals("0")) {
                 float textWidths = paint.measureText(prossgressData1);

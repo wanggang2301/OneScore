@@ -260,7 +260,7 @@
                                     android:indeterminateOnly="false"
                                     android:max="100"
                                     android:progress="60"
-                                    android:progressDrawable="@drawable/verticalprogressbar"
+                                    android:progressDrawable="@drawable/verticalprogressbar_too"
                                     />
                                 <TextView
                                     android:id="@+id/basket_database_euro_tv2"
@@ -848,7 +848,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:background="@color/basket_database_statistics_background"
                                     android:layout_gravity="center"
                                     />
 

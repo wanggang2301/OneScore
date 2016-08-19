@@ -18,7 +18,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueMost;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueMost; //Unused import statement
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseMostDat;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseStatisticsBean;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueStatistics;
@@ -496,12 +496,20 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
                 return;
             }
 
-            ImageView mIcon= (ImageView)holder.getConvertView().findViewById(R.id.progress_statistic);
 
             holder.setText(R.id.basket_database_most_item_name , basketDatabaseMostDat.getTeamName());
             holder.setText(R.id.basket_database_most_item_total_score , getResources().getString(R.string.basket_database_details_leagueMost_all_score) + (int)basketDatabaseMostDat.getTotalScore()+"");
             holder.setText(R.id.basket_database_most_item_avg_score ,getResources().getString(R.string.basket_database_details_leagueMost_avg_score) + basketDatabaseMostDat.getAvgScore() + "");
 
+            if (holder.getPosition() == 0) {
+                holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_allmatch));
+            }else if(holder.getPosition() == 1){
+                holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_homematch));
+            }else if(holder.getPosition() == 2){
+                holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_guestmatch));
+            }
+
+            ImageView mIcon= (ImageView)holder.getConvertView().findViewById(R.id.progress_statistic);
             mImageLoader.displayImage(basketDatabaseMostDat.getTeamIconUrl(), mIcon , mOptions);
 
 
