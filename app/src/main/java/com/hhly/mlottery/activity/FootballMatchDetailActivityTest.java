@@ -142,6 +142,19 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private static final String YTORED1 = "2069";//两黄变一红
 
 
+    //走势图
+
+    private static final String SHOOT = "1039";
+    private static final String SHOOTASIDE = "1040";
+    private static final String DANGERATTACK = "1026";
+    private static final String ATTACK = "1024";
+
+    private static final String SHOOT1 = "2063";
+    private static final String SHOOTASIDE1 = "2064";
+    private static final String DANGERATTACK1 = "2050";
+    private static final String ATTACK1 = "2048";
+
+
     /**
      * 未开
      */
@@ -204,7 +217,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private List<MatchTextLiveBean> matchLive;
     private List<Integer> allMatchLiveMsgId;
 
-    private List<MatchTimeLiveBean> eventMatchTimeLiveList;
+
+    private List<MatchTimeLiveBean> eventMatchTimeLiveList; //赛中文字直播事件帅选List
+
+    private List<MatchTextLiveBean> trendChartList; //赛中文字直播事件帅选List
 
 
     /**
@@ -258,14 +274,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private int mStartTime;// 获取推送的开赛时间
     private TextView reLoading; //赔率请求失败重新加载
 
-
-    /***
-     * 走势图
-     */
-    private ArrayList<Integer> homeCorners = new ArrayList<>();
-    private ArrayList<Integer> guestCorners = new ArrayList<>();
-    private ArrayList<Integer> homeDangers = new ArrayList<>();
-    private ArrayList<Integer> guestDangers = new ArrayList<>();
 
     private String shareHomeIconUrl;
 
@@ -484,7 +492,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     mOddsFragment.oddPlateRefresh(); //指数刷新
 
                     //走势图
-                    mStatisticsFragment.initData(mMatchDetail.getLiveStatus());
+                    mStatisticsFragment.initChartData(mMatchDetail.getLiveStatus());
                     //统计图
                     mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
                 }
@@ -686,7 +694,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             Collections.reverse(eventMatchTimeLiveList);
                             //直播事件
                             mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
-                            mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
+
+                            //  mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
 
                         }
@@ -827,6 +836,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 //直播事件
                 mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
 
+                //走势图
+                mStatisticsFragment.finishMatchRequest();
+
 
                 mTalkAboutBallFragment.setClickableLikeBtn(false);
 
@@ -904,8 +916,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 Collections.reverse(eventMatchTimeLiveList);
                 //直播事件
                 mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
-                mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
-                mStatisticsFragment.initData(mMatchDetail.getLiveStatus());
+
+                //走势图表
+                mStatisticsFragment.setTrendChartList(trendChartList);
+
+                mStatisticsFragment.initChartData(mMatchDetail.getLiveStatus());
 
 
                 //统计图
@@ -927,7 +942,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             //赛后赛中下面赔率显示
         }
 
-        mStatisticsFragment.setType(matchDetail.getLiveStatus());
 
         if (!isInitedViewPager) {
 
@@ -951,11 +965,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private void initMatchSatisInfo() {
 
         mathchStatisInfo = new MathchStatisInfo();
+
+
         for (MatchTextLiveBean m : matchLive) {
             switch (m.getCode().trim()) {
                 case "1029": //主队进球
                     mathchStatisInfo.setHome_score(mathchStatisInfo.getHome_score() + 1);
                     mathchStatisInfo.setHome_shoot_correct(mathchStatisInfo.getHome_shoot_correct() + 1);
+
                     break;
                 case "1030"://取消主队进球
                     mathchStatisInfo.setHome_score(mathchStatisInfo.getHome_score() - 1);
@@ -1089,7 +1106,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mathchStatisInfo.setHome_rescue(mathchStatisInfo.getGuest_shoot_correct() - mathchStatisInfo.getGuest_score());
         mathchStatisInfo.setGuest_rescue(mathchStatisInfo.getHome_shoot_correct() - mathchStatisInfo.getHome_score());
 
-        homeCorners.clear();
+      /*  homeCorners.clear();
         homeDangers.clear();
         guestCorners.clear();
         guestDangers.clear();
@@ -1100,12 +1117,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         homeCorners.add(0, 0);
         homeDangers.add(0, 0);
         guestCorners.add(0, 0);
-        guestDangers.add(0, 0);
+        guestDangers.add(0, 0);*/
 
-
-        //处理261
 
         eventMatchTimeLiveList = new ArrayList<>();
+
+        trendChartList = new ArrayList<>();
+
         if (matchLive == null) {
             return;
         }
@@ -1125,23 +1143,25 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
 
                 MatchTimeLiveBean timeLiveBean = null;
-                //  public MatchTimeLiveBean(String time, String code, String isHome, String msgId, String state, String playInfo, String enNum, int eventnum) {
-
-                if (bean1.getCode().equals("1055")) {
-                    L.d("ghhh", bean1.getMsgText());
-                }
-                if (bean1.getCode().equals("2079")) {
-                    L.d("ghhh", bean1.getMsgText());
-                }
 
                 if (HALFTIME.equals(bean1.getState()) && "1".equals(bean1.getCode())) {
-                    L.d("ghhh", bean1.getMsgText());
                     timeLiveBean = new MatchTimeLiveBean(bean1.getTime() + "", bean1.getCode(), bean1.getHomeScore() + " : " + bean1.getGuestScore(), bean1.getMsgId(), bean1.getState(), bean1.getPlayInfo(), bean1.getEnNum(), 0);
                 } else {
                     timeLiveBean = new MatchTimeLiveBean(bean1.getTime() + "", bean1.getCode(), place, bean1.getMsgId(), bean1.getState(), bean1.getPlayInfo(), bean1.getEnNum(), 0);
                 }
                 eventMatchTimeLiveList.add(timeLiveBean);
             }
+
+
+            if (bean1.getCode().equals(SCORE) || bean1.getCode().equals(SCORE1) || bean1.getCode().equals(CORNER) ||
+                    bean1.getCode().equals(CORNER1) || bean1.getCode().equals(SHOOT) || bean1.getCode().equals(SHOOT1) ||
+                    bean1.getCode().equals(SHOOTASIDE) || bean1.getCode().equals(SHOOTASIDE1) || bean1.getCode().equals(DANGERATTACK) ||
+                    bean1.getCode().equals(DANGERATTACK1) || bean1.getCode().equals(ATTACK) || bean1.getCode().equals(ATTACK1)) {
+
+                trendChartList.add(bean1);
+            }
+
+
         }
 
         for (MatchTextLiveBean bean : matchLive) {
@@ -1164,9 +1184,18 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     }
                 }
             }
-        }
 
-        // Collections.sort(eventMatchTimeLiveList, new FootballEventLiveComparator());
+
+            //统计走势图数据
+            Iterator<MatchTextLiveBean> trendIterator = trendChartList.iterator();
+            while (trendIterator.hasNext()) {
+                MatchTextLiveBean m = trendIterator.next();
+                if (m.getEnNum().equals(bean.getCancelEnNum())) {
+                    trendIterator.remove();
+                }
+
+            }
+        }
 
     }
 
@@ -1528,26 +1557,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 isMatchStart = false;
 
 
-                // 获取上半场的走势图数据
-                homeCorners.clear();
-                guestCorners.clear();
-                homeDangers.clear();
-                guestDangers.clear();
-                homeCorners = initMatchTrend("1025", "1050", mStartTime);
-                guestCorners = initMatchTrend("2049", "2074", mStartTime);
-                homeDangers = initMatchTrend("1026", null, mStartTime);
-                guestDangers = initMatchTrend("2050", null, mStartTime);
-                homeCorners.add(0, 0);
-                guestCorners.add(0, 0);
-                homeDangers.add(0, 0);
-                guestDangers.add(0, 0);
-
-
                 mStatisticsFragment.addFootBallEvent(matchTextLiveBean);
                 mStatisticsFragment.updateRecycleView(matchTextLiveBean.getState());
 
-                mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);// 刷新攻防走势图
-                mStatisticsFragment.initData(mMatchDetail.getLiveStatus());// 刷新攻防走势图
 
                 mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
                 mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());// 刷新统计
@@ -1567,28 +1579,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 trendFragment.initData();// 刷新攻防走势图
                 statisticsFragment.initData();// 刷新统计
 
-
-
-
                 //点赞不可点
                 ((FootballMatchDetailActivity) getActivity()).finishMatch();
 */
 
                 // 获取上半场的走势图数据
-                homeCorners.clear();
-                guestCorners.clear();
-                homeDangers.clear();
-                guestDangers.clear();
-                homeCorners = initMatchTrend("1025", "1050", mStartTime);
-                guestCorners = initMatchTrend("2049", "2074", mStartTime);
-                homeDangers = initMatchTrend("1026", null, mStartTime);
-                guestDangers = initMatchTrend("2050", null, mStartTime);
-                homeCorners.add(0, 0);
-                guestCorners.add(0, 0);
-                homeDangers.add(0, 0);
-                guestDangers.add(0, 0);
-                mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);// 刷新攻防走势图
-                mStatisticsFragment.initData("-1");// 刷新攻防走势图
 
                 mStatisticsFragment.addFootBallEvent(matchTextLiveBean);
                 mStatisticsFragment.updateRecycleView(matchTextLiveBean.getState());
@@ -2398,30 +2393,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             }
 
-            mStartTime = StadiumUtils.convertStringToInt(data.get("time"));
-            switch (mStartTime) {
-                case 15:
-                case 30:
-                case 45:
-                case 60:
-                case 75:
-                case 90:
-                    homeCorners.clear();
-                    guestCorners.clear();
-                    homeDangers.clear();
-                    guestDangers.clear();
-                    homeCorners = initMatchTrend("1025", "1050", mStartTime);
-                    guestCorners = initMatchTrend("2049", "2074", mStartTime);
-                    homeDangers = initMatchTrend("1026", null, mStartTime);
-                    guestDangers = initMatchTrend("2050", null, mStartTime);
-                    homeCorners.add(0, 0);
-                    guestCorners.add(0, 0);
-                    homeDangers.add(0, 0);
-                    guestDangers.add(0, 0);
-                    mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);// 刷新攻防走势图
-                    mStatisticsFragment.initData(mMatchDetail.getLiveStatus());
-                    break;
-            }
+
         }
     }
 

@@ -10,6 +10,11 @@ public class Bean {
     private String time;
     private String flag;
 
+    public Bean(String time, String flag) {
+        this.time = time;
+        this.flag = flag;
+    }
+
     public String getFlag() {
         return flag;
     }
