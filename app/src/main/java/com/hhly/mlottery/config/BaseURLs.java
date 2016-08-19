@@ -41,6 +41,34 @@ public class BaseURLs {
         return "m.13322.com";//发布版本
 
     }
+    /*
+    * 上传图片公网
+    * */
+
+    private static String PHOST = getPHost();
+
+
+    private static String getPHost() {
+        if (AppConstants.isTestEnv) {//开发不需要修改下面代码
+            int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.URL_1332255);
+
+//            url_config = DebugConfigActivity.URL_242;
+            if (url_config == DebugConfigActivity.URL_1332255) {
+                return "file.1332255.com";//测试环境
+            } else if (url_config == DebugConfigActivity.URL_242) {
+//                return "192.168.31.65:8181";
+                return "192.168.10.242:8181";//开发环境。
+//                return "192.168.12.242:8181";//余勇俊测试
+            } else {
+                return "file.13322.com";
+            }
+        }
+
+        //return "m.1332255.com";测试环境。
+        return "file.13322.com";//发布版本
+
+    }
+
 
     /**
      * 内网
@@ -87,6 +115,8 @@ public class BaseURLs {
     public final static String URL_API_HOST = HTTP + HOST + URL_SPLITTER + "mlottery/core/";
     /*新搜索特制url*/
     public final static String NEW_URL_API_HOST = HTTP + HOST + URL_SPLITTER + "mlottery/core";
+    /*上传图片新URl*/
+    public final static String NEW_URL_API_PHOST = HTTP + PHOST + URL_SPLITTER + "upload/";
     //视频直播
     private final static String URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
 
@@ -752,4 +782,6 @@ public class BaseURLs {
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
     /*模糊搜索*/
     public final static String FUZZYSEARCH ="/basketballData.fuzzySearch.do";
+    /*头像上传*/
+    public final static String UPLOADIMAGE=NEW_URL_API_PHOST+"uploadImage.do";
 }
