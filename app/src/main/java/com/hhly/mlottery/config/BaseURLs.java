@@ -556,6 +556,13 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DETAIL_FINDDEFENSECOUNTS_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDDEFENSECOUNTS;
     // 角球和攻防
     public final static String URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER;
+
+
+    //走势图表 进攻 危险进攻 射正 射偏
+
+    public final static String URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO = URL_API_HOST + "trendForm.findTrendForm.do";
+
+
     //分析
     public final static String URL_FOOTBALL_DETAIL_ANALYSIS_INFO = URL_API_HOST + URL_FOOTBALL_ANALYSIS;
     // 二期首页
@@ -746,6 +753,8 @@ public class BaseURLs {
     public final static String URL_SINA_LOGIN = URL_API_HOST + "androidUserCenter.loginWeibo.do";
 
     public final static String URL_WEIXIN_LOGIN = URL_API_HOST + "androidUserCenter.loginWeChat.do";
-    /**足球情报 - 大数据预测*/
+    /**
+     * 足球情报 - 大数据预测
+     */
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
 }

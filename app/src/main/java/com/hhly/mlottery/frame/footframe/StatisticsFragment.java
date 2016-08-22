@@ -36,8 +36,8 @@ import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
-import com.hhly.mlottery.bean.footballDetails.trend.Bean;
 import com.hhly.mlottery.bean.footballDetails.trend.FootballTrendBean;
+import com.hhly.mlottery.bean.footballDetails.trend.TrendBean;
 import com.hhly.mlottery.bean.footballDetails.trend.TrendFormBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -83,11 +83,13 @@ public class StatisticsFragment extends Fragment {
     //走势图表
     private static final String SHOOT = "1039";
     private static final String SHOOTASIDE = "1040";
+    private static final String SHOOTASIDE2 = "1041";
     private static final String DANGERATTACK = "1026";
     private static final String ATTACK = "1024";
 
     private static final String SHOOT1 = "2063";
     private static final String SHOOTASIDE1 = "2064";
+    private static final String SHOOTASIDE12 = "2065";
     private static final String DANGERATTACK1 = "2050";
     private static final String ATTACK1 = "2048";
 
@@ -236,6 +238,7 @@ public class StatisticsFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_statistics, container, false);
         mContext = getActivity();
         initView();
+        L.d("112233", "初始化View");
         return mView;
     }
 
@@ -647,7 +650,7 @@ public class StatisticsFragment extends Fragment {
     }
 
     private float getXMaxValue(float xMax, float range) {
-        
+
         return getXLabelCount(xMax, range) * range;
     }
 
@@ -714,10 +717,10 @@ public class StatisticsFragment extends Fragment {
         initChartValues();
 
         //射正
-        Iterator<Bean> shotHomeIterator = trendFormBean.getShot().getHome().iterator();
+        Iterator<TrendBean> shotHomeIterator = trendFormBean.getShot().getHome().iterator();
         int shotHome = 0;
         while (shotHomeIterator.hasNext()) {
-            Bean bean = shotHomeIterator.next();
+            TrendBean bean = shotHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 shootHomeColors.add(Color.GREEN);
             } else if (TREND_GOAL.equals(bean.getFlag())) {
@@ -732,11 +735,11 @@ public class StatisticsFragment extends Fragment {
         }
 
 
-        Iterator<Bean> shotGuestIterator = trendFormBean.getShot().getGuest().iterator();
+        Iterator<TrendBean> shotGuestIterator = trendFormBean.getShot().getGuest().iterator();
         int shotGuest = 0;
 
         while (shotGuestIterator.hasNext()) {
-            Bean bean = shotGuestIterator.next();
+            TrendBean bean = shotGuestIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 shootGuestColors.add(Color.GREEN);
             } else if (TREND_GOAL.equals(bean.getFlag())) {
@@ -765,10 +768,10 @@ public class StatisticsFragment extends Fragment {
 
 
         //射偏
-        Iterator<Bean> shotAsideHomeIterator = trendFormBean.getShepian().getHome().iterator();
+        Iterator<TrendBean> shotAsideHomeIterator = trendFormBean.getShepian().getHome().iterator();
         int shotAsideHome = 0;
         while (shotAsideHomeIterator.hasNext()) {
-            Bean bean = shotAsideHomeIterator.next();
+            TrendBean bean = shotAsideHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 shootAsideHomeColors.add(Color.GREEN);
                 L.d("rrt", bean.getTime());
@@ -788,10 +791,10 @@ public class StatisticsFragment extends Fragment {
         }
 
 
-        Iterator<Bean> shotAsideGuestIterator = trendFormBean.getShepian().getGuest().iterator();
+        Iterator<TrendBean> shotAsideGuestIterator = trendFormBean.getShepian().getGuest().iterator();
         int shotAsideGuest = 0;
         while (shotAsideGuestIterator.hasNext()) {
-            Bean bean = shotAsideGuestIterator.next();
+            TrendBean bean = shotAsideGuestIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 shootAsideGuestColors.add(Color.GREEN);
             } else if (TREND_GOAL.equals(bean.getFlag())) {
@@ -820,10 +823,10 @@ public class StatisticsFragment extends Fragment {
 
 
         //危险进攻
-        Iterator<Bean> dangerAttackHomeIterator = trendFormBean.getDangerousAttack().getHome().iterator();
+        Iterator<TrendBean> dangerAttackHomeIterator = trendFormBean.getDangerousAttack().getHome().iterator();
         int dangerAttackHome = 0;
         while (dangerAttackHomeIterator.hasNext()) {
-            Bean bean = dangerAttackHomeIterator.next();
+            TrendBean bean = dangerAttackHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 dangerousAttackHomeColors.add(Color.GREEN);
             } else if (TREND_GOAL.equals(bean.getFlag())) {
@@ -835,10 +838,10 @@ public class StatisticsFragment extends Fragment {
             dangerousAttackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackHome));
         }
 
-        Iterator<Bean> dangerAttackGusetIterator = trendFormBean.getDangerousAttack().getGuest().iterator();
+        Iterator<TrendBean> dangerAttackGusetIterator = trendFormBean.getDangerousAttack().getGuest().iterator();
         int dangerAttackGuest = 0;
         while (dangerAttackGusetIterator.hasNext()) {
-            Bean bean = dangerAttackGusetIterator.next();
+            TrendBean bean = dangerAttackGusetIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 dangerousAttackGuestColors.add(Color.GREEN);
             } else if (TREND_GOAL.equals(bean.getFlag())) {
@@ -867,10 +870,10 @@ public class StatisticsFragment extends Fragment {
 
 
         //进攻
-        Iterator<Bean> attackHomeIterator = trendFormBean.getAttack().getHome().iterator();
+        Iterator<TrendBean> attackHomeIterator = trendFormBean.getAttack().getHome().iterator();
         int attackHome = 0;
         while (attackHomeIterator.hasNext()) {
-            Bean bean = attackHomeIterator.next();
+            TrendBean bean = attackHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 attackHomeColors.add(Color.GREEN);
             } else if (TREND_GOAL.equals(bean.getFlag())) {
@@ -882,10 +885,10 @@ public class StatisticsFragment extends Fragment {
             attackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), attackHome));
         }
 
-        Iterator<Bean> attackGusetIterator = trendFormBean.getAttack().getGuest().iterator();
+        Iterator<TrendBean> attackGusetIterator = trendFormBean.getAttack().getGuest().iterator();
         int attackGuest = 0;
         while (attackGusetIterator.hasNext()) {
-            Bean bean = attackGusetIterator.next();
+            TrendBean bean = attackGusetIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 attackGuestColors.add(Color.GREEN);
             } else if (TREND_GOAL.equals(bean.getFlag())) {
@@ -919,12 +922,14 @@ public class StatisticsFragment extends Fragment {
         LineDataSet mGuestLineDataSet;
 
         if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-           /* mHomeLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            mHomeLineDataSet.setValues(homeEntry);
+            mHomeLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+            mGuestLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(1);
 
+            mHomeLineDataSet.setValues(homeEntry);
+            mGuestLineDataSet.setValues(guestEntry);
 
             mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();*/
+            mChart.notifyDataSetChanged();
         } else {
 
 
@@ -1047,7 +1052,17 @@ public class StatisticsFragment extends Fragment {
                     shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
                     shootAsideHomeColors.add(Color.TRANSPARENT);
                     break;
+                case SHOOTASIDE2:
+                    shotAsideHome++;
+                    shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
+                    shootAsideHomeColors.add(Color.TRANSPARENT);
+                    break;
                 case SHOOTASIDE1:
+                    shotAsideGuest++;
+                    shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
+                    shootAsideGuestColors.add(Color.TRANSPARENT);
+                    break;
+                case SHOOTASIDE12:
                     shotAsideGuest++;
                     shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
                     shootAsideGuestColors.add(Color.TRANSPARENT);
@@ -1153,12 +1168,22 @@ public class StatisticsFragment extends Fragment {
     }
 
 
-    public void addTrendChartEvent() {
+    public void addTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
+        trendChartList.add(matchTextLiveBean);
+        showTrendChart();
+
 
     }
 
-    public void cancelTrendChartEvent() {
-
+    public void cancelTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
+        Iterator<MatchTextLiveBean> iterator = trendChartList.iterator();
+        while (iterator.hasNext()) {
+            MatchTextLiveBean bean = iterator.next();
+            if (bean.getEnNum().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
+                iterator.remove();//用xMatchLive.remove会有异常
+            }
+        }
+        showTrendChart();
     }
 
 
@@ -1167,7 +1192,7 @@ public class StatisticsFragment extends Fragment {
      *
      * @return
      */
-    public void getVolleyData() {
+    private void getVolleyData() {
         if (getActivity() == null) {
             return;
         }
@@ -1180,28 +1205,34 @@ public class StatisticsFragment extends Fragment {
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("matchId", mThirdId);
 
-        //BaseURLs.URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER_INFO
+        // String url = "http://192.168.10.242:8181/mlottery/core/trendForm.findTrendForm.do";
 
-        String url = "http://192.168.10.242:8181/mlottery/core/trendForm.findTrendForm.do";
-
-        VolleyContentFast.requestJsonByPost(url, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
             @Override
             public void onResponse(FootballTrendBean jsonObject) {
                 if (jsonObject != null) {
                     if (!"200".equals(jsonObject.getResult())) {
                         return;
                     }
-                    trendFormBean = jsonObject.getTrendForm();
-                    mHandler.sendEmptyMessage(SUCCESS);
+
+                    if (jsonObject.getTrendForm() != null) {
+                        trendFormBean = null;
+                        trendFormBean = jsonObject.getTrendForm();
+                        mHandler.sendEmptyMessage(SUCCESS);
+                    }
 
                 } else {
                     // 后台没请求到数据
+                    L.d("112233", "走势请求失败");
+
                     mHandler.sendEmptyMessage(ERROR);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                L.d("112233", "走势请求失败" + exception);
+
                 mHandler.sendEmptyMessage(ERROR);// 访问失败
             }
         }, FootballTrendBean.class);
@@ -1215,15 +1246,12 @@ public class StatisticsFragment extends Fragment {
      */
     public void getVolleyDataStatic() {
 
-        L.d("456", "总计");
         mHandlerStatics.sendEmptyMessage(STARTLOADING);// 正在加载中
         Map<String, String> map = new HashMap<>();
         if (getActivity() == null) {
             return;
         } else {
             map.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
-
-            L.i("dddffdfd");
 
             VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO, map, new VolleyContentFast.ResponseSuccessListener<DataStatisInfo>() {
                 @Override

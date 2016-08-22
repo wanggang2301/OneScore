@@ -8,22 +8,23 @@ import java.util.List;
  * 时间:  2016/8/18 11:48
  */
 public class ShotBean {
-    private List<Bean> home;
-    private List<Bean> guest;
 
-    public List<Bean> getHome() {
+    private List<TrendBean> home;
+    private List<TrendBean> guest;
+
+    public List<TrendBean> getHome() {
         return home;
     }
 
-    public void setHome(List<Bean> home) {
+    public void setHome(List<TrendBean> home) {
         this.home = home;
     }
 
-    public List<Bean> getGuest() {
+    public List<TrendBean> getGuest() {
         return guest;
     }
 
-    public void setGuest(List<Bean> guest) {
+    public void setGuest(List<TrendBean> guest) {
         this.guest = guest;
     }
 }

@@ -618,10 +618,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="射正球门"
+                            android:text="@string/shoot_correct_txt"
                             android:textSize="@dimen/text_size_10" />
 
                         <TextView
+                            android:id="@+id/tv_shoot"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="3dp"
@@ -681,10 +682,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="射偏球门"
+                            android:text="@string/shoot_miss_txt"
                             android:textSize="@dimen/text_size_10" />
 
                         <TextView
+                            android:id="@+id/tv_shotAside"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="3dp"
@@ -745,10 +747,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="危险进攻"
+                            android:text="@string/danger_attack_txt"
                             android:textSize="@dimen/text_size_10" />
 
                         <TextView
+                            android:id="@+id/tv_dangerAttack"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="3dp"
@@ -809,7 +812,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="进攻"
+                            android:text="@string/shoot"
                             android:textSize="@dimen/text_size_10" />
 
                         <TextView

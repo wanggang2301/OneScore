@@ -30,7 +30,7 @@
         <com.hhly.mlottery.widget.ProgressWebView
             android:id="@+id/webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:nestedScrollingEnabled="false"
             android:scrollbars="none"></com.hhly.mlottery.widget.ProgressWebView>0

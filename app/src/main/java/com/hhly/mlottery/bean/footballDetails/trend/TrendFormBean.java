@@ -7,11 +7,12 @@ package com.hhly.mlottery.bean.footballDetails.trend;
  */
 public class TrendFormBean {
 
-
     private ShotBean shot;
     private ShepianBean shepian;
     private DangerousAttackBean dangerousAttack;
     private AttackBean attack;
+
+
 
     public ShotBean getShot() {
         return shot;
@@ -44,4 +45,7 @@ public class TrendFormBean {
     public void setAttack(AttackBean attack) {
         this.attack = attack;
     }
+
+
+
 }

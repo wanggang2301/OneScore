@@ -19,6 +19,7 @@ public class FootballTrendBean {
         this.trendForm = trendForm;
     }
 
+
     public String getResult() {
         return result;
     }
