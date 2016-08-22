@@ -80,7 +80,9 @@
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:divider="@color/linecolor"
+                    android:dividerHeight="0.5px"/>
 
                 <!--分割线-->
                 <View
@@ -113,7 +115,9 @@
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:divider="@color/linecolor"
+                    android:dividerHeight="0.5px"/>
 
                 <!--分割线-->
                 <View
@@ -145,7 +149,9 @@
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:divider="@color/linecolor"
+                    android:dividerHeight="0.5px"/>
 
                 <!--分割线-->
                 <View
@@ -177,7 +183,9 @@
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:divider="@color/linecolor"
+                    android:dividerHeight="0.5px"/>
                 <!--分割线-->
                 <View
                     android:layout_width="match_parent"
