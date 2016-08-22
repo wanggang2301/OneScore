@@ -22,7 +22,7 @@ import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.widget.GrapeGridsView;
+import com.hhly.mlottery.widget.GrapeGridView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -90,8 +90,8 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
 
     private boolean isCheckedDefualt;
 
-    private GrapeGridsView mGrapeGridViewHot;
-    private GrapeGridsView mGrapeGridViewOther;
+    private GrapeGridView mGrapeGridViewHot;
+    private GrapeGridView mGrapeGridViewOther;
 
 
     @Override
@@ -118,8 +118,8 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
         View view = inflater.inflate(R.layout.frage_filtrate_match, container, false);
 
         //mGridView = (GridView) view.findViewById(R.id.filtrate_match_gridview);
-        mGrapeGridViewHot = (GrapeGridsView) view.findViewById(R.id.filtrate_match_gridview_hot);
-        mGrapeGridViewOther = (GrapeGridsView) view.findViewById(R.id.filtrate_match_gridview_other);
+        mGrapeGridViewHot = (GrapeGridView) view.findViewById(R.id.filtrate_match_gridview_hot);
+        mGrapeGridViewOther = (GrapeGridView) view.findViewById(R.id.filtrate_match_gridview_other);
         // 国际版3列
         if (AppConstants.isGOKeyboard) {
             columns = 3;

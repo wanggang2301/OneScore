@@ -25,7 +25,7 @@
                 android:text="@string/hot_score_txt"
                 android:textSize="14sp" />
 
-            <com.hhly.mlottery.widget.GrapeGridsView
+            <com.hhly.mlottery.widget.GrapeGridView
                 android:id="@+id/cpi_filtrate_match_gridview_hot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:text="@string/other_score_txt"
                 android:textSize="14sp" />
 
-            <com.hhly.mlottery.widget.GrapeGridsView
+            <com.hhly.mlottery.widget.GrapeGridView
                 android:id="@+id/cpi_filtrate_match_gridview_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

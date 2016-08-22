@@ -26,7 +26,7 @@
                 android:textSize="14sp"
                 />
 
-            <com.hhly.mlottery.widget.GrapeGridsView
+            <com.hhly.mlottery.widget.GrapeGridView
                 android:id="@+id/filtrate_match_gridview_hot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:textSize="14sp"
                 />
 
-            <com.hhly.mlottery.widget.GrapeGridsView
+            <com.hhly.mlottery.widget.GrapeGridView
                 android:id="@+id/filtrate_match_gridview_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
