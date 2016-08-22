@@ -782,6 +782,8 @@ public class BaseURLs {
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
     /*模糊搜索*/
     public final static String FUZZYSEARCH ="/basketballData.fuzzySearch.do";
-    /*头像上传*/
+    /*头像图片上传*/
     public final static String UPLOADIMAGE=NEW_URL_API_PHOST+"uploadImage.do";
+    /*头像URL上传*/
+    public final static String UPDATEHEADICON = URL_API_HOST + "androidUserCenter.updateHeadIcon.do";
 }

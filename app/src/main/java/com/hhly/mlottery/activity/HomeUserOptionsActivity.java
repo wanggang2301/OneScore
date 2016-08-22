@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +23,9 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -33,11 +37,15 @@ import java.util.Map;
  */
 public class HomeUserOptionsActivity extends BaseActivity implements View.OnClickListener {
 
-    private RelativeLayout rl_language_frame;// 语言切换
-    private RelativeLayout rl_about_frame;// 关于我们
-    private RelativeLayout rl_user_feedback;// 反馈
+    /**语言切换**/
+    private RelativeLayout rl_language_frame;
+    /**关于我们**/
+    private RelativeLayout rl_about_frame;
+    /**反馈**/
+    private RelativeLayout rl_user_feedback;
     private ProgressDialog progressBar;
-
+    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
+    private  DisplayImageOptions options;
     /**
      * 跳转其他Activity 的requestcode
      */
@@ -57,6 +65,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 case LOGGED_ON:
                     //mTv_nickname.setVisibility(View.VISIBLE);
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
+                    universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mUser_image, options);
                     mTv_nickname.setEnabled(false);
                     mTv_logout.setVisibility(View.VISIBLE);
                     findViewById(R.id.view_top).setVisibility(View.VISIBLE);
@@ -72,7 +81,21 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.mipmap.center_head)   //默认图片
+                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
+                .resetViewBeforeLoading(true)
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
+        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
+        universalImageLoader.init(config);
         initView();
+
     }
     /**
      * 初始化控件
@@ -95,7 +118,6 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         //头像
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
-
 
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
@@ -142,8 +164,6 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.user_info_image: //用户信息
                 MobclickAgent.onEvent(mContext, "ProfileActivity_Start");
-
-
                 if (CommonUtils.isLogin()) {
                     startActivity(new Intent(this, ProfileActivity.class));
                 } else {

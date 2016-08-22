@@ -199,6 +199,8 @@ public class AppConstants {
 
 
 	// ============= account begin ==============
+    /**保存userId的key*/
+    public static final String HEADICON = "headIcon";
 	/**保存userId的key*/
 	public static final String SPKEY_USERID = "userId";
 	/**保存token的key*/
