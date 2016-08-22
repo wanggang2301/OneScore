@@ -2579,9 +2579,37 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        L.d("xxx",">>>requestCode:" + requestCode);
+        L.d("xxx",">>>resultCode:" + resultCode);
         if (requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_FOOT && resultCode == -1) {
             joinRoom();
         }
+        if(requestCode == CyUtils.JUMP_COMMENT_QUESTCODE){
+            switch (resultCode) {
+                case CyUtils.RESULT_OK:
+                    mTalkAboutBallFragment.getResultOk();
+                    break;
+                case CyUtils.RESULT_CODE://接收评论输入页面返回
+                    mTalkAboutBallFragment.getResultCode();
+                    break;
+                case CyUtils.RESULT_BACK://接收评论输入页面返回
+                    mTalkAboutBallFragment.getResultBack();
+                    break;
+            }
+        }
+    }
+    // 评论登录跳转
+    public void talkAboutBallLoginFoot(){
+        //跳转登录界面
+        Intent intent1 = new Intent(mContext, LoginActivity.class);
+        startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+    }
+
+    // 发表评论跳转
+    public void talkAboutBallSendFoot(long topicid){
+        Intent intent2 = new Intent(mContext, InputActivity.class);
+        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+        startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
     private void popWindow(View v) {

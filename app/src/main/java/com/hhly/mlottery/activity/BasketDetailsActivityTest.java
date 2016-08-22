@@ -43,6 +43,7 @@ import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -348,7 +349,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private void initView() {
         // 初始化加载框
         pd = new ProgressDialog(this);
-        pd.setCancelable(false);
+        pd.setCanceledOnTouchOutside(false);
         pd.setMessage(getResources().getString(R.string.loading_data_txt));
         // 初始化悬浮按钮
         iv_join_room_basket = (ImageView) findViewById(R.id.iv_join_room_basket);
@@ -624,9 +625,38 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        L.d("xxx",">>>requestCode:" + requestCode);
+        L.d("xxx",">>>resultCode:" + resultCode);
         if(requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_BASKET && resultCode == -1){
             joinRoom();
         }
+        if(requestCode == CyUtils.JUMP_COMMENT_QUESTCODE){
+            switch (resultCode) {
+                case CyUtils.RESULT_OK:
+                    mTalkAboutBallFragment.getResultOk();
+                    break;
+                case CyUtils.RESULT_CODE://接收评论输入页面返回
+                    mTalkAboutBallFragment.getResultCode();
+                    break;
+                case CyUtils.RESULT_BACK://接收评论输入页面返回
+                    mTalkAboutBallFragment.getResultBack();
+                    break;
+            }
+        }
+    }
+
+    // 评论登录跳转
+    public void talkAboutBallLoginBasket(){
+        //跳转登录界面
+        Intent intent1 = new Intent(mContext, LoginActivity.class);
+        startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+    }
+
+    // 发表评论跳转
+    public void talkAboutBallSendBasket(long topicid){
+        Intent intent2 = new Intent(mContext, InputActivity.class);
+        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+        startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
     @Override
