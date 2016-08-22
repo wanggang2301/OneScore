@@ -278,7 +278,7 @@
     <string name="about_us_txt">關於我們</string>
     <string name="about_ver_update_txt">版本更新</string>
     <string name="about_product_intro_txt">產品簡介</string>
-    <string name="about_product_msg_txt">壹比分，一直專注於體育比分和彩票開獎的產品，目前比分、角球響應速度業內領先。</string>
+    <string name="about_product_msg_txt">壹比分，一直專注於體育比分的產品，目前比分、角球響應速度業內領先。</string>
     <string name="about_product_msg_txt_simple">壹比分，一直專注於體育比分的產品，目前比分、角球響應速度業內領先。</string>
     <string name="about_pc_txt">PC電腦端</string>
     <string name="about_pc_msg_txt">www.13322.com</string>
@@ -769,6 +769,9 @@
     <string name="basket_database_details_leagueMost_avg_score">場均得分 : </string>
 
     <string name="basket_database_details_leagueMost_allmatch">全部比賽</string>
+    <string name="basket_database_details_leagueMost_homematch">主場比賽</string>
+    <string name="basket_database_details_leagueMost_guestmatch">客場比賽</string>
+
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
