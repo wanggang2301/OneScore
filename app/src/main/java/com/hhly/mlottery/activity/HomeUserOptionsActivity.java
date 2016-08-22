@@ -65,7 +65,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 case LOGGED_ON:
                     //mTv_nickname.setVisibility(View.VISIBLE);
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-                    universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mUser_image, options);
+                    universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mUser_image, options);
                     mTv_nickname.setEnabled(false);
                     mTv_logout.setVisibility(View.VISIBLE);
                     findViewById(R.id.view_top).setVisibility(View.VISIBLE);

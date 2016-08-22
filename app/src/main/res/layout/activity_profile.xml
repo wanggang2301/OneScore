@@ -2,6 +2,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/whitesmoke"
               android:orientation="vertical"
               android:id="@+id/profile_main"
@@ -33,28 +34,30 @@
             />
 
 
-        <ImageView
+        <com.hhly.mlottery.view.CircleImageView
             android:id="@+id/head_portrait"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/tv_pic"
             android:src="@mipmap/center_head"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/light"
             />
 
 
-        <!--<ImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:src="@mipmap/plate_icon"
-            />-->
+            />
 
     </RelativeLayout>
 

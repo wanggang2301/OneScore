@@ -25,6 +25,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -87,10 +88,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private static final String IMAGE = "image.png";
     private static final String STORAGGEID = "/headview";
 
-
     private PopupWindow mPopupWindow;
-
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("application/octet-stream");
 
 
 
@@ -115,14 +114,15 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         mHead_portrait = (ImageView) findViewById(R.id.head_portrait);
         mHead_portrait.setOnClickListener(this);
         findViewById(R.id.modify_avatar).setOnClickListener(this);
-        if (Environment
+
+      /*  if (Environment
                 .getExternalStoragePublicDirectory(IMAGE_STORAGGEID).exists()) {
             Bitmap bm = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(IMAGE_STORAGGEID).toString());
             mHead_portrait.setImageBitmap(bm);
         } else {
             mHead_portrait.setImageResource(R.mipmap.smallhead);
 
-        }
+        }*/
         ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.profile);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
@@ -163,7 +163,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.modify_avatar: //修改头像
 
-              //  setHeadView(v);
+              setHeadView(v);
                 break;
             case R.id.tv_photograph:  //拍照
                 doTakePhoto();
@@ -355,9 +355,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                                 Log.i(TAG,"图片已保存至:" + outFile.getAbsolutePath());
                                 //BaseURLs.UPLOADIMAGE
 
-                                String url="http://file.13322.com/upload/uploadImage.do";
-                                doPostSycn(url,outFile);
-                                 System.out.println("url>>>>>>>>>>>>>>>>>>>>>>>"+outFile.toString());
+                                 String url="http://file.13322.com/upload/uploadImage.do";
+                                 doPostSycn(url,outFile);
+                                //System.out.println("url>>>>>>>>>>>>>>>>>>>>>>>"+outFile.toString());
                                 //putPhotoUrl("http://pic.13322.com/basketball/team/135_135/1.png");
 
                             } else {
@@ -405,23 +405,16 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
              @Override
              public void onResponse(Response response) throws IOException {
                  Log.d(TAG, "onResponse: ");
-             /*   if (response.isSuccessful()){
-                   // String jsonString=response.body().string();
-                   // JSONObject jo = JSON.parseObject(jsonString);
-                    //UiUtils.toast(MyApp.getInstance(), jo.toString());
-                   //String headerUrl = jo.getString("url");
-                   // System.out.println("url>>>>>>>>>>>>>>>>>>>>>>>"+jsonString);
-                    putPhotoUrl("http://pic.13322.com/basketball/team/135_135/1.png");
 
-                }else{
-                    throw new IOException("Unexpected code " + response);
-                }*/
                   String jsonString=response.body().string();
                   JSONObject jo = JSON.parseObject(jsonString);
                   //UiUtils.toast(MyApp.getInstance(), jo.toString());
                   String headerUrl = jo.getString("url");
-                  System.out.println("url+++++++++++++++++>>>>>"+jsonString);
-                  putPhotoUrl(headerUrl);
+                 if(!headerUrl.isEmpty()){
+                     putPhotoUrl(headerUrl);
+                 }else{
+                     UiUtils.toast(MyApp.getInstance(), "图片上传失败!");
+                 }
 
 
              }
@@ -435,7 +428,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private void putPhotoUrl(String headerUrl) {
 
         //final String url = BaseURLs.UPDATEHEADICON;
-        final String url = "http://192.168.10.242:8181/mlottery/core/androidUserCenter.updateHeadIcon.do";
+
         Map<String, String> param = new HashMap<>();
 
         Log.d(TAG, AppConstants.deviceToken);
@@ -447,13 +440,14 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         Log.d(TAG, AppConstants.deviceToken);
         param.put("imgUrl", headerUrl);
 
-        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.UPDATEHEADICON, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
 
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), "图片上传成功");
-                    CommonUtils.saveRegisterInfo(register);
+                   // CommonUtils.saveRegisterInfo(register);
+                    PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
