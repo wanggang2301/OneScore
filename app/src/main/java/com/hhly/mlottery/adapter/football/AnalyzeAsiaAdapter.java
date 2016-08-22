@@ -204,8 +204,8 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
      */
     private void setScore(String point, TextView score) {
         String a[]=point.split("-");
-        String text1="<font color='#dd2f1c'><b>" +a[0]+ "</b></font> "+"<font color='#333333'><b>" +"-"+a[1]+ "</b></font> ";//第一个比分是主队
-        String text2="<font color='#333333'><b>" +a[0]+"-"+ "</b></font> "+"<font color='#dd2f1c'><b>" +a[1]+ "</b></font> ";//第二个比分是主队
+        String text1="<font color='#f15353'><b>" +a[0]+ "</b></font> "+"<font color='#333333'><b>" +"- "+a[1]+ "</b></font> ";//第一个比分是主队
+        String text2="<font color='#333333'><b>" +a[0]+" -"+ "</b></font> "+"<font color='#f15353'><b>" +a[1]+ "</b></font> ";//第二个比分是主队
         if(a[2].equals("1")){ //第一个比分是主队，即2-1 中 2需要标红
             score.setText(Html.fromHtml(text1));
         }else if(a[2].equals("2")){ //第二个比分是主队 即 2-1中 1需要标红

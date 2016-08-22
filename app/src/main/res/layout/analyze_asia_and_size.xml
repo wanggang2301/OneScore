@@ -19,43 +19,7 @@
             android:textColor="@color/analyze_title"
             android:textSize="@dimen/text_size_13"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:text="@string/new_analyze_guest"
-            android:textSize="@dimen/text_size_10"
-            android:textColor="@color/history_win"
-            android:id="@+id/textView3" />
-        <ImageView
-            android:id="@+id/image_small_circular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/small_circular"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/textView3"
-            android:layout_marginRight="5dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="@string/new_analyze_home"
-            android:textSize="@dimen/text_size_10"
-            android:textColor="@color/history_win"
-            android:layout_toLeftOf="@id/image_small_circular"
-            android:id="@+id/textView4" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/small_triangle"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/textView4"
-            android:layout_marginRight="5dp"
-            />
+
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -70,23 +34,29 @@
         android:orientation="vertical"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
+        android:visibility="gone"
         >
         <TextView
             android:id="@+id/tv_analyze_let1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text=""
-            android:textSize="@dimen/text_size_13"
+            android:textSize="13sp"
             />
         <TextView
             android:id="@+id/tv_analyze_let2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:text=""
-            android:textSize="@dimen/text_size_13"
+            android:textSize="13sp"
+            />
+        <TextView
+            android:id="@+id/tv_analyze_let3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text=""
             android:layout_marginBottom="10dp"
             />
 
@@ -96,6 +66,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:orientation="horizontal"-->
+                <!--&gt;-->
+
+            <!--</LinearLayout>-->
             <!--赢 走 输-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -372,6 +349,60 @@
             </LinearLayout>
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            >
+
+            <ImageView
+                android:id="@+id/image_small_triangle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/small_triangle"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/new_analyze_home"
+                android:textSize="@dimen/text_size_10"
+                android:textColor="@color/history_win"
+                android:layout_toRightOf="@id/image_small_triangle"
+                android:paddingLeft="5dp"
+                android:id="@+id/textView4" />
+            <ImageView
+                android:id="@+id/image_small_circular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/small_circular"
+                android:layout_toRightOf="@id/textView4"
+                android:paddingLeft="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/new_analyze_guest"
+                android:textSize="@dimen/text_size_10"
+                android:textColor="@color/history_win"
+                android:layout_toRightOf="@id/image_small_circular"
+                android:paddingLeft="5dp"
+                android:id="@+id/textView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mdy_999"
+                android:text="@string/new_analyze_description"
+                android:layout_toRightOf="@id/textView3"
+                android:textSize="10sp"
+                android:paddingLeft="10dp"
+                />
+        </RelativeLayout>
         <RadioGroup
             android:id="@+id/radio_group_let"
             android:layout_width="260dp"
@@ -447,43 +478,6 @@
             android:textColor="@color/analyze_title"
             android:textSize="@dimen/text_size_13"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:text="@string/new_analyze_guest"
-            android:textSize="@dimen/text_size_10"
-            android:textColor="@color/history_win"
-            android:id="@+id/textView5" />
-        <ImageView
-            android:id="@+id/image_small_circular1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/small_circular"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/textView5"
-            android:layout_marginRight="5dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="@string/new_analyze_home"
-            android:textSize="@dimen/text_size_10"
-            android:textColor="@color/history_win"
-            android:layout_toLeftOf="@id/image_small_circular1"
-            android:id="@+id/textView6" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/small_triangle"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/textView6"
-            android:layout_marginRight="5dp"
-            />
     </RelativeLayout>
     <View
 
@@ -504,7 +498,6 @@
             android:id="@+id/tv_analyze_size1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text=""
             android:textSize="@dimen/text_size_13"
@@ -513,7 +506,13 @@
             android:id="@+id/tv_analyze_size2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:text=""
+            android:textSize="@dimen/text_size_13"
+            />
+        <TextView
+            android:id="@+id/tv_analyze_size3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text=""
             android:textSize="@dimen/text_size_13"
             android:layout_marginBottom="10dp"
@@ -800,6 +799,60 @@
             </LinearLayout>
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            >
+
+            <ImageView
+                android:id="@+id/image_small_triangle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/small_triangle"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/new_analyze_home"
+                android:textSize="@dimen/text_size_10"
+                android:textColor="@color/history_win"
+                android:layout_toRightOf="@id/image_small_triangle1"
+                android:paddingLeft="5dp"
+                android:id="@+id/textView6" />
+            <ImageView
+                android:id="@+id/image_small_circular1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/small_circular"
+                android:layout_toRightOf="@id/textView6"
+                android:paddingLeft="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/new_analyze_guest"
+                android:textSize="@dimen/text_size_10"
+                android:textColor="@color/history_win"
+                android:layout_toRightOf="@id/image_small_circular1"
+                android:paddingLeft="5dp"
+                android:id="@+id/textView5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mdy_999"
+                android:text="@string/new_analyze_description"
+                android:layout_toRightOf="@id/textView5"
+                android:textSize="10sp"
+                android:paddingLeft="10dp"
+                />
+        </RelativeLayout>
         <RadioGroup
             android:id="@+id/radio_group_size"
             android:layout_width="260dp"

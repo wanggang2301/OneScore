@@ -829,7 +829,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED, matchDetail);
 
 
-            } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
+            } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) { //未完场头部
 
 
                 //place  1主队 2客队

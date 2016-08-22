@@ -969,7 +969,7 @@
     <string name="intelligence_guest_recent">客隊近期</string>
     <string name="version_update_title">升級包下載中，請稍後...</string>
     <string name="new_analyze_big_small_ball">大小球</string>
-    <string name="new_analyze_changjiaofeng">場交鋒，主隊</string>
+    <string name="new_analyze_changjiaofeng">場歷史交鋒</string>
     <string name="new_analyze_cidaqiu">次大球</string>
     <string name="new_analyze_cixiaoqiu">次小球</string>
     <string name="new_analyze_ciyingpan">次贏盤</string>
@@ -989,6 +989,7 @@
     <string name="new_analyze_score">比分</string>
     <string name="new_analyze_result">結果</string>
     <string name="new_analyze_liangduijin">兩隊近</string>
+    <string name="new_analyze_description">(比分紅色為主隊)</string>
     <!--情报分析-->
     <string name="intelligent_all_game">全部比賽</string>
     <string name="intelligent_same_game">相同主客場</string>
@@ -1031,4 +1032,5 @@
     <string name="rong_input_prompt4">我從不說謊，除啦這句話以外。</string>
     <string name="rong_input_prompt5">沈默是金.沈默久了就會有很多金子嗎？</string>
     <string name="rong_input_prompt6">元芳怎麽看？</string>
+    <string name="new_analyze_recent_game">6场近期各自比赛</string>
 </resources>
