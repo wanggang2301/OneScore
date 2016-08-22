@@ -160,7 +160,7 @@ public class FootballActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         CpiFiltrateActivity.mCheckedIds.clear();
-        CpiFiltrateActivity.isDefualHot = true;
+        CpiFiltrateActivity.isDefaultHot = true;
         if (ImmediateFragment.imEventBus != null) {
             ImmediateFragment.imEventBus.unregister(ImmediateFragment.class);
         }
