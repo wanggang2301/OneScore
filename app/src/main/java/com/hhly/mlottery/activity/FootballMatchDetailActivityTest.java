@@ -1,14 +1,15 @@
 package com.hhly.mlottery.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -93,7 +94,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import io.rong.imlib.model.Conversation;
 import me.relex.circleindicator.CircleIndicator;
 
 /**
@@ -296,6 +296,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private TimerTask timerTask;
 
     private FloatingActionButton fab_join_room_foot;// 聊天室悬浮按钮
+    private ProgressDialog pd;// 加载框
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,7 +314,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         }
 
         RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
-        System.out.println("RongYunUtils>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>创建聊天室了");
 
         L.e(TAG, "mThirdId = " + mThirdId);
 
@@ -369,7 +369,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
     private void initView() {
-
+        // 初始化加载框
+        pd = new ProgressDialog(this);
+        pd.setCancelable(false);
+        pd.setMessage(getResources().getString(R.string.loading_data_txt));
+        // 初始化悬浮按钮
         fab_join_room_foot = (FloatingActionButton) findViewById(R.id.fab_join_room_foot);
         fab_join_room_foot.setOnClickListener(this);
 
@@ -1273,7 +1277,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        RongYunUtils.isCreateChartRoom = false;// 修改创建聊天室状态
         if (footballTimer != null) {
             L.d("timer", "footballdetails定时器");
             footballTimer.cancel();
@@ -2544,22 +2548,39 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
      */
     private void joinRoom() {
         if (CommonUtils.isLogin()) {// 判断是否登录
-
-            // 判断融云是否连接成功，聊天室是否创建成功 TODO
-
-            // OK---》进入  否则--》显示加载框
-
-            RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+            pd.show();
+            fab_join_room_foot.setVisibility(View.GONE);
+            if(RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom){
+                pd.dismiss();
+                appBarLayout.setExpanded(true);// 显示头部内容
+                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+            }else{
+                new Thread(){
+                    @Override
+                    public void run() {
+                        while (!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom){
+                            SystemClock.sleep(1000);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pd.dismiss();
+                                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+                            }
+                        });
+                    }
+                }.start();
+            }
         }else{
             // 跳转到登录界面
             Intent intent1 = new Intent(mContext, LoginActivity.class);
-            startActivityForResult(intent1, RongYunUtils.CHART_ROOM_QUESTCODE);
+            startActivityForResult(intent1, RongYunUtils.CHART_ROOM_QUESTCODE_FOOT);
         }
     }
 
     @Override
-    public void onActivityReenter(int resultCode, Intent data) {
-        if(resultCode == RongYunUtils.CHART_ROOM_QUESTCODE){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_FOOT){
             joinRoom();
         }
     }
@@ -2764,6 +2785,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
+        fab_join_room_foot.setVisibility(View.VISIBLE);// 显示悬浮按钮
         MobclickAgent.onResume(this);
         if (isDetailsRollballFragment) {
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");

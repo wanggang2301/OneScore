@@ -36,7 +36,8 @@ public class RongYunUtils {
     //测试appkey和appsecret
     public static final String APPKEY = "3argexb6r6c1e";
     public static final String APPSECRET = "l0Fu9Kn0uqO";
-    public static final int CHART_ROOM_QUESTCODE = 5;// 跳转登录界面的请求码
+    public static final int CHART_ROOM_QUESTCODE_FOOT = 5;// 足球跳转登录界面的请求码
+    public static final int CHART_ROOM_QUESTCODE_BASKET = 6;// 篮球跳转登录界面的请求码
 
     public static final String CHART_ROOM_ID = "chartRoomId";// 聊天室id  key
     public static final String CHART_ROOM_NAME = "chartBall";// 聊天室名称
