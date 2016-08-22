@@ -214,7 +214,7 @@ public class CPIOddsFragment extends Fragment {
     public void updateFilterData() {
         filterData.clear();
         LinkedList<String> filterList = parentFragment.getFilterList();
-        if (filterList != null && filterList.size() > 0) {
+        if (filterList != null) {
             for (NewOddsInfo.AllInfoBean allInfo : defaultData) {
                 if (filterList.indexOf(allInfo.getLeagueId()) >= 0) {
                     filterAllInfo(allInfo);
