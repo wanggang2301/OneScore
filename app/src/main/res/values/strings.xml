@@ -1011,6 +1011,7 @@
     <string name="new_analyze_cixiaoqiu">次小球</string>
     <string name="new_analyze_daqiulv">大球率</string>
     <string name="new_analyze_description">(比分红色为主队)</string>
+    <string name="new_analyze_recent_game">6场近期各自比赛</string>
     <!--情报分析-->
     <string name="intelligent_all_game">全部比赛</string>
     <string name="intelligent_same_game">相同主客场</string>
@@ -1056,6 +1057,5 @@
     <string name="rong_input_prompt4">我从不说谎，除啦这句话以外。</string>
     <string name="rong_input_prompt5">沉默是金.沉默久了就会有很多金子吗？</string>
     <string name="rong_input_prompt6">元芳怎么看？</string>
-    <string name="new_analyze_recent_game">6场近期各自比赛</string>
 
 </resources>
