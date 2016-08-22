@@ -43,14 +43,12 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         setContentView(R.layout.conversationlist);
         mContext = this;
         // 设置聊天室背景色为透明
-        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.transparency));
+//        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.transparency));
 
-        this.overridePendingTransition(R.anim.slide_in_from_bottom, 0);// 开启动画
+        findViewById(R.id.ll_top).setOnClickListener(this);
 
-        findViewById(R.id.home_like).setOnClickListener(this);
-        findViewById(R.id.guest_like).setOnClickListener(this);
-        findViewById(R.id.bt_comment).setOnClickListener(this);
-        findViewById(R.id.ll_other).setOnClickListener(this);
+        this.overridePendingTransition(R.anim.slide_in_from_bottom,0);// 开启动画
+
 
         String userTestPhoto = "http://m.1332255.com/news/upload/shortcut/69c426f0f0974d4b8aae0826da71f751.png";// 用户使用测试头像
 //        String userTestPhoto = "http://m.1332255.com/oms/upload/shortcut/90b503d1d34d4bc19d4f2e8a0ee43b63.png";// 用户使用测试头像
@@ -60,26 +58,6 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         RongIM.getInstance().setCurrentUserInfo(mUserInfo);
         RongIM.getInstance().setMessageAttachedUserInfo(true);
         RongIM.getInstance().refreshUserInfoCache(mUserInfo);// 刷新本地用户缓存
-
-        initInput();
-    }
-
-    /**
-     * 初始化输入框提示语
-     */
-    private void initInput() {
-        String[] prompts = {mContext.getResources().getString(R.string.rong_input_prompt1),
-                mContext.getResources().getString(R.string.rong_input_prompt2),
-                mContext.getResources().getString(R.string.rong_input_prompt3),
-                mContext.getResources().getString(R.string.rong_input_prompt4),
-                mContext.getResources().getString(R.string.rong_input_prompt5),
-                mContext.getResources().getString(R.string.rong_input_prompt6)};
-
-        Random random = new Random();
-
-        // 设置默认输入语
-        TextInputProvider textInputProvider = (TextInputProvider) RongContext.getInstance().getPrimaryInputProvider();
-        textInputProvider.setEditTextContent(prompts[random.nextInt(prompts.length)]);
     }
 
     @Override
@@ -88,37 +66,16 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         super.finish();
         RongYunUtils.quitChatRoom();// 退出聊天室
         RongYunUtils.isJoinChartRoom = false;
-        EventBus.getDefault().post(new FirstEvent(RongYunUtils.TALK_COMMENT));
-        this.overridePendingTransition(R.anim.slide_in_from_top, 0);// 关闭动画
+        this.overridePendingTransition(0,R.anim.slide_in_from_top);// 关闭动画
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.home_like: // 主队点赞
-                EventBus.getDefault().post(new FirstEvent(RongYunUtils.HOME_LIKE));
-                break;
-            case R.id.guest_like: // 客队点赞
-                EventBus.getDefault().post(new FirstEvent(RongYunUtils.GUEST_LIKE));
-                break;
-            case R.id.bt_comment: // 评论按钮
-            case R.id.ll_other: // 点击外部，关闭聊天界面
+        switch (v.getId()){
+            case R.id.ll_top:
                 this.finish();
                 break;
         }
-    }
-
-    /**
-     * 如果向右滑动，也关闭聊天界面
-     *
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-
-        return super.onTouchEvent(event);
     }
 
     /**

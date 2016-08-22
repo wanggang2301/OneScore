@@ -63,6 +63,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_join_room_basket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="60dp"
+            android:src="@mipmap/join_room_icon"
+            app:elevation="0dp"
+            app:borderWidth="0dp"
+            app:backgroundTint="@color/chart_bt_color"
+            app:rippleColor="@color/chart_bt_click_color"
+            app:pressedTranslationZ="5dp"/>
+
     </android.support.design.widget.CoordinatorLayout>
 
 </com.hhly.mlottery.widget.ExactSwipeRefrashLayout>
