@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.cpiadapter.CpiFiltrateMatchAdapter;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
-import com.hhly.mlottery.widget.GrapeGridView;
+import com.hhly.mlottery.widget.GrapeGridsView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -27,8 +27,8 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
     private CpiFiltrateMatchAdapter mCpiAdapterOther;
     private ImageView public_img_back;// 筛选界面返回
     private Context mContext;
-    private GrapeGridView cpiGridViewHot;
-    private GrapeGridView cpiGridViewOther;
+    private GrapeGridsView cpiGridViewHot;
+    private GrapeGridsView cpiGridViewOther;
 
     public static boolean isDefaultHot = true;
 
@@ -87,8 +87,8 @@ public class CpiFiltrateActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.public_txt_title).setVisibility(View.GONE);
         public_img_back = (ImageView) findViewById(R.id.public_img_back);
         public_img_back.setOnClickListener(this);
-        cpiGridViewHot = (GrapeGridView) findViewById(R.id.cpi_filtrate_match_gridview_hot);
-        cpiGridViewOther = (GrapeGridView) findViewById(R.id.cpi_filtrate_match_gridview_other);
+        cpiGridViewHot = (GrapeGridsView) findViewById(R.id.cpi_filtrate_match_gridview_hot);
+        cpiGridViewOther = (GrapeGridsView) findViewById(R.id.cpi_filtrate_match_gridview_other);
         //场次，热门，全选，反选，重置,确定
         cpi_filtrate_match_hide_number = (TextView) findViewById(R.id.cpi_filtrate_match_hide_number);
         cpi_filtrate_match_hot_btn = (TextView) findViewById(R.id.cpi_filtrate_match_hot_btn);
