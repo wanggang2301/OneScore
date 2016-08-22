@@ -224,6 +224,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_analyze_fragment, container, false);
         mAnalyzeBean=new NewAnalyzeBean();
+        mHomeName=getString(R.string.intelligent_home);
+        mGuestName=getString(R.string.intelligent_guest);
         initView();
         initData();
         setListener();
@@ -307,7 +309,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mTextLet3= (TextView) mView.findViewById(R.id.tv_analyze_let3);
         mLetListView= (ListView) mView.findViewById(R.id.lv_analyze_let);
         mLetListView.setFocusable(false);
-//        mLetListView.setDivider(getActivity().getResources().getColor(R.color.transparency));
+        mLetListView.setDivider(getActivity().getResources().getDrawable(R.color.mdy_999));
+        mLetListView.setDividerHeight(1);
         mLinearLetHistory= (LinearLayout) mView.findViewById(R.id.ll_analyze_let_history);
         mLinearLetRecent= (LinearLayout) mView.findViewById(R.id.ll_analyze_let_recent);
         mLetRg= (RadioGroup) mView.findViewById(R.id.radio_group_let);
@@ -330,7 +333,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mTextSize3= (TextView) mView.findViewById(R.id.tv_analyze_size3);
         mSizeListView= (ListView) mView.findViewById(R.id.lv_analyze_size);
         mSizeListView.setFocusable(false);
-//        mSizeListView.setDivider(getActivity().getResources().getColor(R.color.transparency));
+        mSizeListView.setDivider(getActivity().getResources().getDrawable(R.color.mdy_999));
+        mSizeListView.setDividerHeight(1);
         mLinearSizeHistory= (LinearLayout) mView.findViewById(R.id.ll_analyze_size_history);
         mLinearSizeRecent= (LinearLayout) mView.findViewById(R.id.ll_analyze_size_recent);
         mSizeRg= (RadioGroup) mView.findViewById(R.id.radio_group_size);
