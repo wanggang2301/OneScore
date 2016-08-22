@@ -210,7 +210,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
-    private FloatingActionButton fab_join_room_basket;// 聊天室悬浮按钮
+    private ImageView iv_join_room_basket;// 聊天室悬浮按钮
     private ProgressDialog pd;// 加载框
 
 
@@ -351,8 +351,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         pd.setCancelable(false);
         pd.setMessage(getResources().getString(R.string.loading_data_txt));
         // 初始化悬浮按钮
-        fab_join_room_basket = (FloatingActionButton) findViewById(R.id.fab_join_room_basket);
-        fab_join_room_basket.setOnClickListener(this);
+        iv_join_room_basket = (ImageView) findViewById(R.id.iv_join_room_basket);
+        iv_join_room_basket.setOnClickListener(this);
 
         TITLES = new String[]{getResources().getString(R.string.basket_analyze),
                 getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
@@ -581,7 +581,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
                 break;
-            case R.id.fab_join_room_basket:
+            case R.id.iv_join_room_basket:
                 joinRoom();
                 break;
         }
@@ -592,11 +592,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
      */
     private void joinRoom() {
         if (CommonUtils.isLogin()) {// 判断是否登录
-            L.d("xxx","显示加载框。。。。");
             pd.show();
-            fab_join_room_basket.setVisibility(View.GONE);
+            iv_join_room_basket.setVisibility(View.GONE);
             if(RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom){
-                L.d("xxx","进入聊天室。。。。");
                 pd.dismiss();
                 appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
@@ -605,13 +603,11 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                     @Override
                     public void run() {
                         while (!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom){
-                            L.d("xxx","循环循环循环循环循环循环。。。。");
                             SystemClock.sleep(1000);
                         }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                L.d("xxx","循环完了，进入聊天室。。。。");
                                 pd.dismiss();
                                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                             }
@@ -628,7 +624,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_BASKET){
+        if(requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_BASKET && resultCode == -1){
             joinRoom();
         }
     }
@@ -1401,7 +1397,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onResume() {
         super.onResume();
-        fab_join_room_basket.setVisibility(View.VISIBLE);// 显示悬浮按钮
+        iv_join_room_basket.setVisibility(View.VISIBLE);// 显示悬浮按钮
         MobclickAgent.onResume(this);
         if (isFragment0) {
             MobclickAgent.onPageStart("BasketBall_Info_FX");

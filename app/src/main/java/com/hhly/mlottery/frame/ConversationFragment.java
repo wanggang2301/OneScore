@@ -43,7 +43,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         setContentView(R.layout.conversationlist);
         mContext = this;
         // 设置聊天室背景色为透明
-//        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.transparency));
+        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.chart_room_bg_color));
 
         findViewById(R.id.ll_top).setOnClickListener(this);
 

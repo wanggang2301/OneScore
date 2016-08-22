@@ -12,7 +12,6 @@ import android.os.PersistableBundle;
 import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -295,7 +294,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private TimerTask timerTask;
 
-    private FloatingActionButton fab_join_room_foot;// 聊天室悬浮按钮
+    private ImageView iv_join_room_foot;// 聊天室悬浮按钮
     private ProgressDialog pd;// 加载框
 
     @Override
@@ -374,8 +373,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         pd.setCancelable(false);
         pd.setMessage(getResources().getString(R.string.loading_data_txt));
         // 初始化悬浮按钮
-        fab_join_room_foot = (FloatingActionButton) findViewById(R.id.fab_join_room_foot);
-        fab_join_room_foot.setOnClickListener(this);
+        iv_join_room_foot = (ImageView) findViewById(R.id.iv_join_room_foot);
+        iv_join_room_foot.setOnClickListener(this);
 
         // String[] titles = mContext.getResourceName(R.attr.foot_details_tabs);
 
@@ -2535,7 +2534,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             case R.id.reLoading_details:
                 loadData();
                 break;
-            case R.id.fab_join_room_foot:
+            case R.id.iv_join_room_foot:
                 joinRoom();
                 break;
             default:
@@ -2549,16 +2548,16 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private void joinRoom() {
         if (CommonUtils.isLogin()) {// 判断是否登录
             pd.show();
-            fab_join_room_foot.setVisibility(View.GONE);
-            if(RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom){
+            iv_join_room_foot.setVisibility(View.GONE);
+            if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
                 appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
-            }else{
-                new Thread(){
+            } else {
+                new Thread() {
                     @Override
                     public void run() {
-                        while (!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom){
+                        while (!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom) {
                             SystemClock.sleep(1000);
                         }
                         runOnUiThread(new Runnable() {
@@ -2571,7 +2570,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     }
                 }.start();
             }
-        }else{
+        } else {
             // 跳转到登录界面
             Intent intent1 = new Intent(mContext, LoginActivity.class);
             startActivityForResult(intent1, RongYunUtils.CHART_ROOM_QUESTCODE_FOOT);
@@ -2580,7 +2579,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_FOOT){
+        if (requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_FOOT && resultCode == -1) {
             joinRoom();
         }
     }
@@ -2785,7 +2784,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
-        fab_join_room_foot.setVisibility(View.VISIBLE);// 显示悬浮按钮
+        iv_join_room_foot.setVisibility(View.VISIBLE);// 显示悬浮按钮
         MobclickAgent.onResume(this);
         if (isDetailsRollballFragment) {
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");

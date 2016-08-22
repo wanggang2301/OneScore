@@ -60,6 +60,7 @@
     <color name="divider_color">#FFCCCCCC</color>
     <color name="chart_bt_color">#33CCCCCC</color>
     <color name="chart_bt_click_color">#66CCCCCC</color>
+    <color name="chart_room_bg_color">#88CCCCCC</color>
     <color name="grey">#ff5b5a5a</color>
     <color name="deep_gray">#ff3b3b3b</color>
     <color name="transparency">#00000000</color>
