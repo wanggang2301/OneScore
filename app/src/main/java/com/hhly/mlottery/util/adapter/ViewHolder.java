@@ -307,13 +307,13 @@ public class ViewHolder{
 	}
 
 	public ViewHolder setChecked(int viewId, boolean checked) {
-		Checkable view = (Checkable) getView(viewId);
+		Checkable view = getView(viewId);
 		view.setChecked(checked);
 		return this;
 	}
 	
 	public ViewHolder setClickable(int viewId, boolean clickable) {
-		CheckBox view = (CheckBox) getView(viewId);
+		CheckBox view = getView(viewId);
 		view.setClickable(clickable);
 		return this;
 	}

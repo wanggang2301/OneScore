@@ -8,6 +8,6 @@ import android.view.View;
  * @des 篮球资料库列表国家赛事子Gridview展开收缩接口
  */
 public interface BasketInfomationCallBack {
-    public void onClick(View view, int groupPosition, int child);
+    void onClick(View view, int groupPosition, int child);
 
 }

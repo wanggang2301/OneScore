@@ -565,7 +565,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                         head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
                         head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                         head_score.setText("VS");
-                        mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
+                        mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
                         mTalkAboutBallFragment.setClickableLikeBtn(true);
                         mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName() + " " + matchDetail.getMatchInfo().getStartTime());
 
@@ -611,7 +611,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             mLiveHeadInfoFragment.initMatchOverData(mMatchDetail);
                             mKeepTime = "5400000";//90分钟的毫秒数
 
-                            mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
+                            mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
 
 
                             mTalkAboutBallFragment.setClickableLikeBtn(false);
@@ -680,7 +680,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             }
 
                             if ("0".equals(mPreStatus) && "1".equals(matchDetail.getLiveStatus()) && !isFinishing()) {
-                                mDetailsRollballFragment.activateMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
+                                mDetailsRollballFragment.activateMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
 
                                 //滑动
                                 mHeadviewpager.setIsScrollable(true);
@@ -690,7 +690,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                                 mPreStatus = "1";
                             }
 
-                            mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
+                            mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
 
 
                             mTalkAboutBallFragment.setClickableLikeBtn(true);

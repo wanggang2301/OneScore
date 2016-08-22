@@ -598,7 +598,6 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                                 mHandler.sendEmptyMessage(COUNTDOWN);// 刷新界面
                             }
 
-                            ;
                         }.start();
                     } else {
                         if (cruuentIssue < Long.parseLong(numberSortList.get(i).getIssue())) {// Long.parseLong(numberSortList.get(i).getIssue())
@@ -621,7 +620,6 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                                     mHandler.sendEmptyMessage(COUNTDOWN);// 刷新界面
                                 }
 
-                                ;
                             }.start();
                         }
                     }
@@ -662,11 +660,8 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                         isHKOpenNumberStartNF = true;// 正在开奖中...
 
                         // 判断中是否已经在开奖了
-                        if (numberSortList.get(i).getNumbers().contains("#")) {
-                            isNextNumber = true;// 未获取到了下一期的开奖号码
-                        } else {
-                            isNextNumber = false;
-                        }
+                        // 未获取到了下一期的开奖号码
+                        isNextNumber = numberSortList.get(i).getNumbers().contains("#");
 
                     } else {
                         isHKOpenNumberStartNF = false;
@@ -676,12 +671,8 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
 
                 } else if ("6".equals(numberSortList.get(i).getName())) {
                     long numTime = DateUtil.getCurrentTime(numberSortList.get(i).getNextTime()) - Long.parseLong(serverTime);
-                    if (numTime <= 0) {
-                        // 正在开奖中...
-                        isQXCOpenNumberStartNF = true;
-                    } else {
-                        isQXCOpenNumberStartNF = false;
-                    }
+                    // 正在开奖中...
+                    isQXCOpenNumberStartNF = numTime <= 0;
 
                 } else {// 其它彩种是否正在开奖中
                     long numTime = DateUtil.getCurrentTime(numberSortList.get(i).getNextTime()) - Long.parseLong(serverTime);
@@ -735,8 +726,6 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             L.d("脚标越界：" + e.getMessage());
         }
     }
-
-    ;
 
     public void initView() {
 

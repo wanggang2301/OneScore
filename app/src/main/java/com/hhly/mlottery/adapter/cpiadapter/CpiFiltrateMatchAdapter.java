@@ -75,7 +75,7 @@ public class CpiFiltrateMatchAdapter extends CommonAdapter<NewOddsInfo.FileterTa
 
 
     public interface OnItemClickListenerListener {
-        public void onClick(View buttonView, boolean isChecked, NewOddsInfo.FileterTagsBean fileterTagsBean);
+        void onClick(View buttonView, boolean isChecked, NewOddsInfo.FileterTagsBean fileterTagsBean);
     }
 
 

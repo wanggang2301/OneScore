@@ -87,7 +87,7 @@ public class MyRotateAnimation extends Animation {
     }
 
     /** 动画进度监听器。 */
-    public static interface InterpolatedTimeListener {
-        public void interpolatedTime(float interpolatedTime);
+    public interface InterpolatedTimeListener {
+        void interpolatedTime(float interpolatedTime);
     }
 }

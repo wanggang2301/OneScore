@@ -474,13 +474,13 @@ public class VolleyContentFast {
 
 
     public interface ResponseSuccessListener<T> {
-        public void onResponse(T jsonObject);
+        void onResponse(T jsonObject);
     }
 
 
     public interface ResponseErrorListener {
 
-        public void onErrorResponse(VolleyException exception);
+        void onErrorResponse(VolleyException exception);
     }
 
 

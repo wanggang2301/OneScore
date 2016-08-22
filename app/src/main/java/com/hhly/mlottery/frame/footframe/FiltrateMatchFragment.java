@@ -296,7 +296,7 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
     }
 
     public interface CheckedCupsCallback {
-        public void onChange(LinkedList<String> checkedCups);
+        void onChange(LinkedList<String> checkedCups);
     }
 
     public LinkedList<String> getCheckedCups() {

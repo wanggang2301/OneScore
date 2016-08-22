@@ -223,11 +223,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
     }
 
     private boolean isNULLOrEmpty(String s) {
-        if (s == null || "".equals(s)) {
-            return true;
-        } else {
-            return false;
-        }
+        return s == null || "".equals(s);
     }
 
 
@@ -275,7 +271,7 @@ public class BottomOddsDetailsFragment extends BottomSheetDialogFragment {
         fl_no_data = (FrameLayout) mView.findViewById(R.id.fl_nodata);
         ll_content = (LinearLayout) mView.findViewById(R.id.ll_content);
         reLoading = (TextView) mView.findViewById(R.id.reLoading);
-        bottomview = (View) mView.findViewById(R.id.bottomview);
+        bottomview = mView.findViewById(R.id.bottomview);
 
         odds_left = (TextView) mView.findViewById(R.id.odds_left);
         odds_middle = (TextView) mView.findViewById(R.id.odds_middle);

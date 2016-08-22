@@ -596,7 +596,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
 
     public interface SchFocusClickListener {
-        public void onClick(View view, SchMatch match);
+        void onClick(View view, SchMatch match);
     }
 
 

@@ -151,7 +151,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
         if (convertView == null) {
             listViewHolder = new ListViewHolder();
-            convertView = (LinearLayout) LinearLayout.inflate(mContext, R.layout.basket_info_country_item, null);
+            convertView = LinearLayout.inflate(mContext, R.layout.basket_info_country_item, null);
 
             listViewHolder.rl0 = (RelativeLayout) convertView.findViewById(R.id.rl0);
             listViewHolder.rl1 = (RelativeLayout) convertView.findViewById(R.id.rl1);

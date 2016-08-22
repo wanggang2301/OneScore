@@ -876,12 +876,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
     private boolean isNULLOrEmpty(String s) {
-        if (s == null || "".equals(s) || "-".equals(s)) {
-            return true;
-        } else {
-            return false;
-
-        }
+        return s == null || "".equals(s) || "-".equals(s);
     }
 
 }

@@ -47,7 +47,7 @@ public class FootballInformationActivity extends BaseActivity implements View.On
     private static final int ISNET_SUCCESS = 11;//数据请求成功
     private static final int ISNET_RERROR = 22;//网络请求失败
 
-    private List<List<IntegralBean.LangueScoreBean.ListBean>> childDataList = new ArrayList<>();;//小组数据
+    private List<List<IntegralBean.LangueScoreBean.ListBean>> childDataList = new ArrayList<>();//小组数据
     private List<IntegralBean.LangueScoreBean> mAllLangueScore;  //获取小组数据
     private List<IntegralBean.LeagueTimesBean.LeagueDateBean> leagueData;//获取联赛时间
     private ArrayList<String> mListDatas = new ArrayList<>();//赛季存储集合

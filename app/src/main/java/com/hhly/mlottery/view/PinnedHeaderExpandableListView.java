@@ -44,9 +44,9 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
 	 * Adapter 接口 . 列表必须实现此接口 .
 	 */
 	public interface HeaderAdapter {
-		public static final int PINNED_HEADER_GONE = 0;
-		public static final int PINNED_HEADER_VISIBLE = 1;
-		public static final int PINNED_HEADER_PUSHED_UP = 2;
+		int PINNED_HEADER_GONE = 0;
+		int PINNED_HEADER_VISIBLE = 1;
+		int PINNED_HEADER_PUSHED_UP = 2;
 		
 		/**
 		 * 获取 Header 的状态

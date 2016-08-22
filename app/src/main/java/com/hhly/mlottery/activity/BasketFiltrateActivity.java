@@ -372,7 +372,7 @@ public class BasketFiltrateActivity extends BaseActivity implements View.OnClick
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
 
-                String[] checkedCups = (String[]) mCupChicked.toArray(new String[]{});
+                String[] checkedCups = mCupChicked.toArray(new String[]{});
 //                System.out.println(">>>>>>>>>>>>>>--checkedCups.length-->>>>>>>>>>>>>>" + checkedCups.length + ">>>>>>>>>>>>>>");
 
                 bundle.putCharSequenceArray(CHECKED_CUPS_IDS, checkedCups);

@@ -114,8 +114,8 @@ public class OddsAdapter extends BaseAdapter {
                 TableRow.LayoutParams params2 = new TableRow.LayoutParams(0, AbsListView.LayoutParams.MATCH_PARENT);
                 params2.weight = 3;
                 params2.rightMargin = 1;
-                ((TextView) convertView.findViewById(R.id.plate_dish_txt)).setLayoutParams(params);
-                ((TextView) convertView.findViewById(R.id.plate_dish_txt2)).setLayoutParams(params2);
+                convertView.findViewById(R.id.plate_dish_txt).setLayoutParams(params);
+                convertView.findViewById(R.id.plate_dish_txt2).setLayoutParams(params2);
             } else if ("three".equals(stKey)) {//大小球
                 //无需改变
             }
