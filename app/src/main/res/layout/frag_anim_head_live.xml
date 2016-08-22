@@ -23,8 +23,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/green"
-        android:gravity="bottom"
+        android:background="@mipmap/anim_bg"
+        android:gravity="center"
         android:orientation="vertical">
 
         <com.hhly.mlottery.widget.ProgressWebView

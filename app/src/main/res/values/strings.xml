@@ -4,6 +4,7 @@
 
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
+    <string name="foot_trend">走势</string>
     <string name="foot_statictics">统计</string>
     <string name="foot_event_goal">进球</string>
     <string name="foot_event_rc">红牌</string>
@@ -22,6 +23,8 @@
     <string name="foot_event_out">下场</string>
     <string name="foot_event_num_out">号下场</string>
     <string name="foot_event_num_in">号上场</string>
+    <string name="matchIsNotStart">比赛暂未开始</string>
+    <string name="goChat">走,先去聊聊</string>
 
 
     <!--篮球资料库-->

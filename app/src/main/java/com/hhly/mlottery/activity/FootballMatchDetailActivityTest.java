@@ -107,8 +107,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private final static int RESULT_FRAGMENT = 1;
     private final static int SCHEDULE_FRAGMENT = 2;
     private final static int FOCUS_FRAGMENT = 3;
-    private final static int BANNER_PLAY_TIME = 5000; //头部5秒轮播
-    private final static int BANNER_ANIM_TIME = 1000; //轮播动画时间
+    private final static int BANNER_PLAY_TIME = 1500; //头部5秒轮播
+    private final static int BANNER_ANIM_TIME = 800; //轮播动画时间
     private final static int ERROR = -1;//访问失败
     private final static int SUCCESS = 0;// 访问成功
     private final static int STARTLOADING = 1;// 正在加载中
@@ -332,6 +332,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment, mAnimHeadLiveFragment);
         mHeadviewpager.setAdapter(basePagerAdapter);
+        mHeadviewpager.setOffscreenPageLimit(2);
         mIndicator.setViewPager(mHeadviewpager);
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
         mHeadviewpager.setCurrentItem(0);
@@ -943,6 +944,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             }, BANNER_PLAY_TIME);
             //赛后赛中下面赔率显示
         }
+
+        mStatisticsFragment.setChartName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
 
 
         if (!isInitedViewPager) {

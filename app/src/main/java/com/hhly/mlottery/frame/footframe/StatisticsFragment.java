@@ -161,6 +161,8 @@ public class StatisticsFragment extends Fragment {
 
     private List<MatchTimeLiveBean> eventMatchLive = new ArrayList<>();
 
+    private LinearLayout ll_nodata;
+
 
     /***
      * 走势图
@@ -226,6 +228,20 @@ public class StatisticsFragment extends Fragment {
     private List<MatchTextLiveBean> trendChartList;
 
 
+    private TextView tv_shot;
+    private TextView tv_shot_home;
+    private TextView tv_shot_guest;
+    private TextView tv_shotAside;
+    private TextView tv_shotAside_home;
+    private TextView tv_shotAside_guest;
+    private TextView tv_dangerAttack;
+    private TextView tv_dangerAttack_home;
+    private TextView tv_dangerAttack_guest;
+    private TextView tv_attack;
+    private TextView tv_attack_home;
+    private TextView tv_attack_guest;
+
+
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
         return fragment;
@@ -279,12 +295,14 @@ public class StatisticsFragment extends Fragment {
         radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
         mNestedScrollView_event = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_event);
         mNestedScrollView_trend = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_trend);
-        mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
+        //  mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
 
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setNestedScrollingEnabled(false);
+
+        ll_nodata = (LinearLayout) mView.findViewById(R.id.nodata);
 
         mNestedScrollView_event.setFillViewport(true);
 
@@ -294,17 +312,17 @@ public class StatisticsFragment extends Fragment {
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
                     case R.id.live_event:
-                        if (!eventType.equals("0")) {
-                            mNestedScrollView_event.setVisibility(View.VISIBLE);
-                            mNestedScrollView_trend.setVisibility(View.GONE);
-                        }
+                        //  if (!eventType.equals("0")) {
+                        mNestedScrollView_event.setVisibility(View.VISIBLE);
+                        mNestedScrollView_trend.setVisibility(View.GONE);
+                        // }
 
                         break;
                     case R.id.live_statistics:
-                        if (!eventType.equals("0")) {
-                            mNestedScrollView_event.setVisibility(View.GONE);
-                            mNestedScrollView_trend.setVisibility(View.VISIBLE);
-                        }
+                        // if (!eventType.equals("0")) {
+                        mNestedScrollView_event.setVisibility(View.GONE);
+                        mNestedScrollView_trend.setVisibility(View.VISIBLE);
+                        // }
                         break;
                     default:
                         break;
@@ -396,6 +414,20 @@ public class StatisticsFragment extends Fragment {
         guest_lineout_txt = (TextView) mView.findViewById(R.id.guest_lineout_txt);
 
 
+        tv_shot = (TextView) mView.findViewById(R.id.tv_shoot);
+        tv_shot_home = (TextView) mView.findViewById(R.id.tv_shot_home);
+        tv_shot_guest = (TextView) mView.findViewById(R.id.tv_shot_guest);
+        tv_shotAside = (TextView) mView.findViewById(R.id.tv_shotAside);
+        tv_shotAside_home = (TextView) mView.findViewById(R.id.tv_shotAside_home);
+        tv_shotAside_guest = (TextView) mView.findViewById(R.id.tv_shotAside_guest);
+        tv_dangerAttack = (TextView) mView.findViewById(R.id.tv_dangerAttack);
+        tv_dangerAttack_home = (TextView) mView.findViewById(R.id.tv_dangerAttack_home);
+        tv_dangerAttack_guest = (TextView) mView.findViewById(R.id.tv_dangerAttack_guest);
+        tv_attack = (TextView) mView.findViewById(R.id.tv_attack);
+        tv_attack_home = (TextView) mView.findViewById(R.id.tv_attack_home);
+        tv_attack_guest = (TextView) mView.findViewById(R.id.tv_attack_guest);
+
+
         /**
          * 走势图
          */
@@ -474,6 +506,20 @@ public class StatisticsFragment extends Fragment {
     }
 
 
+    public void setChartName(String home, String guest) {
+
+        tv_shot_home.setText(home);
+        tv_shot_guest.setText(guest);
+        tv_shotAside_home.setText(home);
+        tv_shotAside_guest.setText(guest);
+        tv_dangerAttack_home.setText(home);
+        tv_dangerAttack_guest.setText(guest);
+        tv_attack_home.setText(home);
+        tv_attack_guest.setText(guest);
+
+    }
+
+
     /**
      * 足球事件直播
      *
@@ -486,12 +532,15 @@ public class StatisticsFragment extends Fragment {
         eventType = livestatus;
 
         if ("0".equals(livestatus)) {
-            mNestedScrollView_nodata.setVisibility(View.VISIBLE);
-            mNestedScrollView_event.setVisibility(View.GONE);
+            ll_nodata.setVisibility(View.VISIBLE);
+            // mNestedScrollView_event.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+
+
             mNestedScrollView_trend.setVisibility(View.GONE);
         } else if ("1".equals(livestatus) || "-1".equals(livestatus)) {   //-1代表完场  1代表直播中
-            mNestedScrollView_nodata.setVisibility(View.GONE);
-            mNestedScrollView_event.setVisibility(View.VISIBLE);
+            ll_nodata.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             mNestedScrollView_trend.setVisibility(View.VISIBLE);
             computeEventNum(livestatus);
             eventAdapter = new EventAdapter(mContext, eventMatchLive);
@@ -722,10 +771,10 @@ public class StatisticsFragment extends Fragment {
         while (shotHomeIterator.hasNext()) {
             TrendBean bean = shotHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
-                shootHomeColors.add(Color.GREEN);
+                shootHomeColors.add(Color.parseColor("#19A67A"));
             } else if (TREND_GOAL.equals(bean.getFlag())) {
                 shotHome++;
-                shootHomeColors.add(Color.RED);
+                shootHomeColors.add(Color.parseColor("#FF0000"));
             } else {
                 shotHome++;
                 shootHomeColors.add(Color.TRANSPARENT);
@@ -741,10 +790,10 @@ public class StatisticsFragment extends Fragment {
         while (shotGuestIterator.hasNext()) {
             TrendBean bean = shotGuestIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
-                shootGuestColors.add(Color.GREEN);
+                shootGuestColors.add(Color.parseColor("#19A67A"));
             } else if (TREND_GOAL.equals(bean.getFlag())) {
                 shotGuest++;
-                shootGuestColors.add(Color.RED);
+                shootGuestColors.add(Color.parseColor("#FF0000"));
             } else {
                 shotGuest++;
                 shootGuestColors.add(Color.TRANSPARENT);
@@ -773,11 +822,11 @@ public class StatisticsFragment extends Fragment {
         while (shotAsideHomeIterator.hasNext()) {
             TrendBean bean = shotAsideHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
-                shootAsideHomeColors.add(Color.GREEN);
+                shootAsideHomeColors.add(Color.parseColor("#19A67A"));
                 L.d("rrt", bean.getTime());
 
             } else if (TREND_GOAL.equals(bean.getFlag())) {
-                shootAsideHomeColors.add(Color.RED);
+                shootAsideHomeColors.add(Color.parseColor("#FF0000"));
 
             } else {
                 shotAsideHome++;
@@ -796,9 +845,9 @@ public class StatisticsFragment extends Fragment {
         while (shotAsideGuestIterator.hasNext()) {
             TrendBean bean = shotAsideGuestIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
-                shootAsideGuestColors.add(Color.GREEN);
+                shootAsideGuestColors.add(Color.parseColor("#19A67A"));
             } else if (TREND_GOAL.equals(bean.getFlag())) {
-                shootAsideGuestColors.add(Color.RED);
+                shootAsideGuestColors.add(Color.parseColor("#FF0000"));
             } else {
                 shotAsideGuest++;
                 shootAsideGuestColors.add(Color.TRANSPARENT);
@@ -828,9 +877,9 @@ public class StatisticsFragment extends Fragment {
         while (dangerAttackHomeIterator.hasNext()) {
             TrendBean bean = dangerAttackHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
-                dangerousAttackHomeColors.add(Color.GREEN);
+                dangerousAttackHomeColors.add(Color.parseColor("#19A67A"));
             } else if (TREND_GOAL.equals(bean.getFlag())) {
-                dangerousAttackHomeColors.add(Color.RED);
+                dangerousAttackHomeColors.add(Color.parseColor("#FF0000"));
             } else {
                 dangerAttackHome++;
                 dangerousAttackHomeColors.add(Color.TRANSPARENT);
@@ -843,9 +892,9 @@ public class StatisticsFragment extends Fragment {
         while (dangerAttackGusetIterator.hasNext()) {
             TrendBean bean = dangerAttackGusetIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
-                dangerousAttackGuestColors.add(Color.GREEN);
+                dangerousAttackGuestColors.add(Color.parseColor("#19A67A"));
             } else if (TREND_GOAL.equals(bean.getFlag())) {
-                dangerousAttackGuestColors.add(Color.RED);
+                dangerousAttackGuestColors.add(Color.parseColor("#FF0000"));
             } else {
                 dangerAttackGuest++;
                 dangerousAttackGuestColors.add(Color.TRANSPARENT);
@@ -875,9 +924,9 @@ public class StatisticsFragment extends Fragment {
         while (attackHomeIterator.hasNext()) {
             TrendBean bean = attackHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
-                attackHomeColors.add(Color.GREEN);
+                attackHomeColors.add(Color.parseColor("#19A67A"));
             } else if (TREND_GOAL.equals(bean.getFlag())) {
-                attackHomeColors.add(Color.RED);
+                attackHomeColors.add(Color.parseColor("#FF0000"));
             } else {
                 attackHome++;
                 attackHomeColors.add(Color.TRANSPARENT);
@@ -890,9 +939,9 @@ public class StatisticsFragment extends Fragment {
         while (attackGusetIterator.hasNext()) {
             TrendBean bean = attackGusetIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
-                attackGuestColors.add(Color.GREEN);
+                attackGuestColors.add(Color.parseColor("#19A67A"));
             } else if (TREND_GOAL.equals(bean.getFlag())) {
-                attackGuestColors.add(Color.RED);
+                attackGuestColors.add(Color.parseColor("#FF0000"));
             } else {
                 attackGuest++;
                 attackGuestColors.add(Color.TRANSPARENT);
@@ -913,7 +962,7 @@ public class StatisticsFragment extends Fragment {
         }
 
         showTrendData(chart_attack, attackHomeValues, attackGuestValues, attackHomeColors, attackGuestColors);
-
+        setChartScore();
     }
 
 
@@ -935,7 +984,7 @@ public class StatisticsFragment extends Fragment {
 
             mHomeLineDataSet = new LineDataSet(homeEntry, "DataSet1");
             mHomeLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
-            mHomeLineDataSet.setColor(Color.RED);
+            mHomeLineDataSet.setColor(Color.parseColor("#C23531"));
             mHomeLineDataSet.setCircleColor(Color.BLACK);
             mHomeLineDataSet.setLineWidth(0.7f);
             mHomeLineDataSet.setCircleRadius(3f);
@@ -993,10 +1042,10 @@ public class StatisticsFragment extends Fragment {
                     shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
                     dangerousAttackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackHome));
                     attackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), attackHome));
-                    shootHomeColors.add(Color.RED);
-                    shootAsideHomeColors.add(Color.RED);
-                    dangerousAttackHomeColors.add(Color.RED);
-                    attackHomeColors.add(Color.RED);
+                    shootHomeColors.add(Color.parseColor("#FF0000"));
+                    shootAsideHomeColors.add(Color.parseColor("#FF0000"));
+                    dangerousAttackHomeColors.add(Color.parseColor("#FF0000"));
+                    attackHomeColors.add(Color.parseColor("#FF0000"));
 
                     break;
 
@@ -1006,10 +1055,10 @@ public class StatisticsFragment extends Fragment {
                     shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
                     dangerousAttackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackGuest));
                     attackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), attackGuest));
-                    shootGuestColors.add(Color.RED);
-                    shootAsideGuestColors.add(Color.RED);
-                    dangerousAttackGuestColors.add(Color.RED);
-                    attackGuestColors.add(Color.RED);
+                    shootGuestColors.add(Color.parseColor("#FF0000"));
+                    shootAsideGuestColors.add(Color.parseColor("#FF0000"));
+                    dangerousAttackGuestColors.add(Color.parseColor("#FF0000"));
+                    attackGuestColors.add(Color.parseColor("#FF0000"));
                     break;
 
                 case CORNER:
@@ -1017,10 +1066,10 @@ public class StatisticsFragment extends Fragment {
                     shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
                     dangerousAttackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackHome));
                     attackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), attackHome));
-                    shootHomeColors.add(Color.GREEN);
-                    shootAsideHomeColors.add(Color.GREEN);
-                    dangerousAttackHomeColors.add(Color.GREEN);
-                    attackHomeColors.add(Color.GREEN);
+                    shootHomeColors.add(Color.parseColor("#19A67A"));
+                    shootAsideHomeColors.add(Color.parseColor("#19A67A"));
+                    dangerousAttackHomeColors.add(Color.parseColor("#19A67A"));
+                    attackHomeColors.add(Color.parseColor("#19A67A"));
                     break;
 
                 case CORNER1:
@@ -1028,10 +1077,10 @@ public class StatisticsFragment extends Fragment {
                     shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
                     dangerousAttackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackGuest));
                     attackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), attackGuest));
-                    shootGuestColors.add(Color.GREEN);
-                    shootAsideGuestColors.add(Color.GREEN);
-                    dangerousAttackGuestColors.add(Color.GREEN);
-                    attackGuestColors.add(Color.GREEN);
+                    shootGuestColors.add(Color.parseColor("#19A67A"));
+                    shootAsideGuestColors.add(Color.parseColor("#19A67A"));
+                    dangerousAttackGuestColors.add(Color.parseColor("#19A67A"));
+                    attackGuestColors.add(Color.parseColor("#19A67A"));
 
                     break;
 
@@ -1127,6 +1176,7 @@ public class StatisticsFragment extends Fragment {
             shotYAxis.setLabelCount(getYLabelCount(shotGuest));
         }
 
+
         showTrendData(chart_shoot, shootHomeValues, shootGuestValues, shootHomeColors, shootGuestColors);
 
 
@@ -1164,11 +1214,22 @@ public class StatisticsFragment extends Fragment {
 
         showTrendData(chart_attack, attackHomeValues, attackGuestValues, attackHomeColors, attackGuestColors);
 
+        setChartScore();
+    }
+
+
+    private void setChartScore() {
+        tv_shot.setText((int) shootHomeValues.get(shootHomeValues.size() - 1).getY() + ":" + (int) shootGuestValues.get(shootGuestValues.size() - 1).getY());
+        tv_shotAside.setText((int) shootAsideHomeValues.get(shootAsideHomeValues.size() - 1).getY() + ":" + (int) shootAsideGuestValues.get(shootAsideGuestValues.size() - 1).getY());
+        tv_dangerAttack.setText((int) dangerousAttackHomeValues.get(dangerousAttackHomeValues.size() - 1).getY() + ":" + (int) dangerousAttackGuestValues.get(dangerousAttackGuestValues.size() - 1).getY());
+        tv_attack.setText((int) attackHomeValues.get(attackHomeValues.size() - 1).getY() + ":" + (int) attackGuestValues.get(attackGuestValues.size() - 1).getY());
 
     }
 
 
     public void addTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
+
+        L.d("223344", "直播中走勢圖測試");
         trendChartList.add(matchTextLiveBean);
         showTrendChart();
 
