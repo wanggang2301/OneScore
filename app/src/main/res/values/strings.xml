@@ -906,4 +906,17 @@
     <string name="action_compute">计算</string>
     <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
     <string name="insufficient_sampling">采样\n不足</string>
+    <!--头像上传-->
+    <string name="sd_card_not_exist">sd卡不存在</string>
+    <string name="install_the_gallery">请先安装图库</string>
+    <string name="see_your_face">这张照片太小看不清你的绝世容颜</string>
+    <string name="picture_put_failed">图片上传失败!</string>
+    <string name="save_file_not_found">保存文件路径找不到!</string>
+    <string name="picture_save_failed">图片保存失败!</string>
+    <string name="picture_put_success">图片上传成功!</string>
+    <string name="picture_save">图片已保存至:</string>
+    <string name="picture_save_telephone">保存到手机</string>
+    <string name="chose_for_telephone">从手机相册选择</string>
+    <string name="avatar_settings">头像选择</string>
+    <string name="photograph">拍照</string>
 </resources>
