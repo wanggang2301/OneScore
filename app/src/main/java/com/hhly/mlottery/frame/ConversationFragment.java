@@ -38,7 +38,6 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setFinishOnTouchOutside(true);//设置为true点击区域外消失
 
         setContentView(R.layout.conversationlist);
         mContext = this;

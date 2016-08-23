@@ -2548,8 +2548,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private void joinRoom() {
         if (CommonUtils.isLogin()) {// 判断是否登录
             pd.show();
-            iv_join_room_foot.setVisibility(View.GONE);
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
+                iv_join_room_foot.setVisibility(View.GONE);
                 pd.dismiss();
                 appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
@@ -2563,7 +2563,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                iv_join_room_foot.setVisibility(View.GONE);
                                 pd.dismiss();
+                                appBarLayout.setExpanded(true);// 显示头部内容
                                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                             }
                         });
