@@ -1049,7 +1049,7 @@
 
     <string name="rong_comment">评论</string>
     <string name="rong_chart_room">聊天</string>
-    <string name="rong_prompt_login">请先登录</string>
+    <string name="rong_chart_bg_pb">透明度：</string>
 
     <string name="rong_input_prompt1">珍爱生命,远离喷子！</string>
     <string name="rong_input_prompt2">路见不平一声吼！！！</string>

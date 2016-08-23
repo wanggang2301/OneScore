@@ -1,32 +1,24 @@
 package com.hhly.mlottery.frame;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.SeekBar;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.RongYunUtils;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
-import java.util.Random;
-
-import de.greenrobot.event.EventBus;
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.widget.provider.TextInputProvider;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -55,9 +47,51 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         mContext = this;
         ll_comment = (LinearLayout) findViewById(R.id.ll_comment);
         // 设置聊天室背景色为透明
-        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.chart_room_bg_color));
+//        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.chart_room_bg_color));
+        final View conversation = findViewById(R.id.conversation);
+        String s = Integer.toHexString(204);// 80%
+        conversation.setBackgroundColor(Color.parseColor("#"+ s +"f9f9f9"));
+        final LinearLayout ll_setting = (LinearLayout) findViewById(R.id.ll_setting);
+        ll_setting.setBackgroundColor(Color.parseColor("#"+ s +"f9f9f9"));
 
         findViewById(R.id.ll_top).setOnClickListener(this);
+        findViewById(R.id.iv_exit).setOnClickListener(this);// 关闭
+        SeekBar sb_adjust = (SeekBar) findViewById(R.id.sb_adjust);
+        sb_adjust.setProgress(80);
+        sb_adjust.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                L.d("xxx","当前进度：" + progress);
+                String str = Integer.toHexString((int)(progress * 2.55));
+                L.d("xxx","转换后：：：：" + (int)(progress * 2.55));
+                L.d("xxx","十六进制：str:::" + str);
+                if(str.length() <= 1){
+                    str = "0" + str;
+                }
+                conversation.setBackgroundColor(Color.parseColor("#"+ str +"f9f9f9"));
+                ll_setting.setBackgroundColor(Color.parseColor("#"+ str +"f9f9f9"));
+               /* if(progress >= 100){
+                    conversation.setBackgroundColor(Color.parseColor("#f9f9f9"));
+                    ll_setting.setBackgroundColor(Color.parseColor("#f9f9f9"));
+                }else if(progress < 10){
+                    conversation.setBackgroundColor(Color.parseColor("#0"+progress+"f9f9f9"));
+                    ll_setting.setBackgroundColor(Color.parseColor("#0"+progress+"f9f9f9"));
+                }else{
+                    conversation.setBackgroundColor(Color.parseColor("#"+progress+"f9f9f9"));
+                    ll_setting.setBackgroundColor(Color.parseColor("#"+progress+"f9f9f9"));
+                }*/
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         this.overridePendingTransition(R.anim.slide_in_from_bottom,0);// 开启动画
 
@@ -100,6 +134,9 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_top:
+
+                break;
+            case R.id.iv_exit:// 关闭按钮
                 this.finish();
                 break;
         }
