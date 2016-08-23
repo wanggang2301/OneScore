@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -117,6 +118,9 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
 
 //        String userTestPhoto = "http://m.1332255.com/news/upload/shortcut/69c426f0f0974d4b8aae0826da71f751.png";// 用户使用测试头像
         String userTestPhoto = AppConstants.register.getData().getUser().getHeadIcon();// 用户头像
+        if(TextUtils.isEmpty(userTestPhoto)){
+            userTestPhoto = "xxx";// 使用系统默认头像
+        }
         mUserInfo = new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(userTestPhoto));
 
         RongIM.setUserInfoProvider(this, true);
