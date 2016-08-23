@@ -632,7 +632,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             if (homeLineUpList != null && guestLineUpList != null) {
                 if (homeLineUpList.size() > 0) {
                     // 显示首发内容
-                    fl_firsPlayers_not.setVisibility(View.GONE);
+                    fl_firsPlayers_not.setVisibility(View.GONE); ///sd
                     fl_firsPlayers_content.setVisibility(View.VISIBLE);
 
                     int dip5 = DisplayUtil.dip2px(mContext, 5);
