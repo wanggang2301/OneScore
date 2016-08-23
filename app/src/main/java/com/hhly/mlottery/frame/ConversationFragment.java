@@ -77,8 +77,8 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         });
 
 
-        String userTestPhoto = "http://m.1332255.com/news/upload/shortcut/69c426f0f0974d4b8aae0826da71f751.png";// 用户使用测试头像
-//        String userTestPhoto = "http://m.1332255.com/oms/upload/shortcut/90b503d1d34d4bc19d4f2e8a0ee43b63.png";// 用户使用测试头像
+//        String userTestPhoto = "http://m.1332255.com/news/upload/shortcut/69c426f0f0974d4b8aae0826da71f751.png";// 用户使用测试头像
+        String userTestPhoto = AppConstants.register.getData().getUser().getHeadIcon();// 用户头像
         mUserInfo = new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(userTestPhoto));
 
         RongIM.setUserInfoProvider(this, true);
