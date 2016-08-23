@@ -34,10 +34,11 @@
 
                 <TextView
                     android:id="@+id/tv_pb_size"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/week"
-                    android:text="透明度：" />
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/rong_chart_bg_pb" />
 
                 <SeekBar
                     android:id="@+id/sb_adjust"

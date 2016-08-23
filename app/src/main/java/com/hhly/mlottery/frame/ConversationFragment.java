@@ -12,6 +12,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
@@ -50,9 +51,11 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
 //        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.chart_room_bg_color));
         final View conversation = findViewById(R.id.conversation);
         String s = Integer.toHexString(204);// 80%
-        conversation.setBackgroundColor(Color.parseColor("#"+ s +"f9f9f9"));
+        conversation.setBackgroundColor(Color.parseColor("#" + s + "f9f9f9"));
         final LinearLayout ll_setting = (LinearLayout) findViewById(R.id.ll_setting);
-        ll_setting.setBackgroundColor(Color.parseColor("#"+ s +"f9f9f9"));
+        ll_setting.setBackgroundColor(Color.parseColor("#" + s + "f9f9f9"));
+        final TextView tv_pb_size = (TextView) findViewById(R.id.tv_pb_size);
+        tv_pb_size.setText(mContext.getResources().getString(R.string.rong_chart_bg_pb) + "(80):");
 
         findViewById(R.id.ll_top).setOnClickListener(this);
         findViewById(R.id.iv_exit).setOnClickListener(this);// 关闭
@@ -61,15 +64,16 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         sb_adjust.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                L.d("xxx","当前进度：" + progress);
-                String str = Integer.toHexString((int)(progress * 2.55));
-                L.d("xxx","转换后：：：：" + (int)(progress * 2.55));
-                L.d("xxx","十六进制：str:::" + str);
-                if(str.length() <= 1){
+                L.d("xxx", "当前进度：" + progress);
+                String str = Integer.toHexString((int) (progress * 2.55));
+                L.d("xxx", "转换后：：：：" + (int) (progress * 2.55));
+                L.d("xxx", "十六进制：str:::" + str);
+                if (str.length() <= 1) {
                     str = "0" + str;
                 }
-                conversation.setBackgroundColor(Color.parseColor("#"+ str +"f9f9f9"));
-                ll_setting.setBackgroundColor(Color.parseColor("#"+ str +"f9f9f9"));
+                conversation.setBackgroundColor(Color.parseColor("#" + str + "f9f9f9"));
+                ll_setting.setBackgroundColor(Color.parseColor("#" + str + "f9f9f9"));
+                tv_pb_size.setText(mContext.getResources().getString(R.string.rong_chart_bg_pb) + "(" + progress + "):");
                /* if(progress >= 100){
                     conversation.setBackgroundColor(Color.parseColor("#f9f9f9"));
                     ll_setting.setBackgroundColor(Color.parseColor("#f9f9f9"));
@@ -93,7 +97,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
             }
         });
 
-        this.overridePendingTransition(R.anim.slide_in_from_bottom,0);// 开启动画
+        this.overridePendingTransition(R.anim.slide_in_from_bottom, 0);// 开启动画
 
         // 状态栏设为透明后软键盘监听失效，这里重新加载软键盘监听
         final View decorView = getWindow().getDecorView();
@@ -104,8 +108,8 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
                 decorView.getWindowVisibleDisplayFrame(r);
                 int screenHeight = decorView.getRootView().getHeight();
                 int heightDifference = screenHeight - r.bottom;
-                LinearLayout.LayoutParams params = ( LinearLayout.LayoutParams) ll_comment.getLayoutParams();
-                params.setMargins(0,0,0,heightDifference);
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll_comment.getLayoutParams();
+                params.setMargins(0, 0, 0, heightDifference);
                 ll_comment.requestLayout();
             }
         });
@@ -127,12 +131,12 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         super.finish();
         RongYunUtils.quitChatRoom();// 退出聊天室
         RongYunUtils.isJoinChartRoom = false;
-        this.overridePendingTransition(0,R.anim.slide_in_from_top);// 关闭动画
+        this.overridePendingTransition(0, R.anim.slide_in_from_top);// 关闭动画
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_top:
 
                 break;
