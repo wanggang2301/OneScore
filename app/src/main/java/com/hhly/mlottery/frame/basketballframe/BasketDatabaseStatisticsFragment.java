@@ -332,16 +332,15 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
                     return;
                 }
                 //统计
-                BasketDatabaseLeagueStatistics data ;
-                data = bean.getLeagueStatistics();
+                BasketDatabaseLeagueStatistics data = bean.getLeagueStatistics();
                 setData(data);
 
                 BasketDatabaseLeagueMost data2 = bean.getLeagueMost();
 
-                L.d("BasketDatabaseLeagueMost======>" , data2.getStrongestAttack().size() + "*****");
-                L.d("BasketDatabaseLeagueMost======>" , data2.getWeakestAttack().size() + "*****");
-                L.d("BasketDatabaseLeagueMost======>" , data2.getStrongestDefense().size() + "*****");
-                L.d("BasketDatabaseLeagueMost======>" , data2.getWeakestDefense().size() + "*****");
+//                L.d("BasketDatabaseLeagueMost======>" , data2.getStrongestAttack().size() + "*****");
+//                L.d("BasketDatabaseLeagueMost======>" , data2.getWeakestAttack().size() + "*****");
+//                L.d("BasketDatabaseLeagueMost======>" , data2.getStrongestDefense().size() + "*****");
+//                L.d("BasketDatabaseLeagueMost======>" , data2.getWeakestDefense().size() + "*****");
 
                 //之最
                 mAdapter1 = new MostAdapter(getContext() , data2.getStrongestAttack(), R.layout.basket_database_most_item);
@@ -374,9 +373,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         /**
          * 胜负统计
          */
-//        mProgressStatistic.setProgress(20);
         mProgressStatistic.setProgress(data.getHomeWinRate());
-//        mProgressStatistic.setProgress2(40);
         mProgressStatistic.setProgress2(data.getGuestWinRate());
         mProgressStatistic.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mProgressStatistic.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
@@ -399,9 +396,9 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         /**
          * 让分统计
          */
-        mLetProgress.setProgress(data.getLetHomeWinRate());
-        mLetProgress.setProgress2(data.getLetGuestWinRate());
-        mLetProgress.setProgress3(data.getLetDrawRate());
+        mLetProgress.setProgress(data.getGraphLetHomeWinRate());
+        mLetProgress.setProgress2(data.getGraphLetGuestWinRate());
+        mLetProgress.setProgress3(data.getGraphLetDrawRate());
         mLetProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mLetProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
         mLetProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
@@ -415,9 +412,9 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         /**
          * 大小球统计
          */
-        mBigSmallProgress.setProgress(data.getAsiaSizeOverRate());
-        mBigSmallProgress.setProgress2(data.getAsiaSizeUnderRate());
-        mBigSmallProgress.setProgress3(data.getAsiaSizeDrawRate());
+        mBigSmallProgress.setProgress(data.getGraphAsiaSizeOverRate());
+        mBigSmallProgress.setProgress2(data.getGraphAsiaSizeUnderRate());
+        mBigSmallProgress.setProgress3(data.getGraphAsiaSizeDrawRate());
         mBigSmallProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mBigSmallProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
         mBigSmallProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
@@ -431,7 +428,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         /**
          * 得分统计
          */
-        mTotalText.setText((int)data.getTotalScore() + "");
+        mTotalText.setText((int)data.getTotalScore() + "" );
         mGpText.setText((int)data.getFinishedMatch() + "");
         mAverageText.setText(data.getAvgScore() + "");
 
