@@ -337,11 +337,6 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
 
                 BasketDatabaseLeagueMost data2 = bean.getLeagueMost();
 
-//                L.d("BasketDatabaseLeagueMost======>" , data2.getStrongestAttack().size() + "*****");
-//                L.d("BasketDatabaseLeagueMost======>" , data2.getWeakestAttack().size() + "*****");
-//                L.d("BasketDatabaseLeagueMost======>" , data2.getStrongestDefense().size() + "*****");
-//                L.d("BasketDatabaseLeagueMost======>" , data2.getWeakestDefense().size() + "*****");
-
                 //之最
                 mAdapter1 = new MostAdapter(getContext() , data2.getStrongestAttack(), R.layout.basket_database_most_item);
                 mAdapter2 = new MostAdapter(getContext() , data2.getWeakestAttack(), R.layout.basket_database_most_item);
