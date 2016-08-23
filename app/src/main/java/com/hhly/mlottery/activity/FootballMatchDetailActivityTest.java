@@ -102,7 +102,6 @@ import me.relex.circleindicator.CircleIndicator;
  */
 public class FootballMatchDetailActivityTest extends AppCompatActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
 
-
     private final static String TAG = "FootballMatchDetailActivityTest";
     private final static String URL_DEFAULT = "http://m.13322.com/live/bifen/index.html?id=";
 

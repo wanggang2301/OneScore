@@ -87,6 +87,12 @@ public class Register {
             private String nickName;
             private String userId;
             private String loginAccount;
+            private  String headIcon;
+            public String getHeadIcon() {
+                return headIcon;}
+            public void setHeadIcon(String headIcon) {
+                this.headIcon = headIcon;
+            }
 
             public String getLoginAccount() {
                 return loginAccount;
@@ -117,6 +123,7 @@ public class Register {
                 return "UserBean{" +
                         "nickName='" + nickName + '\'' +
                         ", userId='" + userId + '\'' +
+                        ", userId='" + headIcon + '\'' +
                         ", loginAccount='" + loginAccount + '\'' +
                         '}';
             }

@@ -71,7 +71,8 @@
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="信息展示区1"
-              >
+        android:divider="@color/linecolor"
+        android:dividerHeight="0.5px"
+        android:text="信息展示区1">
     </ListView>
 </LinearLayout>
