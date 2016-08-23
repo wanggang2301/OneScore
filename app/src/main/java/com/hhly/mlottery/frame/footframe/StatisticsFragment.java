@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -39,13 +40,12 @@ import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.trend.FootballTrendBean;
 import com.hhly.mlottery.bean.footballDetails.trend.TrendBean;
 import com.hhly.mlottery.bean.footballDetails.trend.TrendFormBean;
+import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FootballTrendChartComparator;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.MyLineChart;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +59,7 @@ import java.util.Map;
  * @date 2016/6/12 11:21
  * @des 足球内页改版直播(足球事件直播, 走勢統計)
  */
-public class StatisticsFragment extends Fragment {
+public class StatisticsFragment extends Fragment implements View.OnClickListener {
 
 
     private static String STA_PARM = "STA_PARM";
@@ -119,8 +119,6 @@ public class StatisticsFragment extends Fragment {
     private FrameLayout fl_attackTrend_networkError;// 加载失败
     private TextView reLoading;// 刷新
     private ScrollView sv_attack;
-    private MyLineChart myLineChartAttack;// 攻防图表对象
-    private MyLineChart myLineChartCorner;// 角球图表对象
 
     private String eventType;
 
@@ -163,6 +161,11 @@ public class StatisticsFragment extends Fragment {
 
     private LinearLayout ll_nodata;
 
+    private FootballLiveGotoChart mFootballLiveGotoChart;
+
+    public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
+        this.mFootballLiveGotoChart = mFootballLiveGotoChart;
+    }
 
     /***
      * 走势图
@@ -241,6 +244,14 @@ public class StatisticsFragment extends Fragment {
     private TextView tv_attack_home;
     private TextView tv_attack_guest;
 
+    private TextView goChart;
+
+
+    //测试走势图
+    private Button btn1;
+    private Button btn2;
+    private Button btn3;
+
 
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
@@ -258,34 +269,36 @@ public class StatisticsFragment extends Fragment {
         return mView;
     }
 
-
     public void finishMatchRequest() {
         getVolleyData();
         getVolleyDataStatic();
-        initEvent();
     }
 
-    /**
-     * 初始化事件
-     */
-    private void initEvent() {
-        // 访问失败，点击刷新
-        reLoading.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 请求数据
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.goChart:
+                if (mFootballLiveGotoChart != null) {
+                    mFootballLiveGotoChart.onClick();
+                }
+                break;
+
+            case R.id.reLoading:
                 getVolleyData();
-            }
-        });
 
+                break;
 
-        reLoadin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 请求数据
+            case R.id.reLoadin:
                 getVolleyDataStatic();
-            }
-        });
+
+                break;
+
+
+        }
+
+
     }
 
     /**
@@ -339,35 +352,6 @@ public class StatisticsFragment extends Fragment {
         //  sv_attack = (ScrollView) mView.findViewById(R.id.sv_attack);
 
         reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新走势图
-        // 攻防走势图控件
-        myLineChartAttack = new MyLineChart(mContext);
-        myLineChartAttack.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
-        myLineChartAttack.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
-        myLineChartAttack.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
-        myLineChartAttack.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
-        myLineChartAttack.setmOneLineColor(mContext.getResources().getColor(R.color.firstPlayers_homeTeam_bg));// 设置第一条线颜色
-        myLineChartAttack.setmTwoLineColor(mContext.getResources().getColor(R.color.firstPlayers_visitingTeam_bg));// 设置第二条线颜色
-        myLineChartAttack.setMargin(DisplayUtil.dip2px(mContext, 16));// 设置边距
-        myLineChartAttack.setXscale(DisplayUtil.px2dip(mContext, 6));// 设置X轴长度
-        myLineChartAttack.setYscale(DisplayUtil.px2dip(mContext, 6));// 设置Y轴长度
-        myLineChartAttack.setmTextSize(DisplayUtil.dip2px(mContext, 10));// XY轴字体大小
-        myLineChartAttack.setmLineWidth(DisplayUtil.dip2px(mContext, 1));// 线条宽度
-        myLineChartAttack.setmCircleSize(DisplayUtil.dip2px(mContext, 3));// 圆点大小
-        // 角球走势图控件
-        myLineChartCorner = new MyLineChart(mContext);
-        myLineChartCorner.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
-        myLineChartCorner.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
-        myLineChartCorner.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
-        myLineChartCorner.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
-        myLineChartCorner.setmOneLineColor(mContext.getResources().getColor(R.color.firstPlayers_homeTeam_bg));// 设置第一条线颜色
-        myLineChartCorner.setmTwoLineColor(mContext.getResources().getColor(R.color.firstPlayers_visitingTeam_bg));// 设置第二条线颜色
-        myLineChartCorner.setMargin(DisplayUtil.dip2px(mContext, 16));// 设置边距
-        myLineChartCorner.setXscale(DisplayUtil.px2dip(mContext, 6));// 设置X轴长度
-        myLineChartCorner.setYscale(DisplayUtil.px2dip(mContext, 6));// 设置Y轴长度
-        myLineChartCorner.setmTextSize(DisplayUtil.dip2px(mContext, 10));// XY轴字体大小
-        myLineChartCorner.setmLineWidth(DisplayUtil.dip2px(mContext, 1));// 线条宽度
-        myLineChartCorner.setmCircleSize(DisplayUtil.dip2px(mContext, 3));// 圆点大小
-
 
         /***
          * 统计图
@@ -428,6 +412,11 @@ public class StatisticsFragment extends Fragment {
         tv_attack_guest = (TextView) mView.findViewById(R.id.tv_attack_guest);
 
 
+        goChart = (TextView) mView.findViewById(R.id.goChart);
+        goChart.setOnClickListener(this);
+
+        reLoadin.setOnClickListener(this);
+        reLoading.setOnClickListener(this);
         /**
          * 走势图
          */
@@ -438,10 +427,10 @@ public class StatisticsFragment extends Fragment {
         chart_attack = (LineChart) mView.findViewById(R.id.chart_attack);
 
 
-        initChartView(chart_shoot, "暂无射正球门数据.");
-        initChartView(chart_shootAside, "暂无射偏球门数据.");
-        initChartView(chart_dangerousAttack, "暂无危险进攻数据.");
-        initChartView(chart_attack, "暂无进攻数据.");
+        initChartView(chart_shoot, mContext.getResources().getString(R.string.shot_nodata));
+        initChartView(chart_shootAside, mContext.getResources().getString(R.string.shotAside_nodata));
+        initChartView(chart_dangerousAttack, mContext.getResources().getString(R.string.dangerAttackk_nodata));
+        initChartView(chart_attack, mContext.getResources().getString(R.string.attack_nodata));
 
 
         shotYAxis = chart_shoot.getAxisLeft();
@@ -486,12 +475,56 @@ public class StatisticsFragment extends Fragment {
         attackXAxis.setAxisLineColor(Color.BLACK);
         attackXAxis.setAxisMinValue(0f);
 
+
+        btn1 = (Button) mView.findViewById(R.id.btn1);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        btn2 = (Button) mView.findViewById(R.id.btn2);
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                trendChartList = new ArrayList<MatchTextLiveBean>();
+                trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "4500000", "", "", "", "", "", "", "", ""));
+
+                initChartData("1");
+
+                //trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "4500000", "", "", "", "", "", "", "", ""));
+
+            }
+        });
+
+        btn3 = (Button) mView.findViewById(R.id.btn3);
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // initChartData("1");
+
+                trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "4500000", "", "", "", "", "", "", "", ""));
+
+                updateChartView();
+
+                liveMatchTrendData();
+
+                L.d("hhhhjjj", "trendChartList==" + trendChartList.size());
+            }
+        });
+
     }
 
 
     private void initChartView(LineChart mChart, String msg) {
         mChart.setDrawGridBackground(false);
-        mChart.setDescription("时间(T)");
+        mChart.setDescription(mContext.getResources().getString(R.string.time));
         mChart.setNoDataTextDescription(msg);
         mChart.setTouchEnabled(true);
         mChart.setDragEnabled(false);
@@ -503,6 +536,8 @@ public class StatisticsFragment extends Fragment {
         mChart.getXAxis().setAxisLineWidth(1f);
         Legend l_shoot = mChart.getLegend();
         l_shoot.setForm(Legend.LegendForm.LINE);
+
+        l_shoot.setEnabled(false);
     }
 
 
@@ -668,13 +703,19 @@ public class StatisticsFragment extends Fragment {
      */
     public void initChartData(String id) {
         if ("0".equals(id)) {
-          /*  ArrayList<Integer> arrayList = new ArrayList<>();
 
-            showData(arrayList, arrayList, myLineChartCorner, ff_corner);// 显示角球数据
-            showData(arrayList, arrayList, myLineChartAttack, ff);// 显示攻防数据*/
+            trendChartList = new ArrayList<MatchTextLiveBean>();
+
+            // trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "3000000", "", "", "", "", "", "", "", ""));
+
+            firstInitChartValues();
+
+            liveMatchTrendData();
 
         } else if ("1".equals(id)) {
-            showTrendChart();
+            firstInitChartValues();
+
+            liveMatchTrendData();
         }
     }
 
@@ -704,7 +745,56 @@ public class StatisticsFragment extends Fragment {
     }
 
 
-    private void initChartValues() {
+    private void updateChartView() {
+        shotHome = 0;
+        shotGuest = 0;
+        shotAsideHome = 0;
+        shotAsideGuest = 0;
+        dangerAttackHome = 0;
+        dangerAttackGuest = 0;
+        attackHome = 0;
+        attackGuest = 0;
+
+
+        shootHomeValues.clear();
+        shootGuestValues.clear();
+        shootAsideHomeValues.clear();
+        shootAsideGuestValues.clear();
+        dangerousAttackHomeValues.clear();
+        dangerousAttackGuestValues.clear();
+        attackHomeValues.clear();
+        attackGuestValues.clear();
+
+        shootHomeColors.clear();
+        shootGuestColors.clear();
+        shootAsideHomeColors.clear();
+        shootAsideGuestColors.clear();
+        dangerousAttackHomeColors.clear();
+        dangerousAttackGuestColors.clear();
+        attackHomeColors.clear();
+        attackGuestColors.clear();
+
+        shootHomeValues.add(new Entry(0f, 0f));
+        shootGuestValues.add(new Entry(0f, 0f));
+        shootAsideHomeValues.add(new Entry(0f, 0f));
+        shootAsideGuestValues.add(new Entry(0f, 0f));
+        dangerousAttackHomeValues.add(new Entry(0f, 0f));
+        dangerousAttackGuestValues.add(new Entry(0f, 0f));
+        attackHomeValues.add(new Entry(0f, 0f));
+        attackGuestValues.add(new Entry(0f, 0f));
+
+        shootHomeColors.add(Color.TRANSPARENT);
+        shootGuestColors.add(Color.TRANSPARENT);
+        shootAsideHomeColors.add(Color.TRANSPARENT);
+        shootAsideGuestColors.add(Color.TRANSPARENT);
+        dangerousAttackHomeColors.add(Color.TRANSPARENT);
+        dangerousAttackGuestColors.add(Color.TRANSPARENT);
+        attackHomeColors.add(Color.TRANSPARENT);
+        attackGuestColors.add(Color.TRANSPARENT);
+
+    }
+
+    private void firstInitChartValues() {
 
         shotHome = 0;
         shotGuest = 0;
@@ -754,17 +844,13 @@ public class StatisticsFragment extends Fragment {
     }
 
     /**
-     * 走势图计算数据
+     * 走势图完场计算数据
      */
-
-
-    private void computeTrendData() {
+    private void finishMatchTrendData() {
         /**
          * x轴为分钟  y轴为个数
          */
-
-        initChartValues();
-
+        firstInitChartValues();
         //射正
         Iterator<TrendBean> shotHomeIterator = trendFormBean.getShot().getHome().iterator();
         int shotHome = 0;
@@ -813,7 +899,7 @@ public class StatisticsFragment extends Fragment {
             shotYAxis.setLabelCount(getYLabelCount(shotGuest));
         }
 
-        showTrendData(chart_shoot, shootHomeValues, shootGuestValues, shootHomeColors, shootGuestColors);
+        showTrendChartView(chart_shoot, shootHomeValues, shootGuestValues, shootHomeColors, shootGuestColors);
 
 
         //射偏
@@ -823,7 +909,6 @@ public class StatisticsFragment extends Fragment {
             TrendBean bean = shotAsideHomeIterator.next();
             if (TREND_CORNER.equals(bean.getFlag())) {
                 shootAsideHomeColors.add(Color.parseColor("#19A67A"));
-                L.d("rrt", bean.getTime());
 
             } else if (TREND_GOAL.equals(bean.getFlag())) {
                 shootAsideHomeColors.add(Color.parseColor("#FF0000"));
@@ -833,7 +918,6 @@ public class StatisticsFragment extends Fragment {
                 shootAsideHomeColors.add(Color.TRANSPARENT);
 
             }
-            L.d("rrt", "分钟" + convertStringToFloat(bean.getTime()));
 
 
             shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
@@ -868,7 +952,7 @@ public class StatisticsFragment extends Fragment {
         }
 
 
-        showTrendData(chart_shootAside, shootAsideHomeValues, shootAsideGuestValues, shootAsideHomeColors, shootAsideGuestColors);
+        showTrendChartView(chart_shootAside, shootAsideHomeValues, shootAsideGuestValues, shootAsideHomeColors, shootAsideGuestColors);
 
 
         //危险进攻
@@ -915,7 +999,7 @@ public class StatisticsFragment extends Fragment {
             dangerousAttackYAxis.setLabelCount(getYLabelCount(dangerAttackGuest));
         }
 
-        showTrendData(chart_dangerousAttack, dangerousAttackHomeValues, dangerousAttackGuestValues, dangerousAttackHomeColors, dangerousAttackGuestColors);
+        showTrendChartView(chart_dangerousAttack, dangerousAttackHomeValues, dangerousAttackGuestValues, dangerousAttackHomeColors, dangerousAttackGuestColors);
 
 
         //进攻
@@ -961,57 +1045,76 @@ public class StatisticsFragment extends Fragment {
             attackYAxis.setLabelCount(getYLabelCount(attackGuest));
         }
 
-        showTrendData(chart_attack, attackHomeValues, attackGuestValues, attackHomeColors, attackGuestColors);
+        showTrendChartView(chart_attack, attackHomeValues, attackGuestValues, attackHomeColors, attackGuestColors);
         setChartScore();
     }
 
 
-    private void showTrendData(LineChart mChart, List<Entry> homeEntry, List<Entry> guestEntry, List<Integer> homeColors, List<Integer> guestColors) {
+    private void showTrendChartView(LineChart mChart, List<Entry> homeEntry, List<Entry> guestEntry, List<Integer> homeColors, List<Integer> guestColors) {
         LineDataSet mHomeLineDataSet;
         LineDataSet mGuestLineDataSet;
 
-        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
+
+       /* if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
+
+
+            L.d("hhhhjjj", "刷新chart" + homeEntry.size());
+            // L.d("hhhhjjj", "刷新chart" + guestEntry.size());
+            L.d("hhhhjjj", "刷新chart" + homeColors.size());
+            // L.d("hhhhjjj", "刷新chart" + guestColors.size());
+
             mHomeLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            mGuestLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(1);
+            // mGuestLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(1);
 
             mHomeLineDataSet.setValues(homeEntry);
-            mGuestLineDataSet.setValues(guestEntry);
+            // mGuestLineDataSet.setValues(guestEntry);
+            mHomeLineDataSet.setCircleColors(homeColors);
+            //  mGuestLineDataSet.setCircleColors(guestColors);
 
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
-        } else {
 
 
-            mHomeLineDataSet = new LineDataSet(homeEntry, "DataSet1");
-            mHomeLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
-            mHomeLineDataSet.setColor(Color.parseColor("#C23531"));
-            mHomeLineDataSet.setCircleColor(Color.BLACK);
-            mHomeLineDataSet.setLineWidth(0.7f);
-            mHomeLineDataSet.setCircleRadius(3f);
-            mHomeLineDataSet.setDrawCircleHole(false);
-            mHomeLineDataSet.setDrawValues(false);
-            mHomeLineDataSet.setCircleColors(homeColors);
+        } else {*/
 
 
-            mGuestLineDataSet = new LineDataSet(guestEntry, "DataSet2");
-            mGuestLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
-            mGuestLineDataSet.setColor(Color.BLUE);
-            mGuestLineDataSet.setCircleColor(Color.BLACK);
-            mGuestLineDataSet.setLineWidth(0.7f);
-            mGuestLineDataSet.setCircleRadius(3f);
-            mGuestLineDataSet.setDrawCircleHole(false);
-            mGuestLineDataSet.setValueTextSize(9f);
-            mGuestLineDataSet.setDrawValues(false);
-            mGuestLineDataSet.setCircleColors(guestColors);
+        mHomeLineDataSet = new LineDataSet(homeEntry, "");
+        mHomeLineDataSet.setDrawHighlightIndicators(false);
 
 
-            ArrayList<ILineDataSet> dataSetsList = new ArrayList<ILineDataSet>();
-            dataSetsList.add(mHomeLineDataSet);
-            dataSetsList.add(mGuestLineDataSet);
+        mHomeLineDataSet.setLabel("");
+        mHomeLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+        mHomeLineDataSet.setColor(Color.parseColor("#C23531"));
+        mHomeLineDataSet.setCircleColor(Color.BLACK);
+        mHomeLineDataSet.setLineWidth(0.7f);
+        mHomeLineDataSet.setCircleRadius(3f);
+        mHomeLineDataSet.setDrawCircleHole(false);
+        mHomeLineDataSet.setDrawValues(false);
+        mHomeLineDataSet.setCircleColors(homeColors);
 
-            LineData lineData = new LineData(dataSetsList);
-            mChart.setData(lineData);
-        }
+        mGuestLineDataSet = new LineDataSet(guestEntry, "");
+        mGuestLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+        mGuestLineDataSet.setColor(Color.BLUE);
+        mGuestLineDataSet.setCircleColor(Color.BLACK);
+        mGuestLineDataSet.setLineWidth(0.7f);
+        mGuestLineDataSet.setCircleRadius(3f);
+        mGuestLineDataSet.setDrawCircleHole(false);
+        mGuestLineDataSet.setValueTextSize(9f);
+        mGuestLineDataSet.setDrawValues(false);
+        mGuestLineDataSet.setCircleColors(guestColors);
+
+
+        ArrayList<ILineDataSet> dataSetsList = new ArrayList<ILineDataSet>();
+        dataSetsList.add(mHomeLineDataSet);
+        dataSetsList.add(mGuestLineDataSet);
+
+        LineData lineData = new LineData(dataSetsList);
+        mChart.setData(lineData);
+
+        mChart.invalidate();
+
+
+        // }
 
     }
 
@@ -1020,12 +1123,18 @@ public class StatisticsFragment extends Fragment {
      * 显示数据走势图
      */
 
-    private void showTrendChart() {
-        initChartValues();
+    private void liveMatchTrendData() {
         //trendChartList排序由小到大
-        Collections.sort(trendChartList, new FootballTrendChartComparator());
+
+        if (trendChartList.size() > 1) {
+            Collections.sort(trendChartList, new FootballTrendChartComparator());
+        }
 
         float maxXais = 0;
+
+        if (trendChartList.size() == 0) {
+            return;
+        }
 
         maxXais = convertStringToFloat(trendChartList.get(trendChartList.size() - 1).getTime());
 
@@ -1177,7 +1286,7 @@ public class StatisticsFragment extends Fragment {
         }
 
 
-        showTrendData(chart_shoot, shootHomeValues, shootGuestValues, shootHomeColors, shootGuestColors);
+        showTrendChartView(chart_shoot, shootHomeValues, shootGuestValues, shootHomeColors, shootGuestColors);
 
 
         //射偏
@@ -1189,7 +1298,7 @@ public class StatisticsFragment extends Fragment {
             shotAsideYAxis.setLabelCount(getYLabelCount(shotAsideGuest));
         }
 
-        showTrendData(chart_shootAside, shootAsideHomeValues, shootAsideGuestValues, shootAsideHomeColors, shootAsideGuestColors);
+        showTrendChartView(chart_shootAside, shootAsideHomeValues, shootAsideGuestValues, shootAsideHomeColors, shootAsideGuestColors);
 
         //危险进攻
         if (dangerAttackHome > dangerAttackGuest) {
@@ -1200,7 +1309,7 @@ public class StatisticsFragment extends Fragment {
             dangerousAttackYAxis.setLabelCount(getYLabelCount(dangerAttackGuest));
         }
 
-        showTrendData(chart_dangerousAttack, dangerousAttackHomeValues, dangerousAttackGuestValues, dangerousAttackHomeColors, dangerousAttackGuestColors);
+        showTrendChartView(chart_dangerousAttack, dangerousAttackHomeValues, dangerousAttackGuestValues, dangerousAttackHomeColors, dangerousAttackGuestColors);
 
 
         //进攻
@@ -1212,7 +1321,7 @@ public class StatisticsFragment extends Fragment {
             attackYAxis.setLabelCount(getYLabelCount(attackGuest));
         }
 
-        showTrendData(chart_attack, attackHomeValues, attackGuestValues, attackHomeColors, attackGuestColors);
+        showTrendChartView(chart_attack, attackHomeValues, attackGuestValues, attackHomeColors, attackGuestColors);
 
         setChartScore();
     }
@@ -1231,8 +1340,7 @@ public class StatisticsFragment extends Fragment {
 
         L.d("223344", "直播中走勢圖測試");
         trendChartList.add(matchTextLiveBean);
-        showTrendChart();
-
+        liveMatchTrendData();
 
     }
 
@@ -1244,7 +1352,7 @@ public class StatisticsFragment extends Fragment {
                 iterator.remove();//用xMatchLive.remove会有异常
             }
         }
-        showTrendChart();
+        liveMatchTrendData();
     }
 
 
@@ -1432,10 +1540,9 @@ public class StatisticsFragment extends Fragment {
                     L.d("112233", "请求成功");
 
 
-                    computeTrendData();
+                    finishMatchTrendData();
 
-                    // showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
-                    // showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
+
                     break;
                 case ERROR:// 加载失败
                     fl_attackTrend_loading.setVisibility(View.GONE);

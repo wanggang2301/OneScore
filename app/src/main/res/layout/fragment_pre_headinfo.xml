@@ -89,9 +89,15 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00-00 00:00"
+                android:text="00:00"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12" />
+
+            <ImageView
+                android:id="@+id/head_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/head_video" />
 
         </LinearLayout>
 

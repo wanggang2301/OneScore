@@ -101,6 +101,7 @@
                             android:textSize="@dimen/text_size_15" />
 
                         <TextView
+                            android:id="@+id/goChart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -179,8 +180,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_ytor" />
 
@@ -195,8 +196,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_player" />
 
@@ -211,8 +212,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_corner" />
 
@@ -227,8 +228,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_half" />
 
@@ -243,8 +244,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
 
                         android:src="@mipmap/event_finish" />
 
@@ -679,394 +680,451 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/white"
-                        android:orientation="horizontal"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="5dp">
+                        android:orientation="horizontal">
 
-                        <TextView
+                        <Button
+                            android:id="@+id/btn1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/shoot_correct_txt"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_11" />
+                            android:text="btn1" />
 
-                        <TextView
-                            android:id="@+id/tv_shoot"
+                        <Button
+                            android:id="@+id/btn2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text=""
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_11" />
+                            android:text="btn2" />
 
 
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:background="#C23531"
-                            android:gravity="center" />
-
-                        <TextView
-                            android:id="@+id/tv_shot_home"
+                        <Button
+                            android:id="@+id/btn3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingLeft="3dp"
-                            android:text="主队"
-                            android:textSize="@dimen/text_size_10" />
-
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:background="@color/blue" />
-
-                        <TextView
-                            android:id="@+id/tv_shot_guest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="客队"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:src="@mipmap/chart_goal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="进球"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:src="@mipmap/chart_corner" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="角球"
-                            android:textSize="@dimen/text_size_10" />
+                            android:text="btn3" />
 
 
                     </LinearLayout>
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/chart_shoot"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:background="@color/white"
-                        android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="10dp"
                         android:background="@color/white"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:paddingBottom="5dp"
-                        android:paddingLeft="20dp"
                         android:paddingTop="5dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/shoot_miss_txt"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_11" />
-
-                        <TextView
-                            android:id="@+id/tv_shotAside"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text=""
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_11" />
-
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:background="#C23531"
-                            android:gravity="center" />>
-
-                        <TextView
-                            android:id="@+id/tv_shotAside_home"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="主队"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:background="@color/blue" />
-
-                        <TextView
-                            android:id="@+id/tv_shotAside_guest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="客队"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:src="@mipmap/chart_goal" />
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="进球"
-                            android:textSize="@dimen/text_size_10" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/shoot_correct_txt"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:src="@mipmap/chart_corner" />
+                            <TextView
+                                android:id="@+id/tv_shoot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="角球"
-                            android:textSize="@dimen/text_size_10" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:background="#C23531"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tv_shot_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="3dp"
+                                android:text="主队"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/blue" />
+
+                            <TextView
+                                android:id="@+id/tv_shot_guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="客队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:src="@mipmap/chart_goal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="进球"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_corner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="角球"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                        </LinearLayout>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_shoot"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/white"
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
 
                     </LinearLayout>
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/chart_shootAside"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:background="@color/white"
-
-                        android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:paddingBottom="5dp"
-                        android:paddingLeft="20dp"
                         android:paddingTop="5dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/danger_attack_txt"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_11" />
-
-                        <TextView
-                            android:id="@+id/tv_dangerAttack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text=""
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_11" />
-
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:background="#C23531"
-                            android:gravity="center" />
-
-                        <TextView
-                            android:id="@+id/tv_dangerAttack_home"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="主队"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:background="@color/blue" />
-
-                        <TextView
-                            android:id="@+id/tv_dangerAttack_guest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="客队"
-                            android:textSize="@dimen/text_size_10" />
-
-
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:src="@mipmap/chart_goal" />
+                            android:layout_marginTop="10dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="进球"
-                            android:textSize="@dimen/text_size_10" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/shoot_miss_txt"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:src="@mipmap/chart_corner" />
+                            <TextView
+                                android:id="@+id/tv_shotAside"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="角球"
-                            android:textSize="@dimen/text_size_10" />
 
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:background="#C23531"
+                                android:gravity="center" />>
+
+                            <TextView
+                                android:id="@+id/tv_shotAside_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="主队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/blue" />
+
+                            <TextView
+                                android:id="@+id/tv_shotAside_guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="客队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:src="@mipmap/chart_goal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="进球"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_corner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="角球"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_shootAside"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/white"
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
                     </LinearLayout>
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/chart_dangerousAttack"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:background="@color/white"
-
-                        android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:paddingBottom="5dp"
-                        android:paddingLeft="20dp"
                         android:paddingTop="5dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/shoot"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_11" />
-
-                        <TextView
-                            android:id="@+id/tv_attack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text=""
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_11" />
-
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:background="#C23531"
-                            android:gravity="center" />
-
-                        <TextView
-                            android:id="@+id/tv_attack_home"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="主队"
-                            android:textSize="@dimen/text_size_10" />
-
-                        <View
-                            android:layout_width="10dp"
-                            android:layout_height="1dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:background="@color/blue" />
-
-                        <TextView
-                            android:id="@+id/tv_attack_guest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="客队"
-                            android:textSize="@dimen/text_size_10" />
-
-
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:src="@mipmap/chart_goal" />
+                            android:layout_marginTop="10dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="进球"
-                            android:textSize="@dimen/text_size_10" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/danger_attack_txt"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:src="@mipmap/chart_corner" />
+                            <TextView
+                                android:id="@+id/tv_dangerAttack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="3dp"
-                            android:text="角球"
-                            android:textSize="@dimen/text_size_10" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:background="#C23531"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tv_dangerAttack_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="主队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/blue" />
+
+                            <TextView
+                                android:id="@+id/tv_dangerAttack_guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="客队"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:src="@mipmap/chart_goal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="进球"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_corner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="角球"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_dangerousAttack"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/white"
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
 
                     </LinearLayout>
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/chart_attack"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp">
 
-                        android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/shoot"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:id="@+id/tv_attack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:background="#C23531"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tv_attack_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="主队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/blue" />
+
+                            <TextView
+                                android:id="@+id/tv_attack_guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="客队"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="20dp"
+                                android:src="@mipmap/chart_goal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="进球"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_corner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="角球"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_attack"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/white"
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+
+                    </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
 

@@ -42,6 +42,7 @@ import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
+import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.footframe.AnalyzeFragment;
@@ -119,10 +120,11 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
     private final static int ROLLBALL_FG = 0;
-    private final static int TALKBALL_FG = 1;
+    private final static int LIVE_FG = 1;
     private final static int ANALYZE_FG = 2;
     private final static int ODDS_FG = 3;
     private final static int STATISTICS_FG = 4;
+    private final static int TALKBALL_FG = 5;
 
 
     //事件直播
@@ -303,6 +305,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private TimerTask timerTask;
 
+    private FootballLiveGotoChart mFootballLiveGotoChart;
+    private FootballLiveGotoChart mPreHeadGotoAnimHead;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -361,6 +367,20 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        mFootballLiveGotoChart = new FootballLiveGotoChart() {
+            @Override
+            public void onClick() {
+                mViewPager.setCurrentItem(TALKBALL_FG);
+            }
+        };
+
+
+        mPreHeadGotoAnimHead = new FootballLiveGotoChart() {
+            @Override
+            public void onClick() {
+                mHeadviewpager.setCurrentItem(2);
+            }
+        };
 
         loadData();
 
@@ -780,6 +800,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
             mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), null);
 
+            //  mStatisticsFragment.initChartData("0");
+
+            mStatisticsFragment.setmFootballLiveGotoChart(mFootballLiveGotoChart);
+
             mTalkAboutBallFragment.setClickableLikeBtn(true);
 
             mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName() + " " + matchDetail.getMatchInfo().getStartTime());
@@ -796,6 +820,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
             mPreHeadInfoFrament.initData(matchDetail, true);
+            mPreHeadInfoFrament.setmPreHeadGotoAnimHead(mPreHeadGotoAnimHead);
+
             mLiveHeadInfoFragment.initData(matchDetail);
 
 
