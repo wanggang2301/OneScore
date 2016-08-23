@@ -52,9 +52,9 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
 //        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.chart_room_bg_color));
         final View conversation = findViewById(R.id.conversation);
         String s = Integer.toHexString(204);// 80%
-        conversation.setBackgroundColor(Color.parseColor("#" + s + "f9f9f9"));
+        conversation.setBackgroundColor(Color.parseColor("#" + s + "000000"));
         final LinearLayout ll_setting = (LinearLayout) findViewById(R.id.ll_setting);
-        ll_setting.setBackgroundColor(Color.parseColor("#" + s + "f9f9f9"));
+        ll_setting.setBackgroundColor(Color.parseColor("#" + s + "000000"));
         final TextView tv_pb_size = (TextView) findViewById(R.id.tv_pb_size);
         tv_pb_size.setText(mContext.getResources().getString(R.string.rong_chart_bg_pb) + "(80):");
 
@@ -72,8 +72,8 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
                 if (str.length() <= 1) {
                     str = "0" + str;
                 }
-                conversation.setBackgroundColor(Color.parseColor("#" + str + "f9f9f9"));
-                ll_setting.setBackgroundColor(Color.parseColor("#" + str + "f9f9f9"));
+                conversation.setBackgroundColor(Color.parseColor("#" + str + "000000"));
+                ll_setting.setBackgroundColor(Color.parseColor("#" + str + "000000"));
                 tv_pb_size.setText(mContext.getResources().getString(R.string.rong_chart_bg_pb) + "(" + progress + "):");
                /* if(progress >= 100){
                     conversation.setBackgroundColor(Color.parseColor("#f9f9f9"));
@@ -127,6 +127,8 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         RongIM.getInstance().setCurrentUserInfo(mUserInfo);
         RongIM.getInstance().setMessageAttachedUserInfo(true);
         RongIM.getInstance().refreshUserInfoCache(mUserInfo);// 刷新本地用户缓存
+
+        L.d("xxx","userTestPhoto 头像URL：" + userTestPhoto);
     }
 
     @Override
