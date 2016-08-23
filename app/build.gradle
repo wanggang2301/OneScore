@@ -89,4 +89,5 @@ dependencies {
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     compile files('libs/umeng-analytics-v6.0.1.jar')
     compile project(':IMKit')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
