@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -247,11 +246,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private TextView goChart;
 
 
-    //测试走势图
-    private Button btn1;
-    private Button btn2;
-    private Button btn3;
-
 
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
@@ -474,51 +468,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         attackXAxis.enableGridDashedLine(10f, 10f, 0f);
         attackXAxis.setAxisLineColor(Color.BLACK);
         attackXAxis.setAxisMinValue(0f);
-
-
-        btn1 = (Button) mView.findViewById(R.id.btn1);
-
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-        btn2 = (Button) mView.findViewById(R.id.btn2);
-
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                trendChartList = new ArrayList<MatchTextLiveBean>();
-                trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "4500000", "", "", "", "", "", "", "", ""));
-
-                initChartData("1");
-
-                //trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "4500000", "", "", "", "", "", "", "", ""));
-
-            }
-        });
-
-        btn3 = (Button) mView.findViewById(R.id.btn3);
-
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // initChartData("1");
-
-                trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "4500000", "", "", "", "", "", "", "", ""));
-
-                updateChartView();
-
-                liveMatchTrendData();
-
-                L.d("hhhhjjj", "trendChartList==" + trendChartList.size());
-            }
-        });
-
     }
 
 
@@ -1340,6 +1289,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
         L.d("223344", "直播中走勢圖測試");
         trendChartList.add(matchTextLiveBean);
+        updateChartView();
+
         liveMatchTrendData();
 
     }
@@ -1352,6 +1303,8 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 iterator.remove();//用xMatchLive.remove会有异常
             }
         }
+        updateChartView();
+
         liveMatchTrendData();
     }
 

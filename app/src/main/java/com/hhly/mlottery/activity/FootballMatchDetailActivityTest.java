@@ -777,10 +777,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
     private void initViewPager(MatchDetail matchDetail) {
-
-
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
-
 
             //赛前进入分析
             mViewPager.setCurrentItem(ANALYZE_FG);
@@ -979,7 +976,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                 L.d(TAG, "第一次启动socket");
                 L.d("456789", "第一次启动socket");
-
                 startWebsocket();
                 computeWebSocket();
             }

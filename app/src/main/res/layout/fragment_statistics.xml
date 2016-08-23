@@ -680,34 +680,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/btn1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="btn1" />
-
-                        <Button
-                            android:id="@+id/btn2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="btn2" />
-
-
-                        <Button
-                            android:id="@+id/btn3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="btn3" />
-
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:paddingBottom="5dp"
