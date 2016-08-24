@@ -1,4 +1,4 @@
-package com.hhly.mlottery.bean.basket.BasketDatabase;
+package com.hhly.mlottery.bean.basket.basketdatabase;
 
 /**
  * description:

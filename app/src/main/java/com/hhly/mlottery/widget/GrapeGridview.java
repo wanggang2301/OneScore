@@ -8,17 +8,17 @@ import android.widget.GridView;
 /**
  * Created by A on 2016/1/12.
  */
-public class GrapeGridview extends GridView {
+public class GrapeGridView extends GridView {
 
-    public GrapeGridview(Context context) {
+    public GrapeGridView(Context context) {
         super(context);
     }
 
-    public GrapeGridview(Context context, AttributeSet attrs) {
+    public GrapeGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public GrapeGridview(Context context, AttributeSet attrs, int defStyle) {
+    public GrapeGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
