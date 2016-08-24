@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/home_default_icon_coloer"
     android:orientation="vertical">
 
     <RadioGroup
@@ -33,7 +34,7 @@
             android:layout_marginLeft="-0.25dp"
             android:background="@drawable/shape_basketball_infomation_right"
             android:checked="false"
-            android:text="@string/foot_statictics"
+            android:text="@string/foot_trend"
             android:textColor="@drawable/info_text_color" />
     </RadioGroup>
 
@@ -43,21 +44,6 @@
         android:layout_below="@id/radio_group"
         android:orientation="vertical">
 
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/nested_scroll_view_nodata"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/foot_event_nomatchstate" />
-
-        </android.support.v4.widget.NestedScrollView>
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view_event"
@@ -68,8 +54,68 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/nodata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/foot_event"
+                        android:textColor="#3F5672"
+                        android:textSize="@dimen/text_size_13" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linecolor"></View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="50dp"
+                        android:paddingTop="50dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/foot_face" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="5dp"
+                            android:text="@string/matchIsNotStart"
+                            android:textColor="@color/res_pl_color"
+                            android:textSize="@dimen/text_size_15" />
+
+                        <TextView
+                            android:id="@+id/goChart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/tv_shape"
+                            android:gravity="center_horizontal"
+                            android:padding="10dp"
+                            android:text="@string/goChat"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_15" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view"
@@ -78,16 +124,10 @@
                     android:layout_marginBottom="15dp"></android.support.v7.widget.RecyclerView>
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/linecolor"></View>
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp">
@@ -95,6 +135,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:src="@mipmap/event_goal" />
 
                     <TextView
@@ -108,6 +149,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_rc" />
 
@@ -122,6 +164,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+
                         android:layout_marginLeft="6dp"
                         android:src="@mipmap/event_yc" />
 
@@ -136,7 +180,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="6dp"
+
                         android:src="@mipmap/event_ytor" />
 
                     <TextView
@@ -150,7 +196,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="6dp"
+
                         android:src="@mipmap/event_player" />
 
                     <TextView
@@ -164,7 +212,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="6dp"
+
                         android:src="@mipmap/event_corner" />
 
                     <TextView
@@ -178,7 +228,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="6dp"
+
                         android:src="@mipmap/event_half" />
 
                     <TextView
@@ -192,7 +244,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="6dp"
+
                         android:src="@mipmap/event_finish" />
 
                     <TextView
@@ -204,232 +258,29 @@
                         android:textSize="@dimen/text_size_10" />
                 </LinearLayout>
 
-                <LinearLayout
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/home_default_icon_coloer"></View>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:padding="10dp"
+                    android:text="@string/foot_statictics"
+                    android:textColor="#3F5672"
+                    android:textSize="@dimen/text_size_13" />
 
-                </LinearLayout>
-            </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/linecolor"></View>
 
-
-        </android.support.v4.widget.NestedScrollView>
-
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/nested_scroll_view_trend"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <RelativeLayout
-                android:id="@+id/ll_statistics"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:id="@+id/trend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <!--走势布局-->
-
-                    <!--内容加载进度条_正在加载中-->
-                    <FrameLayout
-                        android:id="@+id/fl_attackTrend_loading"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone">
-
-                        <ProgressBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center" />
-                    </FrameLayout>
-                    <!--网络访问失败-->
-                    <FrameLayout
-                        android:id="@+id/fl_attackTrend_networkError"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/refresh" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="@string/exp_net_status_txt"
-                                android:textColor="@color/version"
-                                android:textSize="@dimen/text_size_14" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="0dip"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="5dip"
-                                    android:text="@string/exp__check_txt"
-                                    android:textColor="@color/msg"
-                                    android:textSize="@dimen/text_size_14" />
-
-                                <TextView
-                                    android:id="@+id/reLoading"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/exp_refresh_txt"
-                                    android:textColor="@color/exp_refresh"
-                                    android:textSize="@dimen/text_size_14" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </FrameLayout>
-
-                    <!--走势图-->
-                    <LinearLayout
-                        android:id="@+id/ll_trend_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:orientation="vertical"
-                        android:visibility="visible">
-                        <!--角球折线图走势-->
-                        <RelativeLayout
-                            android:id="@+id/rl_cornerTrend_data"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="visible">
-
-                            <FrameLayout
-                                android:id="@+id/fl_main_corner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="220dp"
-                                android:paddingLeft="40dp"
-                                android:paddingRight="20dp"></FrameLayout>
-
-                            <LinearLayout
-                                android:id="@+id/ll_time_name_corner"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/fl_main_corner"
-                                android:orientation="horizontal"
-                                android:paddingBottom="10dp"
-                                android:paddingLeft="60dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/homeTeam"
-                                    android:textColor="@color/firstPlayers_homeTeam_bg"
-                                    android:textSize="@dimen/number_desc" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingLeft="25dip"
-                                    android:text="@string/guestTeam"
-                                    android:textColor="@color/firstPlayers_visitingTeam_bg"
-                                    android:textSize="@dimen/number_desc" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
-                                android:paddingTop="10dp"
-                                android:text="@string/corner"
-                                android:textColor="@color/res_pl_color"
-                                android:textSize="@dimen/number_desc" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_above="@id/ll_time_name_corner"
-                                android:layout_alignParentRight="true"
-                                android:paddingRight="70dp"
-                                android:text="@string/game_time"
-                                android:textColor="@color/res_pl_color"
-                                android:textSize="@dimen/number_desc" />
-
-                        </RelativeLayout>
-                        <!--攻防折线图走势-->
-                        <RelativeLayout
-                            android:id="@+id/rl_attackTrend_data"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="visible">
-
-                            <FrameLayout
-                                android:id="@+id/fl_main"
-                                android:layout_width="wrap_content"
-                                android:layout_height="220dp"
-                                android:paddingLeft="40dp"
-                                android:paddingRight="20dp"></FrameLayout>
-
-                            <LinearLayout
-                                android:id="@+id/ll_time_name"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/fl_main"
-                                android:orientation="horizontal"
-                                android:paddingBottom="10dp"
-                                android:paddingLeft="60dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/homeTeam"
-                                    android:textColor="@color/firstPlayers_homeTeam_bg"
-                                    android:textSize="@dimen/number_desc" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingLeft="25dip"
-                                    android:text="@string/guestTeam"
-                                    android:textColor="@color/firstPlayers_visitingTeam_bg"
-                                    android:textSize="@dimen/number_desc" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="15dp"
-                                android:paddingTop="10dp"
-                                android:text="@string/attack"
-                                android:textColor="@color/res_pl_color"
-                                android:textSize="@dimen/number_desc" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_above="@id/ll_time_name"
-                                android:layout_alignParentRight="true"
-                                android:paddingRight="70dp"
-                                android:text="@string/game_time"
-                                android:textColor="@color/res_pl_color"
-                                android:textSize="@dimen/number_desc" />
-                        </RelativeLayout>
-                    </LinearLayout>
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/statistics"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/trend"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -736,7 +587,519 @@
                     </RelativeLayout>
                     <!--数据统计的弹框 end-->
                 </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view_trend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:id="@+id/trend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--走势布局-->
+
+                <!--内容加载进度条_正在加载中-->
+                <FrameLayout
+                    android:id="@+id/fl_attackTrend_loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+                <!--网络访问失败-->
+                <FrameLayout
+                    android:id="@+id/fl_attackTrend_networkError"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/refresh" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/exp_net_status_txt"
+                            android:textColor="@color/version"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dip"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dip"
+                                android:text="@string/exp__check_txt"
+                                android:textColor="@color/msg"
+                                android:textSize="@dimen/text_size_14" />
+
+                            <TextView
+                                android:id="@+id/reLoading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exp_refresh_txt"
+                                android:textColor="@color/exp_refresh"
+                                android:textSize="@dimen/text_size_14" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!--走势图-->
+                <LinearLayout
+                    android:id="@+id/ll_trend_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/shoot_correct_txt"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:id="@+id/tv_shoot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1.5dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="15dp"
+                                android:background="#C23531"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tv_shot_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="3dp"
+                                android:text="主队"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1.5dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/blue" />
+
+                            <TextView
+                                android:id="@+id/tv_shot_guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="客队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_goal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="进球"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_corner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="角球"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                        </LinearLayout>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_shoot"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/white"
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/shoot_miss_txt"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:id="@+id/tv_shotAside"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1.5dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="15dp"
+                                android:background="#C23531"
+                                android:gravity="center" />>
+
+                            <TextView
+                                android:id="@+id/tv_shotAside_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="主队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1.5dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/blue" />
+
+                            <TextView
+                                android:id="@+id/tv_shotAside_guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="客队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_goal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="进球"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_corner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="角球"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_shootAside"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/white"
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/danger_attack_txt"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:id="@+id/tv_dangerAttack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1.5dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="15dp"
+                                android:background="#C23531"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tv_dangerAttack_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="主队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1.5dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/blue" />
+
+                            <TextView
+                                android:id="@+id/tv_dangerAttack_guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="客队"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_goal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="进球"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_corner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="角球"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_dangerousAttack"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/white"
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/shoot"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+                            <TextView
+                                android:id="@+id/tv_attack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_size_11" />
+
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1.5dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="15dp"
+                                android:background="#C23531"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/tv_attack_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="主队"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="1.5dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/blue" />
+
+                            <TextView
+                                android:id="@+id/tv_attack_guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="客队"
+                                android:textSize="@dimen/text_size_10" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_goal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="进球"
+                                android:textSize="@dimen/text_size_10" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/chart_corner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="角球"
+                                android:textSize="@dimen/text_size_10" />
+
+                        </LinearLayout>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_attack"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/white"
+                            android:paddingLeft="10dp"></com.github.mikephil.charting.charts.LineChart>
+
+                    </LinearLayout>
+                </LinearLayout>
             </RelativeLayout>
+
         </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>

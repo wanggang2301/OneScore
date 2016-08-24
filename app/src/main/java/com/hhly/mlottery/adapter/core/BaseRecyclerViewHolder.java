@@ -29,8 +29,8 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 	 * ViewHolder模式 查找子View
 	 *
 	 * @param viewId viewId
-	 * @param <T>    T
-	 * @return T
+	 * @param <T>    Test
+	 * @return Test
 	 */
 	public <T extends View> T findViewById(int viewId) {
 		View view = views.get(viewId);

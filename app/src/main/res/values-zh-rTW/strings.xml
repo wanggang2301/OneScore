@@ -4,6 +4,7 @@
 
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
+    <string name="foot_trend">走勢</string>
     <string name="foot_statictics">統計</string>
     <string name="foot_event_goal">進球</string>
     <string name="foot_event_rc">紅牌</string>
@@ -22,6 +23,15 @@
     <string name="foot_event_out">下場</string>
     <string name="foot_event_num_out">號下場</string>
     <string name="foot_event_num_in">號上場</string>
+    <string name="matchIsNotStart">比賽暫未開始</string>
+    <string name="goChat">走,先去聊聊</string>
+    <string name="shot_nodata">暫無射正球門數據.</string>
+    <string name="shotAside_nodata">暫無射偏球門數據.</string>
+    <string name="dangerAttackk_nodata">暫無危險進攻數據.</string>
+    <string name="attack_nodata">暫無進攻數據.</string>
+    <string name="time">時間(T)</string>
+
+
 
     <!--篮球资料库-->
     <string name="basket_info_hot">熱門</string>
