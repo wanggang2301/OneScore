@@ -80,7 +80,7 @@
     -->
     <style name="RCTheme.Message.Username.TextView" parent="RCTheme.TextView">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/rc_location_text</item>
+        <item name="android:textColor">@color/rc_name_coloc</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
     <!--
