@@ -246,7 +246,6 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private TextView goChart;
 
 
-
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
         return fragment;
@@ -485,13 +484,11 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         mChart.getXAxis().setAxisLineWidth(1f);
         Legend l_shoot = mChart.getLegend();
         l_shoot.setForm(Legend.LegendForm.LINE);
-
         l_shoot.setEnabled(false);
     }
 
 
     public void setChartName(String home, String guest) {
-
         tv_shot_home.setText(home);
         tv_shot_guest.setText(guest);
         tv_shotAside_home.setText(home);
@@ -500,15 +497,11 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         tv_dangerAttack_guest.setText(guest);
         tv_attack_home.setText(home);
         tv_attack_guest.setText(guest);
-
     }
 
 
     /**
      * 足球事件直播
-     *
-     * @param livestatus
-     * @param matchTimeLiveBeanMs
      */
     public void setEventMatchLive(String livestatus, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
         //统计事件个数

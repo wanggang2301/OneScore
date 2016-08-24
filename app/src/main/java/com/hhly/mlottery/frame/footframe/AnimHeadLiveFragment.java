@@ -7,11 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
 
@@ -25,10 +29,14 @@ public class AnimHeadLiveFragment extends Fragment {
     private static final String TAG = "AnimHeadLiveFragment";
     private static final String THIRDID = "thirdId";
 
+    private static final String baseURL = "http://192.168.31.107:9000/live/footballodds_graphic.html?thirdId=";
+
     private String thirdId;
     private Context context;
     private View mView;
     private ProgressWebView mWebView;
+
+    private TextView tv_nopage;
 
     private String url;
 
@@ -56,12 +64,15 @@ public class AnimHeadLiveFragment extends Fragment {
             thirdId = getArguments().getString(THIRDID);
         }
         context = getActivity();
-
-        mWebView = (ProgressWebView)mView.findViewById(R.id.webview);
+        tv_nopage = (TextView) mView.findViewById(R.id.tv_nopage);
+        mWebView = (ProgressWebView) mView.findViewById(R.id.webview);
 
         //url = "http://m.1332255.com/news/infomationhtml/20160817/2016081730808.html";
 
-        url = "http://192.168.31.107:3000/act/footballodds/footballodds_graphic.html?thirdId=355174";
+        L.d("456789", "动画直播" + thirdId);
+
+        //  url = baseURL + thirdId;
+        url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId;
 
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
@@ -85,6 +96,12 @@ public class AnimHeadLiveFragment extends Fragment {
                 return true;
             }
 
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                mWebView.setVisibility(View.GONE);
+                tv_nopage.setVisibility(View.VISIBLE);
+            }
         });
 
         mWebView.loadUrl(url);

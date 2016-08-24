@@ -757,4 +757,7 @@ public class BaseURLs {
      * 足球情报 - 大数据预测
      */
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
+
+
+    public final static String URL_FOOTBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/footballodds_graphic.html";
 }
