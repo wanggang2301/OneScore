@@ -122,10 +122,16 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mHead_portrait, options);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-        universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mHead_portrait, options);
+
     }
 
     private void initView() {
@@ -373,7 +379,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                             Log.i("1", "flag=" + flag);
                             if (flag) {
                                 Log.i(TAG,"图片已保存至:" + outFile.getAbsolutePath());
-
+                                 mHead_portrait.setImageBitmap(photo);
                                  doPostSycn(PUT_URL,outFile);//上传图片
 
                             } else {
@@ -417,7 +423,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
          client.newCall(request).enqueue(new Callback() {
              @Override
              public void onFailure(Request request, IOException e) {
-                 UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
+                // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
                  Log.d(TAG, "onFailure: "+e.getMessage());
              }
 
@@ -465,7 +471,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                    // CommonUtils.saveRegisterInfo(register);
+
                     PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
+                    universalImageLoader.displayImage(register.getData().getUser().getHeadIcon(), mHead_portrait, options);
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
