@@ -721,12 +721,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                             //统计图
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
-                            mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
                             //走势图表
                             mStatisticsFragment.setTrendChartList(trendChartList);
-                            mStatisticsFragment.initChartData(mMatchDetail.getLiveStatus());
-
-
 
                         }
 
