@@ -94,6 +94,13 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
+
+    <!-- Fragment dialog 样式 -->
+    <style name="fragment_dialog_style">
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
     <!-- 彩票开奖数据布局 -->
     <style name="number_text_style">
         <item name="android:layout_width">match_parent</item>

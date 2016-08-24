@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 /**
  * Created by lyx on 2016/5/19.
@@ -50,14 +49,14 @@ public class CommonUtils {
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, "");
             PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, "");
             PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, "");
-
+            PreferenceUtil.commitString(AppConstants.HEADICON, "");
             AppConstants.register = new Register();
 
         } else {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID, register.getData().getUser().getUserId());
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, register.getData().getUser().getNickName());
             PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
-
+            PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon());
             String token = register.getData().getLoginToken();
             L.d(TAG, " saveRegisterInfo   token = " + token);
             PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, token);
@@ -97,7 +96,7 @@ public class CommonUtils {
         userBean.setUserId(PreferenceUtil.getString(AppConstants.SPKEY_USERID, ""));
         userBean.setNickName(PreferenceUtil.getString(AppConstants.SPKEY_NICKNAME, ""));
         userBean.setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
-
+        userBean.setHeadIcon(PreferenceUtil.getString(AppConstants.HEADICON, ""));
         Register.DataBean dataBean = new Register.DataBean();
 
         String token = PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, "");

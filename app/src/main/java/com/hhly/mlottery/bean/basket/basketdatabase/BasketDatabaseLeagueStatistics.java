@@ -231,4 +231,59 @@ public class BasketDatabaseLeagueStatistics {
     private double unequalEuroOdd;//	156
     private double unequalEuroOddRate;//	13%
     private double unfinishedMatch;//	0
+
+    private double graphAsiaSizeDrawRate;//	0
+    private double graphAsiaSizeOverRate;//	50
+    private double graphAsiaSizeUnderRate;//	51
+    private double graphLetDrawRate;//	2
+    private double graphLetGuestWinRate;//	36
+    private double graphLetHomeWinRate;//	63
+
+    public double getGraphAsiaSizeDrawRate() {
+        return graphAsiaSizeDrawRate;
+    }
+
+    public void setGraphAsiaSizeDrawRate(double graphAsiaSizeDrawRate) {
+        this.graphAsiaSizeDrawRate = graphAsiaSizeDrawRate;
+    }
+
+    public double getGraphAsiaSizeOverRate() {
+        return graphAsiaSizeOverRate;
+    }
+
+    public void setGraphAsiaSizeOverRate(double graphAsiaSizeOverRate) {
+        this.graphAsiaSizeOverRate = graphAsiaSizeOverRate;
+    }
+
+    public double getGraphAsiaSizeUnderRate() {
+        return graphAsiaSizeUnderRate;
+    }
+
+    public void setGraphAsiaSizeUnderRate(double graphAsiaSizeUnderRate) {
+        this.graphAsiaSizeUnderRate = graphAsiaSizeUnderRate;
+    }
+
+    public double getGraphLetDrawRate() {
+        return graphLetDrawRate;
+    }
+
+    public void setGraphLetDrawRate(double graphLetDrawRate) {
+        this.graphLetDrawRate = graphLetDrawRate;
+    }
+
+    public double getGraphLetGuestWinRate() {
+        return graphLetGuestWinRate;
+    }
+
+    public void setGraphLetGuestWinRate(double graphLetGuestWinRate) {
+        this.graphLetGuestWinRate = graphLetGuestWinRate;
+    }
+
+    public double getGraphLetHomeWinRate() {
+        return graphLetHomeWinRate;
+    }
+
+    public void setGraphLetHomeWinRate(double graphLetHomeWinRate) {
+        this.graphLetHomeWinRate = graphLetHomeWinRate;
+    }
 }
