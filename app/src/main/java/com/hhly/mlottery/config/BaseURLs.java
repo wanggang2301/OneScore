@@ -32,6 +32,8 @@ public class BaseURLs {
 //                return "192.168.31.65:8181";
                 return "192.168.10.242:8181";//开发环境。
 //                return "192.168.12.242:8181";//余勇俊测试
+            } else if (url_config == DebugConfigActivity.URL_93) {
+                return "183.61.172.93:8096"; // 典哥新加
             } else {
                 return "m.13322.com";
             }

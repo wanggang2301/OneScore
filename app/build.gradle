@@ -39,7 +39,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 19
-        versionName "1.1.6.0823"
+        versionName "1.1.6.0824"
         multiDexEnabled true
     }
 
@@ -93,7 +93,4 @@ dependencies {
 
     compile files('libs/umeng-analytics-v6.0.1.jar')
     compile project(':IMKit')
-/*
-    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
-*/
 }

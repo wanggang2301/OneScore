@@ -19,6 +19,7 @@ public class DebugConfigActivity extends BaseActivity{
     public final static int URL_13322 = 1;
     public final static int URL_1332255 = 2;
     public final static int URL_242 = 5;
+    public final static int URL_93 = 7;
 
     public final static int WS_13322 = 3;
     public final static int WS_242 = 4;
@@ -73,7 +74,10 @@ public class DebugConfigActivity extends BaseActivity{
                     PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_13322);
                 } else if (config_rg1.getCheckedRadioButtonId() == R.id.config_rb5) {
                     PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_242);
+                } else if (config_rg1.getCheckedRadioButtonId() == R.id.config_rb7) {
+                    PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_93);
                 }
+
 
                 RadioGroup config_rg2 = (RadioGroup) findViewById(R.id.config_rg2);
                 if (config_rg2.getCheckedRadioButtonId() == R.id.config_rb3) {

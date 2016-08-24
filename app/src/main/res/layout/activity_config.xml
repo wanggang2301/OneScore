@@ -34,10 +34,18 @@
             />
 
         <RadioButton
+            android:id="@+id/config_rb7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试环境2：http://183.61.172.93:8096"  />
+
+        <RadioButton
             android:id="@+id/config_rb2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="生产环境：http://m.13322.com"  />
+
+
 
 
     </RadioGroup>

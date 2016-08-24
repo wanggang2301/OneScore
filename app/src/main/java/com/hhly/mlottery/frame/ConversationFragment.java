@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
@@ -52,6 +53,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
 
         setContentView(R.layout.conversationlist);
         mContext = this;
+        Toast.makeText(mContext, mContext.getResources().getString(R.string.welcome_chart_room), Toast.LENGTH_SHORT).show();
         ll_comment = (LinearLayout) findViewById(R.id.ll_comment);
         // 设置聊天室背景色为透明
 //        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.chart_room_bg_color));

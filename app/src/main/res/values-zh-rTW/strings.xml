@@ -1060,4 +1060,6 @@
     <string name="avatar_settings">頭像設定</string>
     <string name="photograph">拍照</string>
 
+    <string name="welcome_chart_room">歡迎進入聊天室!</string>
+
 </resources>
