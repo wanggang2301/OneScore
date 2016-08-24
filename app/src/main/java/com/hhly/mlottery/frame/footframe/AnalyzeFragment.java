@@ -840,14 +840,14 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * @param statistics
      */
     private void setLetHistoryText(NewAnalyzeBean.AsiaTrendEntity.Statistics statistics) {
-        String text1="<font color='#323232'><b>" +getActivity().getString(R.string.new_analyze_liangduijin)+statistics.getVsCount()+getActivity().getString(R.string.new_analyze_changjiaofeng)+ "</b></font> ";
-        mTextLet1.setText(Html.fromHtml(text1));
+        String text1=getActivity().getString(R.string.new_analyze_liangduijin)+statistics.getVsCount()+getActivity().getString(R.string.new_analyze_changjiaofeng);
+        mTextLet1.setText(text1);
 
-        String text2="<font color='#323232'><b>" +mHomeName+ "</b></font>" +"<font color='#dd2f1c'><b>" + statistics.getWin() + getActivity().getString(R.string.new_analyze_ciyingpan) + "</b></font>"+
-                "<font color='#323232'><b>" +","+mGuestName+ "</b></font>"+"<font color='#dd2f1c'><b>" + statistics.getLose() + getActivity().getString(R.string.new_analyze_ciyingpan) + "</b></font>"+
-                "<font color='#323232'><b>" +","+ "</b></font>"+"<font color='#0090ff'><b>" +statistics.getDraw()+getActivity().getString((R.string.new_analyze_cizoupan))+ "</b></font>";
-        String text3="<font color='#323232'><b>" +mHomeName+getActivity().getString(R.string.new_analyze_yingpanlv)+ "</b></font>"+"<font color='#dd2f1c'><b>" +statistics.getWinPercent()+ "</b></font>"+
-                "<font color='#323232'><b>" +","+mGuestName+getActivity().getString(R.string.new_analyze_yingpanlv)+"</b></font>"+"<font color='#dd2f1c'><b>" +statistics.getLosePercent()+ "</b></font>";
+        String text2=mHomeName +"<font color='#dd2f1c'><b>" + statistics.getWin() + getActivity().getString(R.string.new_analyze_ciyingpan) + "</b></font>"
+                 +","+mGuestName+"<font color='#dd2f1c'><b>" + statistics.getLose() + getActivity().getString(R.string.new_analyze_ciyingpan) + "</b></font>"+
+                ","+"<font color='#0090ff'><b>" +statistics.getDraw()+getActivity().getString((R.string.new_analyze_cizoupan))+ "</b></font>";
+        String text3= mHomeName+getActivity().getString(R.string.new_analyze_yingpanlv)+"<font color='#dd2f1c'><b>" +statistics.getWinPercent()+ "</b></font>"
+                +","+mGuestName+getActivity().getString(R.string.new_analyze_yingpanlv)+"<font color='#dd2f1c'><b>" +statistics.getLosePercent()+ "</b></font>";
         mTextLet2.setText(Html.fromHtml(text2));
         mTextLet3.setText(Html.fromHtml(text3));
     }
@@ -857,10 +857,10 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * @param statistics
      */
     private void setLetRecentHomeText(NewAnalyzeBean.AsiaTrendEntity.Statistics statistics) {
-        String  douhao="<font color='#323232'><b>" +","+ "</b></font>";
-        String text1="<font color='#323232'><b>" +"6场近期各自比赛"+ "</b></font>";
-        mTextLet1.setText(Html.fromHtml(text1));
-        String text2="<font color='#323232'><b>" +mHomeName+ "</b></font>" +"<font color='#dd2f1c'><b>" + statistics.getWin() + getActivity().getString(R.string.new_analyze_ciyingpan) + "</b></font>"
+        String  douhao=",";
+        String text1=getActivity().getString(R.string.new_analyze_recent_game);
+        mTextLet1.setText(text1);
+        String text2=mHomeName+"<font color='#dd2f1c'><b>" + statistics.getWin() + getActivity().getString(R.string.new_analyze_ciyingpan) + "</b></font>"
                 +douhao+"<font color='#21b11e'><b>" +statistics.getLose()+getActivity().getString(R.string.new_analyze_cishupan)+ "</b></font>"+
                 douhao+"<font color='#0090ff'><b>" +statistics.getDraw()+getActivity().getString((R.string.new_analyze_cizoupan))+ "</b></font>";
         mTextLet2.setText(Html.fromHtml(text2));
@@ -871,8 +871,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * @param statistics
      */
     private void setLetRecentGuestText(NewAnalyzeBean.AsiaTrendEntity.Statistics statistics){
-        String  douhao="<font color='#323232'><b>" +","+ "</b></font>";
-        String text3="<font color='#323232'><b>" +mGuestName+ "</b></font>" +"<font color='#dd2f1c'><b>" + statistics.getWin() + getActivity().getString(R.string.new_analyze_ciyingpan) + "</b></font>"
+        String  douhao=",";
+        String text3=mGuestName+"<font color='#dd2f1c'><b>" + statistics.getWin() + getActivity().getString(R.string.new_analyze_ciyingpan) + "</b></font>"
                 +douhao+"<font color='#21b11e'><b>" +statistics.getLose()+getActivity().getString(R.string.new_analyze_cishupan)+ "</b></font>"+
                 douhao+"<font color='#0090ff'><b>" +statistics.getDraw()+getActivity().getString((R.string.new_analyze_cizoupan))+ "</b></font>";
         mTextLet3.setText(Html.fromHtml(text3));
@@ -883,10 +883,10 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * @param statistics
      */
     private void setSizeHistoryText(NewAnalyzeBean.SizeTrendEntity.Statistics statistics){
-        String text="<font color='#323232'><b>" +getActivity().getString(R.string.new_analyze_liangduijin)+statistics.getVsCount()+getActivity().getString(R.string.new_analyze_changjiaofeng)+ "</b></font> "+"<font color='#DD2F1C'><b>"
+        String text=getActivity().getString(R.string.new_analyze_liangduijin)+statistics.getVsCount()+getActivity().getString(R.string.new_analyze_changjiaofeng)+"<font color='#DD2F1C'><b>"
                 + statistics.getBig() + getActivity().getString(R.string.new_analyze_cidaqiu) + "</b></font> "+
-                "<font color='#323232'><b>" +","+ "</b></font> "+"<font color='#21b11e'><b>" + statistics.getSmall() + getActivity().getString(R.string.new_analyze_cixiaoqiu) + "</b></font> "+"<font color='#323232'><b>" +","+ "</b></font> "+
-                "<font color='#0090ff'><b>" + statistics.getDraw() + getActivity().getString(R.string.new_analyze_cizoupan) + "</b></font> "+"<font color='#323232'><b>" +";"+ "</b></font> ";
+                ","+"<font color='#21b11e'><b>" + statistics.getSmall() + getActivity().getString(R.string.new_analyze_cixiaoqiu) + "</b></font> "+","+
+                "<font color='#0090ff'><b>" + statistics.getDraw() + getActivity().getString(R.string.new_analyze_cizoupan) + "</b></font> "+";";
         mTextSize1.setText(Html.fromHtml(text));
         mTextSize2.setText("");
         mTextSize3.setText("");
@@ -897,18 +897,18 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * @param statistics
      */
     private void setSizeRecentHomeText(NewAnalyzeBean.SizeTrendEntity.Statistics statistics){
-        String  douhao="<font color='#323232'><b>" +","+ "</b></font>";
-        String text1="<font color='#323232'><b>" +getActivity().getString(R.string.new_analyze_recent_game)+ "</b></font>";
-        mTextSize1.setText(Html.fromHtml(text1));
-        String text2="<font color='#323232'><b>" +mHomeName+ "</b></font>" +"<font color='#dd2f1c'><b>" + statistics.getBig() + getActivity().getString(R.string.new_analyze_cidaqiu) + "</b></font>"
+        String  douhao=",";
+        String text1=getActivity().getString(R.string.new_analyze_recent_game);
+        mTextSize1.setText(text1);
+        String text2=mHomeName+"<font color='#dd2f1c'><b>" + statistics.getBig() + getActivity().getString(R.string.new_analyze_cidaqiu) + "</b></font>"
                 +douhao+"<font color='#21b11e'><b>" +statistics.getSmall()+getActivity().getString(R.string.new_analyze_cixiaoqiu)+ "</b></font>"+
                 douhao+"<font color='#0090ff'><b>" +statistics.getDraw()+getActivity().getString((R.string.new_analyze_cizoupan))+ "</b></font>";
         mTextSize2.setText(Html.fromHtml(text2));
     }
 
     private void setSizeRecentGuestText(NewAnalyzeBean.SizeTrendEntity.Statistics statistics){
-        String  douhao="<font color='#323232'><b>" +","+ "</b></font>";
-        String text3="<font color='#323232'><b>" +mGuestName+ "</b></font>" +"<font color='#dd2f1c'><b>" + statistics.getBig() + getActivity().getString(R.string.new_analyze_cidaqiu) + "</b></font>"
+        String  douhao=",";
+        String text3=mGuestName+"<font color='#dd2f1c'><b>" + statistics.getBig() + getActivity().getString(R.string.new_analyze_cidaqiu) + "</b></font>"
                 +douhao+"<font color='#21b11e'><b>" +statistics.getSmall()+getActivity().getString(R.string.new_analyze_cixiaoqiu)+ "</b></font>"+
                 douhao+"<font color='#0090ff'><b>" +statistics.getDraw()+getActivity().getString((R.string.new_analyze_cizoupan))+ "</b></font>";
         mTextSize3.setText(Html.fromHtml(text3));
