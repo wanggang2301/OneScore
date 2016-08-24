@@ -551,7 +551,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         params.put("thirdId", mThirdId);
 
         //BaseURLs.URL_FOOTBALL_DETAIL_INFO
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO_FIRST, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
             @Override
             public void onResponse(MatchDetail matchDetail) {
 
@@ -719,8 +719,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             //直播事件
                             mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), eventMatchTimeLiveList);
 
-                            //  mStatisticsFragment.setList(homeCorners, guestCorners, homeDangers, guestDangers);
+                            //统计图
                             mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
+                            mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
+                            //走势图表
+                            mStatisticsFragment.setTrendChartList(trendChartList);
+                            mStatisticsFragment.initChartData(mMatchDetail.getLiveStatus());
+
+
 
                         }
 

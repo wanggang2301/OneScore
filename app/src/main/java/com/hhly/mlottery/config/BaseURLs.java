@@ -276,6 +276,11 @@ public class BaseURLs {
 
     //赛场
     private final static String URL_FOOTBALL_DETAIL = "footBallMatch.queryAndroidMatchInfos.do";
+
+    //赛场新接口
+    private final static String URL_FOOTBALL_DETAIL_FIRST = "footBallMatch.queryAndroidFirstMatchInfos.do";
+
+
     //赛场——点赞
     private final static String URL_FOOTBALL_DETAIL_LIKE = "footBallMatch.updLike.do";
     private final static String URL_BASKETBALLBALL_DETAIL_LIKE = "basketballDetail.updLike.do";
@@ -535,6 +540,12 @@ public class BaseURLs {
 
     //赛场
     public final static String URL_FOOTBALL_DETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL;
+
+    //赛场新接口
+    public final static String URL_FOOTBALL_DETAIL_INFO_FIRST = URL_API_HOST + URL_FOOTBALL_DETAIL_FIRST;
+
+
+
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
     public final static String URL_BASKETBALLBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_BASKETBALLBALL_DETAIL_LIKE;

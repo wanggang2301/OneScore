@@ -92,7 +92,6 @@ public class AnimHeadLiveFragment extends Fragment {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
-                L.d("lzfshiping", url);
                 return true;
             }
 
