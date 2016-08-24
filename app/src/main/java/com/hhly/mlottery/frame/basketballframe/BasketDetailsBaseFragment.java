@@ -27,7 +27,7 @@ import com.hhly.mlottery.view.Scrollable;
  * @Description: 篮球详情页面的base fragment
  * @author yixq
  */
-public abstract class BasketDetailsBaseFragment<L extends Scrollable> extends BaksketBaseFragment
+public abstract class BasketDetailsBaseFragment<L extends Scrollable> extends BasketBaseFragment
         implements ObservableScrollViewCallbacks {
 
     public static final String ARG_SCROLL_Y = "ARG_SCROLL_Y";

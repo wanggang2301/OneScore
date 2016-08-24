@@ -6,9 +6,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Fragment、Activity 状态枚举
- * <p/>
- * Created by loshine on 2016/6/29.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/29.
  */
 public interface StatusEnum {
 

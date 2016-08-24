@@ -65,15 +65,9 @@
 
         </activity>
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
         <activity
             android:name=".activity.FootballInformationActivity"
@@ -221,10 +215,7 @@
             android:screenOrientation="portrait" />
 
         <!-- 登录注册 end -->
-        <!-- 模糊搜索页面 -->
-        <activity
-            android:name=".activity.BasketballInformationSerachActivity"
-            android:screenOrientation="portrait" />
+
 
         <!-- 畅言的配置项 -->
         <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity" />
@@ -287,16 +278,40 @@
 
         <activity
             android:name=".activity.BasketDetailsActivityTest"
-            android:theme="@style/AppThemeDark.NoActionBar"></activity>
+            android:theme="@style/AppThemeDark.NoActionBar"
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name=".activity.BasketballInformationActivity"
-            android:theme="@style/AppThemeDark.NoActionBar">
+            android:theme="@style/AppThemeDark.NoActionBar"
+            android:screenOrientation="portrait">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
 
+        </activity>
+
+        <!--篮球资料库模糊搜索-->
+        <activity android:name=".activity.BasketballInformationSerachActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--融云会话列表-->
+        <activity
+            android:name=".frame.ConversationFragment"
+            android:theme="@style/chart_room"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.hhly.mlottery"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
         </activity>
     </application>
 

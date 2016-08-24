@@ -131,7 +131,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     }
 
     /**
-     * set the on item click listener
+     * set the on item_event_half_finish click listener
      * 设置点击事件
      *
      * @param onItemClickListener onItemClickListener
@@ -141,7 +141,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     }
 
     /**
-     * set the on item long click listener
+     * set the on item_event_half_finish long click listener
      * 设置长点击事件
      *
      * @param onItemLongClickListener onItemLongClickListener

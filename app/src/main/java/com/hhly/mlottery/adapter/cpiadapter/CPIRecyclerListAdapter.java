@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -21,9 +22,9 @@ import com.hhly.mlottery.widget.CpiOddsItemView;
 import java.util.List;
 
 /**
- * 足球指数 - 指数列表适配器
- * <p/>
- * Created by loshine on 2016/6/21.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/21.
  */
 public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfoBean> {
 
@@ -190,16 +191,36 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
 
         TextView timeTextView = holder.getView(R.id.cpi_item_time_txt);
         TextView statusTextView = holder.getView(R.id.tv_tag);
+        TextView second = holder.getView(R.id.cpi_item_seconds_txt);
         // 上半场 > 45 显示 45+
-        // 下班场 > 90 显示 90+
+        // 下半场 > 90 显示 90+
+
+        if (status == 2) {
+            timeTextView.setVisibility(View.GONE);
+        } else {
+            timeTextView.setVisibility(View.VISIBLE);
+        }
+
         if (status > 0) {
             try {
-                int minute = Integer.parseInt(matchInfo.getOpenTime());
-                if (minute > 45) {
+                String openTime = matchInfo.getOpenTime();
+                int minute = Integer.parseInt(openTime);
+                if (status == 1 && minute > 45) {
                     timeTextView.setText(R.string.forty_five_plus);
-                } else if (minute > 90) {
+                } else if (status == 3 && minute > 90) {
                     timeTextView.setText(R.string.ninety_plus);
+                } else if (status == 1 || status == 3) {
+                    if (!TextUtils.isEmpty(openTime)) {
+                        timeTextView.setText(openTime);
+                    }
                 }
+
+                if (status == 2) {
+                    second.setText("");
+                } else {
+                    second.setText("\'");
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

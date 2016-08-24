@@ -670,24 +670,31 @@ public class BaseURLs {
     public final static String URL_BASKET_ODDS = HTTP + HOST + URL_BASKET_PROJECT + URL_BASKET_FINDODDS;
 
     //篮球推送
-//	public final static String URL_BASKET_SCOKET = "ws://192.168.10.242:61634/ws";
-//	public final static String URL_BASKET_SCOKET = "ws://m.1332255.com/ws";
-//	public final static String URL_BASKET_SCOKET = "ws://"+ HOST + "/ws";
-    public final static String URL_BASKET_SCOKET = "ws://" + WS_HOST;
+//	public final static String URL_BASKET_SOCKET = "ws://192.168.10.242:61634/ws";
+//	public final static String URL_BASKET_SOCKET = "ws://m.1332255.com/ws";
+//	public final static String URL_BASKET_SOCKET = "ws://"+ HOST + "/ws";
+    public final static String URL_BASKET_SOCKET = "ws://" + WS_HOST;
 
     /**
      * 篮球详情接口
      */
 
     //篮球资料库
-    public final static String URL_BASKET_INFOMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
+    public final static String URL_BASKET_INFORMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
 
     //篮球资料库详情
     public final static String URL_BASKET_DATABASE_DETAILS = URL_API_HOST + "basketballData.findLeagueHeader.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do
+    // 赛程
+    public final static String URL_BASKET_DATABASE_SCHEDULE = URL_API_HOST + "basketballData.findSchedule.do";
+    // 排行
+    public final static String URL_BASKET_DATABASE_RANKING = URL_API_HOST + "basketballData.findRanking.do";
     //让分盘
-    public final static String URL_BASKET_DATABASE_HANDICP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
+    public final static String URL_BASKET_DATABASE_HANDICAP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
     //大小盘
     public final static String URL_BASKET_DATABASE_BIG_SMALL_DETAILS = URL_API_HOST + "basketballData.findAsiaSize.do"; // "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
+
+    //统计
+    public final static String URL_BASKET_DATABASE_STATISTIC_DETAILS = URL_API_HOST + "basketballData.findStatistic.do"; // "http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaSize.do";
 
     public final static String URL_BASKET_FINDANALYSIS = "basketballDetail.findAnalysis.do";
     public final static String URL_BASKET_FINDANALYSISDETAIL = "basketballDetail.findAnalysisDetail.do";
@@ -782,6 +789,13 @@ public class BaseURLs {
     public final static String URL_INTELLIGENCE_BIG_DATA = URL_API_HOST + "footBallMatch.findIntelligence.do";
     /*模糊搜索*/
     public final static String FUZZYSEARCH ="/basketballData.fuzzySearch.do";
+
+    /**--融云 获取用户Token URL--*/
+    public final static String RONG_USER_TOKEN = "https://api.cn.ronghub.com/user/getToken.json";
+    /**--融云 获取聊天室ID URL--*/
+    public final static String RONG_CHARTROOM_ID = "https://api.cn.ronghub.com/chatroom/create.json";
+    /**--融去 获取聊天室人数 URL--*/
+    public final static String RONG_CHARTROOM_COUNT = "https://api.cn.ronghub.com/chatroom/user/query.json";
     /*头像图片上传*/
     public final static String UPLOADIMAGE=NEW_URL_API_PHOST+"uploadImage.do";
     /*头像URL上传*/

@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.basketballframe.BasketInfomationFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketInformationFragment;
 
 /**
  * @author wang gang
  * @date 2016/7/14 17:07
- * @des 篮球资料库Activity
+ * @des 篮球资料库入口列表Activity
  */
 public class BasketballInformationActivity extends BaseActivity implements View.OnClickListener {
     private static final String HOT = "hot";            //热门
@@ -68,7 +68,12 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         String[] titles = getApplicationContext().getResources().getStringArray(R.array.basket_info_tabs);
         mTabsAdapter = new TabsAdapter(fragmentManager);
         mTabsAdapter.setTitles(titles);
-        mTabsAdapter.addFragments(BasketInfomationFragment.newInstance(HOT), BasketInfomationFragment.newInstance(EUR), BasketInfomationFragment.newInstance(AMERICA), BasketInfomationFragment.newInstance(ASIA), BasketInfomationFragment.newInstance(AFRICA), BasketInfomationFragment.newInstance(INTER));
+        mTabsAdapter.addFragments(BasketInformationFragment.newInstance(HOT),
+                BasketInformationFragment.newInstance(EUR),
+                BasketInformationFragment.newInstance(AMERICA),
+                BasketInformationFragment.newInstance(ASIA),
+                BasketInformationFragment.newInstance(AFRICA),
+                BasketInformationFragment.newInstance(INTER));
         viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);

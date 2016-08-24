@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="38dp"
         android:background="@drawable/share_date_top_bg"
         android:gravity="center"
         android:text="@string/diy_compute_method"
@@ -22,7 +22,10 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -55,187 +58,269 @@
 
     </RadioGroup>
 
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp">
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/alert_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            app:layout_widthPercent="50%">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/probability"
+                android:textColor="@color/content_txt_light_grad"
+                android:textSize="@dimen/text_size_10"
+                app:layout_widthPercent="50%"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/symbol_times"
+                android:textColor="@color/content_txt_light_grad"
+                android:textSize="@dimen/text_size_10"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text="@string/percent_factor"
+                android:textColor="@color/content_txt_light_grad"
+                android:textSize="@dimen/text_size_10"
+                app:layout_widthPercent="50%"/>
+
+        </android.support.percent.PercentRelativeLayout>
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/alert_layout"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="25dp"
+            app:layout_widthPercent="50%"
+            app:theme="@style/edit_text_line">
+
+            <EditText
+                android:id="@+id/history_edt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:textColor="@color/content_txt_black"
+                android:textSize="@dimen/text_size_18"
+                app:layout_widthPercent="50%"
+                tools:text="0.25"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/history_edt"
+                app:layout_widthPercent="50%">
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="2px"
+                    android:layout_gravity="center"
+                    android:background="@color/linecolor"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/history_percent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/history_edt"
+                android:gravity="center"
+                android:textColor="@color/football_analyze_progress_color1"
+                android:textSize="@dimen/text_size_16"
+                app:layout_widthPercent="50%"
+                tools:text="0.25"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/history_edt"
+                android:layout_centerHorizontal="true"
+                android:text="@string/symbol_times"
+                android:textSize="@dimen/text_size_16"/>
+
+            <EditText
+                android:id="@+id/host_edt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/history_edt"
+                android:layout_marginTop="15dp"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:textColor="@color/content_txt_black"
+                android:textSize="@dimen/text_size_18"
+                app:layout_widthPercent="50%"
+                tools:text="0.25"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/host_edt"
+                app:layout_widthPercent="50%">
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="2px"
+                    android:layout_gravity="center"
+                    android:background="@color/linecolor"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/host_percent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/host_edt"
+                android:gravity="center"
+                android:textColor="@color/football_analyze_progress_color2"
+                android:textSize="@dimen/text_size_16"
+                app:layout_widthPercent="50%"
+                tools:text="0.25"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/host_edt"
+                android:layout_centerHorizontal="true"
+                android:text="@string/symbol_times"
+                android:textSize="@dimen/text_size_16"/>
+
+            <EditText
+                android:id="@+id/guest_edt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/host_edt"
+                android:layout_marginTop="15dp"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:textColor="@color/content_txt_black"
+                android:textSize="@dimen/text_size_18"
+                app:layout_widthPercent="50%"
+                tools:text="0.25"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/guest_edt"
+                app:layout_widthPercent="50%">
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="2px"
+                    android:layout_gravity="center"
+                    android:background="@color/linecolor"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/guest_percent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/guest_edt"
+                android:gravity="center"
+                android:textColor="@color/football_analyze_progress_color3"
+                android:textSize="@dimen/text_size_16"
+                app:layout_widthPercent="50%"
+                tools:text="0.25"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/guest_edt"
+                android:layout_centerHorizontal="true"
+                android:text="@string/symbol_times"
+                android:textSize="@dimen/text_size_16"/>
+
+        </android.support.percent.PercentRelativeLayout>
+
+        <com.hhly.mlottery.view.RoundProgressBar
+            android:id="@+id/progress"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_centerVertical="true"
+            app:roundProgressColor="@color/football_analyze_progress_color1"
+            app:textColor="@color/colorPrimary"
+            app:textIsDisplayable="true"
+            app:textSize="@dimen/text_size_29"/>
+
+        <ImageView
+            android:id="@+id/big_parantheses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/big_parantheses"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="-12dp"
+            android:layout_marginRight="-12dp"
+            android:layout_toLeftOf="@id/big_parantheses"
+            android:layout_toStartOf="@id/big_parantheses"
+            android:gravity="center"
+            android:text="@string/symbol_equal"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_18"
+            app:layout_widthPercent="25%"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
     <TextView
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:gravity="center"
-        android:text="@string/diy_compute_method_message"
-        android:textColor="@color/info_home_progress_color"
+        android:textColor="@color/content_txt_light_grad"
         android:textSize="@dimen/text_size_13"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:theme="@style/edit_text_line">
-
-        <EditText
-            android:id="@+id/history_edt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13"
-            tools:text="0.25"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/symbol_times"
-            android:textColor="@color/loading_txt_color"
-            android:textSize="@dimen/text_size_13"/>
-
-        <TextView
-            android:id="@+id/history_percent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13"
-            tools:text="0.25"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/symbol_plus"
-            android:textColor="@color/loading_txt_color"
-            android:textSize="@dimen/text_size_13"/>
-
-        <EditText
-            android:id="@+id/host_edt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13"
-            tools:text="0.25"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/symbol_times"
-            android:textColor="@color/loading_txt_color"
-            android:textSize="@dimen/text_size_13"/>
-
-        <TextView
-            android:id="@+id/host_percent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13"
-            tools:text="0.25"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/symbol_plus"
-            android:textColor="@color/loading_txt_color"
-            android:textSize="@dimen/text_size_13"/>
-
-        <EditText
-            android:id="@+id/guest_edt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13"
-            tools:text="0.25"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/symbol_times"
-            android:textColor="@color/loading_txt_color"
-            android:textSize="@dimen/text_size_13"/>
-
-        <TextView
-            android:id="@+id/guest_percent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/content_txt_black"
-            android:textSize="@dimen/text_size_13"
-            tools:text="0.25"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="end|center_vertical"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="@string/symbol_equal"
-            android:textColor="@color/loading_txt_color"
-            android:textSize="@dimen/text_size_13"/>
-
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="48dp"
-            android:layout_height="25dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:textColor="@color/white"
-            tools:text="0.52"/>
-
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/linecolor"/>
 
-    <android.support.percent.PercentFrameLayout
+    <TextView
+        android:id="@+id/close"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
-
-        <TextView
-            android:id="@+id/close"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:text="@string/action_close"
-            app:layout_widthPercent="50%"/>
-
-        <TextView
-            android:id="@+id/compute"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:text="@string/action_compute"
-            android:textColor="@color/colorPrimary"
-            app:layout_widthPercent="50%"/>
-
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/linecolor"/>
-
-    </android.support.percent.PercentFrameLayout>
+        android:layout_height="40dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="@string/action_close"/>
 
 </LinearLayout>

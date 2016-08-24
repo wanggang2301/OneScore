@@ -4,43 +4,107 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 单个情报
- * <p>
- * Created by loshine on 2016/7/19.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/7/19.
  */
 public class BigDataForecastData implements Parcelable {
 
     /**
-     * homeWinPercent : 0.2
-     * sizeWinPercent : 0.07
-     * asiaWinPercent : 0.13
+     * homeWinPercent: 0.67,
+     * homeLosePercent: 0.27,
+     * sizeWinPercent: 0.5,
+     * sizeLosePercent: 0.42,
+     * asiaWinPercent: 0.58,
+     * asiaLosePercent: 0.42
      */
 
-    private Float homeWinPercent;
-    private Float sizeWinPercent;
-    private Float asiaWinPercent;
+    private Double homeWinPercent;
+    private Double homeLosePercent;
+    private Double sizeWinPercent;
+    private Double sizeLosePercent;
+    private Double asiaWinPercent;
+    private Double asiaLosePercent;
 
-    public Float getHomeWinPercent() {
+    private static Double checkNotNull(Double f) {
+        return f == null ? 0f : f;
+    }
+
+    public static Double getHomeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getHomeWinPercent());
+    }
+
+    public static Double getHomeLosePercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getHomeLosePercent());
+    }
+
+    public static Double getSizeWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getSizeWinPercent());
+    }
+
+    public static Double getSizeLosePercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getSizeLosePercent());
+    }
+
+    public static Double getAsiaWinPercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getAsiaWinPercent());
+    }
+
+    public static Double getAsiaLosePercent(BigDataForecastData data) {
+        if (data == null) return 0D;
+        return checkNotNull(data.getAsiaLosePercent());
+    }
+
+    public Double getHomeLosePercent() {
+        return homeLosePercent;
+    }
+
+    public void setHomeLosePercent(Double homeLosePercent) {
+        this.homeLosePercent = homeLosePercent;
+    }
+
+    public Double getSizeLosePercent() {
+        return sizeLosePercent;
+    }
+
+    public void setSizeLosePercent(Double sizeLosePercent) {
+        this.sizeLosePercent = sizeLosePercent;
+    }
+
+    public Double getAsiaLosePercent() {
+        return asiaLosePercent;
+    }
+
+    public void setAsiaLosePercent(Double asiaLosePercent) {
+        this.asiaLosePercent = asiaLosePercent;
+    }
+
+    public Double getHomeWinPercent() {
         return homeWinPercent;
     }
 
-    public void setHomeWinPercent(Float homeWinPercent) {
+    public void setHomeWinPercent(Double homeWinPercent) {
         this.homeWinPercent = homeWinPercent;
     }
 
-    public Float getSizeWinPercent() {
+    public Double getSizeWinPercent() {
         return sizeWinPercent;
     }
 
-    public void setSizeWinPercent(Float sizeWinPercent) {
+    public void setSizeWinPercent(Double sizeWinPercent) {
         this.sizeWinPercent = sizeWinPercent;
     }
 
-    public Float getAsiaWinPercent() {
+    public Double getAsiaWinPercent() {
         return asiaWinPercent;
     }
 
-    public void setAsiaWinPercent(Float asiaWinPercent) {
+    public void setAsiaWinPercent(Double asiaWinPercent) {
         this.asiaWinPercent = asiaWinPercent;
     }
 
@@ -60,9 +124,9 @@ public class BigDataForecastData implements Parcelable {
     }
 
     protected BigDataForecastData(Parcel in) {
-        this.homeWinPercent = (Float) in.readValue(Float.class.getClassLoader());
-        this.sizeWinPercent = (Float) in.readValue(Float.class.getClassLoader());
-        this.asiaWinPercent = (Float) in.readValue(Float.class.getClassLoader());
+        this.homeWinPercent = (Double) in.readValue(Double.class.getClassLoader());
+        this.sizeWinPercent = (Double) in.readValue(Double.class.getClassLoader());
+        this.asiaWinPercent = (Double) in.readValue(Double.class.getClassLoader());
     }
 
     public static final Creator<BigDataForecastData> CREATOR = new Creator<BigDataForecastData>() {

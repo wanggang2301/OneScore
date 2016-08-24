@@ -224,7 +224,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onItemClick(View convertView, int position) {
         Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
-        intent.putExtra("thirdId", feedAdapterLists.get(position).getThirdId());
+        List<Match> topLists = adapter.getTopLists();
+        if (null == topLists) topLists = feedAdapterLists;
+        intent.putExtra("thirdId", topLists.get(position).getThirdId());
         intent.putExtra("currentFragmentId", 0);
         getParentFragment().startActivity(intent);
     }
@@ -288,7 +290,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         }
     }
 
-    private void restoreSocketClient() {
+    private synchronized void restoreSocketClient() {
         if (socketClient != null) {
             socketClient.close();
             socketClient = null;

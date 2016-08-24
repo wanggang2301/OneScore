@@ -152,23 +152,12 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     if ("1".equals(mNumberName) && "1".equals(numberlist.get(i).getName())) {
                         long numTime = DateUtil.getCurrentTime(numberlist.get(i).getNextTime()) - Long.parseLong(serverTime);
 
-                        if (numTime <= 0 || !numberlist.get(i).getNumbers().contains("#")) {
-
-                            isOpenNumberStartHistory = true;// 正在开奖中...
-
-                        } else {
-                            isOpenNumberStartHistory = false;
-                        }
+                        // 正在开奖中...
+                        isOpenNumberStartHistory = numTime <= 0 || !numberlist.get(i).getNumbers().contains("#");
                     } else if (mNumberName.equals(numberlist.get(i).getName())) {
                         long numTime = DateUtil.getCurrentTime(numberlist.get(i).getNextTime()) - Long.parseLong(serverTime);
-                        if (numTime <= 0) {
-
-                            isOpenNumberStartHistory = true;// 正在开奖中...
-
-                        } else {
-                            isOpenNumberStartHistory = false;
-
-                        }
+                        // 正在开奖中...
+                        isOpenNumberStartHistory = numTime <= 0;
                     }
                 }
             }
@@ -265,7 +254,6 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                         }
                     }
 
-                    ;
                 }.start();
             }
         } catch (Exception e) {
@@ -298,7 +286,6 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     }
                 }
 
-                ;
             }.start();
         }
     }
@@ -457,7 +444,6 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             }
         }
 
-        ;
     };
 
     public void initData() {

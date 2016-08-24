@@ -58,6 +58,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     private ImageView close_image;
 
     private ArrayList<MatchTextLiveBean> matchTextLiveBeansList;
+    private ArrayList<MatchTextLiveBean> dataList;
     private static ArrayList<MatchTextLiveBean> preLiveTextList;
 
     private RecyclerView mRecyclerView;
@@ -76,7 +77,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
 
     private int count;
 
-    private static int pageId;
+    private int pageId;
 
     private SwipeRefreshLayout mRefreshLayout;//下拉刷新页面
 
@@ -100,7 +101,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
         this.mContext = MyApp.getContext();
         if (getArguments() != null) {
-            matchTextLiveBeansList = getArguments().getParcelableArrayList(FINISHMATCHLIVETEXT_PARAM);
+            dataList = getArguments().getParcelableArrayList(FINISHMATCHLIVETEXT_PARAM);
             status = getArguments().getString(FINISHMATCHLIVETEXT_TYPE);
         }
     }
@@ -109,10 +110,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         moreView = inflater.inflate(R.layout.load, container, false);
-
-        System.out.println("lzfonCreateView");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -124,7 +122,6 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
             dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
-        System.out.println("lzfsetupDialog");
         mView = View.inflate(mContext, R.layout.football_live_text, null);  //文字直播
         initView();
         initData();
@@ -176,16 +173,22 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        bottomview = (View) mView.findViewById(R.id.bottomview);
+        bottomview = mView.findViewById(R.id.bottomview);
     }
 
     private void initData() {
+
+        matchTextLiveBeansList = new ArrayList<>();
         pageId = 1;
+        for (MatchTextLiveBean m : dataList) {
+            matchTextLiveBeansList.add(m);
+        }
+
 
         if (matchTextLiveBeansList.size() > 0) {
             if ("3".equals(matchTextLiveBeansList.get(0).getCode())) {
                 //999代表完场  time位置显示黄色“完场”
-                matchTextLiveBeansList.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt) + "", "", "", "0", "", ""));
+                matchTextLiveBeansList.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt) + "", "", "", "0", "", "","",""));
             }
         }
         filterLiveText(matchTextLiveBeansList);
@@ -225,11 +228,15 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
                     break;
                 case NODATA:
                     mLiveTextAdapter.notifyDataChangedAfterLoadMore(false);
-                    Toast.makeText(getActivity(), mContext.getResources().getString(R.string.no_data_txt), Toast.LENGTH_SHORT).show();
+                    if (mContext != null) {
+                        Toast.makeText(getActivity(), mContext.getResources().getString(R.string.no_data_txt), Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case ERROR:
                     mLiveTextAdapter.notifyDataChangedAfterLoadMore(true);
-                    Toast.makeText(getActivity(), mContext.getResources().getString(R.string.exp_net_status_txt), Toast.LENGTH_SHORT).show();
+                    if (mContext != null) {
+                        Toast.makeText(getActivity(), mContext.getResources().getString(R.string.exp_net_status_txt), Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 default:
                     break;
@@ -237,7 +244,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         }
     };
 
-    private void loadMoreData() { //加载更多数据
+    private synchronized void loadMoreData() { //加载更多数据
         //mHandler.sendEmptyMessage(STARTLOADING);
 
         String url = BaseURLs.URL_FOOTBALL_LIVE_TEXT_INFO;
@@ -245,8 +252,13 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         if (getActivity() == null) {
             return;
         }
+
+
         String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
+
+
         pageId = pageId + 1;
+
         Map<String, String> myPostParams = new HashMap<>();
         myPostParams.put("thirdId", mThirdId);
         myPostParams.put("textId", String.valueOf(pageId));

@@ -8,8 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -19,22 +23,26 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.intelligence.BigDataForecast;
+import com.hhly.mlottery.bean.intelligence.BigDataForecastData;
 import com.hhly.mlottery.bean.intelligence.BigDataForecastFactor;
 import com.hhly.mlottery.util.StringFormatUtils;
 import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.TextWatcherAdapter;
 
 import java.util.Locale;
 
 /**
  * 大数据预测 DIY 算法对话框
- * <p>
+ * <p/>
  * Created by Loshine on 2016/7/19.
  */
 public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
 
     private static final String KEY_BIG_DATA_FORECAST = "bigDataForecast";
     private static final String KEY_BIG_DATA_FACTOR = "bigDataFactor";
+
+    RoundProgressBar mRoundProgressBar;
 
     TextView mMessage;
 
@@ -48,10 +56,15 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     TextView mHostTextView;
     TextView mGuestTextView;
 
-    TextView mResultTextView;
 
     private BigDataForecast mBigDataForecast;
     private BigDataForecastFactor mFactor;
+
+    private int combatColor;
+    private int hostColor;
+    private int guestColor;
+
+    private int currentPosition = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,9 +89,27 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
 
         initViews(view);
 
+        initRes();
+
         setData();
 
         return alertDialog;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (currentPosition != 0) {
+            if (currentPosition == 1) mRadioGroup.check(R.id.center);
+            if (currentPosition == 2) mRadioGroup.check(R.id.right);
+        }
+    }
+
+    private void initRes() {
+        combatColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color1);
+        hostColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color2);
+        guestColor = ContextCompat.getColor(getContext(), R.color.football_analyze_progress_color3);
     }
 
     /**
@@ -86,6 +117,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
      */
     private void setData() {
         if (mBigDataForecast != null) {
+
+            BigDataForecastData battleHistory = mBigDataForecast.getBattleHistory();
+            BigDataForecastData homeRecent = mBigDataForecast.getHomeRecent();
+            BigDataForecastData guestRecent = mBigDataForecast.getGuestRecent();
+
             switch (getCurrentRadioPosition()) {
                 case 0:
                     mHistoryEditText.setText(StringFormatUtils.toString
@@ -95,16 +131,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getHost().getGuestTemp()));
 
-                    Float historyHomeWin = checkNotNull(
-                            mBigDataForecast.getBattleHistory().getHomeWinPercent());
-                    Float homeRecentHomeWin = checkNotNull(
-                            mBigDataForecast.getHomeRecent().getHomeWinPercent());
-                    Float guestRecentHomeWin = checkNotNull(
-                            mBigDataForecast.getGuestRecent().getHomeWinPercent());
+                    Double historyHomeWin = BigDataForecastData.getHomeWinPercent(battleHistory);
+                    Double homeRecentHomeWin = BigDataForecastData.getHomeWinPercent(homeRecent);
+                    Double guestRecentHomeLose = BigDataForecastData.getHomeLosePercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyHomeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentHomeWin));
-                    mGuestTextView.setText(StringFormatUtils.toString(guestRecentHomeWin));
+                    mGuestTextView.setText(StringFormatUtils.toString(guestRecentHomeLose));
                     break;
                 case 1:
                     mHistoryEditText.setText(StringFormatUtils.toString
@@ -114,12 +147,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getSize().getGuestTemp()));
 
-                    Float historySizeWin = checkNotNull(
-                            mBigDataForecast.getBattleHistory().getSizeWinPercent());
-                    Float homeRecentSizeWin = checkNotNull(
-                            mBigDataForecast.getHomeRecent().getSizeWinPercent());
-                    Float guestRecentSizeWin = checkNotNull(
-                            mBigDataForecast.getGuestRecent().getSizeWinPercent());
+                    Double historySizeWin = BigDataForecastData.getSizeWinPercent(battleHistory);
+                    Double homeRecentSizeWin = BigDataForecastData.getSizeWinPercent(homeRecent);
+                    Double guestRecentSizeWin = BigDataForecastData.getSizeWinPercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historySizeWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentSizeWin));
@@ -133,23 +163,16 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                     mGuestEditText.setText(StringFormatUtils.toString
                             (mFactor.getAsia().getGuestTemp()));
 
-                    Float historyAsiaWin = checkNotNull(
-                            mBigDataForecast.getBattleHistory().getAsiaWinPercent());
-                    Float homeRecentAsiaWin = checkNotNull(
-                            mBigDataForecast.getHomeRecent().getAsiaWinPercent());
-                    Float guestRecentAsiaWin = checkNotNull(
-                            mBigDataForecast.getGuestRecent().getAsiaWinPercent());
+                    Double historyAsiaWin = BigDataForecastData.getAsiaWinPercent(battleHistory);
+                    Double homeRecentAsiaWin = BigDataForecastData.getAsiaWinPercent(homeRecent);
+                    Double guestRecentAsiaLose = BigDataForecastData.getAsiaLosePercent(guestRecent);
 
                     mHistoryTextView.setText(StringFormatUtils.toString(historyAsiaWin));
                     mHostTextView.setText(StringFormatUtils.toString(homeRecentAsiaWin));
-                    mGuestTextView.setText(StringFormatUtils.toString(guestRecentAsiaWin));
+                    mGuestTextView.setText(StringFormatUtils.toString(guestRecentAsiaLose));
                     break;
             }
         }
-    }
-
-    private Float checkNotNull(Float f) {
-        return f == null ? 0f : f;
     }
 
     /**
@@ -158,10 +181,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
      * @param view view
      */
     private void initViews(View view) {
+        mRoundProgressBar = (RoundProgressBar) view.findViewById(R.id.progress);
+
         mRadioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                currentPosition = getCurrentRadioPosition();
                 setData();
             }
         });
@@ -173,6 +199,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mHistoryEditText.setText("1");
+                    mHistoryEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setHistoryTemp(aDouble);
@@ -192,6 +223,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mHostEditText.setText("1");
+                    mHostEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setHomeTemp(aDouble);
@@ -211,6 +247,11 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 double aDouble = StringFormatUtils.asDouble(s.toString());
+                if (aDouble > 1) {
+                    mGuestEditText.setText("1");
+                    mGuestEditText.setSelection(1);
+                    return;
+                }
                 switch (getCurrentRadioPosition()) {
                     case 0:
                         mFactor.getHost().setGuestTemp(aDouble);
@@ -230,18 +271,16 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
         mHostTextView = (TextView) view.findViewById(R.id.host_percent);
         mGuestTextView = (TextView) view.findViewById(R.id.guest_percent);
 
-        mResultTextView = (TextView) view.findViewById(R.id.result);
-
         view.findViewById(R.id.close)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         closeInputMethod(getContext(), mGuestEditText);
                         getDialog().dismiss();
-                        mFactor.refreshTemp();
+//                        mFactor.refreshTemp();
                     }
                 });
-
+/*
         view.findViewById(R.id.compute)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -256,9 +295,9 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
                         closeInputMethod(getContext(), mGuestEditText);
                         getDialog().dismiss();
                         mFactor.updateTemp();
-                        ((IntelligenceFragment) getParentFragment()).refreshFactorUI();
+                        ((IntelligenceFragment) getParentFragment()).refreshFactorUI(true);
                     }
-                });
+                });*/
     }
 
     /**
@@ -283,28 +322,40 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
      * 更新提示信息
      */
     public void updateMessage() {
-        String message = getString(R.string.diy_compute_method_message);
         String history = "";
         String home = "";
         String guest = "";
+        String messageString = "";
         switch (getCurrentRadioPosition()) {
             case 0:
                 history = StringFormatUtils.toString(mFactor.getHost().getHistoryTemp());
                 home = StringFormatUtils.toString(mFactor.getHost().getHomeTemp());
                 guest = StringFormatUtils.toString(mFactor.getHost().getGuestTemp());
+                messageString = getString(R.string.diy_compute_method_message1);
                 break;
             case 1:
                 history = StringFormatUtils.toString(mFactor.getSize().getHistoryTemp());
                 home = StringFormatUtils.toString(mFactor.getSize().getHomeTemp());
                 guest = StringFormatUtils.toString(mFactor.getSize().getGuestTemp());
+                messageString = getString(R.string.diy_compute_method_message2);
                 break;
             case 2:
                 history = StringFormatUtils.toString(mFactor.getAsia().getHistoryTemp());
                 home = StringFormatUtils.toString(mFactor.getAsia().getHomeTemp());
                 guest = StringFormatUtils.toString(mFactor.getAsia().getGuestTemp());
+                messageString = getString(R.string.diy_compute_method_message3);
                 break;
         }
-        mMessage.setText(String.format(Locale.getDefault(), message, history, home, guest));
+        String unColoredMsg = String.format(Locale.getDefault(), messageString, history, home, guest);
+        SpannableStringBuilder style = new SpannableStringBuilder(unColoredMsg);
+
+        style.setSpan(new ForegroundColorSpan(combatColor), messageString.indexOf("交"),
+                messageString.indexOf("交") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(hostColor), messageString.indexOf("主"),
+                messageString.indexOf("主") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        style.setSpan(new ForegroundColorSpan(guestColor), messageString.indexOf("客"),
+                messageString.indexOf("客") + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mMessage.setText(style);
         setResult();
     }
 
@@ -314,16 +365,13 @@ public class IntelligenceComputeMethodDialogFragment extends DialogFragment {
     private void setResult() {
         switch (getCurrentRadioPosition()) {
             case 0:
-                mResultTextView.setText(StringFormatUtils.toString(
-                        mFactor.computeHostWinRate(mBigDataForecast, true)));
+                mRoundProgressBar.setProgress(mFactor.computeHostWinRate(mBigDataForecast, true) * 100);
                 break;
             case 1:
-                mResultTextView.setText(StringFormatUtils.toString(
-                        mFactor.computeSizeWinRate(mBigDataForecast, true)));
+                mRoundProgressBar.setProgress(mFactor.computeSizeWinRate(mBigDataForecast, true) * 100);
                 break;
             case 2:
-                mResultTextView.setText(StringFormatUtils.toString(
-                        mFactor.computeAsiaWinRate(mBigDataForecast, true)));
+                mRoundProgressBar.setProgress(mFactor.computeAsiaWinRate(mBigDataForecast, true) * 100);
                 break;
         }
     }

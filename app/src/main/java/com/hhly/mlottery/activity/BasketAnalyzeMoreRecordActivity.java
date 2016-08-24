@@ -20,9 +20,9 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketAnalyzeAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketAnalyzeFutureAdapter;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreFutureBean;
-import com.hhly.mlottery.bean.basket.BasketDetails.BasketAnalyzeMoreRecentHistoryBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeMoreBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeMoreFutureBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeMoreRecentHistoryBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -181,7 +181,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     private String mGuestTeam;//客队名
     private String mHomeTeam;//主队名
 
-    private List<BasketAnalyzeMoreRecentHistoryBean> mHistoryScreenNum;; //筛选后的历史交锋
+    private List<BasketAnalyzeMoreRecentHistoryBean> mHistoryScreenNum; //筛选后的历史交锋
     private List<BasketAnalyzeMoreRecentHistoryBean> mGuestRecentScreenNum; //筛选后客队的近期战绩
     private List<BasketAnalyzeMoreRecentHistoryBean> mHomeRecentScreenNum; //筛选后主队的近期战绩
 
@@ -536,7 +536,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         homeWin = count1 + "" + getResources().getText(R.string.basket_analyze_win);
         homeLose = count2 + "" + getResources().getText(R.string.basket_analyze_lost);
         homeCourtWin = count3 + "" + getResources().getText(R.string.basket_analyze_win);
-        homeCourtLose = count4 + "" + getResources().getText(R.string.basket_analyze_lost);;
+        homeCourtLose = count4 + "" + getResources().getText(R.string.basket_analyze_lost);
 
         //"<font color='#ff0000'><b>" + win + getActivity().getString(R.string.analyze_win) + "、 " + "</b></font> "   #FF1F1F  #21B11E
 

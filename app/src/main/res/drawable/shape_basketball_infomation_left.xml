@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- <item android:drawable="@color/colorPrimary" android:state_checked="true" />
-     <item android:drawable="@color/white" android:state_checked="false" />-->
+    <!-- <item_event_half_finish android:drawable="@color/colorPrimary" android:state_checked="true" />
+     <item_event_half_finish android:drawable="@color/white" android:state_checked="false" />-->
 
     <!-- 点击时 -->
     <item android:state_checked="true">

@@ -230,5 +230,7 @@ public class AppConstants {
     /**这个是把devicetoken存入到sharedprefrence中的键*/
     public static final String DEVICETOKEN ="devicetoken";
 
+    /**-当前手机的终端ID-*/
+    public static final String TERID = "terid";
 
 }

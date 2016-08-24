@@ -542,8 +542,8 @@
 
     <!--分享-->
     <!--<style name="popuStyle">
-        <item name="android:windowEnterAnimation">@anim/popup_anim_in</item>
-        <item name="android:windowExitAnimation">@anim/popup_anim_out</item>
+        <item_event_half_finish name="android:windowEnterAnimation">@anim/popup_anim_in</item_event_half_finish>
+        <item_event_half_finish name="android:windowExitAnimation">@anim/popup_anim_out</item_event_half_finish>
     </style>-->
 
 
@@ -837,11 +837,11 @@
     </style>
     <!-- 业务选择弹框activity动画样式 -->
     <style name="AnimTop2" parent="@android:style/Animation">
-        <!--<item name="android:windowEnterAnimation">@anim/push_bottom_in</item>-->
+        <!--<item_event_half_finish name="android:windowEnterAnimation">@anim/push_bottom_in</item_event_half_finish>-->
     </style>
     <!-- 业务选择弹框activity样式 -->
     <style name="MyDialogStyleTop" parent="android:Theme.Dialog">
-        <!--<item name="android:windowAnimationStyle">@style/AnimTop2</item>-->
+        <!--<item_event_half_finish name="android:windowAnimationStyle">@style/AnimTop2</item_event_half_finish>-->
         <item name="android:windowFrame">@null</item>边框
         <item name="android:windowIsFloating">true</item>是否浮现在activity之上
         <item name="android:windowIsTranslucent">true</item>半透明
@@ -868,7 +868,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@color/home_item_bg</item>
     </style>
-   <!--分析界面 比分 初盘 结果-->
+    <!--分析界面 比分 初盘 结果-->
     <style name="analyze_text_score">
         <item name="android:textSize">@dimen/text_size_13</item>
         <item name="android:textColor">@color/basket_vs</item>
@@ -878,7 +878,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/analyze_radio_text_color</item>
+        <item name="android:textColor">@color/radio_text_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
 
@@ -886,5 +886,19 @@
         <item name="colorControlNormal">@color/linecolor</item>
         <item name="colorControlActivated">@color/linecolor</item>
         <item name="colorControlHighlight">@color/linecolor</item>
+    </style>
+    <!---->
+    <style name="intelligent_rate_text">
+        <item name="android:textColor">@color/mdy_999</item>
+        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <!--聊天室样式-->
+    <style name="chart_room" parent="@android:style/Theme.Holo.DialogWhenLarge">
+        <item name="android:windowBackground">@drawable/rong_chart_room_dialog</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 </resources>

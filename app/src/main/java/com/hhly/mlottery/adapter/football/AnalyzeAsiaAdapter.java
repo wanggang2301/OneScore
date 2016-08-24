@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.football;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.bean.footballDetails.PointList;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,25 +83,50 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
             for(int i=0;i<tvList.size();i++){
                 tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_default_color));
             }
-            holder.tv1.setText(list.get(position).getPoint1()+"");
-            holder.tv2.setText(list.get(position).getPoint2());
-            holder.tv3.setText(list.get(position).getPoint3());
-            holder.tv4.setText(list.get(position).getPoint4());
-            holder.tv5.setText(list.get(position).getPoint5());
-            holder.tv6.setText(list.get(position).getPoint6());
+            if(position==1){
+                holder.tv1.setText(list.get(position).getPoint1()+"");
+                holder.tv2.setText(list.get(position).getPoint2());
+                holder.tv3.setText(list.get(position).getPoint3());
+                holder.tv4.setText(list.get(position).getPoint4());
+                holder.tv5.setText(list.get(position).getPoint5());
+                holder.tv6.setText(list.get(position).getPoint6());
+            }
+
+            if(position==0){
+                if(list.get(position).getPoint1()!=null){
+                    setScore(list.get(position).getPoint1(),holder.tv1);
+                }
+                if(list.get(position).getPoint2()!=null){
+                    setScore(list.get(position).getPoint2(),holder.tv2);
+                }
+                if(list.get(position).getPoint3()!=null){
+                    setScore(list.get(position).getPoint3(),holder.tv3);
+                }
+                if(list.get(position).getPoint4()!=null){
+                    setScore(list.get(position).getPoint4(),holder.tv4);
+                }
+                if(list.get(position).getPoint5()!=null){
+                    setScore(list.get(position).getPoint5(),holder.tv5);
+                }
+                if(list.get(position).getPoint6()!=null){
+                    setScore(list.get(position).getPoint6(),holder.tv6);
+                }
+            }
+
+
             //1 赢（大）2 输（小）0 走
             if(position==2){
                 if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getLetList().size()!=0){
                     List<NewAnalyzeBean.AsiaTrendEntity.BattleHistoryEntity.LetListEntity> listLet=analyzeBean.getAsiaTrend().getBattleHistory().getLetList();
                     for(int i=0;i<listLet.size();i++){
                         if(listLet.get(i).getLet()==0){ //第i场比赛 走
-                            tvList.get(i).setText("走");
+                            tvList.get(i).setText(mContext.getString(R.string.new_analyze_draw));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.more_record));
                         }else if(listLet.get(i).getLet()==1){
-                            tvList.get(i).setText("赢");
+                            tvList.get(i).setText(mContext.getString(R.string.new_analyze_win));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_win_color));
                         }else if(listLet.get(i).getLet()==2){
-                            tvList.get(i).setText("输");
+                            tvList.get(i).setText(mContext.getString(R.string.new_analyze_lose));
                             tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_lose_color));
                         }
                     }
@@ -117,12 +145,35 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
             for(int i=0;i<tvList.size();i++){
                 tvList.get(i).setTextColor(mContext.getResources().getColor(R.color.football_analyze_default_color));
             }
-            holder.tv1.setText(list.get(position).getPoint1()+"");
-            holder.tv2.setText(list.get(position).getPoint2());
-            holder.tv3.setText(list.get(position).getPoint3());
-            holder.tv4.setText(list.get(position).getPoint4());
-            holder.tv5.setText(list.get(position).getPoint5());
-            holder.tv6.setText(list.get(position).getPoint6());
+            if(position==1){
+                holder.tv1.setText(list.get(position).getPoint1()+"");
+                holder.tv2.setText(list.get(position).getPoint2());
+                holder.tv3.setText(list.get(position).getPoint3());
+                holder.tv4.setText(list.get(position).getPoint4());
+                holder.tv5.setText(list.get(position).getPoint5());
+                holder.tv6.setText(list.get(position).getPoint6());
+            }
+
+            if(position==0){
+                if(list.get(position).getPoint1()!=null){
+                    setScore(list.get(position).getPoint1(),holder.tv1);
+                }
+                if(list.get(position).getPoint2()!=null){
+                    setScore(list.get(position).getPoint2(),holder.tv2);
+                }
+                if(list.get(position).getPoint3()!=null){
+                    setScore(list.get(position).getPoint3(),holder.tv3);
+                }
+                if(list.get(position).getPoint4()!=null){
+                    setScore(list.get(position).getPoint4(),holder.tv4);
+                }
+                if(list.get(position).getPoint5()!=null){
+                    setScore(list.get(position).getPoint5(),holder.tv5);
+                }
+                if(list.get(position).getPoint6()!=null){
+                    setScore(list.get(position).getPoint6(),holder.tv6);
+                }
+            }
             //1 赢（大）2 输（小）0 走
             if(position==2){
                 if(analyzeBean.getSizeTrend()!=null&&analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getTotList().size()!=0){
@@ -146,7 +197,22 @@ public class AnalyzeAsiaAdapter extends BaseAdapter{
         return convertView;
     }
 
-    static class ViewHolder{
+    /**
+     * 设置比分，主队比分标红
+     * @param point
+     * @param score
+     */
+    private void setScore(String point, TextView score) {
+        String a[]=point.split("-");
+        String text1="<font color='#f15353'><b>" +a[0]+ "</b></font> "+"<font color='#333333'><b>" +"- "+a[1]+ "</b></font> ";//第一个比分是主队
+        String text2="<font color='#333333'><b>" +a[0]+" -"+ "</b></font> "+"<font color='#f15353'><b>" +a[1]+ "</b></font> ";//第二个比分是主队
+        if(a[2].equals("1")){ //第一个比分是主队，即2-1 中 2需要标红
+            score.setText(Html.fromHtml(text1));
+        }else if(a[2].equals("2")){ //第二个比分是主队 即 2-1中 1需要标红
+            score.setText(Html.fromHtml(text2));
+        }
+    }
+     class ViewHolder{
         private TextView tv1;
         private TextView tv2;
         private TextView tv3;

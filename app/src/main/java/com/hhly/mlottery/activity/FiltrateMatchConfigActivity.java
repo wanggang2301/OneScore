@@ -186,7 +186,7 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
 
                     LinkedList<String> list = filtrateMatchFragment.getCheckedCups();
 
-                    String[] checkedCups = (String[]) list.toArray(new String[]{});
+                    String[] checkedCups = list.toArray(new String[]{});
 
                     bundle.putCharSequenceArray(RESULT_CHECKED_CUPS_IDS, checkedCups);
                     bundle.putBoolean(CHECKED_DEFUALT, false);

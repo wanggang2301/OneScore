@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.homePagerAdapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
@@ -489,6 +490,10 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         case 1:// 1、	热门赛事
                         {
                             View scoreView = getScoreView();
+                            scoreViewList.add(scoreView);
+                            View splitView = View.inflate(mContext, R.layout.split_view, null);
+                            scoreSplitViewList.add(splitView);
+                            // scoreView.setLayoutParams(scoreParams);
                             if ("13".equals(homeBodysEntity.getJumpAddr())) {// 足球比分
                                 score01_icon.setImageDrawable(mContext.getResources().getDrawable(AppConstants.homePageScoreFootBG[j % AppConstants.homePageScoreFootBG.length]));// 设置背景图片
                                 switch (homeBodysEntity.getStatusOrigin()) {
@@ -601,17 +606,15 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 ImageLoader.getInstance().displayImage(homeBodysEntity.getGuestLogoUrl(), score01_guest_icon, optionsScore);// 设置客队图标
                             }
                             score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
-
-                            // scoreView.setLayoutParams(scoreParams);
-                            scoreViewList.add(scoreView);
-                            L.d("xxx", "scoreViewList.size: " + scoreViewList.size());
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            scoreSplitViewList.add(splitView);
                         }
                         break;
                         case 2:// 2、	热点资讯
                         {
                             View dataInfoView = getDataInfoView();// 获取布局对象
+                            dataInfoViewList.add(dataInfoView);
+                            View splitView = View.inflate(mContext, R.layout.split_view, null);
+                            dataInfoSplitViewList.add(splitView);
+
                             if (homeBodysEntity.getPicUrl() == null) {
                                 data_info_icon01.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_data_info_def));
                             } else {
@@ -627,13 +630,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                 }
                             }
                             data_info_title01.setText(homeBodysEntity.getTitle());// 设置标题
-                            dataInfoViewList.add(dataInfoView);
-                            View splitView = View.inflate(mContext, R.layout.split_view, null);
-                            dataInfoSplitViewList.add(splitView);
                         }
                         break;
                         case 3:// 3、	彩票开奖
                         {
+                            View splitView = View.inflate(mContext, R.layout.split_view, null);
+                            lotterySplitViewList.add(splitView);
+
                             switch (homeBodysEntity.getName()) {
                                 case "1":// 香港彩
                                     lotteryHKAddView(homeBodysEntity, mContext.getResources().getString(R.string.number_cz_hk));
@@ -699,7 +702,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 }
             }
         } catch (Exception e) {
-            L.d("init初始化失败：" + e.getMessage());
+            L.d("xxx", "init初始化失败：" + e.getMessage());
         }
     }
 
@@ -741,6 +744,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private void lotteryKSAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryKSView();
+        lotteryViewList.add(lotteryView);
+
         if (homeBodysEntity.getPicUrl() == null) {
             ks_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
@@ -754,9 +759,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 ks_numbers.get(k).setImageDrawable(mContext.getResources().getDrawable(AppConstants.numberKSNos[Integer.parseInt(numbers.get(k)) - 1]));
             }
         }
-        lotteryViewList.add(lotteryView);
-        View splitView = View.inflate(mContext, R.layout.split_view, null);
-        lotterySplitViewList.add(splitView);
     }
 
     /**
@@ -767,6 +769,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private void lotteryKLSFAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryKLSFView();
+        lotteryViewList.add(lotteryView);
+
         if (homeBodysEntity.getPicUrl() == null) {
             klsf_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
@@ -794,9 +798,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 }
             }
         }
-        lotteryViewList.add(lotteryView);
-        View splitView = View.inflate(mContext, R.layout.split_view, null);
-        lotterySplitViewList.add(splitView);
     }
 
     /**
@@ -807,6 +808,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private void lotteryBJSCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryBJSCView();
+        lotteryViewList.add(lotteryView);
+
         if (homeBodysEntity.getPicUrl() == null) {
             bjsc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
@@ -820,9 +823,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 bjsc_numbers.get(k).setImageDrawable(mContext.getResources().getDrawable(AppConstants.numberCarNos[Integer.parseInt(numbers.get(k)) - 1]));
             }
         }
-        lotteryViewList.add(lotteryView);
-        View splitView = View.inflate(mContext, R.layout.split_view, null);
-        lotterySplitViewList.add(splitView);
     }
 
     /**
@@ -833,6 +833,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private void lotteryQXCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryyQXCView();
+        lotteryViewList.add(lotteryView);
+
         if (homeBodysEntity.getPicUrl() == null) {
             qxc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
@@ -853,9 +855,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 }
             }
         }
-        lotteryViewList.add(lotteryView);
-        View splitView = View.inflate(mContext, R.layout.split_view, null);
-        lotterySplitViewList.add(splitView);
     }
 
     /**
@@ -866,6 +865,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private void lotteryHKAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotteryHKView();
+        lotteryViewList.add(lotteryView);
+        //lotteryView.setLayoutParams(lotteryHKParams);
+
         if (homeBodysEntity.getPicUrl() == null) {
             hk_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
@@ -987,10 +989,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 hk_zodiacs.get(k).setText(zod);
             }
         }
-        //lotteryView.setLayoutParams(lotteryHKParams);
-        lotteryViewList.add(lotteryView);
-        View splitView = View.inflate(mContext, R.layout.split_view, null);
-        lotterySplitViewList.add(splitView);
     }
 
     /**
@@ -1001,6 +999,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     private void lotterySSCAddView(HomeBodysEntity homeBodysEntity, String lotteryName) {
         View lotteryView = getLotterySSCView();
+        lotteryViewList.add(lotteryView);
+
         if (homeBodysEntity.getPicUrl() == null) {
             ssc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
@@ -1016,9 +1016,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 ssc_numbers.get(k).setBackgroundResource(R.mipmap.number_bg_red);
             }
         }
-        lotteryViewList.add(lotteryView);
-        View splitView = View.inflate(mContext, R.layout.split_view, null);
-        lotterySplitViewList.add(splitView);
     }
 
 
@@ -1087,8 +1084,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hot_score_txt));
                             View scoreView = scoreViewList.get(i);
                             ViewParent parentScore = scoreView.getParent();
-                            if(parentScore != null){
-                                ((ViewGroup)parentScore).removeAllViews();
+                            if (parentScore != null) {
+                                ((ViewGroup) parentScore).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(scoreView);
                             addViewScore = true;
@@ -1100,8 +1097,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.hor_data_info_txt));
                             View dataInfoView = dataInfoViewList.get(i);
                             ViewParent parentDataInfo = dataInfoView.getParent();
-                            if(parentDataInfo != null){
-                                ((ViewGroup)parentDataInfo).removeAllViews();
+                            if (parentDataInfo != null) {
+                                ((ViewGroup) parentDataInfo).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(dataInfoView);
                             addViewDataInfo = true;
@@ -1113,8 +1110,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             mViewHolderOther.tv_title.setText(mContext.getResources().getString(R.string.frame_home_jieguo_txt));
                             View lotteryView = lotteryViewList.get(i);
                             ViewParent parentLottery = lotteryView.getParent();
-                            if(parentLottery != null){
-                                ((ViewGroup)parentLottery).removeAllViews();
+                            if (parentLottery != null) {
+                                ((ViewGroup) parentLottery).removeAllViews();
                             }
                             mViewHolderOther.ll_content.addView(lotteryView);
                             addViewLottery = true;

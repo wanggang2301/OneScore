@@ -42,6 +42,7 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
@@ -340,6 +341,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         iv_account = (ImageView) findViewById(R.id.iv_account);
         if (CommonUtils.isLogin()) {
             iv_account.setImageResource(R.mipmap.login);
+            RongYunUtils.initRongIMConnect(mContext);// 初始化融云
         } else {
             iv_account.setImageResource(R.mipmap.logout);
         }
@@ -589,19 +591,19 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    //Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
                     DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
                     Uri uri = Uri.parse(mUpdateInfo.getUrl());
                     DownloadManager.Request request = new DownloadManager.Request(uri);
                     //指定在WIFI状态下，执行下载操作。
-                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+//                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
                     //是否允许漫游状态下，执行下载操作
                     request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
                     //是否允许“计量式的网络连接”执行下载操作
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         request.setAllowedOverMetered(false);// 默认是允许的。
-                    }
+                    }*/
 
                     //request.setTitle("一比分新版本下载");
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

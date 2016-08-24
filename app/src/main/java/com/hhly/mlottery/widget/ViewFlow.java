@@ -90,7 +90,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	/**
 	 * Receives call backs when a new {@link View} has been scrolled to.
 	 */
-	public static interface ViewSwitchListener {
+	public interface ViewSwitchListener {
 
 		/**
 		 * This method is called when a new View has been scrolled to.
@@ -684,7 +684,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	}
 
 	private View setupChild(View child, boolean addToEnd, boolean recycle) {
-		ViewGroup.LayoutParams p = (ViewGroup.LayoutParams) child
+		ViewGroup.LayoutParams p = child
 				.getLayoutParams();
 		if (p == null) {
 			p = new AbsListView.LayoutParams(

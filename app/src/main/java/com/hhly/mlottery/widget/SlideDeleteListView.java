@@ -91,7 +91,7 @@ public class SlideDeleteListView extends ListView {
 
 	// 滑动删除方向的枚举值
 	public enum RemoveDirection {
-		RIGHT, LEFT, NONE;
+		RIGHT, LEFT, NONE
 	}
 
 	public SlideDeleteListView(Context context) {
@@ -343,7 +343,7 @@ public class SlideDeleteListView extends ListView {
 	 * 
 	 */
 	public interface RemoveListener {
-		public void removeItem(RemoveDirection direction, int position);
+		void removeItem(RemoveDirection direction, int position);
 	}
 
 }

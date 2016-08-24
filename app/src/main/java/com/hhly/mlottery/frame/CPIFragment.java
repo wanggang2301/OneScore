@@ -46,9 +46,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 重构版 CPIFragment
- * <p>
- * Created by loshine on 2016/6/21.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/21.
  */
 public class CPIFragment extends Fragment implements
         HappySocketClient.SocketResponseCloseListener,
@@ -96,7 +96,7 @@ public class CPIFragment extends Fragment implements
 
         // 创建公司 List
         companyList = new ArrayList<>();
-        filterList = new LinkedList<>();
+//        filterList = new LinkedList<>();
 
         // 隐藏中间标题
         hideView(view, R.id.public_txt_title);
@@ -188,6 +188,7 @@ public class CPIFragment extends Fragment implements
             return;
         }
         ArrayList<String> checkedIdList = (ArrayList<String>) data.getSerializableExtra("key");
+        if (filterList == null) filterList = new LinkedList<>();
         filterList.clear();
         filterList.addAll(checkedIdList);
         for (CPIOddsFragment fragment : mFragments) {
@@ -216,7 +217,9 @@ public class CPIFragment extends Fragment implements
      */
     private void showDateChooseDialog() {
         maybeInitDateChooseDialog();
-        mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
+        if (!mDateChooseDialogFragment.isVisible()) {
+            mDateChooseDialogFragment.show(getChildFragmentManager(), "dateChooseFragment");
+        }
     }
 
     /**
@@ -329,7 +332,10 @@ public class CPIFragment extends Fragment implements
      */
     public void showCompanyChooseDialog() {
         maybeInitCompanyChooseDialog();
-        mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+        if (!mCompanyChooseDialogFragment.isVisible()) {
+            mCompanyChooseDialogFragment.show(getChildFragmentManager(), "companyChooseDialog");
+        }
+
     }
 
     /**
@@ -441,7 +447,7 @@ public class CPIFragment extends Fragment implements
      */
     private void updateTimeAndStatus(String jsonString) {
         //时间模拟数据
-//            jsonString = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'338827','type':1}  ";
+//        jsonString = "{'data':{'keepTime':49,'statusOrigin':3},'thirdId':'349114','type':1}  ";
         WebSocketCPIResult<WebSocketCPIResult.UpdateTimeAndStatus> result =
                 WebSocketCPIResult.getTimeAndStatusFromJson(jsonString);
         // 更新三个 Fragment 中对应的 List 中的对应 thirdId 的比赛的数据

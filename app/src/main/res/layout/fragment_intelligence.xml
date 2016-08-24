@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/home_item_bg">
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_item_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,8 +71,77 @@
             android:layout_marginRight="15dp"
             android:src="@drawable/grey_dotted_line"/>
 
-        <include layout="@layout/info_big_data_predict_recent_combat"/>
+        <include layout="@layout/info_big_data_predict_host_recent_combat"/>
 
+        <ImageView
+            android:id="@+id/dotted_line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/grey_dotted_line"/>
+
+        <include layout="@layout/info_big_data_predict_guest_recent_combat"/>
+        <!--情报其它内容-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/home_item_bg"/>
+            <RadioGroup
+                android:id="@+id/radio_group_intelligent"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <!--全部比赛-->
+                <RadioButton
+                    android:id="@+id/intelligent_rb_all"
+                    style="@style/analyze_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/analyze_selected_left"
+                    android:checked="true"
+                    android:text="@string/intelligent_all_game"/>
+
+                <!--相同主客场-->
+                <RadioButton
+                    android:id="@+id/intelligent_rb_same"
+                    style="@style/analyze_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/analyze_selected_right"
+                    android:text="@string/intelligent_same_game"/>
+
+            </RadioGroup>
+        </LinearLayout>
+        <!--大数据赛果-->
+        <include layout="@layout/intelligence_result"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/home_item_bg"/>
+        <!--赛季盘口-->
+        <include layout="@layout/intelligent_season_handicap"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/home_item_bg"/>
+        <!--近期比赛-->
+        <include layout="@layout/intelligent_recent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/home_item_bg"/>
+        <!--今日结束比赛-->
+        <include layout="@layout/intelligent_today_handicap"/>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

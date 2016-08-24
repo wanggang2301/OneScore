@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * 足球详情 - 指数 - 指数详情右侧列表适配器
- * <p>
- * Created by loshine on 2016/6/29.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/29.
  */
 public class FootballPlateDetailsRightAdapter
         extends BaseQuickAdapter<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity>

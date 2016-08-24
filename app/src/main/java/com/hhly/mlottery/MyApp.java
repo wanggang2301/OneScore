@@ -1,30 +1,29 @@
 package com.hhly.mlottery;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.multidex.MultiDex;
 import android.util.DisplayMetrics;
 
-import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.PreferenceUtil;
-import com.hhly.mlottery.util.ShareConstants;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.tencent.mm.sdk.modelmsg.SendAuth;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import java.security.PublicKey;
 import java.util.Locale;
+
+import io.rong.imkit.RongIM;
+
 
 /**
  * @author Tenney
@@ -65,8 +64,38 @@ public class MyApp extends Application {
         //初始化畅言
         CyUtils.initCy(this);
         initUserInfo();
+        /**
+         * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIMClient 的进程和 Push 进程执行了 init。
+         * io.rong.push 为融云 push 进程名称，不可修改。
+         */
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) || "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
+            // 初始化融云
+            RongIM.init(this);
+        }
 
         super.onCreate();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);// 解决友盟分析问题
+    }
+
+    /**
+     * 获取当前进程名
+     * @param context
+     * @return
+     */
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
     }
 
     private void initUserInfo() {

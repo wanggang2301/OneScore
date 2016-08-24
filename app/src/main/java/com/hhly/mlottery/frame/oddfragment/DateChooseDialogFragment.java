@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 日期选择
- * <p/>
- * Created by loshine on 2016/6/22.
+ * 描    述：
+ * 作    者：longs@13322.com
+ * 时    间：2016/6/22.
  */
 public class DateChooseDialogFragment extends DialogFragment {
 

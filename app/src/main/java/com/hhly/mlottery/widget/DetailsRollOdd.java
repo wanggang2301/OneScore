@@ -185,12 +185,7 @@ public class DetailsRollOdd extends FrameLayout {
 
 
     private boolean isNULLOrEmpty(String s) {
-        if (s == null || "".equals(s)) {
-            return true;
-        } else {
-            return false;
-
-        }
+        return s == null || "".equals(s);
     }
 
     private void setTextViewColor(TextView textView, int flag, String b) {

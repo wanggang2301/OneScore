@@ -302,6 +302,7 @@ public class LiveHeadInfoFragment extends Fragment {
      */
     public void showFootballEventByState() {
         Collections.sort(xMatchLive, new FootballEventComparator());
+
         Map<String, List<MatchTimeLiveBean>> timeEventMap1 = new LinkedHashMap<String, List<MatchTimeLiveBean>>();//LinkedHashMap保证map有序
         Map<String, List<MatchTimeLiveBean>> timeEventMap2 = new LinkedHashMap<String, List<MatchTimeLiveBean>>();
 
@@ -345,7 +346,7 @@ public class LiveHeadInfoFragment extends Fragment {
      * 赛中时获取时间轴数据
      */
     private void getTimeLive() {
-        xMatchLive=new ArrayList<>();
+        xMatchLive = new ArrayList<>();
         if (matchLive == null) {
             return;
         }
@@ -364,8 +365,9 @@ public class LiveHeadInfoFragment extends Fragment {
                 if (place.equals("2")) {//客队
                     place = "0";//isHome=0客队
                 }
+
                 MatchTimeLiveBean timeLiveBean = new MatchTimeLiveBean(secondToMInute(bean1) + "", bean1.getCode(),//这里时间直接转换为分钟，就会一样了
-                        place, bean1.getEnNum(), bean1.getState());
+                        place, bean1.getEnNum(), bean1.getState(), "", bean1.getEnNum(), 0);
                 xMatchLive.add(timeLiveBean);
 
             }
@@ -418,15 +420,15 @@ public class LiveHeadInfoFragment extends Fragment {
         }
 
         xMatchLive.add(new MatchTimeLiveBean(secondToMInute(matchTextLiveBean) + "",
-                matchTextLiveBean.getCode(), place, matchTextLiveBean.getEnNum(), matchTextLiveBean.getState()));
+                matchTextLiveBean.getCode(), place, matchTextLiveBean.getEnNum(), matchTextLiveBean.getState(), "", matchTextLiveBean.getEnNum(), 0));
     }
 
     /**
      * 取消对应的足球事件
-     *
-     * @param iterator
      */
-    public void cancelFootBallEvent(Iterator<MatchTimeLiveBean> iterator, MatchTextLiveBean matchTextLiveBean) {
+
+    public void cancelFootBallEvent(MatchTextLiveBean matchTextLiveBean) {
+        Iterator<MatchTimeLiveBean> iterator = xMatchLive.iterator();
         while (iterator.hasNext()) {
             MatchTimeLiveBean bean = iterator.next();
             if (bean.getMsgId().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断

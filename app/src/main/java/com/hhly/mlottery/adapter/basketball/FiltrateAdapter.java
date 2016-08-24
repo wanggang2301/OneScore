@@ -140,7 +140,7 @@ public class FiltrateAdapter extends CommonAdapter<BasketMatchFilter> {
     }
 
     public interface OnCheckListener {
-        public void onCheck(BasketMatchFilter mFilter);
+        void onCheck(BasketMatchFilter mFilter);
     }
 
 
