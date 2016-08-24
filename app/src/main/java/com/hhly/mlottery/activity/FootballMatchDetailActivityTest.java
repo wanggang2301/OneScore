@@ -36,6 +36,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
 import com.hhly.mlottery.adapter.football.FragmentAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
@@ -93,6 +94,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.greenrobot.event.EventBus;
 import me.relex.circleindicator.CircleIndicator;
 
 /**
@@ -311,6 +313,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
         }
 
+        EventBus.getDefault().register(this);//注册EventBus
         RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
 
         L.e(TAG, "mThirdId = " + mThirdId);
@@ -1275,6 +1278,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);//取消注册EventBus
         RongYunUtils.isCreateChartRoom = false;// 修改创建聊天室状态
         if (footballTimer != null) {
             L.d("timer", "footballdetails定时器");
@@ -1297,6 +1301,21 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         this.finish();
     }
 
+    /**
+     * EvenBus接收消息
+     *
+     * @param event
+     */
+    public void onEventMainThread(FirstEvent event) {
+        switch (event.getMsg()) {
+            case RongYunUtils.CHART_ROOM_EXIT:
+                L.d("xxx","足球EventBus收到 ");
+                if(iv_join_room_foot != null){
+                    iv_join_room_foot.setVisibility(View.VISIBLE);
+                }
+                break;
+        }
+    }
 
     /***
      * 开始推送socket

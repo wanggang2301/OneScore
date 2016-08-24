@@ -16,10 +16,15 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
+import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RongYunUtils;
 
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -75,16 +80,6 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
                 conversation.setBackgroundColor(Color.parseColor("#" + str + "000000"));
                 ll_setting.setBackgroundColor(Color.parseColor("#" + str + "000000"));
                 tv_pb_size.setText(mContext.getResources().getString(R.string.rong_chart_bg_pb) + "(" + progress + "):");
-               /* if(progress >= 100){
-                    conversation.setBackgroundColor(Color.parseColor("#f9f9f9"));
-                    ll_setting.setBackgroundColor(Color.parseColor("#f9f9f9"));
-                }else if(progress < 10){
-                    conversation.setBackgroundColor(Color.parseColor("#0"+progress+"f9f9f9"));
-                    ll_setting.setBackgroundColor(Color.parseColor("#0"+progress+"f9f9f9"));
-                }else{
-                    conversation.setBackgroundColor(Color.parseColor("#"+progress+"f9f9f9"));
-                    ll_setting.setBackgroundColor(Color.parseColor("#"+progress+"f9f9f9"));
-                }*/
             }
 
             @Override
@@ -115,20 +110,12 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
             }
         });
 
-
-//        String userTestPhoto = "http://m.1332255.com/news/upload/shortcut/69c426f0f0974d4b8aae0826da71f751.png";// 用户使用测试头像
-        String userTestPhoto = AppConstants.register.getData().getUser().getHeadIcon();// 用户头像
-        if(TextUtils.isEmpty(userTestPhoto)){
-            userTestPhoto = "xxx";// 使用系统默认头像
-        }
-        mUserInfo = new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(userTestPhoto));
+        mUserInfo = new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx")));
 
         RongIM.setUserInfoProvider(this, true);
         RongIM.getInstance().setCurrentUserInfo(mUserInfo);
         RongIM.getInstance().setMessageAttachedUserInfo(true);
-        RongIM.getInstance().refreshUserInfoCache(mUserInfo);// 刷新本地用户缓存
 
-        L.d("xxx","userTestPhoto 头像URL：" + userTestPhoto);
     }
 
     @Override
@@ -138,6 +125,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         RongYunUtils.quitChatRoom();// 退出聊天室
         RongYunUtils.isJoinChartRoom = false;
         this.overridePendingTransition(0, R.anim.slide_in_from_top);// 关闭动画
+        EventBus.getDefault().post(new FirstEvent(RongYunUtils.CHART_ROOM_EXIT));
     }
 
     @Override
