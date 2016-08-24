@@ -28,6 +28,7 @@ import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.LineChartView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -153,6 +154,19 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private TextView mLetNodata3;
     private TextView mLetNodata4;
     private TextView mLetAllNodata;
+    private RoundProgressBar mLetHistoryProgressBar;
+    private TextView mLetHistoryVsCount;
+    private TextView mLetHistoryHomeWin;
+    private TextView mLetHistoryGuestWin;
+    private TextView mLetHistoryDraw;
+    private RoundProgressBar mLetRecentHomeProgress;
+    private RoundProgressBar mLetRecentGuestProgress;
+    private TextView mLetRecentHomeWinRate;
+    private TextView mLetRecentGuestWinRate;
+    private TextView mLetRecentHomeWinText;// 皇马赢盘率
+    private TextView mLetRecentGuestWinText;
+
+
     //大小球走势
     private LinearLayout mllSize;
     private TextView mTextSize1;
@@ -173,6 +187,21 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private TextView mSizeNodata3;
     private TextView mSizeNodata4;
     private TextView mSizeAllNodata;
+    private RoundProgressBar mSizeHistoryProgressBar;
+    private TextView mSizeHistoryVsCount;
+    private TextView mSizeHistoryBigRate;
+    private TextView mSizeHistorySmallRate;
+    private TextView mSizeHistoryDraw;
+    private RoundProgressBar mSizeRecentHomeProgressBar;
+    private TextView mSizeRecentHomeBigRate;
+    private TextView mSizeRecentHomeSmallRate;
+    private TextView mSizeRecentHomeDraw;
+    private TextView mSizeRecentHomeVsCount;
+    private RoundProgressBar mSizeRecentGuestProgressBar;
+    private TextView mSizeRecentGuestBigRate;
+    private TextView mSizeRecentGuestSmallRate;
+    private TextView mSizeRecentGuestDraw;
+    private TextView mSizeRecentGuestVsCount;
 
 
     /**亚盘里的listView*/
@@ -325,6 +354,17 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mLetNodata3= (TextView) mView.findViewById(R.id.let_nodata3);
         mLetNodata4= (TextView) mView.findViewById(R.id.let_nodata4);
         mLetAllNodata= (TextView) mView.findViewById(R.id.let_all_nodata);
+        mLetHistoryProgressBar= (RoundProgressBar) mView.findViewById(R.id.analyze_let_history_progress);
+        mLetHistoryVsCount= (TextView) mView.findViewById(R.id.analyze_let_history_vs_count);
+        mLetHistoryHomeWin= (TextView) mView.findViewById(R.id.analyze_let_history_home_win_percent);
+        mLetHistoryGuestWin= (TextView) mView.findViewById(R.id.analyze_let_history_guest_win_percent);
+        mLetHistoryDraw= (TextView) mView.findViewById(R.id.analyze_let_history_draw_percent);
+        mLetRecentHomeProgress= (RoundProgressBar) mView.findViewById(R.id.analyze_let_recent_home_progress);
+        mLetRecentHomeWinRate= (TextView) mView.findViewById(R.id.analyze_let_recent_home_vs_count);
+        mLetRecentHomeWinText= (TextView) mView.findViewById(R.id.analyze_let_recent_home_win_text);
+        mLetRecentGuestProgress= (RoundProgressBar) mView.findViewById(R.id.analyze_let_recent_guest_progress);
+        mLetRecentGuestWinRate= (TextView) mView.findViewById(R.id.analyze_let_recent_guest_vs_count);
+        mLetRecentGuestWinText= (TextView) mView.findViewById(R.id.analyze_let_recent_guest_win_text);
 
         //大小球走势
         mllSize= (LinearLayout) mView.findViewById(R.id.ll_analyze_size);
@@ -349,6 +389,36 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mSizeNodata3= (TextView) mView.findViewById(R.id.size_nodata3);
         mSizeNodata4= (TextView) mView.findViewById(R.id.size_nodata4);
         mSizeAllNodata= (TextView) mView.findViewById(R.id.size_all_nodata);
+        mSizeHistoryProgressBar= (RoundProgressBar) mView.findViewById(R.id.analyze_size_history_progress);
+        mSizeHistoryBigRate= (TextView) mView.findViewById(R.id.analyze_size_history_big_ball_rate);
+        mSizeHistorySmallRate= (TextView) mView.findViewById(R.id.analyze_size_history_small_ball_rate);
+        mSizeHistoryDraw= (TextView) mView.findViewById(R.id.analyze_size_history_draw);
+        mSizeHistoryVsCount= (TextView) mView.findViewById(R.id.analyze_size_history_vs_count);
+        //recent
+        mSizeRecentHomeProgressBar= (RoundProgressBar) mView.findViewById(R.id.analyze_size_recent_home_progress);
+        mSizeRecentHomeBigRate= (TextView) mView.findViewById(R.id.analyze_size_recent_home_big_ball);
+        mSizeRecentHomeSmallRate= (TextView) mView.findViewById(R.id.analyze_size_recent_home_small_ball);
+        mSizeRecentHomeDraw= (TextView) mView.findViewById(R.id.analyze_size_recent_home_draw_percent);
+        mSizeRecentHomeVsCount= (TextView) mView.findViewById(R.id.analyze_size_recent_home_vs_count);
+        mSizeRecentGuestProgressBar= (RoundProgressBar) mView.findViewById(R.id.analyze_size_recent_guest_progress);
+        mSizeRecentGuestBigRate= (TextView) mView.findViewById(R.id.analyze_size_recent_guest_big_ball);
+        mSizeRecentGuestSmallRate= (TextView) mView.findViewById(R.id.analyze_size_recent_guest_small_ball);
+        mSizeRecentGuestDraw= (TextView) mView.findViewById(R.id.analyze_size_recent_guest_draw_percent);
+        mSizeRecentGuestVsCount= (TextView) mView.findViewById(R.id.analyze_size_recent_guest_vs_count);
+
+        mLetHistoryProgressBar.setTextIsDisplayable(false);
+        mLetRecentHomeProgress.setTextIsDisplayable(false);
+        mLetRecentGuestProgress.setTextIsDisplayable(false);
+        mSizeHistoryProgressBar.setTextIsDisplayable(false);
+        mSizeRecentGuestProgressBar.setTextIsDisplayable(false);
+        mSizeRecentHomeProgressBar.setTextIsDisplayable(false);
+
+        mLetHistoryProgressBar.setIsprogress(true);
+        mLetRecentHomeProgress.setIsprogress(true);
+        mLetRecentGuestProgress.setIsprogress(true);
+        mSizeHistoryProgressBar.setIsprogress(true);
+        mSizeRecentGuestProgressBar.setIsprogress(true);
+        mSizeRecentHomeProgressBar.setIsprogress(true);
 
     }
 
@@ -729,7 +799,29 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             }else{
                 mLetNodata1.setVisibility(View.VISIBLE);
             }
+            //亚盘立交交锋饼状图
+            if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
+                NewAnalyzeBean.AsiaTrendEntity.Statistics statistics=analyzeBean.getAsiaTrend().getBattleHistory().getStatistics();
+                mLetHistoryHomeWin.setText(statistics.getWinPercent());
+                mLetHistoryGuestWin.setText(statistics.getLosePercent());
+                mLetHistoryDraw.setText(statistics.getDrawPercent());
+                mLetHistoryVsCount.setText(statistics.getVsCount()+"");
+                String a[]=statistics.getWinPercent().split("%");
+                String b[]=statistics.getLosePercent().split("%");
+                String c[]=statistics.getDrawPercent().split("%");
+                int winPercent=Integer.parseInt(a[0]);
+                int losePercent=Integer.parseInt(b[0]);
+                int drawPercent=Integer.parseInt(c[0]);
 
+                mLetHistoryProgressBar.setProgress(winPercent);
+                mLetHistoryProgressBar.setProgress2(losePercent);
+                mLetHistoryProgressBar.setProgress3(drawPercent);
+                mLetHistoryProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
+                mLetHistoryProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
+                mLetHistoryProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+                mLetHistoryProgressBar.setRoundWidth(40);
+                mLetHistoryProgressBar.setDatas(statistics.getWin()+"",statistics.getLose()+"",statistics.getDraw()+"");
+            }
 
             //亚盘近期对比主队
             List<List<Integer>> asiaHomeList=new ArrayList<>();
