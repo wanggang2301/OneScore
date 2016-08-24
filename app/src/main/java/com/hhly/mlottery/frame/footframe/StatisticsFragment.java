@@ -473,7 +473,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private void initChartView(LineChart mChart, String msg) {
         mChart.setDrawGridBackground(false);
         mChart.setDescription(mContext.getResources().getString(R.string.time));
-        mChart.setNoDataTextDescription(msg);
+        mChart.setNoDataTextDescription("");
+        mChart.setNoDataTextColor(mContext.getResources().getColor(R.color.res_pl_color));
+        mChart.setNoDataText(msg);
         mChart.setTouchEnabled(true);
         mChart.setDragEnabled(false);
         mChart.setScaleEnabled(false);

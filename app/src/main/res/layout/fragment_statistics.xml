@@ -711,9 +711,9 @@
 
                             <View
                                 android:layout_width="10dp"
-                                android:layout_height="1dp"
+                                android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="15dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -729,7 +729,7 @@
 
                             <View
                                 android:layout_width="10dp"
-                                android:layout_height="1dp"
+                                android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/blue" />
@@ -746,7 +746,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="10dp"
                                 android:src="@mipmap/chart_goal" />
 
                             <TextView
@@ -819,9 +819,9 @@
 
                             <View
                                 android:layout_width="10dp"
-                                android:layout_height="1dp"
+                                android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="15dp"
                                 android:background="#C23531"
                                 android:gravity="center" />>
 
@@ -835,7 +835,7 @@
 
                             <View
                                 android:layout_width="10dp"
-                                android:layout_height="1dp"
+                                android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/blue" />
@@ -852,7 +852,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="10dp"
                                 android:src="@mipmap/chart_goal" />
 
                             <TextView
@@ -923,9 +923,9 @@
 
                             <View
                                 android:layout_width="10dp"
-                                android:layout_height="1dp"
+                                android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="15dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -939,7 +939,7 @@
 
                             <View
                                 android:layout_width="10dp"
-                                android:layout_height="1dp"
+                                android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/blue" />
@@ -957,7 +957,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="10dp"
                                 android:src="@mipmap/chart_goal" />
 
                             <TextView
@@ -1029,9 +1029,9 @@
 
                             <View
                                 android:layout_width="10dp"
-                                android:layout_height="1dp"
+                                android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="15dp"
                                 android:background="#C23531"
                                 android:gravity="center" />
 
@@ -1045,7 +1045,7 @@
 
                             <View
                                 android:layout_width="10dp"
-                                android:layout_height="1dp"
+                                android:layout_height="1.5dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
                                 android:background="@color/blue" />
@@ -1063,7 +1063,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="10dp"
                                 android:src="@mipmap/chart_goal" />
 
                             <TextView
