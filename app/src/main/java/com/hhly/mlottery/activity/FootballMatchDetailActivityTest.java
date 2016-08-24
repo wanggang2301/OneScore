@@ -2643,8 +2643,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        //super.onSaveInstanceState(outState, outPersistentState);
+    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override
