@@ -110,7 +110,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private final static int RESULT_FRAGMENT = 1;
     private final static int SCHEDULE_FRAGMENT = 2;
     private final static int FOCUS_FRAGMENT = 3;
-    private final static int BANNER_PLAY_TIME = 1500; //头部5秒轮播
+    private final static int BANNER_PLAY_TIME = 2500; //头部5秒轮播
     private final static int BANNER_ANIM_TIME = 500; //轮播动画时间
     private final static int ERROR = -1;//访问失败
     private final static int SUCCESS = 0;// 访问成功
@@ -314,6 +314,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private ImageView iv_join_room_foot;// 聊天室悬浮按钮
     private ProgressDialog pd;// 加载框
 
+    private Handler preGotoliveHandler;
+    private Runnable runnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -378,7 +381,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mFootballLiveGotoChart = new FootballLiveGotoChart() {
             @Override
             public void onClick() {
-                mViewPager.setCurrentItem(TALKBALL_FG);
+                mViewPager.setCurrentItem(TALKBALL_FG, false);
             }
         };
 
@@ -386,7 +389,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mPreHeadGotoAnimHead = new FootballLiveGotoChart() {
             @Override
             public void onClick() {
-                mHeadviewpager.setCurrentItem(2);
+                preGotoliveHandler.removeCallbacks(runnable);
+                mHeadviewpager.setCurrentItem(2, false);
             }
         };
 
@@ -797,7 +801,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
 
             //赛前进入分析
-            mViewPager.setCurrentItem(ANALYZE_FG);
+            mViewPager.setCurrentItem(ANALYZE_FG, false);
 
 
             mHeadviewpager.setIsScrollable(false);
@@ -825,7 +829,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         } else {
 
-            mViewPager.setCurrentItem(ROLLBALL_FG);
+            mViewPager.setCurrentItem(ROLLBALL_FG, false);
 
 
             mHeadviewpager.setIsScrollable(true);
@@ -976,12 +980,16 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mAnalyzeFragment.setTeamName(mMatchDetail.getHomeTeamInfo().getName(), mMatchDetail.getGuestTeamInfo().getName());
 
 
-            new Handler().postDelayed(new Runnable() {
+            runnable = new Runnable() {
                 @Override
                 public void run() {
                     mHeadviewpager.setCurrentItem(1, true);
                 }
-            }, BANNER_PLAY_TIME);
+            };
+
+            preGotoliveHandler = new Handler();
+            preGotoliveHandler.postDelayed(runnable, BANNER_PLAY_TIME);
+
             //赛后赛中下面赔率显示
         }
 
