@@ -105,7 +105,6 @@ import me.relex.circleindicator.CircleIndicator;
 public class FootballMatchDetailActivityTest extends AppCompatActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
 
     private final static String TAG = "FootballMatchDetailActivityTest";
-    private final static String URL_DEFAULT = "http://m.13322.com/live/bifen/index.html?id=";
 
     private final static int IMMEDIA_FRAGMENT = 0;
     private final static int RESULT_FRAGMENT = 1;
@@ -1231,97 +1230,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     }
 
-
-    /**
-     * 按时间段统计走势图的数据
-     *
-     * @param code  进球的code
-     * @param code2 取消的code
-     * @param time  开赛的当前时间
-     * @return 统计好的数据集合
-     */
-    private ArrayList<Integer> initMatchTrend(String code, String code2, int time) {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        int time15 = 0, time30 = 0, time45 = 0, time60 = 0, time75 = 0, time90 = 0;
-
-        for (MatchTextLiveBean matchTextLiveBean : matchLive) {
-            Integer dd = StadiumUtils.convertStringToInt(matchTextLiveBean.getTime());
-            if (code.equals(matchTextLiveBean.getCode())) {  //主队角球
-                if (FIRSTHALF.equals(matchTextLiveBean.getState()) || HALFTIME.equals(matchTextLiveBean.getState())) {// 上半场和中场
-                    if (dd >= 0 && dd <= 15 && time >= 15) {
-                        time15++;
-                    }
-                    if (dd > 15 && dd <= 30 && time >= 30) {
-                        time30++;
-                    }
-                    if (dd > 30 && time >= 45) {
-                        time45++;
-                    }
-                } else if (SECONDHALF.equals(matchTextLiveBean.getState())) {// 下半场
-                    if (dd >= 0 && dd <= 60 && time >= 60) {
-                        time60++;
-                    }
-                    if (dd > 60 && dd <= 75 && time >= 75) {
-                        time75++;
-                    }
-                    if (dd > 75 && time >= 90) {
-                        time90++;
-                    }
-                }
-            }
-        }
-
-        if (code2 != null) {
-            for (MatchTextLiveBean matchTextLiveBean : matchLive) {
-                if (code2.equals(matchTextLiveBean.getCode())) {  //主队角球
-                    if (FIRSTHALF.equals(matchTextLiveBean.getState()) || HALFTIME.equals(matchTextLiveBean.getState())) {// 上半场和中场
-                        if (time >= 0 && time <= 15) {
-                            time15--;
-                        }
-                        if (time > 15 && time <= 30) {
-                            time30--;
-                        }
-                        if (time > 30) {
-                            time45--;
-                        }
-                    } else if (SECONDHALF.equals(matchTextLiveBean.getState())) {// 下半场
-                        if (time >= 0 && time <= 60) {
-                            time60--;
-                        }
-                        if (time > 60 && time <= 75) {
-                            time75--;
-                        }
-                        if (time > 75) {
-                            time90--;
-                        }
-                    }
-                }
-            }
-        }
-
-
-        if (time >= 15) {
-            list.add(time15);
-        }
-        if (time >= 30) {
-            list.add(time30 + time15);
-        }
-        if (time >= 45) {
-            list.add(time45 + time30 + time15);
-        }
-        if (time >= 60) {
-            list.add(time60 + time45 + time30 + time15);
-        }
-        if (time >= 75) {
-            list.add(time75 + time60 + time45 + time30 + time15);
-        }
-        if (time >= 90) {
-            list.add(time90 + time75 + time60 + time45 + time30 + time15);
-        }
-
-        return list;
-
-    }
 
     @Override
     protected void onDestroy() {
@@ -2591,12 +2499,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        L.d("xxx",">>>requestCode:" + requestCode);
-        L.d("xxx",">>>resultCode:" + resultCode);
+        L.d("xxx", ">>>requestCode:" + requestCode);
+        L.d("xxx", ">>>resultCode:" + resultCode);
         if (requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_FOOT && resultCode == -1) {
             joinRoom();
         }
-        if(requestCode == CyUtils.JUMP_COMMENT_QUESTCODE){
+        if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
             switch (resultCode) {
                 case CyUtils.RESULT_OK:
                     mTalkAboutBallFragment.getResultOk();
@@ -2610,15 +2518,16 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             }
         }
     }
+
     // 评论登录跳转
-    public void talkAboutBallLoginFoot(){
+    public void talkAboutBallLoginFoot() {
         //跳转登录界面
         Intent intent1 = new Intent(mContext, LoginActivity.class);
         startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
     // 发表评论跳转
-    public void talkAboutBallSendFoot(long topicid){
+    public void talkAboutBallSendFoot(long topicid) {
         Intent intent2 = new Intent(mContext, InputActivity.class);
         intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
@@ -2686,9 +2595,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 String summary = getString(R.string.share_summary);
                 shareBean.setTitle(title != null ? title : getString(R.string.share_to_qq_app_name));
                 shareBean.setSummary(summary);
-                shareBean.setTarget_url(URL_DEFAULT + mThirdId);
+                shareBean.setTarget_url(BaseURLs.URL_FOOTBALL_DETAIL_INFO_SHARE + mThirdId);
                 shareBean.setImage_url(shareHomeIconUrl != null ? shareHomeIconUrl : "");
-                shareBean.setCopy(URL_DEFAULT + mThirdId);
+                shareBean.setCopy(BaseURLs.URL_FOOTBALL_DETAIL_INFO_SHARE + mThirdId);
                 mShareFragment = ShareFragment.newInstance(shareBean);
                 mShareFragment.show(getSupportFragmentManager(), "bottomShare");
             }

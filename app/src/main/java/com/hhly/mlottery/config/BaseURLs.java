@@ -312,6 +312,10 @@ public class BaseURLs {
     //赛场新接口
     private final static String URL_FOOTBALL_DETAIL_FIRST = "footBallMatch.queryAndroidFirstMatchInfos.do";
 
+    //足球内页赛事分享
+
+    private final static String URL_FOOTBALL_DETAIL_SHARE = "live/bifen/index.html?id=";
+
 
     //赛场——点赞
     private final static String URL_FOOTBALL_DETAIL_LIKE = "footBallMatch.updLike.do";
@@ -552,6 +556,7 @@ public class BaseURLs {
 
 
     // 刷新
+    // 刷新
     private final static String URL_INCREMENT = "matchResults.findIncrementMatchs.do";
 
     public final static String URL_MainMatchs = URL_API_HOST + URL_MAIN;
@@ -572,6 +577,14 @@ public class BaseURLs {
 
     //赛场
     public final static String URL_FOOTBALL_DETAIL_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL;
+
+    public final static String URL_FOOTBALL_DETAIL_INFO_FIRST = URL_API_HOST + URL_FOOTBALL_DETAIL_FIRST;
+
+    //足球内页赛事分享
+
+    public final static String URL_FOOTBALL_DETAIL_INFO_SHARE = HTTP + HOST + URL_SPLITTER + URL_FOOTBALL_DETAIL_SHARE;
+
+
     //赛场点赞
     public final static String URL_FOOTBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_FOOTBALL_DETAIL_LIKE;
     public final static String URL_BASKETBALLBALL_DETAIL_LIKE_INFO = URL_API_HOST + URL_BASKETBALLBALL_DETAIL_LIKE;
@@ -805,16 +818,22 @@ public class BaseURLs {
 
     public final static String URL_FOOTBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/footballodds_graphic.html";
     /*模糊搜索*/
-    public final static String FUZZYSEARCH ="/basketballData.fuzzySearch.do";
+    public final static String FUZZYSEARCH = "/basketballData.fuzzySearch.do";
 
-    /**--融云 获取用户Token URL--*/
+    /**
+     * --融云 获取用户Token URL--
+     */
     public final static String RONG_USER_TOKEN = "https://api.cn.ronghub.com/user/getToken.json";
-    /**--融云 获取聊天室ID URL--*/
+    /**
+     * --融云 获取聊天室ID URL--
+     */
     public final static String RONG_CHARTROOM_ID = "https://api.cn.ronghub.com/chatroom/create.json";
-    /**--融去 获取聊天室人数 URL--*/
+    /**
+     * --融去 获取聊天室人数 URL--
+     */
     public final static String RONG_CHARTROOM_COUNT = "https://api.cn.ronghub.com/chatroom/user/query.json";
     /*头像图片上传*/
-    public final static String UPLOADIMAGE=NEW_URL_API_PHOST+"uploadImage.do";
+    public final static String UPLOADIMAGE = NEW_URL_API_PHOST + "uploadImage.do";
     /*头像URL上传*/
     public final static String UPDATEHEADICON = URL_API_HOST + "androidUserCenter.updateHeadIcon.do";
 }
