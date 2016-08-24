@@ -1,5 +1,6 @@
 package com.hhly.mlottery.adapter.basketball;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
@@ -7,7 +8,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.SectionEntity;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduledMatch;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.List;
 
@@ -21,10 +24,20 @@ public class BasketballDatabaseScheduleSectionAdapter
         extends BaseSectionQuickAdapter<BasketballDatabaseScheduleSectionAdapter.Section> {
 
     private ImageLoader mImageLoader;
+    private DisplayImageOptions mOptions;
 
     public BasketballDatabaseScheduleSectionAdapter(List<Section> data) {
         super(R.layout.item_basket_datatbase_schedule, R.layout.item_basket_datatbase_schedule_title, data);
         mImageLoader = ImageLoader.getInstance();
+        mOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.mipmap.basket_default)   //默认图片
+                .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .resetViewBeforeLoading(true)
+                .build();
     }
 
     @Override
@@ -41,8 +54,8 @@ public class BasketballDatabaseScheduleSectionAdapter
                 .setText(R.id.guest_name, match.getGuestTeamName());
         ImageView homeLogo = holder.getView(R.id.home_logo);
         ImageView guestLogo = holder.getView(R.id.guest_logo);
-        mImageLoader.displayImage(match.getHomeTeamIconUrl(), homeLogo);
-        mImageLoader.displayImage(match.getGuestTeamIconUrl(), guestLogo);
+        mImageLoader.displayImage(match.getHomeTeamIconUrl(), homeLogo, mOptions);
+        mImageLoader.displayImage(match.getGuestTeamIconUrl(), guestLogo, mOptions);
     }
 
     public static class Section extends SectionEntity<ScheduledMatch> {
