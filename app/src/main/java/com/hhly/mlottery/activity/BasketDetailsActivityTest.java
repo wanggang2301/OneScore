@@ -1,15 +1,19 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -39,11 +43,14 @@ import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
@@ -107,6 +114,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     public final static String ODDS_SIZE = "asiaSize";
     private String mThirdId = "936707";
     private String mMatchStatus;
+    private Context mContext;
 
     BasketAnalyzeFragment mAnalyzeFragment = new BasketAnalyzeFragment();
     TalkAboutBallFragment mTalkAboutBallFragment;
@@ -121,7 +129,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
+    public AppBarLayout appBarLayout;
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
@@ -203,6 +211,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     private ExactSwipeRefrashLayout mRefreshLayout; //下拉刷新
 
+    private ImageView iv_join_room_basket;// 聊天室悬浮按钮
+    private ProgressDialog pd;// 加载框
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +221,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         setContentView(R.layout.activity_basket_details_activity_test);
         /**不统计当前的Activity界面，只统计Fragment界面*/
         MobclickAgent.openActivityDurationTrack(false);
-
+        mContext = this;
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
@@ -224,6 +235,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
 //            L.d("BASKET_MATCH_STATUS>>>>>>", mMatchStatus);
         }
+
+        RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
+
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -333,6 +347,14 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
      * 初始化界面
      */
     private void initView() {
+        // 初始化加载框
+        pd = new ProgressDialog(this);
+        pd.setCanceledOnTouchOutside(false);
+        pd.setMessage(getResources().getString(R.string.loading_data_txt));
+        // 初始化悬浮按钮
+        iv_join_room_basket = (ImageView) findViewById(R.id.iv_join_room_basket);
+        iv_join_room_basket.setOnClickListener(this);
+
         TITLES = new String[]{getResources().getString(R.string.basket_analyze),
                 getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
 
@@ -350,7 +372,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
-
+        // TODO
         mTabsAdapter.addFragments(mAnalyzeFragment,mOddsLet,mOddsSize, mOddsEuro,  mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
@@ -560,7 +582,82 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
                 break;
+            case R.id.iv_join_room_basket:
+                joinRoom();
+                break;
         }
+    }
+
+    /**
+     * 进入聊天室
+     */
+    private void joinRoom() {
+        if (CommonUtils.isLogin()) {// 判断是否登录
+            pd.show();
+            iv_join_room_basket.setVisibility(View.GONE);
+            if(RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom){
+                pd.dismiss();
+                appBarLayout.setExpanded(true);// 显示头部内容
+                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+            }else{
+                new Thread(){
+                    @Override
+                    public void run() {
+                        while (!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom){
+                            SystemClock.sleep(1000);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pd.dismiss();
+                                appBarLayout.setExpanded(true);// 显示头部内容
+                                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+                            }
+                        });
+                    }
+                }.start();
+            }
+        }else{
+            // 跳转到登录界面
+            Intent intent1 = new Intent(mContext, LoginActivity.class);
+            startActivityForResult(intent1, RongYunUtils.CHART_ROOM_QUESTCODE_BASKET);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        L.d("xxx",">>>requestCode:" + requestCode);
+        L.d("xxx",">>>resultCode:" + resultCode);
+        if(requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_BASKET && resultCode == -1){
+            joinRoom();
+        }
+        if(requestCode == CyUtils.JUMP_COMMENT_QUESTCODE){
+            switch (resultCode) {
+                case CyUtils.RESULT_OK:
+                    mTalkAboutBallFragment.getResultOk();
+                    break;
+                case CyUtils.RESULT_CODE://接收评论输入页面返回
+                    mTalkAboutBallFragment.getResultCode();
+                    break;
+                case CyUtils.RESULT_BACK://接收评论输入页面返回
+                    mTalkAboutBallFragment.getResultBack();
+                    break;
+            }
+        }
+    }
+
+    // 评论登录跳转
+    public void talkAboutBallLoginBasket(){
+        //跳转登录界面
+        Intent intent1 = new Intent(mContext, LoginActivity.class);
+        startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+    }
+
+    // 发表评论跳转
+    public void talkAboutBallSendBasket(long topicid){
+        Intent intent2 = new Intent(mContext, InputActivity.class);
+        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+        startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
     @Override
@@ -1331,6 +1428,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onResume() {
         super.onResume();
+        iv_join_room_basket.setVisibility(View.VISIBLE);// 显示悬浮按钮
         MobclickAgent.onResume(this);
         if (isFragment0) {
             MobclickAgent.onPageStart("BasketBall_Info_FX");

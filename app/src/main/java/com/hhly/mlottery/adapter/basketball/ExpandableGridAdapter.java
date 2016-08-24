@@ -42,8 +42,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
     private int groPosition = -1;
     public boolean isInitChildAdapter = false;
 
-    private static final String LEAGUEID = "leagueId";
-
+    private static final String LEAGUE = "league";
 
     public BasketInfomationCallBack basketInfomationCallBack;
 
@@ -152,7 +151,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
         if (convertView == null) {
             listViewHolder = new ListViewHolder();
-            convertView = (LinearLayout) LinearLayout.inflate(mContext, R.layout.basket_info_country_item, null);
+            convertView = LinearLayout.inflate(mContext, R.layout.basket_info_country_item, null);
 
             listViewHolder.rl0 = (RelativeLayout) convertView.findViewById(R.id.rl0);
             listViewHolder.rl1 = (RelativeLayout) convertView.findViewById(R.id.rl1);
@@ -298,7 +297,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
 
                     if (lastParentPostion != -1 && lastChildPosition != -1) {
-                        if (lastParentPostion != groupPosition || lastChildPosition!=NUM0){
+                        if (lastParentPostion != groupPosition || lastChildPosition != NUM0) {
                             allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
                         }
                     }
@@ -385,7 +384,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
                     if (lastParentPostion != -1 && lastChildPosition != -1) {
                         if (lastParentPostion != groupPosition || lastChildPosition != NUM2) {
                             allDatas.get(lastParentPostion).get(lastChildPosition).setIsShow(false);
-                        }                    }
+                        }
+                    }
 
                     if (allDatas.get(groupPosition).get(NUM2).isShow()) {
                         allDatas.get(groupPosition).get(NUM2).setIsShow(false);
@@ -491,7 +491,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
-        intent.putExtra(LEAGUEID, allDatas.get(groPosition).get(parentItem).getLeagueData().get(position).getLeagueId());
+        intent.putExtra(LEAGUE, allDatas.get(groPosition).get(parentItem).getLeagueData().get(position));
         mContext.startActivity(intent);
         // Toast.makeText(mContext, "当前选中的是:" + allDatas.get(groPosition).get(parentItem).getLeagueData().get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
     }

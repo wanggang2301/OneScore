@@ -36,7 +36,7 @@ public class IsBottomScrollView extends ScrollView {
     }
 
     public interface OnScrollToBottomListener{
-        public void onScrollBottomListener(boolean isBottom);
+        void onScrollBottomListener(boolean isBottom);
     }
 
     @Override

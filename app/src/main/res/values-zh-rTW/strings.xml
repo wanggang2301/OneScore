@@ -288,7 +288,7 @@
     <string name="about_us_txt">關於我們</string>
     <string name="about_ver_update_txt">版本更新</string>
     <string name="about_product_intro_txt">產品簡介</string>
-    <string name="about_product_msg_txt">壹比分，一直專注於體育比分和彩票開獎的產品，目前比分、角球響應速度業內領先。</string>
+    <string name="about_product_msg_txt">壹比分，一直專注於體育比分的產品，目前比分、角球響應速度業內領先。</string>
     <string name="about_product_msg_txt_simple">壹比分，一直專注於體育比分的產品，目前比分、角球響應速度業內領先。</string>
     <string name="about_pc_txt">PC電腦端</string>
     <string name="about_pc_msg_txt">www.13322.com</string>
@@ -722,6 +722,9 @@
     <!--篮球资料库详情-->
     <string name="basket_database_details_handicapname">讓分盤</string>
     <string name="basket_database_details_bigsmallname">大小盤</string>
+    <string name="basket_database_details_schedule">賽程</string>
+    <string name="basket_database_details_stage">階段</string>
+    <string name="basket_database_details_ranking">排行</string>
     <string name="basket_database_details_season">賽季</string>
     <string name="basket_database_details_all">全部</string>
     <string name="basket_database_details_home">主場</string>
@@ -735,6 +738,50 @@
     <string name="basket_database_details_up">上盤</string>
     <string name="basket_database_details_down">下盤</string>
     <string name="basket_database_details_yzs">贏/走/輸</string>
+
+    <string name="basket_database_details_ranking_title">排名/球隊</string>
+    <string name="basket_database_details_match_num_title">賽</string>
+    <string name="basket_database_details_win_lose_title">勝/負</string>
+    <string name="basket_database_details_winrate_title">勝率</string>
+    <string name="basket_database_details_win_offset_title">勝差</string>
+    <string name="basket_database_details_recent_title">近況</string>
+
+    <string name="basket_database_details_statistic">統計</string>
+    <string name="basket_database_details_league_statistic">聯賽統計</string>
+    <string name="basket_database_details_leagueMost">聯賽之最</string>
+    <string name="basket_database_details_victory_defeat">勝負統計</string>
+    <string name="basket_database_details_statistic_num">場次</string>
+    <string name="basket_database_details_statistic_euro">歐賠統計</string>
+    <string name="basket_database_details_statistic_let">讓分統計</string>
+    <string name="basket_database_details_statistic_big_small">大小球統計</string>
+    <string name="basket_database_details_statistic_score">得分統計</string>
+    <string name="basket_database_details_statistic_num_score">場次統計</string>
+    <string name="basket_database_details_statistic_all_score">總得分</string>
+    <string name="basket_database_details_statistic_gp_num">已賽場次</string>
+    <string name="basket_database_details_statistic_average">平均得分</string>
+
+    <string name="basket_database_details_statistic_home_win">主勝 : </string>
+    <string name="basket_database_details_statistic_guest_win">客勝 : </string>
+    <string name="basket_database_details_statistic_draw">走水 : </string>
+    <string name="basket_database_details_statistic_euro_v1">賽果與歐賠壹致 </string>
+    <string name="basket_database_details_statistic_euro_v2">賽果與歐賠相反 </string>
+    <string name="basket_database_details_statistic_big">大球 : </string>
+    <string name="basket_database_details_statistic_small">小球 : </string>
+    <string name="basket_database_details_statistic_gp">已賽 </string>
+    <string name="basket_database_details_statistic_nogp">未賽 </string>
+    <string name="basket_database_details_statistic_allgp">總賽場次 </string>
+
+    <string name="basket_database_details_leagueMost_strongestAttack">攻擊力最強</string>
+    <string name="basket_database_details_leagueMost_weakestAttack">攻擊力最弱</string>
+    <string name="basket_database_details_leagueMost_strongestDefense">防守最強</string>
+    <string name="basket_database_details_leagueMost_weakestDefense">防守最弱</string>
+    <string name="basket_database_details_leagueMost_all_score">總得分 : </string>
+    <string name="basket_database_details_leagueMost_avg_score">場均得分 : </string>
+
+    <string name="basket_database_details_leagueMost_allmatch">全部比賽</string>
+    <string name="basket_database_details_leagueMost_homematch">主場比賽</string>
+    <string name="basket_database_details_leagueMost_guestmatch">客場比賽</string>
+
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
@@ -839,8 +886,9 @@
     <string name="username_pass_error">登錄名或者密碼錯誤</string>
     <string name="username_original_pass_error">請輸入正確的原始密碼</string>
     <string name="logout_check">確認退出登錄?</string>
-
-
+    <!--模糊搜索-->
+    <string name="fuzzy_search">請輸入聯賽名</string>
+    <string name="not_find_search">找不到相關資訊</string>
     <!--1.1.2 begin-->
     <string name="weixin_installed">請先安裝微信客戶端!</string>
     <string name="Login_register">登錄/註冊</string>
@@ -924,9 +972,6 @@
     <string name="diy_combat_rate">交鋒概率</string>
     <string name="diy_host_rate">主隊概率</string>
     <string name="diy_guest_rate">客隊概率</string>
-    <string name="symbol_times" translatable="false">×</string>
-    <string name="symbol_plus" translatable="false">+</string>
-    <string name="symbol_equal" translatable="false">=</string>
     <string name="action_close">關閉</string>
     <string name="action_compute">計算</string>
     <string name="big_data_check_alert">結果無法計算，請輸入合理數字(0~1)</string>
@@ -937,7 +982,7 @@
     <string name="intelligence_guest_recent">客隊近期</string>
     <string name="version_update_title">升級包下載中，請稍後...</string>
     <string name="new_analyze_big_small_ball">大小球</string>
-    <string name="new_analyze_changjiaofeng">場交鋒，主隊</string>
+    <string name="new_analyze_changjiaofeng">場歷史交鋒</string>
     <string name="new_analyze_cidaqiu">次大球</string>
     <string name="new_analyze_cixiaoqiu">次小球</string>
     <string name="new_analyze_ciyingpan">次贏盤</string>
@@ -948,13 +993,58 @@
     <string name="new_analyze_first_let">初盤</string>
     <string name="new_analyze_home">主場</string>
     <string name="new_analyze_guest">客場</string>
-    <string name="new_analyze_let">亞盤走勢</string>
-    <string name="new_analyze_liangduijin">兩隊近</string>
     <string name="new_analyze_lose">輸</string>
     <string name="new_analyze_more_messages"><![CDATA[更多信息>>]]></string>
     <string name="new_analyze_recent_compare">近期對比</string>
-    <string name="new_analyze_result">结果</string>
-    <string name="new_analyze_score">比分</string>
     <string name="new_analyze_win">贏</string>
     <string name="new_analyze_yingpanlv">贏盤率</string>
+    <string name="new_analyze_let">亞盤走勢</string>
+    <string name="new_analyze_score">比分</string>
+    <string name="new_analyze_result">結果</string>
+    <string name="new_analyze_liangduijin">兩隊近</string>
+    <string name="new_analyze_description">(比分紅色為主隊)</string>
+    <string name="new_analyze_recent_game">6場近期各自比賽</string>
+    <!--情报分析-->
+    <string name="intelligent_all_game">全部比賽</string>
+    <string name="intelligent_same_game">相同主客場</string>
+    <string name="intelligent_result">本賽季賽果賽報</string>
+    <string name="intelligent_guest">客隊</string>
+    <string name="intelligent_home">主隊</string>
+    <string name="intelligent_full">全場</string>
+    <string name="intelligent_half">半場</string>
+    <string name="intelligent_goal">進球、淨勝球</string>
+    <string name="intelligent_season_handicap">本賽季盤口情報</string>
+    <string name="intelligent_recent">近期比賽情報</string>
+    <string name="intelligent_today_handicap">今日結束比賽盤口情報</string>
+    <string name="intelligent_win_rate">贏盤率</string>
+    <string name="intelligent_lose_rate">輸盤率</string>
+    <string name="intelligent_big_rate">大球率</string>
+    <string name="intelligent_small_rate">小球率</string>
+    <string name="intelligent_goad_defference">淨勝球>1</string>
+    <string name="intellegent_lose_goal_def">負淨勝球>1</string>
+    <string name="intelligent_first_goal_win">先進球獲勝概率</string>
+    <string name="intelligent_last_goal_win">後進球獲勝概率</string>
+    <string name="intelligent_no_goal_rate">不進球概率</string>
+    <string name="intelligent_win_num">連勝數</string>
+    <string name="intelligent_let_win">亞盤連贏</string>
+    <string name="intelligent_continue_big">連續大球</string>
+    <string name="intelligent_continue_small">連續小球</string>
+    <string name="intelligent_rang">讓</string>
+    <string name="intelligent_ball_win_rate">球贏盤率</string>
+    <string name="intelligent_ball_lose_rate">球輸盤率</string>
+    <string name="intelligent_qiushenglv">球勝率</string>
+    <string name="intelligent_qiupinglv">球平率</string>
+    <string name="intelligent_qiufulv">球負率</string>
+
+    <string name="rong_comment">評論</string>
+    <string name="rong_chart_room">聊天</string>
+    <string name="rong_chart_bg_pb">透明度</string>
+
+    <string name="rong_input_prompt1">珍愛生命,遠離噴子！</string>
+    <string name="rong_input_prompt2">路見不平壹聲吼！！！</string>
+    <string name="rong_input_prompt3">我來聊兩句...</string>
+    <string name="rong_input_prompt4">我從不說謊，除啦這句話以外。</string>
+    <string name="rong_input_prompt5">沈默是金.沈默久了就會有很多金子嗎？</string>
+    <string name="rong_input_prompt6">元芳怎麽看？</string>
+
 </resources>

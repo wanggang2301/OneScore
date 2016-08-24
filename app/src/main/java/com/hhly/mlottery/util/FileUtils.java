@@ -1034,13 +1034,9 @@ public class FileUtils {
             destDirName = destDirName + File.separator;
         }
         //创建目录
-        if (dir.mkdirs()) {
-            ////System.out.println("创建目录" + destDirName + "成功！");
-            return true;
-        } else {
-           // //System.out.println("创建目录" + destDirName + "失败！");
-            return false;
-        }
+        ////System.out.println("创建目录" + destDirName + "成功！");
+// //System.out.println("创建目录" + destDirName + "失败！");
+        return dir.mkdirs();
     }
 
 	/**

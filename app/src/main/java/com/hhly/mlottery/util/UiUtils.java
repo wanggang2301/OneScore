@@ -89,9 +89,7 @@ public class UiUtils {
             return true;
         if (s.length() == 0)
             return true;
-        if (s.trim().length() == 0)
-            return true;
-        return false;
+        return s.trim().length() == 0;
     }
 
     /**
@@ -180,8 +178,8 @@ public class UiUtils {
      *
      * @author yali
      */
-    public static enum CutPhotoType {
-        TYPE_FRONTCOVER, TYPE_LISTTHUMBNAIL, TYPE_SEARCHCOVER, TYPE_DOWNLOADCOVER, TYPE_LARGEPHOTO;
+    public enum CutPhotoType {
+        TYPE_FRONTCOVER, TYPE_LISTTHUMBNAIL, TYPE_SEARCHCOVER, TYPE_DOWNLOADCOVER, TYPE_LARGEPHOTO
     }
 
     private static String kCutPhotoFrontCover = "?imageView2/1/w/1095/h/480";

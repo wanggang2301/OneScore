@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -58,11 +60,13 @@ import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
 import com.hhly.mlottery.frame.footframe.StatisticsFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -99,7 +103,6 @@ import me.relex.circleindicator.CircleIndicator;
  * @des 足球内页改版
  */
 public class FootballMatchDetailActivityTest extends AppCompatActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
-
 
     private final static String TAG = "FootballMatchDetailActivityTest";
     private final static String URL_DEFAULT = "http://m.13322.com/live/bifen/index.html?id=";
@@ -191,7 +194,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private CustomViewpager mHeadviewpager;
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
+    public AppBarLayout appBarLayout;
     private FragmentAdapter fragmentAdapter;
     private BasePagerAdapter basePagerAdapter;
     private TabLayout mTabLayout;
@@ -309,6 +312,9 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private FootballLiveGotoChart mPreHeadGotoAnimHead;
 
 
+    private ImageView iv_join_room_foot;// 聊天室悬浮按钮
+    private ProgressDialog pd;// 加载框
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -323,6 +329,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
         }
+
+        RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
 
         L.e(TAG, "mThirdId = " + mThirdId);
         L.e("456789", "mThirdId = " + mThirdId);
@@ -391,10 +399,18 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
     }
 
 
     private void initView() {
+        // 初始化加载框
+        pd = new ProgressDialog(this);
+        pd.setCancelable(false);
+        pd.setMessage(getResources().getString(R.string.loading_data_txt));
+        // 初始化悬浮按钮
+        iv_join_room_foot = (ImageView) findViewById(R.id.iv_join_room_foot);
+        iv_join_room_foot.setOnClickListener(this);
 
         // String[] titles = mContext.getResourceName(R.attr.foot_details_tabs);
 
@@ -469,7 +485,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         iv_setting.setOnClickListener(this);
 
         setScroller();
-
 
     }
 
@@ -585,7 +600,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                         head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
                         head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
                         head_score.setText("VS");
-                        mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
+                        mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE);
                         mTalkAboutBallFragment.setClickableLikeBtn(true);
                         mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName() + " " + matchDetail.getMatchInfo().getStartTime());
 
@@ -631,7 +646,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             mLiveHeadInfoFragment.initMatchOverData(mMatchDetail);
                             mKeepTime = "5400000";//90分钟的毫秒数
 
-                            mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
+                            mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED);
 
 
                             mTalkAboutBallFragment.setClickableLikeBtn(false);
@@ -700,7 +715,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             }
 
                             if ("0".equals(mPreStatus) && "1".equals(matchDetail.getLiveStatus()) && !isFinishing()) {
-                                mDetailsRollballFragment.activateMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
+                                mDetailsRollballFragment.activateMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
 
                                 //滑动
                                 mHeadviewpager.setIsScrollable(true);
@@ -710,7 +725,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                                 mPreStatus = "1";
                             }
 
-                            mDetailsRollballFragment.refreshMatch(matchDetail, mDetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
+                            mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
 
 
                             mTalkAboutBallFragment.setClickableLikeBtn(true);
@@ -874,7 +889,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_ED, matchDetail);
 
 
-            } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {//未完场头部
+            } else if (ONLIVE.equals(mMatchDetail.getLiveStatus())) { //未完场头部
 
 
                 //place  1主队 2客队
@@ -1311,7 +1326,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        RongYunUtils.isCreateChartRoom = false;// 修改创建聊天室状态
         if (footballTimer != null) {
             L.d("timer", "footballdetails定时器");
             footballTimer.cancel();
@@ -2529,9 +2544,84 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             case R.id.reLoading_details:
                 loadData();
                 break;
+            case R.id.iv_join_room_foot:
+                joinRoom();
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 进入聊天室
+     */
+    private void joinRoom() {
+        if (CommonUtils.isLogin()) {// 判断是否登录
+            pd.show();
+            if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
+                iv_join_room_foot.setVisibility(View.GONE);
+                pd.dismiss();
+                appBarLayout.setExpanded(true);// 显示头部内容
+                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+            } else {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        while (!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom) {
+                            SystemClock.sleep(1000);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv_join_room_foot.setVisibility(View.GONE);
+                                pd.dismiss();
+                                appBarLayout.setExpanded(true);// 显示头部内容
+                                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+                            }
+                        });
+                    }
+                }.start();
+            }
+        } else {
+            // 跳转到登录界面
+            Intent intent1 = new Intent(mContext, LoginActivity.class);
+            startActivityForResult(intent1, RongYunUtils.CHART_ROOM_QUESTCODE_FOOT);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        L.d("xxx",">>>requestCode:" + requestCode);
+        L.d("xxx",">>>resultCode:" + resultCode);
+        if (requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_FOOT && resultCode == -1) {
+            joinRoom();
+        }
+        if(requestCode == CyUtils.JUMP_COMMENT_QUESTCODE){
+            switch (resultCode) {
+                case CyUtils.RESULT_OK:
+                    mTalkAboutBallFragment.getResultOk();
+                    break;
+                case CyUtils.RESULT_CODE://接收评论输入页面返回
+                    mTalkAboutBallFragment.getResultCode();
+                    break;
+                case CyUtils.RESULT_BACK://接收评论输入页面返回
+                    mTalkAboutBallFragment.getResultBack();
+                    break;
+            }
+        }
+    }
+    // 评论登录跳转
+    public void talkAboutBallLoginFoot(){
+        //跳转登录界面
+        Intent intent1 = new Intent(mContext, LoginActivity.class);
+        startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+    }
+
+    // 发表评论跳转
+    public void talkAboutBallSendFoot(long topicid){
+        Intent intent2 = new Intent(mContext, InputActivity.class);
+        intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+        startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
     private void popWindow(View v) {
@@ -2734,6 +2824,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
+        iv_join_room_foot.setVisibility(View.VISIBLE);// 显示悬浮按钮
         MobclickAgent.onResume(this);
         if (isDetailsRollballFragment) {
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");

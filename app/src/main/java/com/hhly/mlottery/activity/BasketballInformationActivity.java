@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.basketballframe.BasketInfomationFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketInformationFragment;
 
 /**
  * @author wang gang
@@ -53,8 +54,9 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         publicImgBack.setOnClickListener(this);
         publicBtnSet.setOnClickListener(this);
 
-        publicBtnSet.setVisibility(View.GONE); //模糊搜索隐藏
+        publicBtnSet.setVisibility(View.VISIBLE); //模糊搜索隐藏
 
+        publicBtnSet.setOnClickListener(this);
 
         publicTxtTitle.setText(getApplicationContext().getResources().getString(R.string.basket_info_title));
         publicBtnFilter.setVisibility(View.GONE);
@@ -66,7 +68,12 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         String[] titles = getApplicationContext().getResources().getStringArray(R.array.basket_info_tabs);
         mTabsAdapter = new TabsAdapter(fragmentManager);
         mTabsAdapter.setTitles(titles);
-        mTabsAdapter.addFragments(BasketInfomationFragment.newInstance(HOT), BasketInfomationFragment.newInstance(EUR), BasketInfomationFragment.newInstance(AMERICA), BasketInfomationFragment.newInstance(ASIA), BasketInfomationFragment.newInstance(AFRICA), BasketInfomationFragment.newInstance(INTER));
+        mTabsAdapter.addFragments(BasketInformationFragment.newInstance(HOT),
+                BasketInformationFragment.newInstance(EUR),
+                BasketInformationFragment.newInstance(AMERICA),
+                BasketInformationFragment.newInstance(ASIA),
+                BasketInformationFragment.newInstance(AFRICA),
+                BasketInformationFragment.newInstance(INTER));
         viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);
@@ -81,6 +88,8 @@ public class BasketballInformationActivity extends BaseActivity implements View.
                 finish();
                 break;
             case R.id.public_btn_set:
+                Intent intent = new Intent(getApplicationContext(), BasketballInformationSerachActivity.class);
+                startActivity(intent);
                 break;
         }
     }

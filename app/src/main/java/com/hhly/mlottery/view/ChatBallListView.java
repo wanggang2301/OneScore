@@ -87,12 +87,8 @@ public class ChatBallListView extends ListView implements AbsListView.OnScrollLi
 //                // addFooterView(footerView);
 //                footerView.setVisibility(View.VISIBLE);//显示底部布局
 //            }
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                isBottom = true;
-//                myPullUpListViewCallBack.scrollBottomState();
-            } else {
-                isBottom = false;
-            }
+            //                myPullUpListViewCallBack.scrollBottomState();
+            isBottom = firstVisibleItem + visibleItemCount == totalItemCount;
         }
 
     }

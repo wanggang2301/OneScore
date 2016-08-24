@@ -223,7 +223,7 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     private String mGuestTeam;//客队名
     private String mHomeTeam;//主队名
 
-    private List<FootballAnaylzeHistoryRecent> mHistoryScreenNum;; //筛选后的历史交锋
+    private List<FootballAnaylzeHistoryRecent> mHistoryScreenNum; //筛选后的历史交锋
     private List<FootballAnaylzeHistoryRecent> mGuestRecentScreenNum; //筛选后客队的近期战绩
     private List<FootballAnaylzeHistoryRecent> mHomeRecentScreenNum; //筛选后主队的近期战绩
 

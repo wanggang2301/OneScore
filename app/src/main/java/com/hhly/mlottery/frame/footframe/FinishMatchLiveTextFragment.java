@@ -173,7 +173,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        bottomview = (View) mView.findViewById(R.id.bottomview);
+        bottomview = mView.findViewById(R.id.bottomview);
     }
 
     private void initData() {

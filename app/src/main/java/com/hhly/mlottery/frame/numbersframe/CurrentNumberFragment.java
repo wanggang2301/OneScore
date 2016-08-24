@@ -156,7 +156,6 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                         }
                     }
 
-                    ;
                 }.start();
             }
 
@@ -188,7 +187,6 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                     }
                 }
 
-                ;
             }.start();
         }
     }
@@ -264,14 +262,8 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                         }
                     } else if (mNumberName.equals(numberlist.get(i).getName())) {
                         long numTime = DateUtil.getCurrentTime(numberlist.get(i).getNextTime()) - Long.parseLong(serverTime);
-                        if (numTime <= 0) {
-
-                            isOpenNumberStartHistory = true;// 正在开奖中...
-
-                        } else {
-                            isOpenNumberStartHistory = false;
-
-                        }
+                        // 正在开奖中...
+                        isOpenNumberStartHistory = numTime <= 0;
                     }
                 }
             }
@@ -535,8 +527,6 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
         }
     }
 
-    ;
-
     private NumberCurrentInfo mNumberInfoCopy;// 产生的当前假数据对象
     private boolean isRnAnima = true;// 是否已经开启动画
 
@@ -585,7 +575,6 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                     isRnAnima = true;
                 }
 
-                ;
             }.start();
         }
     }

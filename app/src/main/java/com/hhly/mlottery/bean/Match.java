@@ -442,8 +442,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
 
         Match match = (Match) o;
 
-        if (thirdId != null ? !thirdId.equals(match.thirdId) : match.thirdId != null) return false;
-        return true;
+        return thirdId != null ? thirdId.equals(match.thirdId) : match.thirdId == null;
     }
 
     @Override

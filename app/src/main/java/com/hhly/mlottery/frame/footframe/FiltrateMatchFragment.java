@@ -22,7 +22,7 @@ import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.widget.GrapeGridview;
+import com.hhly.mlottery.widget.GrapeGridView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -90,8 +90,8 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
 
     private boolean isCheckedDefualt;
 
-    private GrapeGridview grapeGridviewHot;
-    private GrapeGridview grapeGridviewOther;
+    private GrapeGridView mGrapeGridViewHot;
+    private GrapeGridView mGrapeGridViewOther;
 
 
     @Override
@@ -118,8 +118,8 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
         View view = inflater.inflate(R.layout.frage_filtrate_match, container, false);
 
         //mGridView = (GridView) view.findViewById(R.id.filtrate_match_gridview);
-        grapeGridviewHot = (GrapeGridview) view.findViewById(R.id.filtrate_match_gridview_hot);
-        grapeGridviewOther = (GrapeGridview) view.findViewById(R.id.filtrate_match_gridview_other);
+        mGrapeGridViewHot = (GrapeGridView) view.findViewById(R.id.filtrate_match_gridview_hot);
+        mGrapeGridViewOther = (GrapeGridView) view.findViewById(R.id.filtrate_match_gridview_other);
         // 国际版3列
         if (AppConstants.isGOKeyboard) {
             columns = 3;
@@ -127,8 +127,8 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
             columns = 4;
         }
         //mGridView.setNumColumns(columns);
-        grapeGridviewHot.setNumColumns(columns);
-        grapeGridviewOther.setNumColumns(columns);
+        mGrapeGridViewHot.setNumColumns(columns);
+        mGrapeGridViewOther.setNumColumns(columns);
 
         mHideNumber = (TextView) view.findViewById(R.id.filtrate_match_hide_number);
 
@@ -285,18 +285,18 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
                 };
 
                 mAdapterHot.setClickChangeListener(clickChangeListener);
-                grapeGridviewHot.setAdapter(mAdapterHot);
+                mGrapeGridViewHot.setAdapter(mAdapterHot);
 
                 mAdapterOther = new FiltrateMatchAdapter(getActivity(), normalTemp, mCheckedIds, R.layout.item_filtrate_match);
                 mAdapterOther.setClickChangeListener(clickChangeListener);
-                grapeGridviewOther.setAdapter(mAdapterOther);
+                mGrapeGridViewOther.setAdapter(mAdapterOther);
             }
         });
 
     }
 
     public interface CheckedCupsCallback {
-        public void onChange(LinkedList<String> checkedCups);
+        void onChange(LinkedList<String> checkedCups);
     }
 
     public LinkedList<String> getCheckedCups() {

@@ -32,7 +32,7 @@ public class DateUtil {
         try {
             DateFormat df_parseDate = new SimpleDateFormat(format);
             String dt = dateStr;
-            date = (Date) df_parseDate.parse(dt);
+            date = df_parseDate.parse(dt);
         } catch (Exception e) {
         }
         return date;

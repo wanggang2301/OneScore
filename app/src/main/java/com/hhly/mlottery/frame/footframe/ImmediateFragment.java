@@ -457,7 +457,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             }
         }
 
-        ;
     };
 
     // 初始化数据

@@ -171,17 +171,19 @@ public class PreHeadInfoFrament extends Fragment {
             racename.setVisibility(View.GONE);
         }
 
-        String startTime = mMatchDetail.getMatchInfo().getStartTime();
-        if (date == null) {
-            return;
+        if (mMatchDetail.getMatchInfo().getStartTime() != null) {
+            String startTime = mMatchDetail.getMatchInfo().getStartTime();
+            if (date == null) {
+                return;
+            }
+            if (!StringUtils.isEmpty(startTime) && startTime.length() == 16) {
+                date.setText(startTime);
+            } else {
+                date.setText("");//开赛时间
+            }
         }
-        if (!StringUtils.isEmpty(startTime) && startTime.length() == 16) {
-            date.setText(startTime);
-        } else {
-            date.setText("");//开赛时间
-        }
-
-
+       
+        
         if ("0".equals(mMatchDetail.getLiveStatus())) {
             head_video.setVisibility(View.GONE);
         } else {

@@ -80,11 +80,7 @@ public class PullUpRefreshListView extends ListView implements AbsListView.OnScr
                 // addFooterView(footerView);
                 footerView.setVisibility(View.VISIBLE);//显示底部布局
             }
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                isBottom = true;
-            } else {
-                isBottom = false;
-            }
+            isBottom = firstVisibleItem + visibleItemCount == totalItemCount;
         }
 
     }

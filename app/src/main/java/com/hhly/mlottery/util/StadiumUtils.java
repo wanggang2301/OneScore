@@ -11,11 +11,8 @@ public class StadiumUtils {
     //半场比分是否显示
     public static boolean isHalfScoreVisible(String status) {
         //2中场    3  下半场   -1  完场
-        if ("2".equals(status) || "3".equals(status) || "-1".equals(status)) {//中场 下半场 完场
-            return true;
-        }
+        return "2".equals(status) || "3".equals(status) || "-1".equals(status);
 
-        return false;
     }
 
     public static void keepTimeAnimation(final TextView tv_frequency) {

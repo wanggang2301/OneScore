@@ -58,6 +58,9 @@
     <color name="datediver">#FFFAE7</color>
     <color name="number_info_bg">#fffceb</color>
     <color name="divider_color">#FFCCCCCC</color>
+    <color name="chart_bt_color">#33CCCCCC</color>
+    <color name="chart_bt_click_color">#66CCCCCC</color>
+    <color name="chart_room_bg_color">#88CCCCCC</color>
     <color name="grey">#ff5b5a5a</color>
     <color name="deep_gray">#ff3b3b3b</color>
     <color name="transparency">#00000000</color>
@@ -608,8 +611,27 @@
     <color name="football_analyze_progress_color3">#3EAF00</color>
 
     <color name="odds_title_bg_color">#F3F7F9</color>
-
+    <color name="light">#FFEEEEEE</color>
     <color name="info_home_progress_color">#FE0100</color>
     <color name="info_guest_progress_color">#21b11c</color>
     <color name="progress_yellow">#EEC72C</color>
+
+    <!--mdy 颜色若干-->
+    <color name="mdy_333">#333333</color>
+    <color name="mdy_999">#999999</color>
+    <color name="mdy_ddd">#dddddd</color>
+    <!--情报界面颜色-->
+    <color name="shape_stoke_color">#7c99d6</color>
+    <color name="result_home_pro">#ff6a6a</color>
+    <color name="result_guest_pro">#00Db1a</color>
+
+    <color name="database_win_color">#DD2F1C</color>
+    <color name="database_lose_color">#21B11E</color>
+
+    <!--篮球统计-->
+    <color name="basket_database_statistics_progress">#A5CF32</color>
+    <color name="basket_database_statistics_background_h">#F15353</color>
+    <color name="basket_database_statistics_background_g">#0090FF</color>
+    <color name="basket_database_statistics_background_d">#F1CA43</color>
+    <color name="basket_database_statistics_background">#DDDDDD</color>
 </resources>

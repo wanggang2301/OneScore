@@ -42,6 +42,7 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
@@ -340,6 +341,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         iv_account = (ImageView) findViewById(R.id.iv_account);
         if (CommonUtils.isLogin()) {
             iv_account.setImageResource(R.mipmap.login);
+            RongYunUtils.initRongIMConnect(mContext);// 初始化融云
         } else {
             iv_account.setImageResource(R.mipmap.logout);
         }

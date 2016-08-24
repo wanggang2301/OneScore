@@ -213,12 +213,8 @@ public class SlideListView extends ListView {
 				if (offsetX > 0 && (this.mode == MOD_BOTH || this.mode == MOD_RIGHT)) {
 					/* 从右向左滑 */
 					canMove = true;
-				} else if (offsetX < 0 && (this.mode == MOD_BOTH || this.mode == MOD_LEFT)) {
-					/* 从左向右滑 */
-					canMove = true;
-				} else {
-					canMove = false;
-				}
+				} else /* 从左向右滑 */
+					canMove = offsetX < 0 && (this.mode == MOD_BOTH || this.mode == MOD_LEFT);
 				/* 此段代码是为了避免我们在侧向滑动时同时触发ListView的OnItemClickListener事件 */
 				MotionEvent cancelEvent = MotionEvent.obtain(ev);
 				cancelEvent.setAction(MotionEvent.ACTION_CANCEL | (ev.getActionIndex() << MotionEvent.ACTION_POINTER_INDEX_SHIFT));
