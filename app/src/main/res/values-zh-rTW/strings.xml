@@ -1036,5 +1036,18 @@
     <string name="rong_input_prompt4">我從不說謊，除啦這句話以外。</string>
     <string name="rong_input_prompt5">沈默是金.沈默久了就會有很多金子嗎？</string>
     <string name="rong_input_prompt6">元芳怎麽看？</string>
+    <!--头像上传-->
+    <string name="sd_card_not_exist">sd卡不存在</string>
+    <string name="install_the_gallery">請先安裝圖庫</string>
+    <string name="see_your_face">這張照片太小看不清你的絕世容顏</string>
+    <string name="picture_put_failed">圖片上傳失敗!</string>
+    <string name="save_file_not_found">保存檔案路徑找不到!</string>
+    <string name="picture_save_failed">圖片保存失敗!</string>
+    <string name="picture_put_success">图片上传成功!</string>
+    <string name="picture_save">圖片已保存至:</string>
+    <string name="picture_save_telephone">保存到手機</string>
+    <string name="chose_for_telephone">從手機相册選擇</string>
+    <string name="avatar_settings">頭像設定</string>
+    <string name="photograph">拍照</string>
 
 </resources>

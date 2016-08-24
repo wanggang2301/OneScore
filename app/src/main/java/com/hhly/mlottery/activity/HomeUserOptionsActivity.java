@@ -71,7 +71,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 case LOGGED_ON:
                     //mTv_nickname.setVisibility(View.VISIBLE);
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-                    universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mUser_image, options);
+
                     mTv_nickname.setEnabled(false);
                     mTv_logout.setVisibility(View.VISIBLE);
                     findViewById(R.id.view_top).setVisibility(View.VISIBLE);
@@ -258,6 +258,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("HomeUserOptionsActivity");
        // UiUtils.toast(MyApp.getInstance(), "我是个人用户页面");
+        universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mUser_image, options);
          /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);

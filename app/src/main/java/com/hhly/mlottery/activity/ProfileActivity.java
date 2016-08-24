@@ -34,6 +34,9 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -75,6 +78,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     /** 拍照获得图片code */
     private final static int REQUEST_IMAGE_CAPTURE = 20;
 
+    /*图片上传url*/
+    String PUT_URL="http://file.13322.com/upload/uploadImage.do";
 
     /**图片裁剪宽度*/
     private int width = 300;
@@ -82,6 +87,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     /**图片裁剪高度*/
     private int height = 300;
 
+    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
+    private  DisplayImageOptions options;
     private final OkHttpClient client = new OkHttpClient();
 
     private static final String IMAGE_STORAGGEID = "/headview/image.png";
@@ -98,15 +105,33 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.mipmap.center_head)   //默认图片
+                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
+                .resetViewBeforeLoading(true)
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
+        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
+        universalImageLoader.init(config);
 
         initView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mHead_portrait, options);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
+
     }
 
     private void initView() {
@@ -114,14 +139,14 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         mHead_portrait = (ImageView) findViewById(R.id.head_portrait);
         mHead_portrait.setOnClickListener(this);
         findViewById(R.id.modify_avatar).setOnClickListener(this);
+        //universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mHead_portrait, options);
 
       /*  if (Environment
                 .getExternalStoragePublicDirectory(IMAGE_STORAGGEID).exists()) {
             Bitmap bm = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(IMAGE_STORAGGEID).toString());
             mHead_portrait.setImageBitmap(bm);
         } else {
-            mHead_portrait.setImageResource(R.mipmap.smallhead);
-
+            universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mHead_portrait, options);
         }*/
         ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.profile);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
@@ -157,9 +182,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(this, ModifyPasswordActivity.class));
                 break;
 
-            case R.id.head_portrait:
+            case R.id.head_portrait:///显示全图
                 MobclickAgent.onEvent(mContext, "ProfileActivity_SetHead");
-
+                Intent intent2 = new Intent(ProfileActivity.this, EnlargePhotoActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.modify_avatar: //修改头像
 
@@ -205,7 +231,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private File getPicFile() {
         File photoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         if (!photoFile.exists()) {
-            UiUtils.toast(MyApp.getInstance(), "sd卡不存在");
+            UiUtils.toast(MyApp.getInstance(),R.string.sd_card_not_exist);
         }
         File file = new File(photoFile.getAbsolutePath() + "/dcim" + System.currentTimeMillis() + ".jpg");
         if (!file.exists()) {
@@ -227,7 +253,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             intent.setType("image/*"); // 设置文件类型
             startActivityForResult(intent, REQUEST_IMAGE_CHOICE);// 转到图库
         } catch (Exception e) {
-            UiUtils.toast(MyApp.getInstance(), "请先安装图库");
+            UiUtils.toast(MyApp.getInstance(), R.string.install_the_gallery);
         }
     }
     /*
@@ -292,7 +318,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), uri);
                     if (bitmap.getWidth() < width || bitmap.getHeight() < height) {
-                        UiUtils.toast(MyApp.getInstance(), "这张照片太小看不清你的绝世容颜");
+                        UiUtils.toast(MyApp.getInstance(),R.string.see_your_face);
                         //successNull();
                         return;
                     }
@@ -307,7 +333,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), mCamerUri);
                     if (bitmap.getWidth() < width || bitmap.getHeight() < height) {
                        // successNull();
-                        UiUtils.toast(MyApp.getInstance(), "这张照片太小看不清你的绝世容颜");
+                        UiUtils.toast(MyApp.getInstance(), R.string.see_your_face);
                         return;
                     }
                 } catch (Exception e) {
@@ -353,22 +379,20 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                             Log.i("1", "flag=" + flag);
                             if (flag) {
                                 Log.i(TAG,"图片已保存至:" + outFile.getAbsolutePath());
-                                //BaseURLs.UPLOADIMAGE
-
-                                 String url="http://file.13322.com/upload/uploadImage.do";
-                                 doPostSycn(url,outFile);
-                                //System.out.println("url>>>>>>>>>>>>>>>>>>>>>>>"+outFile.toString());
-                                //putPhotoUrl("http://pic.13322.com/basketball/team/135_135/1.png");
+                                 mHead_portrait.setImageBitmap(photo);
+                                 doPostSycn(PUT_URL,outFile);//上传图片
 
                             } else {
-                                UiUtils.toast(MyApp.getInstance(), "图片保存失败!");
+                                UiUtils.toast(MyApp.getInstance(), R.string.picture_save_failed);
                             }
                         } catch (FileNotFoundException e) {
+                            UiUtils.toast(MyApp.getInstance(), R.string.save_file_not_found);
                             throw new RuntimeException(e);
                         }
 
 
                     } catch (Exception e) {
+                        UiUtils.toast(MyApp.getInstance(), R.string.save_file_not_found);
                         e.printStackTrace();
                     }
                     mPopupWindow. dismiss();
@@ -399,6 +423,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
          client.newCall(request).enqueue(new Callback() {
              @Override
              public void onFailure(Request request, IOException e) {
+                // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
                  Log.d(TAG, "onFailure: "+e.getMessage());
              }
 
@@ -413,9 +438,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                  if(!headerUrl.isEmpty()){
                      putPhotoUrl(headerUrl);
                  }else{
-                     UiUtils.toast(MyApp.getInstance(), "图片上传失败!");
+                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
                  }
-
 
              }
 
@@ -445,9 +469,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             public void onResponse(Register register) {
 
                 if (register.getResult() == AccountResultCode.SUCC) {
-                    UiUtils.toast(MyApp.getInstance(), "图片上传成功");
+                    UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                    // CommonUtils.saveRegisterInfo(register);
+
                     PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
+                    universalImageLoader.displayImage(register.getData().getUser().getHeadIcon(), mHead_portrait, options);
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
@@ -457,7 +483,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
                 L.e(TAG, "图片上传失败");
-                UiUtils.toast(ProfileActivity.this, R.string.immediate_unconection);
+                UiUtils.toast(ProfileActivity.this, R.string.picture_put_failed);
             }
         }, Register.class);
 
@@ -497,7 +523,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             intent.putExtra("return-data", true);
             startActivityForResult(intent, REQUEST_IMAGE_CROP);
         } catch (Exception e) {
-            UiUtils.toast(MyApp.getInstance(), "请先安装图库");
+            UiUtils.toast(MyApp.getInstance(),R.string.install_the_gallery);
         }
     }
 

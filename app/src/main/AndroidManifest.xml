@@ -205,6 +205,10 @@
             android:name=".activity.ModifyNicknameActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 头像图片放大 -->
+        <activity
+            android:name=".activity.EnlargePhotoActivity"
+            android:screenOrientation="portrait" />
         <!-- 修改密码界面 -->
         <activity
             android:name=".activity.ModifyPasswordActivity"
