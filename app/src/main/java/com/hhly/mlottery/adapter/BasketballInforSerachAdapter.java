@@ -50,6 +50,10 @@ public class BasketballInforSerachAdapter extends BaseAdapter{
         // TODO Auto-generated method stub
         return 0;
     }
+    public void clearData(){
+        resultListBeen.clear();
+        notifyDataSetChanged();
+    }
 
 
     @Override

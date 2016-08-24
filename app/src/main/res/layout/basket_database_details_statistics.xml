@@ -111,7 +111,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="场次"
+                                    android:text="@string/basket_database_details_statistic_num"
                                     android:layout_gravity="center"/>
                                 <TextView
                                     android:id="@+id/basket_database_cc"
@@ -371,7 +371,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="场次"
+                                    android:text="@string/basket_database_details_statistic_num"
                                     android:layout_gravity="center"/>
                                 <TextView
                                     android:id="@+id/basket_database_cc2"
@@ -508,7 +508,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="场次"
+                                    android:text="@string/basket_database_details_statistic_num"
                                     android:layout_gravity="center"/>
                                 <TextView
                                     android:id="@+id/basket_database_cc3"

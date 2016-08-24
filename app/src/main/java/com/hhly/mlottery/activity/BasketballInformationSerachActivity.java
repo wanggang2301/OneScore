@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,6 +42,8 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
     private ListView mTv_result;
     private TextView mNo_serach_tv;
     private static final String SEARCHKEYWORD= "searchKeyword";
+    private ImageView mSearch_iv_delete;
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.serach_layout);
@@ -63,9 +66,21 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                     @Override public Boolean call(CharSequence charSequence) {
                         // 清空搜索出来的结构
                         //tv_result.setText("");
-
                         //当 EditText 中文字大于0的时候
-                        return charSequence.length() > 0;
+                        if(charSequence.length() > 0){
+                            //有数据显示删除键
+                            mSearch_iv_delete.setVisibility(View.VISIBLE);
+                            return true;
+                        }else{
+                            if (basketballInforSerachAdapter!=null){
+                                //无搜索  隐藏删除键
+                                mSearch_iv_delete.setVisibility(View.GONE);
+                                basketballInforSerachAdapter.clearData();
+                            }
+
+                            return false;
+                        }
+//                        return charSequence.length() > 0;
                     }
                 })
                 .switchMap(new Func1<CharSequence, rx.Observable<BasketSerach>>() {
@@ -74,13 +89,14 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                         return service.searchProdcut("zh", charSequence.toString());
                     }
                 })
-//                .retryWhen(new RetryWithConnectivityIncremental(MainActivity.this, 5, 15, TimeUnit.MILLISECONDS))
+               // .retryWhen(new RetryWithConnectivityIncremental(BasketballInformationSerachActivity.this, 5, 15, TimeUnit.MILLISECONDS))
                 // 网络操作在io线程
                 .subscribeOn(Schedulers.io())
                 //将 data 转换成 ArrayList<ArrayList<String>>
                 .map(new Func1<BasketSerach, List<BasketSerach.ResultListBean>>() {
                     @Override public List<BasketSerach.ResultListBean> call(BasketSerach data) {
-                        return data.resultList;
+
+                            return data.resultList;
                     }
                 })
 
@@ -94,32 +110,31 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                 })
 
                 // 发生错误后不要调用 onError，而是转到 onErrorResumeNext
-/*
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<BasketSerach.ResultListBean>>>() {
-                    @Override public Observable<? extends List<BasketSerach.ResultListBean>> call(Throwable throwable) {
-                        return Observable.just("error result");
-                    }
-                })*/
+   /*             .onErrorResumeNext((Observable<? extends List<BasketSerach.ResultListBean>>) new Func1<Throwable, Observable<String>>() {
+            @Override public Observable<String> call(Throwable throwable) {
+                return Observable.just("error result");
+            }
+        })*/
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<BasketSerach.ResultListBean>>() {
                     @Override
                     public void call(List<BasketSerach.ResultListBean> resultListBeen) {
                         //设置适配数据
+                        if (resultListBeen != null) {
+                            if (resultListBeen.isEmpty()) {
+                                //搜索详情
+                                //UiUtils.toast(MyApp.getInstance(), "找不到相关信息!");
+                                mTv_result.setVisibility(View.GONE);
+                                mNo_serach_tv.setVisibility(View.VISIBLE);
 
-                        if(resultListBeen.isEmpty()){
-                            //搜索详情
-                            //UiUtils.toast(MyApp.getInstance(), "找不到相关信息!");
-                            mTv_result.setVisibility(View.GONE);
-                            mNo_serach_tv.setVisibility(View.VISIBLE);
-
-                         }else{
-                            mTv_result.setVisibility(View.VISIBLE);
-                            mNo_serach_tv.setVisibility(View.GONE);
-                            showpop(resultListBeen,et_keyword.getText().toString());
+                            } else {
+                                mTv_result.setVisibility(View.VISIBLE);
+                                mNo_serach_tv.setVisibility(View.GONE);
+                                showpop(resultListBeen, et_keyword.getText().toString());
+                            }
+                            // showpop(resultListBeen);
                         }
-                       // showpop(resultListBeen);
                     }
-
                 });
     }
 
@@ -130,6 +145,10 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
         mTv_result = (ListView) findViewById(R.id.tv_result);
         //无数据显示
         mNo_serach_tv = (TextView) findViewById(R.id.no_serach_tv);
+        //删除键
+        mSearch_iv_delete = (ImageView) findViewById(R.id.search_iv_delete);
+        mSearch_iv_delete.setOnClickListener(this);
+
         //返回
         findViewById(R.id.search_btn_back).setOnClickListener(this);
     }
@@ -140,10 +159,11 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
         mTv_result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(BasketballInformationSerachActivity.this, BasketballDatabaseDetailsActivity.class);
-                intent.putExtra(LEAGUEID, resultListBeen.get(position).leagueId);//传递联赛ID
-                startActivity(intent);
+                   if( null!=resultListBeen.get(position).leagueId&&!resultListBeen.get(position).leagueId.isEmpty()) {
+                       Intent intent = new Intent(BasketballInformationSerachActivity.this, BasketballDatabaseDetailsActivity.class);
+                       intent.putExtra(LEAGUEID, resultListBeen.get(position).leagueId);//传递联赛ID
+                       startActivity(intent);
+                   }
             }
         });
     }
@@ -169,6 +189,12 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                 finish();
                 break;
 
+
+            case R.id.search_iv_delete:
+
+                et_keyword.setText("");
+
+                break;
             default:
                 break;
 

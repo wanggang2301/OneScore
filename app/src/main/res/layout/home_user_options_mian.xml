@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/home_item_bg"
               android:orientation="vertical">
     <!--首页设置选项-->
@@ -26,13 +27,15 @@
             android:scaleType="centerInside"
             android:src="@mipmap/back"/>
 
-        <ImageView
+        <com.hhly.mlottery.view.CircleImageView
             android:id="@+id/user_info_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:src="@mipmap/center_head"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/light"
             />
 
         <TextView
@@ -202,17 +205,14 @@
 
     <!----> 分割线
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/linecolor"/>
+
 
     <View
         android:visibility="gone"
         android:id="@+id/view_top"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="13dp"
         android:background="@color/linecolor"/>
 
     <TextView

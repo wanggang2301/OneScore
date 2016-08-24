@@ -2,9 +2,7 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,16 +21,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
-import com.hhly.mlottery.activity.InputActivity;
-import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.ChatballAdapter;
-import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.footballDetails.MatchLike;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
@@ -40,7 +34,6 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.Comment;
@@ -53,8 +46,6 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.greenrobot.event.EventBus;
 
 
 /**
@@ -432,7 +423,7 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
         loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        //接收全部评论页面返回的评论总数
 //        if (requestCode == CyUtils.JUMP_QUESTCODE) {
@@ -467,6 +458,28 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
                     break;
             }
         }
+    }*/
+
+    public void getResultCode(){
+        loadTopic(mThirdId, title, CyUtils.SINGLE_PAGE_COMMENT);
+        mLinearLayout.setVisibility(View.VISIBLE);
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
+        lp.setMargins(0, 0, 0, 0);
+        mRecyclerView.requestLayout();
+    }
+
+    public void getResultBack(){
+        mLinearLayout.setVisibility(View.VISIBLE);
+        FrameLayout.LayoutParams lp1 = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
+        lp1.setMargins(0, 0, 0, 0);
+        mRecyclerView.requestLayout();
+    }
+
+    public void getResultOk(){
+        if (CommonUtils.isLogin()) { //接收登录华海成功返回
+            CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
+            mLinearLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     //fg切换时回调该方法
@@ -496,12 +509,22 @@ public class TalkAboutBallFragment extends Fragment implements SwipeRefreshLayou
             case R.id.et_comment:
                 if (!CommonUtils.isLogin()) {
                     //跳转登录界面
-                    Intent intent1 = new Intent(mContext, LoginActivity.class);
-                    startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+//                    Intent intent1 = new Intent(mContext, LoginActivity.class);
+//                    startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
+                    if(type == 1){
+                        ((BasketDetailsActivityTest)mContext).talkAboutBallLoginBasket();
+                    }else if(type == 0){
+                        ((FootballMatchDetailActivityTest)mContext).talkAboutBallLoginFoot();
+                    }
                 } else {//跳转输入评论页面
-                    Intent intent2 = new Intent(mContext, InputActivity.class);
-                    intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
-                    startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
+//                    Intent intent2 = new Intent(mContext, InputActivity.class);
+//                    intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
+//                    startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
+                    if(type == 1){
+                        ((BasketDetailsActivityTest)mContext).talkAboutBallSendBasket(topicid);
+                    }else if(type == 0){
+                        ((FootballMatchDetailActivityTest)mContext).talkAboutBallSendFoot(topicid);
+                    }
                     mLinearLayout.setVisibility(View.GONE);
                     System.out.println("lzftalk跳" + topicid);
                     //解决在评论输入窗口的时候  上拉加载按钮被盖住的问题
