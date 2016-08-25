@@ -95,7 +95,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="场次"
+                            android:text="@string/new_analyze_changci"
                             android:layout_gravity="center"/>
                         <TextView
                             android:id="@+id/analyze_let_history_vs_count"
@@ -136,7 +136,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
-                            android:text="主队赢盘率"
+                            android:text="@string/new_analyze_home_win_rate"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/content_txt_black"/>
                         <TextView
@@ -168,7 +168,7 @@
                             android:paddingLeft="10dp"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/content_txt_black"
-                            android:text="客队赢盘率"/>
+                            android:text="@string/new_analyze_guest_win_rate"/>
                         <TextView
                             android:id="@+id/analyze_let_history_guest_win_percent"
                             android:layout_width="wrap_content"
@@ -197,7 +197,7 @@
                             android:paddingLeft="10dp"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/content_txt_black"
-                            android:text="走水:"/>
+                            android:text="@string/analyze_draw_rate"/>
                         <TextView
                             android:id="@+id/analyze_let_history_draw_percent"
                             android:layout_width="wrap_content"
@@ -388,7 +388,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="13sp"
-                        android:text="皇马赢盘率"
+                        android:text=""
                         android:textColor="@color/mdy_666"
                         />
                 </LinearLayout>
@@ -434,7 +434,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="13sp"
-                        android:text="皇马赢盘率"
+                        android:text=""
                         android:textColor="@color/mdy_666"
                         />
                 </LinearLayout>
@@ -787,7 +787,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="场次"
+                            android:text="@string/new_analyze_changci"
                             android:layout_gravity="center"/>
                         <TextView
                             android:id="@+id/analyze_size_history_vs_count"
@@ -827,7 +827,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
-                            android:text="大球率"
+                            android:text="@string/new_analyze_daqiulv"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/content_txt_black"/>
                         <TextView
@@ -858,7 +858,7 @@
                             android:paddingLeft="10dp"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/content_txt_black"
-                            android:text="小球率"/>
+                            android:text="@string/intelligent_small_rate"/>
                         <TextView
                             android:id="@+id/analyze_size_history_small_ball_rate"
                             android:layout_width="wrap_content"
@@ -887,7 +887,7 @@
                             android:paddingLeft="10dp"
                             android:textSize="@dimen/text_size_13"
                             android:textColor="@color/content_txt_black"
-                            android:text="走水:"/>
+                            android:text="@string/new_analyze_draw"/>
                         <TextView
                             android:id="@+id/analyze_size_history_draw"
                             android:layout_width="wrap_content"
@@ -1060,7 +1060,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="场次"
+                                android:text="@string/new_analyze_changci"
                                 android:layout_gravity="center"/>
                             <TextView
                                 android:id="@+id/analyze_size_recent_home_vs_count"
@@ -1087,92 +1087,99 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             >
-
-                            <View
-                                android:layout_width="12dp"
-                                android:layout_height="12dp"
-                                android:background="@color/basket_database_statistics_background_h"
-                                android:layout_gravity="center"
-                                />
-
-                            <TextView
-
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:text="大球率"
-                                android:textSize="@dimen/text_size_13"
-                                android:textColor="@color/content_txt_black"/>
-                            <TextView
-                                android:id="@+id/analyze_size_recent_home_big_ball"
+                                >
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_h"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/new_analyze_daqiulv"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/analyze_size_recent_home_big_ball"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:text="--"
+                                    android:paddingLeft="3dp"
+                                    android:textColor="@color/mdy_333"
+                                    />
+
+                            </LinearLayout>
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:text="--"
-                                android:paddingLeft="3dp"
-                                android:textColor="@color/mdy_333"
-                                />
+                                android:layout_marginTop="10dp">
 
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"
+                                    android:text="@string/intelligent_small_rate"/>
+                                <TextView
+                                    android:id="@+id/analyze_size_recent_home_small_ball"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:text="--"
+                                    android:paddingLeft="3dp"
+                                    android:textColor="@color/mdy_333"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_d"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"
+                                    android:text="@string/new_analyze_size_draw_rate"/>
+                                <TextView
+                                    android:id="@+id/analyze_size_recent_home_draw_percent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:text="--"
+                                    android:paddingLeft="3dp"
+                                    android:textColor="@color/mdy_333"
+                                    />
+                            </LinearLayout>
                         </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp">
 
-                            <View
-                                android:layout_width="12dp"
-                                android:layout_height="12dp"
-                                android:background="@color/basket_database_statistics_background_g"
-                                android:layout_gravity="center"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:textSize="@dimen/text_size_13"
-                                android:textColor="@color/content_txt_black"
-                                android:text="小球率"/>
-                            <TextView
-                                android:id="@+id/analyze_size_recent_home_small_ball"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:text="--"
-                                android:paddingLeft="3dp"
-                                android:textColor="@color/mdy_333"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp">
-
-                            <View
-                                android:layout_width="12dp"
-                                android:layout_height="12dp"
-                                android:background="@color/basket_database_statistics_background_d"
-                                android:layout_gravity="center"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:textSize="@dimen/text_size_13"
-                                android:textColor="@color/content_txt_black"
-                                android:text="走    水"/>
-                            <TextView
-                                android:id="@+id/analyze_size_recent_home_draw_percent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:text="--"
-                                android:paddingLeft="3dp"
-                                android:textColor="@color/mdy_333"
-                                />
-                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
                 <!--客队赢盘率-->
@@ -1197,7 +1204,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="场次"
+                                android:text="@string/new_analyze_changci"
                                 android:layout_gravity="center"/>
                             <TextView
                                 android:id="@+id/analyze_size_recent_guest_vs_count"
@@ -1224,92 +1231,99 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             >
-
-                            <View
-                                android:layout_width="12dp"
-                                android:layout_height="12dp"
-                                android:background="@color/basket_database_statistics_background_h"
-                                android:layout_gravity="center"
-                                />
-
-                            <TextView
-
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:text="大球率"
-                                android:textSize="@dimen/text_size_13"
-                                android:textColor="@color/content_txt_black"/>
-                            <TextView
-                                android:id="@+id/analyze_size_recent_guest_big_ball"
+                                >
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_h"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/new_analyze_daqiulv"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/analyze_size_recent_guest_big_ball"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:text="--"
+                                    android:paddingLeft="3dp"
+                                    android:textColor="@color/mdy_333"
+                                    />
+
+                            </LinearLayout>
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:text="--"
-                                android:paddingLeft="3dp"
-                                android:textColor="@color/mdy_333"
-                                />
+                                android:layout_marginTop="10dp">
 
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"
+                                    android:text="@string/intelligent_small_rate"/>
+                                <TextView
+                                    android:id="@+id/analyze_size_recent_guest_small_ball"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:text="--"
+                                    android:paddingLeft="3dp"
+                                    android:textColor="@color/mdy_333"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_d"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"
+                                    android:text="@string/new_analyze_size_draw_rate"/>
+                                <TextView
+                                    android:id="@+id/analyze_size_recent_guest_draw_percent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:text="--"
+                                    android:paddingLeft="3dp"
+                                    android:textColor="@color/mdy_333"
+                                    />
+                            </LinearLayout>
                         </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp">
 
-                            <View
-                                android:layout_width="12dp"
-                                android:layout_height="12dp"
-                                android:background="@color/basket_database_statistics_background_g"
-                                android:layout_gravity="center"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:textSize="@dimen/text_size_13"
-                                android:textColor="@color/content_txt_black"
-                                android:text="小球率"/>
-                            <TextView
-                                android:id="@+id/analyze_size_recent_guest_small_ball"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:text="--"
-                                android:paddingLeft="3dp"
-                                android:textColor="@color/mdy_333"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp">
-
-                            <View
-                                android:layout_width="12dp"
-                                android:layout_height="12dp"
-                                android:background="@color/basket_database_statistics_background_d"
-                                android:layout_gravity="center"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:textSize="@dimen/text_size_13"
-                                android:textColor="@color/content_txt_black"
-                                android:text="走    水"/>
-                            <TextView
-                                android:id="@+id/analyze_size_recent_guest_draw_percent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:text="--"
-                                android:paddingLeft="3dp"
-                                android:textColor="@color/mdy_333"
-                                />
-                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 

@@ -839,6 +839,19 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mLetNodata3.setVisibility(View.VISIBLE);
             }
 
+            if(getActivity()!=null&&analyzeBean.getAsiaTrend().getHomeRecent()!=null&&analyzeBean.getAsiaTrend().getHomeRecent().getStatistics()!=null){
+                NewAnalyzeBean.AsiaTrendEntity.Statistics statistics=analyzeBean.getAsiaTrend().getHomeRecent().getStatistics();
+                mLetRecentHomeWinText.setText(mHomeName+getActivity().getResources().getString(R.string.new_analyze_yingpanlv));
+                mLetRecentHomeWinRate.setText(statistics.getWinPercent());
+                String a[]=statistics.getWinPercent().split("%");
+                int winPercent=Integer.parseInt(a[0]);
+                mLetRecentHomeProgress.setProgress(winPercent);
+                mLetRecentHomeProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
+                mLetRecentHomeWinRate.setText(statistics.getWinPercent());
+                mLetRecentHomeProgress.setRoundWidth(40);
+            }
+
+
             //亚盘近期对比客队
             List<List<Integer>> asiaGuestList=new ArrayList<>();
             if(analyzeBean.getAsiaTrend().getGuestRecent()!=null&&analyzeBean.getAsiaTrend().getGuestRecent().getTrendList().size()!=0){
@@ -854,6 +867,19 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             else{
                 mLetNodata4.setVisibility(View.VISIBLE);
             }
+
+            if(getActivity()!=null&&analyzeBean.getAsiaTrend().getGuestRecent()!=null&&analyzeBean.getAsiaTrend().getGuestRecent().getStatistics()!=null){
+                NewAnalyzeBean.AsiaTrendEntity.Statistics statistics=analyzeBean.getAsiaTrend().getGuestRecent().getStatistics();
+                mLetRecentGuestWinText.setText(mGuestName+getActivity().getResources().getString(R.string.new_analyze_yingpanlv));
+                mLetRecentGuestWinRate.setText(statistics.getWinPercent());
+                String a[]=statistics.getWinPercent().split("%");
+                int winPercent=Integer.parseInt(a[0]);
+                mLetRecentGuestProgress.setProgress(winPercent);
+                mLetRecentGuestProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_g));
+                mLetRecentGuestWinRate.setText(statistics.getWinPercent());
+                mLetRecentGuestProgress.setRoundWidth(40);
+            }
+
 
         }else {
             mllLet.setVisibility(View.GONE);
@@ -891,6 +917,30 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             }else{
                 mSizeNodata1.setVisibility(View.VISIBLE);
             }
+            if(analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
+                NewAnalyzeBean.SizeTrendEntity.Statistics statistics=analyzeBean.getSizeTrend().getBattleHistory().getStatistics();
+                mSizeHistoryBigRate.setText(statistics.getBigPercent());
+                mSizeHistorySmallRate.setText(statistics.getSmallPercent());
+                mSizeHistoryDraw.setText(statistics.getDrawPercent());
+                mSizeHistoryVsCount.setText(statistics.getVsCount()+"");
+                String a[]=statistics.getBigPercent().split("%");
+                String b[]=statistics.getSmallPercent().split("%");
+                String c[]=statistics.getDrawPercent().split("%");
+                int bigPercent=Integer.parseInt(a[0]);
+                int smallPercent=Integer.parseInt(b[0]);
+                int drawPercent=Integer.parseInt(c[0]);
+
+                mSizeHistoryProgressBar.setProgress(bigPercent);
+                mSizeHistoryProgressBar.setProgress2(smallPercent);
+                mSizeHistoryProgressBar.setProgress3(drawPercent);
+                mSizeHistoryProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
+                mSizeHistoryProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
+                mSizeHistoryProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+                mSizeHistoryProgressBar.setRoundWidth(40);
+                mSizeHistoryProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
+
+            }
+
             //大小球近期对比主队
             List<List<Integer>> sizeHomeList=new ArrayList<>();
             if(analyzeBean.getSizeTrend().getHomeRecent()!=null&&analyzeBean.getSizeTrend().getHomeRecent().getTrendList().size()!=0){
@@ -904,6 +954,29 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mChartSizeHome.setLineChartList(sizeHomeList);
             }else{
                 mSizeNodata3.setVisibility(View.VISIBLE);
+            }
+            if(analyzeBean.getSizeTrend().getHomeRecent()!=null&&analyzeBean.getSizeTrend().getHomeRecent().getStatistics()!=null){
+                NewAnalyzeBean.SizeTrendEntity.Statistics statistics=analyzeBean.getSizeTrend().getHomeRecent().getStatistics();
+                mSizeRecentHomeBigRate.setText(statistics.getBigPercent());
+                mSizeRecentHomeSmallRate.setText(statistics.getSmallPercent());
+                mSizeRecentHomeDraw.setText(statistics.getDrawPercent());
+                mSizeRecentHomeVsCount.setText(statistics.getVsCount()+"");
+                String a[]=statistics.getBigPercent().split("%");
+                String b[]=statistics.getSmallPercent().split("%");
+                String c[]=statistics.getDrawPercent().split("%");
+                int bigPercent=Integer.parseInt(a[0]);
+                int smallPercent=Integer.parseInt(b[0]);
+                int drawPercent=Integer.parseInt(c[0]);
+
+                mSizeRecentHomeProgressBar.setProgress(bigPercent);
+                mSizeRecentHomeProgressBar.setProgress2(smallPercent);
+                mSizeRecentHomeProgressBar.setProgress3(drawPercent);
+                mSizeRecentHomeProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
+                mSizeRecentHomeProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
+                mSizeRecentHomeProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+                mSizeRecentHomeProgressBar.setRoundWidth(40);
+                mSizeRecentHomeProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
+
             }
 
             //大小球近期对比客队
@@ -919,7 +992,29 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             }else{
                 mSizeNodata4.setVisibility(View.VISIBLE);
             }
+            if(analyzeBean.getSizeTrend().getGuestRecent()!=null&&analyzeBean.getSizeTrend().getGuestRecent().getStatistics()!=null){
+                NewAnalyzeBean.SizeTrendEntity.Statistics statistics=analyzeBean.getSizeTrend().getGuestRecent().getStatistics();
+                mSizeRecentGuestBigRate.setText(statistics.getBigPercent());
+                mSizeRecentGuestSmallRate.setText(statistics.getSmallPercent());
+                mSizeRecentGuestDraw.setText(statistics.getDrawPercent());
+                mSizeRecentGuestVsCount.setText(statistics.getVsCount()+"");
+                String a[]=statistics.getBigPercent().split("%");
+                String b[]=statistics.getSmallPercent().split("%");
+                String c[]=statistics.getDrawPercent().split("%");
+                int bigPercent=Integer.parseInt(a[0]);
+                int smallPercent=Integer.parseInt(b[0]);
+                int drawPercent=Integer.parseInt(c[0]);
 
+                mSizeRecentGuestProgressBar.setProgress(bigPercent);
+                mSizeRecentGuestProgressBar.setProgress2(smallPercent);
+                mSizeRecentGuestProgressBar.setProgress3(drawPercent);
+                mSizeRecentGuestProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
+                mSizeRecentGuestProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
+                mSizeRecentGuestProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+                mSizeRecentGuestProgressBar.setRoundWidth(40);
+                mSizeRecentGuestProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
+
+            }
         }else{
             mllSize.setVisibility(View.GONE);
             mSizeAllNodata.setVisibility(View.VISIBLE);

@@ -994,6 +994,11 @@
     <string name="new_analyze_liangduijin">兩隊近</string>
     <string name="new_analyze_description">(比分紅色為主隊)</string>
     <string name="new_analyze_recent_game">6場近期各自比賽</string>
+    <string name="new_analyze_changci">場次</string>
+    <string name="new_analyze_home_win_rate">主隊贏盤率</string>
+    <string name="new_analyze_guest_win_rate">客隊贏盤率</string>
+    <string name="analyze_draw_rate">走水</string>
+    <string name="new_analyze_size_draw_rate">走  水</string>
     <!--情报分析-->
     <string name="intelligent_all_game">全部比賽</string>
     <string name="intelligent_same_game">相同主客場</string>
@@ -1036,5 +1041,7 @@
     <string name="rong_input_prompt4">我從不說謊，除啦這句話以外。</string>
     <string name="rong_input_prompt5">沈默是金.沈默久了就會有很多金子嗎？</string>
     <string name="rong_input_prompt6">元芳怎麽看？</string>
+
+
 
 </resources>
