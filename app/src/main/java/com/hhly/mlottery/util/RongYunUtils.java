@@ -1,6 +1,8 @@
 package com.hhly.mlottery.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -34,17 +36,18 @@ public class RongYunUtils {
     //测试appkey和appsecret
     public static final String APPKEY = "3argexb6r6c1e";
     public static final String APPSECRET = "l0Fu9Kn0uqO";
+    public static final int CHART_ROOM_QUESTCODE_FOOT = 5;// 足球跳转登录界面的请求码
+    public static final int CHART_ROOM_QUESTCODE_BASKET = 6;// 篮球跳转登录界面的请求码
 
     public static final String CHART_ROOM_ID = "chartRoomId";// 聊天室id  key
     public static final String CHART_ROOM_NAME = "chartBall";// 聊天室名称
     public static final String USER_TOKEN = "userToken";// 用户Token key
     public static final String USER_ID = "userId";// 用户id
-    public static final String HOME_LIKE = "homeLike";// 主队点赞
-    public static final String GUEST_LIKE = "guestLike";// 客队点赞
-    public static final String TALK_COMMENT = "talkComment";// 评论
+    public static final String CHART_ROOM_EXIT = "chartRoomExit";// 关闭传话界面
     public static final String RONG_CONNENT_OK = "RongConnentOK";// 连接融云服务器
     public static final String CREATE_CHARTROOM_OK = "CreateChartRoomOK";// 创建聊天室
     public static final String CHART_ROOM_COUNT_OK = "chartRoomCountOK";// 获取到聊天室人数
+    public static final String CHART_ROOM_TRANSPARENT_SIZE = "chartRoomTransparentSize";// 调节聊天界面透明度值
 
     public static boolean isRongConnent = false;// 连接融云服务器状态
     public static boolean isCreateChartRoom = false;// 创建聊天室状态
@@ -117,7 +120,7 @@ public class RongYunUtils {
                     if (jsonObject.getCode() == 200) {
                         isCreateChartRoom = true;
                         EventBus.getDefault().post(new FirstEvent(CREATE_CHARTROOM_OK));
-                        getChatRoomCount(roomId);
+//                        getChatRoomCount(roomId);
                         PreferenceUtil.commitString(CHART_ROOM_ID, roomId);
                         L.d("xxx", "保存聊天室id：" + PreferenceUtil.getString(CHART_ROOM_ID, "xxx"));
                     }
@@ -131,7 +134,7 @@ public class RongYunUtils {
         }else{
             isCreateChartRoom = true;
             EventBus.getDefault().post(new FirstEvent(CREATE_CHARTROOM_OK));
-            getChatRoomCount(roomId);
+//            getChatRoomCount(roomId);
         }
     }
 
@@ -144,7 +147,11 @@ public class RongYunUtils {
         if (TextUtils.isEmpty(roomId)) {
             return;
         }
-        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, roomId, null);
+        Uri uri = Uri.parse("rong://" + mContext.getApplicationInfo().processName).buildUpon().appendPath("conversation").appendPath(Conversation.ConversationType.CHATROOM.getName().toLowerCase()).appendQueryParameter("targetId", roomId).appendQueryParameter("title", "").build();
+        Intent intent = new Intent("android.intent.action.VIEW", uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+//        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, roomId, null);
         L.d("xxx", "joinChatRoom...");
     }
 

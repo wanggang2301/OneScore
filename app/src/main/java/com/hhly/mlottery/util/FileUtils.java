@@ -609,7 +609,7 @@ public class FileUtils {
 	}*/
 	
 	@SuppressWarnings("unchecked")
-//	public static <T> T ReadFromJsonFile(String fn, Class<T> cls) {
+//	public static <Test> Test ReadFromJsonFile(String fn, Class<Test> cls) {
 //		if (null == fn || cls == null)
 //			return null;
 //		JsonReader reader;
@@ -620,10 +620,10 @@ public class FileUtils {
 //		}
 //
 //		Gson gson = new Gson();
-//		T t;
+//		Test t;
 //
 //		try {
-//			t = (T)gson.fromJson(reader, cls);
+//			t = (Test)gson.fromJson(reader, cls);
 //		} catch (JsonIOException e) {
 //			e.printStackTrace();
 //			return null;
@@ -632,7 +632,7 @@ public class FileUtils {
 //			return null;
 //		}
 //
-//		return (T)t;
+//		return (Test)t;
 //	}
 
 //	public static Object ReadFromJsonFile(String fn, Type type) {
@@ -1034,13 +1034,9 @@ public class FileUtils {
             destDirName = destDirName + File.separator;
         }
         //创建目录
-        if (dir.mkdirs()) {
-            ////System.out.println("创建目录" + destDirName + "成功！");
-            return true;
-        } else {
-           // //System.out.println("创建目录" + destDirName + "失败！");
-            return false;
-        }
+        ////System.out.println("创建目录" + destDirName + "成功！");
+// //System.out.println("创建目录" + destDirName + "失败！");
+        return dir.mkdirs();
     }
 
 	/**

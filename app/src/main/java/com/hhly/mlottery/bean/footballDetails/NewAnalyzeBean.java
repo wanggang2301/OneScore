@@ -201,8 +201,8 @@ public class NewAnalyzeBean {
     public static class SizeTrendEntity {
 
         private BattleHistoryEntity battleHistory;
-        private List<HomeRecentEntity> homeRecent;
-        private List<GuestRecentEntity> guestRecent;
+        private HomeRecentEntity homeRecent;
+        private GuestRecentEntity guestRecent;
 
         public BattleHistoryEntity getBattleHistory() {
             return battleHistory;
@@ -212,25 +212,66 @@ public class NewAnalyzeBean {
             this.battleHistory = battleHistory;
         }
 
-        public List<HomeRecentEntity> getHomeRecent() {
+        public HomeRecentEntity getHomeRecent() {
             return homeRecent;
         }
 
-        public void setHomeRecent(List<HomeRecentEntity> homeRecent) {
+        public void setHomeRecent(HomeRecentEntity homeRecent) {
             this.homeRecent = homeRecent;
         }
 
-        public List<GuestRecentEntity> getGuestRecent() {
+        public GuestRecentEntity getGuestRecent() {
             return guestRecent;
         }
 
-        public void setGuestRecent(List<GuestRecentEntity> guestRecent) {
+        public void setGuestRecent(GuestRecentEntity guestRecent) {
             this.guestRecent = guestRecent;
         }
 
+        public static class HomeRecentEntity{
+            private List<TrendListEntity> trendList;
+            private Statistics statistics;
+
+            public List<TrendListEntity> getTrendList() {
+                return trendList;
+            }
+
+            public void setTrendList(List<TrendListEntity> trendList) {
+                this.trendList = trendList;
+            }
+
+            public Statistics getStatistics() {
+                return statistics;
+            }
+
+            public void setStatistics(Statistics statistics) {
+                this.statistics = statistics;
+            }
+        }
+
+        public static class GuestRecentEntity{
+            private List<TrendListEntity> trendList;
+            private Statistics statistics;
+
+            public List<TrendListEntity> getTrendList() {
+                return trendList;
+            }
+
+            public void setTrendList(List<TrendListEntity> trendList) {
+                this.trendList = trendList;
+            }
+
+            public Statistics getStatistics() {
+                return statistics;
+            }
+
+            public void setStatistics(Statistics statistics) {
+                this.statistics = statistics;
+            }
+        }
         public static class BattleHistoryEntity {
 
-            private StatisticsEntity statistics;
+            private Statistics statistics;
 
 
             private List<TotListEntity> totList;
@@ -238,11 +279,11 @@ public class NewAnalyzeBean {
 
             private List<PointListEntity> pointList;
 
-            public StatisticsEntity getStatistics() {
+            public Statistics getStatistics() {
                 return statistics;
             }
 
-            public void setStatistics(StatisticsEntity statistics) {
+            public void setStatistics(Statistics statistics) {
                 this.statistics = statistics;
             }
 
@@ -260,54 +301,6 @@ public class NewAnalyzeBean {
 
             public void setPointList(List<PointListEntity> pointList) {
                 this.pointList = pointList;
-            }
-
-            public static class StatisticsEntity {
-                private int draw;
-                private String bigPercent;
-                private int vsCount;
-                private int big;
-                private int small;
-
-                public int getDraw() {
-                    return draw;
-                }
-
-                public void setDraw(int draw) {
-                    this.draw = draw;
-                }
-
-                public String getBigPercent() {
-                    return bigPercent;
-                }
-
-                public void setBigPercent(String bigPercent) {
-                    this.bigPercent = bigPercent;
-                }
-
-                public int getVsCount() {
-                    return vsCount;
-                }
-
-                public void setVsCount(int vsCount) {
-                    this.vsCount = vsCount;
-                }
-
-                public int getBig() {
-                    return big;
-                }
-
-                public void setBig(int big) {
-                    this.big = big;
-                }
-
-                public int getSmall() {
-                    return small;
-                }
-
-                public void setSmall(int small) {
-                    this.small = small;
-                }
             }
 
             public static class TotListEntity {
@@ -389,7 +382,72 @@ public class NewAnalyzeBean {
             }
         }
 
-        public static class HomeRecentEntity {
+        public static class Statistics{
+            private int draw;
+            private String bigPercent;
+            private String smallPercent;
+            private int vsCount;
+            private int big;
+            private String drawPercent;
+            private int small;
+
+            public int getDraw() {
+                return draw;
+            }
+
+            public void setDraw(int draw) {
+                this.draw = draw;
+            }
+
+            public String getBigPercent() {
+                return bigPercent;
+            }
+
+            public void setBigPercent(String bigPercent) {
+                this.bigPercent = bigPercent;
+            }
+
+            public String getSmallPercent() {
+                return smallPercent;
+            }
+
+            public void setSmallPercent(String smallPercent) {
+                this.smallPercent = smallPercent;
+            }
+
+            public int getVsCount() {
+                return vsCount;
+            }
+
+            public void setVsCount(int vsCount) {
+                this.vsCount = vsCount;
+            }
+
+            public int getBig() {
+                return big;
+            }
+
+            public void setBig(int big) {
+                this.big = big;
+            }
+
+            public String getDrawPercent() {
+                return drawPercent;
+            }
+
+            public void setDrawPercent(String drawPercent) {
+                this.drawPercent = drawPercent;
+            }
+
+            public int getSmall() {
+                return small;
+            }
+
+            public void setSmall(int small) {
+                this.small = small;
+            }
+        }
+        public static class TrendListEntity {
             private int tot;
             private boolean homeGround;
 
@@ -410,26 +468,6 @@ public class NewAnalyzeBean {
             }
         }
 
-        public static class GuestRecentEntity {
-            private int tot;
-            private boolean homeGround;
-
-            public int getTot() {
-                return tot;
-            }
-
-            public void setTot(int tot) {
-                this.tot = tot;
-            }
-
-            public boolean isHomeGround() {
-                return homeGround;
-            }
-
-            public void setHomeGround(boolean homeGround) {
-                this.homeGround = homeGround;
-            }
-        }
     }
 
     public static class ScoreRankEntity {
@@ -673,13 +711,13 @@ public class NewAnalyzeBean {
          * homeGround : true
          */
 
-        private List<HomeRecentEntity> homeRecent;
+        private HomeRecentEntity homeRecent;
         /**
          * let : 1
          * homeGround : true
          */
 
-        private List<GuestRecentEntity> guestRecent;
+        private GuestRecentEntity guestRecent;
 
         public BattleHistoryEntity getBattleHistory() {
             return battleHistory;
@@ -689,35 +727,77 @@ public class NewAnalyzeBean {
             this.battleHistory = battleHistory;
         }
 
-        public List<HomeRecentEntity> getHomeRecent() {
+        public HomeRecentEntity getHomeRecent() {
             return homeRecent;
         }
 
-        public void setHomeRecent(List<HomeRecentEntity> homeRecent) {
+        public void setHomeRecent(HomeRecentEntity homeRecent) {
             this.homeRecent = homeRecent;
         }
 
-        public List<GuestRecentEntity> getGuestRecent() {
+        public GuestRecentEntity getGuestRecent() {
             return guestRecent;
         }
 
-        public void setGuestRecent(List<GuestRecentEntity> guestRecent) {
+        public void setGuestRecent(GuestRecentEntity guestRecent) {
             this.guestRecent = guestRecent;
         }
 
+        public static class HomeRecentEntity{
+            private List<TrendListEntity> trendList;
+            private Statistics statistics;
+
+            public List<TrendListEntity> getTrendList() {
+                return trendList;
+            }
+
+            public void setTrendList(List<TrendListEntity> trendList) {
+                this.trendList = trendList;
+            }
+
+            public Statistics getStatistics() {
+                return statistics;
+            }
+
+            public void setStatistics(Statistics statistics) {
+                this.statistics = statistics;
+            }
+        }
+
+        public static class GuestRecentEntity{
+            private List<TrendListEntity> trendList;
+            private Statistics statistics;
+
+            public List<TrendListEntity> getTrendList() {
+                return trendList;
+            }
+
+            public void setTrendList(List<TrendListEntity> trendList) {
+                this.trendList = trendList;
+            }
+
+            public Statistics getStatistics() {
+                return statistics;
+            }
+
+            public void setStatistics(Statistics statistics) {
+                this.statistics = statistics;
+            }
+        }
+
         public static class BattleHistoryEntity {
-            private StatisticsEntity statistics;
+            private Statistics statistics;
 
             private List<PointListEntity> pointList;
 
 
             private List<LetListEntity> letList;
 
-            public StatisticsEntity getStatistics() {
+            public Statistics getStatistics() {
                 return statistics;
             }
 
-            public void setStatistics(StatisticsEntity statistics) {
+            public void setStatistics(Statistics statistics) {
                 this.statistics = statistics;
             }
 
@@ -735,54 +815,6 @@ public class NewAnalyzeBean {
 
             public void setLetList(List<LetListEntity> letList) {
                 this.letList = letList;
-            }
-
-            public static class StatisticsEntity {
-                private int draw;
-                private int lose;
-                private String winPercent;
-                private int vsCount;
-                private int win;
-
-                public int getDraw() {
-                    return draw;
-                }
-
-                public void setDraw(int draw) {
-                    this.draw = draw;
-                }
-
-                public int getLose() {
-                    return lose;
-                }
-
-                public void setLose(int lose) {
-                    this.lose = lose;
-                }
-
-                public String getWinPercent() {
-                    return winPercent;
-                }
-
-                public void setWinPercent(String winPercent) {
-                    this.winPercent = winPercent;
-                }
-
-                public int getVsCount() {
-                    return vsCount;
-                }
-
-                public void setVsCount(int vsCount) {
-                    this.vsCount = vsCount;
-                }
-
-                public int getWin() {
-                    return win;
-                }
-
-                public void setWin(int win) {
-                    this.win = win;
-                }
             }
 
             public static class PointListEntity extends PointList{
@@ -864,7 +896,73 @@ public class NewAnalyzeBean {
             }
         }
 
-        public static class HomeRecentEntity {
+        public static class Statistics{
+            private int draw;
+            private int lose;
+            private String winPercent;
+            private int vsCount;
+            private  int win;
+            private String losePercent;
+            private String drawPercent;
+
+            public int getDraw() {
+                return draw;
+            }
+
+            public void setDraw(int draw) {
+                this.draw = draw;
+            }
+
+            public int getLose() {
+                return lose;
+            }
+
+            public void setLose(int lose) {
+                this.lose = lose;
+            }
+
+            public String getWinPercent() {
+                return winPercent;
+            }
+
+            public void setWinPercent(String winPercent) {
+                this.winPercent = winPercent;
+            }
+
+            public int getVsCount() {
+                return vsCount;
+            }
+
+            public void setVsCount(int vsCount) {
+                this.vsCount = vsCount;
+            }
+
+            public int getWin() {
+                return win;
+            }
+
+            public void setWin(int win) {
+                this.win = win;
+            }
+
+            public String getLosePercent() {
+                return losePercent;
+            }
+
+            public void setLosePercent(String losePercent) {
+                this.losePercent = losePercent;
+            }
+
+            public String getDrawPercent() {
+                return drawPercent;
+            }
+
+            public void setDrawPercent(String drawPercent) {
+                this.drawPercent = drawPercent;
+            }
+        }
+
+        public static class TrendListEntity {
             private int let;
             private boolean homeGround;
 
@@ -885,26 +983,6 @@ public class NewAnalyzeBean {
             }
         }
 
-        public static class GuestRecentEntity {
-            private int let;
-            private boolean homeGround;
-
-            public int getLet() {
-                return let;
-            }
-
-            public void setLet(int let) {
-                this.let = let;
-            }
-
-            public boolean isHomeGround() {
-                return homeGround;
-            }
-
-            public void setHomeGround(boolean homeGround) {
-                this.homeGround = homeGround;
-            }
-        }
     }
 
     public static class BothRecordEntity {

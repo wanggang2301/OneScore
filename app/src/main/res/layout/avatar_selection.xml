@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/home_item_bg">
+
+<LinearLayout
+    android:id="@+id/popu_layout"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_photograph"
+        style="@style/login_textview_logout"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:textSize="@dimen/home_pager_user_title"
+        android:text="@string/photograph"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"/>
+    <TextView
+        android:id="@+id/tv_chosephoto"
+        style="@style/login_textview_logout"
+        android:layout_gravity="center"
+        android:layout_height="55dp"
+        android:textSize="@dimen/home_pager_user_title"
+        android:text="@string/chose_for_telephone"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"/>
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_cancel"
+        android:textColor="@color/res_name_color"
+        style="@style/login_textview_logout"
+        android:layout_gravity="center"
+        android:layout_height="55dp"
+        android:textSize="@dimen/home_pager_user_title"
+        android:text="@string/fottball_home_quxiao"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"/>
+</LinearLayout>
+
+
+
+</LinearLayout>

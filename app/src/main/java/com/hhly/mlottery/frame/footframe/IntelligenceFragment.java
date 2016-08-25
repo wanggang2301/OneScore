@@ -542,7 +542,7 @@ public class IntelligenceFragment extends Fragment {
      * 设置相同主客场的本赛季盘口
      */
     private void setGroundSeasonHandicap() {
-        BigDataResult.AllEntity entity=mResult.getAll();
+        BigDataResult.GroundEntity entity=mResult.getGround();
         mLlSeasonHandicapFull.setVisibility(View.VISIBLE);
         mLlSeasonHandicapHalf.setVisibility(View.VISIBLE);
         mSeasonHandicapNodata.setVisibility(View.GONE);

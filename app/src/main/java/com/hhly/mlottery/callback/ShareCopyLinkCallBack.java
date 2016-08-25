@@ -6,5 +6,5 @@ package com.hhly.mlottery.callback;
  * @des ${TODO}
  */
 public interface ShareCopyLinkCallBack {
-    public void onClick();
+    void onClick();
 }

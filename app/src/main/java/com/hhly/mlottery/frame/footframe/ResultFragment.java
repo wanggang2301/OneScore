@@ -634,7 +634,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     // 定义关注监听
     public interface ResultFocusClickListener {
-        public void FocusonClick(View view, ResultMatchDto resultMatchDto);
+        void FocusonClick(View view, ResultMatchDto resultMatchDto);
     }
 
     @Override

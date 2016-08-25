@@ -39,7 +39,7 @@ public class SpecifiedTextsColorTextView extends TextView {
             if(start != -1)
             {
                 start = start + lengthFront;
-                sTextsStartList.add(start);
+                sTextsStartList.add(start);//oom
                 lengthFront = start + sTextLength;
                 temp = lowerText.substring(lengthFront);
 

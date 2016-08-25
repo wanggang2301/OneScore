@@ -9,10 +9,10 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
  */
 public interface GetVerifyCodeCallBack {
     /**获取验证码之前*/
-    public void beforGet();
+    void beforGet();
     /**获取验证码返回, 默认已处理正常情况下的 返回值*/
-    public void onGetResponce(SendSmsCode code);
+    void onGetResponce(SendSmsCode code);
     /**获取验证码错误  ， 默认已弹出 "网速不给力"*/
-    public void onGetError(VolleyContentFast.VolleyException exception);
+    void onGetError(VolleyContentFast.VolleyException exception);
 
 }

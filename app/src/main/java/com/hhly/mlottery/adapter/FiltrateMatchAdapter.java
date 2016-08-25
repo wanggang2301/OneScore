@@ -96,7 +96,7 @@ public class FiltrateMatchAdapter extends CommonAdapter<LeagueCup> {
 						}
 					} else {
 						if (mCheckedIds.contains(buttonView.getTag())) {
-							mCheckedIds.remove((String) buttonView.getTag());
+							mCheckedIds.remove(buttonView.getTag());
 						}
 					}
 					// checkedChangeListener.onChanged(buttonView, isChecked);
@@ -150,11 +150,11 @@ public class FiltrateMatchAdapter extends CommonAdapter<LeagueCup> {
 	}
 
 	public interface ClickChangeListener {
-		public void onClick(CompoundButton buttonView);
+		void onClick(CompoundButton buttonView);
 	}
 
 	public interface CheckedChangeListener {
-		public void onChanged(CompoundButton buttonView, boolean isChecked);
+		void onChanged(CompoundButton buttonView, boolean isChecked);
 	}
 
 }

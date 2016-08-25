@@ -96,7 +96,7 @@ public class CPIFragment extends Fragment implements
 
         // 创建公司 List
         companyList = new ArrayList<>();
-        filterList = new LinkedList<>();
+//        filterList = new LinkedList<>();
 
         // 隐藏中间标题
         hideView(view, R.id.public_txt_title);
@@ -188,6 +188,7 @@ public class CPIFragment extends Fragment implements
             return;
         }
         ArrayList<String> checkedIdList = (ArrayList<String>) data.getSerializableExtra("key");
+        if (filterList == null) filterList = new LinkedList<>();
         filterList.clear();
         filterList.addAll(checkedIdList);
         for (CPIOddsFragment fragment : mFragments) {

@@ -226,11 +226,8 @@ public class MyScrollLayout extends ViewGroup {
 			return false;
 		}
 
-		if (getScrollX() >= (getChildCount() - 1) * getWidth() && deltaX > 0) {
-			return false;
-		}
+		return !(getScrollX() >= (getChildCount() - 1) * getWidth() && deltaX > 0);
 
-		return true;
 	}
 
 	public void SetOnViewChangeListener(OnViewChangeListener listener) {

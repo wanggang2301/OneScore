@@ -32,6 +32,7 @@ import java.util.Random;
  */
 public class PreHeadInfoFrament extends Fragment {
 
+
     private View mView;
 
     public static final int PREHEADINFO_TYPE_PRE = 0x01;//赛前
@@ -74,11 +75,6 @@ public class PreHeadInfoFrament extends Fragment {
 
     public static PreHeadInfoFrament newInstance() {
         PreHeadInfoFrament fragment = new PreHeadInfoFrament();
-      /*  Bundle args = new Bundle();
-        args.putParcelable(PREHEADINFO_PARAM, matchDetail);
-        args.putInt(PREHEADINFO_TYPE, mType);
-
-        fragment.setArguments(args);*/
         return fragment;
     }
 
@@ -86,10 +82,6 @@ public class PreHeadInfoFrament extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_pre_headinfo, container, false);
-        if (getArguments() != null) {
-            mMatchDetail = getArguments().getParcelable(PREHEADINFO_PARAM);
-            mType = getArguments().getInt(PREHEADINFO_TYPE);
-        }
 
         this.mContext = getActivity();
         initView();
@@ -114,6 +106,7 @@ public class PreHeadInfoFrament extends Fragment {
         mMatchTypeLayout = (RelativeLayout) mView.findViewById(R.id.football_match_detail_matchtype_layout);
         mMatchType1 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype1);
         mMatchType2 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype2);
+
 
 
     }
@@ -180,6 +173,7 @@ public class PreHeadInfoFrament extends Fragment {
                 date.setText("");//开赛时间
             }
         }
+
     }
 
 
