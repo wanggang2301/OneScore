@@ -9,7 +9,7 @@
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="环境选择" 
+        android:text="环境选择"
         android:background="@color/bg_gray"
         android:textSize="20sp"
         />
@@ -49,17 +49,17 @@
 
 
     </RadioGroup>
-    
+
     <TextView
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="推送环境选择" 
+        android:text="推送环境选择"
         android:background="@color/bg_gray"
         android:textSize="20sp"
         />
-    
-    
+
+
     <RadioGroup
         android:id="@+id/config_rg2"
         android:layout_width="wrap_content"
