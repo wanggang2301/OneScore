@@ -32,6 +32,7 @@ import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
@@ -74,6 +75,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author yixq
@@ -236,6 +239,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 //            L.d("BASKET_MATCH_STATUS>>>>>>", mMatchStatus);
         }
 
+        EventBus.getDefault().register(this);//注册EventBus
         RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
 
         mOptions = new DisplayImageOptions.Builder()
@@ -477,6 +481,23 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             }
         }
         computeWebSocketConnTimer.cancel();
+        EventBus.getDefault().unregister(this);//取消注册EventBus
+    }
+
+    /**
+     * EvenBus接收消息
+     *
+     * @param event
+     */
+    public void onEventMainThread(FirstEvent event) {
+        switch (event.getMsg()) {
+            case RongYunUtils.CHART_ROOM_EXIT:
+                L.d("xxx","篮球EventBus收到 ");
+                if(iv_join_room_basket != null){
+                    iv_join_room_basket.setVisibility(View.VISIBLE);
+                }
+                break;
+        }
     }
 
     /**
@@ -1428,7 +1449,6 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onResume() {
         super.onResume();
-        iv_join_room_basket.setVisibility(View.VISIBLE);// 显示悬浮按钮
         MobclickAgent.onResume(this);
         if (isFragment0) {
             MobclickAgent.onPageStart("BasketBall_Info_FX");

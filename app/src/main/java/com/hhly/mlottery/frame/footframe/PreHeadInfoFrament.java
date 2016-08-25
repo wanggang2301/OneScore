@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
+import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -32,7 +33,15 @@ import java.util.Random;
  */
 public class PreHeadInfoFrament extends Fragment {
 
+    public void setmPreHeadGotoAnimHead(FootballLiveGotoChart mPreHeadGotoAnimHead) {
+        this.mPreHeadGotoAnimHead = mPreHeadGotoAnimHead;
+    }
+
+    private FootballLiveGotoChart mPreHeadGotoAnimHead;
+
     private View mView;
+
+    private ImageView head_video;
 
     public static final int PREHEADINFO_TYPE_PRE = 0x01;//赛前
     public static final int PREHEADINFO_TYPE_ING = 0x10;//赛中赛后
@@ -74,11 +83,6 @@ public class PreHeadInfoFrament extends Fragment {
 
     public static PreHeadInfoFrament newInstance() {
         PreHeadInfoFrament fragment = new PreHeadInfoFrament();
-      /*  Bundle args = new Bundle();
-        args.putParcelable(PREHEADINFO_PARAM, matchDetail);
-        args.putInt(PREHEADINFO_TYPE, mType);
-
-        fragment.setArguments(args);*/
         return fragment;
     }
 
@@ -86,10 +90,6 @@ public class PreHeadInfoFrament extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_pre_headinfo, container, false);
-        if (getArguments() != null) {
-            mMatchDetail = getArguments().getParcelable(PREHEADINFO_PARAM);
-            mType = getArguments().getInt(PREHEADINFO_TYPE);
-        }
 
         this.mContext = getActivity();
         initView();
@@ -114,6 +114,8 @@ public class PreHeadInfoFrament extends Fragment {
         mMatchTypeLayout = (RelativeLayout) mView.findViewById(R.id.football_match_detail_matchtype_layout);
         mMatchType1 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype1);
         mMatchType2 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype2);
+
+        head_video = (ImageView) mView.findViewById(R.id.head_video);
 
 
     }
@@ -180,6 +182,24 @@ public class PreHeadInfoFrament extends Fragment {
                 date.setText("");//开赛时间
             }
         }
+       
+        
+        if ("0".equals(mMatchDetail.getLiveStatus())) {
+            head_video.setVisibility(View.GONE);
+        } else {
+            head_video.setVisibility(View.VISIBLE);
+        }
+
+        head_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mPreHeadGotoAnimHead != null) {
+                    mPreHeadGotoAnimHead.onClick();
+                }
+            }
+        });
+
     }
 
 

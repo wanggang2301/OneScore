@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/home_item_bg"
+              android:orientation="vertical">
+
+
+    <include layout="@layout/layout_header"/>
+
+<ImageView
+    android:layout_centerInParent="true"
+    android:id="@+id/eblarge_photo"
+    android:src="@mipmap/login"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+
+</RelativeLayout>

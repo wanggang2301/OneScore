@@ -4,6 +4,7 @@
 
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
+    <string name="foot_trend">走势</string>
     <string name="foot_statictics">统计</string>
     <string name="foot_event_goal">进球</string>
     <string name="foot_event_rc">红牌</string>
@@ -22,6 +23,14 @@
     <string name="foot_event_out">下场</string>
     <string name="foot_event_num_out">号下场</string>
     <string name="foot_event_num_in">号上场</string>
+    <string name="matchIsNotStart">比赛暂未开始</string>
+    <string name="goChat">走,先去聊聊</string>
+    <string name="shot_nodata">暂无射正球门数据.</string>
+    <string name="shotAside_nodata">暂无射偏球门数据.</string>
+    <string name="dangerAttackk_nodata">暂无危险进攻数据.</string>
+    <string name="attack_nodata">暂无进攻数据.</string>
+    <string name="time">时间(T)</string>
+
 
     <!--篮球资料库-->
     <string name="basket_info_hot">热门</string>
@@ -1054,6 +1063,21 @@
     <string name="rong_input_prompt4">我从不说谎，除啦这句话以外。</string>
     <string name="rong_input_prompt5">沉默是金.沉默久了就会有很多金子吗？</string>
     <string name="rong_input_prompt6">元芳怎么看？</string>
+    <!--头像上传-->
+    <string name="sd_card_not_exist">sd卡不存在</string>
+    <string name="install_the_gallery">请先安装图库</string>
+    <string name="see_your_face">这张照片太小看不清你的绝世容颜</string>
+    <string name="picture_put_failed">图片上传失败!</string>
+    <string name="save_file_not_found">保存文件路径找不到!</string>
+    <string name="picture_save_failed">图片保存失败!</string>
+    <string name="picture_put_success">图片上传成功!</string>
+    <string name="picture_save">图片已保存至:</string>
+    <string name="picture_save_telephone">保存到手机</string>
+    <string name="chose_for_telephone">从手机相册选择</string>
+    <string name="avatar_settings">头像选择</string>
+    <string name="photograph">拍照</string>
+
+    <string name="welcome_chart_room">欢迎进入聊天室!</string>
 
 
 

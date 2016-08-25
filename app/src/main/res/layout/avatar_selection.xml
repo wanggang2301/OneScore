@@ -16,7 +16,7 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:textSize="@dimen/home_pager_user_title"
-        android:text="拍照"/>
+        android:text="@string/photograph"/>
 
     <View
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:layout_height="55dp"
         android:textSize="@dimen/home_pager_user_title"
-        android:text="从手机相册中选择"/>
+        android:text="@string/chose_for_telephone"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -43,7 +43,7 @@
         android:layout_gravity="center"
         android:layout_height="55dp"
         android:textSize="@dimen/home_pager_user_title"
-        android:text="取消"/>
+        android:text="@string/fottball_home_quxiao"/>
 
     <View
         android:layout_width="match_parent"
