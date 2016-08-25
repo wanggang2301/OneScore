@@ -307,6 +307,14 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                 req.message = wxmsg;
                 req.scene = flag;
                 boolean flg = api.sendReq(req);
+
+                if (flg){
+                    Toast.makeText(mContext, "微信成功", Toast.LENGTH_LONG).show();
+
+                }else {
+                    Toast.makeText(mContext, "微信失败", Toast.LENGTH_LONG).show();
+
+                }
             }
         }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
@@ -369,6 +377,7 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                 mWeiboShareAPI.sendRequest((Activity) mContext, request, authInfo, token, new WeiboAuthListener() {
                     @Override
                     public void onWeiboException(WeiboException arg0) {
+
                     }
 
                     @Override
@@ -458,13 +467,13 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
         if (baseResp != null) {
             switch (baseResp.errCode) {
                 case WBConstants.ErrorCode.ERR_OK:
-                    //   Toast.makeText(mContext, "微博成功", Toast.LENGTH_LONG).show();
+                       Toast.makeText(mContext, "微博成功", Toast.LENGTH_LONG).show();
                     break;
                 case WBConstants.ErrorCode.ERR_CANCEL:
-                    // Toast.makeText(mContext, "微博取消", Toast.LENGTH_LONG).show();
+                     Toast.makeText(mContext, "微博取消", Toast.LENGTH_LONG).show();
                     break;
                 case WBConstants.ErrorCode.ERR_FAIL:
-                    // Toast.makeText(mContext, "微博失败" + "Error Message: " + baseResp.errMsg,Toast.LENGTH_LONG).show();
+                     Toast.makeText(mContext, "微博失败" + "Error Message: " + baseResp.errMsg,Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -473,17 +482,23 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
     IUiListener qqShareListener = new IUiListener() {
         @Override
         public void onCancel() {
+            Toast.makeText(mContext, "QQ取消", Toast.LENGTH_LONG).show();
+
 
         }
 
         @Override
         public void onComplete(Object response) {
             // TODO Auto-generated method stub
+            Toast.makeText(mContext, "QQ成功", Toast.LENGTH_LONG).show();
+
         }
 
         @Override
         public void onError(UiError e) {
             // TODO Auto-generated method stub
+            Toast.makeText(mContext, "QQ失败", Toast.LENGTH_LONG).show();
+
         }
     };
 

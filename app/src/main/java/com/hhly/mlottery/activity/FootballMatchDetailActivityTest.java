@@ -309,8 +309,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private TimerTask timerTask;
 
     private FootballLiveGotoChart mFootballLiveGotoChart;
-    private FootballLiveGotoChart mPreHeadGotoAnimHead;
-
 
     private ImageView iv_join_room_foot;// 聊天室悬浮按钮
     private ProgressDialog pd;// 加载框
@@ -387,14 +385,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             }
         };
 
-
-        mPreHeadGotoAnimHead = new FootballLiveGotoChart() {
-            @Override
-            public void onClick() {
-                preGotoliveHandler.removeCallbacks(runnable);
-                mHeadviewpager.setCurrentItem(2, false);
-            }
-        };
 
         loadData();
 
@@ -840,7 +830,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
 
             mPreHeadInfoFrament.initData(matchDetail, true);
-            mPreHeadInfoFrament.setmPreHeadGotoAnimHead(mPreHeadGotoAnimHead);
 
             mLiveHeadInfoFragment.initData(matchDetail);
 
@@ -985,7 +974,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             runnable = new Runnable() {
                 @Override
                 public void run() {
-                    mHeadviewpager.setCurrentItem(1, true);
+                    if ("1".equals(mMatchDetail.getLiveStatus())) {
+                        mHeadviewpager.setCurrentItem(2, false);
+                    } else if ("-1".equals(mMatchDetail.getLiveStatus())) {
+                        mHeadviewpager.setCurrentItem(1, true);
+
+                    }
                 }
             };
 
@@ -1275,8 +1269,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     public void onEventMainThread(FirstEvent event) {
         switch (event.getMsg()) {
             case RongYunUtils.CHART_ROOM_EXIT:
-                L.d("xxx","足球EventBus收到 ");
-                if(iv_join_room_foot != null){
+                L.d("xxx", "足球EventBus收到 ");
+                if (iv_join_room_foot != null) {
                     iv_join_room_foot.setVisibility(View.VISIBLE);
                 }
                 break;
