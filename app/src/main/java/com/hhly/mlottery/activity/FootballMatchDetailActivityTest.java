@@ -2,6 +2,7 @@ package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -315,6 +316,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     private ImageView iv_join_room_foot;// 聊天室悬浮按钮
     private ProgressDialog pd;// 加载框
+    private boolean isExit = false;// 是否取消进入聊天室
 
     private Handler preGotoliveHandler;
     private Runnable runnable;
@@ -406,6 +408,16 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             e.printStackTrace();
         }
 
+        pd.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    isExit = true;
+                    iv_join_room_foot.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -1245,6 +1257,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isExit = true;
         EventBus.getDefault().unregister(this);//取消注册EventBus
         RongYunUtils.isCreateChartRoom = false;// 修改创建聊天室状态
         if (footballTimer != null) {
@@ -1276,8 +1289,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     public void onEventMainThread(FirstEvent event) {
         switch (event.getMsg()) {
             case RongYunUtils.CHART_ROOM_EXIT:
-                L.d("xxx","足球EventBus收到 ");
-                if(iv_join_room_foot != null){
+                L.d("xxx", "足球EventBus收到 ");
+                if (iv_join_room_foot != null) {
                     iv_join_room_foot.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -2502,18 +2515,20 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 new Thread() {
                     @Override
                     public void run() {
-                        while (!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom) {
+                        while ((!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom) && !isExit) {
                             SystemClock.sleep(1000);
                         }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                iv_join_room_foot.setVisibility(View.GONE);
-                                pd.dismiss();
-                                appBarLayout.setExpanded(true);// 显示头部内容
-                                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
-                            }
-                        });
+                        if (!isExit) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv_join_room_foot.setVisibility(View.GONE);
+                                    pd.dismiss();
+                                    appBarLayout.setExpanded(true);// 显示头部内容
+                                    RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+                                }
+                            });
+                        }
                     }
                 }.start();
             }

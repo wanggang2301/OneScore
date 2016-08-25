@@ -58,17 +58,26 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         // 设置聊天室背景色为透明
 //        findViewById(R.id.conversation).setBackgroundColor(getResources().getColor(R.color.chart_room_bg_color));
         final View conversation = findViewById(R.id.conversation);
-        String s = Integer.toHexString(204);// 80%
+        int size = PreferenceUtil.getInt(RongYunUtils.CHART_ROOM_TRANSPARENT_SIZE, -1);
+        if (size == -1) {
+            size = 204;
+        } else {
+            size = (int) (size * 2.55);
+        }
+        String s = Integer.toHexString(size);// 80%
+        if (s.length() <= 1) {
+            s = "0" + s;
+        }
         conversation.setBackgroundColor(Color.parseColor("#" + s + "000000"));
         final LinearLayout ll_setting = (LinearLayout) findViewById(R.id.ll_setting);
         ll_setting.setBackgroundColor(Color.parseColor("#" + s + "000000"));
         final TextView tv_pb_size = (TextView) findViewById(R.id.tv_pb_size);
-        tv_pb_size.setText(mContext.getResources().getString(R.string.rong_chart_bg_pb) + "(80):");
+        tv_pb_size.setText(mContext.getResources().getString(R.string.rong_chart_bg_pb) + "("+PreferenceUtil.getInt(RongYunUtils.CHART_ROOM_TRANSPARENT_SIZE,80)+"):");
 
         findViewById(R.id.ll_top).setOnClickListener(this);
         findViewById(R.id.iv_exit).setOnClickListener(this);// 关闭
         SeekBar sb_adjust = (SeekBar) findViewById(R.id.sb_adjust);
-        sb_adjust.setProgress(80);
+        sb_adjust.setProgress(PreferenceUtil.getInt(RongYunUtils.CHART_ROOM_TRANSPARENT_SIZE,80));
         sb_adjust.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -82,6 +91,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
                 conversation.setBackgroundColor(Color.parseColor("#" + str + "000000"));
                 ll_setting.setBackgroundColor(Color.parseColor("#" + str + "000000"));
                 tv_pb_size.setText(mContext.getResources().getString(R.string.rong_chart_bg_pb) + "(" + progress + "):");
+                PreferenceUtil.commitInt(RongYunUtils.CHART_ROOM_TRANSPARENT_SIZE,progress);
             }
 
             @Override
