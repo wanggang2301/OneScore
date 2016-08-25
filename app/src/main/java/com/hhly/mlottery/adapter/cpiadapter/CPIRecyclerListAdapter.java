@@ -28,9 +28,9 @@ import java.util.List;
  */
 public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfoBean> {
 
-    int defaultTextColor;
-    int primaryColor;
-    int redColor;
+    private int defaultTextColor;
+    private int primaryColor;
+    private int redColor;
 
     private String type; // 类型
 
@@ -101,7 +101,7 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
             status.setVisibility(View.VISIBLE);
             // 取消、待定、推迟、未开始
             if (intState == 0 || intState == -10 || intState == -11 || intState == -14) {
-                // 未开，显示默认灰色
+                // 显示默认灰色
                 score.setText(R.string.basket_VS);
                 score.setTextColor(defaultTextColor);
                 status.setTextColor(defaultTextColor);
