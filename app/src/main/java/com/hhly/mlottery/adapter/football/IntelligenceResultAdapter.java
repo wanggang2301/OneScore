@@ -66,18 +66,20 @@ public class IntelligenceResultAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-            holder.homeRate.setText(list.get(position).getHome());
+            holder.homeRate.setText(list.get(position).getHome()==null?"--":list.get(position).getHome());
+            holder.guestRate.setText(list.get(position).getGuest()==null?"--":list.get(position).getGuest());
             String home=list.get(position).getHome();
-            String a[]=home.split("%");
+            if(null!=home){
+                String a[]=home.split("%");
+                int homeProgress= (int) Double.parseDouble(a[0]);
+                holder.homePro.setProgress(homeProgress);
+            }
             String guest=list.get(position).getGuest();
-            String b[]=guest.split("%");
-
-
-            int homeProgress= (int) Double.parseDouble(a[0]);
-            int guestProgress= (int) Double.parseDouble(b[0]);
-            holder.homePro.setProgress(homeProgress);
-            holder.guestRate.setText(list.get(position).getGuest());
-            holder.guestPro.setProgress(guestProgress);
+            if(null!=guest){
+                String b[]=guest.split("%");
+                int guestProgress= (int) Double.parseDouble(b[0]);
+                holder.guestPro.setProgress(guestProgress);
+            }
 
             switch (list.get(position).getType()){
                 case 1:

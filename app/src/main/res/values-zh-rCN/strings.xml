@@ -1015,6 +1015,11 @@
     <string name="intelligence_guest_recent">客队近期</string>
     <string name="new_analyze_description">(比分红色为主队)</string>
     <string name="new_analyze_recent_game">6场近期各自比赛</string>
+    <string name="new_analyze_changci">场次</string>
+    <string name="new_analyze_home_win_rate">主队赢盘率</string>
+    <string name="new_analyze_guest_win_rate">客队赢盘率</string>
+    <string name="analyze_draw_rate">走水</string>
+    <string name="new_analyze_size_draw_rate">走  水</string>
     <!--情报分析-->
     <string name="intelligent_all_game">全部比赛</string>
     <string name="intelligent_same_game">相同主客场</string>
@@ -1073,5 +1078,7 @@
     <string name="photograph">拍照</string>
 
     <string name="welcome_chart_room">欢迎进入聊天室!</string>
+
+
 
 </resources>

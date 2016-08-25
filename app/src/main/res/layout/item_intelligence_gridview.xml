@@ -19,33 +19,33 @@
             android:id="@+id/item_tv_home_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14%"
+            android:text="--"
             style="@style/intelligent_rate_text" />
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/item_pro_home_rate"
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:progress="50"
+            android:progress="0"
             android:progressDrawable="@drawable/intelligent_pro_home"/>
         <TextView
             android:id="@+id/item_tv_guest_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14%"
+            android:text="--"
             style="@style/intelligent_rate_text" />
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/item_pro_guest_rate"
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:progress="50"
+            android:progress="0"
             android:progressDrawable="@drawable/intelligent_pro_guest"/>
         <TextView
             android:id="@+id/item_tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="赢盘率"
+            android:text=""
             android:paddingTop="5dp"
             android:textColor="@color/mdy_333"
             android:textSize="@dimen/text_size_13"

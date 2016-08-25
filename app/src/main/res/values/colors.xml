@@ -620,6 +620,7 @@
     <color name="mdy_333">#333333</color>
     <color name="mdy_999">#999999</color>
     <color name="mdy_ddd">#dddddd</color>
+    <color name="mdy_666">#666666</color>
     <!--情报界面颜色-->
     <color name="shape_stoke_color">#7c99d6</color>
     <color name="result_home_pro">#ff6a6a</color>
