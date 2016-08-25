@@ -47,6 +47,7 @@ public class RongYunUtils {
     public static final String RONG_CONNENT_OK = "RongConnentOK";// 连接融云服务器
     public static final String CREATE_CHARTROOM_OK = "CreateChartRoomOK";// 创建聊天室
     public static final String CHART_ROOM_COUNT_OK = "chartRoomCountOK";// 获取到聊天室人数
+    public static final String CHART_ROOM_TRANSPARENT_SIZE = "chartRoomTransparentSize";// 调节聊天界面透明度值
 
     public static boolean isRongConnent = false;// 连接融云服务器状态
     public static boolean isCreateChartRoom = false;// 创建聊天室状态

@@ -2,10 +2,14 @@ package com.hhly.mlottery.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.MyConstants;
@@ -24,6 +28,7 @@ public class DebugConfigActivity extends BaseActivity{
     public final static int WS_13322 = 3;
     public final static int WS_242 = 4;
     public final static int WS_82 = 6;
+    public final static int DIY_INPUT = 8;
 
 
 
@@ -37,6 +42,7 @@ public class DebugConfigActivity extends BaseActivity{
         MobclickAgent.openActivityDurationTrack(false);
 
         Button config_submit = (Button) findViewById(R.id.config_submit);
+        Button bt_ok = (Button) findViewById(R.id.bt_ok);
 
 
         //开发环境
@@ -94,6 +100,26 @@ public class DebugConfigActivity extends BaseActivity{
 
 //				finish();
 
+            }
+        });
+
+        bt_ok.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EditText ed =  (EditText)findViewById(R.id.et_input);
+                String str = ed.getText().toString();
+                if(TextUtils.isEmpty(str)){
+                    Toast.makeText(DebugConfigActivity.this, "不能为空！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, DIY_INPUT);
+                PreferenceUtil.commitInt(MyConstants.WS_HOME_CONFIG, DIY_INPUT);
+                PreferenceUtil.commitString("DIY_INPUT", str);
+
+                startActivity(new Intent(DebugConfigActivity.this, WelcomeActivity.class));
+                System.exit(0);
             }
         });
 

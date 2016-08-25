@@ -289,11 +289,4 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
             }
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // 刷新本地用户缓存
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx"))));
-    }
 }

@@ -99,7 +99,8 @@ public class CPIRecyclerListAdapter extends BaseQuickAdapter<NewOddsInfo.AllInfo
             time.setTextColor(defaultTextColor);
             second.setText("");
             status.setVisibility(View.VISIBLE);
-            if (intState == 0) {
+            // 取消、待定、推迟、未开始
+            if (intState == 0 || intState == -10 || intState == -11 || intState == -14) {
                 // 未开，显示默认灰色
                 score.setText(R.string.basket_VS);
                 score.setTextColor(defaultTextColor);
