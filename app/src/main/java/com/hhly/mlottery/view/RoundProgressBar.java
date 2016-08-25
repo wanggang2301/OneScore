@@ -59,7 +59,7 @@ public class RoundProgressBar extends View {
     /**
      * 当前进度
      */
-    private double progress;
+    private double progress1;
     private double progress2;
     private double progress3;
     /**
@@ -157,7 +157,7 @@ public class RoundProgressBar extends View {
         paint.setColor(textColor);
         paint.setTextSize(textSize);
         paint.setTypeface(Typeface.DEFAULT_BOLD); //设置字体
-        String percent = StringFormatUtils.toPercentString(progress / (float) max);  //中间的进度百分比，先转换成float在进行除法运算，不然都为0
+        String percent = StringFormatUtils.toPercentString(progress1 / (float) max);  //中间的进度百分比，先转换成float在进行除法运算，不然都为0
         float textWidth = paint.measureText(percent);   //测量字体宽度，我们需要根据字体的宽度设置在圆环中间
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float textCenterVerticalBaselineY =
@@ -178,15 +178,15 @@ public class RoundProgressBar extends View {
         switch (style) {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
-                if (progress > 0) {
-                    canvas.drawArc(oval, 270, (360 * (int)(progress) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                if (progress1 > 0) {
+                    canvas.drawArc(oval, 270, (360 * (int)(progress1) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
                 }
                 break;
             }
             case FILL: {
                 paint.setStyle(Paint.Style.FILL_AND_STROKE);
-                if (progress != 0)
-                    canvas.drawArc(oval, 0, (360 * (int)(progress + 0.5) / max), true, paint);  //根据进度画圆弧
+                if (progress1 != 0)
+                    canvas.drawArc(oval, 0, (360 * (int)(progress1 + 0.5) / max), true, paint);  //根据进度画圆弧
                 break;
             }
         }
@@ -203,7 +203,7 @@ public class RoundProgressBar extends View {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
                 if (progress2 > 0) {
-                    canvas.drawArc(oval2, 270+(360 * (int)(progress + 0.5) / 100),  (360 * (int)(progress2) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                    canvas.drawArc(oval2, 270+(360 * (int)(progress1 + 0.5) / 100),  (360 * (int)(progress2) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
                 }
                 break;
             }
@@ -227,7 +227,7 @@ public class RoundProgressBar extends View {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
                 if (progress3 > 0) {
-                    canvas.drawArc(oval3, 270 + (360 * ((int)(progress + 0.5) + (int)(progress2 + 0.5)) / 100),  (360 * (int)(progress3) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
+                    canvas.drawArc(oval3, 270 + (360 * ((int)(progress1 + 0.5) + (int)(progress2 + 0.5)) / 100),  (360 * (int)(progress3) / max) +2, false, paint);  //根据进度画圆弧  （从270°开始，0°顺时针开始计算）
                 }
                 break;
             }
@@ -251,9 +251,9 @@ public class RoundProgressBar extends View {
 
             float r = (int) (centerX - roundWidth / 2);//半径
 
-            double d = (360 * progress / 100) / 2; //得到角度的一半（进度中间显示）
-            double d2 = 360 * (progress + progress2/2) / 100; //得到角度的一半（进度中间显示）
-            double d3 = (360 * (progress + progress2 + progress3/2)/ 100); //得到角度的一半（进度中间显示）
+            double d = (360 * progress1 / 100) / 2; //得到角度的一半（进度中间显示）
+            double d2 = 360 * (progress1 + progress2/2) / 100; //得到角度的一半（进度中间显示）
+            double d3 = (360 * (progress1 + progress2 + progress3/2)/ 100); //得到角度的一半（进度中间显示）
 
             Paint.FontMetrics fontMetrics2 = paint.getFontMetrics();
             float centerY = centerX - fontMetrics2.bottom + (fontMetrics2.bottom - fontMetrics2.top) / 2;
@@ -305,7 +305,7 @@ public class RoundProgressBar extends View {
      * @return
      */
     public synchronized double getProgress() {
-        return progress;
+        return progress1;
     }
 
     /**
@@ -316,19 +316,19 @@ public class RoundProgressBar extends View {
      */
     public synchronized void setProgress(double progress) {
         if (progress < 0) {
-            throw new IllegalArgumentException("progress not less than 0");
+            throw new IllegalArgumentException("progress值不能小于0");
         }
         if (progress > max) {
             progress = max;
         }
         if (progress <= max) {
-            this.progress = progress;
+            this.progress1 = progress;
             postInvalidate();
         }
     }
     public synchronized void setProgress2(double progress2) {
         if (progress2 < 0) {
-            throw new IllegalArgumentException("progress not less than 0");
+            throw new IllegalArgumentException("progress值不能小于0");
         }
         if (progress2 > max) {
             progress2 = max;
@@ -340,13 +340,48 @@ public class RoundProgressBar extends View {
     }
     public synchronized void setProgress3(double progress3) {
         if (progress3 < 0) {
-            throw new IllegalArgumentException("progress not less than 0");
+            throw new IllegalArgumentException("progress值不能小于0");
         }
         if (progress3 > max) {
             progress3 = max;
         }
-        if (progress <= max) {
+        if (progress1 <= max) {
             this.progress3 = progress3;
+            postInvalidate();
+        }
+    }
+    public synchronized void setProgressAll(double progr1 , double progr2 , double progr3){
+
+        if (progr1 < 0) {
+            throw new IllegalArgumentException("progress值不能小于0");
+        }
+        if (progr1 > max) {
+            progr1 = max;
+        }
+        if (progr1 <= max){
+            this.progress1 = progr1;
+            postInvalidate();
+        }
+
+        if (progr2 < 0) {
+            throw new IllegalArgumentException("progress值不能小于0");
+        }
+        if (progr2 > max) {
+            progr2 = max;
+        }
+        if (progr2 <= max){
+            this.progress2 = progr2;
+            postInvalidate();
+        }
+
+        if (progr3 < 0) {
+            throw new IllegalArgumentException("progress值不能小于0");
+        }
+        if (progr3 > max) {
+            progr3 = max;
+        }
+        if (progr3 <= max){
+            this.progress3 = progr3;
             postInvalidate();
         }
     }
