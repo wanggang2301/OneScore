@@ -34,6 +34,8 @@ public class BaseURLs {
 //                return "192.168.12.242:8181";//余勇俊测试
             } else if (url_config == DebugConfigActivity.URL_93) {
                 return "183.61.172.93:8096"; // 典哥新加
+            } else if (url_config == DebugConfigActivity.DIY_INPUT) {
+                return PreferenceUtil.getString("DIY_INPUT","m.13322.com"); // 自定义环境地址
             } else {
                 return "m.13322.com";
             }
@@ -97,6 +99,8 @@ public class BaseURLs {
             } else if (ws_config == DebugConfigActivity.WS_242) {
                 return "192.168.10.242:61634";
 //                return "192.168.12.242:61634";//余勇俊测试
+            } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
+                return PreferenceUtil.getString("DIY_INPUT","m.13322.com/ws");// 自定义
             } else {
                 return "m.13322.com/ws";
             }
