@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +35,7 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * 首页用户设置选项
@@ -69,7 +71,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 case LOGGED_ON:
                     //mTv_nickname.setVisibility(View.VISIBLE);
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-                    universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mUser_image, options);
+
                     mTv_nickname.setEnabled(false);
                     mTv_logout.setVisibility(View.VISIBLE);
                     findViewById(R.id.view_top).setVisibility(View.VISIBLE);
@@ -256,6 +258,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("HomeUserOptionsActivity");
        // UiUtils.toast(MyApp.getInstance(), "我是个人用户页面");
+        universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mUser_image, options);
          /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
@@ -285,5 +288,12 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 // iv_account.setImageResource(R.mipmap.logout);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 刷新本地用户缓存
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx"))));
     }
 }

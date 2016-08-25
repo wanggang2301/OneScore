@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.BasketSerach;
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.view.SpecifiedTextsColorTextView;
 
 import java.util.List;
@@ -22,11 +22,11 @@ import java.util.List;
 public class BasketballInforSerachAdapter extends BaseAdapter{
 
     private LayoutInflater inflater;
-    private List<BasketSerach.ResultListBean> resultListBeen;
+    private List<LeagueBean> resultListBeen;
     private   SpecifiedTextsColorTextView mTv;
     private  Context mContext;
     private  String et_keyword;
-    public BasketballInforSerachAdapter(Context context, List<BasketSerach.ResultListBean> resultListBeen, String et_keyword) {
+    public BasketballInforSerachAdapter(Context context, List<LeagueBean> resultListBeen, String et_keyword) {
         super();
         this.mContext=context;
         this.resultListBeen = resultListBeen;
@@ -66,7 +66,7 @@ public class BasketballInforSerachAdapter extends BaseAdapter{
 
         }
         mTv = (SpecifiedTextsColorTextView)convertView.findViewById(R.id.serach_item);
-        mTv.setSpecifiedTextsColor(resultListBeen.get(position).leagueName,et_keyword, Color.parseColor("#0090FF"));
+        mTv.setSpecifiedTextsColor(resultListBeen.get(position).getLeagueName(),et_keyword, Color.parseColor("#0090FF"));
 
            // mTv.setText(resultListBeen.get(position).leagueName);
 
