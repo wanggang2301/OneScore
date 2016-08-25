@@ -9,7 +9,7 @@
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="环境选择" 
+        android:text="环境选择"
         android:background="@color/bg_gray"
         android:textSize="20sp"
         />
@@ -34,24 +34,32 @@
             />
 
         <RadioButton
+            android:id="@+id/config_rb7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试环境2：http://183.61.172.93:8096"  />
+
+        <RadioButton
             android:id="@+id/config_rb2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="生产环境：http://m.13322.com"  />
 
 
+
+
     </RadioGroup>
-    
+
     <TextView
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="推送环境选择" 
+        android:text="推送环境选择"
         android:background="@color/bg_gray"
         android:textSize="20sp"
         />
-    
-    
+
+
     <RadioGroup
         android:id="@+id/config_rg2"
         android:layout_width="wrap_content"
@@ -83,5 +91,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="30dp"
         android:text="确    定" />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义环境"
+        android:background="@color/bg_gray"
+        android:textSize="20sp"
+        />
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:hint="请输入环境地址"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义确定"/>
 </LinearLayout>

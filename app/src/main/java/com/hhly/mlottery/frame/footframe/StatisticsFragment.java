@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.footframe;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,14 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.football.EventAdapter;
@@ -27,15 +36,18 @@ import com.hhly.mlottery.bean.footballDetails.DataStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
-import com.hhly.mlottery.bean.footballDetails.TrendAllBean;
+import com.hhly.mlottery.bean.footballDetails.trend.FootballTrendBean;
+import com.hhly.mlottery.bean.footballDetails.trend.TrendBean;
+import com.hhly.mlottery.bean.footballDetails.trend.TrendFormBean;
+import com.hhly.mlottery.callback.FootballLiveGotoChart;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.FootballTrendChartComparator;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.widget.MyLineChart;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -46,7 +58,7 @@ import java.util.Map;
  * @date 2016/6/12 11:21
  * @des 足球内页改版直播(足球事件直播, 走勢統計)
  */
-public class StatisticsFragment extends Fragment {
+public class StatisticsFragment extends Fragment implements View.OnClickListener {
 
 
     private static String STA_PARM = "STA_PARM";
@@ -66,6 +78,20 @@ public class StatisticsFragment extends Fragment {
     private static final String YELLOW_CARD1 = "2058";
     private static final String CORNER1 = "2049";
 
+
+    //走势图表
+    private static final String SHOOT = "1039";
+    private static final String SHOOTASIDE = "1040";
+    private static final String SHOOTASIDE2 = "1041";
+    private static final String DANGERATTACK = "1026";
+    private static final String ATTACK = "1024";
+
+    private static final String SHOOT1 = "2063";
+    private static final String SHOOTASIDE1 = "2064";
+    private static final String SHOOTASIDE12 = "2065";
+    private static final String DANGERATTACK1 = "2050";
+    private static final String ATTACK1 = "2048";
+
     /**
      * 上半场
      */
@@ -84,10 +110,6 @@ public class StatisticsFragment extends Fragment {
     private final int SUCCESS = 0;// 访问成功
     private final int STARTLOADING = 1;// 正在加载中
 
-    private List<Integer> mHomeDangers = new ArrayList<>();// 主队攻防数据
-    private List<Integer> mGuestDangers = new ArrayList<>();// 客队攻防数据
-    private List<Integer> mHomeCorners = new ArrayList<>();// 主队角球数据
-    private List<Integer> mGuestCorners = new ArrayList<>();// 客队角球数据
 
     private LinearLayout ll_trend_main;// 走势图容器
     private FrameLayout ff;// 攻防折线图显示容器
@@ -96,8 +118,6 @@ public class StatisticsFragment extends Fragment {
     private FrameLayout fl_attackTrend_networkError;// 加载失败
     private TextView reLoading;// 刷新
     private ScrollView sv_attack;
-    private MyLineChart myLineChartAttack;// 攻防图表对象
-    private MyLineChart myLineChartCorner;// 角球图表对象
 
     private String eventType;
 
@@ -138,6 +158,93 @@ public class StatisticsFragment extends Fragment {
 
     private List<MatchTimeLiveBean> eventMatchLive = new ArrayList<>();
 
+    private LinearLayout ll_nodata;
+
+    private FootballLiveGotoChart mFootballLiveGotoChart;
+
+    public void setmFootballLiveGotoChart(FootballLiveGotoChart mFootballLiveGotoChart) {
+        this.mFootballLiveGotoChart = mFootballLiveGotoChart;
+    }
+
+    /***
+     * 走势图
+     */
+
+    private static final String TREND_DEFAULT = "0"; //维度
+    private static final String TREND_CORNER = "1"; //角球
+    private static final String TREND_GOAL = "2";  //进球
+
+
+    private LineChart chart_shoot;  //射正  //射正+进球
+    private LineChart chart_shootAside; //射偏   //射偏
+    private LineChart chart_dangerousAttack; //危险进攻  //危险进攻
+    private LineChart chart_attack;  //进攻  //进攻
+
+
+    private List<Entry> shootHomeValues;
+    private List<Entry> shootGuestValues;
+    private List<Entry> shootAsideHomeValues;
+    private List<Entry> shootAsideGuestValues;
+    private List<Entry> dangerousAttackHomeValues;
+    private List<Entry> dangerousAttackGuestValues;
+    private List<Entry> attackHomeValues;
+    private List<Entry> attackGuestValues;
+
+    private List<Integer> shootHomeColors;
+    private List<Integer> shootGuestColors;
+    private List<Integer> shootAsideHomeColors;
+    private List<Integer> shootAsideGuestColors;
+    private List<Integer> dangerousAttackHomeColors;
+    private List<Integer> dangerousAttackGuestColors;
+    private List<Integer> attackHomeColors;
+    private List<Integer> attackGuestColors;
+
+    private int shotHome;
+    private int shotGuest;
+    private int shotAsideHome;
+    private int shotAsideGuest;
+    private int dangerAttackHome;
+    private int dangerAttackGuest;
+    private int attackHome;
+    private int attackGuest;
+
+
+    private TrendFormBean trendFormBean;
+
+
+    private XAxis shotXAxis;
+    private YAxis shotYAxis;
+
+    private XAxis shotAsideXAxis;
+    private YAxis shotAsideYAxis;
+
+    private XAxis dangerousAttackXAxis;
+    private YAxis dangerousAttackYAxis;
+
+    private XAxis attackXAxis;
+    private YAxis attackYAxis;
+
+    private static final float HALFMATCH = 5f;
+    private static final float FINISHMATCH = 10f;
+
+    private List<MatchTextLiveBean> trendChartList;
+
+
+    private TextView tv_shot;
+    private TextView tv_shot_home;
+    private TextView tv_shot_guest;
+    private TextView tv_shotAside;
+    private TextView tv_shotAside_home;
+    private TextView tv_shotAside_guest;
+    private TextView tv_dangerAttack;
+    private TextView tv_dangerAttack_home;
+    private TextView tv_dangerAttack_guest;
+    private TextView tv_attack;
+    private TextView tv_attack_home;
+    private TextView tv_attack_guest;
+
+    private TextView goChart;
+
 
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
@@ -145,95 +252,46 @@ public class StatisticsFragment extends Fragment {
     }
 
 
-    public static StatisticsFragment newInstance(String type) {
-
-        Bundle args = new Bundle();
-        args.putString(STA_PARM, type);
-        StatisticsFragment fragment = new StatisticsFragment();
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_statistics, container, false);
         mContext = getActivity();
-       /* Bundle args = getArguments();
-        if (args != null) {
-            type = args.getString(STA_PARM);
-        }*/
         initView();
-        //  loadData();
+        L.d("112233", "初始化View");
         return mView;
     }
 
-
-    public void setType(String type) {
-        this.type = type;
-        loadData();
-        initEvent();
+    public void finishMatchRequest() {
+        getVolleyData();
+        getVolleyDataStatic();
     }
 
 
-    private void loadData() {
-        if ("-1".equals(type)) {
-            getVolleyData();
-            getVolleyDataStatic();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
 
-        } else { //未完场
-            initData(type);
-            initJson(type);
-        }
-    }
-
-    /**
-     * 初始化事件
-     */
-    private void initEvent() {
-        // 访问失败，点击刷新
-        reLoading.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 请求数据
-                getVolleyData();
-            }
-        });
-
-
-        reLoadin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 请求数据
-                getVolleyDataStatic();
-            }
-        });
-        // 走势图滚动监听
-     /*   sv_attack.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_MOVE:
-                        if (sv_attack.getScrollY() != 0) {// 处于顶部
-                            if (getActivity() != null) {
-                              //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(false);
-                            }
-                        }
-                        break;
-
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        if (getActivity() != null) {
-                          //  ((FootballMatchDetailActivityTest) getActivity()).mRefreshLayout.setEnabled(true);
-                        }
-                        break;
+            case R.id.goChart:
+                if (mFootballLiveGotoChart != null) {
+                    mFootballLiveGotoChart.onClick();
                 }
-                return false;
-            }
-        });*/
+                break;
+
+            case R.id.reLoading:
+                getVolleyData();
+
+                break;
+
+            case R.id.reLoadin:
+                getVolleyDataStatic();
+
+                break;
+
+
+        }
+
+
     }
 
     /**
@@ -243,12 +301,14 @@ public class StatisticsFragment extends Fragment {
         radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
         mNestedScrollView_event = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_event);
         mNestedScrollView_trend = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_trend);
-        mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
+        //  mNestedScrollView_nodata = (NestedScrollView) mView.findViewById(R.id.nested_scroll_view_nodata);
 
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setNestedScrollingEnabled(false);
+
+        ll_nodata = (LinearLayout) mView.findViewById(R.id.nodata);
 
         mNestedScrollView_event.setFillViewport(true);
 
@@ -258,17 +318,17 @@ public class StatisticsFragment extends Fragment {
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
                     case R.id.live_event:
-                        if (!eventType.equals("0")) {
-                            mNestedScrollView_event.setVisibility(View.VISIBLE);
-                            mNestedScrollView_trend.setVisibility(View.GONE);
-                        }
+                        //  if (!eventType.equals("0")) {
+                        mNestedScrollView_event.setVisibility(View.VISIBLE);
+                        mNestedScrollView_trend.setVisibility(View.GONE);
+                        // }
 
                         break;
                     case R.id.live_statistics:
-                        if (!eventType.equals("0")) {
-                            mNestedScrollView_event.setVisibility(View.GONE);
-                            mNestedScrollView_trend.setVisibility(View.VISIBLE);
-                        }
+                        // if (!eventType.equals("0")) {
+                        mNestedScrollView_event.setVisibility(View.GONE);
+                        mNestedScrollView_trend.setVisibility(View.VISIBLE);
+                        // }
                         break;
                     default:
                         break;
@@ -285,35 +345,6 @@ public class StatisticsFragment extends Fragment {
         //  sv_attack = (ScrollView) mView.findViewById(R.id.sv_attack);
 
         reLoading = (TextView) mView.findViewById(R.id.reLoading);// 刷新走势图
-        // 攻防走势图控件
-        myLineChartAttack = new MyLineChart(mContext);
-        myLineChartAttack.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
-        myLineChartAttack.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
-        myLineChartAttack.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
-        myLineChartAttack.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
-        myLineChartAttack.setmOneLineColor(mContext.getResources().getColor(R.color.firstPlayers_homeTeam_bg));// 设置第一条线颜色
-        myLineChartAttack.setmTwoLineColor(mContext.getResources().getColor(R.color.firstPlayers_visitingTeam_bg));// 设置第二条线颜色
-        myLineChartAttack.setMargin(DisplayUtil.dip2px(mContext, 16));// 设置边距
-        myLineChartAttack.setXscale(DisplayUtil.px2dip(mContext, 6));// 设置X轴长度
-        myLineChartAttack.setYscale(DisplayUtil.px2dip(mContext, 6));// 设置Y轴长度
-        myLineChartAttack.setmTextSize(DisplayUtil.dip2px(mContext, 10));// XY轴字体大小
-        myLineChartAttack.setmLineWidth(DisplayUtil.dip2px(mContext, 1));// 线条宽度
-        myLineChartAttack.setmCircleSize(DisplayUtil.dip2px(mContext, 3));// 圆点大小
-        // 角球走势图控件
-        myLineChartCorner = new MyLineChart(mContext);
-        myLineChartCorner.setXlabel(new String[]{"0", "", "", "45'", "", "", "90'"});// 设置X轴刻度值
-        myLineChartCorner.setmLineXYColor(mContext.getResources().getColor(R.color.res_pl_color));// 设置XY主轴的颜色
-        myLineChartCorner.setmXYTextColor(mContext.getResources().getColor(R.color.res_time_color));// 设置XY轴文字颜色
-        myLineChartCorner.setmGridColor(mContext.getResources().getColor(R.color.linecolor));// 设置网格颜色
-        myLineChartCorner.setmOneLineColor(mContext.getResources().getColor(R.color.firstPlayers_homeTeam_bg));// 设置第一条线颜色
-        myLineChartCorner.setmTwoLineColor(mContext.getResources().getColor(R.color.firstPlayers_visitingTeam_bg));// 设置第二条线颜色
-        myLineChartCorner.setMargin(DisplayUtil.dip2px(mContext, 16));// 设置边距
-        myLineChartCorner.setXscale(DisplayUtil.px2dip(mContext, 6));// 设置X轴长度
-        myLineChartCorner.setYscale(DisplayUtil.px2dip(mContext, 6));// 设置Y轴长度
-        myLineChartCorner.setmTextSize(DisplayUtil.dip2px(mContext, 10));// XY轴字体大小
-        myLineChartCorner.setmLineWidth(DisplayUtil.dip2px(mContext, 1));// 线条宽度
-        myLineChartCorner.setmCircleSize(DisplayUtil.dip2px(mContext, 3));// 圆点大小
-
 
         /***
          * 统计图
@@ -359,14 +390,120 @@ public class StatisticsFragment extends Fragment {
         home_lineout_txt = (TextView) mView.findViewById(R.id.home_lineout_txt);
         guest_lineout_txt = (TextView) mView.findViewById(R.id.guest_lineout_txt);
 
+
+        tv_shot = (TextView) mView.findViewById(R.id.tv_shoot);
+        tv_shot_home = (TextView) mView.findViewById(R.id.tv_shot_home);
+        tv_shot_guest = (TextView) mView.findViewById(R.id.tv_shot_guest);
+        tv_shotAside = (TextView) mView.findViewById(R.id.tv_shotAside);
+        tv_shotAside_home = (TextView) mView.findViewById(R.id.tv_shotAside_home);
+        tv_shotAside_guest = (TextView) mView.findViewById(R.id.tv_shotAside_guest);
+        tv_dangerAttack = (TextView) mView.findViewById(R.id.tv_dangerAttack);
+        tv_dangerAttack_home = (TextView) mView.findViewById(R.id.tv_dangerAttack_home);
+        tv_dangerAttack_guest = (TextView) mView.findViewById(R.id.tv_dangerAttack_guest);
+        tv_attack = (TextView) mView.findViewById(R.id.tv_attack);
+        tv_attack_home = (TextView) mView.findViewById(R.id.tv_attack_home);
+        tv_attack_guest = (TextView) mView.findViewById(R.id.tv_attack_guest);
+
+
+        goChart = (TextView) mView.findViewById(R.id.goChart);
+        goChart.setOnClickListener(this);
+
+        reLoadin.setOnClickListener(this);
+        reLoading.setOnClickListener(this);
+        /**
+         * 走势图
+         */
+
+        chart_shoot = (LineChart) mView.findViewById(R.id.chart_shoot);
+        chart_shootAside = (LineChart) mView.findViewById(R.id.chart_shootAside);
+        chart_dangerousAttack = (LineChart) mView.findViewById(R.id.chart_dangerousAttack);
+        chart_attack = (LineChart) mView.findViewById(R.id.chart_attack);
+
+
+        initChartView(chart_shoot, mContext.getResources().getString(R.string.shot_nodata));
+        initChartView(chart_shootAside, mContext.getResources().getString(R.string.shotAside_nodata));
+        initChartView(chart_dangerousAttack, mContext.getResources().getString(R.string.dangerAttackk_nodata));
+        initChartView(chart_attack, mContext.getResources().getString(R.string.attack_nodata));
+
+
+        shotYAxis = chart_shoot.getAxisLeft();
+        shotYAxis.setAxisMinValue(0f);
+        shotYAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        shotYAxis.setDrawZeroLine(false);
+        shotYAxis.setAxisLineColor(Color.BLACK);
+
+        shotXAxis = chart_shoot.getXAxis();   //x轴
+        shotXAxis.setAxisLineColor(Color.BLACK);
+        shotXAxis.enableGridDashedLine(10f, 10f, 0f);
+        shotXAxis.setAxisMinValue(0f);
+
+
+        shotAsideYAxis = chart_shootAside.getAxisLeft();
+        shotAsideYAxis.setAxisMinValue(0f);
+        shotAsideYAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        shotAsideYAxis.setDrawZeroLine(false);
+        shotAsideYAxis.setAxisLineColor(Color.BLACK);
+        shotAsideXAxis = chart_shootAside.getXAxis();   //x轴
+        shotAsideXAxis.setAxisLineColor(Color.BLACK);
+        shotAsideXAxis.enableGridDashedLine(10f, 10f, 0f);
+        shotAsideXAxis.setAxisMinValue(0f);
+
+        dangerousAttackYAxis = chart_dangerousAttack.getAxisLeft();
+        dangerousAttackYAxis.setAxisMinValue(0f);
+        dangerousAttackYAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        dangerousAttackYAxis.setDrawZeroLine(false);
+        dangerousAttackYAxis.setAxisLineColor(Color.BLACK);
+        dangerousAttackXAxis = chart_dangerousAttack.getXAxis();   //x轴
+        dangerousAttackXAxis.setAxisLineColor(Color.BLACK);
+        dangerousAttackXAxis.enableGridDashedLine(10f, 10f, 0f);
+        dangerousAttackXAxis.setAxisMinValue(0f);
+
+        attackYAxis = chart_attack.getAxisLeft();
+        attackYAxis.setAxisMinValue(0f);
+        attackYAxis.enableGridDashedLine(10f, 10f, 0f);  //Y轴横向虚线
+        attackYAxis.setDrawZeroLine(false);
+        attackYAxis.setAxisLineColor(Color.BLACK);
+        attackXAxis = chart_attack.getXAxis();   //x轴
+        attackXAxis.enableGridDashedLine(10f, 10f, 0f);
+        attackXAxis.setAxisLineColor(Color.BLACK);
+        attackXAxis.setAxisMinValue(0f);
+    }
+
+
+    private void initChartView(LineChart mChart, String msg) {
+        mChart.setDrawGridBackground(false);
+        mChart.setDescription(mContext.getResources().getString(R.string.time));
+        mChart.setNoDataTextDescription("");
+        mChart.setNoDataTextColor(mContext.getResources().getColor(R.color.res_pl_color));
+        mChart.setNoDataText(msg);
+        mChart.setTouchEnabled(true);
+        mChart.setDragEnabled(false);
+        mChart.setScaleEnabled(false);
+        mChart.setPinchZoom(true);
+        mChart.getAxisRight().setEnabled(false);
+        mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        mChart.getAxisLeft().setAxisLineWidth(1f);
+        mChart.getXAxis().setAxisLineWidth(1f);
+        Legend l_shoot = mChart.getLegend();
+        l_shoot.setForm(Legend.LegendForm.LINE);
+        l_shoot.setEnabled(false);
+    }
+
+
+    public void setChartName(String home, String guest) {
+        tv_shot_home.setText(home);
+        tv_shot_guest.setText(guest);
+        tv_shotAside_home.setText(home);
+        tv_shotAside_guest.setText(guest);
+        tv_dangerAttack_home.setText(home);
+        tv_dangerAttack_guest.setText(guest);
+        tv_attack_home.setText(home);
+        tv_attack_guest.setText(guest);
     }
 
 
     /**
      * 足球事件直播
-     *
-     * @param livestatus
-     * @param matchTimeLiveBeanMs
      */
     public void setEventMatchLive(String livestatus, List<MatchTimeLiveBean> matchTimeLiveBeanMs) {
         //统计事件个数
@@ -374,12 +511,15 @@ public class StatisticsFragment extends Fragment {
         eventType = livestatus;
 
         if ("0".equals(livestatus)) {
-            mNestedScrollView_nodata.setVisibility(View.VISIBLE);
-            mNestedScrollView_event.setVisibility(View.GONE);
+            ll_nodata.setVisibility(View.VISIBLE);
+            // mNestedScrollView_event.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+
+
             mNestedScrollView_trend.setVisibility(View.GONE);
         } else if ("1".equals(livestatus) || "-1".equals(livestatus)) {   //-1代表完场  1代表直播中
-            mNestedScrollView_nodata.setVisibility(View.GONE);
-            mNestedScrollView_event.setVisibility(View.VISIBLE);
+            ll_nodata.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             mNestedScrollView_trend.setVisibility(View.VISIBLE);
             computeEventNum(livestatus);
             eventAdapter = new EventAdapter(mContext, eventMatchLive);
@@ -454,7 +594,6 @@ public class StatisticsFragment extends Fragment {
         Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
         while (iterator.hasNext()) {
             MatchTimeLiveBean m = iterator.next();
-
             if (HALFTIME.equals(m.getState()) && "1".equals(m.getCode())) {
                 if (statusEqual2 == 1) {
                     iterator.remove();
@@ -498,129 +637,722 @@ public class StatisticsFragment extends Fragment {
     }
 
 
-    public void setList(List<Integer> hCorners, List<Integer> gCorners, List<Integer> hDangers, List<Integer> gDangers) {
-        mHomeCorners = hCorners;
-        mGuestCorners = gCorners;
-        mHomeDangers = hDangers;
-        mGuestDangers = gDangers;
+    public void setTrendChartList(List<MatchTextLiveBean> list) {
+        trendChartList = list;
     }
+
 
     /**
      * 初始化数据走势图数据
      */
-    public void initData(String id) {
-
+    public void initChartData(String id) {
         if ("0".equals(id)) {
-            ArrayList<Integer> arrayList = new ArrayList<>();
 
-            showData(arrayList, arrayList, myLineChartCorner, ff_corner);// 显示角球数据
-            showData(arrayList, arrayList, myLineChartAttack, ff);// 显示攻防数据
+            trendChartList = new ArrayList<MatchTextLiveBean>();
+
+            // trendChartList.add(new MatchTextLiveBean("1029", "", "", "", "", "3000000", "", "", "", "", "", "", "", ""));
+
+            firstInitChartValues();
+
+            liveMatchTrendData();
 
         } else if ("1".equals(id)) {
+            firstInitChartValues();
 
-            showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
-            showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
-
-        } else if ("-1".equals(id)) {
-            // getVolleyData();
+            liveMatchTrendData();
         }
     }
 
     /**
+     * 改版走势图
+     */
+
+
+    private int getYLabelCount(float yMax) {
+        if (yMax == 0) {
+            return 1;
+        }
+        return (int) yMax / (int) Math.ceil(yMax / 8f) + 1;
+    }
+
+    private float getYMaxValue(float yMax) {
+        return ((int) Math.ceil(yMax / 8f)) * getYLabelCount(yMax);
+    }
+
+    private int getXLabelCount(float xMax, float range) {
+        return xMax % range == 0 ? (int) Math.ceil(xMax / range) + 1 : (int) Math.ceil(xMax / range);
+    }
+
+    private float getXMaxValue(float xMax, float range) {
+
+        return getXLabelCount(xMax, range) * range;
+    }
+
+
+    private void updateChartView() {
+        shotHome = 0;
+        shotGuest = 0;
+        shotAsideHome = 0;
+        shotAsideGuest = 0;
+        dangerAttackHome = 0;
+        dangerAttackGuest = 0;
+        attackHome = 0;
+        attackGuest = 0;
+
+
+        shootHomeValues.clear();
+        shootGuestValues.clear();
+        shootAsideHomeValues.clear();
+        shootAsideGuestValues.clear();
+        dangerousAttackHomeValues.clear();
+        dangerousAttackGuestValues.clear();
+        attackHomeValues.clear();
+        attackGuestValues.clear();
+
+        shootHomeColors.clear();
+        shootGuestColors.clear();
+        shootAsideHomeColors.clear();
+        shootAsideGuestColors.clear();
+        dangerousAttackHomeColors.clear();
+        dangerousAttackGuestColors.clear();
+        attackHomeColors.clear();
+        attackGuestColors.clear();
+
+        shootHomeValues.add(new Entry(0f, 0f));
+        shootGuestValues.add(new Entry(0f, 0f));
+        shootAsideHomeValues.add(new Entry(0f, 0f));
+        shootAsideGuestValues.add(new Entry(0f, 0f));
+        dangerousAttackHomeValues.add(new Entry(0f, 0f));
+        dangerousAttackGuestValues.add(new Entry(0f, 0f));
+        attackHomeValues.add(new Entry(0f, 0f));
+        attackGuestValues.add(new Entry(0f, 0f));
+
+        shootHomeColors.add(Color.TRANSPARENT);
+        shootGuestColors.add(Color.TRANSPARENT);
+        shootAsideHomeColors.add(Color.TRANSPARENT);
+        shootAsideGuestColors.add(Color.TRANSPARENT);
+        dangerousAttackHomeColors.add(Color.TRANSPARENT);
+        dangerousAttackGuestColors.add(Color.TRANSPARENT);
+        attackHomeColors.add(Color.TRANSPARENT);
+        attackGuestColors.add(Color.TRANSPARENT);
+
+    }
+
+    private void firstInitChartValues() {
+
+        shotHome = 0;
+        shotGuest = 0;
+        shotAsideHome = 0;
+        shotAsideGuest = 0;
+        dangerAttackHome = 0;
+        dangerAttackGuest = 0;
+        attackHome = 0;
+        attackGuest = 0;
+
+        shootHomeValues = new ArrayList<>();
+        shootGuestValues = new ArrayList<>();
+        shootAsideHomeValues = new ArrayList<>();
+        shootAsideGuestValues = new ArrayList<>();
+        dangerousAttackHomeValues = new ArrayList<>();
+        dangerousAttackGuestValues = new ArrayList<>();
+        attackHomeValues = new ArrayList<>();
+        attackGuestValues = new ArrayList<>();
+
+        shootHomeColors = new ArrayList<>();
+        shootGuestColors = new ArrayList<>();
+        shootAsideHomeColors = new ArrayList<>();
+        shootAsideGuestColors = new ArrayList<>();
+        dangerousAttackHomeColors = new ArrayList<>();
+        dangerousAttackGuestColors = new ArrayList<>();
+        attackHomeColors = new ArrayList<>();
+        attackGuestColors = new ArrayList<>();
+
+        shootHomeValues.add(new Entry(0f, 0f));
+        shootGuestValues.add(new Entry(0f, 0f));
+        shootAsideHomeValues.add(new Entry(0f, 0f));
+        shootAsideGuestValues.add(new Entry(0f, 0f));
+        dangerousAttackHomeValues.add(new Entry(0f, 0f));
+        dangerousAttackGuestValues.add(new Entry(0f, 0f));
+        attackHomeValues.add(new Entry(0f, 0f));
+        attackGuestValues.add(new Entry(0f, 0f));
+
+        shootHomeColors.add(Color.TRANSPARENT);
+        shootGuestColors.add(Color.TRANSPARENT);
+        shootAsideHomeColors.add(Color.TRANSPARENT);
+        shootAsideGuestColors.add(Color.TRANSPARENT);
+        dangerousAttackHomeColors.add(Color.TRANSPARENT);
+        dangerousAttackGuestColors.add(Color.TRANSPARENT);
+        attackHomeColors.add(Color.TRANSPARENT);
+        attackGuestColors.add(Color.TRANSPARENT);
+
+    }
+
+    /**
+     * 走势图完场计算数据
+     */
+    private void finishMatchTrendData() {
+        /**
+         * x轴为分钟  y轴为个数
+         */
+        firstInitChartValues();
+        //射正
+        Iterator<TrendBean> shotHomeIterator = trendFormBean.getShot().getHome().iterator();
+        int shotHome = 0;
+        while (shotHomeIterator.hasNext()) {
+            TrendBean bean = shotHomeIterator.next();
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                shootHomeColors.add(Color.parseColor("#19A67A"));
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
+                shotHome++;
+                shootHomeColors.add(Color.parseColor("#FF0000"));
+            } else {
+                shotHome++;
+                shootHomeColors.add(Color.TRANSPARENT);
+            }
+
+            shootHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotHome));
+        }
+
+
+        Iterator<TrendBean> shotGuestIterator = trendFormBean.getShot().getGuest().iterator();
+        int shotGuest = 0;
+
+        while (shotGuestIterator.hasNext()) {
+            TrendBean bean = shotGuestIterator.next();
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                shootGuestColors.add(Color.parseColor("#19A67A"));
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
+                shotGuest++;
+                shootGuestColors.add(Color.parseColor("#FF0000"));
+            } else {
+                shotGuest++;
+                shootGuestColors.add(Color.TRANSPARENT);
+            }
+            shootGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotGuest));
+        }
+
+
+        shotXAxis.setAxisMaxValue(getXMaxValue(90f, FINISHMATCH));
+        shotXAxis.setLabelCount(getXLabelCount(90f, FINISHMATCH));
+
+        if (shotHome > shotGuest) {
+            shotYAxis.setAxisMaxValue(getYMaxValue(shotHome));
+            shotYAxis.setLabelCount(getYLabelCount(shotHome));
+        } else {
+            shotYAxis.setAxisMaxValue(getYMaxValue(shotGuest));
+            shotYAxis.setLabelCount(getYLabelCount(shotGuest));
+        }
+
+        showTrendChartView(chart_shoot, shootHomeValues, shootGuestValues, shootHomeColors, shootGuestColors);
+
+
+        //射偏
+        Iterator<TrendBean> shotAsideHomeIterator = trendFormBean.getShepian().getHome().iterator();
+        int shotAsideHome = 0;
+        while (shotAsideHomeIterator.hasNext()) {
+            TrendBean bean = shotAsideHomeIterator.next();
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                shootAsideHomeColors.add(Color.parseColor("#19A67A"));
+
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
+                shootAsideHomeColors.add(Color.parseColor("#FF0000"));
+
+            } else {
+                shotAsideHome++;
+                shootAsideHomeColors.add(Color.TRANSPARENT);
+
+            }
+
+
+            shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
+        }
+
+
+        Iterator<TrendBean> shotAsideGuestIterator = trendFormBean.getShepian().getGuest().iterator();
+        int shotAsideGuest = 0;
+        while (shotAsideGuestIterator.hasNext()) {
+            TrendBean bean = shotAsideGuestIterator.next();
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                shootAsideGuestColors.add(Color.parseColor("#19A67A"));
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
+                shootAsideGuestColors.add(Color.parseColor("#FF0000"));
+            } else {
+                shotAsideGuest++;
+                shootAsideGuestColors.add(Color.TRANSPARENT);
+            }
+            shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
+        }
+
+
+        shotAsideXAxis.setAxisMaxValue(getXMaxValue(90f, FINISHMATCH));
+        shotAsideXAxis.setLabelCount(getXLabelCount(90f, FINISHMATCH));
+
+        if (shotAsideHome > shotAsideGuest) {
+            shotAsideYAxis.setAxisMaxValue(getYMaxValue(shotAsideHome));
+            shotAsideYAxis.setLabelCount(getYLabelCount(shotAsideHome));
+        } else {
+            shotAsideYAxis.setAxisMaxValue(getYMaxValue(shotAsideGuest));
+            shotAsideYAxis.setLabelCount(getYLabelCount(shotAsideGuest));
+        }
+
+
+        showTrendChartView(chart_shootAside, shootAsideHomeValues, shootAsideGuestValues, shootAsideHomeColors, shootAsideGuestColors);
+
+
+        //危险进攻
+        Iterator<TrendBean> dangerAttackHomeIterator = trendFormBean.getDangerousAttack().getHome().iterator();
+        int dangerAttackHome = 0;
+        while (dangerAttackHomeIterator.hasNext()) {
+            TrendBean bean = dangerAttackHomeIterator.next();
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                dangerousAttackHomeColors.add(Color.parseColor("#19A67A"));
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
+                dangerousAttackHomeColors.add(Color.parseColor("#FF0000"));
+            } else {
+                dangerAttackHome++;
+                dangerousAttackHomeColors.add(Color.TRANSPARENT);
+            }
+            dangerousAttackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackHome));
+        }
+
+        Iterator<TrendBean> dangerAttackGusetIterator = trendFormBean.getDangerousAttack().getGuest().iterator();
+        int dangerAttackGuest = 0;
+        while (dangerAttackGusetIterator.hasNext()) {
+            TrendBean bean = dangerAttackGusetIterator.next();
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                dangerousAttackGuestColors.add(Color.parseColor("#19A67A"));
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
+                dangerousAttackGuestColors.add(Color.parseColor("#FF0000"));
+            } else {
+                dangerAttackGuest++;
+                dangerousAttackGuestColors.add(Color.TRANSPARENT);
+            }
+            dangerousAttackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackGuest));
+        }
+
+
+        dangerousAttackXAxis.setAxisMaxValue(getXMaxValue(90f, FINISHMATCH));
+        dangerousAttackXAxis.setLabelCount(getXLabelCount(90f, FINISHMATCH));
+
+
+        if (dangerAttackHome > dangerAttackGuest) {
+            dangerousAttackYAxis.setAxisMaxValue(getYMaxValue(dangerAttackHome));
+            dangerousAttackYAxis.setLabelCount(getYLabelCount(dangerAttackHome));
+        } else {
+            dangerousAttackYAxis.setAxisMaxValue(getYMaxValue(dangerAttackGuest));
+            dangerousAttackYAxis.setLabelCount(getYLabelCount(dangerAttackGuest));
+        }
+
+        showTrendChartView(chart_dangerousAttack, dangerousAttackHomeValues, dangerousAttackGuestValues, dangerousAttackHomeColors, dangerousAttackGuestColors);
+
+
+        //进攻
+        Iterator<TrendBean> attackHomeIterator = trendFormBean.getAttack().getHome().iterator();
+        int attackHome = 0;
+        while (attackHomeIterator.hasNext()) {
+            TrendBean bean = attackHomeIterator.next();
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                attackHomeColors.add(Color.parseColor("#19A67A"));
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
+                attackHomeColors.add(Color.parseColor("#FF0000"));
+            } else {
+                attackHome++;
+                attackHomeColors.add(Color.TRANSPARENT);
+            }
+            attackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), attackHome));
+        }
+
+        Iterator<TrendBean> attackGusetIterator = trendFormBean.getAttack().getGuest().iterator();
+        int attackGuest = 0;
+        while (attackGusetIterator.hasNext()) {
+            TrendBean bean = attackGusetIterator.next();
+            if (TREND_CORNER.equals(bean.getFlag())) {
+                attackGuestColors.add(Color.parseColor("#19A67A"));
+            } else if (TREND_GOAL.equals(bean.getFlag())) {
+                attackGuestColors.add(Color.parseColor("#FF0000"));
+            } else {
+                attackGuest++;
+                attackGuestColors.add(Color.TRANSPARENT);
+            }
+            attackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), attackGuest));
+        }
+
+        attackXAxis.setAxisMaxValue(getXMaxValue(90f, FINISHMATCH));
+        attackXAxis.setLabelCount(getXLabelCount(90f, FINISHMATCH));
+
+
+        if (attackHome > attackGuest) {
+            attackYAxis.setAxisMaxValue(getYMaxValue(attackHome));
+            attackYAxis.setLabelCount(getYLabelCount(attackHome));
+        } else {
+            attackYAxis.setAxisMaxValue(getYMaxValue(attackGuest));
+            attackYAxis.setLabelCount(getYLabelCount(attackGuest));
+        }
+
+        showTrendChartView(chart_attack, attackHomeValues, attackGuestValues, attackHomeColors, attackGuestColors);
+        setChartScore();
+    }
+
+
+    private void showTrendChartView(LineChart mChart, List<Entry> homeEntry, List<Entry> guestEntry, List<Integer> homeColors, List<Integer> guestColors) {
+        LineDataSet mHomeLineDataSet;
+        LineDataSet mGuestLineDataSet;
+
+
+       /* if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
+
+
+            L.d("hhhhjjj", "刷新chart" + homeEntry.size());
+            // L.d("hhhhjjj", "刷新chart" + guestEntry.size());
+            L.d("hhhhjjj", "刷新chart" + homeColors.size());
+            // L.d("hhhhjjj", "刷新chart" + guestColors.size());
+
+            mHomeLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+            // mGuestLineDataSet = (LineDataSet) mChart.getData().getDataSetByIndex(1);
+
+            mHomeLineDataSet.setValues(homeEntry);
+            // mGuestLineDataSet.setValues(guestEntry);
+            mHomeLineDataSet.setCircleColors(homeColors);
+            //  mGuestLineDataSet.setCircleColors(guestColors);
+
+            mChart.getData().notifyDataChanged();
+            mChart.notifyDataSetChanged();
+
+
+        } else {*/
+
+
+        mHomeLineDataSet = new LineDataSet(homeEntry, "");
+        mHomeLineDataSet.setDrawHighlightIndicators(false);
+
+
+        mHomeLineDataSet.setLabel("");
+        mHomeLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+        mHomeLineDataSet.setColor(Color.parseColor("#C23531"));
+        mHomeLineDataSet.setCircleColor(Color.BLACK);
+        mHomeLineDataSet.setLineWidth(0.7f);
+        mHomeLineDataSet.setCircleRadius(3f);
+        mHomeLineDataSet.setDrawCircleHole(false);
+        mHomeLineDataSet.setDrawValues(false);
+        mHomeLineDataSet.setCircleColors(homeColors);
+
+        mGuestLineDataSet = new LineDataSet(guestEntry, "");
+        mGuestLineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+        mGuestLineDataSet.setColor(Color.BLUE);
+        mGuestLineDataSet.setCircleColor(Color.BLACK);
+        mGuestLineDataSet.setLineWidth(0.7f);
+        mGuestLineDataSet.setCircleRadius(3f);
+        mGuestLineDataSet.setDrawCircleHole(false);
+        mGuestLineDataSet.setValueTextSize(9f);
+        mGuestLineDataSet.setDrawValues(false);
+        mGuestLineDataSet.setCircleColors(guestColors);
+
+
+        ArrayList<ILineDataSet> dataSetsList = new ArrayList<ILineDataSet>();
+        dataSetsList.add(mHomeLineDataSet);
+        dataSetsList.add(mGuestLineDataSet);
+
+        LineData lineData = new LineData(dataSetsList);
+        mChart.setData(lineData);
+
+        mChart.invalidate();
+
+
+        // }
+
+    }
+
+
+    /**
      * 显示数据走势图
      */
-    private void showData(List<Integer> mHDList, List<Integer> mGDList, MyLineChart myLineChart, FrameLayout mff) {
-        // 动态判断Y轴刻度
-        if (mHDList.size() != 0 && mGDList.size() != 0) {
-            // 获取Y轴需要显示的最大值
-            int hc = 0;
-            int gc = 0;
-            for (Integer homeMax : mHDList) {
-                if (homeMax > hc) {
-                    hc = homeMax;
-                }
-            }
-            for (Integer guestMax : mGDList) {
-                if (guestMax > gc) {
-                    gc = guestMax;
-                }
-            }
-            // 动态设置Y轴刻度
-            if (mHDList.size() > 1 && mGDList.size() > 1) {
-                if (hc >= gc) {
-                    int hcCount = (int) Math.ceil((hc / 4D)) * 4;
-                    if (hcCount < 4) {
-                        hcCount = 4;// 设置最小刻度
-                    }
-                    myLineChart.setYlabel(new String[]{"0", hcCount / 4 + "", (hcCount / 4) * 2 + "", (hcCount / 4) * 3 + "", (hcCount / 4) * 4 + ""});// 设置Y轴刻度值
-                } else {
-                    int gcCount = (int) Math.ceil((gc / 4D)) * 4;
-                    if (gcCount < 4) {
-                        gcCount = 4;
-                    }
-                    myLineChart.setYlabel(new String[]{"0", gcCount / 4 + "", (gcCount / 4) * 2 + "", (gcCount / 4) * 3 + "", (gcCount / 4) * 4 + ""});// 设置Y轴刻度值
-                }
-            } else {
-                myLineChart.setYlabel(new String[]{"0", "2", "4", "6", "8"});// 设置Y轴刻度值
+
+    private void liveMatchTrendData() {
+        //trendChartList排序由小到大
+
+        if (trendChartList.size() > 1) {
+            Collections.sort(trendChartList, new FootballTrendChartComparator());
+        }
+
+        float maxXais = 0;
+
+        if (trendChartList.size() == 0) {
+            return;
+        }
+
+        maxXais = convertStringToFloat(trendChartList.get(trendChartList.size() - 1).getTime());
+
+
+        Iterator<MatchTextLiveBean> iterator = trendChartList.iterator();
+        while (iterator.hasNext()) {
+
+            MatchTextLiveBean bean = iterator.next();
+
+            switch (bean.getCode()) {
+                case SCORE:
+                    shotHome++;
+                    shootHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotHome));
+                    shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
+                    dangerousAttackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackHome));
+                    attackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), attackHome));
+                    shootHomeColors.add(Color.parseColor("#FF0000"));
+                    shootAsideHomeColors.add(Color.parseColor("#FF0000"));
+                    dangerousAttackHomeColors.add(Color.parseColor("#FF0000"));
+                    attackHomeColors.add(Color.parseColor("#FF0000"));
+
+                    break;
+
+                case SCORE1:
+                    shotGuest++;
+                    shootGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotGuest));
+                    shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
+                    dangerousAttackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackGuest));
+                    attackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), attackGuest));
+                    shootGuestColors.add(Color.parseColor("#FF0000"));
+                    shootAsideGuestColors.add(Color.parseColor("#FF0000"));
+                    dangerousAttackGuestColors.add(Color.parseColor("#FF0000"));
+                    attackGuestColors.add(Color.parseColor("#FF0000"));
+                    break;
+
+                case CORNER:
+                    shootHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotHome));
+                    shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
+                    dangerousAttackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackHome));
+                    attackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), attackHome));
+                    shootHomeColors.add(Color.parseColor("#19A67A"));
+                    shootAsideHomeColors.add(Color.parseColor("#19A67A"));
+                    dangerousAttackHomeColors.add(Color.parseColor("#19A67A"));
+                    attackHomeColors.add(Color.parseColor("#19A67A"));
+                    break;
+
+                case CORNER1:
+                    shootGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotGuest));
+                    shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
+                    dangerousAttackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackGuest));
+                    attackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), attackGuest));
+                    shootGuestColors.add(Color.parseColor("#19A67A"));
+                    shootAsideGuestColors.add(Color.parseColor("#19A67A"));
+                    dangerousAttackGuestColors.add(Color.parseColor("#19A67A"));
+                    attackGuestColors.add(Color.parseColor("#19A67A"));
+
+                    break;
+
+                case SHOOT:
+                    shotHome++;
+                    shootHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotHome));
+                    shootHomeColors.add(Color.TRANSPARENT);
+                    break;
+
+                case SHOOT1:
+                    shotGuest++;
+                    shootGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotGuest));
+                    shootGuestColors.add(Color.TRANSPARENT);
+                    break;
+
+                case SHOOTASIDE:
+                    shotAsideHome++;
+                    shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
+                    shootAsideHomeColors.add(Color.TRANSPARENT);
+                    break;
+                case SHOOTASIDE2:
+                    shotAsideHome++;
+                    shootAsideHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideHome));
+                    shootAsideHomeColors.add(Color.TRANSPARENT);
+                    break;
+                case SHOOTASIDE1:
+                    shotAsideGuest++;
+                    shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
+                    shootAsideGuestColors.add(Color.TRANSPARENT);
+                    break;
+                case SHOOTASIDE12:
+                    shotAsideGuest++;
+                    shootAsideGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), shotAsideGuest));
+                    shootAsideGuestColors.add(Color.TRANSPARENT);
+                    break;
+                case DANGERATTACK:
+                    dangerAttackHome++;
+                    dangerousAttackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackHome));
+                    dangerousAttackHomeColors.add(Color.TRANSPARENT);
+                    break;
+                case DANGERATTACK1:
+                    dangerAttackGuest++;
+                    dangerousAttackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), dangerAttackGuest));
+                    dangerousAttackGuestColors.add(Color.TRANSPARENT);
+                    break;
+                case ATTACK:
+                    attackHome++;
+                    attackHomeValues.add(new Entry(convertStringToFloat(bean.getTime()), attackHome));
+                    attackHomeColors.add(Color.TRANSPARENT);
+                    break;
+                case ATTACK1:
+                    attackGuest++;
+                    attackGuestValues.add(new Entry(convertStringToFloat(bean.getTime()), attackGuest));
+                    attackGuestColors.add(Color.TRANSPARENT);
+                    break;
             }
         }
 
-        myLineChart.setData(mHDList);// 设置第一条线数据
-        myLineChart.setData2(mGDList);// 设置第二条线数据
-        mff.removeAllViews();
-        mff.addView(myLineChart);
+
+        //比较四个坐标轴时间，取最大的time值
+
+        L.d("hhhhjjj", maxXais + "");
+
+        if (maxXais >= 45f) {
+            shotXAxis.setAxisMaxValue(getXMaxValue(maxXais, FINISHMATCH));
+            shotXAxis.setLabelCount(getXLabelCount(maxXais, FINISHMATCH));
+            shotAsideXAxis.setAxisMaxValue(getXMaxValue(maxXais, FINISHMATCH));
+            shotAsideXAxis.setLabelCount(getXLabelCount(maxXais, FINISHMATCH));
+            dangerousAttackXAxis.setAxisMaxValue(getXMaxValue(maxXais, FINISHMATCH));
+            dangerousAttackXAxis.setLabelCount(getXLabelCount(maxXais, FINISHMATCH));
+            attackXAxis.setAxisMaxValue(getXMaxValue(maxXais, FINISHMATCH));
+            attackXAxis.setLabelCount(getXLabelCount(maxXais, FINISHMATCH));
+        } else {
+            shotXAxis.setAxisMaxValue(getXMaxValue(maxXais, HALFMATCH));
+            shotXAxis.setLabelCount(getXLabelCount(maxXais, HALFMATCH));
+
+            shotAsideXAxis.setAxisMaxValue(getXMaxValue(maxXais, HALFMATCH));
+            shotAsideXAxis.setLabelCount(getXLabelCount(maxXais, HALFMATCH));
+
+            dangerousAttackXAxis.setAxisMaxValue(getXMaxValue(maxXais, HALFMATCH));
+            dangerousAttackXAxis.setLabelCount(getXLabelCount(maxXais, HALFMATCH));
+
+            attackXAxis.setAxisMaxValue(getXMaxValue(maxXais, HALFMATCH));
+            attackXAxis.setLabelCount(getXLabelCount(maxXais, HALFMATCH));
+        }
+
+        //射正
+        if (shotHome > shotGuest) {
+            shotYAxis.setAxisMaxValue(getYMaxValue(shotHome));
+            shotYAxis.setLabelCount(getYLabelCount(shotHome));
+        } else {
+            shotYAxis.setAxisMaxValue(getYMaxValue(shotGuest));
+            shotYAxis.setLabelCount(getYLabelCount(shotGuest));
+        }
+
+
+        showTrendChartView(chart_shoot, shootHomeValues, shootGuestValues, shootHomeColors, shootGuestColors);
+
+
+        //射偏
+        if (shotAsideHome > shotAsideGuest) {
+            shotAsideYAxis.setAxisMaxValue(getYMaxValue(shotAsideHome));
+            shotAsideYAxis.setLabelCount(getYLabelCount(shotAsideHome));
+        } else {
+            shotAsideYAxis.setAxisMaxValue(getYMaxValue(shotAsideGuest));
+            shotAsideYAxis.setLabelCount(getYLabelCount(shotAsideGuest));
+        }
+
+        showTrendChartView(chart_shootAside, shootAsideHomeValues, shootAsideGuestValues, shootAsideHomeColors, shootAsideGuestColors);
+
+        //危险进攻
+        if (dangerAttackHome > dangerAttackGuest) {
+            dangerousAttackYAxis.setAxisMaxValue(getYMaxValue(dangerAttackHome));
+            dangerousAttackYAxis.setLabelCount(getYLabelCount(dangerAttackHome));
+        } else {
+            dangerousAttackYAxis.setAxisMaxValue(getYMaxValue(dangerAttackGuest));
+            dangerousAttackYAxis.setLabelCount(getYLabelCount(dangerAttackGuest));
+        }
+
+        showTrendChartView(chart_dangerousAttack, dangerousAttackHomeValues, dangerousAttackGuestValues, dangerousAttackHomeColors, dangerousAttackGuestColors);
+
+
+        //进攻
+        if (attackHome > attackGuest) {
+            attackYAxis.setAxisMaxValue(getYMaxValue(attackHome));
+            attackYAxis.setLabelCount(getYLabelCount(attackHome));
+        } else {
+            attackYAxis.setAxisMaxValue(getYMaxValue(attackGuest));
+            attackYAxis.setLabelCount(getYLabelCount(attackGuest));
+        }
+
+        showTrendChartView(chart_attack, attackHomeValues, attackGuestValues, attackHomeColors, attackGuestColors);
+
+        setChartScore();
     }
+
+
+    private void setChartScore() {
+        tv_shot.setText((int) shootHomeValues.get(shootHomeValues.size() - 1).getY() + ":" + (int) shootGuestValues.get(shootGuestValues.size() - 1).getY());
+        tv_shotAside.setText((int) shootAsideHomeValues.get(shootAsideHomeValues.size() - 1).getY() + ":" + (int) shootAsideGuestValues.get(shootAsideGuestValues.size() - 1).getY());
+        tv_dangerAttack.setText((int) dangerousAttackHomeValues.get(dangerousAttackHomeValues.size() - 1).getY() + ":" + (int) dangerousAttackGuestValues.get(dangerousAttackGuestValues.size() - 1).getY());
+        tv_attack.setText((int) attackHomeValues.get(attackHomeValues.size() - 1).getY() + ":" + (int) attackGuestValues.get(attackGuestValues.size() - 1).getY());
+
+    }
+
+
+    public void addTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
+
+        L.d("223344", "直播中走勢圖測試");
+        trendChartList.add(matchTextLiveBean);
+        updateChartView();
+
+        liveMatchTrendData();
+
+    }
+
+    public void cancelTrendChartEvent(MatchTextLiveBean matchTextLiveBean) {
+        Iterator<MatchTextLiveBean> iterator = trendChartList.iterator();
+        while (iterator.hasNext()) {
+            MatchTextLiveBean bean = iterator.next();
+            if (bean.getEnNum().equals(matchTextLiveBean.getCancelEnNum())) {//取消进球等事件的判断
+                iterator.remove();//用xMatchLive.remove会有异常
+            }
+        }
+        updateChartView();
+
+        liveMatchTrendData();
+    }
+
 
     /**
      * 请求走势图后台数据
      *
      * @return
      */
-    public void getVolleyData() {
+    private void getVolleyData() {
         if (getActivity() == null) {
             return;
         }
         mHandler.sendEmptyMessage(STARTLOADING);// 正在加载数据中
         // 获取对象ID
         String mThirdId = ((FootballMatchDetailActivityTest) getActivity()).mThirdId;
+
+        L.d("112233", mThirdId);
         // 设置参数
         Map<String, String> myPostParams = new HashMap<>();
-        myPostParams.put("thirdId", mThirdId);
-        L.d("xxxx", "mThirdId   " + mThirdId);
-        // 请求数据
-        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_FINDCORNERANDDANGER_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<TrendAllBean>() {
-            @Override
-            public void onResponse(TrendAllBean jsonObject) {
-                if (jsonObject != null) {
-                    mHomeCorners.clear();
-                    mGuestCorners.clear();
-                    mHomeDangers.clear();
-                    mGuestDangers.clear();
-                    mHomeCorners = jsonObject.getHomeCorner();
-                    mGuestCorners = jsonObject.getGuestCorner();
-                    mHomeDangers = jsonObject.getHomeDanger();
-                    mGuestDangers = jsonObject.getGuestDanger();
-                    if (mHomeCorners != null && mGuestCorners != null && mHomeDangers != null && mGuestDangers != null) {
-                        mHomeCorners.add(0, 0);
-                        mGuestCorners.add(0, 0);
+        myPostParams.put("matchId", mThirdId);
 
-                        mHomeDangers.add(0, 0);
-                        mGuestDangers.add(0, 0);
-                        mHandler.sendEmptyMessage(SUCCESS);// 访问成功
-                    } else {
-                        mHandler.sendEmptyMessage(ERROR);
+        // String url = "http://192.168.10.242:8181/mlottery/core/trendForm.findTrendForm.do";
+
+        VolleyContentFast.requestJsonByPost(BaseURLs.URL_FOOTBALL_DETAIL_FINDTRENDFORM_INFO, myPostParams, new VolleyContentFast.ResponseSuccessListener<FootballTrendBean>() {
+            @Override
+            public void onResponse(FootballTrendBean jsonObject) {
+                if (jsonObject != null) {
+                    if (!"200".equals(jsonObject.getResult())) {
+                        return;
                     }
+
+                    if (jsonObject.getTrendForm() != null) {
+                        trendFormBean = null;
+                        trendFormBean = jsonObject.getTrendForm();
+                        mHandler.sendEmptyMessage(SUCCESS);
+                    }
+
                 } else {
                     // 后台没请求到数据
+                    L.d("112233", "走势请求失败");
+
                     mHandler.sendEmptyMessage(ERROR);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                L.d("112233", "走势请求失败" + exception);
+
                 mHandler.sendEmptyMessage(ERROR);// 访问失败
             }
-        }, TrendAllBean.class);
+        }, FootballTrendBean.class);
     }
 
 
@@ -631,15 +1363,12 @@ public class StatisticsFragment extends Fragment {
      */
     public void getVolleyDataStatic() {
 
-        L.d("456", "总计");
         mHandlerStatics.sendEmptyMessage(STARTLOADING);// 正在加载中
         Map<String, String> map = new HashMap<>();
         if (getActivity() == null) {
             return;
         } else {
             map.put("thirdId", ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
-
-            L.i("dddffdfd");
 
             VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_STATISTICAL_DATA_INFO, map, new VolleyContentFast.ResponseSuccessListener<DataStatisInfo>() {
                 @Override
@@ -749,13 +1478,19 @@ public class StatisticsFragment extends Fragment {
                     fl_attackTrend_loading.setVisibility(View.VISIBLE);
                     fl_attackTrend_networkError.setVisibility(View.GONE);
                     ll_trend_main.setVisibility(View.GONE);
+
                     break;
                 case SUCCESS:// 加载成功
                     fl_attackTrend_loading.setVisibility(View.GONE);
                     fl_attackTrend_networkError.setVisibility(View.GONE);
                     ll_trend_main.setVisibility(View.VISIBLE);
-                    showData(mHomeCorners, mGuestCorners, myLineChartCorner, ff_corner);// 显示角球数据
-                    showData(mHomeDangers, mGuestDangers, myLineChartAttack, ff);// 显示攻防数据
+
+                    L.d("112233", "请求成功");
+
+
+                    finishMatchTrendData();
+
+
                     break;
                 case ERROR:// 加载失败
                     fl_attackTrend_loading.setVisibility(View.GONE);
@@ -822,6 +1557,14 @@ public class StatisticsFragment extends Fragment {
 
         guest_lineout_txt.setText(mGuestStatisEntity.getLineOut() + "");
         home_lineout_txt.setText(mHomeStatisEntity.getLineOut() + "");
+
+    }
+
+
+    private float convertStringToFloat(String time) {
+        float f = (float) Double.parseDouble(time) / 60000;
+
+        return (float) (Math.round(f * 100)) / 100;
 
     }
 

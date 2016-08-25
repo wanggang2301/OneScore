@@ -57,7 +57,13 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,11 +99,17 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
     private IWXAPI api;    //微信Api
     private IWeiboShareAPI mWeiboShareAPI;    //新浪微博Api
 
-
     private Tencent mTencent;
 
-
     private ShareBean mShareBean;
+
+    //测试各类分享成功回调log
+    private static String MYLOG_TYPE = "info";// 输入日志类型，w代表只输出告警信息等，v代表输出所有信息
+    private static String MYLOG_PATH_SDCARD_DIR = "/sdcard/";// 日志文件在sdcard中的路径
+    private static String MYLOGFILEName = "Log.txt";// 本类输出的日志文件名称
+    private static SimpleDateFormat myLogSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 日志的输出格式
+    private static SimpleDateFormat logfile = new SimpleDateFormat("yyyy-MM-dd");// 日志文件格式
+    private static Boolean MYLOG_SWITCH = false; // 日志文件总开关
 
     public static ShareFragment newInstance(ShareBean shareBean) {
         Bundle args = new Bundle();
@@ -111,10 +123,8 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-
         if (args != null) {
             this.mShareBean = args.getParcelable(SHARE_PARM);
-
         }
         this.mContext = getActivity();
     }
@@ -127,7 +137,6 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
         }
         mView = View.inflate(getContext(), R.layout.share_popmenu, null);
         initView();
-
         dialog.setContentView(mView);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) mView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
@@ -307,6 +316,14 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                 req.message = wxmsg;
                 req.scene = flag;
                 boolean flg = api.sendReq(req);
+
+                if (flg) {
+                    writeLogtoFile(MYLOG_TYPE, "shareFragment", "微信成功");
+
+                } else {
+                    writeLogtoFile(MYLOG_TYPE, "shareFragment", "微信失败");
+
+                }
             }
         }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
@@ -369,6 +386,7 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                 mWeiboShareAPI.sendRequest((Activity) mContext, request, authInfo, token, new WeiboAuthListener() {
                     @Override
                     public void onWeiboException(WeiboException arg0) {
+
                     }
 
                     @Override
@@ -382,6 +400,7 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                     @Override
                     public void onCancel() {
                     }
+
                 });
 
             }
@@ -458,33 +477,61 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
         if (baseResp != null) {
             switch (baseResp.errCode) {
                 case WBConstants.ErrorCode.ERR_OK:
-                    //   Toast.makeText(mContext, "微博成功", Toast.LENGTH_LONG).show();
+                    writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博成功");
                     break;
                 case WBConstants.ErrorCode.ERR_CANCEL:
-                    // Toast.makeText(mContext, "微博取消", Toast.LENGTH_LONG).show();
+                    writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博取消");
+
                     break;
                 case WBConstants.ErrorCode.ERR_FAIL:
-                    // Toast.makeText(mContext, "微博失败" + "Error Message: " + baseResp.errMsg,Toast.LENGTH_LONG).show();
+                    writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博失败");
+
+
                     break;
             }
         }
     }
 
+
     IUiListener qqShareListener = new IUiListener() {
         @Override
         public void onCancel() {
-
+            writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
         }
 
         @Override
         public void onComplete(Object response) {
-            // TODO Auto-generated method stub
+            writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
         }
 
         @Override
         public void onError(UiError e) {
-            // TODO Auto-generated method stub
+            writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ失败");
         }
     };
+
+
+    private static void writeLogtoFile(String mylogtype, String tag, String text) {// 新建或打开日志文件
+
+        if (MYLOG_SWITCH) {
+            Date nowtime = new Date();
+            String needWriteFiel = logfile.format(nowtime);
+            String needWriteMessage = myLogSdf.format(nowtime) + "    " + mylogtype
+                    + "    " + tag + "    " + text;
+            File file = new File(MYLOG_PATH_SDCARD_DIR, needWriteFiel
+                    + MYLOGFILEName);
+            try {
+                FileWriter filerWriter = new FileWriter(file, true);//后面这个参数代表是不是要接上文件中原来的数据，不进行覆盖
+                BufferedWriter bufWriter = new BufferedWriter(filerWriter);
+                bufWriter.write(needWriteMessage);
+                bufWriter.newLine();
+                bufWriter.close();
+                filerWriter.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

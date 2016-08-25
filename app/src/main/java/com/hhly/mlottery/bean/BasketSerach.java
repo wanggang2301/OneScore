@@ -1,5 +1,7 @@
 package com.hhly.mlottery.bean;
 
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+
 import java.util.List;
 
 /**
@@ -15,10 +17,10 @@ public class BasketSerach {
      * leagueId : 39
      */
 
-    public List<ResultListBean> resultList;
+    public List<LeagueBean> resultList;
 
-    public static class ResultListBean {
+  /*  public static class ResultListBean {
         public String leagueName;
         public String leagueId;
-    }
+    }*/
 }

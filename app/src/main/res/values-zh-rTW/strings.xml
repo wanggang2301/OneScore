@@ -4,6 +4,7 @@
 
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
+    <string name="foot_trend">走勢</string>
     <string name="foot_statictics">統計</string>
     <string name="foot_event_goal">進球</string>
     <string name="foot_event_rc">紅牌</string>
@@ -22,6 +23,15 @@
     <string name="foot_event_out">下場</string>
     <string name="foot_event_num_out">號下場</string>
     <string name="foot_event_num_in">號上場</string>
+    <string name="matchIsNotStart">比賽暫未開始</string>
+    <string name="goChat">走,先去聊聊</string>
+    <string name="shot_nodata">暫無射正球門數據.</string>
+    <string name="shotAside_nodata">暫無射偏球門數據.</string>
+    <string name="dangerAttackk_nodata">暫無危險進攻數據.</string>
+    <string name="attack_nodata">暫無進攻數據.</string>
+    <string name="time">時間(T)</string>
+
+
 
     <!--篮球资料库-->
     <string name="basket_info_hot">熱門</string>
@@ -994,6 +1004,11 @@
     <string name="new_analyze_liangduijin">兩隊近</string>
     <string name="new_analyze_description">(比分紅色為主隊)</string>
     <string name="new_analyze_recent_game">6場近期各自比賽</string>
+    <string name="new_analyze_changci">場次</string>
+    <string name="new_analyze_home_win_rate">主隊贏盤率</string>
+    <string name="new_analyze_guest_win_rate">客隊贏盤率</string>
+    <string name="analyze_draw_rate">走水</string>
+    <string name="new_analyze_size_draw_rate">走  水</string>
     <!--情报分析-->
     <string name="intelligent_all_game">全部比賽</string>
     <string name="intelligent_same_game">相同主客場</string>
@@ -1036,5 +1051,22 @@
     <string name="rong_input_prompt4">我從不說謊，除啦這句話以外。</string>
     <string name="rong_input_prompt5">沈默是金.沈默久了就會有很多金子嗎？</string>
     <string name="rong_input_prompt6">元芳怎麽看？</string>
+    <!--头像上传-->
+    <string name="sd_card_not_exist">sd卡不存在</string>
+    <string name="install_the_gallery">請先安裝圖庫</string>
+    <string name="see_your_face">這張照片太小看不清你的絕世容顏</string>
+    <string name="picture_put_failed">圖片上傳失敗!</string>
+    <string name="save_file_not_found">保存檔案路徑找不到!</string>
+    <string name="picture_save_failed">圖片保存失敗!</string>
+    <string name="picture_put_success">图片上传成功!</string>
+    <string name="picture_save">圖片已保存至:</string>
+    <string name="picture_save_telephone">保存到手機</string>
+    <string name="chose_for_telephone">從手機相册選擇</string>
+    <string name="avatar_settings">頭像設定</string>
+    <string name="photograph">拍照</string>
+
+    <string name="welcome_chart_room">歡迎進入聊天室!</string>
+
+
 
 </resources>
