@@ -641,7 +641,7 @@
         <RadioGroup
             android:id="@+id/radio_group_let"
             android:layout_width="260dp"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:layout_margin="10dp"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
@@ -1528,7 +1528,7 @@
         <RadioGroup
             android:id="@+id/radio_group_size"
             android:layout_width="260dp"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:layout_margin="10dp"
             android:gravity="center"
             android:layout_gravity="center_horizontal"

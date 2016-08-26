@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
     >
 
     <LinearLayout
@@ -18,43 +19,44 @@
             >
             <!--&lt;!&ndash;分割线&ndash;&gt;-->
             <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
-                <!--android:background="@color/content_txt_light_grad" />-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:background="@color/content_txt_light_grad" />-->
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/selected_bg"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
-            <RadioGroup
-                android:id="@+id/head_radiogroup"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_margin="13dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                >
-                <!--联赛统计-->
-                <RadioButton
-                    android:id="@+id/basket_database_details_statistics"
-                    style="@style/odds_radio_button"
+                <RadioGroup
+                    android:id="@+id/head_radiogroup"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/odds_selected_plate"
-                    android:checked="true"
-                    android:text="联赛统计"/>
-                <!--联赛之最-->
-                <RadioButton
-                    android:id="@+id/basket_database_details_most"
-                    style="@style/odds_radio_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/odds_selected_big"
-                    android:text="联赛之最"/>
+                    android:layout_height="25dp"
+                    android:layout_margin="13dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+                    <!--联赛统计-->
+                    <RadioButton
+                        android:id="@+id/basket_database_details_statistics"
+                        style="@style/odds_radio_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/odds_selected_plate"
+                        android:checked="true"
+                        android:text="联赛统计"/>
+                    <!--联赛之最-->
+                    <RadioButton
+                        android:id="@+id/basket_database_details_most"
+                        style="@style/odds_radio_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/odds_selected_big"
+                        android:text="联赛之最"/>
 
-            </RadioGroup>
+                </RadioGroup>
             </FrameLayout>
             <!--攻击力最强-->
             <LinearLayout
@@ -75,7 +77,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/content_txt_light_grad" />
+                    android:background="@color/content_txt_light_grad"/>
 
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list1"
@@ -88,7 +90,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/selected_bg"/>
             </LinearLayout>
 
             <!--攻击力最弱-->
@@ -110,7 +112,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/content_txt_light_grad" />
+                    android:background="@color/content_txt_light_grad"/>
 
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list2"
@@ -123,7 +125,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/selected_bg"/>
             </LinearLayout>
             <!--防守最强-->
             <LinearLayout
@@ -144,7 +146,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/content_txt_light_grad" />
+                    android:background="@color/content_txt_light_grad"/>
 
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list3"
@@ -157,7 +159,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/selected_bg"/>
             </LinearLayout>
             <!--防守最弱-->
             <LinearLayout
@@ -178,7 +180,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/content_txt_light_grad" />
+                    android:background="@color/content_txt_light_grad"/>
 
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list4"
@@ -190,7 +192,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/selected_bg"/>
             </LinearLayout>
 
         </LinearLayout>
