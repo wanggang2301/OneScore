@@ -14,11 +14,12 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.account.BaseBean;
+import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
@@ -119,9 +120,9 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                  param.put("deviceToken", AppConstants.deviceToken);
                  param.put("nickname", nickName);
 
-                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<BaseBean>() {
+                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                      @Override
-                     public void onResponse(BaseBean bean) {
+                     public void onResponse(Register bean) {
 
                          progressBar.dismiss();
 
@@ -129,7 +130,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                              UiUtils.toast(MyApp.getInstance(), R.string.modify_nickname_succ);
                              AppConstants.register.getData().getUser().setNickName(nickName);
                             // CommonUtils.saveRegisterInfo(AppConstants.register);
-                            // PreferenceUtil.commitString(AppConstants.HEADICON, bean.getData().getUser().getHeadIcon().toString());
+                            PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, bean.getData().getUser().getNickName());
                              finish();
                          } else if (bean.getResult() == AccountResultCode.USER_NOT_LOGIN) {
                              UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
@@ -148,7 +149,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                          L.e(TAG, " 修改nickName失败");
                          UiUtils.toast(ModifyNicknameActivity.this, R.string.immediate_unconection);
                      }
-                 }, BaseBean.class);
+                 }, Register.class);
              }else{
                  UiUtils.toast(getApplicationContext() ,R.string.pw_same_same);
              }
