@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
 
 /**
@@ -67,13 +66,17 @@ public class AnimHeadLiveFragment extends Fragment {
         tv_nopage = (TextView) mView.findViewById(R.id.tv_nopage);
         mWebView = (ProgressWebView) mView.findViewById(R.id.webview);
 
-        //url = "http://m.1332255.com/news/infomationhtml/20160817/2016081730808.html";
 
-        L.d("456789", "动画直播" + thirdId);
-
-        //  url = baseURL + thirdId;
         url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId;
 
+        // loadAnim();
+
+        return mView;
+
+    }
+
+
+    public void loadAnim() {
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
         webSettings.setAppCacheEnabled(false);
@@ -104,59 +107,7 @@ public class AnimHeadLiveFragment extends Fragment {
         });
 
         mWebView.loadUrl(url);
-
-
-      /*  L.d(TAG, thirdId);
-
-        String url = "http://192.168.31.107:3000/act/footballodds/footballodds_graphic.html?thirdId=355174";
-
-        WebSettings settings = webView.getSettings();
-        settings.setSupportZoom(true);          //支持缩放
-        settings.setBuiltInZoomControls(true);  //启用内置缩放装置
-        settings.setJavaScriptEnabled(true);    //启用JS脚本
-        settings.setLoadWithOverviewMode(true);
-        webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
-        webView.loadUrl(url);
-        webView.setWebViewClient(new MyWebViewClient());*/
-
-        return mView;
-
     }
 
-   /* public class MyWebViewClient extends WebViewClient {
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.d(TAG, "-MyWebViewClient->shouldOverrideUrlLoading()--");
-            view.loadUrl(url);
-            return true;
-        }
-
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            Log.d(TAG, "-MyWebViewClient->onPageStarted()--");
-            super.onPageStarted(view, url, favicon);
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            Log.d(TAG, "-MyWebViewClient->onPageFinished()--");
-            super.onPageFinished(view, url);
-        }
-
-        @Override
-        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-            super.onReceivedError(view, request, error);
-
-            Log.d(TAG, "-MyWebViewClient->onReceivedError()--");
-            //这里进行无网络或错误处理，具体可以根据errorCode的值进行判断，做跟详细的处理。
-            //view.loadData(errorHtml, "text/html", "UTF-8");
-            webView.setVisibility(View.GONE);
-            tv_nopage.setVisibility(View.VISIBLE);
-        }
-    }
-*/
 
 }
