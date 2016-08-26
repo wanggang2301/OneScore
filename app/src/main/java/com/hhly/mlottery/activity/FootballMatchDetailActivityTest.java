@@ -748,6 +748,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                         }
 
+                        mAnimHeadLiveFragment.loadAnim();
+
                         mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName());
 
                     }
@@ -977,6 +979,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mStatisticsFragment.setMathchStatisInfo(mathchStatisInfo);
                 mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
             }
+
+            mAnimHeadLiveFragment.loadAnim();
 
             mTalkAboutBallFragment.setTitle(matchDetail.getHomeTeamInfo().getName() + "vs" + matchDetail.getGuestTeamInfo().getName());
 
@@ -1282,8 +1286,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     public void onEventMainThread(FirstEvent event) {
         switch (event.getMsg()) {
             case RongYunUtils.CHART_ROOM_EXIT:
-                L.d("xxx","足球EventBus收到 ");
-                if(iv_join_room_foot != null){
+                L.d("xxx", "足球EventBus收到 ");
+                if (iv_join_room_foot != null) {
                     iv_join_room_foot.setVisibility(View.VISIBLE);
                 }
                 break;
