@@ -322,6 +322,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(ProfileActivity.this.getContentResolver(), uri);
                     if (bitmap.getWidth() < width || bitmap.getHeight() < height) {
                         UiUtils.toast(MyApp.getInstance(),R.string.see_your_face);
+                        bitmap.recycle();
+                        System.gc();
                         //successNull();
                         return;
                     }
@@ -337,6 +339,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     if (bitmap.getWidth() < width || bitmap.getHeight() < height) {
                        // successNull();
                         UiUtils.toast(MyApp.getInstance(), R.string.see_your_face);
+                        bitmap.recycle();
+                        System.gc();
                         return;
                     }
                 } catch (Exception e) {
@@ -400,6 +404,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     }
                     mPopupWindow. dismiss();
                     mHead_portrait.setImageBitmap(photo); //把图片显示在ImageView控件上
+                    photo.recycle();
+                    System.gc();
                 }
                 break;
             default:
