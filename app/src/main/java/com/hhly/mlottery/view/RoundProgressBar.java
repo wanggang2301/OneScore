@@ -246,7 +246,7 @@ public class RoundProgressBar extends View {
         if (isprogress) {
             paint.setStrokeWidth(0);
             paint.setColor(getResources().getColor(R.color.home_item_bg));
-            paint.setTextSize(18);
+            paint.setTextSize(getResources().getDimension(R.dimen.round_progressbar_textsize));
             paint.setTypeface(Typeface.DEFAULT_BOLD); //设置字体
 
             float r = (int) (centerX - roundWidth / 2);//半径

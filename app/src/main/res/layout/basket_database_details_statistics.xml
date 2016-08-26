@@ -82,12 +82,13 @@
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_victory_defeat"
                         android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"
                         android:id="@+id/textView9" />
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad" />
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -186,7 +187,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/home_item_bg" />
 
                 <!--欧赔统计-->
                 <LinearLayout
@@ -201,13 +202,14 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_euro"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad" />
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -327,7 +329,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/home_item_bg" />
                 <!--让分统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -341,13 +343,14 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_let"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad" />
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -465,7 +468,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/home_item_bg" />
                 <!--大小球统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -478,13 +481,14 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_big_small"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad" />
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -603,7 +607,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/home_item_bg" />
                 <!--得分统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -616,13 +620,14 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_score"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad" />
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -751,7 +756,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg" />
+                    android:background="@color/home_item_bg" />
                 <!--场次统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -765,13 +770,14 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_num_score"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad" />
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
