@@ -1078,7 +1078,8 @@
     <string name="photograph">拍照</string>
 
     <string name="welcome_chart_room">欢迎进入聊天室!</string>
-
-
+    <string name="to_update_kindly_reminder">温馨提示</string>
+    <string name="kindly_reminder_comment">您正在使用流量，是否继续下载？</string>
+    <string name="continue_download">继续下载</string>
 
 </resources>
