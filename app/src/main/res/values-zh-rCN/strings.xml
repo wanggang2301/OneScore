@@ -1074,7 +1074,7 @@
     <string name="picture_save">图片已保存至:</string>
     <string name="picture_save_telephone">保存到手机</string>
     <string name="chose_for_telephone">从手机相册选择</string>
-    <string name="avatar_settings">头像选择</string>
+    <string name="avatar_settings">头像</string>
     <string name="photograph">拍照</string>
 
     <string name="welcome_chart_room">欢迎进入聊天室!</string>
@@ -1082,4 +1082,5 @@
     <string name="kindly_reminder_comment">您正在使用流量，是否继续下载？</string>
     <string name="continue_download">继续下载</string>
 
+    <string name="is_uploading">努力上传中..........</string>
 </resources>
