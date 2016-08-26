@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,11 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueMost; //Unused import statement
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueMost;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueStatistics;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseMostDat;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseStatisticsBean;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueStatistics;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
@@ -333,7 +334,9 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
                 }
                 //统计
                 BasketDatabaseLeagueStatistics data = bean.getLeagueStatistics();
-                setData(data);
+                if (data != null) {
+                    setData(data);
+                }
 
                 BasketDatabaseLeagueMost data2 = bean.getLeagueMost();
 
@@ -365,6 +368,9 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
 
     private void setData( BasketDatabaseLeagueStatistics data){
 
+        if (data == null || getActivity() == null) {
+            return;
+        }
         /**
          * 胜负统计
          */
