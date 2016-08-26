@@ -374,6 +374,7 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
             @Override
             public void onFailure(Request request, IOException e) {
                 mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
+                progressBar.dismiss();
                 Log.d(TAG, "onFailure: "+e.getMessage());
             }
 

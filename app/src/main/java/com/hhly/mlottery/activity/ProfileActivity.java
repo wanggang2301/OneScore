@@ -457,6 +457,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
              public void onFailure(Request request, IOException e) {
                 // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
                  mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
+                 progressBar.dismiss();
                  Log.d(TAG, "onFailure: "+e.getMessage());
              }
 
