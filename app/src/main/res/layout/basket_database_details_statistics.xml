@@ -83,11 +83,14 @@
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_victory_defeat"
                         android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"
+                        android:id="@+id/textView9" />
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad"/>
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -133,9 +136,9 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_weight="1.1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -145,8 +148,8 @@
 
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_h"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -155,10 +158,9 @@
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
                                     android:text="主胜: --"
-                                    android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -167,8 +169,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_g"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -176,9 +178,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="客胜: --"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:text="客胜: --"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -188,7 +190,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg"/>
+                    android:background="@color/home_item_bg" />
 
                 <!--欧赔统计-->
                 <LinearLayout
@@ -203,20 +205,21 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_euro"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad"/>
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="15dp">
+                        android:paddingTop="15dp"
+                        android:paddingBottom="10dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -244,8 +247,8 @@
                                     android:id="@+id/basket_database_euro_tv1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:paddingTop="10dp"
+                                    android:gravity="center"
                                     android:text="--"/>
                             </LinearLayout>
 
@@ -264,13 +267,12 @@
                                     android:progress="60"
                                     android:progressDrawable="@drawable/verticalprogressbar_too"
                                     />
-
                                 <TextView
                                     android:id="@+id/basket_database_euro_tv2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:paddingTop="10dp"
+                                    android:gravity="center"
                                     android:text="--"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -278,9 +280,9 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_weight="1.1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -289,8 +291,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_progress"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -299,10 +301,9 @@
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
                                     android:text="赛果与欧赔一致 --"
-                                    android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -311,8 +312,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_g"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -320,9 +321,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="赛果与欧赔相反 --"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:text="赛果与欧赔相反 --"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -331,7 +332,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg"/>
+                    android:background="@color/home_item_bg" />
                 <!--让分统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -345,20 +346,21 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_let"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad"/>
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp">
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <FrameLayout
                             android:layout_width="0dp"
@@ -375,15 +377,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:text="@string/basket_database_details_statistic_num"/>
-
+                                    android:text="@string/basket_database_details_statistic_num"
+                                    android:layout_gravity="center"/>
                                 <TextView
                                     android:id="@+id/basket_database_cc2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:text="--"/>
+                                    android:text="--"
+                                    android:layout_gravity="center"/>
                             </LinearLayout>
 
                             <com.hhly.mlottery.view.RoundProgressBar
@@ -397,9 +398,9 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_weight="1.1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -408,8 +409,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_h"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -418,10 +419,9 @@
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
                                     android:text="主胜: --"
-                                    android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -430,8 +430,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_g"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -439,11 +439,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="客胜: --"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:text="客胜: --"/>
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -452,8 +451,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_d"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -461,9 +460,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="走水: --"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:text="走水: --"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -472,7 +471,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg"/>
+                    android:background="@color/home_item_bg" />
                 <!--大小球统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -485,20 +484,21 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_big_small"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad"/>
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp">
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <FrameLayout
                             android:layout_width="0dp"
@@ -515,15 +515,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:text="@string/basket_database_details_statistic_num"/>
-
+                                    android:text="@string/basket_database_details_statistic_num"
+                                    android:layout_gravity="center"/>
                                 <TextView
                                     android:id="@+id/basket_database_cc3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:text="--"/>
+                                    android:text="--"
+                                    android:layout_gravity="center"/>
                             </LinearLayout>
 
                             <com.hhly.mlottery.view.RoundProgressBar
@@ -537,9 +536,9 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_weight="1.1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -548,8 +547,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_h"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -558,10 +557,9 @@
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
                                     android:text="主胜: --"
-                                    android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -570,8 +568,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_g"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -579,11 +577,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="客胜: --"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:text="客胜: --"/>
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -592,8 +589,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background_d"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -601,9 +598,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="走水: --"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:text="走水: --"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -613,7 +610,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg"/>
+                    android:background="@color/home_item_bg" />
                 <!--得分统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -626,13 +623,14 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_score"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad"/>
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -642,10 +640,10 @@
                         >
 
                         <TextView
-                            android:id="@+id/view2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:id="@+id/view2" />
 
                         <TextView
                             android:id="@+id/basket_database_total"
@@ -653,111 +651,103 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
                             android:gravity="center"
-                            android:text="---"
+                            android:textSize="15sp"
                             android:textColor="#F15353"
-                            android:textSize="15sp"/>
-
+                            android:text="---"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="÷"
+                            android:textSize="15sp"
                             android:textColor="#666666"
-                            android:textSize="15sp"/>
-
+                            android:text="÷"/>
                         <TextView
                             android:id="@+id/basket_database_gp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
                             android:gravity="center"
-                            android:text="---"
+                            android:textSize="15sp"
                             android:textColor="#F15353"
-                            android:textSize="15sp"/>
-
+                            android:text="---"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="="
+                            android:textSize="15sp"
                             android:textColor="#666666"
-                            android:textSize="15sp"/>
-
+                            android:text="="/>
                         <TextView
                             android:id="@+id/basket_database_average"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
                             android:gravity="center"
-                            android:text="---"
+                            android:textSize="15sp"
                             android:textColor="#F15353"
-                            android:textSize="15sp"/>
-
+                            android:text="---"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp">
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             />
-
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
                             android:gravity="center"
-                            android:text="@string/basket_database_details_statistic_all_score"
+                            android:textSize="10sp"
                             android:textColor="#666666"
-                            android:textSize="10sp"/>
+                            android:text="@string/basket_database_details_statistic_all_score"/>
 
                         <TextView
-                            android:id="@+id/textView7"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text=" "/>
+                            android:text=" "
+                            android:id="@+id/textView7" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
                             android:gravity="center"
-                            android:text="@string/basket_database_details_statistic_gp_num"
+                            android:textSize="10sp"
                             android:textColor="#666666"
-                            android:textSize="10sp"/>
+                            android:text="@string/basket_database_details_statistic_gp_num"/>
 
                         <TextView
-                            android:id="@+id/textView8"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text=" "/>
+                            android:text=" "
+                            android:id="@+id/textView8" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.5"
                             android:gravity="center"
-                            android:text="@string/basket_database_details_statistic_average"
+                            android:textSize="10sp"
                             android:textColor="#666666"
-                            android:textSize="10sp"/>
-
+                            android:text="@string/basket_database_details_statistic_average"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -769,7 +759,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="30px"
-                    android:background="@color/selected_bg"/>
+                    android:background="@color/home_item_bg" />
                 <!--场次统计-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -783,20 +773,21 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_num_score"
-                        android:textSize="@dimen/text_size_15"/>
+                        android:textSize="@dimen/text_size_15"
+                        android:textColor="@color/statistics_textsize"/>
 
                     <!--分割线-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:background="@color/content_txt_light_grad"/>
+                        android:background="@color/line_football_footer" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="15dp">
+                        android:paddingTop="15dp"
+                        android:paddingBottom="10dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -819,13 +810,12 @@
                                     android:progress="70"
                                     android:progressDrawable="@drawable/verticalprogressbar"
                                     />
-
                                 <TextView
                                     android:id="@+id/basket_database_gp_tv"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:paddingTop="10dp"
+                                    android:gravity="center"
                                     android:text="--"/>
 
                             </LinearLayout>
@@ -835,20 +825,20 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_weight="1.1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
 
                                 <View
-                                    android:id="@+id/view"
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
-                                    android:background="@color/basket_database_statistics_progress"/>
+                                    android:background="@color/basket_database_statistics_progress"
+                                    android:id="@+id/view"
+                                    android:layout_gravity="center"/>
 
                                 <TextView
                                     android:id="@+id/basket_database_statistic_gp"
@@ -856,10 +846,9 @@
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
                                     android:text="已赛 --"
-                                    android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -868,8 +857,8 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_gravity="center"
                                     android:background="@color/basket_database_statistics_background"
+                                    android:layout_gravity="center"
                                     />
 
                                 <TextView
@@ -877,11 +866,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="未赛 --"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:text="未赛 --"/>
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -897,9 +885,9 @@
                                     android:id="@+id/basket_database_statistic_all"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="总场次 --"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:textSize="@dimen/text_size_13"/>
+                                    android:text="总场次 --"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -931,7 +919,7 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
         </FrameLayout>
 
         <!--网络不给力提示-->
@@ -947,7 +935,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/refresh"/>
+                android:src="@mipmap/refresh" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -955,7 +943,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/exp_net_status_txt"
                 android:textColor="@color/version"
-                android:textSize="@dimen/text_size_14"/>
+                android:textSize="@dimen/text_size_14" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -970,7 +958,7 @@
                     android:layout_marginRight="5dip"
                     android:text="@string/exp__check_txt"
                     android:textColor="@color/msg"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textSize="@dimen/text_size_14" />
 
                 <TextView
                     android:id="@+id/reLoadin"
@@ -978,7 +966,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/exp_refresh_txt"
                     android:textColor="@color/exp_refresh"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textSize="@dimen/text_size_14" />
             </LinearLayout>
         </LinearLayout>
 
@@ -988,8 +976,8 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:gravity="center"
-            android:text="@string/nodata"
             android:textSize="20dp"
+            android:text="@string/nodata"
             android:visibility="gone"
             />
     </LinearLayout>
