@@ -69,6 +69,7 @@ public class AnimHeadLiveFragment extends Fragment {
 
 
         url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
+        //url = "http://192.168.31.107:9000/live/footballodds_graphic.html?thirdId=354584";
 
         // loadAnim();
 
