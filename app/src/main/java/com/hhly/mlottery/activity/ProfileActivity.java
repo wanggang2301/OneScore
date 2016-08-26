@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -53,9 +56,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 /**
- * 个人
+ * @ClassName: OneScoreGit
+ * @author:Administrator luyao
+ * @Description:   个人中心
+ * @data: 2016/7/11 17:53
  */
 public class ProfileActivity extends BaseActivity implements View.OnClickListener {
 
@@ -87,6 +92,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     /**图片裁剪高度*/
     private int height = 300;
 
+
+    private ProgressDialog progressBar;
+
+    private final static int Put_FAIL_PHOTO = 11;
+
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
     private  DisplayImageOptions options;
     private final OkHttpClient client = new OkHttpClient();
@@ -99,7 +109,18 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("application/octet-stream");
 
 
+    private Handler mViewHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Put_FAIL_PHOTO:
+                    UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
+                    break;
 
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +156,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initView() {
+
+        progressBar = new ProgressDialog(this);
+        progressBar.setCancelable(false);
+        progressBar.setMessage(getResources().getString(R.string.is_uploading));
+
         //设置头像
         mHead_portrait = (ImageView) findViewById(R.id.head_portrait);
         mHead_portrait.setOnClickListener(this);
@@ -412,7 +438,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
      /*图片上传*/
      //异步上传图片并且携带其他参数
      public void doPostSycn(String url,File file){
-
+         progressBar.show();
 
          RequestBody requestBody = new MultipartBuilder() //建立请求的内容
 
@@ -430,6 +456,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
              @Override
              public void onFailure(Request request, IOException e) {
                 // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
+                 mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
                  Log.d(TAG, "onFailure: "+e.getMessage());
              }
 
@@ -473,7 +500,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         VolleyContentFast.requestJsonByPost(BaseURLs.UPDATEHEADICON, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
-
+                progressBar.dismiss();
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                    // CommonUtils.saveRegisterInfo(register);
@@ -487,7 +514,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+                progressBar.dismiss();
                 L.e(TAG, "图片上传失败");
                 UiUtils.toast(ProfileActivity.this, R.string.picture_put_failed);
             }

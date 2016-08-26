@@ -150,6 +150,9 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
         progressBar.setCancelable(false);
         progressBar.setMessage(getResources().getString(R.string.logining));*/
 
+        progressBar = new ProgressDialog(this);
+        progressBar.setCancelable(false);
+        progressBar.setMessage(getResources().getString(R.string.is_uploading));
 
         ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.avatar_settings);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
@@ -354,7 +357,7 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
     /*图片上传*/
     //异步上传图片并且携带其他参数
     public void doPostSycn(String url,File file){
-
+        progressBar.show();
         RequestBody requestBody = new MultipartBuilder() //建立请求的内容
 
                 .type(MultipartBuilder.FORM)//表单形式
@@ -383,6 +386,7 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
                 //UiUtils.toast(MyApp.getInstance(), jo.toString());
                 String headerUrl = jo.getString("url");
                 if(!headerUrl.isEmpty()){
+
                     putPhotoUrl(headerUrl);
                 }else{
                     return;// UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
@@ -397,7 +401,7 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
      /*上传图片url  后台绑定*/
 
     private void putPhotoUrl(String headerUrl) {
-      //  progressBar.show();
+
         Map<String, String> param = new HashMap<>();
 
         Log.d(TAG, AppConstants.deviceToken);
@@ -414,7 +418,7 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
             public void onResponse(Register register) {
 
                 if (register.getResult() == AccountResultCode.SUCC) {
-                    //progressBar.dismiss();
+                    progressBar.dismiss();
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                     // CommonUtils.saveRegisterInfo(register);
                     universalImageLoader.displayImage(register.getData().getUser().getHeadIcon().toString(), mEblarge_photo, options);
@@ -426,7 +430,7 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-               // progressBar.dismiss();
+                progressBar.dismiss();
                 L.e(TAG, "图片上传失败");
                 UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
             }
