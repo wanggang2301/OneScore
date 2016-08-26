@@ -413,7 +413,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private void initView() {
         // 初始化加载框
         pd = new ProgressDialog(this);
-        pd.setCancelable(false);
+        pd.setCanceledOnTouchOutside(false);
         pd.setMessage(getResources().getString(R.string.loading_data_txt));
         // 初始化悬浮按钮
         iv_join_room_foot = (ImageView) findViewById(R.id.iv_join_room_foot);
