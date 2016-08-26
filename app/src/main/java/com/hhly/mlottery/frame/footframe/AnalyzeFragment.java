@@ -819,7 +819,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mLetHistoryProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
                 mLetHistoryProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
                 mLetHistoryProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
-                mLetHistoryProgressBar.setRoundWidth(40);
+                mLetHistoryProgressBar.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
                 mLetHistoryProgressBar.setDatas(statistics.getWin()+"",statistics.getLose()+"",statistics.getDraw()+"");
             }
 
@@ -848,7 +848,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mLetRecentHomeProgress.setProgress(winPercent);
                 mLetRecentHomeProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
                 mLetRecentHomeWinRate.setText(statistics.getWinPercent());
-                mLetRecentHomeProgress.setRoundWidth(40);
+                mLetRecentHomeProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
             }
 
 
@@ -877,7 +877,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mLetRecentGuestProgress.setProgress(winPercent);
                 mLetRecentGuestProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_g));
                 mLetRecentGuestWinRate.setText(statistics.getWinPercent());
-                mLetRecentGuestProgress.setRoundWidth(40);
+                mLetRecentGuestProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
             }
 
 
@@ -936,7 +936,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mSizeHistoryProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
                 mSizeHistoryProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
                 mSizeHistoryProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
-                mSizeHistoryProgressBar.setRoundWidth(40);
+                mSizeHistoryProgressBar.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
                 mSizeHistoryProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
 
             }
@@ -974,7 +974,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mSizeRecentHomeProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
                 mSizeRecentHomeProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
                 mSizeRecentHomeProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
-                mSizeRecentHomeProgressBar.setRoundWidth(40);
+                mSizeRecentHomeProgressBar.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
                 mSizeRecentHomeProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
 
             }
@@ -1011,7 +1011,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mSizeRecentGuestProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
                 mSizeRecentGuestProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
                 mSizeRecentGuestProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
-                mSizeRecentGuestProgressBar.setRoundWidth(40);
+                mSizeRecentGuestProgressBar.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
                 mSizeRecentGuestProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
 
             }
