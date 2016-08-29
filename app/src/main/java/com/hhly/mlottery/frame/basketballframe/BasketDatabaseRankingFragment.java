@@ -25,11 +25,15 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import rx.functions.Action1;
 
 /**
  * 描    述：篮球资料库 - 排行
@@ -141,24 +145,28 @@ public class BasketDatabaseRankingFragment extends Fragment {
     }
 
     private void initListener() {
-        mTitleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mResult != null) {
-                    CupMatchStageChooseDialogFragment dialog =
-                            CupMatchStageChooseDialogFragment.newInstance(mResult.getStageResult());
-                    dialog.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int i) {
-                            load(mResult.getSearchCondition().get(i).getStageId());
+
+        RxView.clicks(mTitleTextView)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        if (mResult != null) {
+                            CupMatchStageChooseDialogFragment dialog =
+                                    CupMatchStageChooseDialogFragment.newInstance(mResult.getStageResult());
+                            dialog.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, int i) {
+                                    load(mResult.getSearchCondition().get(i).getStageId());
+                                }
+                            });
+                            dialog.show(getChildFragmentManager(), "stageChoose");
+                        } else {
+                            ToastTools.showQuick(getContext(), "稍候，获取数据中");
                         }
-                    });
-                    dialog.show(getChildFragmentManager(), "stageChoose");
-                } else {
-                    ToastTools.showQuick(getContext(), "稍候，获取数据中");
-                }
-            }
-        });
+                    }
+                });
+
         mLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
