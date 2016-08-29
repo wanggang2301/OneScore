@@ -211,7 +211,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         Integer secondStageIndex = mResult.getSecondStageIndex();
         if (firstStageIndex < matchStages.size()) {
             MatchStage firstStage = matchStages.get(firstStageIndex);
-            if (firstStage.isHasSecondStage()) {
+            if (firstStage.isHasSecondStage() && secondStageIndex != null) {
                 int nextIndex = secondStageIndex + 1;
                 MatchStage secondStage = matchStages.get(firstStageIndex);
                 if (nextIndex == secondStage.getStages().size()) {
@@ -229,7 +229,13 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                             firstStage.getStages().get(nextIndex).getStageId());
                 }
             } else {
-                loadData(matchStages.get(firstStageIndex + 1).getStageId(), null);
+                MatchStage nextFirstStage = matchStages.get(firstStageIndex + 1);
+                List<MatchStage> nextSecondStages = nextFirstStage.getStages();
+                if (CollectionUtils.notEmpty(nextSecondStages)) {
+                    loadData(nextFirstStage.getStageId(), nextSecondStages.get(0).getStageId());
+                } else {
+                    loadData(nextFirstStage.getStageId(), null);
+                }
             }
         }
     }
@@ -245,8 +251,8 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         if (!CollectionUtils.notEmpty(matchStages)) return;
         if (firstStageIndex >= 0) {
             MatchStage firstStage = matchStages.get(firstStageIndex);
-            if (firstStage.isHasSecondStage()) {
-                Integer secondStageIndex = mResult.getSecondStageIndex();
+            Integer secondStageIndex = mResult.getSecondStageIndex();
+            if (firstStage.isHasSecondStage() && secondStageIndex != null) {
                 int nextIndex = secondStageIndex - 1;
                 if (nextIndex == -1) {
                     MatchStage preFirstStage = matchStages.get(firstStageIndex - 1);
@@ -263,7 +269,14 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                             firstStage.getStages().get(nextIndex).getStageId());
                 }
             } else {
-                loadData(matchStages.get(firstStageIndex - 1).getStageId(), null);
+                MatchStage preFirstStage = matchStages.get(firstStageIndex - 1);
+                List<MatchStage> preSecondStages = preFirstStage.getStages();
+                if (CollectionUtils.notEmpty(preSecondStages)) {
+                    loadData(preFirstStage.getStageId(),
+                            preSecondStages.get(preSecondStages.size() - 1).getStageId());
+                } else {
+                    loadData(preFirstStage.getStageId(), null);
+                }
             }
         }
     }
