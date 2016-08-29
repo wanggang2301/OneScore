@@ -18,8 +18,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,6 +64,7 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
     private RelativeLayout about_detail_progressbar;// 网络请求进度条
 
     private boolean isCheckVersion = true;// 是否正在请求版本更新
+    private TextView mTv9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +87,8 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
         mTv7.setOnClickListener(this);
         tv1 = (TextView) findViewById(R.id.tv1);
         tv1.setOnClickListener(this);
-
+        mTv9 = (TextView) findViewById(R.id.tv9);
+        mTv9.setOnClickListener(this);
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         public_txt_title.setText(getResources().getString(R.string.about_us_txt));
 
@@ -145,6 +145,12 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                 Uri uri = Uri.parse("tel:" + number);
                 Intent intent = new Intent(Intent.ACTION_DIAL, uri);
                 startActivity(intent);
+                break;
+            case R.id.tv9:
+                String number9 = mTv9.getText().toString();
+                Uri uri9 = Uri.parse("tel:" + number9);
+                Intent intent9 = new Intent(Intent.ACTION_DIAL, uri9);
+                startActivity(intent9);
                 break;
             default:
                 break;
