@@ -57,8 +57,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import io.rong.imkit.RongIM;
-
 
 /**
  * 登录界面
@@ -601,7 +599,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onDestroy();
         PreferenceUtil.commitString("code", "");
     }
-
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
