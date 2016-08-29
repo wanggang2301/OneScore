@@ -167,31 +167,7 @@
                     android:text="@string/about_service_txt"
                     android:textColor="@color/msg"
                     android:textSize="14sp" />-->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv1">
 
-            <TextView
-
-                android:id="@+id/tv8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="客    服："
-                android:textColor="@color/msg"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/tv8"
-                android:text="0755-86338109"
-                android:textColor="@color/text_about_color"
-                android:textSize="14sp" />
-        </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -208,11 +184,33 @@
                 android:textSize="14sp" />
 
             <TextView
+
+                android:layout_toRightOf="@+id/tv6"
+                android:id="@+id/tv9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="0755-86338109"
+                android:textColor="@color/text_about_color"
+                android:textSize="14sp" />
+
+            <TextView
+
+                android:layout_toRightOf="@+id/tv9"
+                android:id="@+id/tv10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text=" 、"
+                android:textColor="@color/text_about_color"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/tv7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/tv6"
+                android:layout_toRightOf="@+id/tv10"
                 android:text="@string/about_cus_number_txt"
                 android:textColor="@color/text_about_color"
                 android:textSize="14sp" />
