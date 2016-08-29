@@ -179,28 +179,85 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         mLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mResult == null) return;
-                if (mResult.getFirstStageIndex() == null) return;
-                List<MatchStage> matchStages = mResult.getSearchCondition();
-                if (!CollectionUtils.notEmpty(matchStages)) return;
-                if (mResult.getFirstStageIndex() > 0) {
-                    loadData(matchStages.get(mResult.getFirstStageIndex() - 1).getStageId(), null);
-                }
+                loadPre();
             }
         });
 
         mRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mResult == null) return;
-                if (mResult.getFirstStageIndex() == null) return;
-                List<MatchStage> matchStages = mResult.getSearchCondition();
-                if (!CollectionUtils.notEmpty(matchStages)) return;
-                if (mResult.getFirstStageIndex() < matchStages.size() - 1) {
-                    loadData(matchStages.get(mResult.getFirstStageIndex() + 1).getStageId(), null);
-                }
+                loadNext();
             }
         });
+    }
+
+    /**
+     * 加载下一页
+     */
+    private void loadNext() {
+        if (mResult == null) return;
+        Integer firstStageIndex = mResult.getFirstStageIndex();
+        if (mResult.getFirstStageIndex() == null) return;
+        List<MatchStage> matchStages = mResult.getSearchCondition();
+        if (!CollectionUtils.notEmpty(matchStages)) return;
+        Integer secondStageIndex = mResult.getSecondStageIndex();
+        if (firstStageIndex < matchStages.size()) {
+            MatchStage firstStage = matchStages.get(firstStageIndex);
+            if (firstStage.isHasSecondStage()) {
+                int nextIndex = secondStageIndex + 1;
+                MatchStage secondStage = matchStages.get(firstStageIndex);
+                if (nextIndex == secondStage.getStages().size()) {
+                    MatchStage nextFirstStage = matchStages.get(firstStageIndex + 1);
+                    List<MatchStage> nextSecondStages = nextFirstStage.getStages();
+                    if (!nextFirstStage.isHasSecondStage() ||
+                            nextSecondStages.get(0) == null) {
+                        loadData(nextFirstStage.getStageId(), null);
+                    } else {
+                        loadData(nextFirstStage.getStageId(),
+                                nextSecondStages.get(0).getStageId());
+                    }
+                } else {
+                    loadData(firstStage.getStageId(),
+                            firstStage.getStages().get(nextIndex).getStageId());
+                }
+            } else {
+                loadData(matchStages.get(firstStageIndex + 1).getStageId(), null);
+            }
+        }
+    }
+
+    /**
+     * 加载上一页
+     */
+    private void loadPre() {
+        if (mResult == null) return;
+        Integer firstStageIndex = mResult.getFirstStageIndex();
+        if (firstStageIndex == null) return;
+        List<MatchStage> matchStages = mResult.getSearchCondition();
+        if (!CollectionUtils.notEmpty(matchStages)) return;
+        if (firstStageIndex >= 0) {
+            MatchStage firstStage = matchStages.get(firstStageIndex);
+            if (firstStage.isHasSecondStage()) {
+                Integer secondStageIndex = mResult.getSecondStageIndex();
+                int nextIndex = secondStageIndex - 1;
+                if (nextIndex == -1) {
+                    MatchStage preFirstStage = matchStages.get(firstStageIndex - 1);
+                    List<MatchStage> preSecondStages = preFirstStage.getStages();
+                    if (!preFirstStage.isHasSecondStage() ||
+                            preSecondStages.get(preSecondStages.size() - 1) == null) {
+                        loadData(preFirstStage.getStageId(), null);
+                    } else {
+                        loadData(preFirstStage.getStageId(),
+                                preSecondStages.get(preSecondStages.size() - 1).getStageId());
+                    }
+                } else {
+                    loadData(firstStage.getStageId(),
+                            firstStage.getStages().get(nextIndex).getStageId());
+                }
+            } else {
+                loadData(matchStages.get(firstStageIndex - 1).getStageId(), null);
+            }
+        }
     }
 
     /**
@@ -240,7 +297,8 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                         mButtonFrame.setVisibility(View.VISIBLE);
                         mResult = result;
                         handleData(result.getMatchData());
-                        handleHeadView(result.getSearchCondition(), result.getFirstStageIndex());
+                        handleHeadView(result.getSearchCondition(), result.getFirstStageIndex(),
+                                result.getSecondStageIndex());
                         mAdapter.notifyDataSetChanged();
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
@@ -269,19 +327,33 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         }
     }
 
-    private void handleHeadView(List<MatchStage> searchCondition, Integer firstStageIndex) {
+    private void handleHeadView(List<MatchStage> searchCondition, Integer firstStageIndex,
+                                Integer secondStageIndex) {
         if (CollectionUtils.notEmpty(searchCondition)) {
             mStageList.clear();
             mStageList.addAll(searchCondition);
             MatchStage matchStage = mStageList.get(mResult.getFirstStageIndex());
-            mTitleTextView.setText(matchStage.getStageName());
+            if (matchStage.isHasSecondStage() && mResult.getSecondStageIndex() != null &&
+                    mResult.getSecondStageIndex() != -1) {
+                MatchStage secondStage = matchStage.getStages().get(mResult.getSecondStageIndex());
+                mTitleTextView.setText(secondStage.getStageName());
+            } else {
+                mTitleTextView.setText(matchStage.getStageName());
+            }
         }
 
         if (firstStageIndex != null) {
-            mLeftButton.setVisibility(firstStageIndex == 0 ? View.GONE : View.VISIBLE);
-            mRightButton.setVisibility(
-                    firstStageIndex + 1 == mResult.getSearchCondition().size() ?
-                            View.GONE : View.VISIBLE);
+            boolean secondIsStart = secondStageIndex == null || secondStageIndex == -1
+                    || secondStageIndex == 0;
+            mLeftButton.setVisibility(firstStageIndex == 0 && secondIsStart ?
+                    View.GONE : View.VISIBLE);
+            boolean firstIsEnd = firstStageIndex + 1 == mResult.getSearchCondition().size();
+
+            MatchStage firstStage = searchCondition.get(firstStageIndex);
+            boolean secondIsEnd = secondStageIndex == null || firstStage.getStages() == null ||
+                    secondStageIndex == firstStage.getStages().size() - 1;
+            mRightButton.setVisibility(firstIsEnd && secondIsEnd ?
+                    View.GONE : View.VISIBLE);
         }
     }
 

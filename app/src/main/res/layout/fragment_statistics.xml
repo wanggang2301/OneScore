@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="-0.25dp"
-            android:background="@drawable/shape_basketball_infomation_left"
+            android:background="@drawable/radio_button_left"
             android:checked="true"
             android:text="@string/foot_event"
             android:textColor="@drawable/info_text_color" />
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="-0.25dp"
-            android:background="@drawable/shape_basketball_infomation_right"
+            android:background="@drawable/radio_button_right"
             android:checked="false"
             android:text="@string/foot_trend"
             android:textColor="@drawable/info_text_color" />
@@ -121,7 +121,8 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"></android.support.v7.widget.RecyclerView>
+                    android:layout_marginBottom="15dp"
+                    android:paddingTop="10dp"></android.support.v7.widget.RecyclerView>
 
 
                 <LinearLayout

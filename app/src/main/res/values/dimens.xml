@@ -62,6 +62,8 @@
     <dimen name="basket_header_height">72dp</dimen>
     <dimen name="basket_no_data_height">159dp</dimen>
     <dimen name="round_progressbar_width">10dp</dimen>
+    <dimen name="round_progressbar_staristic_width">15dp</dimen>
+    <dimen name="round_progressbar_textsize">7dp</dimen>
 
     <dimen name="basket_item_height">35dp</dimen>
     <dimen name="basket_details_item">20dp</dimen>

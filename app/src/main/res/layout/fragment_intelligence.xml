@@ -88,17 +88,19 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@color/home_item_bg"/>
+
             <RadioGroup
                 android:id="@+id/radio_group_intelligent"
                 android:layout_width="260dp"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:gravity="center"
-                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <!--全部比赛-->
@@ -124,18 +126,21 @@
         </LinearLayout>
         <!--大数据赛果-->
         <include layout="@layout/intelligence_result"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="@color/home_item_bg"/>
         <!--赛季盘口-->
         <include layout="@layout/intelligent_season_handicap"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:background="@color/home_item_bg"/>
         <!--近期比赛-->
         <include layout="@layout/intelligent_recent"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"

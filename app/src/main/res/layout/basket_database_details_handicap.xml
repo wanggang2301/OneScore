@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="#FFFFFF"
     >
 
     <LinearLayout
@@ -24,51 +24,56 @@
                 android:layout_height="wrap_content"
                 android:background="@color/home_item_bg">
 
-            <RadioGroup
-                android:id="@+id/gendergroup"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_margin="13dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                >
+                <RadioGroup
+                    android:id="@+id/gendergroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_margin="13dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
 
-                <!--亚盘-->
-                <RadioButton
-                    android:id="@+id/basket_database_details_all"
-                    style="@style/odds_radio_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/odds_selected_plate"
-                    android:checked="true"
-                    android:text="@string/basket_database_details_all"/>
-                <!--大小-->
-                <RadioButton
-                    android:id="@+id/basket_database_details_home"
-                    style="@style/odds_radio_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/odds_selected_op"
-                    android:text="@string/basket_database_details_home"/>
-                <!--欧赔-->
-                <RadioButton
-                    android:id="@+id/basket_database_details_guest"
-                    style="@style/odds_radio_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/odds_selected_big"
-                    android:text="@string/basket_database_details_guest"/>
+                    <!--亚盘-->
+                    <RadioButton
+                        android:id="@+id/basket_database_details_all"
+                        style="@style/odds_radio_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="-1dp"
+                        android:layout_marginRight="-1dp"
+                        android:background="@drawable/radio_button_left"
+                        android:checked="true"
+                        android:text="@string/basket_database_details_all"/>
+                    <!--大小-->
+                    <RadioButton
+                        android:id="@+id/basket_database_details_home"
+                        style="@style/odds_radio_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/radio_button_center"
+                        android:text="@string/basket_database_details_home"/>
+                    <!--欧赔-->
+                    <RadioButton
+                        android:id="@+id/basket_database_details_guest"
+                        style="@style/odds_radio_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="-1dp"
+                        android:layout_marginStart="-1dp"
+                        android:background="@drawable/radio_button_right"
+                        android:text="@string/basket_database_details_guest"/>
 
-            </RadioGroup>
+                </RadioGroup>
             </FrameLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="12dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/basket_database_name"
@@ -77,8 +82,8 @@
                     android:layout_weight="2.5"
                     android:gravity="left"
                     android:text="@string/basket_database_details_runkingname"
-                    android:textSize="10sp"
-                    android:textColor="@color/black_details_ball_textcolor"/>
+                    android:textColor="@color/black_details_ball_textcolor"
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/basket_database_yisai"
@@ -87,8 +92,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/basket_database_details_overgame"
-                    android:textSize="10sp"
-                    android:textColor="@color/black_details_ball_textcolor"/>
+                    android:textColor="@color/black_details_ball_textcolor"
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/basket_database_up"
@@ -97,8 +102,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/basket_database_details_up"
-                    android:textSize="10sp"
-                    android:textColor="@color/black_details_ball_textcolor"/>
+                    android:textColor="@color/black_details_ball_textcolor"
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/basket_database_down"
@@ -107,8 +112,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/basket_database_details_down"
-                    android:textSize="10sp"
-                    android:textColor="@color/black_details_ball_textcolor"/>
+                    android:textColor="@color/black_details_ball_textcolor"
+                    android:textSize="10sp"/>
 
                 <TextView
                     android:id="@+id/basket_database_yzs"
@@ -117,15 +122,15 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="@string/basket_database_details_yzs"
-                    android:textSize="10sp"
-                    android:textColor="@color/black_details_ball_textcolor"/>
+                    android:textColor="@color/black_details_ball_textcolor"
+                    android:textSize="10sp"/>
             </LinearLayout>
 
             <!--分割线-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/content_txt_light_grad" />
+                android:background="@color/content_txt_light_grad"/>
             <!--listview-->
             <com.hhly.mlottery.widget.NoScrollListView
                 android:id="@+id/basket_database_handicap_list"
@@ -133,12 +138,12 @@
                 android:layout_height="wrap_content"
                 android:divider="#00000000"
                 android:dividerHeight="0px"
-                android:listSelector="@android:color/transparent" />
+                android:listSelector="@android:color/transparent"/>
             <!--&lt;!&ndash;分割线&ndash;&gt;-->
             <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
-                <!--android:background="@color/content_txt_light_grad" />-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:background="@color/content_txt_light_grad" />-->
         </LinearLayout>
 
         <!--正在加载中显示进度条-->
@@ -153,7 +158,7 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"/>
         </FrameLayout>
 
         <!--网络不给力提示-->
@@ -169,7 +174,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/refresh" />
+                android:src="@mipmap/refresh"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -177,7 +182,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/exp_net_status_txt"
                 android:textColor="@color/version"
-                android:textSize="@dimen/text_size_14" />
+                android:textSize="@dimen/text_size_14"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -192,7 +197,7 @@
                     android:layout_marginRight="5dip"
                     android:text="@string/exp__check_txt"
                     android:textColor="@color/msg"
-                    android:textSize="@dimen/text_size_14" />
+                    android:textSize="@dimen/text_size_14"/>
 
                 <TextView
                     android:id="@+id/reLoadin"
@@ -200,19 +205,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/exp_refresh_txt"
                     android:textColor="@color/exp_refresh"
-                    android:textSize="@dimen/text_size_14" />
+                    android:textSize="@dimen/text_size_14"/>
             </LinearLayout>
         </LinearLayout>
 
         <!--暂无数据提示-->
-            <TextView
-                android:id="@+id/basket_database_details_nodata"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:gravity="center"
-                android:textSize="20dp"
-                android:text="@string/nodata"
-                android:visibility="gone"
-                />
+        <TextView
+            android:id="@+id/basket_database_details_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:gravity="center"
+            android:text="@string/nodata"
+            android:textSize="20dp"
+            android:visibility="gone"
+            />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

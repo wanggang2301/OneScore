@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,6 +55,7 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
     private static final int GET_INFO_START = 0; // 开始请求
     private static final int GET_INFO_SUCCESS = 1; // 获取版本信息成功
     private static final int GET_INFO_ERROR = 2; // 网络访问失败
+    private static final int DOWNLOAD_UPGRADE = 3;// 准备开始升级下载
     private static final String COMP_VER = "1"; // 完整版
     private static final String PURE_VER = "2"; // 纯净版
     private TextView tv1, tv2;//订阅号//服务号
@@ -173,6 +176,17 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                     about_detail_progressbar.setVisibility(View.GONE);
                     versionUpError(false);
                     break;
+                case DOWNLOAD_UPGRADE:
+                    // 先判断是否为网络数据连接
+                    ConnectivityManager connectMgr = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo info = connectMgr.getActiveNetworkInfo();
+                    if (info != null && info.getType() == ConnectivityManager.TYPE_MOBILE) {
+                        // 判断是否是手机网络
+                        promptNetInfo();
+                    } else {
+                        downloadUpgrade();
+                    }
+                    break;
             }
         }
     };
@@ -197,33 +211,7 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    MobclickAgent.onEvent(mContext, "AboutWe_UpdateVersion_Click");
-                    Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(mContext, "更新", Toast.LENGTH_SHORT).show();
-                    DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-                    Uri uri = Uri.parse(mUpdateInfo.getUrl());
-                    DownloadManager.Request request = new DownloadManager.Request(uri);
-                    //指定在WIFI状态下，执行下载操作。
-//                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-                    //是否允许漫游状态下，执行下载操作
-                    request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
-                    //是否允许“计量式的网络连接”执行下载操作
-
-//                    request.setAllowedOverMetered(false);// 默认是允许的。
-
-                    //request.setTitle("一比分新版本下载");
-                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                    request.setMimeType("application/vnd.android.package-archive");
-                    L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                    String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"),mUpdateInfo.getUrl().length());
-                    L.d("xxx","mAppName:>>" + mAppName);
-                    request.setDestinationInExternalPublicDir(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), mAppName);
-                    // 设置为可被媒体扫描器找到
-                    request.allowScanningByMediaScanner();
-                    // 设置为可见和可管理
-                    request.setVisibleInDownloadsUi(true);
-                    long id = downloadManager.enqueue(request);
-                    L.d("xxx", "id = " + id);
+                    mHandler.sendEmptyMessage(DOWNLOAD_UPGRADE);
                 }
             });
             builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
@@ -237,6 +225,69 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 当前连接的网络提示
+     */
+    private void promptNetInfo() {
+        try {
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);
+            builder.setCancelable(false);// 设置对话框以外不可点击
+            builder.setTitle(mContext.getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
+            builder.setMessage(mContext.getResources().getString(R.string.kindly_reminder_comment));// 提示内容
+            builder.setPositiveButton(mContext.getResources().getString(R.string.continue_download), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    downloadUpgrade();
+                }
+            });
+            builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            android.support.v7.app.AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 开始下载升级
+     */
+    private void downloadUpgrade() {
+        Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
+        DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(mUpdateInfo.getUrl());
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        //指定在WIFI状态下，执行下载操作。
+//                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+        //是否允许漫游状态下，执行下载操作
+        request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
+        //是否允许“计量式的网络连接”执行下载操作
+
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        request.setAllowedOverMetered(false);// 默认是允许的。
+                    }*/
+
+        //request.setTitle("一比分新版本下载");
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setMimeType("application/vnd.android.package-archive");
+        L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+        String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"), mUpdateInfo.getUrl().length());
+        L.d("xxx", "mAppName:>>" + mAppName);
+//                    request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(),mAppName);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mAppName);
+        // 设置为可被媒体扫描器找到
+        request.allowScanningByMediaScanner();
+        // 设置为可见和可管理
+        request.setVisibleInDownloadsUi(true);
+        long id = downloadManager.enqueue(request);
+        L.d("xxx", "id = " + id);
     }
 
     /**
