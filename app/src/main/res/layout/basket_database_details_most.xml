@@ -69,14 +69,15 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/basket_database_details_leagueMost_strongestAttack"
-                    android:textColor="@color/statistics_textsize"
+                    android:textColor="@color/statistics_textcolor"
                     android:textSize="@dimen/text_size_13"/>
 
                 <!--分割线-->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/line_football_footer" />
+                    android:background="@color/line_football_footer"
+                    />
 
                 <com.hhly.mlottery.widget.NoScrollListView
                     android:id="@+id/basket_database_leagueMost_list1"
@@ -85,6 +86,11 @@
                     android:divider="@color/linecolor"
                     android:dividerHeight="0.5px"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_football_footer"
+                    />
                 <!--分割线-->
                 <View
                     android:layout_width="match_parent"
@@ -105,7 +111,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/basket_database_details_leagueMost_weakestAttack"
-                    android:textColor="@color/statistics_textsize"
+                    android:textColor="@color/statistics_textcolor"
                     android:textSize="@dimen/text_size_13"/>
 
                 <!--分割线-->
@@ -121,6 +127,10 @@
                     android:divider="@color/linecolor"
                     android:dividerHeight="0.5px"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_football_footer"/>
                 <!--分割线-->
                 <View
                     android:layout_width="match_parent"
@@ -140,7 +150,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/basket_database_details_leagueMost_strongestDefense"
-                    android:textColor="@color/statistics_textsize"
+                    android:textColor="@color/statistics_textcolor"
                     android:textSize="@dimen/text_size_13"/>
 
                 <!--分割线-->
@@ -156,6 +166,10 @@
                     android:divider="@color/linecolor"
                     android:dividerHeight="0.5px"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_football_footer"/>
                 <!--分割线-->
                 <View
                     android:layout_width="match_parent"
@@ -175,7 +189,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="@string/basket_database_details_leagueMost_weakestDefense"
-                    android:textColor="@color/statistics_textsize"
+                    android:textColor="@color/statistics_textcolor"
                     android:textSize="@dimen/text_size_13"/>
 
                 <!--分割线-->
@@ -190,11 +204,11 @@
                     android:layout_height="wrap_content"
                     android:divider="@color/linecolor"
                     android:dividerHeight="0.5px"/>
-                <!--分割线-->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="30px"
-                    android:background="@color/home_item_bg" />
+                <!--&lt;!&ndash;分割线&ndash;&gt;-->
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="30px"-->
+                    <!--android:background="@color/home_item_bg" />-->
             </LinearLayout>
 
         </LinearLayout>
