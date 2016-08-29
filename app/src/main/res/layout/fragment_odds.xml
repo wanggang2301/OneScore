@@ -8,35 +8,44 @@
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_margin="13dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginTop="13dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="4">
 
         <!--亚盘-->
         <RadioButton
             android:id="@+id/odd_plate_btn"
             style="@style/odds_radio_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/odds_selected_plate"
+            android:layout_marginEnd="-1dp"
+            android:layout_marginRight="-1dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_left"
             android:checked="true"
             android:text="@string/odd_plate_rb_txt"/>
         <!--大小-->
         <RadioButton
             android:id="@+id/odd_big_btn"
             style="@style/odds_radio_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/odds_selected_op"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_center"
             android:text="@string/asiasize"/>
         <!--欧赔-->
         <RadioButton
             android:id="@+id/odd_op_btn"
             style="@style/odds_radio_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/odds_selected_big"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginStart="-1dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_right"
             android:text="@string/odd_op_rb_txt"/>
 
     </RadioGroup>

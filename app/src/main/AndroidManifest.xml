@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 畅言权限 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -39,31 +40,33 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
-           <!-- <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
             android:screenOrientation="portrait" />
-        <!--环境选择-->
+        <!-- 环境选择 -->
         <activity
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-              <intent-filter>
-                  <action android:name="android.intent.action.MAIN" />
-                  <category android:name="android.intent.category.LAUNCHER" />
-              </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!-- 引导页 -->
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation"></activity>
         <!-- 内地版的key-begin -->
         <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
         <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
@@ -85,12 +88,11 @@
         <activity
             android:name=".activity.NumberCustomizeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!--评论activity-->
+        <!-- 评论activity -->
         <activity
             android:name=".activity.CounselCommentActivity"
             android:screenOrientation="portrait"
@@ -119,12 +121,12 @@
         <!-- 篮球详情 -->
         <!-- 篮球赔率详情 -->
         <activity
-            android:name="com.hhly.mlottery.activity.BasketOddsDetailsActivity"
+            android:name=".activity.BasketOddsDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!-- 篮球资料库详情 -->
         <activity
-            android:name="com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity"
+            android:name=".activity.BasketballDatabaseDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!-- 篮球分析战绩详情 -->
@@ -142,11 +144,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
-        </receiver>-->
+        </receiver>
+        -->
         <!-- 首页Activity -->
         <activity
             android:name=".activity.HomePagerActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!-- 首页用户设置选项 -->
         <activity
@@ -155,7 +158,7 @@
         <!-- 足球比分 -->
         <activity
             android:name=".activity.FootballActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <!-- 语言切换 -->
         <activity
@@ -220,13 +223,13 @@
         <!-- 畅言的配置项 -->
         <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity" />
 
-        <!--微信分享-->
+        <!-- 微信分享 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
 
-        <!--QQ分享-->
+        <!-- QQ分享 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -240,7 +243,7 @@
                 <data android:scheme="1104883879" />
             </intent-filter>
         </activity>
-        <!--新版指数详情-->
+        <!-- 新版指数详情 -->
         <activity
             android:name=".activity.CpiDetailsActivity"
             android:screenOrientation="portrait" />
@@ -253,7 +256,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--新浪微博-->
+        <!-- 新浪微博 -->
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
@@ -278,35 +281,39 @@
 
         <activity
             android:name=".activity.BasketDetailsActivityTest"
-            android:theme="@style/AppThemeDark.NoActionBar"
             android:screenOrientation="portrait"
-            />
-
+            android:theme="@style/AppThemeDark.NoActionBar" />
         <activity
             android:name=".activity.BasketballInformationActivity"
-            android:theme="@style/AppThemeDark.NoActionBar"
-            android:screenOrientation="portrait">
-            <!--<intent-filter>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeDark.NoActionBar">
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
 
         </activity>
 
-        <!--篮球资料库模糊搜索-->
-        <activity android:name=".activity.BasketballInformationSerachActivity"
-            android:screenOrientation="portrait"/>
+        <!-- 篮球资料库模糊搜索 -->
+        <activity
+            android:name=".activity.BasketballInformationSerachActivity"
+            android:screenOrientation="portrait" />
 
-        <!--融云会话列表-->
+        <!-- 融云会话列表 -->
         <activity
             android:name=".frame.ConversationFragment"
-            android:theme="@style/chart_room"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/chart_room"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.hhly.mlottery"
                     android:pathPrefix="/conversation/"

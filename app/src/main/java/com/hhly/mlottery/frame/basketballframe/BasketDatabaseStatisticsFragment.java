@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,11 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueMost; //Unused import statement
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueMost;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueStatistics;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseMostDat;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseStatisticsBean;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueStatistics;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
@@ -333,7 +334,9 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
                 }
                 //统计
                 BasketDatabaseLeagueStatistics data = bean.getLeagueStatistics();
-                setData(data);
+                if (data != null) {
+                    setData(data);
+                }
 
                 BasketDatabaseLeagueMost data2 = bean.getLeagueMost();
 
@@ -365,14 +368,16 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
 
     private void setData( BasketDatabaseLeagueStatistics data){
 
+        if (data == null || getActivity() == null) {
+            return;
+        }
         /**
          * 胜负统计
          */
-        mProgressStatistic.setProgress(data.getHomeWinRate());
-        mProgressStatistic.setProgress2(data.getGuestWinRate());
+        mProgressStatistic.setProgressAll(data.getHomeWinRate() , data.getGuestWinRate() ,0);
         mProgressStatistic.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mProgressStatistic.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
-        mProgressStatistic.setRoundWidth(40);
+        mProgressStatistic.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mProgressStatistic.setDatas((int)data.getHomeWin() + "" ,(int)data.getGuestWin() + "" , "");
         mHomeWin.setText(getResources().getString(R.string.basket_database_details_statistic_home_win) + (int)(data.getHomeWinRate())+"%");
         mGuestWin.setText(getResources().getString(R.string.basket_database_details_statistic_guest_win) + (int)(data.getGuestWinRate())+"%");
@@ -391,13 +396,11 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         /**
          * 让分统计
          */
-        mLetProgress.setProgress(data.getGraphLetHomeWinRate());
-        mLetProgress.setProgress2(data.getGraphLetGuestWinRate());
-        mLetProgress.setProgress3(data.getGraphLetDrawRate());
+        mLetProgress.setProgressAll(data.getGraphLetHomeWinRate() , data.getGraphLetGuestWinRate() , data.getGraphLetDrawRate());
         mLetProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mLetProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
         mLetProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
-        mLetProgress.setRoundWidth(40);
+        mLetProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mLetProgress.setDatas((int)data.getLetHomeWin() + "" ,(int)data.getLetGuestWin() + "" , (int)data.getLetDraw() + "");
         mLetText.setText((int)(data.getLetHomeWin() + data.getLetGuestWin() + data.getLetDraw()) + "");
         mLetHome.setText(getResources().getString(R.string.basket_database_details_statistic_home_win) + (int)(data.getLetHomeWinRate()) + "%");
@@ -407,14 +410,12 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         /**
          * 大小球统计
          */
-        mBigSmallProgress.setProgress(data.getGraphAsiaSizeOverRate());
-        mBigSmallProgress.setProgress2(data.getGraphAsiaSizeUnderRate());
-        mBigSmallProgress.setProgress3(data.getGraphAsiaSizeDrawRate());
+        mBigSmallProgress.setProgressAll(data.getGraphAsiaSizeOverRate() , data.getGraphAsiaSizeUnderRate() , data.getGraphAsiaSizeDrawRate());
         mBigSmallProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mBigSmallProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
         mBigSmallProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
         mBigSmallProgress.setDatas((int)data.getAsiaSizeOver() + "" ,(int)data.getAsiaSizeUnder() + "" , (int)data.getAsiaSizeDraw() + "");
-        mBigSmallProgress.setRoundWidth(40);
+        mBigSmallProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mBigSmallText.setText((int)(data.getAsiaSizeOver() + data.getAsiaSizeUnder() + data.getAsiaSizeDraw()) + "");
         mBigSmallHome.setText(getResources().getString(R.string.basket_database_details_statistic_big) + (int)(data.getAsiaSizeOverRate()) + "%");
         mBigSmallGuest.setText(getResources().getString(R.string.basket_database_details_statistic_small) + (int)(data.getAsiaSizeUnderRate()) + "%");

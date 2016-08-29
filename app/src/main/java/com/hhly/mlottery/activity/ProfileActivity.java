@@ -56,6 +56,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
+
 /**
  * @ClassName: OneScoreGit
  * @author:Administrator luyao
@@ -570,5 +574,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         return BitmapFactory.decodeFile(filepath, options);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 刷新本地用户缓存
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx"))));
+    }
 }

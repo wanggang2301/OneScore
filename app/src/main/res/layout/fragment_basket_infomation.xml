@@ -25,8 +25,9 @@
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_margin="13dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginTop="13dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="4">
@@ -37,10 +38,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="-0.25dp"
-            android:background="@drawable/shape_basketball_infomation_left"
+            android:background="@drawable/radio_button_left"
             android:checked="true"
             android:text="@string/basket_info_zhouji"
-            android:textColor="@drawable/info_text_color" />
+            android:textColor="@drawable/info_text_color"/>
 
         <RadioButton
             android:id="@+id/info_country_match"
@@ -48,10 +49,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="-0.25dp"
-            android:background="@drawable/shape_basketball_infomation_right"
+            android:background="@drawable/radio_button_right"
             android:checked="false"
             android:text="@string/basket_info_country"
-            android:textColor="@drawable/info_text_color" />
+            android:textColor="@drawable/info_text_color"/>
 
     </RadioGroup>
 

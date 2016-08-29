@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
@@ -74,6 +76,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author yixq
@@ -213,6 +217,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     private ImageView iv_join_room_basket;// 聊天室悬浮按钮
     private ProgressDialog pd;// 加载框
+    private boolean isExit = false;// 是否取消进入聊天室动作
 
 
     @Override
@@ -236,13 +241,14 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 //            L.d("BASKET_MATCH_STATUS>>>>>>", mMatchStatus);
         }
 
+        EventBus.getDefault().register(this);//注册EventBus
         RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                        //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
+                //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
                 .showImageForEmptyUri(R.mipmap.basket_default)
                 .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
                 .build();
@@ -272,6 +278,16 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         setListener();
         loadData();
 
+        pd.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    isExit = true;
+                    iv_join_room_basket.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -373,7 +389,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
         // TODO
-        mTabsAdapter.addFragments(mAnalyzeFragment,mOddsLet,mOddsSize, mOddsEuro,  mTalkAboutBallFragment);
+        mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -471,12 +487,30 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
+        isExit = true;
         if (mSocketClient != null) {
             if (!mSocketClient.isClosed()) {
                 mSocketClient.close();
             }
         }
         computeWebSocketConnTimer.cancel();
+        EventBus.getDefault().unregister(this);//取消注册EventBus
+    }
+
+    /**
+     * EvenBus接收消息
+     *
+     * @param event
+     */
+    public void onEventMainThread(FirstEvent event) {
+        switch (event.getMsg()) {
+            case RongYunUtils.CHART_ROOM_EXIT:
+                L.d("xxx", "篮球EventBus收到 ");
+                if (iv_join_room_basket != null) {
+                    iv_join_room_basket.setVisibility(View.VISIBLE);
+                }
+                break;
+        }
     }
 
     /**
@@ -595,29 +629,31 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         if (CommonUtils.isLogin()) {// 判断是否登录
             pd.show();
             iv_join_room_basket.setVisibility(View.GONE);
-            if(RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom){
+            if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
                 appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
-            }else{
-                new Thread(){
+            } else {
+                new Thread() {
                     @Override
                     public void run() {
-                        while (!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom){
+                        while ((!RongYunUtils.isRongConnent || !RongYunUtils.isCreateChartRoom) && !isExit) {
                             SystemClock.sleep(1000);
                         }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                        if (!isExit) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
                                 pd.dismiss();
-                                appBarLayout.setExpanded(true);// 显示头部内容
-                                RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
-                            }
-                        });
+                                    appBarLayout.setExpanded(true);// 显示头部内容
+                                    RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
+                                }
+                            });
+                        }
                     }
                 }.start();
             }
-        }else{
+        } else {
             // 跳转到登录界面
             Intent intent1 = new Intent(mContext, LoginActivity.class);
             startActivityForResult(intent1, RongYunUtils.CHART_ROOM_QUESTCODE_BASKET);
@@ -626,12 +662,12 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        L.d("xxx",">>>requestCode:" + requestCode);
-        L.d("xxx",">>>resultCode:" + resultCode);
-        if(requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_BASKET && resultCode == -1){
+        L.d("xxx", ">>>requestCode:" + requestCode);
+        L.d("xxx", ">>>resultCode:" + resultCode);
+        if (requestCode == RongYunUtils.CHART_ROOM_QUESTCODE_BASKET && resultCode == -1) {
             joinRoom();
         }
-        if(requestCode == CyUtils.JUMP_COMMENT_QUESTCODE){
+        if (requestCode == CyUtils.JUMP_COMMENT_QUESTCODE) {
             switch (resultCode) {
                 case CyUtils.RESULT_OK:
                     mTalkAboutBallFragment.getResultOk();
@@ -647,14 +683,14 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     }
 
     // 评论登录跳转
-    public void talkAboutBallLoginBasket(){
+    public void talkAboutBallLoginBasket() {
         //跳转登录界面
         Intent intent1 = new Intent(mContext, LoginActivity.class);
         startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
     }
 
     // 发表评论跳转
-    public void talkAboutBallSendBasket(long topicid){
+    public void talkAboutBallSendBasket(long topicid) {
         Intent intent2 = new Intent(mContext, InputActivity.class);
         intent2.putExtra(CyUtils.INTENT_PARAMS_SID, topicid);
         startActivityForResult(intent2, CyUtils.JUMP_COMMENT_QUESTCODE);
@@ -685,7 +721,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         mMatch = bean.getMatch();
 
         String state; //傳給老龍
-        state=mMatch.getGuestTeam()+"vs"+mMatch.getHomeTeam()+"_"+bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
+        state = mMatch.getGuestTeam() + "vs" + mMatch.getHomeTeam() + "_" + bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
 
         mTalkAboutBallFragment.setTitle(state);
 
@@ -1334,7 +1370,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private boolean isFragment4 = false;
     private boolean is4 = false;
 
-    private void isHindShow(int position){
+    private void isHindShow(int position) {
         switch (position) {
             case 0:// 分析
                 isFragment0 = true;
@@ -1428,27 +1464,26 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     @Override
     protected void onResume() {
         super.onResume();
-        iv_join_room_basket.setVisibility(View.VISIBLE);// 显示悬浮按钮
         MobclickAgent.onResume(this);
         if (isFragment0) {
             MobclickAgent.onPageStart("BasketBall_Info_FX");
             is0 = true;
-            L.d("xxx","分析显示");
+            L.d("xxx", "分析显示");
         }
         if (isFragment1) {
             MobclickAgent.onPageStart("BasketBall_Info_OP");
             is1 = true;
-            L.d("xxx","欧赔显示");
+            L.d("xxx", "欧赔显示");
         }
         if (isFragment2) {
             MobclickAgent.onPageStart("BasketBall_Info_YP");
             is2 = true;
-            L.d("xxx","亚盘显示");
+            L.d("xxx", "亚盘显示");
         }
         if (isFragment3) {
             MobclickAgent.onPageStart("BasketBall_Info_DX");
             is3 = true;
-            L.d("xxx","大小显示");
+            L.d("xxx", "大小显示");
         }
         if (isFragment4) {
             MobclickAgent.onPageStart("BasketBall_Info_LQ");
@@ -1464,22 +1499,22 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         if (is0) {
             MobclickAgent.onPageEnd("BasketBall_Info_FX");
             is0 = false;
-            L.d("xxx","分析 隐藏");
+            L.d("xxx", "分析 隐藏");
         }
         if (is1) {
             MobclickAgent.onPageEnd("BasketBall_Info_OP");
             is1 = false;
-            L.d("xxx","欧赔 隐藏");
+            L.d("xxx", "欧赔 隐藏");
         }
         if (is2) {
             MobclickAgent.onPageEnd("BasketBall_Info_YP");
             is2 = false;
-            L.d("xxx","亚盘 隐藏");
+            L.d("xxx", "亚盘 隐藏");
         }
         if (is3) {
             MobclickAgent.onPageEnd("BasketBall_Info_DX");
             is3 = false;
-            L.d("xxx","大小 隐藏");
+            L.d("xxx", "大小 隐藏");
         }
         if (is4) {
             MobclickAgent.onPageEnd("BasketBall_Info_LQ");

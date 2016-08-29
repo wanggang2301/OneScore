@@ -4,6 +4,7 @@
 
     <!--足球事件直播-->
     <string name="foot_event">事件</string>
+    <string name="foot_trend">走势</string>
     <string name="foot_statictics">统计</string>
     <string name="foot_event_goal">进球</string>
     <string name="foot_event_rc">红牌</string>
@@ -22,6 +23,13 @@
     <string name="foot_event_out">下场</string>
     <string name="foot_event_num_out">号下场</string>
     <string name="foot_event_num_in">号上场</string>
+    <string name="matchIsNotStart">比赛暂未开始</string>
+    <string name="goChat">走,先去聊聊</string>
+    <string name="shot_nodata">暂无射正球门数据.</string>
+    <string name="shotAside_nodata">暂无射偏球门数据.</string>
+    <string name="dangerAttackk_nodata">暂无危险进攻数据.</string>
+    <string name="attack_nodata">暂无进攻数据.</string>
+    <string name="time">时间(T)</string>
 
 
     <!--篮球资料库-->
@@ -1012,6 +1020,11 @@
     <string name="new_analyze_daqiulv">大球率</string>
     <string name="new_analyze_description">(比分红色为主队)</string>
     <string name="new_analyze_recent_game">6场近期各自比赛</string>
+    <string name="new_analyze_changci">场次</string>
+    <string name="new_analyze_home_win_rate">主队赢盘率</string>
+    <string name="new_analyze_guest_win_rate">客队赢盘率</string>
+    <string name="analyze_draw_rate">走水</string>
+    <string name="new_analyze_size_draw_rate">走  水</string>
     <!--情报分析-->
     <string name="intelligent_all_game">全部比赛</string>
     <string name="intelligent_same_game">相同主客场</string>
@@ -1071,5 +1084,10 @@
     <string name="avatar_settings">头像</string>
     <string name="photograph">拍照</string>
     <string name="is_uploading">努力上传中..........</string>
+
+    <string name="welcome_chart_room">欢迎进入聊天室!</string>
+    <string name="to_update_kindly_reminder">温馨提示</string>
+    <string name="kindly_reminder_comment">您正在使用流量，是否继续下载？</string>
+    <string name="continue_download">继续下载</string>
 
 </resources>

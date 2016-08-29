@@ -27,6 +27,7 @@
     <color name="rc_voice_color_right">#a2a2a2</color>
 
     <color name="rc_voice_cancel"> #CC933432</color>
+    <color name="rc_name_coloc"> #CCCCCC</color>
 
     <!-- PictureSelectorActivity -->
     <color name="rc_picsel_toolbar">#393A3E</color>
