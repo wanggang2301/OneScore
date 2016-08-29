@@ -29,7 +29,7 @@
             android:id="@+id/config_rb1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="测试环境: http://m.1332255.com"
+            android:text="测试环境: http://m.1332255.com:81"
 
             />
 
@@ -77,7 +77,7 @@
             android:id="@+id/config_rb6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="测试环境：ws://m.1332255.com/ws"  />
+            android:text="测试环境：ws://m.1332255.com:81/ws"  />
         <RadioButton
             android:id="@+id/config_rb4"
             android:layout_width="wrap_content"

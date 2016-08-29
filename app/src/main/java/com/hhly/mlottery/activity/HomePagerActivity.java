@@ -586,7 +586,6 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     };
 
 
-
     /**
      * 开始下载升级
      */
@@ -595,23 +594,20 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(mUpdateInfo.getUrl());
         DownloadManager.Request request = new DownloadManager.Request(uri);
-        //指定在WIFI状态下，执行下载操作。
-//                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+        //指定在WIFI和手机数据状态下，执行下载操作。
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
         //是否允许漫游状态下，执行下载操作
         request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
         //是否允许“计量式的网络连接”执行下载操作
-
-                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        request.setAllowedOverMetered(false);// 默认是允许的。
-                    }*/
-
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            request.setAllowedOverMetered(false);// 默认是允许的。
+        }*/
         //request.setTitle("一比分新版本下载");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setMimeType("application/vnd.android.package-archive");
         L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
         String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"), mUpdateInfo.getUrl().length());
         L.d("xxx", "mAppName:>>" + mAppName);
-//                    request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(),mAppName);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mAppName);
         // 设置为可被媒体扫描器找到
         request.allowScanningByMediaScanner();
