@@ -376,7 +376,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
          */
         mProgressStatistic.setProgressAll(data.getHomeWinRate() , data.getGuestWinRate() ,0);
         mProgressStatistic.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
-        mProgressStatistic.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
+        mProgressStatistic.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_progress));
         mProgressStatistic.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mProgressStatistic.setDatas((int)data.getHomeWin() + "" ,(int)data.getGuestWin() + "" , "");
         mHomeWin.setText(getResources().getString(R.string.basket_database_details_statistic_home_win) + (int)(data.getHomeWinRate())+"%");
@@ -398,8 +398,8 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
          */
         mLetProgress.setProgressAll(data.getGraphLetHomeWinRate() , data.getGraphLetGuestWinRate() , data.getGraphLetDrawRate());
         mLetProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
-        mLetProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
-        mLetProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+        mLetProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_progress));
+        mLetProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_g));
         mLetProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mLetProgress.setDatas((int)data.getLetHomeWin() + "" ,(int)data.getLetGuestWin() + "" , (int)data.getLetDraw() + "");
         mLetText.setText((int)(data.getLetHomeWin() + data.getLetGuestWin() + data.getLetDraw()) + "");
@@ -412,8 +412,8 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
          */
         mBigSmallProgress.setProgressAll(data.getGraphAsiaSizeOverRate() , data.getGraphAsiaSizeUnderRate() , data.getGraphAsiaSizeDrawRate());
         mBigSmallProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
-        mBigSmallProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
-        mBigSmallProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+        mBigSmallProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_progress));
+        mBigSmallProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_g));
         mBigSmallProgress.setDatas((int)data.getAsiaSizeOver() + "" ,(int)data.getAsiaSizeUnder() + "" , (int)data.getAsiaSizeDraw() + "");
         mBigSmallProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mBigSmallText.setText((int)(data.getAsiaSizeOver() + data.getAsiaSizeUnder() + data.getAsiaSizeDraw()) + "");
@@ -490,24 +490,23 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
             if (basketDatabaseMostDat == null) {
                 return;
             }
-
-
             holder.setText(R.id.basket_database_most_item_name , basketDatabaseMostDat.getTeamName());
             holder.setText(R.id.basket_database_most_item_total_score , getResources().getString(R.string.basket_database_details_leagueMost_all_score) + (int)basketDatabaseMostDat.getTotalScore()+"");
             holder.setText(R.id.basket_database_most_item_avg_score ,getResources().getString(R.string.basket_database_details_leagueMost_avg_score) + basketDatabaseMostDat.getAvgScore() + "");
 
             if (holder.getPosition() == 0) {
                 holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_allmatch));
+                holder.setBackgroundColor(R.id.basket_database_most_item_left_color , getResources().getColor(R.color.statistics_most_all_color));
             }else if(holder.getPosition() == 1){
                 holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_homematch));
+                holder.setBackgroundColor(R.id.basket_database_most_item_left_color , getResources().getColor(R.color.statistics_most_home_color));
             }else if(holder.getPosition() == 2){
                 holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_guestmatch));
+                holder.setBackgroundColor(R.id.basket_database_most_item_left_color , getResources().getColor(R.color.statistics_most_guest_color));
             }
 
             ImageView mIcon= (ImageView)holder.getConvertView().findViewById(R.id.progress_statistic);
             mImageLoader.displayImage(basketDatabaseMostDat.getTeamIconUrl(), mIcon , mOptions);
-
-
         }
     }
 

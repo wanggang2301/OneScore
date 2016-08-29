@@ -17,9 +17,12 @@
             android:gravity="bottom">
             <shape>
                 <!--<corners android:radius="5dip" />  // 圆角-->
+                <!--<gradient-->
+                    <!--android:endColor="#A5CF32"-->
+                    <!--android:startColor="#A5CF32" />-->
                 <gradient
-                    android:endColor="#A5CF32"
-                    android:startColor="#A5CF32" />
+                    android:endColor="#F15353"
+                    android:startColor="#F15353" />
             </shape>
         </clip>
     </item>

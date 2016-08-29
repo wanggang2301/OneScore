@@ -169,7 +169,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:background="@color/basket_database_statistics_progress"
                                     android:layout_gravity="center"
                                     />
 
@@ -206,7 +206,7 @@
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_euro"
                         android:textSize="@dimen/text_size_15"
-                        android:textColor="@color/statistics_textsize"/>
+                        android:textColor="@color/statistics_textcolor"/>
 
                     <!--分割线-->
                     <View
@@ -291,7 +291,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_progress"
+                                    android:background="@color/basket_database_statistics_background_h"
                                     android:layout_gravity="center"
                                     />
 
@@ -312,7 +312,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:background="@color/basket_database_statistics_progress"
                                     android:layout_gravity="center"
                                     />
 
@@ -347,7 +347,7 @@
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_let"
                         android:textSize="@dimen/text_size_15"
-                        android:textColor="@color/statistics_textsize"/>
+                        android:textColor="@color/statistics_textcolor"/>
 
                     <!--分割线-->
                     <View
@@ -430,7 +430,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:background="@color/basket_database_statistics_progress"
                                     android:layout_gravity="center"
                                     />
 
@@ -451,7 +451,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_d"
+                                    android:background="@color/basket_database_statistics_background_g"
                                     android:layout_gravity="center"
                                     />
 
@@ -485,7 +485,7 @@
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_big_small"
                         android:textSize="@dimen/text_size_15"
-                        android:textColor="@color/statistics_textsize"/>
+                        android:textColor="@color/statistics_textcolor"/>
 
                     <!--分割线-->
                     <View
@@ -568,7 +568,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:background="@color/basket_database_statistics_progress"
                                     android:layout_gravity="center"
                                     />
 
@@ -589,7 +589,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_d"
+                                    android:background="@color/basket_database_statistics_background_g"
                                     android:layout_gravity="center"
                                     />
 
@@ -624,7 +624,7 @@
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_score"
                         android:textSize="@dimen/text_size_15"
-                        android:textColor="@color/statistics_textsize"/>
+                        android:textColor="@color/statistics_textcolor"/>
 
                     <!--分割线-->
                     <View
@@ -774,7 +774,7 @@
                         android:paddingLeft="10dp"
                         android:text="@string/basket_database_details_statistic_num_score"
                         android:textSize="@dimen/text_size_15"
-                        android:textColor="@color/statistics_textsize"/>
+                        android:textColor="@color/statistics_textcolor"/>
 
                     <!--分割线-->
                     <View
@@ -836,7 +836,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_progress"
+                                    android:background="@color/basket_database_statistics_background_h"
                                     android:id="@+id/view"
                                     android:layout_gravity="center"/>
 

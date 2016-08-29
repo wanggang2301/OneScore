@@ -630,10 +630,13 @@
     <color name="database_lose_color">#21B11E</color>
 
     <!--篮球统计-->
-    <color name="basket_database_statistics_progress">#A5CF32</color>
+    <color name="basket_database_statistics_progress">#21B11E</color>
     <color name="basket_database_statistics_background_h">#F15353</color>
     <color name="basket_database_statistics_background_g">#0090FF</color>
     <color name="basket_database_statistics_background_d">#F1CA43</color>
     <color name="basket_database_statistics_background">#DDDDDD</color>
-    <color name="statistics_textsize">#3f5672</color>
+    <color name="statistics_textcolor">#3f5672</color>
+    <color name="statistics_most_all_color">#FFC611</color>
+    <color name="statistics_most_home_color">#F05553</color>
+    <color name="statistics_most_guest_color">#0090FF</color>
 </resources>
