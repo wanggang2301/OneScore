@@ -964,7 +964,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             }else{
                 mSizeNodata3.setVisibility(View.VISIBLE);
             }
-            if(analyzeBean.getSizeTrend().getHomeRecent()!=null&&analyzeBean.getSizeTrend().getHomeRecent().getStatistics()!=null){
+            if(getActivity()!=null&&analyzeBean.getSizeTrend().getHomeRecent()!=null&&analyzeBean.getSizeTrend().getHomeRecent().getStatistics()!=null){
                 NewAnalyzeBean.SizeTrendEntity.Statistics statistics=analyzeBean.getSizeTrend().getHomeRecent().getStatistics();
                 mSizeRecentHomeBigRate.setText(statistics.getBigPercent());
                 mSizeRecentHomeSmallRate.setText(statistics.getSmallPercent());
@@ -1001,7 +1001,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             }else{
                 mSizeNodata4.setVisibility(View.VISIBLE);
             }
-            if(analyzeBean.getSizeTrend().getGuestRecent()!=null&&analyzeBean.getSizeTrend().getGuestRecent().getStatistics()!=null){
+            if(getActivity()!=null&&analyzeBean.getSizeTrend().getGuestRecent()!=null&&analyzeBean.getSizeTrend().getGuestRecent().getStatistics()!=null){
                 NewAnalyzeBean.SizeTrendEntity.Statistics statistics=analyzeBean.getSizeTrend().getGuestRecent().getStatistics();
                 mSizeRecentGuestBigRate.setText(statistics.getBigPercent());
                 mSizeRecentGuestSmallRate.setText(statistics.getSmallPercent());
