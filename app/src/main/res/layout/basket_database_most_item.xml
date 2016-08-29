@@ -94,12 +94,19 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/content_txt_black"
+                        android:text="@string/basket_database_details_leagueMost_all_score"/>
+                    <TextView
                         android:id="@+id/basket_database_most_item_total_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/content_txt_black"
-                        android:text="总得分 : 100"/>
+                        android:paddingLeft="3dp"
+                        android:text="--"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -107,12 +114,19 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/content_txt_black"
+                        android:text="@string/basket_database_details_leagueMost_avg_score"/>
+                    <TextView
                         android:id="@+id/basket_database_most_item_avg_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/content_txt_black"
-                        android:text="场均分 : 100"
+                        android:paddingLeft="3dp"
+                        android:text="--"
                         />
                 </LinearLayout>
             </LinearLayout>
