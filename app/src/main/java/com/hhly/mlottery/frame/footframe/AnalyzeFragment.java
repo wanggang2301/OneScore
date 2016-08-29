@@ -565,12 +565,21 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * 加载数据
      */
     private void loadData(NewAnalyzeBean analyzeBean){
-        if(getActivity()!=null&&mAnalyzeBean.getAsiaTrend()!=null&&mAnalyzeBean.getAsiaTrend().getBattleHistory()!=null&&mAnalyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
-            setLetHistoryText(mAnalyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
+        if(getActivity()!=null){
+            if(mAnalyzeBean.getAsiaTrend()!=null&&mAnalyzeBean.getAsiaTrend().getHomeRecent()!=null&&mAnalyzeBean.getAsiaTrend().getHomeRecent().getStatistics()!=null){
+                setLetRecentHomeText(mAnalyzeBean.getAsiaTrend().getHomeRecent().getStatistics());
+            }
+            if(mAnalyzeBean.getAsiaTrend()!=null&&mAnalyzeBean.getAsiaTrend().getGuestRecent()!=null&&mAnalyzeBean.getAsiaTrend().getGuestRecent().getStatistics()!=null){
+                setLetRecentGuestText(mAnalyzeBean.getAsiaTrend().getGuestRecent().getStatistics());
+            }
+            if(mAnalyzeBean.getSizeTrend()!=null&&mAnalyzeBean.getSizeTrend().getHomeRecent()!=null&&mAnalyzeBean.getSizeTrend().getHomeRecent().getStatistics()!=null){
+                setSizeRecentHomeText(mAnalyzeBean.getSizeTrend().getHomeRecent().getStatistics());
+            }
+            if(mAnalyzeBean.getSizeTrend()!=null&&mAnalyzeBean.getSizeTrend().getGuestRecent()!=null&&mAnalyzeBean.getSizeTrend().getGuestRecent().getStatistics()!=null){
+                setSizeRecentGuestText(mAnalyzeBean.getSizeTrend().getGuestRecent().getStatistics());
+            }
         }
-        if(getActivity()!=null&&mAnalyzeBean.getSizeTrend()!=null&&mAnalyzeBean.getSizeTrend().getBattleHistory()!=null&&mAnalyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
-            setSizeHistoryText(mAnalyzeBean.getSizeTrend().getBattleHistory().getStatistics());
-        }
+
         int progress;
         if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&getActivity()!=null){
 
@@ -800,7 +809,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mLetNodata1.setVisibility(View.VISIBLE);
             }
             //亚盘立交交锋饼状图
-            if(analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
+            if(getActivity()!=null&&analyzeBean.getAsiaTrend().getBattleHistory()!=null&&analyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
                 NewAnalyzeBean.AsiaTrendEntity.Statistics statistics=analyzeBean.getAsiaTrend().getBattleHistory().getStatistics();
                 mLetHistoryHomeWin.setText(statistics.getWinPercent());
                 mLetHistoryGuestWin.setText(statistics.getLosePercent());
@@ -816,9 +825,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mLetHistoryProgressBar.setProgress(winPercent);
                 mLetHistoryProgressBar.setProgress2(losePercent);
                 mLetHistoryProgressBar.setProgress3(drawPercent);
-                mLetHistoryProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
-                mLetHistoryProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
-                mLetHistoryProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+                mLetHistoryProgressBar.setCircleProgressColor(getResources().getColor(R.color.football_analyze_win_color));
+                mLetHistoryProgressBar.setCircleProgressColor2(getResources().getColor(R.color.football_analyze_lose_color));
+                mLetHistoryProgressBar.setCircleProgressColor3(getResources().getColor(R.color.football_analyze_draw_color));
                 mLetHistoryProgressBar.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
                 mLetHistoryProgressBar.setDatas(statistics.getWin()+"",statistics.getLose()+"",statistics.getDraw()+"");
             }
@@ -846,7 +855,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 String a[]=statistics.getWinPercent().split("%");
                 int winPercent=Integer.parseInt(a[0]);
                 mLetRecentHomeProgress.setProgress(winPercent);
-                mLetRecentHomeProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
+                mLetRecentHomeProgress.setCircleProgressColor(getResources().getColor(R.color.football_analyze_win_color));
                 mLetRecentHomeWinRate.setText(statistics.getWinPercent());
                 mLetRecentHomeProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
             }
@@ -875,7 +884,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 String a[]=statistics.getWinPercent().split("%");
                 int winPercent=Integer.parseInt(a[0]);
                 mLetRecentGuestProgress.setProgress(winPercent);
-                mLetRecentGuestProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_g));
+                mLetRecentGuestProgress.setCircleProgressColor(getResources().getColor(R.color.football_analyze_lose_color));
                 mLetRecentGuestWinRate.setText(statistics.getWinPercent());
                 mLetRecentGuestProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
             }
@@ -917,7 +926,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
             }else{
                 mSizeNodata1.setVisibility(View.VISIBLE);
             }
-            if(analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
+            if(getActivity()!=null&&analyzeBean.getSizeTrend().getBattleHistory()!=null&&analyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
                 NewAnalyzeBean.SizeTrendEntity.Statistics statistics=analyzeBean.getSizeTrend().getBattleHistory().getStatistics();
                 mSizeHistoryBigRate.setText(statistics.getBigPercent());
                 mSizeHistorySmallRate.setText(statistics.getSmallPercent());
@@ -933,9 +942,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mSizeHistoryProgressBar.setProgress(bigPercent);
                 mSizeHistoryProgressBar.setProgress2(smallPercent);
                 mSizeHistoryProgressBar.setProgress3(drawPercent);
-                mSizeHistoryProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
-                mSizeHistoryProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
-                mSizeHistoryProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+                mSizeHistoryProgressBar.setCircleProgressColor(getResources().getColor(R.color.football_analyze_win_color));
+                mSizeHistoryProgressBar.setCircleProgressColor2(getResources().getColor(R.color.football_analyze_lose_color));
+                mSizeHistoryProgressBar.setCircleProgressColor3(getResources().getColor(R.color.football_analyze_draw_color));
                 mSizeHistoryProgressBar.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
                 mSizeHistoryProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
 
@@ -971,9 +980,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mSizeRecentHomeProgressBar.setProgress(bigPercent);
                 mSizeRecentHomeProgressBar.setProgress2(smallPercent);
                 mSizeRecentHomeProgressBar.setProgress3(drawPercent);
-                mSizeRecentHomeProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
-                mSizeRecentHomeProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
-                mSizeRecentHomeProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+                mSizeRecentHomeProgressBar.setCircleProgressColor(getResources().getColor(R.color.football_analyze_win_color));
+                mSizeRecentHomeProgressBar.setCircleProgressColor2(getResources().getColor(R.color.football_analyze_lose_color));
+                mSizeRecentHomeProgressBar.setCircleProgressColor3(getResources().getColor(R.color.football_analyze_draw_color));
                 mSizeRecentHomeProgressBar.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
                 mSizeRecentHomeProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
 
@@ -1008,9 +1017,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mSizeRecentGuestProgressBar.setProgress(bigPercent);
                 mSizeRecentGuestProgressBar.setProgress2(smallPercent);
                 mSizeRecentGuestProgressBar.setProgress3(drawPercent);
-                mSizeRecentGuestProgressBar.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
-                mSizeRecentGuestProgressBar.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_background_g));
-                mSizeRecentGuestProgressBar.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_d));
+                mSizeRecentGuestProgressBar.setCircleProgressColor(getResources().getColor(R.color.football_analyze_win_color));
+                mSizeRecentGuestProgressBar.setCircleProgressColor2(getResources().getColor(R.color.football_analyze_lose_color));
+                mSizeRecentGuestProgressBar.setCircleProgressColor3(getResources().getColor(R.color.football_analyze_draw_color));
                 mSizeRecentGuestProgressBar.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_width));
                 mSizeRecentGuestProgressBar.setDatas(statistics.getBig()+"",statistics.getSmall()+"",statistics.getDraw()+"");
 
