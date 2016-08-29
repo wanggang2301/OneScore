@@ -24,6 +24,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RongYunUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
@@ -161,5 +162,19 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
     @Override
     public UserInfo getUserInfo(String s) {
         return mUserInfo;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        L.d("xxx","聊天界面显示...");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        L.d("xxx","聊天界面隐藏...");
+        MobclickAgent.onPause(this);
     }
 }

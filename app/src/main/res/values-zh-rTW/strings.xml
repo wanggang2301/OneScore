@@ -778,9 +778,9 @@
     <string name="basket_database_details_leagueMost_all_score">總得分 : </string>
     <string name="basket_database_details_leagueMost_avg_score">場均得分 : </string>
 
-    <string name="basket_database_details_leagueMost_allmatch">全部比賽</string>
-    <string name="basket_database_details_leagueMost_homematch">主場比賽</string>
-    <string name="basket_database_details_leagueMost_guestmatch">客場比賽</string>
+    <string name="basket_database_details_leagueMost_allmatch">全部</string>
+    <string name="basket_database_details_leagueMost_homematch">主場</string>
+    <string name="basket_database_details_leagueMost_guestmatch">客場</string>
 
 
     <!--足球分析详情-->

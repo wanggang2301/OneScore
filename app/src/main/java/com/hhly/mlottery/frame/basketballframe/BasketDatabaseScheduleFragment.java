@@ -28,12 +28,16 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.LocaleFactory;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.jakewharton.rxbinding.view.RxView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import rx.functions.Action1;
 
 /**
  * 描    述：篮球资料库赛程
@@ -136,45 +140,49 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     }
 
     private void initListener() {
-        mTitleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BaseQuickAdapter.OnRecyclerViewItemClickListener itemClickListener =
-                        new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int i) {
-                                loadData(mResult.getSearchCondition().get(i).getStageId(), null);
-                            }
-                        };
-                LeagueMatchStageChooseDialogFragment.OnChooseOkListener chooseOkListener =
-                        new LeagueMatchStageChooseDialogFragment.OnChooseOkListener() {
-                            @Override
-                            public void onChooseOk(String firstStageId, String secondStageId) {
-                                loadData(firstStageId, secondStageId);
-                            }
-                        };
 
-                if (mResult != null) {
-                    DialogFragment dialog = null;
-                    if (mResult.getMatchType() == MATCH_TYPE_CUP) {
-                        CupMatchStageChooseDialogFragment cupDialog =
-                                CupMatchStageChooseDialogFragment.newInstance(mResult.getStageResult());
-                        cupDialog.setOnRecyclerViewItemClickListener(itemClickListener);
-                        dialog = cupDialog;
-                    } else if (mResult.getMatchType() == MATCH_TYPE_LEAGUE) {
-                        LeagueMatchStageChooseDialogFragment leagueDialog =
-                                LeagueMatchStageChooseDialogFragment.newInstance(mResult);
-                        leagueDialog.setOnChooseOkListener(chooseOkListener);
-                        dialog = leagueDialog;
+        final BaseQuickAdapter.OnRecyclerViewItemClickListener itemClickListener =
+                new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int i) {
+                        loadData(mResult.getSearchCondition().get(i).getStageId(), null);
                     }
-                    if (dialog != null) {
-                        dialog.show(getChildFragmentManager(), "stageChoose");
+                };
+        final LeagueMatchStageChooseDialogFragment.OnChooseOkListener chooseOkListener =
+                new LeagueMatchStageChooseDialogFragment.OnChooseOkListener() {
+                    @Override
+                    public void onChooseOk(String firstStageId, String secondStageId) {
+                        loadData(firstStageId, secondStageId);
                     }
-                } else {
-                    ToastTools.showQuick(getContext(), "稍候，获取数据中");
-                }
-            }
-        });
+                };
+
+        // 防止重复点击
+        RxView.clicks(mTitleTextView)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        if (mResult != null) {
+                            DialogFragment dialog = null;
+                            if (mResult.getMatchType() == MATCH_TYPE_CUP) {
+                                CupMatchStageChooseDialogFragment cupDialog =
+                                        CupMatchStageChooseDialogFragment.newInstance(mResult.getStageResult());
+                                cupDialog.setOnRecyclerViewItemClickListener(itemClickListener);
+                                dialog = cupDialog;
+                            } else if (mResult.getMatchType() == MATCH_TYPE_LEAGUE) {
+                                LeagueMatchStageChooseDialogFragment leagueDialog =
+                                        LeagueMatchStageChooseDialogFragment.newInstance(mResult);
+                                leagueDialog.setOnChooseOkListener(chooseOkListener);
+                                dialog = leagueDialog;
+                            }
+                            if (dialog != null) {
+                                dialog.show(getChildFragmentManager(), "stageChoose");
+                            }
+                        } else {
+                            ToastTools.showQuick(getContext(), "稍候，获取数据中");
+                        }
+                    }
+                });
 
         mLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override

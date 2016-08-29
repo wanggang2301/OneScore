@@ -27,7 +27,7 @@ public class BaseURLs {
 
 //            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
-                return "m.1332255.com";//测试环境
+                return "m.1332255.com:81";//测试环境
             } else if (url_config == DebugConfigActivity.URL_242) {
 //                return "192.168.31.65:8181";
                 return "192.168.10.242:8181";//开发环境。
@@ -58,7 +58,7 @@ public class BaseURLs {
 
 //            url_config = DebugConfigActivity.URL_242;
             if (url_config == DebugConfigActivity.URL_1332255) {
-                return "file.1332255.com";//测试环境
+                return "file.1332255.com:81";//测试环境
             } else if (url_config == DebugConfigActivity.URL_242) {
 //                return "192.168.31.65:8181";
                 return "192.168.10.242:8181";//开发环境。
@@ -95,7 +95,7 @@ public class BaseURLs {
         if (AppConstants.isTestEnv) {//开发不需要修改下面代码
             int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_242);
             if (ws_config == DebugConfigActivity.WS_82) {
-                return "m.1332255.com/ws";
+                return "m.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_242) {
                 return "192.168.10.242:61634";
 //                return "192.168.12.242:61634";//余勇俊测试
