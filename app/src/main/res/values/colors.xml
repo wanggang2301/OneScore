@@ -636,6 +636,7 @@
     <color name="basket_database_statistics_background_d">#F1CA43</color>
     <color name="basket_database_statistics_background">#DDDDDD</color>
     <color name="statistics_textcolor">#3f5672</color>
+    <color name="statistics_most_textcolor">#999</color>
     <color name="statistics_most_all_color">#FFC611</color>
     <color name="statistics_most_home_color">#F05553</color>
     <color name="statistics_most_guest_color">#0090FF</color>
