@@ -4,14 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
@@ -130,7 +128,8 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                          if (bean.getResult() == AccountResultCode.SUCC) {
                              UiUtils.toast(MyApp.getInstance(), R.string.modify_nickname_succ);
                              AppConstants.register.getData().getUser().setNickName(nickName);
-                             CommonUtils.saveRegisterInfo(AppConstants.register);
+                            // CommonUtils.saveRegisterInfo(AppConstants.register);
+                            // PreferenceUtil.commitString(AppConstants.HEADICON, bean.getData().getUser().getHeadIcon().toString());
                              finish();
                          } else if (bean.getResult() == AccountResultCode.USER_NOT_LOGIN) {
                              UiUtils.toast(getApplicationContext() ,R.string.name_invalid);

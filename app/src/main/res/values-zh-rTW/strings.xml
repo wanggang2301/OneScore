@@ -1062,11 +1062,13 @@
     <string name="picture_save">圖片已保存至:</string>
     <string name="picture_save_telephone">保存到手機</string>
     <string name="chose_for_telephone">從手機相册選擇</string>
-    <string name="avatar_settings">頭像設定</string>
+    <string name="avatar_settings">頭像</string>
     <string name="photograph">拍照</string>
+    <string name="is_uploading">努力上傳中..........</string>
 
     <string name="welcome_chart_room">歡迎進入聊天室!</string>
-
-
+    <string name="to_update_kindly_reminder">溫馨提示</string>
+    <string name="kindly_reminder_comment">您正在使用流量，是否繼續下載？</string>
+    <string name="continue_download">繼續下載</string>
 
 </resources>

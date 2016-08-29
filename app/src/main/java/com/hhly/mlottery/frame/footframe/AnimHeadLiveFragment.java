@@ -14,9 +14,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
 
 /**
@@ -67,13 +67,18 @@ public class AnimHeadLiveFragment extends Fragment {
         tv_nopage = (TextView) mView.findViewById(R.id.tv_nopage);
         mWebView = (ProgressWebView) mView.findViewById(R.id.webview);
 
-        //url = "http://m.1332255.com/news/infomationhtml/20160817/2016081730808.html";
 
-        L.d("456789", "动画直播" + thirdId);
+        url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
+        //url = "http://192.168.31.107:9000/live/footballodds_graphic.html?thirdId=354584";
 
-        //  url = baseURL + thirdId;
-        url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId;
+        // loadAnim();
 
+        return mView;
+
+    }
+
+
+    public void loadAnim() {
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
         webSettings.setAppCacheEnabled(false);
@@ -86,7 +91,6 @@ public class AnimHeadLiveFragment extends Fragment {
         webSettings.setDatabaseEnabled(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setBuiltInZoomControls(false);
-
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -104,59 +108,40 @@ public class AnimHeadLiveFragment extends Fragment {
         });
 
         mWebView.loadUrl(url);
-
-
-      /*  L.d(TAG, thirdId);
-
-        String url = "http://192.168.31.107:3000/act/footballodds/footballodds_graphic.html?thirdId=355174";
-
-        WebSettings settings = webView.getSettings();
-        settings.setSupportZoom(true);          //支持缩放
-        settings.setBuiltInZoomControls(true);  //启用内置缩放装置
-        settings.setJavaScriptEnabled(true);    //启用JS脚本
-        settings.setLoadWithOverviewMode(true);
-        webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
-        webView.loadUrl(url);
-        webView.setWebViewClient(new MyWebViewClient());*/
-
-        return mView;
-
     }
 
-   /* public class MyWebViewClient extends WebViewClient {
 
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.d(TAG, "-MyWebViewClient->shouldOverrideUrlLoading()--");
-            view.loadUrl(url);
-            return true;
+    /**
+     * 根据选择语言，改变推送接口语言环境
+     *
+     * @return
+     */
+    private String appendLanguage() {
+        String lang = "zh";//默认中文
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            lang = BaseURLs.LANGUAGE_SWITCHING_CN;
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            lang = BaseURLs.LANGUAGE_SWITCHING_TW;
+        } else if (MyApp.isLanguage.equals("rEN")) {
+            // 如果是英文环境
+            lang = BaseURLs.LANGUAGE_SWITCHING_EN;
+        } else if (MyApp.isLanguage.equals("rKO")) {
+            // 如果是韩语环境
+            lang = BaseURLs.LANGUAGE_SWITCHING_KO;
+        } else if (MyApp.isLanguage.equals("rID")) {
+            // 如果是印尼语
+            lang = BaseURLs.LANGUAGE_SWITCHING_ID;
+        } else if (MyApp.isLanguage.equals("rTH")) {
+            // 如果是泰语
+            lang = BaseURLs.LANGUAGE_SWITCHING_TH;
+        } else if (MyApp.isLanguage.equals("rVI")) {
+            // 如果是越南语
+            lang = BaseURLs.LANGUAGE_SWITCHING_VI;
         }
 
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            Log.d(TAG, "-MyWebViewClient->onPageStarted()--");
-            super.onPageStarted(view, url, favicon);
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            Log.d(TAG, "-MyWebViewClient->onPageFinished()--");
-            super.onPageFinished(view, url);
-        }
-
-        @Override
-        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-            super.onReceivedError(view, request, error);
-
-            Log.d(TAG, "-MyWebViewClient->onReceivedError()--");
-            //这里进行无网络或错误处理，具体可以根据errorCode的值进行判断，做跟详细的处理。
-            //view.loadData(errorHtml, "text/html", "UTF-8");
-            webView.setVisibility(View.GONE);
-            tv_nopage.setVisibility(View.VISIBLE);
-        }
+        return lang.trim();
     }
-*/
 
 }

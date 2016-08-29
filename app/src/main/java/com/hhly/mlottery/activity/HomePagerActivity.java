@@ -8,6 +8,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -75,6 +77,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private static final int LOADING_DATA_ERROR = 2;// 加载失败
     private static final int REFRES_DATA_SUCCESS = 3;// 下拉刷新
     private static final int VERSION_UPDATA_SUCCESS = 4;// 版本更新请求成功
+    private static final int DOWNLOAD_UPGRADE = 5;// 准备开始升级下载
     private static final String COMP_VER = "1"; // 完整版
     private static final String PURE_VER = "2"; // 纯净版
     private long mExitTime;// 退出程序...时间
@@ -567,9 +570,56 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                         e.printStackTrace();
                     }
                     break;
+                case DOWNLOAD_UPGRADE:
+                    // 先判断是否为网络数据连接
+                    ConnectivityManager connectMgr = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo info = connectMgr.getActiveNetworkInfo();
+                    if (info != null && info.getType() == ConnectivityManager.TYPE_MOBILE) {
+                        // 判断是否是手机网络
+                        promptNetInfo();
+                    } else {
+                        downloadUpgrade();
+                    }
+                    break;
             }
         }
     };
+
+
+
+    /**
+     * 开始下载升级
+     */
+    private void downloadUpgrade() {
+        Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
+        DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(mUpdateInfo.getUrl());
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        //指定在WIFI状态下，执行下载操作。
+//                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+        //是否允许漫游状态下，执行下载操作
+        request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
+        //是否允许“计量式的网络连接”执行下载操作
+
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        request.setAllowedOverMetered(false);// 默认是允许的。
+                    }*/
+
+        //request.setTitle("一比分新版本下载");
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setMimeType("application/vnd.android.package-archive");
+        L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+        String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"), mUpdateInfo.getUrl().length());
+        L.d("xxx", "mAppName:>>" + mAppName);
+//                    request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(),mAppName);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mAppName);
+        // 设置为可被媒体扫描器找到
+        request.allowScanningByMediaScanner();
+        // 设置为可见和可管理
+        request.setVisibleInDownloadsUi(true);
+        long id = downloadManager.enqueue(request);
+        L.d("xxx", "id = " + id);
+    }
 
     /**
      * 新版本更新提示
@@ -591,34 +641,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
-                    DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-                    Uri uri = Uri.parse(mUpdateInfo.getUrl());
-                    DownloadManager.Request request = new DownloadManager.Request(uri);
-                    //指定在WIFI状态下，执行下载操作。
-//                    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-                    //是否允许漫游状态下，执行下载操作
-                    request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
-                    //是否允许“计量式的网络连接”执行下载操作
-
-                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        request.setAllowedOverMetered(false);// 默认是允许的。
-                    }*/
-
-                    //request.setTitle("一比分新版本下载");
-                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                    request.setMimeType("application/vnd.android.package-archive");
-                    L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-                    String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"), mUpdateInfo.getUrl().length());
-                    L.d("xxx", "mAppName:>>" + mAppName);
-//                    request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(),mAppName);
-                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mAppName);
-                    // 设置为可被媒体扫描器找到
-                    request.allowScanningByMediaScanner();
-                    // 设置为可见和可管理
-                    request.setVisibleInDownloadsUi(true);
-                    long id = downloadManager.enqueue(request);
-                    L.d("xxx", "id = " + id);
+                    mHandler.sendEmptyMessage(DOWNLOAD_UPGRADE);
                 }
             });
             builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
@@ -639,6 +662,35 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                     }
                     PreferenceUtil.commitString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, versionIgnore);
                     L.d("xxx", "PreferenceUtil...." + PreferenceUtil.getString(AppConstants.HOME_PAGER_VERSION_UPDATE_KEY, null));
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 当前连接的网络提示
+     */
+    private void promptNetInfo() {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppThemeDialog);
+            builder.setCancelable(false);// 设置对话框以外不可点击
+            builder.setTitle(mContext.getResources().getString(R.string.to_update_kindly_reminder));// 提示标题
+            builder.setMessage(mContext.getResources().getString(R.string.kindly_reminder_comment));// 提示内容
+            builder.setPositiveButton(mContext.getResources().getString(R.string.continue_download), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    downloadUpgrade();
+                }
+            });
+            builder.setNegativeButton(mContext.getResources().getString(R.string.basket_analyze_dialog_cancle), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                 }
             });
