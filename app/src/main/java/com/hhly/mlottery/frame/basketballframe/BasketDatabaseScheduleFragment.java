@@ -300,6 +300,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     }
 
     private void loadData(String firstStageId, String secondStageId) {
+        if (2 == (league.getMatchType())) secondStageId = null;
         mSections.clear();
         mAdapter.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
