@@ -800,7 +800,7 @@
     <string name="football_analyze_details_lose">输</string>
 
     <!-- 足球资讯 -->
-    <string name="foot_title">足球资讯</string>
+    <string name="foot_title">体育资讯</string>
     <string name="foot_zl_tipf">已经是第一轮了</string>
     <string name="foot_zl_tipl">已经是最后一轮了</string>
     <string name="foot_tujian">推荐</string>

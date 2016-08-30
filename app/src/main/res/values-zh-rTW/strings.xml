@@ -792,7 +792,7 @@
     <string name="football_analyze_details_lose">輸</string>
 
     <!-- 足球资讯 -->
-    <string name="foot_title">足球資訊</string>
+    <string name="foot_title">體育資訊</string>
     <string name="foot_zl_tipf">已經是第一輪了</string>
     <string name="foot_zl_tipl">已經是最後一輪了</string>
     <string name="foot_loadmore">加載更多</string>
