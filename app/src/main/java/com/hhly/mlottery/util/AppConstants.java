@@ -31,6 +31,10 @@ public class AppConstants {
     public static String PlayTypeTwo = "playType=2&";// 直播
     public static String SearchType = "searchType=0&";// 搜索类型
 
+    // 融云环境KEY
+    public static String APPKEY_RONGYUN = "3argexb6r6c1e";
+    public static String APPSECRET_RONGYUN = "l0Fu9Kn0uqO";
+
     // public static String i18n = "en";// 测试英文语言环境
 
     // 1至46个数字
@@ -176,6 +180,13 @@ public class AppConstants {
             ACCESS_LINK = CHAONENG_API_TECH;
         } else {
             ACCESS_LINK = CHAONENG_API_PUBLISH;
+        }
+        if(isTestEnv){
+            APPKEY_RONGYUN = "3argexb6r6c1e";
+            APPSECRET_RONGYUN = "l0Fu9Kn0uqO";
+        }else{
+            APPKEY_RONGYUN = "ik1qhw0919m8p";
+            APPSECRET_RONGYUN = "oyHzmKPlNKG";
         }
     }
 

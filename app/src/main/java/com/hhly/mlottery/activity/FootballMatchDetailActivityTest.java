@@ -97,6 +97,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
+import io.rong.imkit.RongIM;
 import me.relex.circleindicator.CircleIndicator;
 
 /**
@@ -2503,8 +2504,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private void joinRoom() {
         if (CommonUtils.isLogin()) {// 判断是否登录
             pd.show();
+            iv_join_room_foot.setVisibility(View.GONE);
+
+            // 判断融云服务器是否连接OK
+            if(!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))){
+                RongYunUtils.initRongIMConnect(mContext);// 连接融云服务器
+            }
+
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
-                iv_join_room_foot.setVisibility(View.GONE);
                 pd.dismiss();
                 appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
@@ -2519,7 +2526,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    iv_join_room_foot.setVisibility(View.GONE);
                                     pd.dismiss();
                                     appBarLayout.setExpanded(true);// 显示头部内容
                                     RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
@@ -2772,7 +2778,6 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     @Override
     protected void onResume() {
         super.onResume();
-        iv_join_room_foot.setVisibility(View.VISIBLE);// 显示悬浮按钮
         MobclickAgent.onResume(this);
         if (isDetailsRollballFragment) {
             MobclickAgent.onPageStart("Football_DetailsRollballFragment");

@@ -28,6 +28,15 @@ public class ScheduledMatch implements Parcelable {
     private String guestTeamIconUrl;
     private String homeTeamName;
     private String guestTeamName;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public int getGuestScore() {
         return guestScore;
@@ -93,6 +102,9 @@ public class ScheduledMatch implements Parcelable {
         this.guestTeamName = guestTeamName;
     }
 
+    public ScheduledMatch() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -108,9 +120,7 @@ public class ScheduledMatch implements Parcelable {
         dest.writeString(this.guestTeamIconUrl);
         dest.writeString(this.homeTeamName);
         dest.writeString(this.guestTeamName);
-    }
-
-    public ScheduledMatch() {
+        dest.writeString(this.time);
     }
 
     protected ScheduledMatch(Parcel in) {
@@ -122,9 +132,10 @@ public class ScheduledMatch implements Parcelable {
         this.guestTeamIconUrl = in.readString();
         this.homeTeamName = in.readString();
         this.guestTeamName = in.readString();
+        this.time = in.readString();
     }
 
-    public static final Parcelable.Creator<ScheduledMatch> CREATOR = new Parcelable.Creator<ScheduledMatch>() {
+    public static final Creator<ScheduledMatch> CREATOR = new Creator<ScheduledMatch>() {
         @Override
         public ScheduledMatch createFromParcel(Parcel source) {
             return new ScheduledMatch(source);

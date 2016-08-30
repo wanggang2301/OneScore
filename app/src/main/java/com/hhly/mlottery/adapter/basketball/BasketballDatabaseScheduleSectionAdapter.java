@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.basketball;
 
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
@@ -48,10 +49,27 @@ public class BasketballDatabaseScheduleSectionAdapter
     @Override
     protected void convert(BaseViewHolder holder, Section section) {
         ScheduledMatch match = section.t;
-        holder.setText(R.id.home_score, match.getHomeScore() + "")
-                .setText(R.id.guest_score, match.getGuestScore() + "")
-                .setText(R.id.home_name, match.getHomeTeamName())
+        holder.setText(R.id.home_name, match.getHomeTeamName())
                 .setText(R.id.guest_name, match.getGuestTeamName());
+        boolean notStart = match.getHomeScore() == 0 && match.getGuestScore() == 0;
+        View middleLine = holder.getView(R.id.middle_line);
+        View homeScore = holder.getView(R.id.home_score);
+        View guestScore = holder.getView(R.id.guest_score);
+        View time = holder.getView(R.id.time);
+
+        middleLine.setVisibility(notStart ? View.INVISIBLE : View.VISIBLE);
+        homeScore.setVisibility(notStart ? View.INVISIBLE : View.VISIBLE);
+        guestScore.setVisibility(notStart ? View.INVISIBLE : View.VISIBLE);
+
+        if (notStart) {
+            holder.setText(R.id.time, match.getTime());
+        } else {
+            holder.setText(R.id.home_score, match.getHomeScore() + "")
+                    .setText(R.id.guest_score, match.getGuestScore() + "");
+        }
+
+        time.setVisibility(notStart ? View.VISIBLE : View.INVISIBLE);
+
         ImageView homeLogo = holder.getView(R.id.home_logo);
         ImageView guestLogo = holder.getView(R.id.guest_logo);
         mImageLoader.displayImage(match.getHomeTeamIconUrl(), homeLogo, mOptions);

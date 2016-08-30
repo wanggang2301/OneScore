@@ -765,23 +765,23 @@
     <string name="basket_database_details_statistic_gp_num">已赛场次</string>
     <string name="basket_database_details_statistic_average">平均得分</string>
 
-    <string name="basket_database_details_statistic_home_win">主胜 : </string>
-    <string name="basket_database_details_statistic_guest_win">客胜 : </string>
-    <string name="basket_database_details_statistic_draw">走水 : </string>
-    <string name="basket_database_details_statistic_euro_v1">赛果与欧赔一致 </string>
-    <string name="basket_database_details_statistic_euro_v2">赛果与欧赔相反 </string>
-    <string name="basket_database_details_statistic_big">大球 : </string>
-    <string name="basket_database_details_statistic_small">小球 : </string>
-    <string name="basket_database_details_statistic_gp">已赛 </string>
-    <string name="basket_database_details_statistic_nogp">未赛 </string>
-    <string name="basket_database_details_statistic_allgp">总赛场次 </string>
+    <string name="basket_database_details_statistic_home_win">主胜 :</string>
+    <string name="basket_database_details_statistic_guest_win">客胜 :</string>
+    <string name="basket_database_details_statistic_draw">走水 :</string>
+    <string name="basket_database_details_statistic_euro_v1">赛果与欧赔一致 :</string>
+    <string name="basket_database_details_statistic_euro_v2">赛果与欧赔相反 :</string>
+    <string name="basket_database_details_statistic_big">大球 :</string>
+    <string name="basket_database_details_statistic_small">小球 :</string>
+    <string name="basket_database_details_statistic_gp">已赛 :</string>
+    <string name="basket_database_details_statistic_nogp">未赛 :</string>
+    <string name="basket_database_details_statistic_allgp">总赛场次 :</string>
 
     <string name="basket_database_details_leagueMost_strongestAttack">攻击力最强</string>
     <string name="basket_database_details_leagueMost_weakestAttack">攻击力最弱</string>
     <string name="basket_database_details_leagueMost_strongestDefense">防守最强</string>
     <string name="basket_database_details_leagueMost_weakestDefense">防守最弱</string>
-    <string name="basket_database_details_leagueMost_all_score">总得分 : </string>
-    <string name="basket_database_details_leagueMost_avg_score">场均得分 : </string>
+    <string name="basket_database_details_leagueMost_all_score">总得分 :</string>
+    <string name="basket_database_details_leagueMost_avg_score">场均得分 :</string>
 
     <string name="basket_database_details_leagueMost_allmatch">全部</string>
     <string name="basket_database_details_leagueMost_homematch">主场</string>
@@ -797,7 +797,7 @@
     <string name="football_analyze_details_lose">输</string>
 
     <!-- 足球资讯 -->
-    <string name="foot_title">足球资讯</string>
+    <string name="foot_title">体育资讯</string>
     <string name="foot_zl_tipf">已经是第一轮了</string>
     <string name="foot_zl_tipl">已经是最后一轮了</string>
     <string name="foot_tujian">推荐</string>

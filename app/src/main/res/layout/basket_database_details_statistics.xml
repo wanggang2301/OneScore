@@ -153,11 +153,18 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_hone_win"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="主胜: --"
+                                    android:text="@string/basket_database_details_statistic_home_win"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_hone_win"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
+                                    android:text="--"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
@@ -174,13 +181,21 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_guest_win"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_guest_win"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+
+                                <TextView
+                                    android:id="@+id/basket_database_guest_win"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:text="客胜: --"/>
+                                    android:text="--"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -296,11 +311,18 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_euro_v1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="赛果与欧赔一致 --"
+                                    android:text="@string/basket_database_details_statistic_euro_v1"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_euro_v1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
+                                    android:text="--"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
@@ -317,13 +339,20 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_euro_v2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_euro_v2"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_euro_v2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:text="赛果与欧赔相反 --"/>
+                                    android:text="--"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -414,11 +443,18 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_let_homg"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="主胜: --"
+                                    android:text="@string/basket_database_details_statistic_home_win"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_let_homg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
+                                    android:text="--"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
@@ -435,13 +471,20 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_let_guest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_guest_win"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_let_guest"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:text="客胜: --"/>
+                                    android:text="--"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -456,13 +499,20 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_let_zou"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_draw"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_let_zou"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:text="走水: --"/>
+                                    android:text="--"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -552,11 +602,18 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_big_small_homg"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="主胜: --"
+                                    android:text="@string/basket_database_details_statistic_big"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_big_small_homg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
+                                    android:text="--"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
@@ -573,13 +630,20 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_big_small_guest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_small"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_big_small_guest"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:text="客胜: --"/>
+                                    android:text="--"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -594,13 +658,20 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_big_small_zou"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_draw"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_big_small_zou"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:text="走水: --"/>
+                                    android:text="--"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -841,11 +912,18 @@
                                     android:layout_gravity="center"/>
 
                                 <TextView
-                                    android:id="@+id/basket_database_statistic_gp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="已赛 --"
+                                    android:text="@string/basket_database_details_statistic_gp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_statistic_gp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
+                                    android:text="--"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                             </LinearLayout>
@@ -862,13 +940,20 @@
                                     />
 
                                 <TextView
-                                    android:id="@+id/basket_database_statistic_nogp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_nogp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/basket_database_statistic_nogp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:text="未赛 --"/>
+                                    android:text="--"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -882,12 +967,19 @@
                                 <!--/>-->
 
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/basket_database_details_statistic_allgp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
                                     android:id="@+id/basket_database_statistic_all"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"
-                                    android:text="总场次 --"/>
+                                    android:text="--"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

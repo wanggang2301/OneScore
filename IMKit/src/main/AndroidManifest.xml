@@ -113,6 +113,9 @@
         <!-- end -->
 
         <!-- imlib config begin -->
+
+        <!--测试KEY:3argexb6r6c1e-->
+        <!--线上KEY:ik1qhw0919m8p-->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
             android:value="3argexb6r6c1e" />

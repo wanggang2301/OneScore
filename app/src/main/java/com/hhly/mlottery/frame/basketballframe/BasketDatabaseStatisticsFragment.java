@@ -24,7 +24,6 @@ import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueStatisti
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseMostDat;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseStatisticsBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -168,6 +167,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mProgressStatistic.setIsprogress(true);
         mProgressStatistic.setTextIsDisplayable(false);
         mProgressStatistic.setCircleColor(getResources().getColor(R.color.unselected_tab_color));
+        mProgressStatistic.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
 
         // 胜负统计的场次
         mStatisticCc = (TextView) mView.findViewById(R.id.basket_database_cc);
@@ -195,6 +195,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mLetProgress.setIsprogress(true);
         mLetProgress.setTextIsDisplayable(false);
         mLetProgress.setCircleColor(getResources().getColor(R.color.unselected_tab_color));
+        mLetProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         //让分统计场次
         mLetText = (TextView) mView.findViewById(R.id.basket_database_cc2);
         //让分统计主胜
@@ -209,6 +210,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mBigSmallProgress.setIsprogress(true);
         mBigSmallProgress.setTextIsDisplayable(false);
         mBigSmallProgress.setCircleColor(getResources().getColor(R.color.unselected_tab_color));
+        mBigSmallProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         //大小球统计场次
         mBigSmallText = (TextView)mView.findViewById(R.id.basket_database_cc3);
         //大小球统计主胜
@@ -320,12 +322,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
             params.put("season" , mSeason);
         }
         params.put("leagueId" , mLeagueId);
-
-        L.d("params======>" , params.get("season") + "*****");
-        L.d("params======>" , params.get("leagueId") + "*****");
-
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseStatisticsBean>() {
-
             @Override
             public void onResponse(BasketDatabaseStatisticsBean bean) {
                 if (bean == null || (bean.getLeagueStatistics() == null && bean.getLeagueMost() == null)) {
@@ -377,10 +374,9 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mProgressStatistic.setProgressAll(data.getHomeWinRate() , data.getGuestWinRate() ,0);
         mProgressStatistic.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mProgressStatistic.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_progress));
-        mProgressStatistic.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mProgressStatistic.setDatas((int)data.getHomeWin() + "" ,(int)data.getGuestWin() + "" , "");
-        mHomeWin.setText(getResources().getString(R.string.basket_database_details_statistic_home_win) + (int)(data.getHomeWinRate())+"%");
-        mGuestWin.setText(getResources().getString(R.string.basket_database_details_statistic_guest_win) + (int)(data.getGuestWinRate())+"%");
+        mHomeWin.setText((int)(data.getHomeWinRate())+"%");
+        mGuestWin.setText((int)(data.getGuestWinRate())+"%");
         mStatisticCc.setText((int)(data.getHomeWin()+data.getGuestWin()) + "");
 
         /**
@@ -390,8 +386,8 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mEuroProgress2.setProgress((int)(data.getUnequalEuroOddRate()));
         mEuroText1.setText((int)data.getEqualEuroOdd()+"");
         mEuroText2.setText((int)data.getUnequalEuroOdd()+"");
-        mEuroTextY.setText(getResources().getString(R.string.basket_database_details_statistic_euro_v1) + (int)(data.getEqualEuroOddRate())+"%");
-        mEuroTextN.setText(getResources().getString(R.string.basket_database_details_statistic_euro_v2) + (int)(data.getUnequalEuroOddRate())+"%");
+        mEuroTextY.setText((int)(data.getEqualEuroOddRate())+"%");
+        mEuroTextN.setText((int)(data.getUnequalEuroOddRate())+"%");
 
         /**
          * 让分统计
@@ -400,12 +396,11 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mLetProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mLetProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_progress));
         mLetProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_g));
-        mLetProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mLetProgress.setDatas((int)data.getLetHomeWin() + "" ,(int)data.getLetGuestWin() + "" , (int)data.getLetDraw() + "");
         mLetText.setText((int)(data.getLetHomeWin() + data.getLetGuestWin() + data.getLetDraw()) + "");
-        mLetHome.setText(getResources().getString(R.string.basket_database_details_statistic_home_win) + (int)(data.getLetHomeWinRate()) + "%");
-        mLetGuest.setText(getResources().getString(R.string.basket_database_details_statistic_guest_win) + (int)(data.getLetGuestWinRate()) + "%");
-        mLet.setText(getResources().getString(R.string.basket_database_details_statistic_draw) + (int)(data.getLetDrawRate()) + "%");
+        mLetHome.setText((int)(data.getLetHomeWinRate()) + "%");
+        mLetGuest.setText((int)(data.getLetGuestWinRate()) + "%");
+        mLet.setText((int)(data.getLetDrawRate()) + "%");
 
         /**
          * 大小球统计
@@ -415,11 +410,10 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         mBigSmallProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_progress));
         mBigSmallProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_g));
         mBigSmallProgress.setDatas((int)data.getAsiaSizeOver() + "" ,(int)data.getAsiaSizeUnder() + "" , (int)data.getAsiaSizeDraw() + "");
-        mBigSmallProgress.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_staristic_width));
         mBigSmallText.setText((int)(data.getAsiaSizeOver() + data.getAsiaSizeUnder() + data.getAsiaSizeDraw()) + "");
-        mBigSmallHome.setText(getResources().getString(R.string.basket_database_details_statistic_big) + (int)(data.getAsiaSizeOverRate()) + "%");
-        mBigSmallGuest.setText(getResources().getString(R.string.basket_database_details_statistic_small) + (int)(data.getAsiaSizeUnderRate()) + "%");
-        mBigSmallZou.setText(getResources().getString(R.string.basket_database_details_statistic_draw) + (int)(data.getAsiaSizeDrawRate()) + "%");
+        mBigSmallHome.setText((int)(data.getAsiaSizeOverRate()) + "%");
+        mBigSmallGuest.setText((int)(data.getAsiaSizeUnderRate()) + "%");
+        mBigSmallZou.setText((int)(data.getAsiaSizeDrawRate()) + "%");
 
         /**
          * 得分统计
@@ -433,9 +427,9 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
          */
         mVretivalProgress.setProgress((int)(data.getFinishedMatch() / data.getTotalMatch() * 100));
         mGpProgressText.setText((int)data.getFinishedMatch() + "");
-        mTextGpNum.setText(getResources().getString(R.string.basket_database_details_statistic_gp) + (int)data.getFinishedMatch() + "");
-        mTextNoGpNum.setText(getResources().getString(R.string.basket_database_details_statistic_nogp) + (int)data.getUnfinishedMatch() + "");
-        mTextAllNum.setText(getResources().getString(R.string.basket_database_details_statistic_allgp) + (int)data.getTotalMatch() + "");
+        mTextGpNum.setText((int)data.getFinishedMatch() + "");
+        mTextNoGpNum.setText((int)data.getUnfinishedMatch() + "");
+        mTextAllNum.setText((int)data.getTotalMatch() + "");
 
     }
 
@@ -491,8 +485,8 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
                 return;
             }
             holder.setText(R.id.basket_database_most_item_name , basketDatabaseMostDat.getTeamName());
-            holder.setText(R.id.basket_database_most_item_total_score , getResources().getString(R.string.basket_database_details_leagueMost_all_score) + (int)basketDatabaseMostDat.getTotalScore()+"");
-            holder.setText(R.id.basket_database_most_item_avg_score ,getResources().getString(R.string.basket_database_details_leagueMost_avg_score) + basketDatabaseMostDat.getAvgScore() + "");
+            holder.setText(R.id.basket_database_most_item_total_score , (int)basketDatabaseMostDat.getTotalScore()+"");
+            holder.setText(R.id.basket_database_most_item_avg_score , basketDatabaseMostDat.getAvgScore() + "");
 
             if (holder.getPosition() == 0) {
                 holder.setText(R.id.basket_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_allmatch));

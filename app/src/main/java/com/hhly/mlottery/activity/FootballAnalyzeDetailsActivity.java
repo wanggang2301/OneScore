@@ -25,7 +25,6 @@ import com.hhly.mlottery.bean.footballDetails.FootballAnaylzeHistoryRecent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -189,27 +188,26 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         mNoData5 = (TextView) findViewById(R.id.football_analyze_nodata5);
 
         mRoundProgressBarHistory1 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar1);
-//        mRoundProgressBarHistory1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(FootballAnalyzeDetailsActivity.this, AutoCompleteActivity.class);
-////                Bundle bundleset = new Bundle();
-////                bundleset.putInt("currentfragment" , mBasketballType);
-////                intent.putExtras(bundleset);
-//                startActivity(intent);
-//                overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-//            }
-//        });
         mRoundProgressBarHistory2 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar2);//#E8C129
         mRoundProgressBarHistory3 = (RoundProgressBar)findViewById(R.id.football_history_roundProgressBar3); //#7DC050
+        mRoundProgressBarHistory1.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
+        mRoundProgressBarHistory2.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
+        mRoundProgressBarHistory3.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
 
         mRoundProgressBarHome1 = (RoundProgressBar)findViewById(R.id.football_home_roundProgressBar1);
         mRoundProgressBarHome2 = (RoundProgressBar)findViewById(R.id.football_home_roundProgressBar2);
         mRoundProgressBarHome3 = (RoundProgressBar)findViewById(R.id.football_home_roundProgressBar3);
+        mRoundProgressBarHome1.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
+        mRoundProgressBarHome2.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
+        mRoundProgressBarHome3.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
+
 
         mRoundProgressBarGuest1 = (RoundProgressBar)findViewById(R.id.football_guest_roundProgressBar1);
         mRoundProgressBarGuest2 = (RoundProgressBar)findViewById(R.id.football_guest_roundProgressBar2);
         mRoundProgressBarGuest3 = (RoundProgressBar)findViewById(R.id.football_guest_roundProgressBar3);
+        mRoundProgressBarGuest1.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
+        mRoundProgressBarGuest2.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
+        mRoundProgressBarGuest3.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
 
         findViewById(R.id.public_btn_set).setVisibility(View.GONE); //隐藏设置按键
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE); //隐藏筛选按键
@@ -240,7 +238,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         Map<String, String> params = new HashMap<>();
         if (mThirdId != null) {
             params.put("thirdId", mThirdId);
-//            params.put("thirdId", "337367");
         }
 
 //        String url = "http://192.168.31.58:8080/mlottery/core/footBallMatch.findAnalysisDetail.do";  //?lang=zh&thirdId=78235  ?lang=zh&thirdId=78235
@@ -307,7 +304,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                     updateAdapter(fistData, mHistoryAdaptey, 0);
                                 }
                             }
-//                            mNoData1.setVisibility(View.GONE);
                             mHistory_ll.setVisibility(View.VISIBLE);
                         } else {
                             mHistory_ll.setVisibility(View.GONE);
@@ -353,7 +349,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                     }
                                 }
                                 mGuestRecent_ll.setVisibility(View.VISIBLE);
-//                                mNoData2.setVisibility(View.GONE);
                             }else{
                                 mGuestRecent_ll.setVisibility(View.GONE);
                                 mNoData2.setVisibility(View.VISIBLE);
@@ -393,7 +388,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                         updateAdapter(fistData, mRecentAdapter2, 1);
                                     }
                                 }
-//                                mNoData3.setVisibility(View.GONE);
                                 mHomeRecent_ll.setVisibility(View.VISIBLE);
                             } else {
                                 mNoData3.setVisibility(View.VISIBLE);
@@ -425,7 +419,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                      */
                                     mGuestFruture.setText(json.getGuestTeam() + getResources().getText(R.string.basket_analyze_fruture));
                                 } else {
-    //                            mGuestFruture.setText(getResources().getText(R.string.basket_analyze_defult_text) + "" + getResources().getText(R.string.basket_analyze_future) + mFutureData1.size() + getResources().getText(R.string.basket_analyze_field));
                                     mGuestFruture.setText(getResources().getText(R.string.basket_analyze_defult_text) + "" + getResources().getText(R.string.basket_analyze_fruture));
                                 }
 
@@ -455,10 +448,8 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
                                 }
 
                                 if (json.getHomeTeam() != null) {
-    //                            mHomeFruture.setText(json.getHomeTeam() + getResources().getText(R.string.basket_analyze_future) + mFutureData2.size() + getResources().getText(R.string.basket_analyze_field));
                                     mHomeFruture.setText(json.getHomeTeam() + getResources().getText(R.string.basket_analyze_fruture));
                                 } else {
-    //                            mHomeFruture.setText(getResources().getText(R.string.basket_analyze_defult_text) +""+ getResources().getText(R.string.basket_analyze_future) + mFutureData2.size() + getResources().getText(R.string.basket_analyze_field));
                                     mHomeFruture.setText(getResources().getText(R.string.basket_analyze_defult_text) + "" + getResources().getText(R.string.basket_analyze_fruture));
                                 }
 
@@ -486,7 +477,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                Toast.makeText(BasketAnalyzeMoreRecordActivity.this, "Error2", Toast.LENGTH_SHORT).show();
 
                 mErrorLoad.setVisibility(View.VISIBLE);
                 mSuccessLoad.setVisibility(View.GONE);
@@ -680,10 +670,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         progressBar1.setCircleProgressColor(getResources().getColor(R.color.football_analyze_progress_color1));
         progressBar2.setCircleProgressColor(getResources().getColor(R.color.football_analyze_progress_color2));
         progressBar3.setCircleProgressColor(getResources().getColor(R.color.football_analyze_progress_color3));
-
-//        L.d("FootballAnaylzeHistoryRecent_>>>>>>>>>>>>>>>>", "总=" + matchNum + " 胜=" + countWin + " 负=" + countLose + " 平=" + countDraw + " 进球=" + countGoal + " 失球=" + countFumble
-//                + " 大球=" + countTot + " 让分球=" + countLet + " 胜率=" + winning + " 大球胜率=" + totWinning + " 让分球胜率=" + letWinnging);
-
     }
 
     @Override
@@ -763,7 +749,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
         LayoutInflater infla = LayoutInflater.from(mContext);
         View view = infla.inflate(R.layout.football_analyze_dialog, null);
         TextView titleView = (TextView) view.findViewById(R.id.screen_titleView);
-//        titleView.setText("筛选");
         titleView.setText(getResources().getText(R.string.basket_analyze_screen));
 
         final AlertDialog mDialog = mBuilder.create();
@@ -915,7 +900,6 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
-//        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -932,6 +916,5 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
     @Override
     public void onPause() {
         super.onPause();
-//        MobclickAgent.onPause(this);
     }
 }

@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.RongYunUtils;
 
@@ -577,11 +578,11 @@ public class VolleyContentFast {
                 String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
                 String sha1 = "";
                 try {
-                    sha1 = RongYunUtils.sha1(RongYunUtils.APPSECRET + nonce + timestamp);
+                    sha1 = RongYunUtils.sha1(AppConstants.APPSECRET_RONGYUN + nonce + timestamp);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                headers.put("App-Key", RongYunUtils.APPKEY);
+                headers.put("App-Key", AppConstants.APPKEY_RONGYUN);
                 headers.put("Nonce", nonce);
                 headers.put("Timestamp", timestamp);
                 headers.put("Signature", sha1);

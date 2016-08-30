@@ -33,9 +33,7 @@ import io.rong.imlib.model.Conversation;
  */
 public class RongYunUtils {
     public static final String TAG = "RongYunUtils";
-    //测试appkey和appsecret
-    public static final String APPKEY = "3argexb6r6c1e";
-    public static final String APPSECRET = "l0Fu9Kn0uqO";
+
     public static final int CHART_ROOM_QUESTCODE_FOOT = 5;// 足球跳转登录界面的请求码
     public static final int CHART_ROOM_QUESTCODE_BASKET = 6;// 篮球跳转登录界面的请求码
 
@@ -184,6 +182,7 @@ public class RongYunUtils {
                 @Override
                 public void onTokenIncorrect() {
                     System.out.println(TAG + "--onTokenIncorrect");
+                    postToken(mContext, AppConstants.register.getData().getUser().getUserId());// 获取用户Token
                 }
 
                 @Override
