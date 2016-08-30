@@ -78,6 +78,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
+import io.rong.imkit.RongIM;
 
 /**
  * @author yixq
@@ -629,6 +630,14 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         if (CommonUtils.isLogin()) {// 判断是否登录
             pd.show();
             iv_join_room_basket.setVisibility(View.GONE);
+
+            // 判断融云服务器是否连接OK
+            L.d("xxx","融云服务器是否连接::" + RongIM.getInstance().getCurrentConnectionStatus());
+            if(!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))){
+                RongYunUtils.initRongIMConnect(mContext);// 连接融云服务器
+                L.d("xxx","融云服务器重新连接 。。。。。。");
+            }
+
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
                 appBarLayout.setExpanded(true);// 显示头部内容

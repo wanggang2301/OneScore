@@ -182,6 +182,7 @@ public class RongYunUtils {
                 @Override
                 public void onTokenIncorrect() {
                     System.out.println(TAG + "--onTokenIncorrect");
+                    postToken(mContext, AppConstants.register.getData().getUser().getUserId());// 获取用户Token
                 }
 
                 @Override
