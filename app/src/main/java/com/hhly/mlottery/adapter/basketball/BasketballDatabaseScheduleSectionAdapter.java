@@ -52,12 +52,6 @@ public class BasketballDatabaseScheduleSectionAdapter
         holder.setText(R.id.home_name, match.getHomeTeamName())
                 .setText(R.id.guest_name, match.getGuestTeamName());
         boolean notStart = match.getHomeScore() == 0 && match.getGuestScore() == 0;
-        if (notStart) {
-            holder.setText(R.id.time, match.getTime());
-        } else {
-            holder.setText(R.id.home_score, match.getHomeScore() + "")
-                    .setText(R.id.guest_score, match.getGuestScore() + "");
-        }
         View middleLine = holder.getView(R.id.middle_line);
         View homeScore = holder.getView(R.id.home_score);
         View guestScore = holder.getView(R.id.guest_score);
@@ -66,6 +60,13 @@ public class BasketballDatabaseScheduleSectionAdapter
         middleLine.setVisibility(notStart ? View.INVISIBLE : View.VISIBLE);
         homeScore.setVisibility(notStart ? View.INVISIBLE : View.VISIBLE);
         guestScore.setVisibility(notStart ? View.INVISIBLE : View.VISIBLE);
+
+        if (notStart) {
+            holder.setText(R.id.time, match.getTime());
+        } else {
+            holder.setText(R.id.home_score, match.getHomeScore() + "")
+                    .setText(R.id.guest_score, match.getGuestScore() + "");
+        }
 
         time.setVisibility(notStart ? View.VISIBLE : View.INVISIBLE);
 
