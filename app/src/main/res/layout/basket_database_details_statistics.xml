@@ -605,7 +605,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="@string/basket_database_details_statistic_home_win"
+                                    android:text="@string/basket_database_details_statistic_big"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                                 <TextView
@@ -633,7 +633,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="10dp"
-                                    android:text="@string/basket_database_details_statistic_guest_win"
+                                    android:text="@string/basket_database_details_statistic_small"
                                     android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/content_txt_black"/>
                                 <TextView
