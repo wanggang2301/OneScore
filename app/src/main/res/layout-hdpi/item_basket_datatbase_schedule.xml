@@ -86,7 +86,7 @@
         android:gravity="end"
         android:textColor="@color/content_txt_black"
         android:textSize="@dimen/text_size_13"
-        app:layout_widthPercent="25%"
+        app:layout_widthPercent="20%"
         tools:text="骑士"/>
 
     <TextView
@@ -100,7 +100,7 @@
         android:layout_toRightOf="@id/middle_line"
         android:textColor="@color/content_txt_black"
         android:textSize="@dimen/text_size_13"
-        app:layout_widthPercent="25%"
+        app:layout_widthPercent="20%"
         tools:text="勇士"/>
 
     <View
