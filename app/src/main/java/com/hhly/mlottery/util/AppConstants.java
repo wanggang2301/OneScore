@@ -6,7 +6,7 @@ import com.hhly.mlottery.config.BaseURLs;
 
 public class AppConstants {
 	/** 是否是测试环境，true为测试，false为生产环境 */
-	public static final boolean isTestEnv = false;
+	public static final boolean isTestEnv = true;
 	/** true是国际版|false内地版 */
 	public static final boolean isGOKeyboard = false;
 	/** true是纯净版|false完整版 */
@@ -16,7 +16,7 @@ public class AppConstants {
 	/**
 	 * 判断是否上传奔溃日志到友盟
 	 */
-	public static final boolean isUploadCrash = true;
+	public static final boolean isUploadCrash = false;
 
     public static String ACCESS_LINK = "";// API
     public static String USER_AGENT = "";
@@ -32,8 +32,8 @@ public class AppConstants {
     public static String SearchType = "searchType=0&";// 搜索类型
 
     // 融云环境KEY
-    public static String APPKEY_RONGYUN = "3argexb6r6c1e";
-    public static String APPSECRET_RONGYUN = "l0Fu9Kn0uqO";
+    public static String APPKEY_RONGYUN = "ik1qhw0919m8p";
+    public static String APPSECRET_RONGYUN = "oyHzmKPlNKG";
 
     // public static String i18n = "en";// 测试英文语言环境
 
@@ -180,13 +180,6 @@ public class AppConstants {
             ACCESS_LINK = CHAONENG_API_TECH;
         } else {
             ACCESS_LINK = CHAONENG_API_PUBLISH;
-        }
-        if(isTestEnv){
-            APPKEY_RONGYUN = "3argexb6r6c1e";
-            APPSECRET_RONGYUN = "l0Fu9Kn0uqO";
-        }else{
-            APPKEY_RONGYUN = "ik1qhw0919m8p";
-            APPSECRET_RONGYUN = "oyHzmKPlNKG";
         }
     }
 
