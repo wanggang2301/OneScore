@@ -44,7 +44,7 @@ import java.util.Map;
  * @Created on:2016/9/1  15:03.
  */
 public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
-    private static final String TAG = "BasketInfomationFragment";
+    private static final String TAG = "FootballDatabaseFragment";
     private static final String TYPE_PARM = "TYPE_PARM";
     private static final String HOT_MATCH = "hot";
     private static final String INTEL_MATCH = "intl";
@@ -54,10 +54,6 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
     private static final int DATA_STATUS_SUCCESS_INTER = 4;
     private static final int DATA_STATUS_SUCCESS_COUNTRY = 5;
     private static final int DATA_STATUS_ERROR = -1;
-    private static final int NUM0 = 0;
-    private static final int NUM1 = 1;
-    private static final int NUM2 = 2;
-    private static final int NUM3 = 3;
 
     private static final int ROWNUM = 4;
 

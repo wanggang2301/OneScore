@@ -328,8 +328,11 @@
         <activity
             android:name=".activity.FootballDatabaseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeDark.NoActionBar">
-        </activity>
+            android:theme="@style/AppThemeDark.NoActionBar"></activity>
+        <activity
+            android:name=".activity.LeagueStatisticsTodayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeDark.NoActionBar"></activity>
     </application>
 
 </manifest>

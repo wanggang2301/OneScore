@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.activity.FootballDatabaseActivity;
 import com.hhly.mlottery.activity.FootballTypeSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.bean.LeagueCup;
@@ -67,6 +68,9 @@ public class ScoresFragment extends Fragment {
      * 设置
      */
     private ImageView mSetImgBtn;// 设置
+    private ImageView public_btn_infomation;// 足球资料库
+
+
     /**
      * 中间标题
      */
@@ -109,6 +113,7 @@ public class ScoresFragment extends Fragment {
         focusCallback();// 加载关注数
         initData();
         initEVent();
+        setFootballLeagueStatisticsTodayClick();
         return view;
     }
 
@@ -129,10 +134,23 @@ public class ScoresFragment extends Fragment {
         });
     }
 
+    public void setFootballLeagueStatisticsTodayClick() {
+        public_btn_infomation.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, FootballDatabaseActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+            }
+        });
+    }
+
     private void initView() {
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         // 返回菜单
         mBackImgBtn = (ImageView) view.findViewById(R.id.public_img_back);
+        public_btn_infomation = (ImageView) view.findViewById(R.id.public_btn_infomation);
+        public_btn_infomation.setVisibility(View.VISIBLE);
 
         //中心标题
         mTitleTv = (TextView) view.findViewById(R.id.public_txt_title);

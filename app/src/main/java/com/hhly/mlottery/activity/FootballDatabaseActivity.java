@@ -59,7 +59,7 @@ public class FootballDatabaseActivity extends BaseActivity implements View.OnCli
 
         publicBtnSet.setOnClickListener(this);
 
-        publicTxtTitle.setText(getApplicationContext().getResources().getString(R.string.basket_info_title));
+        publicTxtTitle.setText(getApplicationContext().getResources().getString(R.string.football_info_title));
         publicBtnFilter.setVisibility(View.GONE);
 
         publicBtnSet.setImageResource(R.mipmap.info_search);
