@@ -130,14 +130,13 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         ll_league_flat.setOnClickListener(this);
         ll_league_loss.setOnClickListener(this);
 
-
         listview = (NoScrollListView) mView.findViewById(R.id.listview);
         listview.setFocusable(false);
     }
 
     private void loadData() {
         data = new ArrayList<>();
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 100; i++) {
             data.add(i);
         }
 
