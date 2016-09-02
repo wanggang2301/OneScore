@@ -20,12 +20,13 @@ import com.hhly.mlottery.frame.footframe.FootballDatabaseFragment;
  * @Created on:2016/9/1  15:00.
  */
 public class FootballDatabaseActivity extends BaseActivity implements View.OnClickListener {
-    private static final String HOT = "hot";            //热门
-    private static final String EUR = "europe";         //欧洲
-    private static final String AMERICA = "america";    //美洲
-    private static final String ASIA = "asia";          //亚洲
-    private static final String AFRICA = "africa";      //非洲
-    private static final String INTER = "intl";         //国际
+    private static final int HOT = 0;            //热门
+    private static final int EUR = 1;         //欧洲
+    private static final int AMERICA = 2;    //美洲
+    private static final int ASIA = 3;          //亚洲
+    private static final int AFRICA = 4;      //非洲
+    private static final int OCEANIA = 5;      //大洋洲
+    private static final int INTER = 6;         //国际
 
     private ImageView publicImgBack;
     private TextView publicTxtTitle;
@@ -66,7 +67,7 @@ public class FootballDatabaseActivity extends BaseActivity implements View.OnCli
 
         fragmentManager = getSupportFragmentManager();
 
-        String[] titles = getApplicationContext().getResources().getStringArray(R.array.basket_info_tabs);
+        String[] titles = getApplicationContext().getResources().getStringArray(R.array.football_info_tabs);
         mTabsAdapter = new TabsAdapter(fragmentManager);
         mTabsAdapter.setTitles(titles);
         mTabsAdapter.addFragments(FootballDatabaseFragment.newInstance(HOT),
@@ -74,12 +75,13 @@ public class FootballDatabaseActivity extends BaseActivity implements View.OnCli
                 FootballDatabaseFragment.newInstance(AMERICA),
                 FootballDatabaseFragment.newInstance(ASIA),
                 FootballDatabaseFragment.newInstance(AFRICA),
+                FootballDatabaseFragment.newInstance(OCEANIA),
                 FootballDatabaseFragment.newInstance(INTER));
         viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     @Override

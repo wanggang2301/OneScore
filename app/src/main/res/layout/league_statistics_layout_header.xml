@@ -47,7 +47,7 @@
             android:paddingRight="12dp"
             android:paddingTop="3dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/icon_config_btn" />
+            android:src="@mipmap/center_about" />
 
     </RelativeLayout>
 

@@ -19,13 +19,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.basketball.BasketInfoGridAdapter;
-import com.hhly.mlottery.adapter.basketball.ExpandableGridAdapter;
-import com.hhly.mlottery.bean.basket.infomation.LeagueAllBean;
-import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
-import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
+import com.hhly.mlottery.adapter.football.FootBallExpandableGridAdapter;
+import com.hhly.mlottery.adapter.football.FootBallInfoGridAdapter;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
+import com.hhly.mlottery.bean.footballDetails.database.LeagueDataBase;
+import com.hhly.mlottery.bean.footballDetails.database.NationBean;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
-import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -46,8 +45,7 @@ import java.util.Map;
 public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
     private static final String TAG = "FootballDatabaseFragment";
     private static final String TYPE_PARM = "TYPE_PARM";
-    private static final String HOT_MATCH = "hot";
-    private static final String INTEL_MATCH = "intl";
+    private static final int HOT_MATCH = 0;
     private static final int DATA_STATUS_LOADING = 1;
     private static final int DATA_STATUS_NODATA_INTER = 2;
     private static final int DATA_STATUS_NODATA_COUNRTY = 3;
@@ -60,9 +58,15 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
     private BasketInfomationCallBack basketInfomationCallBack;
     private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
-    private BasketInfoGridAdapter mBasketInfoGridAdapterInter;
-    private ExpandableGridAdapter mExpandableGridAdapter;
+    // private BasketInfoGridAdapter mBasketInfoGridAdapterInter;
+
+    private FootBallInfoGridAdapter mFootBallInfoGridAdapterInternatrion;
+
+   // private ExpandableGridAdapter mExpandableGridAdapter;
+    private FootBallExpandableGridAdapter mFootBallExpandableGridAdapter;
     private ExpandableListView expandableGridView;
+
+
     private RadioGroup radioGroup;
     private GridView gridviewInter;
 
@@ -79,16 +83,16 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
     private int sign = -1;// 控制列表的展开
     private int childsign = -1;
     private View mView;
-    private String mType;
+    private int mType;
 
-    private List<List<NationalLeague>> interLeagues;
-    private List<LeagueBean> hotLeagues;
+    private List<List<NationBean>> nation;
+    private List<DataBaseBean> internation;
 
     private Context mContext;
 
-    public static FootballDatabaseFragment newInstance(String type) {
+    public static FootballDatabaseFragment newInstance(int type) {
         Bundle bundle = new Bundle();
-        bundle.putString(TYPE_PARM, type);
+        bundle.putInt(TYPE_PARM, type);
         FootballDatabaseFragment footballDatabaseFragment = new FootballDatabaseFragment();
         footballDatabaseFragment.setArguments(bundle);
         return footballDatabaseFragment;
@@ -98,7 +102,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mType = getArguments().getString(TYPE_PARM);
+            mType = getArguments().getInt(TYPE_PARM);
         }
 
     }
@@ -202,7 +206,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
             }
         });
 
-        if (HOT_MATCH.equals(mType) || INTEL_MATCH.equals(mType)) {
+        if (HOT_MATCH == mType) {
             radioGroup.setVisibility(View.GONE);
         } else {
             radioGroup.setVisibility(View.VISIBLE);
@@ -238,7 +242,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
                 case DATA_STATUS_NODATA_INTER:
                     ll_loading.setVisibility(View.GONE);
-                    if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
+                    if (!(mType == HOT_MATCH)) {
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
@@ -253,7 +257,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                     break;
 
                 case DATA_STATUS_NODATA_COUNRTY:
-                    if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
+                    if (!(mType == HOT_MATCH)) {
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
@@ -268,7 +272,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
                 case DATA_STATUS_SUCCESS_INTER:
                     ll_loading.setVisibility(View.GONE);
-                    if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
+                    if (!(mType == HOT_MATCH)) {
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
@@ -283,7 +287,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
                 case DATA_STATUS_SUCCESS_COUNTRY:
                     ll_loading.setVisibility(View.GONE);
-                    if (!mType.equals(HOT_MATCH) && !mType.equals(INTEL_MATCH)) {
+                    if (!(mType == HOT_MATCH)) {
                         radioGroup.setVisibility(View.VISIBLE);
                     }
 
@@ -317,37 +321,41 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
     private void loadData() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("type", mType);
-        L.d(TAG, mType);
+        params.put("index", mType + "");
+        L.d(TAG, mType + "");
 
-        String url = BaseURLs.URL_BASKET_INFORMATION;
-        // String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
+        // String url = BaseURLs.URL_BASKET_INFORMATION;
+        String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidDataMenu.do";
 
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueAllBean>() {
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueDataBase>() {
 
             @Override
-            public void onResponse(LeagueAllBean json) {
+            public void onResponse(LeagueDataBase json) {
 
-                if (json.getSpecificLeague() != null && json.getSpecificLeague().size() > 0) {
-                    hotLeagues = json.getSpecificLeague();
+                if (!"200".equals(json.getCode())) {
+                    mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
+                    return;
+                }
 
-                    int size = hotLeagues.size() % ROWNUM == 0 ? 0 : ROWNUM - hotLeagues.size() % ROWNUM;
+                if (json.getInternation() != null && json.getInternation().size() > 0) {
+                    internation = json.getInternation();
+                    int size = internation.size() % ROWNUM == 0 ? 0 : ROWNUM - internation.size() % ROWNUM;
                     for (int i = 0; i < size; i++) {
-                        hotLeagues.add(new LeagueBean("", "", ""));
+                        internation.add(new DataBaseBean("", "", "", ""));
                     }
                 }
 
-                if (json.getNationalLeague() != null && json.getNationalLeague().size() > 0) {
-                    interLeagues = new ArrayList<>();
-                    for (int t = 0; t < Math.ceil((double) json.getNationalLeague().size() / ROWNUM); t++) {
-                        List<NationalLeague> list = new ArrayList<>();
+                if (json.getNation() != null && json.getNation().size() > 0) {
+                    nation = new ArrayList<>();
+                    for (int t = 0; t < Math.ceil((double) json.getNation().size() / ROWNUM); t++) {
+                        List<NationBean> list = new ArrayList<>();
                         for (int j = 0; j < ROWNUM; j++) {
-                            if ((j + ROWNUM * t) < json.getNationalLeague().size()) {
-                                list.add(json.getNationalLeague().get(j + ROWNUM * t));
+                            if ((j + ROWNUM * t) < json.getNation().size()) {
+                                list.add(json.getNation().get(j + ROWNUM * t));
                             }
                         }
 
-                        interLeagues.add(list);
+                        nation.add(list);
                     }
                 }
                 initViewData();
@@ -357,7 +365,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
             }
-        }, LeagueAllBean.class);
+        }, LeagueDataBase.class);
     }
 
     private void initViewData() {
@@ -368,11 +376,11 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
         sign = -1;  //刷新重置
         childsign = -1;
 
-        if (mType.equals(HOT_MATCH) || mType.equals(INTEL_MATCH)) {//热门
+        if (mType == HOT_MATCH) {//热门
 
-            if (hotLeagues != null && hotLeagues.size() > 0) {
-                mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(mContext, hotLeagues);
-                gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
+            if (internation != null && internation.size() > 0) {
+                mFootBallInfoGridAdapterInternatrion = new FootBallInfoGridAdapter(mContext, internation);
+                gridviewInter.setAdapter(mFootBallInfoGridAdapterInternatrion);
                 L.d("123456", "热门或国际有数据");
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_INTER);
             } else {
@@ -383,9 +391,9 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
         } else { //欧洲、美洲、亚洲等
 
             //洲际赛事
-            if (hotLeagues != null && hotLeagues.size() > 0) {
-                mBasketInfoGridAdapterInter = new BasketInfoGridAdapter(mContext, hotLeagues);
-                gridviewInter.setAdapter(mBasketInfoGridAdapterInter);
+            if (internation != null && internation.size() > 0) {
+                mFootBallInfoGridAdapterInternatrion = new FootBallInfoGridAdapter(mContext, internation);
+                gridviewInter.setAdapter(mFootBallInfoGridAdapterInternatrion);
                 L.d("123456", "洲际有数据");
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_INTER);
             } else {
@@ -412,7 +420,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                         childsign = -1;
 
                         L.d("147258", "关闭");
-                        mExpandableGridAdapter.isInitChildAdapter = false;
+                        mFootBallExpandableGridAdapter.isInitChildAdapter = false;
 
                     } else if (sign != groupPosition) {
                         expandableGridView.collapseGroup(sign);
@@ -431,10 +439,10 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                 }
             };
 
-            if (interLeagues != null && interLeagues.size() > 0) {
-                mExpandableGridAdapter = new ExpandableGridAdapter(mContext, interLeagues);
-                mExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
-                expandableGridView.setAdapter(mExpandableGridAdapter);
+            if (nation != null && nation.size() > 0) {
+                mFootBallExpandableGridAdapter = new FootBallExpandableGridAdapter(mContext, nation);
+                mFootBallExpandableGridAdapter.setBasketInfomationCallBack(basketInfomationCallBack);
+                expandableGridView.setAdapter(mFootBallExpandableGridAdapter);
                 L.d("123456", "国家有数据");
 
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_COUNTRY);

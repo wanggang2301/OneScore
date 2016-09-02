@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alertdialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:background="@drawable/share_date_top_bg"
+        android:gravity="center"
+        android:text="说明"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="什么是今日联赛提点？"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_20" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="是对今日有开盘的比赛参赛的所有联赛，各项数据在近期比赛或者某一个时间段内的排名"
+        android:textSize="@dimen/text_size_15" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        style="@style/RippleBackgroudBorderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="关闭"
+        android:textColor="@color/blue"
+        android:textSize="15sp" />
+
+</LinearLayout>
