@@ -30,6 +30,15 @@ public class LeagueStatisticsTodayAdapter extends CommonAdapter<Integer> {
 
     @Override
     public void convert(ViewHolder holder, Integer integer) {
+
+        if (integer % 2 == 0) {
+            holder.setBackgroundColorRes(R.id.ll, R.color.white);
+        } else {
+            holder.setBackgroundColorRes(R.id.ll, R.color.home_item_bg);
+
+        }
+
+
         holder.setText(R.id.tv_league_rank, integer + "");
 
         holder.setBackgroundColorRes(R.id.ll_league_bg, colors[new Random().nextInt(8)]);

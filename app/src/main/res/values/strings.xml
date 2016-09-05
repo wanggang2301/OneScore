@@ -1115,6 +1115,8 @@
     <string name="league_statistics_today_go">走</string>
     <string name="league_statistics_today_big">大</string>
     <string name="league_statistics_today_small">小</string>
-    <string name="league_statistics_today_tip">*温馨提示：点击列表头部的胜、平、负；可以排序</string>
+    <string name="league_statistics_today_tip1">*温馨提示：点击列表头部的</string>
+    <string name="league_statistics_today_tip2">胜、平、负</string>
+    <string name="league_statistics_today_tip3">；可以排序</string>
 
 </resources>

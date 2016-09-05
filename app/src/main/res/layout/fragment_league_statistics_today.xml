@@ -9,49 +9,95 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="5dp"
+        android:paddingBottom="15dp"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp">
+        android:paddingTop="15dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10dp"
             android:text="@string/league_statistics_today_date"
-            android:textSize="@dimen/text_size_15" />
+            android:textColor="#333333"
+            android:textSize="@dimen/text_size_13" />
 
-        <TextView
-            android:id="@+id/tv_date1"
+        <LinearLayout
+            android:id="@+id/ll_riqi1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2016-09-01"
-            android:textSize="@dimen/text_size_15" />
+            android:background="@drawable/about_dialogs"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_date1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-09-01"
+                android:textColor="#333333"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_week1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:text="周四"
+                android:textColor="@color/mdy_999"
+                android:textSize="@dimen/text_size_10" />
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="~" />
+            android:text="~"
+            android:textColor="#333333"
 
-        <TextView
-            android:id="@+id/tv_date2"
+            android:textSize="@dimen/text_size_13" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_riqi2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2016-09-02"
-            android:textSize="@dimen/text_size_15" />
+            android:background="@drawable/about_dialogs"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_date2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-09-02"
+                android:textColor="#333333"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_week2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:text="周五"
+                android:textColor="@color/mdy_999"
+                android:textSize="@dimen/text_size_10" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
+        android:paddingBottom="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:weightSum="7">
 
         <TextView
@@ -60,7 +106,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/league_statistics_today_rank" />
+            android:text="@string/league_statistics_today_rank"
+            android:textColor="#666666"
+            android:textSize="@dimen/text_size_10" />
 
         <TextView
             android:id="@+id/tv_race"
@@ -68,7 +116,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="@string/league_statistics_today_race" />
+            android:text="@string/league_statistics_today_race"
+            android:textColor="#666666"
+            android:textSize="@dimen/text_size_10" />
 
         <TextView
             android:id="@+id/tv_finish"
@@ -76,70 +126,96 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/league_statistics_today_finish" />
+            android:text="@string/league_statistics_today_finish"
+            android:textColor="#666666"
+            android:textSize="@dimen/text_size_10" />
 
         <LinearLayout
             android:id="@+id/ll_league_win"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:background="@drawable/tv_shape"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/tv_win"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="胜" />
+                android:text="胜"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_10" />
 
             <ImageView
+                android:id="@+id/iv_win"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:background="@mipmap/sanjiao" />
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/league_down" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_league_flat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:background="@drawable/tv_shape2"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
             <TextView
-                android:id="@+id/tv_plat"
+                android:id="@+id/tv_flat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="平" />
+                android:text="平"
+                android:textColor="@color/mdy_666"
+                android:textSize="@dimen/text_size_10" />
 
             <ImageView
+                android:id="@+id/iv_flat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:background="@mipmap/sanjiao" />
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/league_defalt" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_league_loss"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:background="@drawable/tv_shape2"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/tv_loss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="负" />
+                android:text="负"
+                android:textColor="@color/mdy_666"
+                android:textSize="@dimen/text_size_10" />
 
             <ImageView
+                android:id="@+id/iv_loss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:background="@mipmap/sanjiao" />
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/league_defalt" />
         </LinearLayout>
     </LinearLayout>
 
@@ -163,17 +239,23 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:divider="@color/linecolor"
-                android:dividerHeight="0.5dp"
+                android:dividerHeight="0dp"
                 android:listSelector="@android:color/transparent" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/linecolor"></View>
+
             <TextView
+                android:id="@+id/league_statistics_today_tip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="@string/league_statistics_today_tip"
-                android:textSize="@dimen/text_size_15" />
+                android:textSize="@dimen/text_size_10" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

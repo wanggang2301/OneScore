@@ -47,7 +47,7 @@
             android:paddingRight="12dp"
             android:paddingTop="3dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/center_about" />
+            android:src="@mipmap/league_tip" />
 
     </RelativeLayout>
 
