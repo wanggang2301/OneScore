@@ -1,6 +1,5 @@
 package com.hhly.mlottery.activity;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -12,16 +11,12 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONException;
@@ -30,10 +25,10 @@ import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.UmengInfo;
-import com.hhly.mlottery.bean.UpdateInfo;
 import com.hhly.mlottery.bean.WelcomeUrl;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
@@ -53,24 +48,13 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
-import java.io.StreamCorruptedException;
-import java.util.Timer;
-
 /**
  * @author Tenney
  * @ClassName: WelcomeActivity
  * @Description: 启动界面
  * @date 2015-11-5 上午11:32:35
  */
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity  implements View.OnClickListener{
     private static final int GET_SAME_SUCCESS = 1;
     private static final int GET_IMAGE_SUCCESS = 2;
     private static final int INIT_IMAGE_ERROR = 3;
@@ -94,14 +78,21 @@ public class WelcomeActivity extends BaseActivity {
 
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
     private DisplayImageOptions options;
-
+    public static final int TIMEOUT = 3699;
+    public static final int TIMEOUT_INTERVEL = 1000;
+    /**
+     * 倒计时 默认3s , 间隔1s
+     */
+    private CountDown countDown;
+    private TextView mTv_verycode;
+    private LinearLayout mCount_down;
 
     @SuppressWarnings("unused")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
+          initView();
         imageAD = (ImageView) findViewById(R.id.imageAD);
         mContext = this;
         mPackageManager = mContext.getPackageManager();
@@ -153,7 +144,9 @@ public class WelcomeActivity extends BaseActivity {
             if (MyApp.isLanguage.equals("rCN")) {// 如果是中文简体
                 imageAD.setBackgroundResource(R.mipmap.welcome);
             } else if (MyApp.isLanguage.equals("rTW")) {
-                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
+
+                                    imageAD.setBackgroundResource(R.mipmap.welcome_tw);
+
             }
         }
 
@@ -178,21 +171,52 @@ public class WelcomeActivity extends BaseActivity {
 
     }
 
-    // 启动动画
+    private void initView() {
+        countDown = CountDown.getDefault(TIMEOUT,TIMEOUT_INTERVEL,new CountDown.CountDownCallback() {
+            @Override
+            public void onFinish() {
+                //setHideTranslateAnimation();
+                cancelCountDown();
+                gotoHomeActivity();
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (mTv_verycode != null){
+
+                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒 | 跳过");
+                    mTv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒 | 跳过");
+                }
+            }
+        });
+
+        mTv_verycode = (TextView) findViewById(R.id.tv_verycode);
+        mTv_verycode.setOnClickListener(this);
+        mCount_down = (LinearLayout) findViewById(R.id.count_down);
+        mCount_down.setVisibility(View.GONE);
+    }
+
+    private void cancelCountDown(){
+        if (countDown != null){
+            countDown.cancel();
+        }
+    }
+
+    /*// 启动动画
     public void setHideTranslateAnimation() {
         if (!isToHome) {
             return;
         }
         isToHome = false;
-
         // 防止闪屏
         AlphaAnimation aa = new AlphaAnimation(1.0f, 1.0f);
-        aa.setDuration(3000);
+        aa.setDuration(1000);
         aa.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
                 //判断更新
                 //gotoHomeActivity();
+                cancelCountDown();
             }
 
             @Override
@@ -204,11 +228,12 @@ public class WelcomeActivity extends BaseActivity {
                 //动画加载完  判断是否更新
 //                thread = new Thread(new CheckVersionTask());
 //                thread.start();
-                gotoHomeActivity();
+               // gotoHomeActivity();
+
             }
         });
         imageAD.startAnimation(aa);
-    }
+    }*/
 
     private void gotoHomeActivity() {
         //判断是否是第一次启动
@@ -304,7 +329,7 @@ public class WelcomeActivity extends BaseActivity {
             public synchronized void onResponse(final WelcomeUrl json) {
                 if ("200".equals(json.getResult() + "") && json != null) {
 
-                    if (json.getUrl().isEmpty() && json.getUrl() == null) {
+                    if (json.getUrl().isEmpty() || json.getUrl() == null) {
                         //没有图片 不显示
                         imageHandler.sendEmptyMessage(GET_IMAGE_NODATA);
                     } else {
@@ -326,6 +351,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 //请求失败
+                mCount_down.setVisibility(View.GONE);
                 imageHandler.sendEmptyMessage(INIT_IMAGE_ERROR);
 
             }
@@ -341,10 +367,12 @@ public class WelcomeActivity extends BaseActivity {
 
             switch (msg.what) {
                 case INIT_IMAGE_ERROR://网络请求失败
-                    setHideTranslateAnimation();
+                    //setHideTranslateAnimation();
+                    gotoHomeActivity();
                     break;
                 case GET_IMAGE_SUCCESS://图片获取成功
                     //判断本地缓存是否存在该图片  是显示 不是替换
+                    mCount_down.setVisibility(View.VISIBLE);
                     universalImageLoader.displayImage(mStartimageUrl, imageAD, options, new ImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String s, View view) {
@@ -354,25 +382,23 @@ public class WelcomeActivity extends BaseActivity {
                         @Override
                         public void onLoadingFailed(String s, View view, FailReason failReason) {
                             //加载失败
-                            setHideTranslateAnimation();
+                          //  setHideTranslateAnimation();
+
+                            gotoHomeActivity();
                         }
 
                         @Override
                         public void onLoadingComplete(String s, View view, Bitmap bitmap) {
                             //加载成功执行
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    setHideTranslateAnimation();
-                                }
-                            }, 2000);
 
+                             countDown.start();
+                           // setHideTranslateAnimation();
                         }
 
                         @Override
                         public void onLoadingCancelled(String s, View view) {
                             //加载取消
-
+                            mCount_down.setVisibility(View.GONE);
                         }
                     });
                     PreferenceUtil.commitString(MyConstants.START_IMAGE_URL, mStartimageUrl);
@@ -382,12 +408,18 @@ public class WelcomeActivity extends BaseActivity {
                             setHideTranslateAnimation();
                         }
                     }, 2000);*/
-
-
+             /*       new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            cancelCountDown();
+                        }
+                    }, 3000);
+*/
                     break;
                 case GET_IMAGE_NODATA://无图片显示
-                    setHideTranslateAnimation();
-
+                    //setHideTranslateAnimation();
+                       mCount_down.setVisibility(View.GONE);
+                      gotoHomeActivity();
                     break;
 
                 default:
@@ -449,6 +481,24 @@ public class WelcomeActivity extends BaseActivity {
             httpHandler.cancel();
         }
         // universalImageLoader.clearDiskCache();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.tv_verycode:
+
+                gotoHomeActivity();
+                cancelCountDown();
+                finish();
+                break;
+
+            default:
+                break;
+        }
 
     }
 
