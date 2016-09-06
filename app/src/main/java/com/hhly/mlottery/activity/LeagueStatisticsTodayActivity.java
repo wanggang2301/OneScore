@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -52,7 +53,6 @@ public class LeagueStatisticsTodayActivity extends BaseActivity implements View.
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewpager = (ViewPager) findViewById(R.id.viewpager);
 
-
         publicTxtTitle.setText(mContext.getResources().getString(R.string.league_statistics_today_title));
         publicBtnSet.setOnClickListener(this);
         publicImgBack.setOnClickListener(this);
@@ -64,9 +64,9 @@ public class LeagueStatisticsTodayActivity extends BaseActivity implements View.
         mTabsAdapter.addFragments(LeagueStatisticsTodayFragment.newInstance(0),
                 LeagueStatisticsTodayFragment.newInstance(1),
                 LeagueStatisticsTodayFragment.newInstance(2),
-                LeagueStatisticsTodayFragment.newInstance(1),
-                LeagueStatisticsTodayFragment.newInstance(2));
-        viewpager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+                LeagueStatisticsTodayFragment.newInstance(3),
+                LeagueStatisticsTodayFragment.newInstance(4));
+        viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -76,17 +76,23 @@ public class LeagueStatisticsTodayActivity extends BaseActivity implements View.
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.public_btn_set:
                 showDialog();
                 break;
-
             case R.id.public_img_back:
                 this.finish();
                 break;
         }
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            this.finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void showDialog() {

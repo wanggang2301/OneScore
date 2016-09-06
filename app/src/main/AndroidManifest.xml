@@ -54,11 +54,11 @@
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-          <!--  <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <!-- 引导页 -->
         <activity
@@ -220,9 +220,7 @@
         <activity
             android:name=".activity.ModifyPasswordActivity"
             android:screenOrientation="portrait" />
-
         <!-- 登录注册 end -->
-
 
         <!-- 畅言的配置项 -->
         <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity" />
@@ -289,8 +287,7 @@
             android:theme="@style/AppThemeDark.NoActionBar" />
         <activity
             android:name=".activity.BasketballInformationActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeDark.NoActionBar">
+            android:screenOrientation="portrait">
 
             <!--
             <intent-filter>
@@ -327,18 +324,14 @@
 
         <activity
             android:name=".activity.FootballDatabaseActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeDark.NoActionBar"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.LeagueStatisticsTodayActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeDark.NoActionBar">
-              <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="portrait">
+            <!--  <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>-->
         </activity>
     </application>
-
 </manifest>
