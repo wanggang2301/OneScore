@@ -137,6 +137,11 @@
             android:name=".activity.FootballAnalyzeDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 足球资料库详情 -->
+        <activity
+            android:name=".activity.FootballDatabaseDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <!--
         <receiver android:name=".activity.WelcomeActivity$DownLoadBroadcastReceiver">
             <intent-filter>

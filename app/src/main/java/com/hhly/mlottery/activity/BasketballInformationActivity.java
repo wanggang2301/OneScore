@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.frame.basketballframe.BasketInformationFragment;
 
 /**
@@ -34,6 +35,7 @@ public class BasketballInformationActivity extends BaseActivity implements View.
     private ViewPager viewpager;
     private TabsAdapter mTabsAdapter;
     private FragmentManager fragmentManager;
+    private TextView mTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         initView();
     }
 
+    private static final String LEAGUE = "league";
     private void initView() {
 
         publicImgBack = (ImageView) findViewById(R.id.public_img_back);
@@ -79,6 +82,24 @@ public class BasketballInformationActivity extends BaseActivity implements View.
         tabLayout.setupWithViewPager(viewpager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        mTest = (TextView) findViewById(R.id.test);
+        mTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),FootballDatabaseDetailsActivity.class);
+
+                LeagueBean bean = new LeagueBean();
+                bean.setMatchType(1);
+                bean.setLeagueName("NBA");
+                bean.setLeagueLogoUrl("http://pic.13322.com/basketball/league/120_120/1.png");
+                bean.setLeagueId("1");
+
+                intent.putExtra(LEAGUE, bean);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
