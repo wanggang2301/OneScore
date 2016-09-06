@@ -18,10 +18,13 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.LeagueStatisticsTodayAdapter;
+import com.hhly.mlottery.bean.LeagueStatisticsTodayBean;
+import com.hhly.mlottery.bean.LeagueStatisticsTodayChildBean;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.NoDoubleClickUtils;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.NoScrollListView;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -30,7 +33,9 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Wangg
@@ -99,6 +104,10 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private LinearLayout ll_showdata;
     private LinearLayout network_exception_layout;
     private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
+
+    private List<LeagueStatisticsTodayChildBean> mLeagueStatisticsTodayChildBeans;
+    private String startDate;
+    private String endDate;
 
     public LeagueStatisticsTodayFragment() {
     }
@@ -211,7 +220,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         listview = (NoScrollListView) mView.findViewById(R.id.listview);
         listview.setFocusable(false);
 
-       // mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
+        // mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
     }
 
@@ -255,8 +264,46 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         for (int i = 0; i < 100; i++) {
             data.add(i);
         }
-        leagueStatisticsTodayAdapter = new LeagueStatisticsTodayAdapter(mContext, data, R.layout.item_fragment_league_statistics_today);
+      /*  leagueStatisticsTodayAdapter = new LeagueStatisticsTodayAdapter(mContext, data, R.layout.item_fragment_league_statistics_today);
+        listview.setAdapter(leagueStatisticsTodayAdapter);*/
+    }
+
+    private void loadData2() {
+        Map<String, String> params = new HashMap<String, String>();
+        //params.put("type", mType);
+
+        // String url = BaseURLs.URL_BASKET_INFORMATION;
+        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
+
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueStatisticsTodayBean>() {
+
+            @Override
+            public void onResponse(LeagueStatisticsTodayBean json) {
+
+                startDate = json.getStartDate();
+                endDate = json.getEndDate();
+                mLeagueStatisticsTodayChildBeans = json.getStatistics();
+                initViewData();
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
+            }
+        }, LeagueStatisticsTodayBean.class);
+    }
+
+    private void initViewData() {
+        setData(startDate, tv_date1, tv_week1);
+        setData(endDate, tv_date2, tv_week2);
+        leagueStatisticsTodayAdapter = new LeagueStatisticsTodayAdapter(mContext, mLeagueStatisticsTodayChildBeans, R.layout.item_fragment_league_statistics_today);
         listview.setAdapter(leagueStatisticsTodayAdapter);
+    }
+
+    private void setData(String date, TextView tv_date, TextView tv_week) {
+        tv_date.setText(DateUtil.format(DateUtil.parseDate(date, "yyyy-MM-dd"), "yyyy-MM-dd"));
+        tv_week.setText(DateUtil.getWeekOfXinQi(DateUtil.parseDate(date, "yyyy-MM-dd")));
     }
 
     @Override

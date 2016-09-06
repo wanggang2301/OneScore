@@ -55,14 +55,9 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
     private static final int ROWNUM = 4;
 
-
     private BasketInfomationCallBack basketInfomationCallBack;
     private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
-    // private BasketInfoGridAdapter mBasketInfoGridAdapterInter;
-
     private FootBallInfoGridAdapter mFootBallInfoGridAdapterInternatrion;
-
-   // private ExpandableGridAdapter mExpandableGridAdapter;
     private FootBallExpandableGridAdapter mFootBallExpandableGridAdapter;
     private ExpandableListView expandableGridView;
 
@@ -178,8 +173,6 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-
-
                         break;
                 }
                 return false;
@@ -238,7 +231,6 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                     ll_net_error.setVisibility(View.GONE);
                     mExactSwipeRefrashLayout.setRefreshing(true);
                     break;
-
 
                 case DATA_STATUS_NODATA_INTER:
                     ll_loading.setVisibility(View.GONE);
