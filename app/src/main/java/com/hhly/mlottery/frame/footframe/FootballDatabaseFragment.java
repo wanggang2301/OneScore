@@ -316,7 +316,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
         params.put("index", mType + "");
         L.d(TAG, mType + "");
 
-        // String url = BaseURLs.URL_BASKET_INFORMATION;
+        // String url = BaseURLs.URL_FOOTBALL_DATABASE;
         String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidDataMenu.do";
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueDataBase>() {

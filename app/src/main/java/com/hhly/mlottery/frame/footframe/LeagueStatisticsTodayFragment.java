@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,20 +19,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.LeagueStatisticsTodayAdapter;
+import com.hhly.mlottery.adapter.LeagueStatisticsTodayRecyclerViewAdapter;
 import com.hhly.mlottery.bean.LeagueStatisticsTodayBean;
 import com.hhly.mlottery.bean.LeagueStatisticsTodayChildBean;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.LeagueStatisticsTodayFlatBigToSmallComparator;
+import com.hhly.mlottery.util.LeagueStatisticsTodayFlatSmallToBigComparator;
+import com.hhly.mlottery.util.LeagueStatisticsTodayLossBigToSmallComparator;
+import com.hhly.mlottery.util.LeagueStatisticsTodayLossSmallToBigComparator;
+import com.hhly.mlottery.util.LeagueStatisticsTodayWinBigToSmallComparator;
+import com.hhly.mlottery.util.LeagueStatisticsTodayWinSmallToBigComparator;
 import com.hhly.mlottery.util.NoDoubleClickUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.hhly.mlottery.widget.NoScrollListView;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,7 +67,10 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private static final String TYPE = "type";
     private Context mContext;
     private View mView;
-    private LeagueStatisticsTodayAdapter leagueStatisticsTodayAdapter;
+
+    private LeagueStatisticsTodayRecyclerViewAdapter leagueStatisticsTodayRecyclerViewAdapter;
+
+
     private LinearLayout ll_league_win;
     private LinearLayout ll_league_flat;
     private LinearLayout ll_league_loss;
@@ -72,13 +82,9 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private TextView tv_week1;
     private TextView tv_week2;
 
+    private RecyclerView recyclerView;
 
-    private int currentSelectedDate;
-    private List<Integer> data;
-
-    private NoScrollListView listview;
-
-    private int type;
+    private int handicap;
 
     private TextView tv_rank;
     private TextView tv_race;
@@ -106,8 +112,11 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private ExactSwipeRefrashLayout mExactSwipeRefrashLayout;
 
     private List<LeagueStatisticsTodayChildBean> mLeagueStatisticsTodayChildBeans;
-    private String startDate;
-    private String endDate;
+    private String startDate = "";
+    private String endDate = "";
+
+    private boolean isPrepared = false;
+    private boolean isVisible = false;
 
     public LeagueStatisticsTodayFragment() {
     }
@@ -125,10 +134,12 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         mView = inflater.inflate(R.layout.fragment_league_statistics_today, container, false);
 
         if (getArguments() != null) {
-            type = getArguments().getInt(TYPE);
+            handicap = getArguments().getInt(TYPE);
         }
         mContext = getActivity();
         initView();
+        isPrepared = true;
+
         loadData();
         return mView;
     }
@@ -146,6 +157,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         mExactSwipeRefrashLayout.setColorSchemeResources(R.color.bg_header);
         mExactSwipeRefrashLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         mExactSwipeRefrashLayout.setEnabled(false);
+        mExactSwipeRefrashLayout.setRefreshing(false);
 
         tv_date1 = (TextView) mView.findViewById(R.id.tv_date1);
         tv_date2 = (TextView) mView.findViewById(R.id.tv_date2);
@@ -175,7 +187,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         tv_finish.setText(mContext.getString(R.string.league_statistics_today_finish));
 
 
-        if (type == TAB0) {
+        if (handicap == TAB0) {
             tv_win.setText(mContext.getString(R.string.league_statistics_today_victor));
             tv_flat.setText(mContext.getString(R.string.league_statistics_today_flat));
             tv_loss.setText(mContext.getString(R.string.league_statistics_today_loss));
@@ -187,7 +199,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
             tv_tip.setText(Html.fromHtml(tip));
 
 
-        } else if (type == TAB1 || type == TAB3) {
+        } else if (handicap == TAB1 || handicap == TAB3) {
             tv_win.setText(mContext.getString(R.string.league_statistics_today_win));
             tv_flat.setText(mContext.getString(R.string.league_statistics_today_failed));
             tv_loss.setText(mContext.getString(R.string.league_statistics_today_go));
@@ -198,7 +210,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                     + "<b></font></b>" + "<font color='#666666'>" + mContext.getString(R.string.league_statistics_today_tip3) + "<b></font></b>";
             tv_tip.setText(Html.fromHtml(tip));
 
-        } else if (type == TAB2 || type == TAB4) {
+        } else if (handicap == TAB2 || handicap == TAB4) {
             tv_win.setText(mContext.getString(R.string.league_statistics_today_big));
             tv_flat.setText(mContext.getString(R.string.league_statistics_today_small));
             tv_loss.setText(mContext.getString(R.string.league_statistics_today_go));
@@ -217,13 +229,12 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         ll_riqi1.setOnClickListener(this);
         ll_riqi2.setOnClickListener(this);
 
-        listview = (NoScrollListView) mView.findViewById(R.id.listview);
-        listview.setFocusable(false);
+        recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
+        recyclerView.setNestedScrollingEnabled(false);
 
-        // mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
-        new Handler().postDelayed(mLoadingDataThread, 0);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
     }
-
 
     private Handler mHandler = new Handler() {
         @Override
@@ -231,19 +242,31 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
             switch (msg.what) {
                 case DATA_STATUS_LOADING:
                     fl_loading.setVisibility(View.VISIBLE);
-                    mExactSwipeRefrashLayout.setRefreshing(true);
+                    fl_nodata.setVisibility(View.GONE);
+                    ll_showdata.setVisibility(View.GONE);
+                    network_exception_layout.setVisibility(View.GONE);
                     break;
                 case DATA_STATUS_NODATA:
-
-                    mExactSwipeRefrashLayout.setRefreshing(false);
+                    fl_loading.setVisibility(View.GONE);
+                    fl_nodata.setVisibility(View.VISIBLE);
+                    ll_showdata.setVisibility(View.GONE);
+                    network_exception_layout.setVisibility(View.GONE);
                     break;
 
                 case DATA_STATUS_SUCCESS:
+                    fl_loading.setVisibility(View.GONE);
+                    fl_nodata.setVisibility(View.GONE);
+                    ll_showdata.setVisibility(View.VISIBLE);
+                    network_exception_layout.setVisibility(View.GONE);
                     mExactSwipeRefrashLayout.setRefreshing(false);
+                    mExactSwipeRefrashLayout.setEnabled(true);
                     break;
 
                 case DATA_STATUS_ERROR:
-
+                    fl_loading.setVisibility(View.GONE);
+                    fl_nodata.setVisibility(View.GONE);
+                    ll_showdata.setVisibility(View.GONE);
+                    network_exception_layout.setVisibility(View.VISIBLE);
                     mExactSwipeRefrashLayout.setRefreshing(false);
                     break;
 
@@ -251,40 +274,68 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         }
     };
 
+
+    private void loadData() {
+        if (!isPrepared || !isVisible) {
+            return;
+        }
+        mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
+        new Handler().postDelayed(mLoadingDataThread, 0);
+
+    }
+
+
     private Runnable mLoadingDataThread = new Runnable() {
         @Override
         public void run() {
-            loadData();
+            L.d("fffgg", "加载数据");
+            lazyLoad();
         }
     };
 
+    private void resetStatus() {
 
-    private void loadData() {
-        data = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            data.add(i);
-        }
-      /*  leagueStatisticsTodayAdapter = new LeagueStatisticsTodayAdapter(mContext, data, R.layout.item_fragment_league_statistics_today);
-        listview.setAdapter(leagueStatisticsTodayAdapter);*/
+        ll_league_win.setBackgroundResource(R.drawable.tv_shape);
+        tv_win.setTextColor(mContext.getResources().getColor(R.color.white));
+        iv_win.setBackgroundResource(R.mipmap.league_down);
+        ll_league_flat.setBackgroundResource(R.drawable.tv_shape2);
+        tv_flat.setTextColor(mContext.getResources().getColor(R.color.mdy_666));
+        iv_flat.setBackgroundResource(R.mipmap.league_defalt);
+        ll_league_loss.setBackgroundResource(R.drawable.tv_shape2);
+        tv_loss.setTextColor(mContext.getResources().getColor(R.color.mdy_666));
+        iv_loss.setBackgroundResource(R.mipmap.league_defalt);
+
+        isSortBigToSmall = false;
+        isSortTab1 = false;
+        isSortTab2 = true;
+        isSortTab3 = true;
+
     }
 
-    private void loadData2() {
+    private void lazyLoad() {
+        resetStatus();
         Map<String, String> params = new HashMap<String, String>();
-        //params.put("type", mType);
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+        params.put("handicap", handicap + "");
 
-        // String url = BaseURLs.URL_BASKET_INFORMATION;
-        String url = "http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHierarchy.do";
+
+        //String url = BaseURLs.URL_LEAGUESTATISTICSTODAY;
+
+        String url = "http://192.168.10.242:8181/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueStatisticsTodayBean>() {
-
             @Override
             public void onResponse(LeagueStatisticsTodayBean json) {
-
+                if (!"200".equals(json.getResult())) {
+                    mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
+                    return;
+                }
                 startDate = json.getStartDate();
                 endDate = json.getEndDate();
                 mLeagueStatisticsTodayChildBeans = json.getStatistics();
+                mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS);
                 initViewData();
-
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -297,8 +348,9 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private void initViewData() {
         setData(startDate, tv_date1, tv_week1);
         setData(endDate, tv_date2, tv_week2);
-        leagueStatisticsTodayAdapter = new LeagueStatisticsTodayAdapter(mContext, mLeagueStatisticsTodayChildBeans, R.layout.item_fragment_league_statistics_today);
-        listview.setAdapter(leagueStatisticsTodayAdapter);
+        leagueStatisticsTodayRecyclerViewAdapter = new LeagueStatisticsTodayRecyclerViewAdapter(mContext, mLeagueStatisticsTodayChildBeans);
+        recyclerView.setAdapter(leagueStatisticsTodayRecyclerViewAdapter);
+
     }
 
     private void setData(String date, TextView tv_date, TextView tv_week) {
@@ -311,12 +363,12 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         switch (v.getId()) {
             case R.id.ll_riqi1:
                 if (!NoDoubleClickUtils.isDoubleClick()) {
-                    showDialog(tv_date1.getText().toString(), tv_date1, tv_week1);
+                    showDialog(0, tv_date1.getText().toString(), tv_date1, tv_week1);
                 }
                 break;
             case R.id.ll_riqi2:
                 if (!NoDoubleClickUtils.isDoubleClick()) {
-                    showDialog(tv_date2.getText().toString(), tv_date2, tv_week2);
+                    showDialog(1, tv_date2.getText().toString(), tv_date2, tv_week2);
                 }
                 break;
             case R.id.ll_league_win:
@@ -332,9 +384,13 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 if (isSortBigToSmall) {
                     iv_win.setBackgroundResource(R.mipmap.league_down);
                     isSortBigToSmall = false;
+                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayWinBigToSmallComparator());
+
                 } else {
                     iv_win.setBackgroundResource(R.mipmap.league_up);
                     isSortBigToSmall = true;
+                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayWinSmallToBigComparator());
+
                 }
 
                 ll_league_flat.setBackgroundResource(R.drawable.tv_shape2);
@@ -344,8 +400,8 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 tv_loss.setTextColor(mContext.getResources().getColor(R.color.mdy_666));
                 iv_loss.setBackgroundResource(R.mipmap.league_defalt);
 
-                Collections.reverse(data);
-                leagueStatisticsTodayAdapter.notifyDataSetChanged();
+                leagueStatisticsTodayRecyclerViewAdapter.notifyDataSetChanged();
+
 
                 break;
 
@@ -367,16 +423,18 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 if (isSortBigToSmall) {
                     iv_flat.setBackgroundResource(R.mipmap.league_down);
                     isSortBigToSmall = false;
+                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatBigToSmallComparator());
+
                 } else {
                     iv_flat.setBackgroundResource(R.mipmap.league_up);
                     isSortBigToSmall = true;
+                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatSmallToBigComparator());
                 }
 
                 ll_league_loss.setBackgroundResource(R.drawable.tv_shape2);
                 tv_loss.setTextColor(mContext.getResources().getColor(R.color.mdy_666));
                 iv_loss.setBackgroundResource(R.mipmap.league_defalt);
-                Collections.reverse(data);
-                leagueStatisticsTodayAdapter.notifyDataSetChanged();
+                leagueStatisticsTodayRecyclerViewAdapter.notifyDataSetChanged();
                 break;
 
             case R.id.ll_league_loss:
@@ -400,28 +458,32 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 if (isSortBigToSmall) {
                     iv_loss.setBackgroundResource(R.mipmap.league_down);
                     isSortBigToSmall = false;
+                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossBigToSmallComparator());
+
                 } else {
                     iv_loss.setBackgroundResource(R.mipmap.league_up);
                     isSortBigToSmall = true;
+                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossSmallToBigComparator());
+
                 }
 
-                Collections.reverse(data);
-                leagueStatisticsTodayAdapter.notifyDataSetChanged();
+                leagueStatisticsTodayRecyclerViewAdapter.notifyDataSetChanged();
                 break;
 
             case R.id.network_exception_reload_btn:
-
+                mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
+                new Handler().postDelayed(mLoadingDataThread, 0);
                 break;
         }
     }
 
-
     @Override
     public void onRefresh() {
 
+        new Handler().postDelayed(mLoadingDataThread, 1000);
     }
 
-    private void showDialog(String currendate, final TextView tv_date, final TextView tv_week) {
+    private void showDialog(final int type, String currendate, final TextView tv_date, final TextView tv_week) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AlertDialog);
         final AlertDialog alertDialog = builder.create();
         LayoutInflater infla = LayoutInflater.from(mContext);
@@ -455,9 +517,15 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 CalendarDay date = widget.getSelectedDate();
                 tv_date.setText(DateUtil.format(date.getDate(), "yyyy-MM-dd"));
                 tv_week.setText(DateUtil.getWeekOfXinQi(date.getDate()));
+                if (type == 0) {
+                    startDate = DateUtil.format(date.getDate(), "yyyy-MM-dd");
+                } else {
+                    endDate = DateUtil.format(date.getDate(), "yyyy-MM-dd");
+                }
+
                 alertDialog.dismiss();
-                Collections.reverse(data);
-                leagueStatisticsTodayAdapter.notifyDataSetChanged();
+
+                new Handler().postDelayed(mLoadingDataThread, 1000);
 
             }
         });
@@ -465,5 +533,23 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         alertDialog.show();
         alertDialog.getWindow().setContentView(alertDialogView);
         alertDialog.setCanceledOnTouchOutside(true);
+    }
+
+
+    @Override
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            isVisible = true;
+            loadData();
+        } else {
+            isVisible = false;
+        }
     }
 }

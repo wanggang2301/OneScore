@@ -464,7 +464,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
         // Log.e(TAG, "url:"+BaseURLs.URL_ImmediateMatchs);
 //        isStartInitData = true;
-        L.d("imedia","dddd");
+        L.d("imedia", "dddd");
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ImmediateMatchs, new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
             @Override
@@ -473,10 +473,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     return;
                 }
-
                 mAllMatchs = jsonMatch.getImmediateMatch();// 获取所有赛程
                 mMatchs = new ArrayList<Match>();//
-                // mMatchs.addAll(mAllMatchs);//用这种方式是把all的引用赋给它了，操作起来比较麻烦
 
                 if (getActivity() == null) {
                     return;
@@ -485,7 +483,6 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
                 teamLogoPre = jsonMatch.getTeamLogoPre();
                 teamLogoSuff = jsonMatch.getTeamLogoSuff();
-
 
                 HotFocusUtils hotFocusUtils = new HotFocusUtils();
                 hotFocusUtils.loadHotFocusData(getActivity(), new RequestHostFocusCallBack() {
@@ -523,27 +520,14 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                         mCups = jsonMatch.getAll();
                         mNoDataTextView.setText(R.string.immediate_no_data);
                         if (mMatchs.size() == 0) {// 没有热门赛事，显示全部
-                            // mNoDataLayout.setVisibility(View.VISIBLE);
-                            // mLoadingLayout.setVisibility(View.GONE);
-                            // mListView.setVisibility(View.GONE);
-                            // mErrorLayout.setVisibility(View.GONE);
+
                             mMatchs.addAll(mAllMatchs);
                             mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
                             if (mMatchs.size() == 0) {// 一个赛事都没有，显示“暂无赛事”
-                                //  mRecyclerView.setLayoutManager(layoutManager);
-
-                               /* if (AppConstants.isGOKeyboard) {
-                                    *//*mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
-                                    mInternationalAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                                    mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                                    mListView.setAdapter(mInternationalAdapter);*//*
-                                } else {*/
                                 mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                                 //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                                 mAdapter.setmFocusMatchClickListener(mFocusClickListener);
                                 mRecyclerView.setAdapter(mAdapter);
-
-
                                 mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                                     @Override
                                     public void onItemClick(View view, String data) {
@@ -584,19 +568,10 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                     }
                                 }
                             }
-
                             mCheckedCups = tempHotCups.toArray(new LeagueCup[tempHotCups.size()]);
                         }
 
-                        //mRecyclerView.setLayoutManager(layoutManager);
 
-
-                      /*  if (AppConstants.isGOKeyboard) {
-                           *//* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
-                            mInternationalAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                            mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                            mListView.setAdapter(mInternationalAdapter);*//*
-                        } else {*/
                         mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
                         //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
                         mAdapter.setmFocusMatchClickListener(mFocusClickListener);

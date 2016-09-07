@@ -35,7 +35,7 @@ public class BaseURLs {
             } else if (url_config == DebugConfigActivity.URL_93) {
                 return "183.61.172.93:8096"; // 典哥新加
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
-                return PreferenceUtil.getString("DIY_INPUT","m.13322.com"); // 自定义环境地址
+                return PreferenceUtil.getString("DIY_INPUT", "m.13322.com"); // 自定义环境地址
             } else {
                 return "m.13322.com";
             }
@@ -100,7 +100,7 @@ public class BaseURLs {
                 return "192.168.10.242:61634";
 //                return "192.168.12.242:61634";//余勇俊测试
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
-                return PreferenceUtil.getString("DIY_INPUT","m.13322.com/ws");// 自定义
+                return PreferenceUtil.getString("DIY_INPUT", "m.13322.com/ws");// 自定义
             } else {
                 return "m.13322.com/ws";
             }
@@ -713,6 +713,7 @@ public class BaseURLs {
     //篮球资料库
     public final static String URL_BASKET_INFORMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
 
+
     //篮球资料库详情
     public final static String URL_BASKET_DATABASE_DETAILS = URL_API_HOST + "basketballData.findLeagueHeader.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do
     // 赛程
@@ -744,6 +745,12 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_LEAGUERACE = URL_API_HOST + "footballLeagueData.qLeagueRace.do";
 
     //足球资料库
+
+    public final static String URL_FOOTBALL_DATABASE = URL_API_HOST + "androidLeagueData.findAndroidDataMenu.do";
+
+    //足球赛事提点
+    public final static String URL_LEAGUESTATISTICSTODAY = URL_API_HOST + "toDayMatchStatistics.findTodayMatchStatistics.do";
+
     //联赛列表
     public final static String URL_QLIBARYLEAGUES = "footballLeagueData.qLibaryLeagues.do";
     public final static String URL_INFORMATION = URL_API_HOST + URL_QLIBARYLEAGUES;

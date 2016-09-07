@@ -9,6 +9,16 @@ import java.util.List;
  */
 public class LeagueStatisticsTodayBean {
 
+    private String result;
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
     private String startDate;
     private String endDate;
     private List<LeagueStatisticsTodayChildBean> statistics;

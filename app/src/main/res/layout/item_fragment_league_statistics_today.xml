@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:orientation="horizontal"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
@@ -11,7 +12,7 @@
     <TextView
         android:id="@+id/tv_league_rank"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center"
@@ -22,14 +23,12 @@
     <LinearLayout
         android:id="@+id/ll_league_bg"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_weight="2"
         android:background="@color/red"
         android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_league_name"
@@ -57,7 +56,7 @@
     <TextView
         android:id="@+id/tv_league_finish"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center"
