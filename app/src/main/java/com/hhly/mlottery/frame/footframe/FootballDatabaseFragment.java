@@ -373,10 +373,8 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
             if (internation != null && internation.size() > 0) {
                 mFootBallInfoGridAdapterInternatrion = new FootBallInfoGridAdapter(mContext, internation);
                 gridviewInter.setAdapter(mFootBallInfoGridAdapterInternatrion);
-                L.d("123456", "热门或国际有数据");
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_INTER);
             } else {
-                L.d("123456", "热门或国际");
                 mHandler.sendEmptyMessage(DATA_STATUS_NODATA_INTER);
             }
 
@@ -386,10 +384,8 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
             if (internation != null && internation.size() > 0) {
                 mFootBallInfoGridAdapterInternatrion = new FootBallInfoGridAdapter(mContext, internation);
                 gridviewInter.setAdapter(mFootBallInfoGridAdapterInternatrion);
-                L.d("123456", "洲际有数据");
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS_INTER);
             } else {
-                L.d("123456", "洲际无数据");
                 mHandler.sendEmptyMessage(DATA_STATUS_NODATA_INTER);
             }
 
