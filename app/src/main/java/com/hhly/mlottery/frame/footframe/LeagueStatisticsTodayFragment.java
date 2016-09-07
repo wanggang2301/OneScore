@@ -524,8 +524,8 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 }
 
                 alertDialog.dismiss();
-
-                new Handler().postDelayed(mLoadingDataThread, 1000);
+                mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
+                new Handler().postDelayed(mLoadingDataThread, 0);
 
             }
         });
@@ -545,6 +545,8 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
+
         if (getUserVisibleHint()) {
             isVisible = true;
             loadData();
