@@ -1113,6 +1113,6 @@
     <string name="league_statistics_today_tip3">；可以排序</string>
     <string name="league_statistics_today_notice">说明</string>
     <string name="league_statistics_today_noticetitle">什么是今日联赛提点？</string>
-    <string name="league_statistics_today_noticetext">是对今日有开盘的比赛参赛的所有联赛，各项数据在近期比赛或者某一个时间段内的排名</string>
+    <string name="league_statistics_today_noticetext">是对今日有开盘的比赛参赛的所有联赛，各项数据在近期比赛或者某一个时间段内的排名。</string>
 
 </resources>

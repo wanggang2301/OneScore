@@ -1097,6 +1097,6 @@
     <string name="league_statistics_today_tip3">；可以排序</string>
     <string name="league_statistics_today_notice">說明</string>
     <string name="league_statistics_today_noticetitle">什麼是今日聯賽提點？</string>
-    <string name="league_statistics_today_noticetext">是對今日有開盤的比賽參賽的所有聯賽，各項數據在近期比賽或者某一個時間段內的排名</string>
+    <string name="league_statistics_today_noticetext">是對今日有開盤的比賽參賽的所有聯賽，各項數據在近期比賽或者某一個時間段內的排名。</string>
 
 </resources>
