@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.basketballframe;
+package com.hhly.mlottery.frame.footframe;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +26,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.CupMatchStageChooseDialogFragment;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -40,11 +41,12 @@ import java.util.concurrent.TimeUnit;
 import rx.functions.Action1;
 
 /**
- * 描    述：篮球资料库 - 排行
- * 作    者：longs@13322.com
- * 时    间：2016/8/9
+ * description:
+ * author: yixq
+ * Created by A on 2016/9/5.
+ * 足球资料库积分
  */
-public class BasketDatabaseRankingFragment extends Fragment {
+public class FootballDatabaseIntegralFragment extends Fragment{
 
     private static final String LEAGUE = "league";
     private static final String PARAM_ID = "leagueId";
@@ -73,15 +75,14 @@ public class BasketDatabaseRankingFragment extends Fragment {
     private LeagueBean league;
     private String season;
 
-//    private RankingResult mResult;
     private IntegralResult mResult;
 
     private List<BasketballDatabaseRankingAdapter.Section> mSections;
     private BasketballDatabaseRankingAdapter mAdapter;
-    private RadioGroup mRadioGroup;
     private RadioButton mAllRadio;
     private RadioButton mHomeRadio;
     private RadioButton mGuestRadio;
+    private RadioGroup mRadioGroup;
     private int mTypeSelect = 0;// 主客场选中type（默认全部）【All: 0 、 主场：1 、 客场：2】
 
     @Override
@@ -115,6 +116,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         mRadioGroup = (RadioGroup)view.findViewById(R.id.gendergroup);
+//        mRadioGroup.setVisibility(View.VISIBLE);
         mAllRadio = (RadioButton)view.findViewById(R.id.football_database_details_all);
         mAllRadio.setChecked(true);//默认选中
         mHomeRadio = (RadioButton)view.findViewById(R.id.football_database_details_home);
@@ -128,6 +130,44 @@ public class BasketDatabaseRankingFragment extends Fragment {
         initRecycler();
 
         load(null);
+    }
+    /**
+     * RadioGroup的点击（全部、主、客切换）
+     */
+    private void RadioGroupOnClick(){
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if (checkedId == mAllRadio.getId()) {
+                    mTypeSelect = 0;
+                }else if(checkedId == mHomeRadio.getId()){
+                    mTypeSelect = 1;
+                }else if(checkedId == mGuestRadio.getId()){
+                    mTypeSelect = 2;
+                }
+                updataAdapter(mTypeSelect);
+            }
+        });
+    }
+    public void updataAdapter(int type){
+
+        if (type == 0) {
+            mSections.clear();
+            handleData(mResult.getRankingObj().getAll());
+            mAdapter.notifyDataSetChanged();
+            Toast.makeText(getContext(), "all==", Toast.LENGTH_SHORT).show();
+        } else if (type == 1) {
+            mSections.clear();
+            handleData(mResult.getRankingObj().getHome());
+            mAdapter.notifyDataSetChanged();
+            Toast.makeText(getContext(), "home==", Toast.LENGTH_SHORT).show();
+        } else if(type == 2){
+            mSections.clear();
+            handleData(mResult.getRankingObj().getGuest());
+            mAdapter.notifyDataSetChanged();
+            Toast.makeText(getContext(), "guest==", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initEmptyView() {
@@ -226,15 +266,19 @@ public class BasketDatabaseRankingFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
 
-        Map<String, String> params = new HashMap<>();
-        params.put(PARAM_ID, league.getLeagueId());
-        putIfNotNull(params, PARAM_SEASON, season);
-        putIfNotNull(params, PARAM_FIRST_STAGE_ID, firstStageId);
-        params.put(PARAM_MATCH_TYPE, league.getMatchType().toString());
+//        Map<String, String> params = new HashMap<>();
+//        params.put(PARAM_ID, league.getLeagueId());
+//        putIfNotNull(params, PARAM_SEASON, season);
+//        putIfNotNull(params, PARAM_FIRST_STAGE_ID, firstStageId);
+//        params.put(PARAM_MATCH_TYPE, league.getMatchType().toString());
         // http://192.168.31.72:3000/basketball/ranking
         // http://192.168.31.115:8888/mlottery/core/basketballData.findRanking.do?lang=zh&leagueId=7&season=2014-2015&matchType=2
 //        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DATABASE_RANKING, params,
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DATABASE_INTEGRAL, params,
+        String url = "http://192.168.10.242:8181/mlottery/core/basketballData.findRanking117.do";
+        Map<String, String> map = new HashMap<>();
+        map.put("leagueId" , "1");
+        map.put("matchType" , "1");
+        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DATABASE_INTEGRAL, map,
                 new VolleyContentFast.ResponseSuccessListener<IntegralResult>() {
                     @Override
                     public void onResponse(IntegralResult result) {
@@ -247,10 +291,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
                         mAdapter.setType(result.getRankingType());
                         handleHeadView(result.getSearchCondition(), firstStageIndex);
                         updataAdapter(mTypeSelect);
-                        //判断如果是联赛 则显示主客场选择
-                        if (league.getMatchType() == 1) {
-                            setStatus(STATUS_LOAD_SUCCESS);
-                        }
+                        setStatus(STATUS_LOAD_SUCCESS);
 //                        handleData(result.getRankingObj().getAll());
 //                        mAdapter.notifyDataSetChanged();
                     }
@@ -270,56 +311,6 @@ public class BasketDatabaseRankingFragment extends Fragment {
         }
     }
 
-    /**
-     * RadioGroup的点击（全部、主、客切换）
-     */
-    private void RadioGroupOnClick(){
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                if (checkedId == mAllRadio.getId()) {
-                    mTypeSelect = 0;
-                }else if(checkedId == mHomeRadio.getId()){
-                    mTypeSelect = 1;
-                }else if(checkedId == mGuestRadio.getId()){
-                    mTypeSelect = 2;
-                }
-                updataAdapter(mTypeSelect);
-            }
-        });
-    }
-    public void updataAdapter(int type){
-
-        if (type == 0) {
-            mSections.clear();
-            if (mResult.getRankingObj().getAll() == null || mResult.getRankingObj().getAll().equals("")){
-                setStatus(STATUS_NO_DATA);
-            }else{
-                handleData(mResult.getRankingObj().getAll());
-                mAdapter.notifyDataSetChanged();
-            }
-            Toast.makeText(getContext(), "all==", Toast.LENGTH_SHORT).show();
-        } else if (type == 1) {
-            mSections.clear();
-            if (mResult.getRankingObj().getHome() == null || mResult.getRankingObj().getHome().equals("")) {
-                setStatus(STATUS_NO_DATA);
-            }else{
-                handleData(mResult.getRankingObj().getHome());
-                mAdapter.notifyDataSetChanged();
-            }
-            Toast.makeText(getContext(), "home==", Toast.LENGTH_SHORT).show();
-        } else if(type == 2){
-            mSections.clear();
-            if (mResult.getRankingObj().getGuest() == null || mResult.getRankingObj().getGuest().equals("")) {
-                setStatus(STATUS_NO_DATA);
-            }else{
-                handleData(mResult.getRankingObj().getGuest());
-                mAdapter.notifyDataSetChanged();
-            }
-            Toast.makeText(getContext(), "guest==", Toast.LENGTH_SHORT).show();
-        }
-    }
     /**
      * 处理数据
      *
@@ -373,12 +364,12 @@ public class BasketDatabaseRankingFragment extends Fragment {
         }
     }
 
-    public static BasketDatabaseRankingFragment newInstance(LeagueBean league, String season) {
+    public static FootballDatabaseIntegralFragment newInstance(LeagueBean league, String season) {
 
         Bundle args = new Bundle();
         args.putParcelable(LEAGUE, league);
         args.putString(PARAM_SEASON, season);
-        BasketDatabaseRankingFragment fragment = new BasketDatabaseRankingFragment();
+        FootballDatabaseIntegralFragment fragment = new FootballDatabaseIntegralFragment();
         fragment.setArguments(args);
         return fragment;
     }

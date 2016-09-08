@@ -14,7 +14,6 @@ import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +44,6 @@ import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -219,6 +217,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private ImageView iv_join_room_basket;// 聊天室悬浮按钮
     private ProgressDialog pd;// 加载框
     private boolean isExit = false;// 是否取消进入聊天室动作
+    private String mLeagueId; // 联赛ID
+    private Integer mMatchType; //联赛类型
 
 
     @Override
@@ -358,6 +358,12 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     public String getmThirdId() {
         return mThirdId;
+    }
+    public String getmLeagueId() {
+        return mLeagueId;
+    }
+    public Integer getmMatchType() {
+        return mMatchType;
     }
 
     /**
@@ -575,6 +581,11 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
                     initData(basketDetailsBean);
+
+                    mLeagueId = basketDetailsBean.getMatch().getLeagueId();
+                    mMatchType = basketDetailsBean.getMatch().getMatchType();
+
+
                     /**
                      * 启动秒闪烁
                      */

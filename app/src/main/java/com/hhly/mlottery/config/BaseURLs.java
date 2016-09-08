@@ -720,6 +720,9 @@ public class BaseURLs {
     public final static String URL_BASKET_DATABASE_SCHEDULE = URL_API_HOST + "basketballData.findSchedule.do";
     // 排行
     public final static String URL_BASKET_DATABASE_RANKING = URL_API_HOST + "basketballData.findRanking.do";
+
+    //足球资料库积分
+    public final static String URL_FOOTBALL_DATABASE_INTEGRAL = "http://192.168.10.242:8181/mlottery/core/basketballData.findRanking117.do";
     //让分盘
     public final static String URL_BASKET_DATABASE_HANDICAP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
     //大小盘
