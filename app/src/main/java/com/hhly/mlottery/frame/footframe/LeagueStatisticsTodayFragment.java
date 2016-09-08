@@ -22,9 +22,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.LeagueStatisticsTodayRecyclerViewAdapter;
 import com.hhly.mlottery.bean.LeagueStatisticsTodayBean;
 import com.hhly.mlottery.bean.LeagueStatisticsTodayChildBean;
-import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DateUtil;
-import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.LeagueStatisticsTodayFlatBigToSmallComparator;
 import com.hhly.mlottery.util.LeagueStatisticsTodayFlatSmallToBigComparator;
 import com.hhly.mlottery.util.LeagueStatisticsTodayLossBigToSmallComparator;
@@ -52,6 +51,7 @@ import java.util.Map;
  */
 public class LeagueStatisticsTodayFragment extends Fragment implements View.OnClickListener, ExactSwipeRefrashLayout.OnRefreshListener {
 
+    private static final String TAG="LeagueStatisticsTodayFragment";
     private static final Integer TAB0 = 0; //胜平负
     private static final Integer TAB1 = 1; //亚盘
     private static final Integer TAB2 = 2; //大小盘
@@ -154,7 +154,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         mExactSwipeRefrashLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.league_swiperefreshlayout);
         mExactSwipeRefrashLayout.setOnRefreshListener(this);
         mExactSwipeRefrashLayout.setColorSchemeResources(R.color.bg_header);
-        mExactSwipeRefrashLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
+
         mExactSwipeRefrashLayout.setEnabled(false);
         mExactSwipeRefrashLayout.setRefreshing(false);
 
@@ -319,8 +319,8 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
 
         //String url = BaseURLs.URL_LEAGUESTATISTICSTODAY;
 
-        // String url = "http://192.168.10.242:8181/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
-        String url = "http://192.168.31.53:8080/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
+         String url = "http://192.168.10.242:8181/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
+       // String url = "http://192.168.31.53:8080/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueStatisticsTodayBean>() {
             @Override
@@ -482,6 +482,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     @Override
     public void onRefresh() {
 
+        L.d(TAG,"下拉刷新");
         new Handler().postDelayed(mLoadingDataThread, 1000);
     }
 
