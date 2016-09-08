@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="horizontal"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
+
     android:weightSum="7">
 
     <TextView
@@ -18,7 +17,7 @@
         android:gravity="center"
         android:text="排名"
         android:textColor="@color/team_name_color"
-        android:textSize="@dimen/text_size_15" />
+        android:textSize="@dimen/text_size_13" />
 
     <LinearLayout
         android:id="@+id/ll_league_bg"
