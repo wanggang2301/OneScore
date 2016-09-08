@@ -66,7 +66,7 @@ public class LeagueStatisticsTodayActivity extends BaseActivity implements View.
                 LeagueStatisticsTodayFragment.newInstance(2),
                 LeagueStatisticsTodayFragment.newInstance(3),
                 LeagueStatisticsTodayFragment.newInstance(4));
-        viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
+        viewpager.setOffscreenPageLimit(4);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);

@@ -25,7 +25,6 @@ import com.hhly.mlottery.bean.LeagueStatisticsTodayChildBean;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.LeagueStatisticsTodayFlatBigToSmallComparator;
 import com.hhly.mlottery.util.LeagueStatisticsTodayFlatSmallToBigComparator;
 import com.hhly.mlottery.util.LeagueStatisticsTodayLossBigToSmallComparator;
@@ -38,6 +37,7 @@ import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -63,13 +63,11 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private static final int DATA_STATUS_SUCCESS = 3;
     private static final int DATA_STATUS_ERROR = -1;
 
-
     private static final String TYPE = "type";
     private Context mContext;
     private View mView;
 
     private LeagueStatisticsTodayRecyclerViewAdapter leagueStatisticsTodayRecyclerViewAdapter;
-
 
     private LinearLayout ll_league_win;
     private LinearLayout ll_league_flat;
@@ -114,6 +112,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private List<LeagueStatisticsTodayChildBean> mLeagueStatisticsTodayChildBeans;
     private String startDate = "";
     private String endDate = "";
+    private String maxDate = "";
 
     private boolean isPrepared = false;
     private boolean isVisible = false;
@@ -276,19 +275,18 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
 
 
     private void loadData() {
-        if (!isPrepared || !isVisible) {
+       /* if (!isPrepared || !isVisible) {
             return;
-        }
+        }*/
+
         mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
-
     }
 
 
     private Runnable mLoadingDataThread = new Runnable() {
         @Override
         public void run() {
-            L.d("fffgg", "加载数据");
             lazyLoad();
         }
     };
@@ -319,10 +317,10 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         params.put("endDate", endDate);
         params.put("handicap", handicap + "");
 
-
         //String url = BaseURLs.URL_LEAGUESTATISTICSTODAY;
 
-        String url = "http://192.168.10.242:8181/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
+        // String url = "http://192.168.10.242:8181/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
+        String url = "http://192.168.31.53:8080/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueStatisticsTodayBean>() {
             @Override
@@ -330,6 +328,10 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 if (!"200".equals(json.getResult())) {
                     mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
                     return;
+                }
+
+                if ("".equals(startDate) && "".equals(endDate)) {
+                    maxDate = json.getEndDate();
                 }
                 startDate = json.getStartDate();
                 endDate = json.getEndDate();
@@ -504,6 +506,15 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         widget.setWeekDayLabels(weekDays);
         widget.setSelectionColor(mContext.getResources().getColor(R.color.blue));
 
+        //日期最大值不超过首次请求日期最大值
+        widget.state().edit().setMaximumDate(DateUtil.parseDate(maxDate, "yyyy-MM-dd")).commit();
+
+        //日期最小值=当前选择区间后面值往前推一年
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(DateUtil.parseDate(endDate, "yyyy-MM-dd"));
+        calendar.add(Calendar.YEAR, -1);
+        widget.state().edit().setMinimumDate(calendar).commit();
+
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -535,8 +546,8 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         alertDialog.setCanceledOnTouchOutside(true);
     }
 
-
-    @Override
+    //fragment每次请求当前数据，目前暂时没有使用
+  /*  @Override
     public boolean getUserVisibleHint() {
         return super.getUserVisibleHint();
     }
@@ -549,9 +560,10 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
 
         if (getUserVisibleHint()) {
             isVisible = true;
+
             loadData();
         } else {
             isVisible = false;
         }
-    }
+    }*/
 }

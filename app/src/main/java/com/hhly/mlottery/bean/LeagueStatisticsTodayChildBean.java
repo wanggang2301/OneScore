@@ -1,11 +1,14 @@
 package com.hhly.mlottery.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 描述:  ${TODO}
  * 作者:  wangg@13322.com
  * 时间:  2016/9/6 18:04
  */
-public class LeagueStatisticsTodayChildBean {
+public class LeagueStatisticsTodayChildBean implements Parcelable {
 
     private String num;
     private String matchName;
@@ -106,4 +109,53 @@ public class LeagueStatisticsTodayChildBean {
     public void setNum(String num) {
         this.num = num;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.num);
+        dest.writeString(this.matchName);
+        dest.writeString(this.total);
+        dest.writeString(this.winPercent);
+        dest.writeString(this.drawPercent);
+        dest.writeString(this.lostPercent);
+        dest.writeString(this.winCount);
+        dest.writeString(this.drawCount);
+        dest.writeString(this.lostCount);
+        dest.writeString(this.color);
+        dest.writeString(this.date);
+    }
+
+    public LeagueStatisticsTodayChildBean() {
+    }
+
+    protected LeagueStatisticsTodayChildBean(Parcel in) {
+        this.num = in.readString();
+        this.matchName = in.readString();
+        this.total = in.readString();
+        this.winPercent = in.readString();
+        this.drawPercent = in.readString();
+        this.lostPercent = in.readString();
+        this.winCount = in.readString();
+        this.drawCount = in.readString();
+        this.lostCount = in.readString();
+        this.color = in.readString();
+        this.date = in.readString();
+    }
+
+    public static final Parcelable.Creator<LeagueStatisticsTodayChildBean> CREATOR = new Parcelable.Creator<LeagueStatisticsTodayChildBean>() {
+        @Override
+        public LeagueStatisticsTodayChildBean createFromParcel(Parcel source) {
+            return new LeagueStatisticsTodayChildBean(source);
+        }
+
+        @Override
+        public LeagueStatisticsTodayChildBean[] newArray(int size) {
+            return new LeagueStatisticsTodayChildBean[size];
+        }
+    };
 }

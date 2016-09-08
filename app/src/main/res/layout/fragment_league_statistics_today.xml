@@ -76,7 +76,7 @@
                         android:id="@+id/tv_date1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2016-09-01"
+                        android:text=""
                         android:textColor="#333333"
                         android:textSize="@dimen/text_size_13" />
 
@@ -85,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="2dp"
-                        android:text="周四"
+                        android:text=""
                         android:textColor="@color/mdy_999"
                         android:textSize="@dimen/text_size_10" />
                 </LinearLayout>
@@ -115,7 +115,7 @@
                         android:id="@+id/tv_date2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2016-09-02"
+                        android:text=""
                         android:textColor="#333333"
                         android:textSize="@dimen/text_size_13" />
 
@@ -124,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="2dp"
-                        android:text="周五"
+                        android:text=""
                         android:textColor="@color/mdy_999"
                         android:textSize="@dimen/text_size_10" />
                 </LinearLayout>
