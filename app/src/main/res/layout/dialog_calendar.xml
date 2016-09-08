@@ -15,8 +15,8 @@
         android:background="@drawable/share_date_top_bg"
         android:gravity="center"
         android:padding="10dp"
-        android:textColor="@color/white"
-        android:text="日期选择" />
+        android:text="@string/tip"
+        android:textColor="@color/white" />
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
@@ -50,7 +50,7 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="取消"
+            android:text="@string/about_cancel"
             android:visibility="visible" />
 
         <View
@@ -68,7 +68,7 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="确定"
+            android:text="@string/about_confirm"
             android:visibility="visible" />
     </LinearLayout>
 

@@ -330,7 +330,6 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                     return;
                 }
 
-
                 if ("".equals(startDate) && "".equals(endDate)) {
                     maxDate = json.getEndDate();
                 }
@@ -353,7 +352,6 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         setData(endDate, tv_date2, tv_week2);
         leagueStatisticsTodayRecyclerViewAdapter = new LeagueStatisticsTodayRecyclerViewAdapter(mContext, mLeagueStatisticsTodayChildBeans);
         recyclerView.setAdapter(leagueStatisticsTodayRecyclerViewAdapter);
-
     }
 
     private void setData(String date, TextView tv_date, TextView tv_week) {
@@ -388,12 +386,10 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                     iv_win.setBackgroundResource(R.mipmap.league_down);
                     isSortBigToSmall = false;
                     Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayWinBigToSmallComparator());
-
                 } else {
                     iv_win.setBackgroundResource(R.mipmap.league_up);
                     isSortBigToSmall = true;
                     Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayWinSmallToBigComparator());
-
                 }
 
                 ll_league_flat.setBackgroundResource(R.drawable.tv_shape2);
@@ -404,8 +400,6 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 iv_loss.setBackgroundResource(R.mipmap.league_defalt);
 
                 leagueStatisticsTodayRecyclerViewAdapter.notifyDataSetChanged();
-
-
                 break;
 
             case R.id.ll_league_flat:

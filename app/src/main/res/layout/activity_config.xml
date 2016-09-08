@@ -114,4 +114,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="自定义确定"/>
+
+    <Button
+        android:id="@+id/league"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="赛事提点测试"/>
 </LinearLayout>

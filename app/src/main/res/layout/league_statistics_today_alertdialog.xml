@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:background="@drawable/share_date_top_bg"
         android:gravity="center"
-        android:text="说明"
+        android:text="@string/league_statistics_today_notice"
         android:textColor="@color/white"
         android:textSize="15sp" />
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="10dp"
-        android:text="什么是今日联赛提点？"
+        android:text="@string/league_statistics_today_noticetitle"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_20" />
 
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="10dp"
-        android:text="是对今日有开盘的比赛参赛的所有联赛，各项数据在近期比赛或者某一个时间段内的排名"
+        android:text="@string/league_statistics_today_noticetext"
         android:textSize="@dimen/text_size_15" />
 
     <Button
