@@ -13,7 +13,7 @@ import com.hhly.mlottery.bean.LeagueStatisticsTodayChildBean;
 import java.util.List;
 
 /**
- * 描述:  ${TODO}
+ * 描述:  足球賽事提點Adapter
  * 作者:  wangg@13322.com
  * 时间:  2016/9/7 15:42
  */
@@ -28,8 +28,6 @@ public class LeagueStatisticsTodayRecyclerViewAdapter extends BaseRecyclerViewAd
 
     @Override
     public void onBindRecycleViewHolder(BaseRecyclerViewHolder viewHolder, int position) {
-
-
         LinearLayout ll = viewHolder.findViewById(R.id.ll);
         LinearLayout ll_league_bg = viewHolder.findViewById(R.id.ll_league_bg);
         TextView tv_league_rank = viewHolder.findViewById(R.id.tv_league_rank);

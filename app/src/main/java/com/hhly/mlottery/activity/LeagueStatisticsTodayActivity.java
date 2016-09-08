@@ -20,7 +20,7 @@ import com.hhly.mlottery.frame.footframe.LeagueStatisticsTodayFragment;
 /**
  * @author: Wangg
  * @Name：LeagueStatisticsTodayActivity
- * @Description: 今日联赛统计
+ * @Description: 今日联赛统计Activity
  * @Created on:2016/9/1  15:28.
  */
 public class LeagueStatisticsTodayActivity extends BaseActivity implements View.OnClickListener {

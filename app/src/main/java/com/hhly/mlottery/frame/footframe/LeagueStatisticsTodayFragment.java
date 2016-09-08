@@ -46,7 +46,7 @@ import java.util.Map;
 /**
  * @author: Wangg
  * @Name：LeagueStatisticsTodayFragment
- * @Description: 今日联赛统计
+ * @Description: 今日联赛统计Fragment
  * @Created on:2016/9/1  15:28.
  */
 public class LeagueStatisticsTodayFragment extends Fragment implements View.OnClickListener, ExactSwipeRefrashLayout.OnRefreshListener {
