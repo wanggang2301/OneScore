@@ -1070,5 +1070,5 @@
     <string name="to_update_kindly_reminder">溫馨提示</string>
     <string name="kindly_reminder_comment">您正在使用流量，是否繼續下載？</string>
     <string name="continue_download">繼續下載</string>
-
+    <string name="title_info_center">情報中心</string>
 </resources>

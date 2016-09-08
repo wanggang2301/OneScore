@@ -76,6 +76,7 @@
     <color name="bg_gray">#FFE3E3E7</color>
     <color name="orange">#FFE84E0E</color>
     <color name="bg">#FFF39200</color>
+    <color name="info_data_bg">#FFEA00</color>
     <color name="lightblue">#FF007AA2</color>
     <color name="lightorange">#FFACBA00</color>
     <color name="transparentdarkgray">#CC292929</color>
@@ -205,6 +206,8 @@
     <!--分析-->
     <color name="analyze_left">#ff6a6a</color>
     <color name="analyze_right">#598cff</color>
+    <color name="info_center_right">#4779b6</color>
+    <color name="info_center_left">#c53f3f</color>
     <color name="analyze_opinion_title">#0078ff</color>
     <color name="analyze_date">#999</color>
 

@@ -1083,4 +1083,5 @@
     <string name="continue_download">继续下载</string>
 
     <string name="is_uploading">努力上传中..........</string>
+    <string name="title_info_center">情报中心</string>
 </resources>
