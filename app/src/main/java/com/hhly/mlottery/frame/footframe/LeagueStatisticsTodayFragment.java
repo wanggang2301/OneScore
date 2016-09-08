@@ -259,6 +259,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                     network_exception_layout.setVisibility(View.GONE);
                     mExactSwipeRefrashLayout.setRefreshing(false);
                     mExactSwipeRefrashLayout.setEnabled(true);
+                    initViewData();
                     break;
 
                 case DATA_STATUS_ERROR:
@@ -311,7 +312,6 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     }
 
     private void lazyLoad() {
-        resetStatus();
         Map<String, String> params = new HashMap<String, String>();
         params.put("startDate", startDate);
         params.put("endDate", endDate);
@@ -337,7 +337,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 endDate = json.getEndDate();
                 mLeagueStatisticsTodayChildBeans = json.getStatistics();
                 mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS);
-                initViewData();
+
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -348,6 +348,8 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     }
 
     private void initViewData() {
+        resetStatus();
+
         setData(startDate, tv_date1, tv_week1);
         setData(endDate, tv_date2, tv_week2);
         leagueStatisticsTodayRecyclerViewAdapter = new LeagueStatisticsTodayRecyclerViewAdapter(mContext, mLeagueStatisticsTodayChildBeans);
