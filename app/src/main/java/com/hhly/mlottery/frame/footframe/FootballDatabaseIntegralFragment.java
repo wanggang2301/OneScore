@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.basketballframe;
+package com.hhly.mlottery.frame.footframe;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +26,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.CupMatchStageChooseDialogFragment;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -265,11 +266,11 @@ public class FootballDatabaseIntegralFragment extends Fragment{
         mAdapter.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
 
-        Map<String, String> params = new HashMap<>();
-        params.put(PARAM_ID, league.getLeagueId());
-        putIfNotNull(params, PARAM_SEASON, season);
-        putIfNotNull(params, PARAM_FIRST_STAGE_ID, firstStageId);
-        params.put(PARAM_MATCH_TYPE, league.getMatchType().toString());
+//        Map<String, String> params = new HashMap<>();
+//        params.put(PARAM_ID, league.getLeagueId());
+//        putIfNotNull(params, PARAM_SEASON, season);
+//        putIfNotNull(params, PARAM_FIRST_STAGE_ID, firstStageId);
+//        params.put(PARAM_MATCH_TYPE, league.getMatchType().toString());
         // http://192.168.31.72:3000/basketball/ranking
         // http://192.168.31.115:8888/mlottery/core/basketballData.findRanking.do?lang=zh&leagueId=7&season=2014-2015&matchType=2
 //        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DATABASE_RANKING, params,

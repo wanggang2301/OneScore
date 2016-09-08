@@ -28,11 +28,10 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBean;
+import com.hhly.mlottery.bean.basket.basketdatabase.FootballDatabaseHeaderBean;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
-import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.frame.basketballframe.FootballDatabaseIntegralFragment;
-import com.hhly.mlottery.frame.basketballframe.FootballDatabaseScheduleFragment;
+import com.hhly.mlottery.frame.footframe.FootballDatabaseIntegralFragment;
+import com.hhly.mlottery.frame.footframe.FootballDatabaseScheduleFragment;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -103,17 +102,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         /**
          * 第一次加载默认赛季数据，不需要season ==》（-1）
          */
-//        String leagueId = mLeague == null ? null : mLeague.getLeagueId();
-//        BasketDatabaseScheduleFragment mScheduleFragment = BasketDatabaseScheduleFragment.newInstance(mLeague, null);
-//        BasketDatabaseRankingFragment mRankingFragment = BasketDatabaseRankingFragment.newInstance(mLeague, null);
-
         mScheduleFragment = FootballDatabaseScheduleFragment.newInstance(mLeague , null);//赛程
         mIntegralFragment = FootballDatabaseIntegralFragment.newInstance(mLeague , null); //积分
-
-
-//        footballDatabaseScheduleFragment = new FootballDatabaseScheduleFragment(); //.newInstance("" , "");
-//        mHandicapFragment = BasketDatabaseHandicapFragment.newInstance("1", "-1");
-//        mBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance("1", "-1");
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true)
@@ -145,7 +135,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private void initView(){
         String[] titles = new String[]{
                 getString(R.string.basket_database_details_schedule),
-                "积分",
+                getString(R.string.football_database_details_integral),
         };
 
         toolbar = (Toolbar)findViewById(R.id.football_database_details_toolbar);
@@ -205,15 +195,16 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private void initData(){
 
         // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do?lang=zh&leagueId=2
-//        String url = "http://192.168.31.115:8080/mlottery/core/basketballData.findLeagueHeader.do";
-        String url = BaseURLs.URL_BASKET_DATABASE_DETAILS;
+        String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do";
+//        String url = BaseURLs.URL_BASKET_DATABASE_DETAILS;
         Map<String, String> params = new HashMap<>();
-        params.put("leagueId", "1");
-//        params.put("leagueId", mLeague.getLeagueId());
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketDatabaseBean>() {
+//        params.put("leagueId", "1");
+//        params.put("type" , "0");
+        params.put("leagueId", mLeague.getLeagueId());
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseHeaderBean>() {
 
             @Override
-            public void onResponse(BasketDatabaseBean basketDatabaseBean) {
+            public void onResponse(FootballDatabaseHeaderBean basketDatabaseBean) {
                 if (basketDatabaseBean != null) {
                     mSports = basketDatabaseBean.getSeason();
 
@@ -241,8 +232,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                         mLeagueName.setText(basketDatabaseBean.getLeagueName());
                     }
                     //图标
-                    mImageLoader.displayImage(basketDatabaseBean.getLeagueLogoUrl(), mIcon, mOptions);
-                    mImageLoader.displayImage(basketDatabaseBean.getBgUrl(), mBackground, mOptionsHead);
+                    mImageLoader.displayImage(basketDatabaseBean.getLeagueLogo(), mIcon, mOptions);
+                    mImageLoader.displayImage(basketDatabaseBean.getRandomBg(), mBackground, mOptionsHead);
 
                 }
             }
@@ -251,7 +242,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 isLoad = false; //不可筛选
             }
-        }, BasketDatabaseBean.class);
+        }, FootballDatabaseHeaderBean.class);
 
     }
 
@@ -446,12 +437,12 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
 
                 //赛程
+                mScheduleFragment.setSeason(newData);
+                mScheduleFragment.update();
+                //积分
                 mIntegralFragment.setSeason(newData);
                 mIntegralFragment.update();
 
-                //积分
-                mScheduleFragment.setSeason(newData);
-                mScheduleFragment.update();
 
             }
         });

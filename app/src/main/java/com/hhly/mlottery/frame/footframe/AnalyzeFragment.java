@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +21,9 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
-import com.hhly.mlottery.activity.FootballInformationActivity;
+import com.hhly.mlottery.activity.FootballDatabaseDetailsActivity;
 import com.hhly.mlottery.adapter.football.AnalyzeAsiaAdapter;
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -34,7 +34,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.sina.weibo.sdk.api.share.Base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -213,6 +212,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private String mThirdId="1111";
 
     private NewAnalyzeBean mAnalyzeBean;
+    private TextView mostData;
+
     public AnalyzeFragment() {
         // Required empty public constructor
     }
@@ -261,8 +262,9 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
         return mView;
 }
-
     private void initView() {
+        mostData = (TextView)mView.findViewById(R.id.football_analyze_mostdata);
+
         mProgressBar = (ProgressBar) mView.findViewById(R.id.football_analyze__progressbar);
         mProgressHomeWin= (TextView) mView.findViewById(R.id.football_progressbar_home);
         mProgressGuestWin= (TextView) mView.findViewById(R.id.football_progressbar_guest);
@@ -422,6 +424,22 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private void setMostOnclick(final NewAnalyzeBean analyzeBean){
+        mostData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FootballDatabaseDetailsActivity.class);
+
+                LeagueBean bean = new LeagueBean();
+                bean.setMatchType(analyzeBean.getLeagueType());
+                bean.setLeagueId(analyzeBean.getLeagueId()+"");
+
+                intent.putExtra("league", bean);
+                startActivity(intent);
+            }
+        });
+    }
+
     public void initData() {
         Map<String ,String > params=new HashMap<>();
 //        params.put("thirdId","345566");
@@ -432,6 +450,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 if (analyzeBean.getResult().equals("200")) {
                     mAnalyzeBean=analyzeBean;
                     loadData(mAnalyzeBean);
+                    setMostOnclick(analyzeBean);
                 }
                 else{
                     mLinearRanking.setVisibility(View.GONE);
@@ -1157,9 +1176,18 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.football_analyze_integral_table:
-                Intent intent1=new Intent(getActivity(), FootballInformationActivity.class);
-                intent1.putExtra("lid",mAnalyzeBean.getLeagueId()+"");
-                intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType()+"");
+//                Intent intent1=new Intent(getActivity(), FootballInformationActivity.class);
+//                intent1.putExtra("lid",mAnalyzeBean.getLeagueId()+"");
+//                intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType()+"");
+//                startActivity(intent1);
+
+                Intent intent1 = new Intent(getActivity(),FootballDatabaseDetailsActivity.class);
+
+                LeagueBean bean = new LeagueBean();
+                bean.setMatchType(mAnalyzeBean.getLeagueType());
+                bean.setLeagueId(mAnalyzeBean.getLeagueId()+"");
+
+                intent1.putExtra("league", bean);
                 startActivity(intent1);
                 break;
         }

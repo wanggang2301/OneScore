@@ -787,6 +787,9 @@
     <string name="basket_database_details_leagueMost_homematch">主场</string>
     <string name="basket_database_details_leagueMost_guestmatch">客场</string>
 
+    <!--足球资料库-->
+    <string name="football_database_details_integral">积分</string>
+    <string name="football_database_details_stage">阶段</string>
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
