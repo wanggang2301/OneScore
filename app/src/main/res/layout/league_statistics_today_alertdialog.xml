@@ -33,6 +33,11 @@
         android:text="@string/league_statistics_today_noticetext"
         android:textSize="@dimen/text_size_15" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/linecolor"></View>
+
     <Button
         android:id="@+id/btn_cancel"
         style="@style/RippleBackgroudBorderless"
