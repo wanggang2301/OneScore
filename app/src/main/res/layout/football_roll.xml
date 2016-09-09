@@ -19,6 +19,8 @@
 
     <!-- app:layout_scrollFlags="scroll|enterAlways" -->
 
+    <include layout="@layout/item_header_unconection_view" />
+
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/titleContainer"
         android:layout_width="match_parent"
@@ -26,7 +28,9 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="10dp"
         android:visibility="invisible"
-        android:background="@drawable/selector_item_clickable">
+        android:background="@drawable/selector_item_clickable"
+        android:layout_below="@+id/unconection_layout"
+        >
 
         <TextView
             android:id="@+id/t1"

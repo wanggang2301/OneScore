@@ -61,7 +61,7 @@ public class FootballActivity extends BaseActivity {
         MobclickAgent.openActivityDurationTrack(false);
 
         currentPosition = getIntent().getIntExtra(AppConstants.FOTTBALL_KEY, 0);// 足球fragment下标
-        basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY,0);// 篮球fragment下标
+        basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY, 0);// 篮球fragment下标
         initView();
         initData();
     }
@@ -122,21 +122,35 @@ public class FootballActivity extends BaseActivity {
                         break;
                     case R.id.rb_news:
                         MobclickAgent.onEvent(mContext, "Football_News");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
                         currentPosition = NEWS_FRAGMENT;
                         switchFragment(NEWS_FRAGMENT);
+
                         break;
                     case R.id.rb_data:
                         MobclickAgent.onEvent(mContext, "Football_Data");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
                         currentPosition = DATA_FRAGMENT;
                         switchFragment(DATA_FRAGMENT);
                         break;
                     case R.id.rb_video:
                         MobclickAgent.onEvent(mContext, "Football_Video");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
                         currentPosition = VIDEO_FRAGMENT;
                         switchFragment(VIDEO_FRAGMENT);
+
                         break;
                     case R.id.rb_cpi:
                         MobclickAgent.onEvent(mContext, "Football_CPI");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
                         currentPosition = CPI_FRAGMENT;
                         switchFragment(CPI_FRAGMENT);
                         break;
@@ -149,7 +163,7 @@ public class FootballActivity extends BaseActivity {
 
     public void switchFragment(int position) {
         fragmentIndex = position;// 当前fragment下标
-        L.d("xxx","当前Fragment下标：" + fragmentIndex);
+        L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getSupportFragmentManager();
         currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content, currentFragment,
                 fragments.get(position).getClass(), null, false,

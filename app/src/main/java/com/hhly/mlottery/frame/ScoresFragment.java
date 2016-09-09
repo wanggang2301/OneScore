@@ -19,11 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BaseWebSocketFragment;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballTypeSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.bean.LeagueCup;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
@@ -37,11 +39,13 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * @author Tenney
  */
 @SuppressLint("NewApi")
-public class ScoresFragment extends Fragment {
+public class ScoresFragment extends BaseWebSocketFragment {
 
     private final int ROLLBALL_FRAGMENT = 0;
     private final int IMMEDIA_FRAGMENT = 1;
@@ -91,12 +95,20 @@ public class ScoresFragment extends Fragment {
 
     private RollBallFragment rollBallFragment;
 
+
     @SuppressLint("ValidFragment")
     public ScoresFragment(Context context) {
         this.mContext = context;
     }
 
     public ScoresFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.app");
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -109,6 +121,10 @@ public class ScoresFragment extends Fragment {
         focusCallback();// 加载关注数
         initData();
         initEVent();
+
+//        eventBus = new EventBus();
+//        eventBus.register(this);
+
         return view;
     }
 
@@ -292,9 +308,9 @@ public class ScoresFragment extends Fragment {
                             break;
                         case ImmediateFragment.LOAD_DATA_STATUS_INIT:
                         case ImmediateFragment.LOAD_DATA_STATUS_LOADING:
-                            if (!ImmediateFragment.isPause) {
-                                Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
-                            }
+//                            if (!ImmediateFragment.isPause) {
+                            Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
+//                            }
                             break;
                         default:
                             break;
@@ -498,8 +514,56 @@ public class ScoresFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "football Fragment destroy..");
+//        eventBus.unregister(this);
     }
 
+    @Override
+    protected void onTextResult(String text) {
+        ImmediateFragment.imEventBus.post(new FootballScoresWebSocketEntity(text));
+        FocusFragment.focusEventBus.post(new FootballScoresWebSocketEntity(text));
+        RollBallFragment.eventBus.post(new FootballScoresWebSocketEntity(text));
+    }
+
+    public class FootballScoresWebSocketEntity {
+        public String text;
+
+        FootballScoresWebSocketEntity(String text) {
+            this.text = text;
+        }
+    }
+
+
+    @Override
+    protected void onConnectFail() {
+        L.d(TAG, "__onConnectFail__");
+        ((RollBallFragment) fragments.get(0)).connectFail();
+        ((ImmediateFragment) fragments.get(1)).connectFail();
+        ((FocusFragment) fragments.get(4)).connectFail();
+    }
+
+    @Override
+    protected void onDisconnected() {
+        L.d(TAG, "__onDisconnected__");
+        ((RollBallFragment) fragments.get(0)).connectFail();
+        ((ImmediateFragment) fragments.get(1)).connectFail();
+        ((FocusFragment) fragments.get(4)).connectFail();
+    }
+
+    @Override
+    protected void onConnected() {
+        L.d(TAG, "__onConnected__");
+        ((RollBallFragment) fragments.get(0)).connectSuccess();
+        ((ImmediateFragment) fragments.get(1)).connectSuccess();
+        ((FocusFragment) fragments.get(4)).connectSuccess();
+    }
+
+    public void reconnectWebSocket() {
+        connectWebSocket();
+    }
+
+    public void disconnectWebSocket(){
+        closeWebSocket();
+    }
 
     @Override
     public void onDestroyView() {

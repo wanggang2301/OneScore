@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.ConnectivityManager;
@@ -49,7 +48,6 @@ import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
@@ -57,27 +55,17 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StringUtils;
-import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.websocket.HappySocketClient;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseCloseListener;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseErrorListener;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseMessageListener;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
-import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
@@ -87,8 +75,7 @@ import de.greenrobot.event.EventBus;
  * @Description: 即时
  * @date 2015-10-15 上午9:53:24
  */
-public class ImmediateFragment extends Fragment implements OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener,
-        SwipeRefreshLayout.OnRefreshListener {
+public class ImmediateFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -143,10 +130,10 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     // 判断是否加载过数据
     private boolean isLoadedData = false;
     public static boolean isCheckedDefualt = false;// true为默认选中全部，但是在筛选页面不选中
-    private boolean isWebSocketStart = false;// 不使用websocket时可设置为true
+//    private boolean isWebSocketStart = false;// 不使用websocket时可设置为true
 
-    private HappySocketClient mSocketClient;
-    private URI mSocketUri = null;
+//    private HappySocketClient mSocketClient;
+//    private URI mSocketUri = null;
 
     private int mHandicap = 1;// 盘口 1.亚盘 2.大小球 3.欧赔 4.不显示
 
@@ -228,11 +215,11 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            mSocketUri = new URI(BaseURLs.WS_SERVICE);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            mSocketUri = new URI(BaseURLs.WS_SERVICE);
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
         imEventBus = new EventBus();
         imEventBus.register(this);
 
@@ -261,18 +248,24 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         }*/
 
 
-        mContext = getActivity();
         mView = inflater.inflate(R.layout.football_immediate, container, false);
 
 
         initMedia();
         initView();
-        initBroadCase();
+
+//        initBroadCase();
 
         return mView;
     }
 
-   /* protected void lazyLoad(){
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    /* protected void lazyLoad(){
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
             return;
         }
@@ -286,22 +279,22 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     }*/
 
 
-    private void initBroadCase() {
-        if (getActivity() != null) {
-            mNetStateReceiver = new ImmediateNetStateReceiver();
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            getActivity().registerReceiver(mNetStateReceiver, filter);
-        }
-
-    }
+//    private void initBroadCase() {
+//        if (getActivity() != null) {
+//            mNetStateReceiver = new ImmediateNetStateReceiver();
+//            IntentFilter filter = new IntentFilter();
+//            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//            getActivity().registerReceiver(mNetStateReceiver, filter);
+//        }
+//
+//    }
 
     private void initMedia() {
-        mVibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
+        mVibrator = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
         mSoundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5); //
-        mSoundMap.put(1, mSoundPool.load(getActivity(), R.raw.sound1, 1)); //
-        mSoundMap.put(2, mSoundPool.load(getActivity(), R.raw.sound2, 1));
-        mSoundMap.put(3, mSoundPool.load(getActivity(), R.raw.sound3, 1));
+        mSoundMap.put(1, mSoundPool.load(mContext, R.raw.sound1, 1)); //
+        mSoundMap.put(2, mSoundPool.load(mContext, R.raw.sound2, 1));
+        mSoundMap.put(3, mSoundPool.load(mContext, R.raw.sound3, 1));
     }
 
     // 初始化控件
@@ -311,7 +304,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 //		mLoadingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.cirle);
 //		mLoadingAnimation.setInterpolator(new LinearInterpolator());
 //		mLoadingImg.startAnimation(mLoadingAnimation);
-        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager = new LinearLayoutManager(mContext);
 
 
         mSwipeRefreshLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.football_immediate_swiperefreshlayout);// 数据板块，listview
@@ -389,6 +382,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     private final static int VIEW_STATUS_SUCCESS = 3;
     private final static int VIEW_STATUS_NET_ERROR = 4;
     private final static int VIEW_STATUS_FLITER_NO_DATA = 5;
+    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
+    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -429,9 +424,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                     //mListView.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (isLoadedData) {
-                        if (!isPause && getActivity() != null && !isError) {
-                            Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
-                        }
+//                        if (!isPause && getActivity() != null && !isError) {
+                        Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                     } else {
                         //mSwipeRefreshLayout.setVisibility(View.GONE);
                         mLoadingLayout.setVisibility(View.GONE);
@@ -452,6 +446,16 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     break;
+                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
+                    if (mUnconectionLayout != null) {
+                        mUnconectionLayout.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
+                    if (mUnconectionLayout != null) {
+                        mUnconectionLayout.setVisibility(View.GONE);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -464,7 +468,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
         // Log.e(TAG, "url:"+BaseURLs.URL_ImmediateMatchs);
 //        isStartInitData = true;
-        L.d("imedia","dddd");
+        L.d("imedia", "dddd");
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ImmediateMatchs, new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
             @Override
@@ -538,28 +542,26 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                                     mInternationalAdapter.setFocusClickListener(mFocusClickListener);
                                     mListView.setAdapter(mInternationalAdapter);*//*
                                 } else {*/
-                                mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                                //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                                mAdapter.setmFocusMatchClickListener(mFocusClickListener);
-                                mRecyclerView.setAdapter(mAdapter);
-
-
-                                mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View view, String data) {
-                                        String thirdId = data;
-                                        Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
-                                        intent.putExtra("thirdId", thirdId);
-                                        intent.putExtra("currentFragmentId", 0);
-
-                                        getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-                                    }
-                                });
+//                                if (mAdapter == null) {
+//                                    mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+//                                    mAdapter.setmFocusMatchClickListener(mFocusClickListener);
+//                                    mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+//                                        @Override
+//                                        public void onItemClick(View view, String data) {
+//                                            String thirdId = data;
+//                                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+//                                            intent.putExtra("thirdId", thirdId);
+//                                            intent.putExtra("currentFragmentId", 0);
+//                                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+//                                        }
+//                                    });
+//                                    mRecyclerView.setAdapter(mAdapter);
+//                                }
                                 // }
 
                                 isLoadedData = true;
                                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-                                startWebsocket();
+//                                startWebsocket();
                                 return;
                             }// 否则走下面，不需要再写
                         } else {
@@ -597,26 +599,30 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
                             mInternationalAdapter.setFocusClickListener(mFocusClickListener);
                             mListView.setAdapter(mInternationalAdapter);*//*
                         } else {*/
-                        mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                        //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                        mAdapter.setmFocusMatchClickListener(mFocusClickListener);
-                        mRecyclerView.setAdapter(mAdapter);
+                        if (mAdapter == null) {
+                            mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                            //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
+                            mAdapter.setmFocusMatchClickListener(mFocusClickListener);
+                            mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, String data) {
+                                    String thirdId = data;
+                                    Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                                    intent.putExtra("thirdId", thirdId);
+                                    intent.putExtra("currentFragmentId", 0);
+                                    getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                                }
+                            });
+                            mRecyclerView.setAdapter(mAdapter);
+                        }else{
+                            updateAdapter();
+                        }
 
-
-                        mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, String data) {
-                                String thirdId = data;
-                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
-                                intent.putExtra("thirdId", thirdId);
-                                getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-                            }
-                        });
                         //  }
 
                         isLoadedData = true;
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
-                        startWebsocket();
+//                        startWebsocket();
                     }
                 });
             }
@@ -624,43 +630,42 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
-
             }
         }, ImmediateMatchs.class);
 
 //
     }
 
-    private synchronized void startWebsocket() {
-
-        if (mSocketClient == null || (mSocketClient != null && mSocketClient.isClosed())) {
-            // client.close();
-            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
-            mSocketClient.setSocketResponseMessageListener(this);
-            mSocketClient.setSocketResponseCloseListener(this);
-            mSocketClient.setSocketResponseErrorListener(this);
-            try {
-                mSocketClient.connect();
-            } catch (IllegalThreadStateException e) {
-                mSocketClient.close();
-                L.e(TAG, "IllegalThreadStateException.........");
-            }
-
-            if (isError) {
-                initData();
-            }
-
-            isError = false;
-        }
-
-        L.d(TAG, "websocket start status..");
-        L.e(TAG, "websocket isClosed = " + mSocketClient.isClosed());
-        L.e(TAG, "websocket isClosing = " + mSocketClient.isClosing());
-        L.e(TAG, "websocket isConnecting = " + mSocketClient.isConnecting());
-        L.e(TAG, "websocket isFlushAndClose = " + mSocketClient.isFlushAndClose());
-        L.e(TAG, "websocket isOpen = " + mSocketClient.isOpen());
-        L.e(TAG, "isWebSocketStart = " + isWebSocketStart);
-    }
+//    private synchronized void startWebsocket() {
+//
+//        if (mSocketClient == null || (mSocketClient != null && mSocketClient.isClosed())) {
+//            // client.close();
+//            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
+//            mSocketClient.setSocketResponseMessageListener(this);
+//            mSocketClient.setSocketResponseCloseListener(this);
+//            mSocketClient.setSocketResponseErrorListener(this);
+//            try {
+//                mSocketClient.connect();
+//            } catch (IllegalThreadStateException e) {
+//                mSocketClient.close();
+//                L.e(TAG, "IllegalThreadStateException.........");
+//            }
+//
+//            if (isError) {
+//                initData();
+//            }
+//
+//            isError = false;
+//        }
+//
+//        L.d(TAG, "websocket start status..");
+//        L.e(TAG, "websocket isClosed = " + mSocketClient.isClosed());
+//        L.e(TAG, "websocket isClosing = " + mSocketClient.isClosing());
+//        L.e(TAG, "websocket isConnecting = " + mSocketClient.isConnecting());
+//        L.e(TAG, "websocket isFlushAndClose = " + mSocketClient.isFlushAndClose());
+//        L.e(TAG, "websocket isOpen = " + mSocketClient.isOpen());
+//        L.e(TAG, "isWebSocketStart = " + isWebSocketStart);
+//    }
 
     Handler mSocketHandler = new Handler() {
         @Override
@@ -1257,7 +1262,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
 
 
     public void reLoadData() {
-        //mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         mLoadHandler.postDelayed(mLoadingDataThread, 0);
     }
 
@@ -1331,6 +1336,9 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     }
 
 
+
+
+
     /**
      * 设置
      * 接受消息的页面实现
@@ -1392,18 +1400,19 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         super.onResume();
         L.v(TAG, "___onResume___");
 
-        isPause = false;
-        if (isDestroy) {
-            return;
-        }
+//        isPause = false;
+//        if (isDestroy) {
+//            return;
+//        }
 
+//        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+//        mLoadHandler.postDelayed(mLoadingDataThread, 0);
 
-        if (!isLoadedData && mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-            mLoadHandler.postDelayed(mLoadingDataThread, 0);
-        } else {
-
-        }
+//        if (!isLoadedData && mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
+//
+//        } else {
+//
+//        }
 
     }
 
@@ -1412,143 +1421,126 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
         super.onHiddenChanged(hidden);
 //        L.v(TAG, "___onHiddenChanged___");
 //        L.v(TAG, "hidden = "+hidden);
-        if (hidden) {
-            isPause = true;
-            if (mSocketClient != null) {
-                isDestroy = true;
-                mSocketClient.close();
-            }
-        } else {
-            isPause = false;
-            isDestroy = false;
-            if (mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
-                mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                mLoadHandler.postDelayed(mLoadingDataThread, 0);
-            }
-        }
+//        if (hidden) {
+//            isPause = true;
+//            if (mSocketClient != null) {
+//                isDestroy = true;
+//                mSocketClient.close();
+//            }
+//        } else {
+//            isPause = false;
+//            isDestroy = false;
+//            if (mLoadDataStatus != LOAD_DATA_STATUS_LOADING) {
+//                mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+//                mLoadHandler.postDelayed(mLoadingDataThread, 0);
+//            }
+//        }
     }
 
-    private boolean isDestroy = false;
+//    private boolean isDestroy = false;
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "__onDestroy___");
-        if (mSocketClient != null) {
-            isDestroy = true;
-            mSocketClient.close();
-        }
-
-        if (getActivity() != null && mNetStateReceiver != null) {
-            getActivity().unregisterReceiver(mNetStateReceiver);
-        }
+//        if (mSocketClient != null) {
+//            isDestroy = true;
+//            mSocketClient.close();
+//        }
+//
+//        if (getActivity() != null && mNetStateReceiver != null) {
+//            getActivity().unregisterReceiver(mNetStateReceiver);
+//        }
 
 
     }
 
-    private boolean isError = false;
+//    private boolean isError = false;
+//
+//    @Override
+//    public void onError(Exception exception) {
+//        L.e(TAG, "websocket error");
+//        isError = true;
+//        restartSocket();
+//    }
 
-    @Override
-    public void onError(Exception exception) {
-        L.e(TAG, "websocket error");
-        isError = true;
-        restartSocket();
-    }
+//    @Override
+//    public void onClose(String message) {
+//        L.e(TAG, "websocket close");
+//
+//        if (!isError) {
+//            restartSocket();
+//        }
+//    }
 
-    @Override
-    public void onClose(String message) {
-        L.e(TAG, "websocket close");
+//    private Timer timer = new Timer();
+//    private boolean isTimerStart = false;
+//
+//    private synchronized void restartSocket() {
+//        if (!isDestroy) {
+//            if (!isTimerStart) {
+//                TimerTask timerTask = new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        if (!isDestroy) {
+//                            startWebsocket();
+//                        } else {
+//                            timer.cancel();
+//                        }
+//                    }
+//                };
+//                timer.schedule(timerTask, 2000, 5000);
+//                isTimerStart = true;
+//            }
+//        }
+//    }
 
-        if (!isError) {
-            restartSocket();
-        }
-    }
+//    @Override
+//    public void onMessage(String message) {
+//        L.w(TAG, "message = " + message);
+    // L.e(TAG, "websocket isClosed = " + client.isClosed());
+    // L.e(TAG, "websocket isClosing = " + client.isClosing());
+    // L.e(TAG, "websocket isConnecting = " + client.isConnecting());
+    // L.e(TAG, "websocket isFlushAndClose = " + client.isFlushAndClose());
+    // L.e(TAG, "websocket isOpen = " + client.isOpen());
 
-    private Timer timer = new Timer();
-    private boolean isTimerStart = false;
-
-    private synchronized void restartSocket() {
-        if (!isDestroy) {
-            if (!isTimerStart) {
-                TimerTask timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (!isDestroy) {
-                            startWebsocket();
-                        } else {
-                            timer.cancel();
-                        }
-                    }
-                };
-                timer.schedule(timerTask, 2000, 5000);
-                isTimerStart = true;
-            }
-        }
-    }
-
-    @Override
-    public void onMessage(String message) {
-        L.w(TAG, "message = " + message);
-        // L.e(TAG, "websocket isClosed = " + client.isClosed());
-        // L.e(TAG, "websocket isClosing = " + client.isClosing());
-        // L.e(TAG, "websocket isConnecting = " + client.isConnecting());
-        // L.e(TAG, "websocket isFlushAndClose = " + client.isFlushAndClose());
-        // L.e(TAG, "websocket isOpen = " + client.isOpen());
-
-        if (message.startsWith("CONNECTED")) {
-            String id = "android" + DeviceInfo.getDeviceId(getActivity());
-            // if (logger != null) {
-            // logger.debug(DateUtil.getMillisDateTime(new Date()) +
-            // " CONNECTED-----" + id);
-            // }
-            // L.d(TAG, "id = " + id);
-            id = MD5Util.getMD5(id);
-            // L.d(TAG, "md5 id = " + id);
-            // client.send("SUBSCRIBE\nid:" + id +
-            // "\ndestination:/topic/USER.topic.app\n\n");
-            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.app\n\n");
-            isWebSocketStart = true;
-            return;
-        } else if (message.startsWith("MESSAGE")) {
-            String[] msgs = message.split("\n");
-            // System.out.println("msgs.length = " +
-            // msgs.length);
-            String ws_json = msgs[msgs.length - 1];
-
-            // if (logger != null) {
-            // logger.debug(ws_json);
-            // }
-
-            // System.out.println("msgs last = " + ws_json);
-            String type = "";
-            try {
-                JSONObject jsonObject = new JSONObject(ws_json);
-                type = jsonObject.getString("type");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (!"".equals(type)) {
-                Message msg = Message.obtain();
-                msg.obj = ws_json;
-                msg.arg1 = Integer.parseInt(type);
-
-                mSocketHandler.sendMessage(msg);
-            }
-        }
-        mSocketClient.send("\n");
-    }
+//        if (message.startsWith("CONNECTED")) {
+//            String id = "android" + DeviceInfo.getDeviceId(getActivity());
+    // if (logger != null) {
+    // logger.debug(DateUtil.getMillisDateTime(new Date()) +
+    // " CONNECTED-----" + id);
+    // }
+    // L.d(TAG, "id = " + id);
+//            id = MD5Util.getMD5(id);
+    // L.d(TAG, "md5 id = " + id);
+    // client.send("SUBSCRIBE\nid:" + id +
+    // "\ndestination:/topic/USER.topic.app\n\n");
+//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.app\n\n");
+//            isWebSocketStart = true;
+//            return;
+//        } else if (message.startsWith("MESSAGE")) {
+//            String[] msgs = message.split("\n");
+//            // System.out.println("msgs.length = " +
+//            // msgs.length);
+//            String ws_json = msgs[msgs.length - 1];
+//
+//            // if (logger != null) {
+//            // logger.debug(ws_json);
+//            // }
+//
+//            // System.out.println("msgs last = " + ws_json);
+//
+//        }
+//        mSocketClient.send("\n");
+//    }
 
     @Override
     public void onRefresh() {
         L.e(TAG, "__onRefresh___");
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                initData();
-            }
-        }, 0);
+
+        mLoadHandler.post(mLoadingDataThread);
+        ((ScoresFragment) getParentFragment()).reconnectWebSocket();
 
     }
 
@@ -1564,18 +1556,18 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
             NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 //            NetworkInfo gprs = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 //            NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            if (activeNetwork == null || !activeNetwork.isAvailable()) {
-                if (mErrorLayout.getVisibility() != View.VISIBLE) {
-                    mUnconectionLayout.setVisibility(View.VISIBLE);
-                }
-
-                isWebSocketStart = false;
-                if (mSocketClient != null) {
-                    mSocketClient.close();
-                }
-                mSocketClient = null;
-
-            }
+//            if (activeNetwork == null || !activeNetwork.isAvailable()) {
+//                if (mErrorLayout.getVisibility() != View.VISIBLE) {
+//                    mUnconectionLayout.setVisibility(View.VISIBLE);
+//                }
+//
+//                isWebSocketStart = false;
+//                if (mSocketClient != null) {
+//                    mSocketClient.close();
+//                }
+//                mSocketClient = null;
+//
+//            }
 //            else {
 //                if (!isStartInitData) {
 //                    mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -1586,11 +1578,41 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Sock
     }
 
 
-    public static boolean isPause = false;
+    public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
+        if (mAdapter == null) {
+            return;
+        }
+
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(entity.text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!"".equals(type)) {
+            Message msg = Message.obtain();
+            msg.obj = entity.text;
+            msg.arg1 = Integer.parseInt(type);
+            mSocketHandler.sendMessage(msg);
+        }
+    }
+
+    public void connectFail() {
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
+    }
+
+    public void connectSuccess() {
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
+    }
+
+
+//    public static boolean isPause = false;
 
     @Override
     public void onPause() {
-        isPause = true;
+//        isPause = true;
         super.onPause();
     }
 
