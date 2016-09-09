@@ -78,7 +78,6 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
 
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
     private DisplayImageOptions options;
-    public static final int TIMEOUT = 3699;
     public static final int TIMEOUT_INTERVEL = 1000;
     /**
      * 倒计时 默认3s , 间隔1s
@@ -86,6 +85,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
     private CountDown countDown;
     private TextView mTv_verycode;
     private LinearLayout mCount_down;
+    private int mDuration;
 
     @SuppressWarnings("unused")
     @Override
@@ -172,24 +172,6 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
     }
 
     private void initView() {
-        countDown = CountDown.getDefault(TIMEOUT,TIMEOUT_INTERVEL,new CountDown.CountDownCallback() {
-            @Override
-            public void onFinish() {
-                //setHideTranslateAnimation();
-                cancelCountDown();
-                gotoHomeActivity();
-            }
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if (mTv_verycode != null){
-
-                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + mContext.getResources().getString(R.string.skip));
-                    mTv_verycode.setVisibility(View.VISIBLE);
-                    mTv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL +mContext.getResources().getString(R.string.skip));
-                }
-            }
-        });
 
         mTv_verycode = (TextView) findViewById(R.id.tv_verycode);
         mTv_verycode.setOnClickListener(this);
@@ -342,6 +324,8 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
                             //网络请求图片成功
                             imageHandler.sendEmptyMessage(GET_IMAGE_SUCCESS);
                         }
+                        mDuration = json.getDuration()*1000+699;
+
                     }
 
                 } else {
@@ -362,6 +346,29 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
 //
     }
 
+    private void toCountdown(int duration) {
+        countDown = CountDown.getDefault(duration,TIMEOUT_INTERVEL,new CountDown.CountDownCallback() {
+            @Override
+            public void onFinish() {
+                //setHideTranslateAnimation();
+                cancelCountDown();
+                gotoHomeActivity();
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (mTv_verycode != null){
+
+                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + mContext.getResources().getString(R.string.skip));
+                    mTv_verycode.setVisibility(View.VISIBLE);
+                    mTv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL +mContext.getResources().getString(R.string.skip));
+                }
+            }
+        });
+
+
+    }
+
     private Handler imageHandler = new Handler() {
 
         @Override
@@ -379,6 +386,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
                         @Override
                         public void onLoadingStarted(String s, View view) {
                             //加载开始
+                            toCountdown(mDuration);
                         }
 
                         @Override

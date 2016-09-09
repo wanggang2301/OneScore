@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -163,10 +164,10 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                   /* Intent intent = new Intent(BasketballInformationSerachActivity.this, BasketballDatabaseDetailsActivity.class);
+                    Intent intent = new Intent(FootballInformationSerachActivity.this, FootballDatabaseDetailsActivity.class);
                     intent.putExtra(LEAGUEID, resultListBeen.get(position));//传递联赛ID
                     System.out.println("resulistBeen====================="+resultListBeen.get(position).toString());
-                    startActivity(intent);*/
+                    startActivity(intent);
 
             }
         });
