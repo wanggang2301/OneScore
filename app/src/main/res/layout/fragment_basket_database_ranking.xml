@@ -4,9 +4,63 @@
              android:layout_height="match_parent"
              android:background="@color/whitesmoke">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--RadioGroup-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/home_item_bg">
+
+            <RadioGroup
+                android:id="@+id/gendergroup"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_margin="13dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <!--all-->
+                <RadioButton
+                    android:id="@+id/football_database_details_all"
+                    style="@style/odds_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="-1dp"
+                    android:layout_marginRight="-1dp"
+                    android:background="@drawable/radio_button_left"
+                    android:checked="true"
+                    android:text="@string/basket_database_details_all"/>
+                <!--home-->
+                <RadioButton
+                    android:id="@+id/football_database_details_home"
+                    style="@style/odds_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/radio_button_center"
+                    android:text="@string/basket_database_details_home"/>
+                <!--guest-->
+                <RadioButton
+                    android:id="@+id/football_database_details_guest"
+                    style="@style/odds_radio_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-1dp"
+                    android:layout_marginStart="-1dp"
+                    android:background="@drawable/radio_button_right"
+                    android:text="@string/basket_database_details_guest"/>
+
+            </RadioGroup>
+        </FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
 </FrameLayout>

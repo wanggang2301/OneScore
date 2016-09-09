@@ -722,6 +722,15 @@
                                 android:textColor="@color/black_details_ball_textcolor"
                                 android:text="--"/>
                         </LinearLayout>
+                        <TextView
+                            android:id="@+id/basket_analyze_more_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/basket_details_item_height"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/text_size_12"
+                            android:textColor="@color/black_details_textcolor"
+                            android:text="全部排名>>>"/>
                     </LinearLayout>
                     <TextView
                         android:id="@+id/basket_analyze_nodata2"

@@ -43,6 +43,9 @@
     <string name="basket_info_title">籃球資料庫</string>
     <string name="basket_info_zhouji">洲際賽事</string>
     <string name="basket_info_country">國家賽事</string>
+    <string name="football_info_title">足球資料庫</string>
+
+    <string name="football_info_oceania">大洋洲</string>
 
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滾球</string>
@@ -782,6 +785,9 @@
     <string name="basket_database_details_leagueMost_homematch">主場</string>
     <string name="basket_database_details_leagueMost_guestmatch">客場</string>
 
+    <!--足球资料库-->
+    <string name="football_database_details_integral">積分</string>
+    <string name="football_database_details_stage">階段</string>
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
@@ -1149,4 +1155,31 @@
     <string name="info_center_other_type42">%1$s盤口上半場平概率</string>
     <string name="info_center_other_type43">%1$s盤口上半場負概率</string>
     <!--情报中心 end-->
+
+    <!--今日赛事提点-->
+    <string name="league_statistics_today_title">今日賽事提點</string>
+    <string name="league_statistics_today_tab1">勝平負</string>
+    <string name="league_statistics_today_tab2">亞盤</string>
+    <string name="league_statistics_today_tab3">大小盤</string>
+    <string name="league_statistics_today_tab4">半場亞盤</string>
+    <string name="league_statistics_today_tab5">半場大小</string>
+    <string name="league_statistics_today_date">數據統計時間：</string>
+    <string name="league_statistics_today_rank">排名</string>
+    <string name="league_statistics_today_race">聯賽</string>
+    <string name="league_statistics_today_finish">已賽</string>
+    <string name="league_statistics_today_victor">勝</string>
+    <string name="league_statistics_today_flat">平</string>
+    <string name="league_statistics_today_loss">負</string>
+    <string name="league_statistics_today_win">贏</string>
+    <string name="league_statistics_today_failed">輸</string>
+    <string name="league_statistics_today_go">走</string>
+    <string name="league_statistics_today_big">大</string>
+    <string name="league_statistics_today_small">小</string>
+    <string name="league_statistics_today_tip1">*溫馨提示：點擊列表頭部的</string>
+    <string name="league_statistics_today_tip2">勝、平、負</string>
+    <string name="league_statistics_today_tip3">；可以排序</string>
+    <string name="league_statistics_today_notice">說明</string>
+    <string name="league_statistics_today_noticetitle">什麼是今日聯賽提點？</string>
+    <string name="league_statistics_today_noticetext">是對今日有開盤的比賽參賽的所有聯賽，各項數據在近期比賽或者某一個時間段內的排名。</string>
+
 </resources>

@@ -19,13 +19,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 获取经纬度权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    Failure [INSTALL_FAILED_INTERNAL_ERROR]
-
-
-    $ adb shell pm uninstall com.hhly.mlottery
-    Unknown failure (Failure)
-    Error while Installing APK <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- 用于修改电源时间 -->
@@ -74,8 +68,7 @@
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation"></activity>
         <!-- 内地版的key-begin -->
         <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
         <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
@@ -146,6 +139,11 @@
         <!-- 足球分析明细 -->
         <activity
             android:name=".activity.FootballAnalyzeDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 足球资料库详情 -->
+        <activity
+            android:name=".activity.FootballDatabaseDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--
@@ -294,8 +292,7 @@
             android:theme="@style/AppThemeDark.NoActionBar" />
         <activity
             android:name=".activity.BasketballInformationActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeDark.NoActionBar">
+            android:screenOrientation="portrait">
 
             <!--
             <intent-filter>
@@ -330,6 +327,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.FootballDatabaseActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.LeagueStatisticsTodayActivity"
+            android:screenOrientation="portrait">
+            <!--  <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

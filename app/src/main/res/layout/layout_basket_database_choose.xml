@@ -18,7 +18,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_11"
-        tools:text="决赛"/>
+        tools:text=""/>
 
     <ImageView
         android:id="@+id/left_button"

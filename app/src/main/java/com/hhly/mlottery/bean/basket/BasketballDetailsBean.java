@@ -28,6 +28,17 @@ public class BasketballDetailsBean {
     }
 
     public static class MatchEntity {
+        public Integer getMatchType() {
+            return matchType;
+        }
+
+        public void setMatchType(Integer matchType) {
+            this.matchType = matchType;
+        }
+
+        private Integer matchType;
+
+
         private String thirdId;
         private String homeTeam;
         private String guestTeam;
