@@ -10,10 +10,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.adapter.BasketballInforSerachAdapter;
-import com.hhly.mlottery.bean.BasketSerach;
-import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
-import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.adapter.FootaballSerachAdapter;
+import com.hhly.mlottery.bean.FootBallSerachBean;
+import com.hhly.mlottery.bean.FootballLeagueBean;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.List;
@@ -37,7 +36,7 @@ import rx.schedulers.Schedulers;
 public class FootballInformationSerachActivity extends BaseActivity implements  View.OnClickListener {
 
     private static final String LEAGUEID = "league";
-    private BasketballInforSerachAdapter basketballInforSerachAdapter;
+    private FootaballSerachAdapter basketballInforSerachAdapter;
     private EditText et_keyword;
     private ListView mTv_result;
     private TextView mNo_serach_tv;
@@ -51,7 +50,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
         //ButterKnife.bind(this);
         //BaseURLs.NEW_URL_API_HOST
 
-        RestAdapter retrofit = new RestAdapter.Builder().setEndpoint(BaseURLs.NEW_URL_API_HOST)
+        RestAdapter retrofit = new RestAdapter.Builder().setEndpoint("http://192.168.10.242:8181/mlottery/core")
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter(new Gson()))
                 .build();
@@ -70,6 +69,8 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
                         if(charSequence.length() > 0){
                             //有数据显示删除键
                             mSearch_iv_delete.setVisibility(View.VISIBLE);
+                            mNo_serach_tv.setVisibility(View.VISIBLE);
+                            mNo_serach_tv.setText(R.string.find_search);
                             return true;
                         }else{
                             if (basketballInforSerachAdapter!=null){
@@ -83,9 +84,10 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
 //                        return charSequence.length() > 0;
                     }
                 })
-                .switchMap(new Func1<CharSequence, rx.Observable<BasketSerach>>() {
-                    @Override public rx.Observable<BasketSerach> call(CharSequence charSequence) {
+                .switchMap(new Func1<CharSequence, rx.Observable<FootBallSerachBean>>() {
+                    @Override public rx.Observable<FootBallSerachBean> call(CharSequence charSequence) {
                         // 搜索
+
                         return service.searchProdcut("zh", charSequence.toString());
                     }
                 })
@@ -93,37 +95,38 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
                 // 网络操作在io线程
                 .subscribeOn(Schedulers.io())
                 //将 data 转换成 ArrayList<ArrayList<String>>
-                .map(new Func1<BasketSerach, List<LeagueBean>>() {
-                    @Override public List<LeagueBean> call(BasketSerach data) {
-
-                        return data.resultList;
+                .map(new Func1<FootBallSerachBean, List<FootballLeagueBean>>() {
+                    @Override public List<FootballLeagueBean> call(FootBallSerachBean data) {
+                        return data.leagues;
                     }
                 })
 
-                .filter(new Func1<List<LeagueBean>, Boolean>() {
+                .filter(new Func1<List<FootballLeagueBean>, Boolean>() {
                     @Override
-                    public Boolean call(List<LeagueBean> resultListBeen) {
+                    public Boolean call(List<FootballLeagueBean> resultListBeen) {
 
                         return  resultListBeen.size() >= 0;
                     }
 
                 })
 
-                // 发生错误后不要调用 onError，而是转到 onErrorResumeNext
-   /*             .onErrorResumeNext((Observable<? extends List<BasketSerach.ResultListBean>>) new Func1<Throwable, Observable<String>>() {
+  /*              // 发生错误后不要调用 onError，而是转到 onErrorResumeNext
+                .onErrorResumeNext((Observable<? extends List<FootballLeagueBean>>) new Func1<Throwable, Observable<String>>() {
             @Override public Observable<String> call(Throwable throwable) {
                 return Observable.just("error result");
             }
         })*/
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<LeagueBean>>() {
+                .subscribe(new Action1<List<FootballLeagueBean>>() {
                     @Override
-                    public void call(List<LeagueBean> resultListBeen) {
+                    public void call(List<FootballLeagueBean> resultListBeen) {
                         //设置适配数据
+
                         if (resultListBeen != null) {
                             if (resultListBeen.isEmpty()) {
                                 //搜索详情
                                 //UiUtils.toast(MyApp.getInstance(), "找不到相关信息!");
+                                mNo_serach_tv.setText(R.string.not_find_search);
                                 mTv_result.setVisibility(View.GONE);
                                 mNo_serach_tv.setVisibility(View.VISIBLE);
 
@@ -154,25 +157,25 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
     }
 
 
-    private void initEvent(final List<LeagueBean> resultListBeen) {
+    private void initEvent(final List<FootballLeagueBean> resultListBeen) {
 
         mTv_result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if( null!=resultListBeen.get(position).getLeagueId()&&!resultListBeen.get(position).getLeagueId().isEmpty()) {
+
                    /* Intent intent = new Intent(BasketballInformationSerachActivity.this, BasketballDatabaseDetailsActivity.class);
                     intent.putExtra(LEAGUEID, resultListBeen.get(position));//传递联赛ID
                     System.out.println("resulistBeen====================="+resultListBeen.get(position).toString());
                     startActivity(intent);*/
-                }
+
             }
         });
     }
 
     /* * 数据处理 */
 
-    private void showpop(final List<LeagueBean> resultListBeen, String et_keyword) {
-        basketballInforSerachAdapter=new BasketballInforSerachAdapter(getApplicationContext(),resultListBeen,et_keyword);
+    private void showpop(final List<FootballLeagueBean> resultListBeen, String et_keyword) {
+        basketballInforSerachAdapter=new FootaballSerachAdapter(getApplicationContext(),resultListBeen,et_keyword);
         mTv_result.setAdapter(basketballInforSerachAdapter);
         basketballInforSerachAdapter.notifyDataSetChanged();
         //点击监听
@@ -206,7 +209,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
 
     interface SearchService {
         //@GET("/sug") Observable<Data> searchProdcut(@Query("code") String code, @Query("q") String keyword);
-        @GET(BaseURLs.FUZZYSEARCH) rx.Observable<BasketSerach> searchProdcut(@Query("lang") String code, @Query(SEARCHKEYWORD) String keyword);
+        @GET("/androidLeagueData.searchMatchLeagues.do") rx.Observable<FootBallSerachBean> searchProdcut(@Query("lang") String code, @Query("matchStr") String keyword);
     }
 
 }

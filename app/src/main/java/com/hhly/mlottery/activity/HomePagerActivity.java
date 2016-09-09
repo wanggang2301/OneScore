@@ -761,8 +761,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     private void goToUserOptionsActivity() {
-       //startActivityForResult(new Intent(this, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
-        startActivityForResult(new Intent(this, FootballInformationSerachActivity.class), REQUESTCODE_LOGIN);
+       startActivityForResult(new Intent(this, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
     }
 
     private void goToAccountActivity() {

@@ -184,9 +184,9 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
             public void onTick(long millisUntilFinished) {
                 if (mTv_verycode != null){
 
-                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒 | 跳过");
+                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + mContext.getResources().getString(R.string.skip));
                     mTv_verycode.setVisibility(View.VISIBLE);
-                    mTv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒 | 跳过");
+                    mTv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL +mContext.getResources().getString(R.string.skip));
                 }
             }
         });
