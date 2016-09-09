@@ -388,13 +388,15 @@ public class HomeGridAdapter extends BaseAdapter {
                                             mContext.startActivity(new Intent(mContext, LeagueStatisticsTodayActivity.class));
                                         }
                                         break;
-//                                        case "":// 独家访谈
-//                                        {
-//                                            Intent intent = new Intent(mContext, FootballActivity.class);
-//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
-//                                            mContext.startActivity(intent);
-//                                        }
-//                                        break;
+                                        case "51":// 独家访谈
+                                        {
+                                            Intent intent = new Intent(mContext, FootballActivity.class);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
+                                            intent.putExtra("isVideo", "isVideo");
+                                            // 差一个跳转标记
+                                            mContext.startActivity(intent);
+                                        }
+                                        break;
                                     }
                                     break;
                             }
