@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.videobean.MatchVideoInfo;
+import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
+import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,7 +25,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private String mPreurl;//前缀
     private String mFix;//后缀
     private List<String> mGroupDataList;//父类view 数据
-    List<List<MatchVideoInfo.MatchVideoEntity.SptVideoInfoDtoListEntity>> mChildrenDataList;//子view数据
+    List<List<NewMatchVideoinfo.MatchVideoBean.SptVideoMoreInfoDtoListBean>> mChildrenDataList;//子view数据
     private Context mContext;
     private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
@@ -31,7 +33,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     //比赛的状态
     private String state;
 
-    public PinnedHeaderExpandableAdapter(List<List<MatchVideoInfo.MatchVideoEntity.SptVideoInfoDtoListEntity>> childrenDataList, List<String> groupDataList
+    public PinnedHeaderExpandableAdapter( List<List<NewMatchVideoinfo.MatchVideoBean.SptVideoMoreInfoDtoListBean>> childrenDataList, List<String> groupDataList
             , Context mContext, PinnedHeaderExpandableListView listView, String mPreurl, String mFix) {
         this.mGroupDataList = groupDataList;
         this.mChildrenDataList = childrenDataList;
@@ -88,11 +90,12 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             //视频直播开始时间
             holder.live_right_time_txt = (TextView) convertView.findViewById(R.id.live_right_time_txt);
             //暂未直播layout
-            holder.live_right_child_layout = (LinearLayout) convertView.findViewById(R.id.live_right_child_layout);
+          //  holder.live_right_child_layout = (LinearLayout) convertView.findViewById(R.id.live_right_child_layout);
             //直播中txt..
             holder.live_right_child_txt = (TextView) convertView.findViewById(R.id.live_right_child_txt);
+            holder.direct_seeding_photo= (ImageView) convertView.findViewById(R.id.direct_seeding_photo);
             //直播或者未直播图
-            holder.live_right_child_img = (ImageView) convertView.findViewById(R.id.live_right_child_img);
+            //  holder.live_right_child_img = (ImageView) convertView.findViewById(R.id.live_right_child_img);
             //主队icon
             holder.live_home_icon_img = (ImageView) convertView.findViewById(R.id.live_home_icon_img);
             //客队icon
@@ -100,56 +103,65 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             //西甲，英超
             holder.live_item_child_txt = (TextView) convertView.findViewById(R.id.live_item_child_txt);
 
+
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
         //如果是直播中"1 2 3 4 5"都属于直播中
-        state = mChildrenDataList.get(groupPosition).get(childPosition).getStatusOrigin();
+        state = mChildrenDataList.get(groupPosition).get(childPosition).statusOrigin;
         //主队图片
-        String home_images = mPreurl + mChildrenDataList.get(groupPosition).get(childPosition).getHmId() + mFix;
+        String home_images = mPreurl + mChildrenDataList.get(groupPosition).get(childPosition).hmId + mFix;
         //客队图片
-        String guest_images = mPreurl + mChildrenDataList.get(groupPosition).get(childPosition).getAwId() + mFix;
+        String guest_images = mPreurl + mChildrenDataList.get(groupPosition).get(childPosition).awId + mFix;
+
         //如果没开赛
-        if (mChildrenDataList.get(groupPosition).get(childPosition).getStatusOrigin().equals("0")) {
+        if (mChildrenDataList.get(groupPosition).get(childPosition).statusOrigin.equals("0")) {
             //西甲，英超
-            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).getRacename());
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
             //主队icon
             ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
             //客队icon
             ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
             //主队
-            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).getHometeam());
+            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
             // 客队
-            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).getGuestteam());
+            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
             //显示开赛时间
-            holder.live_right_time_txt.setText(" " + mChildrenDataList.get(groupPosition).get(childPosition).getMatchTime());
+           // holder.live_right_time_txt.setText(" " + mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
+            holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
             //如果没开赛显示没开赛的图片
-            holder.live_right_child_img.setBackgroundResource(R.mipmap.live_iconfont_default);
+           // holder.live_right_child_img.setBackgroundResource(R.mipmap.live_iconfont_default);
             //隐藏直播中的布局
-            holder.live_right_child_txt.setVisibility(View.GONE);
+           // holder.live_right_child_txt.setVisibility(View.GONE);
             //显示没开赛布局
-            holder.live_right_child_layout.setVisibility(View.VISIBLE);
+           // holder.live_right_time_txt.setVisibility(View.VISIBLE);
         }
         //如果开赛了，直播中..
-        else if ("1".equals(state) || "2".equals(state )|| "3".equals(state)|| "4".equals(state) || "5".equals(state)) {
+        else if ("0".equals(state) || "2".equals(state )|| "3".equals(state)|| "4".equals(state) || "5".equals(state)) {
             //西甲，英超
-            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).getRacename());
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
+            //显示直播中的布局
+            holder.direct_seeding_photo.setVisibility(View.VISIBLE);
+            holder.live_right_child_txt.setText(mContext.getResources().getString(R.string.direct_seedinging));
+            holder.live_right_child_txt.setPadding(20,0,0,0);
+
+            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.direct_seeding));
+
             //主队icon
             ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
             //客队icon
             ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
             //主队
-            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).getHometeam());
+            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
             // 客队
-            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).getGuestteam());
+            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
             //如果开赛显示开赛的图片
-            holder.live_right_child_img.setBackgroundResource(R.mipmap.live_iconfont);
+           // holder.live_right_child_img.setBackgroundResource(R.mipmap.live_iconfont);
             //隐藏未开始布局
-            holder.live_right_child_layout.setVisibility(View.GONE);
-            //显示直播中的布局
-            holder.live_right_child_txt.setVisibility(View.VISIBLE);
-            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.red));
+            //holder.live_right_child_layout.setVisibility(View.GONE);
         }
         //如果等于“-1”完场
        else if("-1".equals(state)){
@@ -165,15 +177,15 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         TextView live_left_bottom_child_txt; //客队名称
         TextView live_right_child_txt; //视频直播中..
 
-        LinearLayout live_right_child_layout; //视频暂未开始的layout
+      //  LinearLayout live_right_child_layout; //视频暂未开始的layout
         TextView live_right_time_txt; //(视频暂未开始)开始时间
 
-        ImageView live_right_child_img; //直播或者未直播的图片
+       // ImageView live_right_child_img; //直播或者未直播的图片
         ImageView live_home_icon_img; //主队图标
         ImageView live_guest_icon_img; //客队图标
 
         TextView live_item_child_txt; //西甲，英超
-
+        ImageView direct_seeding_photo;//直播图片
 
     }
 
@@ -223,9 +235,15 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        LinearLayout parentLayout = (LinearLayout) View.inflate(mContext, R.layout.item_live_header, null);
+        RelativeLayout parentLayout = (RelativeLayout) View.inflate(mContext, R.layout.item_live_header, null);
         TextView live_item_day_tx = (TextView) parentLayout.findViewById(R.id.live_item_day_txt);
-        live_item_day_tx.setText(mGroupDataList.get(groupPosition));
+
+        TextView mVideo_week= (TextView) parentLayout.findViewById(R.id.video_week);
+        //今天or明天
+        TextView mVideo_day = (TextView) parentLayout.findViewById(R.id.video_day);
+        live_item_day_tx.setText( mGroupDataList.get(groupPosition));
+        mVideo_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0,mGroupDataList.get(groupPosition)))));
+        mVideo_day.setText(DateUtil.getTodayorTomorrow(mGroupDataList.get(groupPosition)));
         return parentLayout;
     }
 
@@ -252,7 +270,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     }
 
     private View createChildrenView() {
-        return inflater.inflate(R.layout.item_live_child, null);
+        return inflater.inflate(R.layout.new_item_live_child, null);
     }
 
 
@@ -275,10 +293,12 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     @Override
     public void configureHeader(View header, int groupPosition,
                                 int childPosition, int alpha) {
-
-        String groupData = this.mGroupDataList.get(groupPosition).toString();
+        String groupData = this.mGroupDataList.get(groupPosition);
+        String  date =ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0,mGroupDataList.get(groupPosition))));
+        String day=DateUtil.getTodayorTomorrow(mGroupDataList.get(groupPosition));
         ((TextView) header.findViewById(R.id.live_item_day_txt)).setText(groupData);
-
+        ((TextView) header.findViewById(R.id.video_week)).setText(date);
+        ((TextView) header.findViewById(R.id.video_day)).setText(day);
     }
 
     private SparseIntArray groupStatusMap = new SparseIntArray();

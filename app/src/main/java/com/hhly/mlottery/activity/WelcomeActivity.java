@@ -185,6 +185,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
                 if (mTv_verycode != null){
 
                     L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒 | 跳过");
+                    mTv_verycode.setVisibility(View.VISIBLE);
                     mTv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + "秒 | 跳过");
                 }
             }
@@ -342,6 +343,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
                             imageHandler.sendEmptyMessage(GET_IMAGE_SUCCESS);
                         }
                     }
+
                 } else {
                     //如过json为空代表无图片显示
                     imageHandler.sendEmptyMessage(GET_IMAGE_NODATA);
@@ -490,7 +492,6 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
         switch (v.getId()){
 
             case R.id.tv_verycode:
-
                 gotoHomeActivity();
                 cancelCountDown();
                 finish();

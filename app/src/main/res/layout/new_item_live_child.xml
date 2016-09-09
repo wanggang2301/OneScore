@@ -1,0 +1,188 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:orientation="vertical">
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_iv"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/live_home_icon_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_gurst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/rl_iv"
+            android:layout_alignLeft="@+id/rl_iv"
+            android:layout_alignRight="@+id/rl_iv"
+            android:layout_alignStart="@+id/rl_iv"
+            android:layout_below="@+id/rl_iv"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/live_left_child_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="客队客队客队客队客队客队"
+                android:textColor="#333333"
+                android:textSize="@dimen/text_size_13"/>
+<!--
+            <TextView
+                android:id="@+id/basket_guest_Ranking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="5dp"
+                android:text="[西二]"
+                android:textColor="#999999"
+                android:textSize="@dimen/text_size_10"/>-->
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/lv_shipin"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/direct_seeding_photo"
+                android:layout_toLeftOf="@+id/live_right_child_txt"
+                android:src="@mipmap/direct_seeding"
+                android:layout_marginTop="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/live_right_child_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/text_size_16"
+                android:layout_marginTop="5dp"
+                android:paddingRight="8dp"
+                android:paddingLeft="3dp"
+                android:textColor="@color/res_name_color"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+
+
+            <TextView
+                android:id="@+id/live_right_time_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="(100:100)"
+                android:textColor="#666666"
+                android:layout_marginTop="3dp"
+                android:textSize="@dimen/text_size_13"
+                android:layout_below="@id/live_right_child_txt"
+                android:layout_centerHorizontal="true"/>
+
+            <LinearLayout
+                android:id="@+id/basket_details_odds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:layout_below="@id/live_right_time_txt"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:layout_marginTop="3dp"
+                    android:id="@+id/live_item_child_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="西甲第13轮"
+                    android:textColor="@color/res_name_color"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_iv2"
+            android:layout_width="105dp"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/relativeLayout"
+            android:layout_toStartOf="@+id/relativeLayout"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/live_guest_icon_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/rl_iv2"
+            android:layout_alignLeft="@+id/rl_iv2"
+            android:layout_alignRight="@+id/rl_iv2"
+            android:layout_alignStart="@+id/rl_iv2"
+            android:layout_below="@+id/rl_iv2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/live_left_bottom_child_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="主队主队主队主队主队主队"
+                android:textColor="#333333"
+                android:textSize="@dimen/text_size_13"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="5dp"
+            android:paddingTop="3dp"
+            >
+            <ImageView
+                android:id="@+id/live_right_child_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

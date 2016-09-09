@@ -1089,5 +1089,9 @@
     <string name="to_update_kindly_reminder">温馨提示</string>
     <string name="kindly_reminder_comment">您正在使用流量，是否继续下载？</string>
     <string name="continue_download">继续下载</string>
-
+    <!--视频直播-->
+    <string name="direct_seedinging">直播中</string>
+    <string name="baskball">篮球</string>
+    <string name="comprehensive">综合</string>
+    <string name="direct_seeding">直播</string>
 </resources>

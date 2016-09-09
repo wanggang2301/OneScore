@@ -16,16 +16,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
             android:layout_gravity="right"
             android:id="@+id/tv_verycode"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:layout_height="48dp"
+            android:layout_height="35dp"
             android:textSize="@dimen/text_size_13"
             android:textColor="@color/white"
-            android:background="@drawable/selector_loginbtn_yellow"/>
+            android:background="@mipmap/rounded_rectangle"/>
     </LinearLayout>
 
 </RelativeLayout>
