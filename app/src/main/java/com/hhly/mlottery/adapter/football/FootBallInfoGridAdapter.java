@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.football;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballDatabaseDetailsActivity;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -88,11 +89,10 @@ public class FootBallInfoGridAdapter extends BaseAdapter {
         mViewHolder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(mContext, FootballDatabaseDetailsActivity.class);
+                intent.putExtra(LEAGUE, mList.get(position));
+                mContext.startActivity(intent);
 
-              /*  Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
-                intent.putExtra(LEAGUE, mList.get(position).getLeagueId());
-                mContext.startActivity(intent);*/
-                Toast.makeText(mContext, "当前选中的是:" + mList.get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
 
             }
         });

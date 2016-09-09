@@ -447,7 +447,6 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
     public void onRefresh() {
         L.d(TAG, "下拉刷新");
         new Handler().postDelayed(mLoadingDataThread, 1000);
-        //mExactSwipeRefrashLayout.setRefreshing(false);  //刷新消失
     }
 
     private boolean isTop(GridView listView) {

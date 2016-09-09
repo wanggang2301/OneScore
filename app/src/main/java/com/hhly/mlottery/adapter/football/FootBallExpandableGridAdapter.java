@@ -1,6 +1,7 @@
 package com.hhly.mlottery.adapter.football;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.bean.footballDetails.database.NationBean;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
@@ -487,10 +489,9 @@ public class FootBallExpandableGridAdapter extends BaseExpandableListAdapter imp
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-       /* Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
-
-        intent.putExtra(LEAGUE, allDatas.get(groPosition).get(parentItem).getLeagueMenues().get(position).getLeagueId());
-        mContext.startActivity(intent);*/
+        Intent intent = new Intent(mContext, BasketballDatabaseDetailsActivity.class);
+        intent.putExtra(LEAGUE, allDatas.get(groPosition).get(parentItem).getLeagueMenues().get(position));
+        mContext.startActivity(intent);
         Toast.makeText(mContext, "当前选中的是:" + allDatas.get(groPosition).get(parentItem).getLeagueMenues().get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
     }
 
