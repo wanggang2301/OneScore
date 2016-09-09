@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -20,6 +21,7 @@ import com.hhly.mlottery.frame.ChatFragment;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.umeng.analytics.MobclickAgent;
@@ -137,6 +139,9 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                initAnimosion(t - oldt);
             }
         });
+
+        mWebView.addJavascriptInterface(new YBFJavascriptHandler(),"YBF");
+
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
         webSettings.setAppCacheEnabled(false);
@@ -281,6 +286,48 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public class YBFJavascriptHandler {
+        @JavascriptInterface
+        public void openShare(String url, String imageurl, String title, String subtitle) {
+            ShareBean shareBean = new ShareBean();
+            String summary;
+            if (subtitle == null || "".equals(subtitle)) {
+                summary = getString(R.string.share_summary_default);
+            } else {
+                summary = subtitle;
+            }
+            shareBean.setTitle(title != null ? title : mContext.getResources().getString(R.string.share_recommend));
+            shareBean.setSummary(summary);
+            shareBean.setTarget_url(url != null ? url : "http://m.13322.com");
+            shareBean.setImage_url(imageurl != null ? imageurl : "");
+            shareBean.setCopy(url);
+
+            mShareFragment = ShareFragment.newInstance(shareBean);
+            mShareFragment.show(getSupportFragmentManager(), "bottomShare");
+        }
+
+        @JavascriptInterface
+        public void openLoginWindow() {
+            startActivity(new Intent(WebActivity.this, LoginActivity.class));
+        }
+
+        @JavascriptInterface
+        public String getLoginToken() {
+            return AppConstants.register.getData().getLoginToken();
+        }
+
+        @JavascriptInterface
+        public String getDeviceId() {
+            return DeviceInfo.getDeviceId(getApplicationContext());
+        }
+
+        @JavascriptInterface
+        public String getLoginUserId() {
+            return AppConstants.register.getData().getUser().getUserId();
+        }
+
     }
 
 }
