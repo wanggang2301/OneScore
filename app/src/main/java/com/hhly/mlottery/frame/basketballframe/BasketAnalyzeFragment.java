@@ -19,9 +19,11 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketAnalyzeMoreRecordActivity;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
+import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeContentBean;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketAnalyzeFutureMatchBean;
+import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
@@ -118,6 +120,8 @@ public class BasketAnalyzeFragment extends Fragment  {
     private LinearLayout mHome1;
     private LinearLayout mHome2;
     private LinearLayout mHome3;
+    private String mLeagueId;
+    private Integer mMatchType;
 
 
     @Override
@@ -125,6 +129,8 @@ public class BasketAnalyzeFragment extends Fragment  {
 
         mThirdId = ((BasketDetailsActivityTest) getActivity()).getmThirdId();
         L.d("mThirdId ==AAAAA===", mThirdId + "");
+        mLeagueId = ((BasketDetailsActivityTest) getActivity()).getmLeagueId();
+        mMatchType = ((BasketDetailsActivityTest) getActivity()).getmMatchType();
 
         mView = inflater.inflate(R.layout.basket_analysis, container, false);
         scrollView = (NestedScrollView) mView.findViewById(R.id.scroll);
@@ -262,6 +268,25 @@ public class BasketAnalyzeFragment extends Fragment  {
         mHome1 = (LinearLayout) mView.findViewById(R.id.basket_analyze_home1);
         mHome2 = (LinearLayout) mView.findViewById(R.id.basket_analyze_home2);
         mHome3 = (LinearLayout) mView.findViewById(R.id.basket_analyze_home3);
+
+        /**
+         * 跳转篮球资料库
+         */
+        TextView mMostData =  (TextView) mView.findViewById(R.id.basket_analyze_more_data);
+        mMostData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),BasketballDatabaseDetailsActivity.class);
+
+                LeagueBean bean = new LeagueBean();
+                bean.setMatchType(1);
+                bean.setLeagueId("1");
+//                bean.setLeagueId(mLeagueId);
+//                bean.setMatchType(mMatchType);
+                intent.putExtra("league", bean);
+                startActivity(intent);
+            }
+        });
 
     }
 
