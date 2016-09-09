@@ -60,20 +60,15 @@
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-
-        <!--情报中心-->
-        <activity android:name=".activity.InfoCenterActivity"
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--情报中心-->
+        <activity android:name=".activity.InfoCenterActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- 引导页 -->
         <activity

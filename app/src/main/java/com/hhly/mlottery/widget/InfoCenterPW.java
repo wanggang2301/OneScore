@@ -12,14 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.InfoCenterActivity;
 import com.hhly.mlottery.adapter.InfoCenterSelectAdapter;
 import com.hhly.mlottery.bean.infoCenterBean.IntelligencesEntity;
-import com.hhly.mlottery.util.L;
 
 import java.util.List;
 
@@ -75,18 +73,8 @@ public class InfoCenterPW extends PopupWindow {
             public void onItemClick(View view, int i) {
                 InfoCenterPW.this.dismiss();
                 ((InfoCenterActivity) mContext).showSelectInfo(i);
+                mRecyclerView.scrollToPosition(i);
                 infoCenterSelectAdapter.notifyDataSetChanged();
-//                mRecyclerView.scrollToPosition(i);
-
-//                view.measure(0,0);
-//                float measuredWidth = view.getX();
-//
-//                L.d("xxx","measuredWidth: " + measuredWidth);
-//
-//
-//                Toast.makeText(mContext, "xxx:" + (width/2-measuredWidth), Toast.LENGTH_SHORT).show();
-//                mRecyclerView.scrollTo(500,0);
-//                mRecyclerView.scrollBy(500,0);
 
             }
         });
@@ -119,7 +107,7 @@ public class InfoCenterPW extends PopupWindow {
     }
 
     public void notifyChanged(int indexPosition) {
-        infoCenterSelectAdapter.notifyDataSetChanged();
         mRecyclerView.scrollToPosition(indexPosition);
+        infoCenterSelectAdapter.notifyDataSetChanged();
     }
 }
