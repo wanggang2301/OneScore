@@ -751,6 +751,12 @@ public class BaseURLs {
 
     public final static String URL_FOOTBALL_DATABASE = URL_API_HOST + "androidLeagueData.findAndroidDataMenu.do";
 
+    //足球资料库赛程
+    public final static String URL_FOOTBALL_DATABASE_SCHEDULE_FIRST = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
+    public final static String URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do";
+
+
+
     //足球赛事提点
     public final static String URL_LEAGUESTATISTICSTODAY = URL_API_HOST + "toDayMatchStatistics.findTodayMatchStatistics.do";
 
