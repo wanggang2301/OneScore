@@ -15,6 +15,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballInformationActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.InfoCenterActivity;
+import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
@@ -384,7 +385,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                         break;
                                         case "19":// 今日联赛统计
                                         {
-//                                            mContext.startActivity(new Intent(mContext, LeagueStatisticsTodayActivity.class));
+                                            mContext.startActivity(new Intent(mContext, LeagueStatisticsTodayActivity.class));
                                         }
                                         break;
 //                                        case "":// 独家访谈
