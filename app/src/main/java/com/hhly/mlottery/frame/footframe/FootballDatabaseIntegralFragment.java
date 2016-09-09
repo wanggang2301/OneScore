@@ -24,7 +24,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingGroup;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
-import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.CupMatchStageChooseDialogFragment;
 import com.hhly.mlottery.util.CollectionUtils;
@@ -72,7 +72,7 @@ public class FootballDatabaseIntegralFragment extends Fragment{
 
     RecyclerView mRecyclerView;
 
-    private LeagueBean league;
+    private DataBaseBean league;
     private String season;
 
     private IntegralResult mResult;
@@ -364,7 +364,7 @@ public class FootballDatabaseIntegralFragment extends Fragment{
         }
     }
 
-    public static FootballDatabaseIntegralFragment newInstance(LeagueBean league, String season) {
+    public static FootballDatabaseIntegralFragment newInstance(DataBaseBean league, String season) {
 
         Bundle args = new Bundle();
         args.putParcelable(LEAGUE, league);

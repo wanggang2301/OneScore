@@ -29,7 +29,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.FootballDatabaseHeaderBean;
-import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseIntegralFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseScheduleFragment;
 import com.hhly.mlottery.util.MDStatusBarCompat;
@@ -60,7 +60,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 
     public static final String LEAGUE = "league";
 
-    private LeagueBean mLeague;
+    private DataBaseBean mLeague;
     private ImageView mIcon;
     private Toolbar toolbar;
     private ImageView mBackground;
@@ -198,8 +198,6 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do";
 //        String url = BaseURLs.URL_BASKET_DATABASE_DETAILS;
         Map<String, String> params = new HashMap<>();
-//        params.put("leagueId", "1");
-//        params.put("type" , "0");
         params.put("leagueId", mLeague.getLeagueId());
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseHeaderBean>() {
 

@@ -23,11 +23,12 @@ import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.FootballDatabaseScheduleSectionAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
-import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.FootballDatabaseScheduleBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDataBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDatasBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleRaceBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.LocaleFactory;
@@ -54,8 +55,8 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
 
     private static final String LEAGUE = "league";
     private static final String PARAM_ID = "leagueId";
-    private static final String PARAM_SEASON = "season";
-    private static final String PARAM_MATCH_TYPE = "matchType";
+    private static final String PARAM_DATE = "leagueDate";
+    private static final String PARAM_MATCH_ROUND = "leagueRound";
     private static final String PARAM_FIRST_STAGE_ID = "firstStageId";
     private static final String PARAM_SECOND_STAGE_ID = "secondStageId";
 
@@ -76,8 +77,8 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
 
     RecyclerView mRecyclerView;
 
-    private LeagueBean league;
-    private String season = null;
+    private DataBaseBean league;
+    private String mLeagueDate = null;
 
     private ScheduleResult mResult;
     private FootballDatabaseScheduleBean mResultNew;
@@ -99,7 +100,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         Bundle args = getArguments();
         if (args != null) {
             league = args.getParcelable(LEAGUE);
-            season = args.getString(PARAM_SEASON);
+            mLeagueDate = args.getString(PARAM_DATE);
         }
     }
 
@@ -208,20 +209,17 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         // http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016
         //http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=36&type=0&leagueDate=2016-2017&leagueRound=4
         Map<String , String> map = new HashMap();
-        map.put("leagueId" , "36");
-        if (season != null) {
-            map.put("leagueDate" , season);
-        }else{
-        map.put("leagueDate" , "2016-2017");
+//        map.put("leagueId" , "36");
+        map.put(PARAM_ID , league.getLeagueId());
+        if (mLeagueDate != null) {
+            map.put(PARAM_DATE , mLeagueDate);
         }
         if (mLeagueRound != null && !mLeagueRound.equals("")) {
-            map.put("leagueRound" , mLeagueRound);
-        }else{
-            map.put("leagueRound" , "4");
+            map.put(PARAM_MATCH_ROUND , mLeagueRound);
         }
 
         if (url == null || url == "") {
-            url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do"; //第一次进入的url
+            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST; //第一次进入的url
         }
 //        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DATABASE_SCHEDULE, map,
         VolleyContentFast.requestJsonByGet(url, map,
@@ -341,7 +339,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
                     mAlertDialog.dismiss();
                     String newData = mRoundString[currentPosition];
                     mLeagueRound = newData;
-                    url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do"; //选择后的URL
+                    url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
                     handleHeadViewNew(mRoundString ,currentPosition);
                     initData(null , null);
                 }
@@ -361,7 +359,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
                     mAlertDialog.dismiss();
                     String newData = mRoundString[currentPosition];
                     mLeagueRound = newData;
-                    url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do"; //选择后的URL
+                    url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
                     handleHeadViewNew(mRoundString ,currentPosition);
                     initData(null , null);
                 }
@@ -388,19 +386,19 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         mRecyclerView.setLayoutManager(manager);
     }
 
-    public static FootballDatabaseScheduleFragment newInstance(LeagueBean leagueBean, String season) {
+    public static FootballDatabaseScheduleFragment newInstance(DataBaseBean leagueBean, String season) {
 
         Bundle args = new Bundle();
         args.putParcelable(LEAGUE, leagueBean);
-        args.putString(PARAM_SEASON, season);
+        args.putString(PARAM_DATE, season);
         FootballDatabaseScheduleFragment fragment = new FootballDatabaseScheduleFragment();
         fragment.setArguments(args);
         return fragment;
     }
     public void setSeason(String season) {
-        this.season = season;
+        this.mLeagueDate = season;
         Bundle args = getArguments();
-        if (args != null) args.putString(PARAM_SEASON, season);
+        if (args != null) args.putString(PARAM_DATE, season);
     }
     @Override
     public void onClick(View v) {
