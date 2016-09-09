@@ -14,6 +14,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.FootaballSerachAdapter;
 import com.hhly.mlottery.bean.FootBallSerachBean;
 import com.hhly.mlottery.bean.FootballLeagueBean;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.List;
@@ -163,12 +164,12 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
         mTv_result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                if( null!=resultListBeen.get(position).getLeagueId()&&!resultListBeen.get(position).getLeagueId().isEmpty()) {
                     Intent intent = new Intent(FootballInformationSerachActivity.this, FootballDatabaseDetailsActivity.class);
-                    intent.putExtra(LEAGUEID, resultListBeen.get(position));//传递联赛ID
-                    System.out.println("resulistBeen====================="+resultListBeen.get(position).toString());
+                    intent.putExtra(LEAGUEID, new DataBaseBean(resultListBeen.get(position).getKind(), resultListBeen.get(position).getLeagueId(), "", ""));//传递联赛ID
+                    System.out.println("resulistBeen=====================" + resultListBeen.get(position).toString());
                     startActivity(intent);
-
+                }
             }
         });
     }

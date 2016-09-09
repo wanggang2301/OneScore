@@ -11,26 +11,26 @@ import android.os.Parcelable;
  */
 public class FootballLeagueBean implements Parcelable {
 
-    private int kind;
-    private int lgId;
+    private String kind;
+    private String lgId;
     private String lgName;
     private String pic;
     public FootballLeagueBean() {
 
     }
 
-    public FootballLeagueBean(int kind, int leagueId, String pic, String lgName) {
+    public FootballLeagueBean(String kind, String leagueId, String pic, String lgName) {
         this.kind = kind;
         this.lgId = leagueId;
         this.pic = pic;
         this.lgName = lgName;
     }
 
-    public int getLeagueId() {
+    public String getLeagueId() {
         return lgId;
     }
 
-    public void setLeagueId(int leagueId) {
+    public void setLeagueId(String leagueId) {
         this.lgId = leagueId;
     }
 
@@ -50,11 +50,11 @@ public class FootballLeagueBean implements Parcelable {
         this.pic = pic;
     }
 
-    public int getKind() {
+    public String getKind() {
         return kind;
     }
 
-    public void setKind(int kind) {
+    public void setKind(String kind) {
         this.kind = kind;
     }
 
@@ -72,8 +72,8 @@ public class FootballLeagueBean implements Parcelable {
     }
 
     protected FootballLeagueBean(Parcel in) {
-        this.kind = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.lgId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.kind = in.readString();
+        this.lgId = in.readString();
         this.lgName = in.readString();
         this.pic = in.readString();
     }
