@@ -22,6 +22,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.LeagueStatisticsTodayRecyclerViewAdapter;
 import com.hhly.mlottery.bean.LeagueStatisticsTodayBean;
 import com.hhly.mlottery.bean.LeagueStatisticsTodayChildBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.LeagueStatisticsTodayFlatBigToSmallComparator;
@@ -317,10 +318,9 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
         params.put("endDate", endDate);
         params.put("handicap", handicap + "");
 
-        //String url = BaseURLs.URL_LEAGUESTATISTICSTODAY;
+        String url = BaseURLs.URL_LEAGUESTATISTICSTODAY;
 
-        String url = "http://192.168.10.242:8181/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
-        // String url = "http://192.168.31.53:8080/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
+        // String url = "http://192.168.10.242:8181/mlottery/core/toDayMatchStatistics.findTodayMatchStatistics.do";
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueStatisticsTodayBean>() {
             @Override
