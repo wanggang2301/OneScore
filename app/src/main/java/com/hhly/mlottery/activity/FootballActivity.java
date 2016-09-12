@@ -13,8 +13,8 @@ import android.widget.RadioGroup;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.frame.CounselFragment;
+import com.hhly.mlottery.frame.NewVideoFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.frame.VideoFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
@@ -49,6 +49,7 @@ public class FootballActivity extends BaseActivity {
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
     private int currentPosition = 0;// 足球界面Fragment下标
+    public int infoPagerLabel = 0;// 足球资讯pager下标
     public int basketCurrentPosition = 0;// 篮球界面Fragment下标
     public LinearLayout ly_tab_bar;
     public int fragmentIndex = 0;
@@ -61,6 +62,7 @@ public class FootballActivity extends BaseActivity {
         MobclickAgent.openActivityDurationTrack(false);
 
         currentPosition = getIntent().getIntExtra(AppConstants.FOTTBALL_KEY, 0);// 足球fragment下标
+        infoPagerLabel = getIntent().getIntExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, 0);// 足球资讯pager下标
         basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY,0);// 篮球fragment下标
         initView();
         initData();
@@ -75,7 +77,7 @@ public class FootballActivity extends BaseActivity {
         fragments.add(new ScoresFragment());
         fragments.add(new CounselFragment());
         fragments.add(new InformationFragment());
-        fragments.add(new VideoFragment());
+        fragments.add(new NewVideoFragment());
         fragments.add(CPIFragment.newInstance());
         fragments.add(new BasketScoresFragment());
     }

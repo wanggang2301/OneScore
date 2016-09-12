@@ -15,7 +15,7 @@ public class WelcomeUrl {
 
     private int result;
     private String url;
-
+    private int duration;
     public int getResult() {
         return result;
     }
@@ -30,5 +30,13 @@ public class WelcomeUrl {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

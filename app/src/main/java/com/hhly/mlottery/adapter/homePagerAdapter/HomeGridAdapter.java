@@ -378,7 +378,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SSC_TJ");
                                         }
                                         break;
-                                        case "40":// 情报中心
+                                        case "60":// 情报中心
                                         {
                                             mContext.startActivity(new Intent(mContext, InfoCenterActivity.class));
                                         }

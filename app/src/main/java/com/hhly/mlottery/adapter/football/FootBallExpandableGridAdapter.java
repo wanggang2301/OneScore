@@ -490,8 +490,10 @@ public class FootBallExpandableGridAdapter extends BaseExpandableListAdapter imp
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(mContext, FootballDatabaseDetailsActivity.class);
         intent.putExtra(LEAGUE, allDatas.get(groPosition).get(parentItem).getLeagueMenues().get(position));
+        intent.putExtra("isIntegral", false);
+
         mContext.startActivity(intent);
-       // Toast.makeText(mContext, "当前选中的是:" + allDatas.get(groPosition).get(parentItem).getLeagueMenues().get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(mContext, "当前选中的是:" + allDatas.get(groPosition).get(parentItem).getLeagueMenues().get(position).getLeagueId(), Toast.LENGTH_SHORT).show();
     }
 
     /**

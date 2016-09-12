@@ -907,6 +907,8 @@
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">找不到相关信息</string>
+    <string name="ind_search">正在查找......</string>
+    <string name="skip">"秒 | 跳过"</string>
     <!--1.1.2 begin-->
     <string name="weixin_installed">请先安装微信客户端!</string>
     <string name="Login_register">登录/注册</string>
@@ -1197,4 +1199,9 @@
     <string name="league_statistics_today_noticetitle">什么是今日联赛提点？</string>
     <string name="league_statistics_today_noticetext">是对今日有开盘的比赛参赛的所有联赛，各项数据在近期比赛或者某一个时间段内的排名。</string>
 
+    <!--视频直播-->
+    <string name="direct_seedinging">直播中</string>
+    <string name="baskball">篮球</string>
+    <string name="comprehensive">综合</string>
+    <string name="direct_seeding">直播</string>
 </resources>

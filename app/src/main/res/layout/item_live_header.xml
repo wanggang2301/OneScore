@@ -1,28 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/layou_id">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              tools:context=".MainActivity"
+              android:background="#F5F5F5">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/listview_divider" />
+  <RelativeLayout
+      android:id="@+id/basketball_date_icon"
+      android:layout_width="wrap_content"
+      android:layout_marginTop="5dp"
+      android:paddingLeft="10dp"
+      android:layout_height="25dp"
+      android:layout_centerVertical="true">
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/football_date"/>
+  </RelativeLayout>
 
     <TextView
-        android:id="@+id/live_item_day_txt"
-        android:layout_width="match_parent"
+    android:id="@+id/live_item_day_txt"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_toRightOf="@id/basketball_date_icon"
+    android:paddingLeft="7dp"
+    android:text="2016-01-01"
+    android:textSize="12dp"
+    android:textColor="#0085E1"/>
+    <TextView
+        android:id="@+id/video_week"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#F5F5F5"
-        android:paddingBottom="8dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="8dp"
-        android:textColor="#666666"
-        android:textSize="16sp" />
+        android:paddingLeft="5dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/live_item_day_txt"
+        android:text="周一"
+        android:textSize="12dp"
+        android:textColor="#0085E1"/>
+      <TextView
 
-    <View
+          android:id="@+id/video_day"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:paddingLeft="5dp"
+          android:layout_toRightOf="@id/video_week"
+          android:text="今天"
+          android:textSize="12dp"
+          android:textColor="#666666" />
+
+   <!-- <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/listview_divider" />
-</LinearLayout>
+        android:background="@color/listview_divider" />-->
+</RelativeLayout>

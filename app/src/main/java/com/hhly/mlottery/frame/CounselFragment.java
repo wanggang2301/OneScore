@@ -210,6 +210,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         mViewPager.setAdapter(mCounselFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setCurrentItem(((FootballActivity)mContext).infoPagerLabel);
         mTabLayout.setTabsFromPagerAdapter(mCounselFragmentAdapter);
     }
 

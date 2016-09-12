@@ -91,6 +91,7 @@ public class FootBallInfoGridAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, FootballDatabaseDetailsActivity.class);
                 intent.putExtra(LEAGUE, mList.get(position));
+                intent.putExtra("isIntegral" , false);
                 mContext.startActivity(intent);
 
 
