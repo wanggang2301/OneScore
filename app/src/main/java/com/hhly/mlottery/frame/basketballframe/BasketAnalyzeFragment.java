@@ -285,6 +285,7 @@ public class BasketAnalyzeFragment extends Fragment  {
                 bean.setLeagueId(mLeagueId);
                 bean.setMatchType(mMatchType);
                 intent.putExtra("league", bean);
+                intent.putExtra("isRanking" , true);
                 startActivity(intent);
             }
         });

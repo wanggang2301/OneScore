@@ -165,7 +165,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(tabsAdapter);
         if (mIsCurrenIntegral) {
-            mViewPager.setCurrentItem(1);
+            mViewPager.setCurrentItem(1);//判断分析页面进来默认显示积分页
         }
         mTabLayout.setupWithViewPager(mViewPager);
 
