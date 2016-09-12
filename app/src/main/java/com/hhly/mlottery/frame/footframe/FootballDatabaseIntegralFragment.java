@@ -17,7 +17,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
@@ -49,7 +48,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
     private static final String LEAGUE = "league";
     private static final String PARAM_ID = "leagueId";
     private static final String PARAM_SEASON = "season";
-    private static final String PARAM_MATCH_TYPE = "matchType";
+    private static final String PARAM_TYPE = "type";
     private static final String PARAM_FIRST_STAGE_ID = "firstStageId";
 
     private static final String PARAM_DATE = "leagueDate";
@@ -74,7 +73,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
     RecyclerView mRecyclerView;
 
     private DataBaseBean league;
-    private String season;
 
     private FootballIntegralResult mResult;
 
@@ -91,7 +89,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
     private String[] mRoundString;
     private String mLeagueRound = "";
     private String mLeagueDate = null;
-//    private String url;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +96,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
         Bundle args = getArguments();
         if (args != null) {
             league = args.getParcelable(LEAGUE);
-            season = args.getString(PARAM_SEASON);
+            mLeagueDate = args.getString(PARAM_DATE);
         }
     }
 
@@ -124,7 +121,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         mRadioGroup = (RadioGroup)view.findViewById(R.id.gendergroup);
-//        mRadioGroup.setVisibility(View.VISIBLE);
         mAllRadio = (RadioButton)view.findViewById(R.id.football_database_details_all);
         mAllRadio.setChecked(true);//默认选中
         mHomeRadio = (RadioButton)view.findViewById(R.id.football_database_details_home);
@@ -133,15 +129,13 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
 
         initEmptyView();
 
-//        initListener();
-
         initRecycler();
 
         mTitleTextView.setOnClickListener(this);
         mLeftButton.setOnClickListener(this);
         mRightButton.setOnClickListener(this);
 
-        load(null);
+        load();
     }
     /**
      * RadioGroup的点击（全部、主、客切换）
@@ -172,7 +166,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                 handleData(mResult.getRankingObj().getAll());
                 mAdapter.notifyDataSetChanged();
             }
-            Toast.makeText(getContext(), "all==", Toast.LENGTH_SHORT).show();
         } else if (type == 1) {
             mSections.clear();
             if (mResult.getRankingObj().getHome() == null || mResult.getRankingObj().getHome().equals("")){
@@ -181,7 +174,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                 handleData(mResult.getRankingObj().getHome());
                 mAdapter.notifyDataSetChanged();
             }
-            Toast.makeText(getContext(), "home==", Toast.LENGTH_SHORT).show();
         } else if(type == 2){
             mSections.clear();
             if (mResult.getRankingObj().getGuest() == null || mResult.getRankingObj().getGuest().equals("")){
@@ -190,7 +182,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                 handleData(mResult.getRankingObj().getGuest());
                 mAdapter.notifyDataSetChanged();
             }
-            Toast.makeText(getContext(), "guest==", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -203,7 +194,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
         mRefreshTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                load(null);
+                load();
             }
         });
     }
@@ -212,7 +203,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
      * 更新
      */
     public void update() {
-        load(null);
+        load();
     }
 
     /**
@@ -227,55 +218,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
         mRadioGroup.setVisibility(status == STATUS_LOAD_SUCCESS ? View.VISIBLE : View.GONE);
     }
 
-//    private void initListener() {
-//
-//        RxView.clicks(mTitleTextView)
-//                .throttleFirst(500, TimeUnit.MILLISECONDS)
-//                .subscribe(new Action1<Void>() {
-//                    @Override
-//                    public void call(Void aVoid) {
-//                        if (mResult != null) {
-//                            CupMatchStageChooseDialogFragment dialog =
-//                                    CupMatchStageChooseDialogFragment.newInstance(mResult.getStageResult());
-//                            dialog.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-//                                @Override
-//                                public void onItemClick(View view, int i) {
-//                                    load(mResult.getSearchCondition().get(i).getStageId());
-//                                }
-//                            });
-//                            dialog.show(getChildFragmentManager(), "stageChoose");
-//                        } else {
-//                            ToastTools.showQuick(getContext(), "稍候，获取数据中");
-//                        }
-//                    }
-//                });
-//
-//        mLeftButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mResult == null) return;
-//                if (mResult.getFirstStageIndex() == null) return;
-//                List<MatchStage> matchStages = mResult.getSearchCondition();
-//                if (!CollectionUtils.notEmpty(matchStages)) return;
-//                if (mResult.getFirstStageIndex() > 0) {
-//                    load(matchStages.get(mResult.getFirstStageIndex() - 1).getStageId());
-//                }
-//            }
-//        });
-//        mRightButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mResult == null) return;
-//                if (mResult.getFirstStageIndex() == null) return;
-//                List<MatchStage> matchStages = mResult.getSearchCondition();
-//                if (!CollectionUtils.notEmpty(matchStages)) return;
-//                if (mResult.getFirstStageIndex() < matchStages.size() - 1) {
-//                    load(matchStages.get(mResult.getFirstStageIndex() + 1).getStageId());
-//                }
-//            }
-//        });
-//    }
-
     private void initRecycler() {
         mSections = new ArrayList<>();
         mAdapter = new FootballDatabaseIntegralAdapter(mSections);
@@ -285,7 +227,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
         mRecyclerView.setLayoutManager(manager);
     }
 
-    private void load(String firstStageId) {
+    private void load() {
         mSections.clear();
         mAdapter.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
@@ -293,14 +235,11 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
 //        url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueScore.do";
         // http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueScore.do?lang=zh&type=2&leagueId=67&leagueDate=2014-2016&condition=外围赛
         Map<String, String> map = new HashMap<>();
-//        map.put("leagueId" , "67");
-//        map.put("type" , "2");
-        map.put("leagueId" , league.getLeagueId());
-        map.put("type" , league.getKind());
+        map.put(PARAM_ID , league.getLeagueId());
+        map.put(PARAM_TYPE , league.getKind());
 
         if (mLeagueDate != null) map.put(PARAM_DATE , mLeagueDate);
         if (mLeagueRound != null && !mLeagueRound.equals("")) map.put(PARAM_MATCH_ROUND , mLeagueRound);
-//        if (url == null || url == "") url = BaseURLs.URL_FOOTBALL_DATABASE_INTEGRAL_FIRST; //第一次进入的url
         String url = BaseURLs.URL_FOOTBALL_DATABASE_INTEGRAL_FIRST;
         VolleyContentFast.requestJsonByGet(url, map,
                 new VolleyContentFast.ResponseSuccessListener<FootballIntegralResult>() {
@@ -334,12 +273,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                 }, FootballIntegralResult.class);
     }
 
-    private void putIfNotNull(Map<String, String> map, String key, String val) {
-        if (val != null) {
-            map.put(key, val);
-        }
-    }
-
     /**
      * 处理数据
      *
@@ -368,21 +301,12 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
      * @param currnIndex 当前选择的position
      */
     private void handleHeadViewNew(String[] data , Integer currnIndex){
-
-//        if (data == null || data.length == 0) {
-//            mTitleTextView.setText("");
-//        }else{
-//            mTitleTextView.setText(data[currnIndex]);
-//        }
-//
-//        mLeftButton.setVisibility(currnIndex <= 0 ? View.GONE : View.VISIBLE);
-//        mRightButton.setVisibility(currnIndex >= data.length-1 ? View.GONE : View.VISIBLE);
         if (data != null) {
             if (data.length != 0) {
                 mTitleTextView.setText(data[currnIndex]);
             }
             // 杯赛且大于1才显示
-            if (mResult.getRankingType() == 2 && data.length > 1 && mAdapter.getHeaderViewsCount() == 0) {
+            if (data.length > 1 && mAdapter.getHeaderViewsCount() == 0 && mResult.getRankingType() == 2) {
                 mAdapter.addHeaderView(mButtonFrame);
                 mAdapter.setEmptyView(true, mEmptyView);
             }
@@ -391,33 +315,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
         }
     }
 
-//    /**
-//     * 处理 HeadView 的显示
-//     *
-//     * @param matchStages
-//     * @param firstStageIndex
-//     */
-//    private void handleHeadView(List<MatchStage> matchStages, Integer firstStageIndex) {
-//        if (CollectionUtils.notEmpty(matchStages)) {
-//            if (firstStageIndex != null) {
-//                mTitleTextView.setText(matchStages.get(
-//                        firstStageIndex).getStageName());
-//            }
-//            // 杯赛且大于1才显示
-//            if (RankingResult.CUP == mResult.getRankingType()
-//                    && matchStages.size() > 1 && mAdapter.getHeaderViewsCount() == 0) {
-//                mAdapter.addHeaderView(mButtonFrame);
-//                mAdapter.setEmptyView(true, mEmptyView);
-//            }
-//
-//            if (firstStageIndex != null) {
-//                mLeftButton.setVisibility(firstStageIndex == 0 ? View.GONE : View.VISIBLE);
-//                mRightButton.setVisibility(
-//                        firstStageIndex + 1 == mResult.getSearchCondition().length ?
-//                                View.GONE : View.VISIBLE);
-//            }
-//        }
-//    }
     /**
      * 加载前一项（左点击）
      * @param currPosition
@@ -430,7 +327,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
             mLeagueRound = mRoundString[currentPosition];
         }
         handleHeadViewNew(mRoundString ,currentPosition);
-        load(null);
+        load();
     }
     /**
      * 加载后一项（右点击）
@@ -444,7 +341,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
             mLeagueRound = mRoundString[currentPosition];
         }
         handleHeadViewNew(mRoundString ,currentPosition);
-        load(null);
+        load();
     }
     /**
      * 选中器弹框
@@ -485,7 +382,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                     String newData = mRoundString[currentPosition];
                     mLeagueRound = newData;
                     handleHeadViewNew(mRoundString ,currentPosition);
-                    load(null);
+                    load();
                 }
             });
             scrollview.setVisibility(View.VISIBLE);
@@ -504,7 +401,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                     String newData = mRoundString[currentPosition];
                     mLeagueRound = newData;
                     handleHeadViewNew(mRoundString ,currentPosition);
-                    load(null);
+                    load();
                 }
             });
             scrollview.setVisibility(View.GONE);
@@ -518,16 +415,16 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
 
         Bundle args = new Bundle();
         args.putParcelable(LEAGUE, league);
-        args.putString(PARAM_SEASON, season);
+        args.putString(PARAM_DATE, season);
         FootballDatabaseIntegralFragment fragment = new FootballDatabaseIntegralFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public void setSeason(String season) {
-        this.season = season;
+    public void setSeason(String type) {
+        this.mLeagueDate = type;
         Bundle args = getArguments();
-        if (args != null) args.putString(PARAM_SEASON, season);
+        if (args != null) args.putString(PARAM_DATE, type);
     }
 
     @Override

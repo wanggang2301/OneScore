@@ -21,11 +21,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketballDatabaseScheduleSectionAdapter;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.FootballDatabaseScheduleSectionAdapter;
-import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
-import com.hhly.mlottery.bean.basket.basketdatabase.ScheduleResult;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.FootballDatabaseScheduleBean;
-import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDataBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDatasBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleRaceBean;
 import com.hhly.mlottery.config.BaseURLs;
@@ -50,15 +47,10 @@ import java.util.Map;
  */
 public class FootballDatabaseScheduleFragment extends Fragment implements View.OnClickListener {
 
-    private static final int MATCH_TYPE_LEAGUE = 1; // 联赛
-    private static final int MATCH_TYPE_CUP = 2; // 杯赛
-
     private static final String LEAGUE = "league";
     private static final String PARAM_ID = "leagueId";
     private static final String PARAM_DATE = "leagueDate";
     private static final String PARAM_MATCH_ROUND = "leagueRound";
-    private static final String PARAM_FIRST_STAGE_ID = "firstStageId";
-    private static final String PARAM_SECOND_STAGE_ID = "secondStageId";
 
     private static final int STATUS_LOADING = 1;
     private static final int STATUS_ERROR = 2;
@@ -80,18 +72,14 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
     private DataBaseBean league;
     private String mLeagueDate = null;
 
-    private ScheduleResult mResult;
-    private FootballDatabaseScheduleBean mResultNew;
     private List<BasketballDatabaseScheduleSectionAdapter.Section> mSections;
     private List<FootballDatabaseScheduleSectionAdapter.Section> mSectionsNew;
-    private List<MatchStage> mStageList;
     private BasketballDatabaseScheduleSectionAdapter mAdapter;
     private FootballDatabaseScheduleSectionAdapter mAdapterNew;
     private String[] mRoundString;
     private String mLeagueRound = "";
     private boolean isLoad = false;//是否可选择
     private String url ;
-    private List<ScheduleDataBean> mDataBean;//选择内容
     private int currentPosition = 0; // 当前选中 （默认选中第一项）
 
     @Override
@@ -127,8 +115,6 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        mStageList = new ArrayList<>();
-
         initEmptyView();
 
         initRecycler();
@@ -137,7 +123,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         mLeftButton.setOnClickListener(this);
         mRightButton.setOnClickListener(this);
 
-        initData(null , null);
+        initData();
     }
 
     private void initEmptyView() {
@@ -149,7 +135,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         mRefreshTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData(null, null);
+                initData();
             }
         });
     }
@@ -166,7 +152,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
             mLeagueRound = mRoundString[currentPosition];
         }
         handleHeadViewNew(mRoundString ,currentPosition);
-        initData(null , null);
+        initData();
     }
     /**
      * 加载后一项（右点击）
@@ -180,14 +166,14 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
             mLeagueRound = mRoundString[currentPosition];
         }
         handleHeadViewNew(mRoundString ,currentPosition);
-        initData(null , null);
+        initData();
     }
 
     /**
      * 刷新数据
      */
     public void update() {
-        initData(null , null);
+        initData();
     }
 
     /**
@@ -201,7 +187,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         mErrorLayout.setVisibility(status == STATUS_ERROR ? View.VISIBLE : View.GONE);
     }
 
-    private void initData(String firstStageId, String secondStageId){
+    private void initData(){
         mSectionsNew.clear();
         mAdapterNew.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
@@ -209,7 +195,6 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         // http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016
         //http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=36&type=0&leagueDate=2016-2017&leagueRound=4
         Map<String , String> map = new HashMap();
-//        map.put("leagueId" , "36");
         map.put(PARAM_ID , league.getLeagueId());
         if (mLeagueDate != null) {
             map.put(PARAM_DATE , mLeagueDate);
@@ -221,7 +206,6 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         if (url == null || url == "") {
             url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST; //第一次进入的url
         }
-//        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DATABASE_SCHEDULE, map,
         VolleyContentFast.requestJsonByGet(url, map,
                 new VolleyContentFast.ResponseSuccessListener<FootballDatabaseScheduleBean>() {
                     @Override
@@ -232,7 +216,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
                             return;
                         }
                         mButtonFrame.setVisibility(View.VISIBLE);
-                        mResultNew = result;
+//                        mResultNew = result;
 
                         if (result.getData() != null) {
                             mRoundString = result.getData();
@@ -254,12 +238,6 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
                         setStatus(STATUS_ERROR);
                     }
                 }, FootballDatabaseScheduleBean.class);
-    }
-
-    private void putIfNotNull(Map<String, String> map, String key, String val) {
-        if (val != null) {
-            map.put(key, val);
-        }
     }
 
     /**
@@ -305,7 +283,6 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
      * 选中器弹框
      */
     public void setDialog(){
-        // Dialog 设置
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext(), R.style.AlertDialog);
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.football_scheduledialog, null);
@@ -341,7 +318,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
                     mLeagueRound = newData;
                     url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
                     handleHeadViewNew(mRoundString ,currentPosition);
-                    initData(null , null);
+                    initData();
                 }
             });
             scrollview.setVisibility(View.VISIBLE);
@@ -361,7 +338,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
                     mLeagueRound = newData;
                     url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
                     handleHeadViewNew(mRoundString ,currentPosition);
-                    initData(null , null);
+                    initData();
                 }
             });
             scrollview.setVisibility(View.GONE);

@@ -282,8 +282,6 @@ public class BasketAnalyzeFragment extends Fragment  {
                 Intent intent = new Intent(getActivity(),BasketballDatabaseDetailsActivity.class);
 
                 LeagueBean bean = new LeagueBean();
-//                bean.setMatchType(1);
-//                bean.setLeagueId("1");
                 bean.setLeagueId(mLeagueId);
                 bean.setMatchType(mMatchType);
                 intent.putExtra("league", bean);

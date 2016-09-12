@@ -16,7 +16,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.FootballIntegralResult;
 import com.hhly.mlottery.bean.footballDetails.FootballRankingData;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.StringUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -34,7 +33,7 @@ public class FootballDatabaseIntegralAdapter
     private int type = FootballIntegralResult.SINGLE_LEAGUE;
 
     public FootballDatabaseIntegralAdapter(List<Section> data) {
-        super(R.layout.item_basket_datatbase_ranking_team, R.layout.item_basket_datatbase_ranking_title, data);
+        super(R.layout.item_football_database_integral_team, R.layout.item_basket_datatbase_ranking_title, data);
     }
 
     public void setType(int type) {
@@ -79,32 +78,19 @@ public class FootballDatabaseIntegralAdapter
 
         TextView rank = holder.getView(R.id.rank);
         TextView name = holder.getView(R.id.name);
-        TextView recent = holder.getView(R.id.recent);
-
-//        int ranking = team.getRanking();
-//        String teamRecent = team.getRecent();
-//
-//        holder.setText(R.id.rank, String.format(Locale.getDefault(), "%d", ranking))
-//                .setText(R.id.name, team.getTeamName())
-//                .setText(R.id.match_num, String.format(Locale.getDefault(), "%d", team.getFinishedMatch()))
-//                .setText(R.id.win_lose, String.format(Locale.getDefault(), "%d/%d", team.getWinMatch(), team.getLoseMatch()))
-//                .setText(R.id.win_rate, String.format(Locale.getDefault(), "%.1f", team.getWinRate()))
-//                .setText(R.id.win_offset, String.format(Locale.getDefault(), "%d", team.getGameBehind()))
-//                .setText(R.id.recent, "0".equals(teamRecent) ? "-" : teamRecent);
 
         int ranking = team.getScore();
-        String teamRecent = team.getWin() + "";
+        String teamIntegral = team.getScore() + "";
 
         holder.setText(R.id.rank, String.format(Locale.getDefault(), "%d", ranking))
                 .setText(R.id.name, team.getName())
                 .setText(R.id.match_num, String.format(Locale.getDefault(), "%d", team.getRound()))
-                .setText(R.id.win_lose, String.format(Locale.getDefault(), "%d/%d", team.getWin(), team.getLoss()))
-//                .setText(R.id.win_rate, String.format(Locale.getDefault(), "%.1f", team.getAbs()))
-                .setText(R.id.win_rate, team.getAbs()+"")
-                .setText(R.id.win_offset, String.format(Locale.getDefault(), "%d", team.getGoal()))
-                .setText(R.id.recent, "0".equals(teamRecent) ? "-" : teamRecent);
+                .setText(R.id.win_equ_lose, String.format(Locale.getDefault(), "%d/%d", team.getWin(),team.getEqu(), team.getLoss()))
+                .setText(R.id.win_loss, team.getGoal() + "/" + team.getLoss())
+                .setText(R.id.win_offset, String.format(Locale.getDefault(), "%d", team.getAbs()))
+                .setText(R.id.recent, "0".equals(teamIntegral) ? "-" : teamIntegral);
 
-        if (ranking <= 3) {
+        if (holder.getPosition() <= 3) {
             rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             rank.setBackgroundResource(R.drawable.basket_databae_round_dra);
             name.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
@@ -113,22 +99,12 @@ public class FootballDatabaseIntegralAdapter
             rank.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
             name.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
         }
-
-        if (StringUtils.isNotEmpty(teamRecent)) {
-            if (teamRecent.contains("W")) {
-                recent.setTextColor(ContextCompat.getColor(mContext, R.color.database_win_color));
-            } else if (teamRecent.contains("L")) {
-                recent.setTextColor(ContextCompat.getColor(mContext, R.color.database_lose_color));
-            } else {
-                recent.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
-            }
-        }
     }
 
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_FORM_TITLE)
-            return new FormTitleViewHolder(getItemView(R.layout.item_basket_datatbase_ranking, parent));
+            return new FormTitleViewHolder(getItemView(R.layout.item_football_database_integral, parent));
         return super.onCreateDefViewHolder(parent, viewType);
     }
 

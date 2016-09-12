@@ -788,6 +788,11 @@
     <string name="football_database_details_integral">積分</string>
     <string name="football_database_details_stage">階段</string>
 
+    <string name="football_database_details_integral_num_title">已賽</string>
+    <string name="football_database_details_integral_win_draw_lose_title">勝/平/負</string>
+    <string name="football_database_details_integral_gain_loss_title">得/失球</string>
+    <string name="football_database_details_integral_itnis_title">凈勝球</string>
+
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
     <string name="football_analyze_details_time">時間</string>
