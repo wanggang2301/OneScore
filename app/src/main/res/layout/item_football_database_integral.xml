@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="已赛"
+                android:text="@string/football_database_details_integral_num_title"
                 android:textColor="@color/content_txt_light_grad"
                 android:textSize="@dimen/text_size_10"/>
 
