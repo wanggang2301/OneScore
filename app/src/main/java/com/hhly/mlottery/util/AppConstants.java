@@ -188,6 +188,7 @@ public class AppConstants {
     public static final int FOTTBALL_SCORE_VALUE = 0;// 足球比分跳转value
     public static final int BASKETBALL_SCORE_VALUE = 5;// 篮球比分跳转value
     public static final int FOTTBALL_INFORMATION_VALUE = 1;// 足球资讯跳转value
+    public static final String FOTTBALL_INFO_LABEL_KEY = "sportsInfoIndex";// 足球资讯标签Key
     public static final int FOTTBALL_DATA_VALUE = 2;// 足球数据跳转value
     public static final int FOTTBALL_VIDEO_VALUE = 3;// 足球视频跳转value
     public static final int FOTTBALL_EXPONENT_VALUE = 4;// 足球指数跳转value

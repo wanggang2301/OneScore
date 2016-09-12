@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballInformationActivity;
 import com.hhly.mlottery.activity.FootballActivity;
+import com.hhly.mlottery.activity.InfoCenterActivity;
+import com.hhly.mlottery.activity.LeagueStatisticsTodayActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
@@ -83,7 +85,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                     break;
                                 case 1:// 页面
                                 {
-                                    if(jumpAddr.contains("{loginToken}")){// 是否需要登录
+                                    if (jumpAddr.contains("{loginToken}")) {// 是否需要登录
                                         if (CommonUtils.isLogin()) {// 判断用户是否登录
                                             Intent intent = new Intent(mContext, WebActivity.class);
                                             intent.putExtra("key", jumpAddr);// 跳转地址
@@ -94,7 +96,7 @@ public class HomeGridAdapter extends BaseAdapter {
                                         } else {// 跳转到登录界面
                                             mContext.startActivity(new Intent(mContext, LoginActivity.class));
                                         }
-                                    }else {// 其它
+                                    } else {// 其它
                                         Intent intent = new Intent(mContext, WebActivity.class);
                                         intent.putExtra("key", jumpAddr);
                                         intent.putExtra("infoTypeName", title);
@@ -374,6 +376,25 @@ public class HomeGridAdapter extends BaseAdapter {
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_THREE));
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Lottery_SSC_TJ");
+                                        }
+                                        break;
+                                        case "60":// 情报中心
+                                        {
+                                            mContext.startActivity(new Intent(mContext, InfoCenterActivity.class));
+                                        }
+                                        break;
+                                        case "19":// 今日联赛统计
+                                        {
+                                            mContext.startActivity(new Intent(mContext, LeagueStatisticsTodayActivity.class));
+                                        }
+                                        break;
+                                        case "51":// 独家访谈
+                                        {
+                                            Intent intent = new Intent(mContext, FootballActivity.class);
+                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
+                                            intent.putExtra("isVideo", "isVideo");
+                                            // 差一个跳转标记
+                                            mContext.startActivity(intent);
                                         }
                                         break;
                                     }

@@ -14,6 +14,8 @@ public class DataBaseBean implements Parcelable {
     private String leagueId;
     private String lgName;
     private String pic;
+    private String lgId;
+
     public DataBaseBean() {
 
     }
@@ -57,6 +59,14 @@ public class DataBaseBean implements Parcelable {
         this.kind = kind;
     }
 
+    public String getLgId() {
+        return lgId;
+    }
+
+    public void setLgId(String lgId) {
+        this.lgId = lgId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -68,6 +78,7 @@ public class DataBaseBean implements Parcelable {
         dest.writeString(this.leagueId);
         dest.writeString(this.lgName);
         dest.writeString(this.pic);
+        dest.writeString(this.lgId);
     }
 
     protected DataBaseBean(Parcel in) {
@@ -75,6 +86,7 @@ public class DataBaseBean implements Parcelable {
         this.leagueId = in.readString();
         this.lgName = in.readString();
         this.pic = in.readString();
+        this.lgId = in.readString();
     }
 
     public static final Parcelable.Creator<DataBaseBean> CREATOR = new Parcelable.Creator<DataBaseBean>() {

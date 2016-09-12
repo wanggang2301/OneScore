@@ -189,7 +189,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener, Swi
                             //添加子view数据
                             childDataList.add(groupMatchVideoList.get(i).getSptVideoInfoDtoList());
                         }
-                        pheadapter = new PinnedHeaderExpandableAdapter(childDataList, groupDataList, mContext, explistview_live, stPreurl, stFix);
+                       // pheadapter = new PinnedHeaderExpandableAdapter(childDataList, groupDataList, mContext, explistview_live, stPreurl, stFix);
                         explistview_live.setAdapter(pheadapter);
                         pheadapter.notifyDataSetChanged();
                         for (int i = 0; i < mSize; i++) {

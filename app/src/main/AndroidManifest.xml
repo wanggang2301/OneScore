@@ -41,10 +41,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!-- <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>-->
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -56,25 +56,23 @@
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--情报中心-->
+        <activity android:name=".activity.InfoCenterActivity"
+            android:screenOrientation="portrait"/>
+
         <!-- 引导页 -->
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation"></activity>
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
         <activity
             android:name=".activity.FootballInformationActivity"
@@ -92,6 +90,8 @@
         <activity
             android:name=".activity.NumberCustomizeActivity"
             android:screenOrientation="portrait" />
+        <!-- 彩种定制 -->
+
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
@@ -225,7 +225,9 @@
         <activity
             android:name=".activity.ModifyPasswordActivity"
             android:screenOrientation="portrait" />
+
         <!-- 登录注册 end -->
+
 
         <!-- 畅言的配置项 -->
         <activity android:name="com.sohu.cyan.android.sdk.activity.OAuthActivity" />
@@ -307,7 +309,10 @@
         <activity
             android:name=".activity.BasketballInformationSerachActivity"
             android:screenOrientation="portrait" />
-
+        <!-- 足球资料库模糊搜索 -->
+        <activity
+            android:name=".activity.FootballInformationSerachActivity"
+            android:screenOrientation="portrait" />
         <!-- 融云会话列表 -->
         <activity
             android:name=".frame.ConversationFragment"
@@ -339,4 +344,5 @@
               </intent-filter>-->
         </activity>
     </application>
+
 </manifest>

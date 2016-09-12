@@ -25,6 +25,7 @@ import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.bean.footballDetails.database.LeagueDataBase;
 import com.hhly.mlottery.bean.footballDetails.database.NationBean;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -316,8 +317,8 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
         params.put("index", mType + "");
         L.d(TAG, mType + "");
 
-        // String url = BaseURLs.URL_FOOTBALL_DATABASE;
-        String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidDataMenu.do";
+        String url = BaseURLs.URL_FOOTBALL_DATABASE;
+        //String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidDataMenu.do";
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<LeagueDataBase>() {
 

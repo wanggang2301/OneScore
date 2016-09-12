@@ -119,7 +119,6 @@
                 android:text="主队"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_13" />
-
         </LinearLayout>
 
         <LinearLayout

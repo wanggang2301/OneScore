@@ -912,6 +912,8 @@
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">找不到相关信息</string>
+    <string name="ind_search">正在查找......</string>
+    <string name="skip">"秒 | 跳过"</string>
     <!--1.1.2 begin-->
     <string name="weixin_installed">请先安装微信客户端!</string>
     <string name="Login_register">登录/注册</string>
@@ -1095,6 +1097,85 @@
     <string name="continue_download">继续下载</string>
 
     <string name="is_uploading">努力上传中..........</string>
+    <!--情报中心 start-->
+    <string name="title_info_center">情报中心</string>
+    <string name="info_center_end_index">今日完场盘指数</string>
+    <string name="info_center_results_index">赛果指数</string>
+    <string name="info_center_size_disc_index">大小盘指数</string>
+    <string name="info_center_asian_plate_index">亚盘指数</string>
+    <string name="info_center_type1">本赛季赢盘概率</string>
+    <string name="info_center_type2">本赛季输盘概率</string>
+    <string name="info_center_type3">近期比赛已连续%1$s场赢盘</string>
+    <string name="info_center_type4">%1$s盘口下赢盘概率</string>
+    <string name="info_center_type5">%1$s盘口下输盘概率</string>
+    <string name="info_center_type6">本赛季大球概率</string>
+    <string name="info_center_type7">本赛季小球概率</string>
+    <string name="info_center_type8">近期比赛已连续%1$s场大球</string>
+    <string name="info_center_type9">近期比赛已连续%1$s场小球</string>
+    <string name="info_center_type10">%1$s盘口下大球概率</string>
+    <string name="info_center_type11">%1$s盘口下小球概率</string>
+    <string name="info_center_type12">近期比赛已取得%1$s连胜</string>
+    <string name="info_center_type13">净胜对手2球或以上的场次概率</string>
+    <string name="info_center_type14">净输对手2球或以上的场次概率</string>
+    <string name="info_center_type15">先入球后赛果胜的概率</string>
+    <string name="info_center_type16">先失球后赛果胜的概率</string>
+    <string name="info_center_type17">进0球的场次概率</string>
+    <string name="info_center_type18">上半场赢盘概率</string>
+    <string name="info_center_type19">上半场输盘概率</string>
+    <string name="info_center_type20">已连续%1$s场上半场赢盘</string>
+    <string name="info_center_type21">%1$s盘口下上半场赢盘概率</string>
+    <string name="info_center_type22">%1$s盘口下上半场输盘概率</string>
+    <string name="info_center_type23">上半场大球概率</string>
+    <string name="info_center_type24">上半场小球概率</string>
+    <string name="info_center_type25">已连续%1$s场上半场大球</string>
+    <string name="info_center_type26">已连续%1$s场上半场小球</string>
+    <string name="info_center_type27">%1$s盘口下上半场大球概率</string>
+    <string name="info_center_type28">%1$s盘口下上半场小球概率</string>
+    <string name="info_center_type29">已取得上半场%1$s连胜</string>
+    <string name="info_center_other_type1">%1$s赢盘概率</string>
+    <string name="info_center_other_type2">%1$s输盘概率</string>
+    <string name="info_center_other_type3">已连续%1$s场赢盘</string>
+    <string name="info_center_other_type4">%1$s盘口下赢盘概率</string>
+    <string name="info_center_other_type5">%1$s盘口下输盘概率</string>
+    <string name="info_center_other_type6">%1$s大球概率</string>
+    <string name="info_center_other_type7">%1$s小球概率</string>
+    <string name="info_center_other_type8">已连续%1$s场大球</string>
+    <string name="info_center_other_type9">已连续%1$s场小球</string>
+    <string name="info_center_other_type10">%1$s盘口下大球概率</string>
+    <string name="info_center_other_type11">%1$s盘口下小球概率</string>
+    <string name="info_center_other_type12">已取得%1$s%2$s连胜</string>
+    <string name="info_center_other_type13">净胜对手2球或以上的场次概率</string>
+    <string name="info_center_other_type14">净输对手2球或以上的场次概率</string>
+    <string name="info_center_other_type15">先入球后赛果胜的概率</string>
+    <string name="info_center_other_type16">先失球后赛果胜的概率</string>
+    <string name="info_center_other_type17">进0球的场次概率</string>
+    <string name="info_center_other_type18">%1$s上半场赢盘概率</string>
+    <string name="info_center_other_type19">%1$s上半场输盘概率</string>
+    <string name="info_center_other_type20">已连续%1$s场上半场赢盘</string>
+    <string name="info_center_other_type21">%1$s盘口下上半场赢盘概率</string>
+    <string name="info_center_other_type22">%1$s盘口下上半场输盘概率</string>
+    <string name="info_center_other_type23">%1$s上半场大球概率</string>
+    <string name="info_center_other_type24">%1$s上半场小球概率</string>
+    <string name="info_center_other_type25">已连续%1$s场上半场大球</string>
+    <string name="info_center_other_type26">已连续%1$s场上半场小球</string>
+    <string name="info_center_other_type27">%1$s盘口下上半场大球概率</string>
+    <string name="info_center_other_type28">%1$s盘口下上半场小球概率</string>
+    <string name="info_center_other_type29">上半场%1$s连胜</string>
+    <string name="info_center_other_type30">%1$s盘口赢盘概率</string>
+    <string name="info_center_other_type31">%1$s盘口输盘概率</string>
+    <string name="info_center_other_type32">%1$s盘口大球概率</string>
+    <string name="info_center_other_type33">%1$s盘口小球概率</string>
+    <string name="info_center_other_type34">%1$s盘口胜概率</string>
+    <string name="info_center_other_type35">%1$s盘口平概率</string>
+    <string name="info_center_other_type36">%1$s盘口负概率</string>
+    <string name="info_center_other_type37">%1$s盘口上半场赢盘概率</string>
+    <string name="info_center_other_type38">%1$s盘口上半场输盘概率</string>
+    <string name="info_center_other_type39">%1$s盘口上半场大球概率</string>
+    <string name="info_center_other_type40">%1$s盘口上半场小球概率</string>
+    <string name="info_center_other_type41">%1$s盘口上半场胜概率</string>
+    <string name="info_center_other_type42">%1$s盘口上半场平概率</string>
+    <string name="info_center_other_type43">%1$s盘口上半场负概率</string>
+    <!--情报中心 end-->
 
     <!--今日赛事提点-->
     <string name="league_statistics_today_title">今日赛事提点</string>
@@ -1123,4 +1204,9 @@
     <string name="league_statistics_today_noticetitle">什么是今日联赛提点？</string>
     <string name="league_statistics_today_noticetext">是对今日有开盘的比赛参赛的所有联赛，各项数据在近期比赛或者某一个时间段内的排名。</string>
 
+    <!--视频直播-->
+    <string name="direct_seedinging">直播中</string>
+    <string name="baskball">篮球</string>
+    <string name="comprehensive">综合</string>
+    <string name="direct_seeding">直播</string>
 </resources>

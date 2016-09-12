@@ -71,6 +71,8 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                         if(charSequence.length() > 0){
                             //有数据显示删除键
                             mSearch_iv_delete.setVisibility(View.VISIBLE);
+                            mNo_serach_tv.setVisibility(View.VISIBLE);
+                            mNo_serach_tv.setText(R.string.find_search);
                             return true;
                         }else{
                             if (basketballInforSerachAdapter!=null){
@@ -125,6 +127,7 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                             if (resultListBeen.isEmpty()) {
                                 //搜索详情
                                 //UiUtils.toast(MyApp.getInstance(), "找不到相关信息!");
+                                mNo_serach_tv.setText(R.string.not_find_search);
                                 mTv_result.setVisibility(View.GONE);
                                 mNo_serach_tv.setVisibility(View.VISIBLE);
 

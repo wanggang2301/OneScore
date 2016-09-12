@@ -127,9 +127,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private final static int ROLLBALL_FG = 0;
     private final static int LIVE_FG = 1;
     private final static int ANALYZE_FG = 2;
-    private final static int ODDS_FG = 3;
-    private final static int STATISTICS_FG = 4;
+    private final static int STATISTICS_FG = 3;
+    private final static int ODDS_FG = 4;
     private final static int TALKBALL_FG = 5;
+    private int infoCenter = -1;// 情报中心中转标记
 
 
     //事件直播
@@ -332,6 +333,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
+            infoCenter = getIntent().getExtras().getInt("info_center");
         }
 
         EventBus.getDefault().register(this);//注册EventBus
@@ -807,8 +809,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private void initViewPager(MatchDetail matchDetail) {
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
 
-            //赛前进入分析
-            mViewPager.setCurrentItem(ANALYZE_FG, false);
+            if (infoCenter == 1) {
+                // 情报
+                mViewPager.setCurrentItem(STATISTICS_FG, false);
+            } else {
+                //赛前进入分析
+                mViewPager.setCurrentItem(ANALYZE_FG, false);
+            }
 
 
             mHeadviewpager.setIsScrollable(false);
@@ -836,7 +843,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         } else {
 
-            mViewPager.setCurrentItem(ROLLBALL_FG, false);
+            if (infoCenter == 1) {
+                // 情报
+                mViewPager.setCurrentItem(STATISTICS_FG, false);
+            } else {
+                mViewPager.setCurrentItem(ROLLBALL_FG, false);
+            }
 
 
             mHeadviewpager.setIsScrollable(true);
@@ -2507,7 +2519,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             iv_join_room_foot.setVisibility(View.GONE);
 
             // 判断融云服务器是否连接OK
-            if(!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))){
+            if (!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))) {
                 RongYunUtils.initRongIMConnect(mContext);// 连接融云服务器
             }
 
