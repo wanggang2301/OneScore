@@ -218,6 +218,12 @@ public class HomePagerAdapter extends PagerAdapter {
                 int jumpType = mHomePagerEntity.getBanners().getContent().get(index).getJumpType();
                 String title = mHomePagerEntity.getBanners().getContent().get(index).getTitle();
                 String picUrl = mHomePagerEntity.getBanners().getContent().get(index).getPicUrl();
+                int sportsInfoIndex = 0;
+                if (jumpAddr.contains("&")) {
+                    String str = jumpAddr.substring(0,jumpAddr.lastIndexOf("&"));
+                    sportsInfoIndex =Integer.parseInt(jumpAddr.substring(jumpAddr.lastIndexOf("&") + 1, jumpAddr.length()));
+                    jumpAddr = str;
+                }
                 if (!TextUtils.isEmpty(jumpAddr)) {
                     switch (jumpType) {
                         case 0:// 无
@@ -264,10 +270,11 @@ public class HomePagerAdapter extends PagerAdapter {
                                     mContext.startActivity(intent);
                                 }
                                 break;
-                                case "12":// 足球资讯
+                                case "12":// 体育资讯
                                 {
                                     Intent intent = new Intent(mContext, FootballActivity.class);
                                     intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
+                                    intent.putExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, sportsInfoIndex);
                                     mContext.startActivity(intent);
                                 }
                                 break;
