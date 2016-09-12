@@ -858,4 +858,6 @@ public class BaseURLs {
     public final static String UPLOADIMAGE = NEW_URL_API_PHOST + "uploadImage.do";
     /*头像URL上传*/
     public final static String UPDATEHEADICON = URL_API_HOST + "androidUserCenter.updateHeadIcon.do";
+    /*头像URL上传*/
+    public final static String VIDEOINFO = URL_API_HOST+ "matchVideo.findAndroidVideoinfo.do";
 }

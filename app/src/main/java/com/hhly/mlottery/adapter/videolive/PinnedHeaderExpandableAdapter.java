@@ -43,7 +43,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         this.mFix = mFix;
         inflater = LayoutInflater.from(this.mContext);
         options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.live_default).showImageOnFail(R.mipmap.live_default)
+                .showImageOnLoading(R.mipmap.home_score_item_icon_def).showImageOnFail(R.mipmap.home_score_item_icon_def)
                 .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
                 .cacheOnDisc(true).considerExifParams(true).build();
     }

@@ -27,6 +27,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.PlayWebViewActivity;
 import com.hhly.mlottery.adapter.videolive.PinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -139,13 +140,13 @@ public class BaskballVideoFragemnt extends Fragment implements View.OnClickListe
     public void initData() {
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
 
-        String url = "http://192.168.10.242:8181/mlottery/core/matchVideo.findAndroidVideoinfo.do";
+       // String url = "http://192.168.10.242:8181/mlottery/core/matchVideo.findAndroidVideoinfo.do";
         Map<String, String> myPostParams = new HashMap<>();
         //第二次请求需要日期
         myPostParams.put("timeZone", "8");
         myPostParams.put("liveType", "2");
 
-        VolleyContentFast.requestJsonByGet(url, myPostParams,new VolleyContentFast.ResponseSuccessListener<NewMatchVideoinfo>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.VIDEOINFO, myPostParams,new VolleyContentFast.ResponseSuccessListener<NewMatchVideoinfo>() {
             @Override
             public void onResponse(NewMatchVideoinfo json) {
                 if (pheadapter != null) {//如果adapter不为空，清除数据（刷新的时候）
