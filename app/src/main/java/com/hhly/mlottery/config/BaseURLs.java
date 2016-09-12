@@ -861,4 +861,6 @@ public class BaseURLs {
 
     // 情报中心
     public final static String URL_INFO_CENTER = URL_API_HOST +  "footBallMatch.findIntelligenceList.do";
+    /*头像URL上传*/
+    public final static String VIDEOINFO = URL_API_HOST+ "matchVideo.findAndroidVideoinfo.do";
 }

@@ -1,38 +1,37 @@
-package com.hhly.mlottery.bean.footballDetails.database;
+package com.hhly.mlottery.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 描述:  ${TODO}
- * 作者:  wangg@13322.com
- * 时间:  2016/9/2 17:15
+ * @ClassName: OneScoreGit
+ * @author:Administrator luyao
+ * @Description:
+ * @data: 2016/9/9 15:01
  */
-public class DataBaseBean implements Parcelable {
+public class FootballLeagueBean implements Parcelable {
 
     private String kind;
-    private String leagueId;
+    private String lgId;
     private String lgName;
     private String pic;
-    private String lgId;
-
-    public DataBaseBean() {
+    public FootballLeagueBean() {
 
     }
 
-    public DataBaseBean(String kind, String leagueId, String pic, String lgName) {
+    public FootballLeagueBean(String kind, String leagueId, String pic, String lgName) {
         this.kind = kind;
-        this.leagueId = leagueId;
+        this.lgId = leagueId;
         this.pic = pic;
         this.lgName = lgName;
     }
 
     public String getLeagueId() {
-        return leagueId;
+        return lgId;
     }
 
     public void setLeagueId(String leagueId) {
-        this.leagueId = leagueId;
+        this.lgId = leagueId;
     }
 
     public String getLgName() {
@@ -59,14 +58,6 @@ public class DataBaseBean implements Parcelable {
         this.kind = kind;
     }
 
-    public String getLgId() {
-        return lgId;
-    }
-
-    public void setLgId(String lgId) {
-        this.lgId = lgId;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -74,30 +65,28 @@ public class DataBaseBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.kind);
-        dest.writeString(this.leagueId);
+        dest.writeValue(this.kind);
+        dest.writeValue(this.lgId);
         dest.writeString(this.lgName);
         dest.writeString(this.pic);
-        dest.writeString(this.lgId);
     }
 
-    protected DataBaseBean(Parcel in) {
+    protected FootballLeagueBean(Parcel in) {
         this.kind = in.readString();
-        this.leagueId = in.readString();
+        this.lgId = in.readString();
         this.lgName = in.readString();
         this.pic = in.readString();
-        this.lgId = in.readString();
     }
 
-    public static final Parcelable.Creator<DataBaseBean> CREATOR = new Parcelable.Creator<DataBaseBean>() {
+    public static final Parcelable.Creator<FootballLeagueBean> CREATOR = new Parcelable.Creator<FootballLeagueBean>() {
         @Override
-        public DataBaseBean createFromParcel(Parcel source) {
-            return new DataBaseBean(source);
+        public FootballLeagueBean createFromParcel(Parcel source) {
+            return new FootballLeagueBean(source);
         }
 
         @Override
-        public DataBaseBean[] newArray(int size) {
-            return new DataBaseBean[size];
+        public FootballLeagueBean[] newArray(int size) {
+            return new FootballLeagueBean[size];
         }
     };
 }

@@ -17,7 +17,7 @@
     <color name="odds_details">#ff6600</color>
     <color name="odds_left">#00DB1A</color>
     <color name="material_red">#F44336</color>
-
+    <color name="direct_seeding">#0090FF</color>
 
     <!-- 主题颜色 -->
     <color name="new_colorPrimary">#800049BF</color>
@@ -63,6 +63,7 @@
     <color name="chart_room_bg_color">#88CCCCCC</color>
     <color name="grey">#ff5b5a5a</color>
     <color name="deep_gray">#ff3b3b3b</color>
+    <color name="new_deep_gray">#000000</color>
     <color name="transparency">#00000000</color>
     <color name="shadow">#1e000000</color>
     <color name="green">#ff4f8c0b</color>

@@ -13,8 +13,8 @@ import android.widget.RadioGroup;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.CPIFragment;
 import com.hhly.mlottery.frame.CounselFragment;
+import com.hhly.mlottery.frame.NewVideoFragment;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.frame.VideoFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
@@ -77,7 +77,7 @@ public class FootballActivity extends BaseActivity {
         fragments.add(new ScoresFragment());
         fragments.add(new CounselFragment());
         fragments.add(new InformationFragment());
-        fragments.add(new VideoFragment());
+        fragments.add(new NewVideoFragment());
         fragments.add(CPIFragment.newInstance());
         fragments.add(new BasketScoresFragment());
     }

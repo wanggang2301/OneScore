@@ -79,27 +79,25 @@ public class DateUtil {
         }
         return result;
     }
+
     /**
-
      * 把毫秒转化成日期
-
-     * @param dateFormat(日期格式 例如  MM-dd HH:mm)  24小时制
-
+     *
+     * @param dateFormat(日期格式 例如 MM-dd HH:mm)  24小时制
      * @param millSec(毫秒数)
-
      * @return
-
      */
 
-    public static String transferLongToDate(Long millSec){
-        String dateFormat="MM-dd HH:mm:ss";
+    public static String transferLongToDate(Long millSec) {
+        String dateFormat = "MM-dd HH:mm:ss";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
-        Date date= new Date(millSec);
+        Date date = new Date(millSec);
 
         return sdf.format(date);
 
     }
+
     /**
      * 功能描述：返回字符型日期
      *
@@ -399,5 +397,30 @@ public class DateUtil {
     public static String getAssignDate(String date) {
         String[] split = date.split("-");
         return split[1] + "-" + split[2];
+    }
+
+    /**
+     * 根据传过来的日期判断是今天还是明天
+     *
+     * @param date
+     * @return
+     */
+
+    public static String getTodayorTomorrow(String date) {
+
+        String current = formatDate(new Date());
+
+        long today = Long.valueOf(current.replaceAll("[-\\s:]", ""));
+
+        long day = Long.valueOf(date.replaceAll("[-\\s:]", ""));
+
+        if ((today - day) == 1) {
+            return "昨天";
+        } else if ((today - day) == -1) {
+            return "明天";
+        } else if ((today - day) == 0) {
+            return "今天";
+        }
+        return "";
     }
 }

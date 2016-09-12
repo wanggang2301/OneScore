@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -90,8 +91,8 @@ public class FootballDatabaseActivity extends BaseActivity implements View.OnCli
                 finish();
                 break;
             case R.id.public_btn_set:
-              //  Intent intent = new Intent(getApplicationContext(), BasketballInformationSerachActivity.class);
-              //  startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), FootballInformationSerachActivity.class);
+                startActivity(intent);
                 break;
         }
     }
