@@ -602,16 +602,6 @@
             android:gravity="center"
             android:visibility="gone"
             />
-        <TextView
-            android:id="@+id/football_analyze_mostdata"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textSize="@dimen/text_size_13"
-            android:text="全部积分>>>"
-            android:textColor="@color/black_details_ball_textcolor"
-            android:gravity="center"
-            />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"

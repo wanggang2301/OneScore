@@ -562,6 +562,8 @@ public class ResultBasketballFragment extends Fragment implements View.OnClickLi
         //用getActivity().startActivityForResult();不走onActivityResult ;
 //        startActivityForResult(intent, REQUEST_DETAILSCODE);
         intent.putExtra("currentfragment", mBasketballType);
+        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID , childrenDataList.get(groupPosition).get(childPosition).getLeagueId());
+        intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE , childrenDataList.get(groupPosition).get(childPosition).getMatchType());
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
         MobclickAgent.onEvent(mContext,"Basketball_ListItem");
