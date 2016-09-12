@@ -36,6 +36,8 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
 
         viewHolder.setText(R.id.tv_time, b + "分钟以前");
 
+
+
     }
 
 }

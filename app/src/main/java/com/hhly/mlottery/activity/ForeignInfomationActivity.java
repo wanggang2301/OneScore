@@ -27,7 +27,6 @@ public class ForeignInfomationActivity extends BaseActivity {
     private List<Integer> list;
     private View moreView;  //加载更多
 
-    private View mView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,6 @@ public class ForeignInfomationActivity extends BaseActivity {
 
         recyclerView.setAdapter(foreignInfomationAdapter);
 
-        // moreView = View.inflate(this, R.layout.view_load_more, null);
         moreView = getLayoutInflater().inflate(R.layout.view_load_more, (ViewGroup) recyclerView.getParent(), false);
 
 
@@ -60,13 +58,10 @@ public class ForeignInfomationActivity extends BaseActivity {
                     @Override
                     public void run() {
 
-
                         for (int i = 0; i < 10; i++) {
                             list.add(new Random().nextInt(50));
                         }
-
-                         foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
-                        // loadMoreData();
+                        foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
                     }
                 });
             }
