@@ -60,6 +60,7 @@ import java.util.Map;
 public class FootballDatabaseDetailsActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     public static final String LEAGUE = "league";
+    public static final String IS_INTEGRAL = "isIntegral";
 
     private DataBaseBean mLeague;
     private ImageView mIcon;
@@ -89,6 +90,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     Handler mHandlerData = new Handler();
     private FootballDatabaseIntegralFragment mIntegralFragment;
     private FootballDatabaseScheduleFragment mScheduleFragment;
+    private boolean mIsCurrenIntegral;//是否默认显示积分页
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         if (getIntent().getExtras() != null) {
 
             mLeague = getIntent().getExtras().getParcelable(LEAGUE);
+            mIsCurrenIntegral = getIntent().getExtras().getBoolean(IS_INTEGRAL);
 
         }
         /**
@@ -161,6 +164,9 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(tabsAdapter);
+        if (mIsCurrenIntegral) {
+            mViewPager.setCurrentItem(1);
+        }
         mTabLayout.setupWithViewPager(mViewPager);
 
         appBarLayout.addOnOffsetChangedListener(this);

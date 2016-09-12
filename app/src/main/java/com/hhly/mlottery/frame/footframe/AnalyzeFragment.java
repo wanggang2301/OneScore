@@ -1167,6 +1167,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 bean.setKind(mAnalyzeBean.getLeagueType() + "");
                 bean.setLeagueId(mAnalyzeBean.getLeagueId() + "");
                 intent1.putExtra("league", bean);
+                intent1.putExtra("isIntegral" , true);
                 startActivity(intent1);
                 break;
         }
