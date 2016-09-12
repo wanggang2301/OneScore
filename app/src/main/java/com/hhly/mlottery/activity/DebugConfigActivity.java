@@ -121,14 +121,6 @@ public class DebugConfigActivity extends BaseActivity {
             }
         });
 
-        findViewById(R.id.league).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DebugConfigActivity.this, LeagueStatisticsTodayActivity.class);
-                startActivity(intent);
-
-            }
-        });
 
     }
 
