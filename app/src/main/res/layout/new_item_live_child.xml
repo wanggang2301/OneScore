@@ -12,6 +12,7 @@
         android:layout_marginTop="10dp"
         >
         <RelativeLayout
+
             android:id="@+id/rl_iv"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
@@ -20,6 +21,24 @@
 
             <ImageView
                 android:id="@+id/live_home_icon_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:id="@+id/rl_iv1"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/live_home_icon_img1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
@@ -48,7 +67,6 @@
                 android:layout_gravity="center"
                 android:paddingTop="5dp"
                 android:singleLine="true"
-                android:text="客队客队客队客队客队客队"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_size_13"/>
 <!--
@@ -100,7 +118,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="(100:100)"
                 android:textColor="#666666"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:textSize="@dimen/text_size_13"
                 android:layout_below="@id/live_right_child_txt"
                 android:layout_centerHorizontal="true"/>
@@ -115,9 +133,9 @@
                 android:layout_below="@id/live_right_time_txt"
                 android:layout_centerHorizontal="true">
                 <TextView
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="1dp"
                     android:id="@+id/live_item_child_txt"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="西甲第13轮"
                     android:textColor="@color/res_name_color"
@@ -163,7 +181,6 @@
                 android:layout_gravity="center"
                 android:paddingTop="5dp"
                 android:singleLine="true"
-                android:text="主队主队主队主队主队主队"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_size_13"/>
 
