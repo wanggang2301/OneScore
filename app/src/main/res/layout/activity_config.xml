@@ -6,25 +6,26 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="环境选择"
+        android:layout_marginTop="5dp"
         android:background="@color/bg_gray"
-        android:textSize="20sp"
-        />
+        android:text="环境选择"
+        android:textSize="20sp" />
 
 
     <RadioGroup
         android:id="@+id/config_rg1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
+
         <RadioButton
             android:id="@+id/config_rb5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开发环境：http://192.168.10.242:8181"
-            android:checked="true"/>
+            android:checked="true"
+            android:text="开发环境：http://192.168.10.242:8181" />
+
         <RadioButton
             android:id="@+id/config_rb1"
             android:layout_width="wrap_content"
@@ -37,52 +38,49 @@
             android:id="@+id/config_rb7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="测试环境2：http://183.61.172.93:8096"  />
+            android:text="测试环境2：http://183.61.172.93:8096" />
 
         <RadioButton
             android:id="@+id/config_rb2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="生产环境：http://m.13322.com"  />
-
-
+            android:text="生产环境：http://m.13322.com" />
 
 
     </RadioGroup>
 
     <TextView
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="推送环境选择"
+        android:layout_marginTop="5dp"
         android:background="@color/bg_gray"
-        android:textSize="20sp"
-        />
+        android:text="推送环境选择"
+        android:textSize="20sp" />
 
 
     <RadioGroup
         android:id="@+id/config_rg2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/config_rb3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开发环境：ws://192.168.10.242:61634"
             android:checked="true"
-            />
+            android:text="开发环境：ws://192.168.10.242:61634" />
 
         <RadioButton
             android:id="@+id/config_rb6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="测试环境：ws://m.1332255.com:81/ws"  />
+            android:text="测试环境：ws://m.1332255.com:81/ws" />
+
         <RadioButton
             android:id="@+id/config_rb4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="生产环境：ws://m.13322.com/ws"  />
+            android:text="生产环境：ws://m.13322.com/ws" />
 
     </RadioGroup>
 
@@ -90,34 +88,33 @@
         android:id="@+id/config_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_marginBottom="30dp"
+        android:layout_marginTop="12dp"
         android:text="确    定" />
 
     <TextView
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="自定义环境"
+        android:layout_marginTop="5dp"
         android:background="@color/bg_gray"
-        android:textSize="20sp"
-        />
+        android:text="自定义环境"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/et_input"
         android:layout_width="match_parent"
-        android:hint="请输入环境地址"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="请输入环境地址" />
 
     <Button
         android:id="@+id/bt_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="自定义确定"/>
+        android:text="自定义确定" />
 
     <Button
         android:id="@+id/league"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="赛事提点测试"/>
+        android:text="国外资讯" />
 </LinearLayout>
