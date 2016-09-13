@@ -80,7 +80,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
     private String mLeagueRound = "";
     private boolean isLoad = false;//是否可选择
     private String url ;
-    private int currentPosition = 0; // 当前选中 （默认选中第一项）
+    private int currentPosition = -1; // 当前选中 （默认选中第一项）
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,6 +145,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
      * @param currPosition
      */
     private void loadLeft(int currPosition){
+        url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
         currentPosition = currPosition - 1;
         if (currentPosition <= 0) {
             mLeagueRound = mRoundString[0];
@@ -159,6 +160,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
      * @param currPosition
      */
     private void loadRight(int currPosition){
+        url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
         currentPosition = currPosition + 1;
         if (currentPosition >= mRoundString.length-1) {
             mLeagueRound = mRoundString[mRoundString.length-1];
@@ -225,7 +227,10 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
                         if (mRoundString != null && mRoundString.length != 0) {
                             isLoad = true;
                         }
-                        handleHeadViewNew(mRoundString ,currentPosition);
+                        if (currentPosition == -1) {
+                            currentPosition = result.getCurr();
+                            handleHeadViewNew(mRoundString ,currentPosition);
+                        }
                         handleDataNew(result.getRace());
                         mAdapterNew.notifyDataSetChanged();
                     }

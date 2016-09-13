@@ -16,7 +16,16 @@ public class FootballDatabaseScheduleBean {
 //    private List<ScheduleDataBean> data;
     private String[] data;
     private int code;
+    private int curr;
     private List<ScheduleRaceBean> race;
+
+    public int getCurr() {
+        return curr;
+    }
+
+    public void setCurr(int curr) {
+        this.curr = curr;
+    }
 
     public String[] getData() {
         return data;

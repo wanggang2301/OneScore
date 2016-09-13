@@ -250,7 +250,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                             return;
                         }
                         mResult = result;
-                        mAdapter.setType(result.getRankingType() + 1);
+                        mAdapter.setType(result.getRankingType());
 
                         mRoundString = result.getSearchCondition();
                         if (mRoundString != null && mRoundString.length != 0) {

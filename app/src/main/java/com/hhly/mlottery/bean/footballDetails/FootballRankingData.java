@@ -31,6 +31,16 @@ public class FootballRankingData {
     private int abs;
     private int score;
 
+    private int rank;
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
     public int getTid() {
         return tid;
     }

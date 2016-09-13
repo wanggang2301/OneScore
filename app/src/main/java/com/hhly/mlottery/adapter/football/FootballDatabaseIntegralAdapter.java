@@ -79,18 +79,20 @@ public class FootballDatabaseIntegralAdapter
         TextView rank = holder.getView(R.id.rank);
         TextView name = holder.getView(R.id.name);
 
-        int ranking = team.getScore();
+        int ranking = team.getRank();
         String teamIntegral = team.getScore() + "";
 
         holder.setText(R.id.rank, String.format(Locale.getDefault(), "%d", ranking))
                 .setText(R.id.name, team.getName())
                 .setText(R.id.match_num, String.format(Locale.getDefault(), "%d", team.getRound()))
-                .setText(R.id.win_equ_lose, String.format(Locale.getDefault(), "%d/%d", team.getWin(),team.getEqu(), team.getLoss()))
+                .setText(R.id.win_equ_lose, String.format(Locale.getDefault(), "%d/%d/%d", team.getWin(),team.getEqu(), team.getLoss()))
                 .setText(R.id.win_loss, team.getGoal() + "/" + team.getLoss())
                 .setText(R.id.win_offset, String.format(Locale.getDefault(), "%d", team.getAbs()))
                 .setText(R.id.recent, "0".equals(teamIntegral) ? "-" : teamIntegral);
 
-        if (holder.getPosition() <= 3) {
+//        if (type == 2 ? holder.getPosition() <= 4 : holder.getPosition() <= 3) {
+//        if (type != 2 &&(type == 0 ? holder.getPosition() <= 3 : holder.getPosition() <= 4)) {
+        if (ranking <= 3) {
             rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             rank.setBackgroundResource(R.drawable.basket_databae_round_dra);
             name.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
