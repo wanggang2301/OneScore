@@ -253,7 +253,7 @@ public class HomePagerAdapter extends PagerAdapter {
                             int sportsInfoIndex = 0;
                             if (jumpAddr.contains("&")) {
                                 String str = jumpAddr.substring(0, jumpAddr.lastIndexOf("&"));
-                                sportsInfoIndex = Integer.parseInt(jumpAddr.substring(jumpAddr.lastIndexOf("&") + 1, jumpAddr.length()));
+                                sportsInfoIndex = Integer.parseInt(jumpAddr.substring(jumpAddr.lastIndexOf("&") + 1, jumpAddr.length())) - 1;
                                 jumpAddr = str;
                             }
                             switch (jumpAddr) {
