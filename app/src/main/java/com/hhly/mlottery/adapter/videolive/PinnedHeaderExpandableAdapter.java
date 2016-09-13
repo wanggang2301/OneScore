@@ -69,10 +69,10 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     /**
      * 设置 子内容 item数据
      *
-     * @param groupPosition 组位置（该组内部含有子元素）
-     * @param childPosition 子元素位置（决定返回哪个视图）
-     * @param isLastChild   子元素是否处于组中的最后一个
-     * @param convertView   重用已有的视图(View)对象。注意：在使用前你应该检查一下这个视图对象是否非空并且这个对象的类型是否合适。
+     * @param groupPosit+on 组位置（该组内部含有子元素）
+     * @param childPosit+on 子元素位置（决定返回哪个视图）
+     * @param isLastChil+   子元素是否处于组中的最后一个
+     * @param convertVie+   重用已有的视图(View)对象。注意：在使用前你应该检查一下这个视图对象是否非空并且这个对象的类型是否合适。
      *                      由此引伸出，如果该对象不能被转换并显示正确的数据，这个方法就会调用getChildView(int, int, boolean, View, ViewGroup)来创建一个视图(View)对象。
      * @param parent        指定位置上的子元素返回的视图对象
      * @return
@@ -107,7 +107,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             //
             holder.rl_iv1= (RelativeLayout) convertView.findViewById(R.id.rl_iv1);
             holder.rl_iv= (RelativeLayout) convertView.findViewById(R.id.rl_iv);
-
             holder.live_home_icon_img1= (ImageView) convertView.findViewById(R.id.live_home_icon_img1);
             convertView.setTag(holder);
         } else {
@@ -123,95 +122,180 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         String home_images = mPreurl + mChildrenDataList.get(groupPosition).get(childPosition).hmId + mFix;
         //客队图片
         String guest_images = mPreurl + mChildrenDataList.get(groupPosition).get(childPosition).awId + mFix;
-        //
-        String zonghe_images =  mChildrenDataList.get(groupPosition).get(childPosition).zonghePic;
+        //综合图片
+       // String zonghe_images =  mChildrenDataList.get(groupPosition).get(childPosition).zonghePic;
+        //System.out.println(">>D"+mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ);
 
-        //如果没开赛
-        if (mChildrenDataList.get(groupPosition).get(childPosition).statusOrigin.equals("0")) {
-            //西甲，英超
-            if( mMatchKind==1|| mMatchKind==2){
-                //主队icon
-                ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
-                //客队icon
-                ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
-                //主队
-                holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
-                // 客队
-                holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
-                holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
-            }else{
-                holder.live_left_bottom_child_txt.setVisibility(View.GONE);
-                holder.live_guest_icon_img.setVisibility(View.GONE);
-                holder.live_left_child_txt.setVisibility(View.GONE);
-                holder.rl_iv.setVisibility(View.GONE);
-                holder.rl_iv1.setVisibility(View.VISIBLE);
-                //主队con
-               // ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img, options);
-                ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
 
-                holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
-            }
+        if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 1){
+            //未直播综合
+            holder.live_left_bottom_child_txt.setVisibility(View.GONE);
+            holder.live_guest_icon_img.setVisibility(View.GONE);
+            holder.live_left_child_txt.setVisibility(View.GONE);
+            holder.rl_iv.setVisibility(View.GONE);
+            holder.rl_iv1.setVisibility(View.VISIBLE);
+            //主队con
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
+
+            /***********************************/
             //主队icon
+            holder.direct_seeding_photo.setVisibility(View.GONE);
             holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
-            //主队icon
-           // ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
-
-            //显示开赛时间
-           // holder.live_right_time_txt.setText(" " + mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
             holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
-
-            //如果没开赛显示没开赛的图片
-           // holder.live_right_child_img.setBackgroundResource(R.mipmap.live_iconfont_default);
-            //隐藏直播中的布局
-           // holder.live_right_child_txt.setVisibility(View.GONE);
-            //显示没开赛布局
-           // holder.live_right_time_txt.setVisibility(View.VISIBLE);
-
+            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
         }
-        //如果开赛了，直播中..
-        else if ("1".equals(state) || "2".equals(state )|| "3".equals(state)|| "4".equals(state) || "5".equals(state)) {
-            //西甲，英超
-            if(mMatchKind==1||mMatchKind==2){
-                //主队icon
+        else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 2){
+            if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==1){
+                //未直播篮足球
                 ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
                 //客队icon
                 ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
-                //主队
-                holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
-                // 客队
-                holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
-                holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
-            }else{
-                holder.live_left_bottom_child_txt.setVisibility(View.GONE);
-                holder.live_guest_icon_img.setVisibility(View.GONE);
-                holder.live_left_child_txt.setVisibility(View.GONE);
-                holder.rl_iv.setVisibility(View.GONE);
-                holder.rl_iv1.setVisibility(View.VISIBLE);
-                //主队icon
-                // ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img, options);
-                ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
-                //holder.live_home_icon_img.setPadding(0,200,0,0);
-                holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
+            }else  if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==2){
+                //未直播篮足球
+                ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
+                //客队icon
+                ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
             }
+            //主队
+            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
+            // 客队
+            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
 
+            holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
+            holder.live_guest_icon_img.setVisibility(View.VISIBLE);
+            holder.live_left_child_txt.setVisibility(View.VISIBLE);
+            holder.rl_iv.setVisibility(View.VISIBLE);
+            holder.rl_iv1.setVisibility(View.GONE);
+            /***********************************/
+            //主队icon
+            holder.direct_seeding_photo.setVisibility(View.GONE);
             holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
-            // holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
-            //显示直播中的布局
+            holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
+            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
+        }
+        else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 3){
+            //直播综合
+            holder.live_left_bottom_child_txt.setVisibility(View.GONE);
+            holder.live_guest_icon_img.setVisibility(View.GONE);
+            holder.live_left_child_txt.setVisibility(View.GONE);
+            holder.rl_iv.setVisibility(View.GONE);
+            holder.rl_iv1.setVisibility(View.VISIBLE);
+            //主队icon
+            // ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img, options);
+            ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+            //holder.live_home_icon_img.setPadding(0,200,0,0);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
+
+            //////////////////////
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+           //显示直播中的布局
             holder.direct_seeding_photo.setVisibility(View.VISIBLE);
             holder.live_right_child_txt.setText(mContext.getResources().getString(R.string.direct_seedinging));
             holder.live_right_child_txt.setPadding(20,0,0,0);
             holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.direct_seeding));
-            //主队icon
-            //  ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
-            //如果开赛显示开赛的图片
-            // holder.live_right_child_img.setBackgroundResource(R.mipmap.live_iconfont);
-            //隐藏未开始布局
-            //holder.live_right_child_layout.setVisibility(View.GONE);
-           }
-            //如果等于“-1”完场
-           else if("-1".equals(state)){
-             //不给他设 值 了
+
+        }
+        else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 4){
+            holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
+            holder.live_guest_icon_img.setVisibility(View.VISIBLE);
+            holder.live_left_child_txt.setVisibility(View.VISIBLE);
+            holder.rl_iv.setVisibility(View.VISIBLE);
+            holder.rl_iv1.setVisibility(View.GONE);
+            //直播篮足球
+            if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==1){
+                //未直播篮足球
+                ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
+                //客队icon
+                ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
+            }else  if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==2){
+                //未直播篮足球
+                ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
+                //客队icon
+                ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
             }
+            //主队
+            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
+            // 客队
+            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
+            ////////////////////////
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+            //显示直播中的布局
+            holder.direct_seeding_photo.setVisibility(View.VISIBLE);
+            holder.live_right_child_txt.setText(mContext.getResources().getString(R.string.direct_seedinging));
+
+            holder.live_right_child_txt.setPadding(20,0,0,0);
+            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.direct_seeding));
+        }
+
+
+        //如果没开赛
+//            if (!mChildrenDataList.get(groupPosition).get(childPosition).isLive) {
+//            //西甲，英超
+//            if(!mChildrenDataList.get(groupPosition).get(childPosition).isZonghe){
+//                //主队icon
+//                ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
+//                //客队icon
+//                ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
+//                //主队
+//                holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
+//                // 客队
+//                holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
+//                holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
+//            }else{
+//                holder.live_left_bottom_child_txt.setVisibility(View.GONE);
+//                holder.live_guest_icon_img.setVisibility(View.GONE);
+//                holder.live_left_child_txt.setVisibility(View.GONE);
+//                holder.rl_iv.setVisibility(View.GONE);
+//                holder.rl_iv1.setVisibility(View.VISIBLE);
+//                //主队con
+//               // ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img, options);
+//                ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+//
+//                holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
+//            }
+//            //主队icon
+//            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+//            holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
+//
+//        }
+        //如果开赛了，直播中..
+//        else if (mChildrenDataList.get(groupPosition).get(childPosition).isLive) {
+//            //西甲，英超
+//            if(mChildrenDataList.get(groupPosition).get(childPosition).isZonghe){
+//                //主队icon
+//                ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
+//                //客队icon
+//                ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
+//                //主队
+//                holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
+//                // 客队
+//                holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
+//                holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
+//            }else{
+//                holder.live_left_bottom_child_txt.setVisibility(View.GONE);
+//                holder.live_guest_icon_img.setVisibility(View.GONE);
+//                holder.live_left_child_txt.setVisibility(View.GONE);
+//                holder.rl_iv.setVisibility(View.GONE);
+//                holder.rl_iv1.setVisibility(View.VISIBLE);
+//                //主队icon
+//                // ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img, options);
+//                ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+//                //holder.live_home_icon_img.setPadding(0,200,0,0);
+//                holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
+//            }
+//
+//            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+//            //显示直播中的布局
+//            holder.direct_seeding_photo.setVisibility(View.VISIBLE);
+//            holder.live_right_child_txt.setText(mContext.getResources().getString(R.string.direct_seedinging));
+//            holder.live_right_child_txt.setPadding(20,0,0,0);
+//            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.direct_seeding));
+//
+//           }
 
         return convertView;
     }
