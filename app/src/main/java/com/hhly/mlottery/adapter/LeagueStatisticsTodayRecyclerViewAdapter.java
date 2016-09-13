@@ -20,10 +20,12 @@ import java.util.List;
 public class LeagueStatisticsTodayRecyclerViewAdapter extends BaseRecyclerViewAdapter {
     private List<LeagueStatisticsTodayChildBean> datas;
     private Context mContext;
+    private int handicap;
 
-    public LeagueStatisticsTodayRecyclerViewAdapter(Context mContext, List<LeagueStatisticsTodayChildBean> data) {
+    public LeagueStatisticsTodayRecyclerViewAdapter(Context mContext, List<LeagueStatisticsTodayChildBean> data, int handicap) {
         this.mContext = mContext;
         this.datas = data;
+        this.handicap = handicap;
     }
 
     @Override
@@ -57,10 +59,18 @@ public class LeagueStatisticsTodayRecyclerViewAdapter extends BaseRecyclerViewAd
         tv_league_finish.setText(datas.get(position).getTotal());
         tv_league_win_percent.setText(datas.get(position).getWinPercent() + "%");
         tv_league_win_num.setText(datas.get(position).getWinCount());
-        tv_league_flat_percent.setText(datas.get(position).getDrawPercent() + "%");
-        tv_league_flat_num.setText(datas.get(position).getDrawCount());
-        tv_league_loss_percent.setText(datas.get(position).getLostPercent() + "%");
-        tv_league_loss_num.setText(datas.get(position).getLostCount());
+
+        if (handicap == 0) {
+            tv_league_flat_percent.setText(datas.get(position).getDrawPercent() + "%");
+            tv_league_flat_num.setText(datas.get(position).getDrawCount());
+            tv_league_loss_percent.setText(datas.get(position).getLostPercent() + "%");
+            tv_league_loss_num.setText(datas.get(position).getLostCount());
+        } else {
+            tv_league_flat_percent.setText(datas.get(position).getLostPercent() + "%");
+            tv_league_flat_num.setText(datas.get(position).getLostCount());
+            tv_league_loss_percent.setText(datas.get(position).getDrawPercent() + "%");
+            tv_league_loss_num.setText(datas.get(position).getDrawCount());
+        }
     }
 
 
