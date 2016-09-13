@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
@@ -21,6 +22,10 @@ public class ForeignInfomationActivity extends BaseActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.public_img_back)
+    ImageView publicImgBack;
+    @BindView(R.id.public_btn_set)
+    ImageView publicBtnSet;
 
     private ForeignInfomationAdapter foreignInfomationAdapter;
 
@@ -34,30 +39,20 @@ public class ForeignInfomationActivity extends BaseActivity {
         setContentView(R.layout.frag_foreign_infomation);
         ButterKnife.bind(this);
 
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
+        initView();
         setList();
 
         foreignInfomationAdapter = new ForeignInfomationAdapter(getApplicationContext(), list);
-
         recyclerView.setAdapter(foreignInfomationAdapter);
-
         moreView = getLayoutInflater().inflate(R.layout.view_load_more, (ViewGroup) recyclerView.getParent(), false);
-
-
         foreignInfomationAdapter.openLoadMore(0, true);
-
         foreignInfomationAdapter.setLoadingView(moreView);
-
-
         foreignInfomationAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-
                         for (int i = 0; i < 10; i++) {
                             list.add(new Random().nextInt(50));
                         }
@@ -66,6 +61,13 @@ public class ForeignInfomationActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+
+    private void initView() {
+        publicBtnSet.setVisibility(View.GONE);
+        publicImgBack.setVisibility(View.GONE);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     private void setList() {
