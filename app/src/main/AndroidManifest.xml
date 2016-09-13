@@ -355,7 +355,9 @@
               </intent-filter>
             -->
         </activity>
-        <activity android:name=".activity.ForeignInfomationActivity">
+        <activity
+            android:name=".activity.ForeignInfomationActivity"
+            android:screenOrientation="portrait">
 
             <!--
             <intent-filter>
@@ -364,7 +366,9 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".activity.ForeignInfomationDetailsActivity"></activity>
+        <activity
+            android:name=".activity.ForeignInfomationDetailsActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

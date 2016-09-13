@@ -35,7 +35,7 @@ public class ForeignInfomationActivity extends BaseActivity {
         ButterKnife.bind(this);
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         setList();
 
