@@ -352,7 +352,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
 
         setData(startDate, tv_date1, tv_week1);
         setData(endDate, tv_date2, tv_week2);
-        leagueStatisticsTodayRecyclerViewAdapter = new LeagueStatisticsTodayRecyclerViewAdapter(mContext, mLeagueStatisticsTodayChildBeans);
+        leagueStatisticsTodayRecyclerViewAdapter = new LeagueStatisticsTodayRecyclerViewAdapter(mContext, mLeagueStatisticsTodayChildBeans,handicap);
         recyclerView.setAdapter(leagueStatisticsTodayRecyclerViewAdapter);
     }
 
