@@ -2503,6 +2503,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 loadData();
                 break;
             case R.id.iv_join_room_foot:
+                MobclickAgent.onEvent(mContext, "Football_Join_Room");
                 joinRoom();
                 break;
             default:
