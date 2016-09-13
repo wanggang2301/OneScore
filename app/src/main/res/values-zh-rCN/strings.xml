@@ -43,6 +43,9 @@
     <string name="basket_info_zhouji">洲际赛事</string>
     <string name="basket_info_country">国家赛事</string>
 
+    <string name="basket_info_zhouji2">国际赛事</string>
+    <string name="basket_info_shatan">沙滩赛事</string>
+
     <string name="football_info_title">足球资料库</string>
     <string name="football_info_oceania">大洋洲</string>
 

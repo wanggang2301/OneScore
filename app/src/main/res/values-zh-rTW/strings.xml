@@ -32,7 +32,6 @@
     <string name="time">時間(T)</string>
 
 
-
     <!--篮球资料库-->
     <string name="basket_info_hot">熱門</string>
     <string name="basket_info_eur">歐洲</string>
@@ -43,6 +42,10 @@
     <string name="basket_info_title">籃球資料庫</string>
     <string name="basket_info_zhouji">洲際賽事</string>
     <string name="basket_info_country">國家賽事</string>
+
+    <string name="basket_info_zhouji2">國際賽事</string>
+    <string name="basket_info_shatan">沙灘賽事</string>
+
     <string name="football_info_title">足球資料庫</string>
 
     <string name="football_info_oceania">大洋洲</string>
