@@ -756,9 +756,9 @@ public class BaseURLs {
     // 联赛 qLeagueRace
 
     //足球资讯列表请求url
-    public final static String URL_FOOTBALL_INFOLIST = URL_API_HOST + "info.findAndroidLstInfo.do";
+    public final static String URL_FOOTBALL_INFOLIST = URL_API_HOST + "info.findAndroidInfoLstWithVideo.do";
     //足球资讯头和首页请求url
-    public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfo.do";
+    public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfoWithVideo.do";
 
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
     /**

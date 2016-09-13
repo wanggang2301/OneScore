@@ -318,6 +318,10 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <!--独家访谈界面-->
+        <activity android:name=".activity.PLVideoTextureActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

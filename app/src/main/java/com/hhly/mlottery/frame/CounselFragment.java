@@ -59,6 +59,9 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private ArrayList<Integer> infotype = new ArrayList<>();//信息类型集合
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Context mContext;
+    private int mCurrentItem=0;
+    private static boolean isVideo=false;
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -156,6 +159,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
                                 infotype.add(mHeadList.get(i).getInfoType());
 
                             }
+//                            mCurrentItem=5;
                             setupViewPager();
                             mHandler.sendEmptyMessage(HEAD_SUCESS);//加载数据成功
                         }
@@ -195,6 +199,9 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         }
     }
 
+    public static void setIsVideo(boolean isvideo){
+        isVideo=isvideo;
+    }
 
     private void setupViewPager() {
         if (mHeadName.size()>4){
@@ -208,8 +215,13 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         initData();
         mCounselFragmentAdapter = new CounselFragmentAdapter(getChildFragmentManager(), mList, mHeadName, mContext);
         mViewPager.setAdapter(mCounselFragmentAdapter);
+
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(1);
+
+        if(isVideo){
+            mViewPager.setCurrentItem(mCurrentItem,true);
+        }
         mTabLayout.setTabsFromPagerAdapter(mCounselFragmentAdapter);
     }
 
