@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ForeignInfomationDetailsActivity;
+import com.hhly.mlottery.activity.PicturePreviewActivity;
 
 import java.util.List;
 
@@ -54,7 +55,9 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
         cardView.findViewById(R.id.iv_photo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              
+                Intent intent = new Intent(mContext, PicturePreviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
         });
 
