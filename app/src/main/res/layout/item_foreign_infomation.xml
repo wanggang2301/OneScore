@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="_rl9"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_name_ch"
@@ -81,6 +81,7 @@
             android:text="我们有理由庆祝，生日快乐我的爱！" />
 
         <ImageView
+            android:id="@+id/iv_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@mipmap/home_carousel_default" />
