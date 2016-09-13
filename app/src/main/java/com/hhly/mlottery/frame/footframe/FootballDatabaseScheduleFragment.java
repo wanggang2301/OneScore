@@ -51,6 +51,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
     private static final String PARAM_ID = "leagueId";
     private static final String PARAM_DATE = "leagueDate";
     private static final String PARAM_MATCH_ROUND = "leagueRound";
+    private static final String PARAM_TYPE = "type";
 
     private static final int STATUS_LOADING = 1;
     private static final int STATUS_ERROR = 2;
@@ -198,6 +199,7 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         //http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=36&type=0&leagueDate=2016-2017&leagueRound=4
         Map<String , String> map = new HashMap();
         map.put(PARAM_ID , league.getLeagueId());
+        map.put(PARAM_TYPE , league.getKind());
         if (mLeagueDate != null) {
             map.put(PARAM_DATE , mLeagueDate);
         }
