@@ -1023,7 +1023,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         if (!isInitedViewPager) {
 
-            if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
+            if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                 L.d(TAG, "第一次启动socket");
                 L.d("456789", "第一次启动socket");
                 startWebsocket();
