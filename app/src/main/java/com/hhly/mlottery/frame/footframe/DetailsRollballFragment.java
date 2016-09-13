@@ -179,19 +179,14 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
         return fragment;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         mContext = getActivity();
 
         try {
-
-            // hSocketUri = new URI(BaseURLs.WS_SERVICE);
-            hSocketUri = new URI("ws://192.168.10.242:61634/ws");
-
+             hSocketUri = new URI(BaseURLs.WS_SERVICE);
+           // hSocketUri = new URI("ws://192.168.10.242:61634/ws");
 
             System.out.println(">>>>>" + hSocketUri);
         } catch (URISyntaxException e) {
