@@ -13,13 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketballDatabaseRankingAdapter;
-import com.hhly.mlottery.bean.basket.basketdatabase.IntegralResult;
+import com.hhly.mlottery.bean.basket.basketdatabase.BasketIntegralResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingGroup;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
@@ -74,7 +73,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
     private String season;
 
 //    private RankingResult mResult;
-    private IntegralResult mResult;
+    private BasketIntegralResult mResult;
 
     private List<BasketballDatabaseRankingAdapter.Section> mSections;
     private BasketballDatabaseRankingAdapter mAdapter;
@@ -235,9 +234,9 @@ public class BasketDatabaseRankingFragment extends Fragment {
         // http://192.168.31.115:8888/mlottery/core/basketballData.findRanking.do?lang=zh&leagueId=7&season=2014-2015&matchType=2
 //        VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DATABASE_RANKING, params,
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DATABASE_INTEGRAL, params,
-                new VolleyContentFast.ResponseSuccessListener<IntegralResult>() {
+                new VolleyContentFast.ResponseSuccessListener<BasketIntegralResult>() {
                     @Override
-                    public void onResponse(IntegralResult result) {
+                    public void onResponse(BasketIntegralResult result) {
                         if (result == null || result.getRankingObj() == null) {
                             setStatus(STATUS_NO_DATA);
                             return;
@@ -261,7 +260,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
                         if (error != null) error.printStackTrace();
                         setStatus(STATUS_ERROR);
                     }
-                }, IntegralResult.class);
+                }, BasketIntegralResult.class);
     }
 
     private void putIfNotNull(Map<String, String> map, String key, String val) {
@@ -299,7 +298,6 @@ public class BasketDatabaseRankingFragment extends Fragment {
                 handleData(mResult.getRankingObj().getAll());
                 mAdapter.notifyDataSetChanged();
             }
-            Toast.makeText(getContext(), "all==", Toast.LENGTH_SHORT).show();
         } else if (type == 1) {
             mSections.clear();
             if (mResult.getRankingObj().getHome() == null || mResult.getRankingObj().getHome().equals("")) {
@@ -308,7 +306,6 @@ public class BasketDatabaseRankingFragment extends Fragment {
                 handleData(mResult.getRankingObj().getHome());
                 mAdapter.notifyDataSetChanged();
             }
-            Toast.makeText(getContext(), "home==", Toast.LENGTH_SHORT).show();
         } else if(type == 2){
             mSections.clear();
             if (mResult.getRankingObj().getGuest() == null || mResult.getRankingObj().getGuest().equals("")) {
@@ -317,7 +314,6 @@ public class BasketDatabaseRankingFragment extends Fragment {
                 handleData(mResult.getRankingObj().getGuest());
                 mAdapter.notifyDataSetChanged();
             }
-            Toast.makeText(getContext(), "guest==", Toast.LENGTH_SHORT).show();
         }
     }
     /**

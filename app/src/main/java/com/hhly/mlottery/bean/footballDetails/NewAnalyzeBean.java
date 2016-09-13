@@ -1009,6 +1009,14 @@ public class NewAnalyzeBean {
 
         public static class HomeEntity {
             private int historyWin;
+            private int historyDraw;
+
+            public int getHistoryDraw() {
+                return historyDraw;
+            }
+            public void setHistoryDraw(int historyDraw) {
+                this.historyDraw = historyDraw;
+            }
 
             private FutureMatchEntity futureMatch;
             private List<Integer> recentRecord;

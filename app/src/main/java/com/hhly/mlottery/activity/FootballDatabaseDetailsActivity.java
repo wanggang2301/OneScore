@@ -30,6 +30,7 @@ import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.FootballDatabaseHeaderBean;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseIntegralFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseScheduleFragment;
 import com.hhly.mlottery.util.MDStatusBarCompat;
@@ -59,6 +60,7 @@ import java.util.Map;
 public class FootballDatabaseDetailsActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     public static final String LEAGUE = "league";
+    public static final String IS_INTEGRAL = "isIntegral";
 
     private DataBaseBean mLeague;
     private ImageView mIcon;
@@ -88,6 +90,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     Handler mHandlerData = new Handler();
     private FootballDatabaseIntegralFragment mIntegralFragment;
     private FootballDatabaseScheduleFragment mScheduleFragment;
+    private boolean mIsCurrenIntegral;//是否默认显示积分页
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +100,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         if (getIntent().getExtras() != null) {
 
             mLeague = getIntent().getExtras().getParcelable(LEAGUE);
+            mIsCurrenIntegral = getIntent().getExtras().getBoolean(IS_INTEGRAL);
 
         }
         /**
@@ -156,11 +160,13 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         tabsAdapter = new TabsAdapter(getSupportFragmentManager());
         tabsAdapter.setTitles(titles);
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
-//        tabsAdapter.addFragments(mHandicapFragment,mBigSmallFragment);
         tabsAdapter.addFragments(mScheduleFragment,mIntegralFragment);
 
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(tabsAdapter);
+        if (mIsCurrenIntegral) {
+            mViewPager.setCurrentItem(1);//判断分析页面进来默认显示积分页
+        }
         mTabLayout.setupWithViewPager(mViewPager);
 
         appBarLayout.addOnOffsetChangedListener(this);
@@ -195,8 +201,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private void initData(){
 
         // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do?lang=zh&leagueId=2
-        String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do";
-//        String url = BaseURLs.URL_BASKET_DATABASE_DETAILS;
+//        String url = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do";
+        String url = BaseURLs.URL_FOOTBALL_DATABASE_HEADER;
         Map<String, String> params = new HashMap<>();
         params.put("leagueId", mLeague.getLeagueId());
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseHeaderBean>() {

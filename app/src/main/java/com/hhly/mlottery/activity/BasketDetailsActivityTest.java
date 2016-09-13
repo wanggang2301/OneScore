@@ -87,6 +87,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     public final static String BASKET_THIRD_ID = "thirdId";
     public final static String BASKET_MATCH_STATUS = "MatchStatus";
+    public final static String BASKET_MATCH_LEAGUEID = "leagueId";
+    public final static String BASKET_MATCH_MATCHTYPE = "matchType";
     //    0:未开赛,1:一节,2:二节,5:1'OT，以此类推
 //            -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
     private final static int PRE_MATCH = 0;//赛前
@@ -230,6 +232,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         mContext = this;
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
+            mLeagueId = getIntent().getExtras().getString(BASKET_MATCH_LEAGUEID);
+            mMatchType = getIntent().getExtras().getInt(BASKET_MATCH_MATCHTYPE);
+
+
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
@@ -582,8 +588,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 if (basketDetailsBean.getMatch() != null) {
                     initData(basketDetailsBean);
 
-                    mLeagueId = basketDetailsBean.getMatch().getLeagueId();
-                    mMatchType = basketDetailsBean.getMatch().getMatchType();
+//                    mLeagueId = basketDetailsBean.getMatch().getLeagueId();
+//                    mMatchType = basketDetailsBean.getMatch().getMatchType();
 
 
                     /**

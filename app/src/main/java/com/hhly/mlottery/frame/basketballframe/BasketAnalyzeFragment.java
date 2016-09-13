@@ -122,6 +122,7 @@ public class BasketAnalyzeFragment extends Fragment  {
     private LinearLayout mHome3;
     private String mLeagueId;
     private Integer mMatchType;
+    private TextView mMostData;
 
 
     @Override
@@ -269,25 +270,25 @@ public class BasketAnalyzeFragment extends Fragment  {
         mHome2 = (LinearLayout) mView.findViewById(R.id.basket_analyze_home2);
         mHome3 = (LinearLayout) mView.findViewById(R.id.basket_analyze_home3);
 
-        /**
-         * 跳转篮球资料库
-         */
-        TextView mMostData =  (TextView) mView.findViewById(R.id.basket_analyze_more_data);
+        mMostData = (TextView) mView.findViewById(R.id.basket_analyze_more_data);
+    }
+    /**
+     * 跳转篮球资料库
+     */
+    private void setMostOnclick(){
         mMostData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),BasketballDatabaseDetailsActivity.class);
 
                 LeagueBean bean = new LeagueBean();
-                bean.setMatchType(1);
-                bean.setLeagueId("1");
-//                bean.setLeagueId(mLeagueId);
-//                bean.setMatchType(mMatchType);
+                bean.setLeagueId(mLeagueId);
+                bean.setMatchType(mMatchType);
                 intent.putExtra("league", bean);
+                intent.putExtra("isRanking" , true);
                 startActivity(intent);
             }
         });
-
     }
 
     private FutureAdapter mAdapter1;
@@ -307,6 +308,9 @@ public class BasketAnalyzeFragment extends Fragment  {
                 if (getActivity() == null || json == null) {
                     return;
                 }
+
+                setMostOnclick();
+
                 List<BasketAnalyzeContentBean> mAnalyzeDatas = new ArrayList<>();
                 mAnalyzeDatas.add(json.getGuestData());
                 mAnalyzeDatas.add(json.getHomeData());

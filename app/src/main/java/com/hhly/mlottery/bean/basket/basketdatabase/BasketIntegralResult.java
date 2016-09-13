@@ -7,10 +7,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/9/5.
+ * description:
+ * author: yixq
+ * Created by A on 2016/9/5.
  */
 
-public class IntegralResult {
+public class BasketIntegralResult {
 
     public static final int SINGLE_LEAGUE = 1;
     public static final int MULTI_PART_LEAGUE = 2;

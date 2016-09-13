@@ -721,8 +721,9 @@ public class BaseURLs {
     // 排行
     public final static String URL_BASKET_DATABASE_RANKING = URL_API_HOST + "basketballData.findRanking.do";
 
-    //足球资料库积分
-    public final static String URL_FOOTBALL_DATABASE_INTEGRAL = "http://192.168.10.242:8181/mlottery/core/basketballData.findRanking117.do";
+    //篮球资料库积分
+//    public final static String URL_FOOTBALL_DATABASE_INTEGRAL = "http://192.168.10.242:8181/mlottery/core/basketballData.findRanking117.do";
+    public final static String URL_FOOTBALL_DATABASE_INTEGRAL = URL_API_HOST + "basketballData.findRanking117.do";
     //让分盘
     public final static String URL_BASKET_DATABASE_HANDICAP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
     //大小盘
@@ -748,14 +749,15 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_LEAGUERACE = URL_API_HOST + "footballLeagueData.qLeagueRace.do";
 
     //足球资料库
-
     public final static String URL_FOOTBALL_DATABASE = URL_API_HOST + "androidLeagueData.findAndroidDataMenu.do";
 
     //足球资料库赛程
-    public final static String URL_FOOTBALL_DATABASE_SCHEDULE_FIRST = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
-    public final static String URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST = "http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do";
-
-
+    public final static String URL_FOOTBALL_DATABASE_SCHEDULE_FIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRound.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
+    public final static String URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRace.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do";
+    //足球资料库积分
+    public final static String URL_FOOTBALL_DATABASE_INTEGRAL_FIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueScore.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueScore.do";
+    //足球资料库详情头部
+    public final static String URL_FOOTBALL_DATABASE_HEADER = URL_API_HOST + "androidLeagueData.findAndroidFootballLeagueHeader.do";//http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do
 
     //足球赛事提点
     public final static String URL_LEAGUESTATISTICSTODAY = URL_API_HOST + "toDayMatchStatistics.findTodayMatchStatistics.do";
