@@ -629,6 +629,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 }
                 break;
             case R.id.iv_join_room_basket:
+                MobclickAgent.onEvent(mContext, "Basketball_Join_Room");
                 joinRoom();
                 break;
         }

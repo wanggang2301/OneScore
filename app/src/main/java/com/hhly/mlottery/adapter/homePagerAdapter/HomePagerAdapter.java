@@ -218,12 +218,7 @@ public class HomePagerAdapter extends PagerAdapter {
                 int jumpType = mHomePagerEntity.getBanners().getContent().get(index).getJumpType();
                 String title = mHomePagerEntity.getBanners().getContent().get(index).getTitle();
                 String picUrl = mHomePagerEntity.getBanners().getContent().get(index).getPicUrl();
-                int sportsInfoIndex = 0;
-                if (jumpAddr.contains("&")) {
-                    String str = jumpAddr.substring(0,jumpAddr.lastIndexOf("&"));
-                    sportsInfoIndex =Integer.parseInt(jumpAddr.substring(jumpAddr.lastIndexOf("&") + 1, jumpAddr.length()));
-                    jumpAddr = str;
-                }
+
                 if (!TextUtils.isEmpty(jumpAddr)) {
                     switch (jumpType) {
                         case 0:// 无
@@ -254,6 +249,22 @@ public class HomePagerAdapter extends PagerAdapter {
                             }
                             break;
                         }
+                        case 4:
+                            int sportsInfoIndex = 0;
+                            if (jumpAddr.contains("&")) {
+                                String str = jumpAddr.substring(0, jumpAddr.lastIndexOf("&"));
+                                sportsInfoIndex = Integer.parseInt(jumpAddr.substring(jumpAddr.lastIndexOf("&") + 1, jumpAddr.length()));
+                                jumpAddr = str;
+                            }
+                            switch (jumpAddr) {
+                                case "12":// 体育资讯指定label页
+                                    Intent intent = new Intent(mContext, FootballActivity.class);
+                                    intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
+                                    intent.putExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, sportsInfoIndex);
+                                    mContext.startActivity(intent);
+                                    break;
+                            }
+                            break;
                         case 2:// 内页
                             switch (jumpAddr) {
                                 case "10":// 足球指数
@@ -274,7 +285,6 @@ public class HomePagerAdapter extends PagerAdapter {
                                 {
                                     Intent intent = new Intent(mContext, FootballActivity.class);
                                     intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
-                                    intent.putExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, sportsInfoIndex);
                                     mContext.startActivity(intent);
                                 }
                                 break;
