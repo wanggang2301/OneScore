@@ -874,11 +874,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 //获取完场事件直播
                 eventMatchTimeLiveList = new ArrayList<>();
-                for (MatchTimeLiveBean m : mMatchDetail.getMatchInfo().getMatchTimeLive()) {
-                    if ("2".equals(m.getState()) && "1".equals(m.getCode())) {   //2在完场时间直播中为中场，中场加入中场比分halfScore  放在isHome字段位置
-                        eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), halfScore, m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
-                    } else {
-                        eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), m.isHome(), m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+
+                if (mMatchDetail.getMatchInfo().getMatchTimeLive() != null && mMatchDetail.getMatchInfo().getMatchTimeLive().size() > 0) {
+                    for (MatchTimeLiveBean m : mMatchDetail.getMatchInfo().getMatchTimeLive()) {
+                        if ("2".equals(m.getState()) && "1".equals(m.getCode())) {   //2在完场时间直播中为中场，中场加入中场比分halfScore  放在isHome字段位置
+                            eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), halfScore, m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+                        } else {
+                            eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), m.isHome(), m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+                        }
                     }
                 }
                 //99999999任意置值 加入完场状态

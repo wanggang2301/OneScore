@@ -422,12 +422,24 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 if (isSortBigToSmall) {
                     iv_flat.setBackgroundResource(R.mipmap.league_down);
                     isSortBigToSmall = false;
-                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatBigToSmallComparator());
+
+                    if (handicap==0) {
+                        Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatBigToSmallComparator());
+                    }else {
+                        Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossBigToSmallComparator());
+
+                    }
 
                 } else {
                     iv_flat.setBackgroundResource(R.mipmap.league_up);
                     isSortBigToSmall = true;
-                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatSmallToBigComparator());
+
+                    if (handicap==0) {
+                        Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatSmallToBigComparator());
+                    }else {
+                        Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossSmallToBigComparator());
+
+                    }
                 }
 
                 ll_league_loss.setBackgroundResource(R.drawable.tv_shape2);
@@ -457,13 +469,20 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 if (isSortBigToSmall) {
                     iv_loss.setBackgroundResource(R.mipmap.league_down);
                     isSortBigToSmall = false;
-                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossBigToSmallComparator());
+                    if (handicap==0) {
+                        Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossBigToSmallComparator());
+                    }else {
+                        Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatBigToSmallComparator());
+                    }
 
                 } else {
                     iv_loss.setBackgroundResource(R.mipmap.league_up);
                     isSortBigToSmall = true;
-                    Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossSmallToBigComparator());
-
+                    if (handicap==0) {
+                        Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayLossSmallToBigComparator());
+                    }else {
+                        Collections.sort(mLeagueStatisticsTodayChildBeans, new LeagueStatisticsTodayFlatSmallToBigComparator());
+                    }
                 }
 
                 leagueStatisticsTodayRecyclerViewAdapter.notifyDataSetChanged();
