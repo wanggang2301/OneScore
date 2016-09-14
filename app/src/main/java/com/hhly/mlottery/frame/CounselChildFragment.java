@@ -374,7 +374,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         boolean isRelateMatch;//是否关联比赛
         String ThirdId;//联赛id
         int type;//联赛id类型  1篮球 2足球
-        if(mInfos.get(position).getIsvideonews()!=null&&mInfos.get(position).getIsvideonews().equals("1")){ //视频的点击播放
+        if(index!=0&&mInfos.size()!=0&&mInfos.get(position).getIsvideonews()!=null&&mInfos.get(position).getIsvideonews().equals("1")){ //视频的点击播放
 
             Intent intent1=new Intent(mContext, PLVideoTextureActivity.class);
             intent1.putExtra("videoPath",mInfos.get(position).getVideourl());
