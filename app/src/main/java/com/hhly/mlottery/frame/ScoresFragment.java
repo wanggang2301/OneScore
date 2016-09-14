@@ -19,11 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseWebSocketFragment;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballTypeSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
@@ -38,8 +38,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * @author Tenney
@@ -135,6 +133,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 if (mContext.getResources().getString(R.string.basket_left).equals(mItems[position])) {// 选择篮球
                     ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.GONE);
                     ((FootballActivity) mContext).switchFragment(5);
+                    closeWebSocket();
                 }
             }
 
@@ -450,6 +449,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
     @Override
     public void onResume() {
         super.onResume();
+        L.d(TAG, "football Fragment resume..");
         mSpinner.setSelection(0);
         if (((FootballActivity) mContext).fragmentIndex == 0) {
             if (isRollballFragment) {
@@ -478,6 +478,11 @@ public class ScoresFragment extends BaseWebSocketFragment {
                 L.d("xxx", "FocusFragment>>>显示");
             }
         }
+        if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex != FootballActivity.BASKET_FRAGMENT) {
+            connectWebSocket();
+        }
+
+
     }
 
     @Override
@@ -508,6 +513,12 @@ public class ScoresFragment extends BaseWebSocketFragment {
             isFocus = false;
             L.d("xxx", "FocusFragment>>>隐藏");
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        L.d(TAG, "football Fragment start..");
     }
 
     @Override
@@ -561,7 +572,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
         connectWebSocket();
     }
 
-    public void disconnectWebSocket(){
+    public void disconnectWebSocket() {
         closeWebSocket();
     }
 

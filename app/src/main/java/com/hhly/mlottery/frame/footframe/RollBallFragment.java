@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
@@ -96,13 +98,13 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @BindView(R.id.titleContainer)
     PercentRelativeLayout titleContainer;
     @BindView(R.id.unconection_layout)
-    RelativeLayout mUnconectionLayout;// 没有网络提示
+    LinearLayout mUnconectionLayout;// 没有网络提示
 
     //    private BorderDividerItemDecration dataDecration;
     public static EventBus eventBus;
-    private ApiHandler apiHandler;
+    private ApiHandler apiHandler = new ApiHandler(this);
     private RollBallAdapter adapter;
-    private HappySocketClient socketClient;
+//    private HappySocketClient socketClient;
     private LinearLayoutManager layoutManager;
     private Subscription subscription;
     private boolean resestTheLifeCycle;
@@ -113,6 +115,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     public List<LeagueCup> leagueCupLists; // 全部联赛
     private List<Match> allDataLists; // 所有数据
     private List<Match> feedAdapterLists; // 要展示的数据
+
+    private boolean isLoadedData = false;
 
     public static RollBallFragment newInstance(int index) {
         Bundle bundle = new Bundle();
@@ -129,7 +133,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     protected void initViews(View self, Bundle savedInstanceState) {
-        if (null == apiHandler) apiHandler = new ApiHandler(this);
         this.setupEventBus();
         this.setupRecyclerView();
         this.setupAdapter();
@@ -138,6 +141,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     protected void initListeners() {
+        mUnconectionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.ACTION_SETTINGS));
+            }
+        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private boolean moveToDown = false;
 
@@ -243,6 +252,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onRefresh() {
         this.initData();
+        ((ScoresFragment) getParentFragment()).reconnectWebSocket();
     }
 
 //    private synchronized void setupWebSocketClient() {
@@ -514,6 +524,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                 }
                                 RollBallFragment.this.feedAdapter(feedAdapterLists);
                                 apiHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                                isLoadedData = true;
                             }
                         });
                     }
@@ -590,7 +601,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         return checkedLeagueCup;
     }
 
-    private static class ApiHandler extends Handler {
+    private class ApiHandler extends Handler {
         private WeakReference<RollBallFragment> weakReference;
 
         ApiHandler(RollBallFragment fragment) {
@@ -660,12 +671,16 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
                         break;
                     case VIEW_STATUS_NET_ERROR:
-                        fragment.titleContainer.setVisibility(View.GONE);
+                        if(isLoadedData){
+                            Toast.makeText(fragment.getContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        }else{
+                            fragment.titleContainer.setVisibility(View.GONE);
+                            fragment.networkExceptionLayout.setVisibility(View.VISIBLE);
+                            fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
+                            fragment.adapter.setList(null);
+                            fragment.adapter.notifyDataSetChanged();
+                        }
                         fragment.swipeRefreshLayout.setRefreshing(false);
-                        fragment.networkExceptionLayout.setVisibility(View.VISIBLE);
-                        fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
-                        fragment.adapter.setList(null);
-                        fragment.adapter.notifyDataSetChanged();
                         break;
                     case VIEW_STATUS_FLITER_NO_DATA:
                         fragment.swipeRefreshLayout.setRefreshing(false);

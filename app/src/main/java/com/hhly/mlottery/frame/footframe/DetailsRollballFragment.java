@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.footballDetails.BottomOdds;
 import com.hhly.mlottery.bean.footballDetails.BottomOddsItem;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
@@ -54,9 +55,8 @@ import java.util.TimerTask;
  * @date 2016/6/3 14:17
  * @des 足球内页聊球下部内容
  */
-public class DetailsRollballFragment extends Fragment implements HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
+public class DetailsRollballFragment extends BaseWebSocketFragment {
 
-    private final static String TAG = "DetailsRollballFragment";
 
     private final int ERROR = -1;//访问失败
     private final int SUCCESS = 0;// 访问成功
@@ -75,6 +75,7 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     private static final String DETAILSROLLBALL_PARAM = "DETAILSROLLBALL_PARAM";
     private static final String DETAILSROLLBALL_TYPE = "DETAILSROLLBALL_TYPE";
+    private static final String DETAILSROLLBALL_THIRD_ID = "THIRD_ID";
     public static final int DETAILSROLLBALL_TYPE_PRE = 0x01;//赛前
     public static final int DETAILSROLLBALL_TYPE_ING = 0x10;//赛中
     public static final int DETAILSROLLBALL_TYPE_ED = 0x20;//赛后
@@ -151,8 +152,8 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     private FinishMatchLiveTextFragment finishMatchLiveTextFragment;//完场
 
 
-    private HappySocketClient hSocketClient;
-    private URI hSocketUri = null;
+//    private HappySocketClient hSocketClient;
+//    private URI hSocketUri = null;
 
 
     //保存上次推送赔率
@@ -164,8 +165,11 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     private boolean isSocketStart = true;
 
 
-    public static DetailsRollballFragment newInstance() {
+    public static DetailsRollballFragment newInstance(String thirdId) {
         DetailsRollballFragment fragment = new DetailsRollballFragment();
+        Bundle args = new Bundle();
+        args.putString(DETAILSROLLBALL_THIRD_ID, thirdId);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -182,21 +186,20 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        String thirdId = getArguments().getString(DETAILSROLLBALL_THIRD_ID);
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.scollodds." + thirdId);
         super.onCreate(savedInstanceState);
-
 
         mContext = getActivity();
 
-        try {
-
-            // hSocketUri = new URI(BaseURLs.WS_SERVICE);
-            hSocketUri = new URI("ws://192.168.10.242:61634/ws");
-
-
-            System.out.println(">>>>>" + hSocketUri);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+//        try {
+        // hSocketUri = new URI(BaseURLs.WS_SERVICE);
+//            hSocketUri = new URI("ws://192.168.10.242:61634/ws");
+//            System.out.println(">>>>>" + hSocketUri);
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Nullable
@@ -399,9 +402,11 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
                         //赛中的时候开启socket推送
                         if (mViewType == DETAILSROLLBALL_TYPE_ING) {
                             if (isSocketStart) {
-                                startWebsocket();
-                                computeWebSocket();
+//                                startWebsocket();
+//                                computeWebSocket();
+                                connectWebSocket();
                                 isSocketStart = false;
+
                             }
                         }
                         mHandler.sendEmptyMessage(SUCCESS);
@@ -636,78 +641,78 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
     }
 
 
-    /***
-     * 开始推送socket
-     */
-    private synchronized void startWebsocket() {
-
-        L.d(TAG, "滚球赔率");
-
-        if (hSocketClient != null) {
-            if (!hSocketClient.isClosed()) {
-                hSocketClient.close();
-                hSocketClient = null;
-            }
-
-            L.d(TAG, "hSocketClient=" + hSocketClient);
-
-            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
-            hSocketClient.setSocketResponseMessageListener(this);
-            hSocketClient.setSocketResponseCloseListener(this);
-            hSocketClient.setSocketResponseErrorListener(this);
-            try {
-                hSocketClient.connect();
-            } catch (Exception e) {
-                hSocketClient.close();
-                hSocketClient = null;
-            }
-        } else {
-            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
-            hSocketClient.setSocketResponseMessageListener(this);
-            hSocketClient.setSocketResponseCloseListener(this);
-            hSocketClient.setSocketResponseErrorListener(this);
-            try {
-                hSocketClient.connect();
-            } catch (Exception e) {
-                hSocketClient.close();
-                hSocketClient = null;
-            }
-        }
-    }
+//    /***
+//     * 开始推送socket
+//     */
+//    private synchronized void startWebsocket() {
+//
+//        L.d(TAG, "滚球赔率");
+//
+//        if (hSocketClient != null) {
+//            if (!hSocketClient.isClosed()) {
+//                hSocketClient.close();
+//                hSocketClient = null;
+//            }
+//
+//            L.d(TAG, "hSocketClient=" + hSocketClient);
+//
+//            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+//            hSocketClient.setSocketResponseMessageListener(this);
+//            hSocketClient.setSocketResponseCloseListener(this);
+//            hSocketClient.setSocketResponseErrorListener(this);
+//            try {
+//                hSocketClient.connect();
+//            } catch (Exception e) {
+//                hSocketClient.close();
+//                hSocketClient = null;
+//            }
+//        } else {
+//            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+//            hSocketClient.setSocketResponseMessageListener(this);
+//            hSocketClient.setSocketResponseCloseListener(this);
+//            hSocketClient.setSocketResponseErrorListener(this);
+//            try {
+//                hSocketClient.connect();
+//            } catch (Exception e) {
+//                hSocketClient.close();
+//                hSocketClient = null;
+//            }
+//        }
+//    }
 
     //事件推送
 
-    @Override
-    public void onMessage(String message) {
-        // L.d(TAG, "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
-
-        pushStartTime = System.currentTimeMillis(); // 记录起始时间
-        L.d(TAG, "心跳时间" + pushStartTime);
-        if (message.startsWith("CONNECTED")) {
-            String id = "android" + DeviceInfo.getDeviceId(mContext);
-            id = MD5Util.getMD5(id);
-            if (mContext == null) {
-                return;
-            }
-            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.scollodds." + "337438" + "\n\n");
-            return;
-        } else if (message.startsWith("MESSAGE")) {
-
-            String[] msgs = message.split("\n");
-            String ws_json = msgs[msgs.length - 1];
-
-            try {
-                JSONObject jsonObject = new JSONObject(ws_json);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Message msg = Message.obtain();
-            msg.obj = ws_json;
-            mSocketHandler.sendMessage(msg);
-
-        }
-        hSocketClient.send("\n");
-    }
+//    @Override
+//    public void onMessage(String message) {
+//        // L.d(TAG, "---onMessage---推送比赛thirdId==" + ((FootballMatchDetailActivityTest) getActivity()).mThirdId);
+//
+//        pushStartTime = System.currentTimeMillis(); // 记录起始时间
+//        L.d(TAG, "心跳时间" + pushStartTime);
+//        if (message.startsWith("CONNECTED")) {
+//            String id = "android" + DeviceInfo.getDeviceId(mContext);
+//            id = MD5Util.getMD5(id);
+//            if (mContext == null) {
+//                return;
+//            }
+//            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.scollodds." + "337438" + "\n\n");
+//            return;
+//        } else if (message.startsWith("MESSAGE")) {
+//
+//            String[] msgs = message.split("\n");
+//            String ws_json = msgs[msgs.length - 1];
+//
+//            try {
+//                JSONObject jsonObject = new JSONObject(ws_json);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            Message msg = Message.obtain();
+//            msg.obj = ws_json;
+//            mSocketHandler.sendMessage(msg);
+//
+//        }
+//        hSocketClient.send("\n");
+//    }
 
 
     /**
@@ -825,55 +830,77 @@ public class DetailsRollballFragment extends Fragment implements HappySocketClie
      */
     private boolean isStartTimer = false;
 
-    private void computeWebSocket() {
-        if (!isStartTimer) {
-            TimerTask tt = new TimerTask() {
-                @Override
-                public void run() {
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                    L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
-                    long pushEndTime = System.currentTimeMillis();
-                    if ((pushEndTime - pushStartTime) >= 30000) {
-                        L.d(TAG, "重新启动socketvvvv");
-                        startWebsocket();
-                    }
-                }
-            };
-
-            if (detailsTimer != null) {
-                detailsTimer.schedule(tt, 15000, 15000);
-                isStartTimer = true;
-            }
-        }
-    }
+//    private void computeWebSocket() {
+//        if (!isStartTimer) {
+//            TimerTask tt = new TimerTask() {
+//                @Override
+//                public void run() {
+//                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+//                    L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+//                    long pushEndTime = System.currentTimeMillis();
+//                    if ((pushEndTime - pushStartTime) >= 30000) {
+//                        L.d(TAG, "重新启动socketvvvv");
+//                        startWebsocket();
+//                    }
+//                }
+//            };
+//
+//            if (detailsTimer != null) {
+//                detailsTimer.schedule(tt, 15000, 15000);
+//                isStartTimer = true;
+//            }
+//        }
+//    }
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if (detailsTimer != null) {
-            L.d("timer", "detailsRoll定时器");
-            detailsTimer.cancel();
-            detailsTimer.purge();
-            detailsTimer = null;
-        }
-
-        if (hSocketClient != null) {
-            hSocketClient.close();
-            hSocketClient = null;
-        }
+//        if (detailsTimer != null) {
+//            L.d("timer", "detailsRoll定时器");
+//            detailsTimer.cancel();
+//            detailsTimer.purge();
+//            detailsTimer = null;
+//        }
+//
+//        if (hSocketClient != null) {
+//            hSocketClient.close();
+//            hSocketClient = null;
+//        }
     }
 
     @Override
-    public void onClose(String message) {
+    protected void onTextResult(String text) {
+        Message msg = Message.obtain();
+        msg.obj = text;
+        mSocketHandler.sendMessage(msg);
+    }
+
+    @Override
+    protected void onConnectFail() {
 
     }
 
     @Override
-    public void onError(Exception exception) {
+    protected void onDisconnected() {
 
     }
+
+    @Override
+    protected void onConnected() {
+
+    }
+
+//    @Override
+//    public void onClose(String message) {
+//
+//    }
+//
+//    @Override
+//    public void onError(Exception exception) {
+//
+//    }
 
     private boolean isNULLOrEmpty(String s) {
         return s == null || "".equals(s) || "-".equals(s);

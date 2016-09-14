@@ -106,7 +106,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     private TextView mReloadTvBtn;// 重新加载按钮
 
-    private RelativeLayout mUnconectionLayout;// 没有网络提示
+    private LinearLayout mUnconectionLayout;// 没有网络提示
     private ExactSwipeRefrashLayout mSwipeRefreshLayout;// 下拉刷新
 
     private LinearLayout mLoadingLayout;// 正在加载
@@ -334,7 +334,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         mNoDataTextView = (TextView) mView.findViewById(R.id.football_immediate_no_data_tv);
         mNoDataTextView.setText(R.string.immediate_no_data);
 
-        mUnconectionLayout = (RelativeLayout) mView.findViewById(R.id.unconection_layout);// 没有网络板块
+        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);// 没有网络板块
         mUnconectionLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -405,7 +405,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mErrorLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    mUnconectionLayout.setVisibility(View.GONE);
+//                    mUnconectionLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     mNoDataTextView.setText(R.string.immediate_no_match);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
@@ -416,7 +416,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     //mListView.setVisibility(View.VISIBLE);
                     mErrorLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.GONE);
-                    mUnconectionLayout.setVisibility(View.GONE);
+//                    mUnconectionLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     break;
@@ -442,7 +442,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mErrorLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mNoDataTextView.setText(R.string.immediate_no_data);
-                    mUnconectionLayout.setVisibility(View.GONE);
+//                    mUnconectionLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     break;

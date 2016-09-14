@@ -266,7 +266,7 @@
     <string name="immediate_status_cut">腰斩</string>
     <string name="immediate_status_mesomere">中断</string>
     <string name="immediate_status_postpone">推迟</string>
-    <string name="immediate_unconection">当前网络不给力...</string>
+    <string name="immediate_unconection">当前数据不在实时更新状态，请下拉尝试连接或检查网络。</string>
 
     <string name="favourite">关注</string>
     <string name="cancel_favourite">取消关注</string>

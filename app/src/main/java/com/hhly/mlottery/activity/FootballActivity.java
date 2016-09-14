@@ -36,19 +36,19 @@ import java.util.List;
  */
 public class FootballActivity extends BaseActivity {
 
-    private final static int SCORES_FRAGMENT = 0; //比分
-    private final static int NEWS_FRAGMENT = 1;   //资讯
-    private final static int DATA_FRAGMENT = 2;   //数据
-    private final static int VIDEO_FRAGMENT = 3;  //视频
-    private final static int CPI_FRAGMENT = 4;    //指数
-    private final static int BASKET_FRAGMENT = 5;    //篮球
+    public final static int SCORES_FRAGMENT = 0; //比分
+    public final static int NEWS_FRAGMENT = 1;   //资讯
+    public final static int DATA_FRAGMENT = 2;   //数据
+    public final static int VIDEO_FRAGMENT = 3;  //视频
+    public final static int CPI_FRAGMENT = 4;    //指数
+    public final static int BASKET_FRAGMENT = 5;    //篮球
     private Context mContext;
 
     private RadioGroup mRadioGroup;
     private List<Fragment> fragments = new ArrayList<>();
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
-    private int currentPosition = 0;// 足球界面Fragment下标
+    public int currentPosition = 0;// 足球界面Fragment下标
     public int basketCurrentPosition = 0;// 篮球界面Fragment下标
     public LinearLayout ly_tab_bar;
     public int fragmentIndex = 0;
@@ -62,6 +62,10 @@ public class FootballActivity extends BaseActivity {
 
         currentPosition = getIntent().getIntExtra(AppConstants.FOTTBALL_KEY, 0);// 足球fragment下标
         basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY, 0);// 篮球fragment下标
+
+//        currentPosition = AppConstants.BASKETBALL_SCORE_VALUE;
+//        basketCurrentPosition = AppConstants.BASKETBALL_SCORE_KEY;
+
         initView();
         initData();
     }

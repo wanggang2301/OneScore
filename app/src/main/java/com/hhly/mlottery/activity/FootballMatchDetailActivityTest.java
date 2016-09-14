@@ -105,9 +105,7 @@ import me.relex.circleindicator.CircleIndicator;
  * @date 2016/6/2 16:53
  * @des 足球内页改版
  */
-public class FootballMatchDetailActivityTest extends AppCompatActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
-
-    private final static String TAG = "FootballMatchDetailActivityTest";
+public class FootballMatchDetailActivityTest extends BaseWebSocketActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, ExactSwipeRefrashLayout.OnRefreshListener {
 
     private final static int IMMEDIA_FRAGMENT = 0;
     private final static int RESULT_FRAGMENT = 1;
@@ -256,8 +254,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
      */
     private String mPreStatus;
 
-    private HappySocketClient hSocketClient;
-    private URI hSocketUri = null;
+//    private HappySocketClient hSocketClient;
+//    private URI hSocketUri = null;
 
 
     public final static String BUNDLE_PARAM_THIRDID = "thirdId";
@@ -321,7 +319,15 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getIntent().getExtras() != null) {
+            mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
+            currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
+        }
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
+
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.activity_football_match_details_test);
 
@@ -329,10 +335,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         MobclickAgent.openActivityDurationTrack(false);
 
         this.mContext = getApplicationContext();
-        if (getIntent().getExtras() != null) {
-            mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
-            currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
-        }
+
 
         EventBus.getDefault().register(this);//注册EventBus
         RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
@@ -347,8 +350,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
          * 足球内页头部ViewPager
          */
         mPreHeadInfoFrament = PreHeadInfoFrament.newInstance();
-        mLiveHeadInfoFragment = new LiveHeadInfoFragment().newInstance();
-        mAnimHeadLiveFragment = new AnimHeadLiveFragment().newInstance(mThirdId);
+        mLiveHeadInfoFragment = LiveHeadInfoFragment.newInstance();
+        mAnimHeadLiveFragment = AnimHeadLiveFragment.newInstance(mThirdId);
 
         basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment, mAnimHeadLiveFragment);
         mHeadviewpager.setAdapter(basePagerAdapter);
@@ -360,7 +363,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         mHeadviewpager.setIsScrollable(false);
         mIndicator.setVisibility(View.GONE);
 
-        mDetailsRollballFragment = DetailsRollballFragment.newInstance();
+        mDetailsRollballFragment = DetailsRollballFragment.newInstance(mThirdId);
         mTalkAboutBallFragment = new TalkAboutBallFragment();
         Bundle bundle = new Bundle();
         bundle.putString("param1", mThirdId);
@@ -388,15 +391,15 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             }
         };
 
-
+        mHandler.sendEmptyMessage(STARTLOADING);
         loadData();
 
-        try {
-            hSocketUri = new URI(BaseURLs.WS_SERVICE);
-            // System.out.println(">>>>>" + hSocketUri);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            hSocketUri = new URI(BaseURLs.WS_SERVICE);
+//            // System.out.println(">>>>>" + hSocketUri);
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
 
         pd.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
@@ -542,6 +545,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                     mStatisticsFragment.initChartData(mMatchDetail.getLiveStatus());
                     //统计图
                     mStatisticsFragment.initJson(mMatchDetail.getLiveStatus());
+
+                    if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {
+                        connectWebSocket();
+                    }
                 }
             }
         }, 1000);
@@ -560,7 +567,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 }
             };
             mReloadTimer = new Timer();
-            mReloadTimer.schedule(reloadTimerTask, 2000, mReloadPeriod);
+            mReloadTimer.schedule(reloadTimerTask, mReloadPeriod, mReloadPeriod);
             isStartTimer = true;
         }
     }
@@ -569,7 +576,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private void loadData() {
 
 
-        mHandler.sendEmptyMessage(STARTLOADING);
+
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
 
@@ -729,12 +736,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                                 mHeadviewpager.setIsScrollable(true);
                                 mIndicator.setVisibility(View.VISIBLE);
 
-                                mReloadTimer.cancel();
+                                if (mReloadTimer != null) {
+                                    mReloadTimer.cancel();
+                                }
+
                                 mPreStatus = "1";
                             }
 
                             mDetailsRollballFragment.refreshMatch(matchDetail, DetailsRollballFragment.DETAILSROLLBALL_TYPE_ING);
-
 
                             mTalkAboutBallFragment.setClickableLikeBtn(true);
 
@@ -1011,11 +1020,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         if (!isInitedViewPager) {
 
-            if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
+//            if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
+            if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                 L.d(TAG, "第一次启动socket");
                 L.d("456789", "第一次启动socket");
-                startWebsocket();
-                computeWebSocket();
+                connectWebSocket();
+//                startWebsocket();
+//                computeWebSocket();
             }
         }
 
@@ -1258,17 +1269,17 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         isExit = true;
         EventBus.getDefault().unregister(this);//取消注册EventBus
         RongYunUtils.isCreateChartRoom = false;// 修改创建聊天室状态
-        if (footballTimer != null) {
-            L.d("timer", "footballdetails定时器");
-            footballTimer.cancel();
-            footballTimer.purge();
-            footballTimer = null;
-            timerTask = null;
-        }
+//        if (footballTimer != null) {
+//            L.d("timer", "footballdetails定时器");
+//            footballTimer.cancel();
+//            footballTimer.purge();
+//            footballTimer = null;
+//            timerTask = null;
+//        }
 
-        if (hSocketClient != null) {
-            hSocketClient.close();
-        }
+//        if (hSocketClient != null) {
+//            hSocketClient.close();
+//        }
 
         if (mReloadTimer != null) {
             mReloadTimer.cancel();
@@ -1276,7 +1287,40 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         }
 
-        this.finish();
+    }
+
+    @Override
+    protected void onTextResult(String text) {
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!"".equals(type)) {
+            Message msg = Message.obtain();
+            msg.obj = text;
+            msg.arg1 = Integer.parseInt(type);
+
+            mSocketHandler.sendMessage(msg);
+        }
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
     }
 
     /**
@@ -1298,79 +1342,78 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     /***
      * 开始推送socket
      */
-    private synchronized void startWebsocket() {
+//    private synchronized void startWebsocket() {
+//
+//        L.d(TAG, "---onMessage---开始推送" + mThirdId);
+//
+//        if (hSocketClient != null) {
+//            if (!hSocketClient.isClosed()) {
+//                hSocketClient.close();
+//            }
+//
+//            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+//            hSocketClient.setSocketResponseMessageListener(this);
+//            hSocketClient.setSocketResponseCloseListener(this);
+//            hSocketClient.setSocketResponseErrorListener(this);
+//            try {
+//                hSocketClient.connect();
+//            } catch (IllegalThreadStateException e) {
+//                hSocketClient.close();
+//            }
+//        } else {
+//            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
+//            hSocketClient.setSocketResponseMessageListener(this);
+//            hSocketClient.setSocketResponseCloseListener(this);
+//            hSocketClient.setSocketResponseErrorListener(this);
+//            try {
+//                hSocketClient.connect();
+//            } catch (IllegalThreadStateException e) {
+//                hSocketClient.close();
+//            }
+//        }
+//    }
 
-        L.d(TAG, "---onMessage---开始推送" + mThirdId);
-
-        if (hSocketClient != null) {
-            if (!hSocketClient.isClosed()) {
-                hSocketClient.close();
-            }
-
-            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
-            hSocketClient.setSocketResponseMessageListener(this);
-            hSocketClient.setSocketResponseCloseListener(this);
-            hSocketClient.setSocketResponseErrorListener(this);
-            try {
-                hSocketClient.connect();
-            } catch (IllegalThreadStateException e) {
-                hSocketClient.close();
-            }
-        } else {
-            hSocketClient = new HappySocketClient(hSocketUri, new Draft_17());
-            hSocketClient.setSocketResponseMessageListener(this);
-            hSocketClient.setSocketResponseCloseListener(this);
-            hSocketClient.setSocketResponseErrorListener(this);
-            try {
-                hSocketClient.connect();
-            } catch (IllegalThreadStateException e) {
-                hSocketClient.close();
-            }
-        }
-    }
-
-    //事件推送
-
-    @Override
-    public void onMessage(String message) {
-        L.d(TAG, "---onMessage---推送比赛thirdId==" + mThirdId);
-        L.d("eventlive", "---onMessage---推送比赛thirdId==" + mThirdId);
-
-        pushStartTime = System.currentTimeMillis(); // 记录起始时间
-        L.d(TAG, "心跳时间" + pushStartTime);
-        if (message.startsWith("CONNECTED")) {
-            String id = "android" + DeviceInfo.getDeviceId(mContext);
-            id = MD5Util.getMD5(id);
-            if (mContext == null) {
-                return;
-            }
-            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.liveEvent." + mThirdId + "." + appendLanguage() + "\n\n");
-            L.d(TAG, "CONNECTED");
-            return;
-        } else if (message.startsWith("MESSAGE")) {
-
-            String[] msgs = message.split("\n");
-            String ws_json = msgs[msgs.length - 1];
-
-            String type = "";
-            try {
-                JSONObject jsonObject = new JSONObject(ws_json);
-                type = jsonObject.getString("type");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (!"".equals(type)) {
-                Message msg = Message.obtain();
-                msg.obj = ws_json;
-                msg.arg1 = Integer.parseInt(type);
-
-                mSocketHandler.sendMessage(msg);
-            }
-        }
-        hSocketClient.send("\n");
-
-    }
+//    //事件推送
+//    @Override
+//    public void onMessage(String message) {
+//        L.d(TAG, "---onMessage---推送比赛thirdId==" + mThirdId);
+//        L.d("eventlive", "---onMessage---推送比赛thirdId==" + mThirdId);
+//
+//        pushStartTime = System.currentTimeMillis(); // 记录起始时间
+//        L.d(TAG, "心跳时间" + pushStartTime);
+//        if (message.startsWith("CONNECTED")) {
+//            String id = "android" + DeviceInfo.getDeviceId(mContext);
+//            id = MD5Util.getMD5(id);
+//            if (mContext == null) {
+//                return;
+//            }
+//            hSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.liveEvent." + mThirdId + "." + appendLanguage() + "\n\n");
+//            L.d(TAG, "CONNECTED");
+//            return;
+//        } else if (message.startsWith("MESSAGE")) {
+//
+//            String[] msgs = message.split("\n");
+//            String ws_json = msgs[msgs.length - 1];
+//
+//            String type = "";
+//            try {
+//                JSONObject jsonObject = new JSONObject(ws_json);
+//                type = jsonObject.getString("type");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (!"".equals(type)) {
+//                Message msg = Message.obtain();
+//                msg.obj = ws_json;
+//                msg.arg1 = Integer.parseInt(type);
+//
+//                mSocketHandler.sendMessage(msg);
+//            }
+//        }
+//        hSocketClient.send("\n");
+//
+//    }
 
     //心跳时间
     private long pushStartTime;
@@ -1383,34 +1426,34 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     /***
      * 计算推送Socket断开重新连接
      */
-    private synchronized void computeWebSocket() {
-
-
-        if (!isStarComputeTimer) {
-            timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    L.d(TAG, "计算");
-
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                    L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
-                    long pushEndTime = System.currentTimeMillis();
-                    if ((pushEndTime - pushStartTime) >= 30000) {
-                        L.d(TAG, "重新启动socket");
-                        startWebsocket();
-                    }
-                }
-            };
-
-
-            if (footballTimer != null) {
-                L.d("456789", "footballTimer");
-                footballTimer.schedule(timerTask, 15000, 30000);
-                isStarComputeTimer = true;
-            }
-
-        }
-    }
+//    private synchronized void computeWebSocket() {
+//
+//
+//        if (!isStarComputeTimer) {
+//            timerTask = new TimerTask() {
+//                @Override
+//                public void run() {
+//                    L.d(TAG, "计算");
+//
+//                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+//                    L.d(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + hSocketClient.isOpen() + ",Connecting=" + hSocketClient.isConnecting() + ",Close=" + hSocketClient.isClosed() + ",Closing=" + hSocketClient.isClosing());
+//                    long pushEndTime = System.currentTimeMillis();
+//                    if ((pushEndTime - pushStartTime) >= 30000) {
+//                        L.d(TAG, "重新启动socket");
+//                        startWebsocket();
+//                    }
+//                }
+//            };
+//
+//
+//            if (footballTimer != null) {
+//                L.d("456789", "footballTimer");
+//                footballTimer.schedule(timerTask, 15000, 30000);
+//                isStarComputeTimer = true;
+//            }
+//
+//        }
+//    }
 
 
     /**
@@ -1571,11 +1614,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 mStatisticsFragment.initJson("-1");// 刷新统计
 
 
-                if (hSocketClient != null) {
-                    if (!hSocketClient.isClosed()) {
-                        hSocketClient.close();
-                    }
-                }
+//                if (hSocketClient != null) {
+//                    if (!hSocketClient.isClosed()) {
+//                        hSocketClient.close();
+//                    }
+//                }
+                closeWebSocket();
 
                 break;
 
@@ -2507,7 +2551,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             iv_join_room_foot.setVisibility(View.GONE);
 
             // 判断融云服务器是否连接OK
-            if(!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))){
+            if (!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))) {
                 RongYunUtils.initRongIMConnect(mContext);// 连接融云服务器
             }
 
@@ -2651,14 +2695,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     }
 
 
-    @Override
-    public void onClose(String message) {
-    }
-
-    @Override
-    public void onError(Exception exception) {
-
-    }
+//    @Override
+//    public void onClose(String message) {
+//    }
+//
+//    @Override
+//    public void onError(Exception exception) {
+//
+//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

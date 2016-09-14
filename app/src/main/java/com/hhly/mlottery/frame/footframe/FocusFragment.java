@@ -90,7 +90,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
-    private RelativeLayout mUnconectionLayout;
+    private LinearLayout mUnconectionLayout;
     private ExactSwipeRefrashLayout mSwipeRefreshLayout;
 
     private View mUnFocusLayout;
@@ -108,7 +108,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     private boolean isWebSocketStart = false;// 不使用websocket时可设置为true
 
-    private HappySocketClient mSocketClient;
+//    private HappySocketClient mSocketClient;
 
     private int mHandicap = 1;// 盘口 1.亚盘 2.大小球 3.欧赔 4.不显示
 
@@ -305,7 +305,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
         mUnFocusLayout = mView.findViewById(R.id.football_immediate_unfocus_ll);
 
-        mUnconectionLayout = (RelativeLayout) mView.findViewById(R.id.unconection_layout);
+        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);
         mUnconectionLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -418,7 +418,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     mLoadingLayout.setVisibility(View.GONE);
 //                    mListView.setVisibility(View.VISIBLE);
                     mErrorLayout.setVisibility(View.GONE);
-                    mUnconectionLayout.setVisibility(View.GONE);
+//                    mUnconectionLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mUnFocusLayout.setVisibility(View.GONE);
