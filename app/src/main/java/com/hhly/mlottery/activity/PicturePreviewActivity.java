@@ -77,13 +77,7 @@ public class PicturePreviewActivity extends BaseActivity {
 
         ctx = this;
 
-
-        //  String url = "http://t11.baidu.com/it/u=705181412,1589083313&fm=72";
-
         url = getIntent().getStringExtra("url");
-       /* /*//* 缩略图存储在本地的地址 *//**//*
-        final String smallPath = getIntent().getStringExtra("smallPath");
-        final int identify = getIntent().getIntExtra("indentify", -1);*/
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);

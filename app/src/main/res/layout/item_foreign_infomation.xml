@@ -79,6 +79,7 @@
         android:background="#f0f0f0"
         android:gravity="center_vertical"
         android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
         android:paddingTop="10dp"
         android:text="我们有理由庆祝，生日快乐我的爱！"
         android:textColor="@color/mdy_333"
