@@ -13,14 +13,13 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.callback.PicturePreviewCallBack;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.NoDoubleClickUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ZoomImageView;
 
@@ -56,6 +55,8 @@ public class PicturePreviewActivity extends BaseActivity {
 
     private Bitmap bitmap;
 
+    private PicturePreviewCallBack picturePreviewCallBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,20 +80,15 @@ public class PicturePreviewActivity extends BaseActivity {
         heightPixels = metrics.heightPixels;
 
 
-        zoomView.setOnClickListener(new View.OnClickListener() {
+        picturePreviewCallBack = new PicturePreviewCallBack() {
             @Override
-            public void onClick(View v) {
-
-                NoDoubleClickUtils.initLastClickTime();
-
-               // L.d("112233", "double=" + NoDoubleClickUtils.isDoubleClick());
-/*
-                if (!NoDoubleClickUtils.isDoubleClick()) {
-                    Toast.makeText(getApplicationContext(), "view", Toast.LENGTH_SHORT).show();
-                }*/
-
+            public void onClick() {
+                finish();
             }
-        });
+        };
+
+
+        zoomView.setPicturePreviewCallBack(picturePreviewCallBack);
 
 
         File bigPicFile = new File(getLocalPath(url));

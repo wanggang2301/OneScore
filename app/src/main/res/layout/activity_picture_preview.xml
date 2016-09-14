@@ -6,10 +6,23 @@
     android:background="#000000"
     android:orientation="vertical">
 
-    <com.hhly.mlottery.widget.ZoomImageView
-        android:id="@+id/zoom_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="matrix" />
+        android:layout_height="match_parent">
+
+        <com.hhly.mlottery.widget.ZoomImageView
+            android:id="@+id/zoom_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="matrix" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:paddingBottom="20dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/new_download" />
+    </FrameLayout>
 
 </LinearLayout>

@@ -17,6 +17,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import com.hhly.mlottery.callback.PicturePreviewCallBack;
+
 /**
  *
  */
@@ -24,6 +26,12 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
     private static final String TAG = ZoomImageView.class.getSimpleName();
     public static final float SCALE_MAX = 4.0f;
     private static final float SCALE_MID = 2.0f;
+
+    private PicturePreviewCallBack picturePreviewCallBack;
+
+    public void setPicturePreviewCallBack(PicturePreviewCallBack picturePreviewCallBack) {
+        this.picturePreviewCallBack = picturePreviewCallBack;
+    }
 
     /**
      * 初始化时的缩放比例，如果图片宽或高大于屏幕，此值将小于0
@@ -77,6 +85,8 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
 
                 Log.e("DoubleTap", "onSingleTapConfirmed " + initScale);
 
+
+                picturePreviewCallBack.onClick();
 
                 return super.onSingleTapConfirmed(e);
             }
