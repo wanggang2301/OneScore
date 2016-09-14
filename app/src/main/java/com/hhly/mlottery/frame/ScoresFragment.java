@@ -24,7 +24,9 @@ import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.FootballDatabaseActivity;
 import com.hhly.mlottery.activity.FootballTypeSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
@@ -42,7 +44,7 @@ import java.util.List;
  * @author Tenney
  */
 @SuppressLint("NewApi")
-public class ScoresFragment extends Fragment {
+public class ScoresFragment extends BaseWebSocketFragment {
 
     private final int ROLLBALL_FRAGMENT = 0;
     private final int IMMEDIA_FRAGMENT = 1;
@@ -95,12 +97,20 @@ public class ScoresFragment extends Fragment {
 
     private RollBallFragment rollBallFragment;
 
+
     @SuppressLint("ValidFragment")
     public ScoresFragment(Context context) {
         this.mContext = context;
     }
 
     public ScoresFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.app");
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -114,6 +124,10 @@ public class ScoresFragment extends Fragment {
         initData();
         initEVent();
         setFootballLeagueStatisticsTodayClick();
+
+//        eventBus = new EventBus();
+//        eventBus.register(this);
+
         return view;
     }
 
@@ -124,6 +138,7 @@ public class ScoresFragment extends Fragment {
                 if (mContext.getResources().getString(R.string.basket_left).equals(mItems[position])) {// 选择篮球
                     ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.GONE);
                     ((FootballActivity) mContext).switchFragment(5);
+                    closeWebSocket();
                 }
             }
 
@@ -310,9 +325,9 @@ public class ScoresFragment extends Fragment {
                             break;
                         case ImmediateFragment.LOAD_DATA_STATUS_INIT:
                         case ImmediateFragment.LOAD_DATA_STATUS_LOADING:
-                            if (!ImmediateFragment.isPause) {
-                                Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
-                            }
+//                            if (!ImmediateFragment.isPause) {
+                            Toast.makeText(getActivity(), R.string.toast_data_loading, Toast.LENGTH_SHORT).show();
+//                            }
                             break;
                         default:
                             break;
@@ -452,6 +467,7 @@ public class ScoresFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        L.d(TAG, "football Fragment resume..");
         mSpinner.setSelection(0);
         if (((FootballActivity) mContext).fragmentIndex == 0) {
             if (isRollballFragment) {
@@ -480,6 +496,11 @@ public class ScoresFragment extends Fragment {
                 L.d("xxx", "FocusFragment>>>显示");
             }
         }
+        if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex != FootballActivity.BASKET_FRAGMENT) {
+            connectWebSocket();
+        }
+
+
     }
 
     @Override
@@ -513,11 +534,65 @@ public class ScoresFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        L.d(TAG, "football Fragment start..");
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "football Fragment destroy..");
+//        eventBus.unregister(this);
     }
 
+    @Override
+    protected void onTextResult(String text) {
+        ImmediateFragment.imEventBus.post(new FootballScoresWebSocketEntity(text));
+        FocusFragment.focusEventBus.post(new FootballScoresWebSocketEntity(text));
+        RollBallFragment.eventBus.post(new FootballScoresWebSocketEntity(text));
+    }
+
+    public class FootballScoresWebSocketEntity {
+        public String text;
+
+        FootballScoresWebSocketEntity(String text) {
+            this.text = text;
+        }
+    }
+
+
+    @Override
+    protected void onConnectFail() {
+        L.d(TAG, "__onConnectFail__");
+        ((RollBallFragment) fragments.get(0)).connectFail();
+        ((ImmediateFragment) fragments.get(1)).connectFail();
+        ((FocusFragment) fragments.get(4)).connectFail();
+    }
+
+    @Override
+    protected void onDisconnected() {
+        L.d(TAG, "__onDisconnected__");
+        ((RollBallFragment) fragments.get(0)).connectFail();
+        ((ImmediateFragment) fragments.get(1)).connectFail();
+        ((FocusFragment) fragments.get(4)).connectFail();
+    }
+
+    @Override
+    protected void onConnected() {
+        L.d(TAG, "__onConnected__");
+        ((RollBallFragment) fragments.get(0)).connectSuccess();
+        ((ImmediateFragment) fragments.get(1)).connectSuccess();
+        ((FocusFragment) fragments.get(4)).connectSuccess();
+    }
+
+    public void reconnectWebSocket() {
+        connectWebSocket();
+    }
+
+    public void disconnectWebSocket() {
+        closeWebSocket();
+    }
 
     @Override
     public void onDestroyView() {
