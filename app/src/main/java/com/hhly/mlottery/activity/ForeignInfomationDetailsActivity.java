@@ -54,6 +54,7 @@ public class ForeignInfomationDetailsActivity extends BaseActivity {
 
     private List<Integer> list;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +73,9 @@ public class ForeignInfomationDetailsActivity extends BaseActivity {
     private void initView() {
         publicBtnSet.setVisibility(View.GONE);
         recyclerViewDetails.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        recyclerViewDetails.setFocusable(false);
+
+
     }
 
     @OnClick({R.id.public_img_back, R.id.tv_comment, R.id.iv_photo})

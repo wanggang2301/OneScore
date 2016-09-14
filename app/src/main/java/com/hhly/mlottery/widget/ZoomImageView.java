@@ -6,7 +6,6 @@ import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -18,6 +17,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.callback.PicturePreviewCallBack;
+import com.hhly.mlottery.util.L;
 
 /**
  *
@@ -83,7 +83,7 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
 
-                Log.e("DoubleTap", "onSingleTapConfirmed " + initScale);
+                L.e("DoubleTap", "onSingleTapConfirmed " + initScale);
 
 
                 picturePreviewCallBack.onClick();
@@ -98,7 +98,7 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
 
                 float x = e.getX();
                 float y = e.getY();
-                Log.e("DoubleTap", getScale() + " , " + initScale);
+                L.e("DoubleTap", getScale() + " , " + initScale);
 
 
                 if (getScale() < SCALE_MID) {
@@ -255,7 +255,7 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
         if (rect.height() < height) {
             deltaY = height * 0.5f - rect.bottom + 0.5f * rect.height();
         }
-        Log.e(TAG, "deltaX = " + deltaX + " , deltaY = " + deltaY);
+        L.e(TAG, "deltaX = " + deltaX + " , deltaY = " + deltaY);
 
         mScaleMatrix.postTranslate(deltaX, deltaY);
 
@@ -327,7 +327,7 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
                 if (rectF.width() > getWidth() || rectF.height() > getHeight()) {
                     getParent().requestDisallowInterceptTouchEvent(true);
                 }
-                Log.e(TAG, "ACTION_MOVE");
+                L.e(TAG, "ACTION_MOVE");
                 float dx = x - mLastX;
                 float dy = y - mLastY;
 
@@ -361,7 +361,7 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                Log.e(TAG, "ACTION_UP");
+                L.e(TAG, "ACTION_UP");
                 lastPointerCount = 0;
                 break;
         }
@@ -398,7 +398,7 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
             Drawable d = getDrawable();
             if (d == null)
                 return;
-            Log.e(TAG, d.getIntrinsicWidth() + " , " + d.getIntrinsicHeight());
+            L.e(TAG, d.getIntrinsicWidth() + " , " + d.getIntrinsicHeight());
             int width = getWidth();
             int height = getHeight();
             // 拿到图片的宽和高
@@ -418,7 +418,7 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener, 
             }
             initScale = scale;
 
-            Log.e(TAG, "initScale = " + initScale);
+            L.e(TAG, "initScale = " + initScale);
             mScaleMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
             mScaleMatrix.postScale(scale, scale, getWidth() / 2,
                     getHeight() / 2);

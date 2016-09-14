@@ -1,10 +1,12 @@
 package com.hhly.mlottery.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -13,7 +15,10 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -30,6 +35,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -40,13 +46,16 @@ import butterknife.ButterKnife;
  */
 public class PicturePreviewActivity extends BaseActivity {
 
-
     private final static String TAG = "picActivity";
+
+    private final static String baseSavePic = "/com.hhly.mlottery/images/";
 
     @BindView(R.id.zoom_view)
     ZoomImageView zoomView;
-    @BindView(R.id.ll_info)
-    LinearLayout llInfo;
+    @BindView(R.id.iv_save)
+    ImageView ivSave;
+    @BindView(R.id.progress)
+    ProgressBar progress;
 
     private Context ctx;
     private GestureDetector gestureDetector;
@@ -56,6 +65,9 @@ public class PicturePreviewActivity extends BaseActivity {
     private Bitmap bitmap;
 
     private PicturePreviewCallBack picturePreviewCallBack;
+
+    private String url;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +80,7 @@ public class PicturePreviewActivity extends BaseActivity {
 
         //  String url = "http://t11.baidu.com/it/u=705181412,1589083313&fm=72";
 
-        String url = getIntent().getStringExtra("url");
+        url = getIntent().getStringExtra("url");
        /* /*//* 缩略图存储在本地的地址 *//**//*
         final String smallPath = getIntent().getStringExtra("smallPath");
         final int identify = getIntent().getIntExtra("indentify", -1);*/
@@ -79,7 +91,6 @@ public class PicturePreviewActivity extends BaseActivity {
         widthPixels = metrics.widthPixels;
         heightPixels = metrics.heightPixels;
 
-
         picturePreviewCallBack = new PicturePreviewCallBack() {
             @Override
             public void onClick() {
@@ -87,28 +98,16 @@ public class PicturePreviewActivity extends BaseActivity {
             }
         };
 
-
         zoomView.setPicturePreviewCallBack(picturePreviewCallBack);
-
 
         File bigPicFile = new File(getLocalPath(url));
         if (bigPicFile.exists()) {/* 如果已经下载过了,直接从本地文件中读取 */
-
             L.d(TAG, "加载已存在SD卡图片");
             zoomView.setImageBitmap(zoomBitmap(BitmapFactory.decodeFile(getLocalPath(url)), widthPixels, heightPixels));
 
         } else if (!TextUtils.isEmpty(url)) {
 
             getBitMapFromUrl(url);
-
-           /*
-
-            if (TextUtils.isEmpty(smallPath) && identify != -1) {
-                handle.setBackground(BitmapFactory.decodeResource(getResources(), identify));
-            } else {
-                handle.setBackground(BitmapFactory.decodeFile(smallPath));
-            }
-            handle.show();*/
         }
 
 
@@ -116,7 +115,6 @@ public class PicturePreviewActivity extends BaseActivity {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
-                L.d("112233", "onFling");
                 float x = e2.getX() - e1.getX();
                 if (x > 0) {
                     prePicture();
@@ -124,15 +122,6 @@ public class PicturePreviewActivity extends BaseActivity {
                     nextPicture();
                 }
                 return true;
-            }
-
-
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
-                L.d("112233", "onDoubleTap");
-
-
-                return super.onDoubleTap(e);
             }
         });
     }
@@ -165,14 +154,27 @@ public class PicturePreviewActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
+                    progress.setVisibility(View.VISIBLE);
+                    zoomView.setVisibility(View.GONE);
+                    ivSave.setVisibility(View.GONE);
+                    break;
+                case 1:
                     L.d(TAG, "加载请求图片");
+                    progress.setVisibility(View.GONE);
+                    zoomView.setVisibility(View.VISIBLE);
+                    ivSave.setVisibility(View.VISIBLE);
                     zoomView.setImageBitmap(zoomBitmap(bitmap, widthPixels, heightPixels));
+                    break;
+
+                case 2:
+
                     break;
             }
         }
     };
 
     public void getBitMapFromUrl(final String url) {
+        handler.sendEmptyMessage(0);
         bitmap = null;
         VolleyContentFast.requestImage(url, new Response.Listener<Bitmap>() {
             @Override
@@ -182,7 +184,7 @@ public class PicturePreviewActivity extends BaseActivity {
                     savePhotoToSDCard(zoomBitmap(bitmap, widthPixels, heightPixels), getLocalPath(url));
                 }
 
-                handler.sendEmptyMessage(0);
+                handler.sendEmptyMessage(1);
             }
         }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
@@ -196,8 +198,6 @@ public class PicturePreviewActivity extends BaseActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        L.d("112233", "ccc======" + gestureDetector.onTouchEvent(event));
         return gestureDetector.onTouchEvent(event);
     }
 
@@ -210,7 +210,7 @@ public class PicturePreviewActivity extends BaseActivity {
      * @param height
      * @return
      */
-    public static Bitmap zoomBitmap(Bitmap bitmap, int width, int height) {
+    public Bitmap zoomBitmap(Bitmap bitmap, int width, int height) {
         if (bitmap == null)
             return bitmap;
         int w = bitmap.getWidth();
@@ -228,7 +228,7 @@ public class PicturePreviewActivity extends BaseActivity {
         return newbmp;
     }
 
-    public static String getLocalPath(String url) {
+    public String getLocalPath(String url) {
         String fileName = "temp.png";
         if (url != null) {
             if (url.contains("/")) {
@@ -241,14 +241,15 @@ public class PicturePreviewActivity extends BaseActivity {
                 fileName = fileName.replaceAll("%", "");
             }
         }
-        L.d(TAG, "路径-=" + Environment.getExternalStorageDirectory() + "/" + fileName);
-        return Environment.getExternalStorageDirectory() + "/" + fileName;
+
+        L.d(TAG, "filename=" + fileName);
+        return Environment.getExternalStorageDirectory() + baseSavePic + fileName;
     }
 
     /**
      * Save image to the SD card
      */
-    public static void savePhotoToSDCard(Bitmap photoBitmap, String fullPath) {
+    public void savePhotoToSDCard(Bitmap photoBitmap, String fullPath) {
         if (checkSDCardAvailable()) {
             File file = new File(fullPath);
             if (!file.getParentFile().exists()) {
@@ -281,30 +282,21 @@ public class PicturePreviewActivity extends BaseActivity {
                     e.printStackTrace();
                 }
             }
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri uri = Uri.fromFile(file);
+            intent.setData(uri);
+            ctx.sendBroadcast(intent);
         }
     }
 
-    public static boolean checkSDCardAvailable() {
+    public boolean checkSDCardAvailable() {
         return Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED);
     }
 
-
-  /*  @OnClick({R.id.zoom_view, R.id.ll_info})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.zoom_view:
-
-                Toast.makeText(getApplicationContext(), "view", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.ll_info:
-                L.d("112233", "ll_info关闭");
-                finish();
-                break;
-
-
-        }
-    }*/
-
-
+    @OnClick(R.id.iv_save)
+    public void onClick() {
+        savePhotoToSDCard(zoomBitmap(bitmap, widthPixels, heightPixels), getLocalPath(url));
+        Toast.makeText(getApplicationContext(), "已保存图片到SD卡文件夹下", Toast.LENGTH_SHORT).show();
+    }
 }

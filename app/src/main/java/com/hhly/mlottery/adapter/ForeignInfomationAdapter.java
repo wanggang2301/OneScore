@@ -56,7 +56,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
             @Override
             public void onClick(View v) {
 
-                String url = "http://bbs.tuwan.com/data/attachment/forum/201504/03/164410mfb6fr6c80a68gfu.png";
+                String url = "http://hiphotos.baidu.com/%B3%F5%BC%B6%BE%D1%BB%F7%CA%D6/pic/item/929b56443840bfc6b3b7dc64.jpg";
                 Intent intent = new Intent(mContext, PicturePreviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("url", url);
