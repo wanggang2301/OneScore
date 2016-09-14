@@ -72,6 +72,7 @@ public class ForeignInfomationActivity extends BaseActivity {
 
     private void setList() {
 
+
         list = new ArrayList<>();
         for (int i = 1; i < 20; i++) {
             list.add(i);
