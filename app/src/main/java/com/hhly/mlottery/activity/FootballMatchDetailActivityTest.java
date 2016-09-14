@@ -323,6 +323,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
+            infoCenter = getIntent().getExtras().getInt("info_center");
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.liveEvent." + mThirdId + "." + appendLanguage());
