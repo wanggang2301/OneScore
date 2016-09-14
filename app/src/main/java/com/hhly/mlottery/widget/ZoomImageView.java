@@ -20,10 +20,7 @@ import android.widget.ImageView;
 /**
  *
  */
-public class ZoomImageView extends ImageView implements OnScaleGestureListener,
-        OnTouchListener, ViewTreeObserver.OnGlobalLayoutListener
-
-{
+public class ZoomImageView extends ImageView implements OnScaleGestureListener, OnTouchListener, ViewTreeObserver.OnGlobalLayoutListener {
     private static final String TAG = ZoomImageView.class.getSimpleName();
     public static final float SCALE_MAX = 4.0f;
     private static final float SCALE_MID = 2.0f;
@@ -62,43 +59,60 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener,
     private boolean isCheckTopAndBottom = true;
     private boolean isCheckLeftAndRight = true;
 
+
     public ZoomImageView(Context context) {
         this(context, null);
+
     }
 
     public ZoomImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setScaleType(ScaleType.MATRIX);
-        mGestureDetector = new GestureDetector(context,
-                new SimpleOnGestureListener() {
-                    @Override
-                    public boolean onDoubleTap(MotionEvent e) {
-                        if (isAutoScale == true)
-                            return true;
 
-                        float x = e.getX();
-                        float y = e.getY();
-                        Log.e("DoubleTap", getScale() + " , " + initScale);
-                        if (getScale() < SCALE_MID) {
-                            ZoomImageView.this.postDelayed(
-                                    new AutoScaleRunnable(SCALE_MID, x, y), 16);
-                            isAutoScale = true;
-                        } else if (getScale() >= SCALE_MID
-                                && getScale() < SCALE_MAX) {
-                            ZoomImageView.this.postDelayed(
-                                    new AutoScaleRunnable(SCALE_MAX, x, y), 16);
-                            isAutoScale = true;
-                        } else {
-                            ZoomImageView.this.postDelayed(
-                                    new AutoScaleRunnable(initScale, x, y), 16);
-                            isAutoScale = true;
-                        }
+        mGestureDetector = new GestureDetector(context, new SimpleOnGestureListener() {
 
-                        return true;
-                    }
-                });
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+
+                Log.e("DoubleTap", "onSingleTapConfirmed " + initScale);
+
+
+                return super.onSingleTapConfirmed(e);
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                if (isAutoScale == true)
+                    return true;
+
+                float x = e.getX();
+                float y = e.getY();
+                Log.e("DoubleTap", getScale() + " , " + initScale);
+
+
+                if (getScale() < SCALE_MID) {
+                    ZoomImageView.this.postDelayed(
+                            new AutoScaleRunnable(SCALE_MID, x, y), 16);
+                    isAutoScale = true;
+                } else if (getScale() >= SCALE_MID
+                        && getScale() < SCALE_MAX) {
+                    ZoomImageView.this.postDelayed(
+                            new AutoScaleRunnable(SCALE_MAX, x, y), 16);
+                    isAutoScale = true;
+                } else {
+                    ZoomImageView.this.postDelayed(
+                            new AutoScaleRunnable(initScale, x, y), 16);
+                    isAutoScale = true;
+                }
+
+                return true;
+            }
+        });
         mScaleGestureDetector = new ScaleGestureDetector(context, this);
+
         this.setOnTouchListener(this);
+
     }
 
     /**
@@ -296,6 +310,8 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener,
                 if (rectF.width() > getWidth() || rectF.height() > getHeight()) {
                     getParent().requestDisallowInterceptTouchEvent(true);
                 }
+
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (rectF.width() > getWidth() || rectF.height() > getHeight()) {
@@ -311,15 +327,6 @@ public class ZoomImageView extends ImageView implements OnScaleGestureListener,
                 if (isCanDrag) {
 
                     if (getDrawable() != null) {
-                        // if (getMatrixRectF().left == 0 && dx > 0)
-                        // {
-                        // getParent().requestDisallowInterceptTouchEvent(false);
-                        // }
-                        //
-                        // if (getMatrixRectF().right == getWidth() && dx < 0)
-                        // {
-                        // getParent().requestDisallowInterceptTouchEvent(false);
-                        // }
                         isCheckLeftAndRight = isCheckTopAndBottom = true;
                         // 如果宽度小于屏幕宽度，则禁止左右移动
                         if (rectF.width() < getWidth()) {

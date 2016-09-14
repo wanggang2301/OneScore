@@ -13,10 +13,14 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.NoDoubleClickUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ZoomImageView;
 
@@ -28,11 +32,23 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+/**
+ * @author: Wangg
+ * @Name：PicturePreviewActivity
+ * @Description: 国外资讯图片预览
+ * @Created on:2016/9/1 3 15:00.
+ */
 public class PicturePreviewActivity extends BaseActivity {
 
 
+    private final static String TAG = "picActivity";
+
     @BindView(R.id.zoom_view)
     ZoomImageView zoomView;
+    @BindView(R.id.ll_info)
+    LinearLayout llInfo;
+
     private Context ctx;
     private GestureDetector gestureDetector;
     private int widthPixels;
@@ -47,10 +63,12 @@ public class PicturePreviewActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         ctx = this;
-        String url = "http://t11.baidu.com/it/u=705181412,1589083313&fm=72";
 
-     /*   final String url = getIntent().getStringExtra("url");
-        *//* 缩略图存储在本地的地址 *//*
+
+        //  String url = "http://t11.baidu.com/it/u=705181412,1589083313&fm=72";
+
+        String url = getIntent().getStringExtra("url");
+       /* /*//* 缩略图存储在本地的地址 *//**//*
         final String smallPath = getIntent().getStringExtra("smallPath");
         final int identify = getIntent().getIntExtra("indentify", -1);*/
 
@@ -61,8 +79,26 @@ public class PicturePreviewActivity extends BaseActivity {
         heightPixels = metrics.heightPixels;
 
 
+        zoomView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NoDoubleClickUtils.initLastClickTime();
+
+               // L.d("112233", "double=" + NoDoubleClickUtils.isDoubleClick());
+/*
+                if (!NoDoubleClickUtils.isDoubleClick()) {
+                    Toast.makeText(getApplicationContext(), "view", Toast.LENGTH_SHORT).show();
+                }*/
+
+            }
+        });
+
+
         File bigPicFile = new File(getLocalPath(url));
         if (bigPicFile.exists()) {/* 如果已经下载过了,直接从本地文件中读取 */
+
+            L.d(TAG, "加载已存在SD卡图片");
             zoomView.setImageBitmap(zoomBitmap(BitmapFactory.decodeFile(getLocalPath(url)), widthPixels, heightPixels));
 
         } else if (!TextUtils.isEmpty(url)) {
@@ -83,14 +119,24 @@ public class PicturePreviewActivity extends BaseActivity {
         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+                L.d("112233", "onFling");
                 float x = e2.getX() - e1.getX();
                 if (x > 0) {
                     prePicture();
                 } else if (x < 0) {
-
                     nextPicture();
                 }
                 return true;
+            }
+
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                L.d("112233", "onDoubleTap");
+
+
+                return super.onDoubleTap(e);
             }
         });
     }
@@ -121,8 +167,12 @@ public class PicturePreviewActivity extends BaseActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            zoomView.setImageBitmap(zoomBitmap(bitmap, widthPixels, heightPixels));
+            switch (msg.what) {
+                case 0:
+                    L.d(TAG, "加载请求图片");
+                    zoomView.setImageBitmap(zoomBitmap(bitmap, widthPixels, heightPixels));
+                    break;
+            }
         }
     };
 
@@ -137,7 +187,6 @@ public class PicturePreviewActivity extends BaseActivity {
                 }
 
                 handler.sendEmptyMessage(0);
-
             }
         }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
@@ -148,10 +197,14 @@ public class PicturePreviewActivity extends BaseActivity {
 
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        L.d("112233", "ccc======" + gestureDetector.onTouchEvent(event));
         return gestureDetector.onTouchEvent(event);
     }
+
 
     /**
      * Resize the bitmap
@@ -192,6 +245,7 @@ public class PicturePreviewActivity extends BaseActivity {
                 fileName = fileName.replaceAll("%", "");
             }
         }
+        L.d(TAG, "路径-=" + Environment.getExternalStorageDirectory() + "/" + fileName);
         return Environment.getExternalStorageDirectory() + "/" + fileName;
     }
 
@@ -204,14 +258,12 @@ public class PicturePreviewActivity extends BaseActivity {
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
-
             File photoFile = new File(fullPath);
             FileOutputStream fileOutputStream = null;
             try {
                 fileOutputStream = new FileOutputStream(photoFile);
                 if (photoBitmap != null) {
-                    if (photoBitmap.compress(Bitmap.CompressFormat.PNG, 100,
-                            fileOutputStream)) {
+                    if (photoBitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)) {
                         fileOutputStream.flush();
                     }
                 }
@@ -240,5 +292,23 @@ public class PicturePreviewActivity extends BaseActivity {
         return Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED);
     }
+
+
+  /*  @OnClick({R.id.zoom_view, R.id.ll_info})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.zoom_view:
+
+                Toast.makeText(getApplicationContext(), "view", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ll_info:
+                L.d("112233", "ll_info关闭");
+                finish();
+                break;
+
+
+        }
+    }*/
+
 
 }

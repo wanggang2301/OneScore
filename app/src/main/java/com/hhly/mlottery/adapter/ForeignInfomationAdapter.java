@@ -2,9 +2,9 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -38,12 +38,12 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
     @Override
     protected void convert(BaseViewHolder viewHolder, Integer b) {
 
-        CardView cardView = viewHolder.getView(R.id.calendarView_ff);
+        LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
 
         viewHolder.setText(R.id.tv_time, b + "分钟以前");
 
 
-        cardView.findViewById(R.id.tv_comment).setOnClickListener(new View.OnClickListener() {
+        linearLayout.findViewById(R.id.tv_comment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
@@ -52,11 +52,16 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
             }
         });
 
-        cardView.findViewById(R.id.iv_photo).setOnClickListener(new View.OnClickListener() {
+        linearLayout.findViewById(R.id.iv_photo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String url = "http://bbs.tuwan.com/data/attachment/forum/201504/03/164410mfb6fr6c80a68gfu.png";
                 Intent intent = new Intent(mContext, PicturePreviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("url", url);
+
+
                 mContext.startActivity(intent);
             }
         });
