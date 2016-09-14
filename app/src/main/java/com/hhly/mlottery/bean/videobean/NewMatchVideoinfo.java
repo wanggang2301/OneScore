@@ -75,6 +75,7 @@ public class NewMatchVideoinfo {
             public String homePic;
             public String guestPic;
             public String zonghePic;
+            public int  liveAndBFZ;
             /**
              * name : CCTV 5+
              * url : http://www.lesports.com/video/26287516.html

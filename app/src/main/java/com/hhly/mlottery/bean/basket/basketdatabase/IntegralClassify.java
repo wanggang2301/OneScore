@@ -3,7 +3,9 @@ package com.hhly.mlottery.bean.basket.basketdatabase;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/9/5.
+ * description:
+ * author: yixq
+ * Created by A on 2016/9/5.
  */
 
 public class IntegralClassify {

@@ -41,12 +41,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!--
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
@@ -355,6 +353,10 @@
               </intent-filter>
             -->
         </activity>
+        <!--独家访谈界面-->
+        <activity android:name=".activity.PLVideoTextureActivity"
+            android:screenOrientation="portrait"
+            ></activity>
         <activity
             android:name=".activity.ForeignInfomationActivity"
             android:screenOrientation="portrait">

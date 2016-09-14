@@ -171,6 +171,7 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         super.onResume();
         L.d("xxx","聊天界面显示...");
         MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart("ConversationFragment");
     }
 
     @Override
@@ -178,5 +179,6 @@ public class ConversationFragment extends FragmentActivity implements View.OnCli
         super.onPause();
         L.d("xxx","聊天界面隐藏...");
         MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd("ConversationFragment");
     }
 }

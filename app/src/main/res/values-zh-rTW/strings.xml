@@ -32,7 +32,6 @@
     <string name="time">時間(T)</string>
 
 
-
     <!--篮球资料库-->
     <string name="basket_info_hot">熱門</string>
     <string name="basket_info_eur">歐洲</string>
@@ -43,6 +42,10 @@
     <string name="basket_info_title">籃球資料庫</string>
     <string name="basket_info_zhouji">洲際賽事</string>
     <string name="basket_info_country">國家賽事</string>
+
+    <string name="basket_info_zhouji2">國際賽事</string>
+    <string name="basket_info_shatan">沙灘賽事</string>
+
     <string name="football_info_title">足球資料庫</string>
 
     <string name="football_info_oceania">大洋洲</string>
@@ -789,6 +792,11 @@
     <string name="football_database_details_integral">積分</string>
     <string name="football_database_details_stage">階段</string>
 
+    <string name="football_database_details_integral_num_title">已賽</string>
+    <string name="football_database_details_integral_win_draw_lose_title">勝/平/負</string>
+    <string name="football_database_details_integral_gain_loss_title">得/失球</string>
+    <string name="football_database_details_integral_itnis_title">凈勝球</string>
+
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
     <string name="football_analyze_details_time">時間</string>
@@ -1053,12 +1061,6 @@
     <string name="rong_chart_room">聊天</string>
     <string name="rong_chart_bg_pb">透明度</string>
 
-    <string name="rong_input_prompt1">珍愛生命,遠離噴子！</string>
-    <string name="rong_input_prompt2">路見不平壹聲吼！！！</string>
-    <string name="rong_input_prompt3">我來聊兩句...</string>
-    <string name="rong_input_prompt4">我從不說謊，除啦這句話以外。</string>
-    <string name="rong_input_prompt5">沈默是金.沈默久了就會有很多金子嗎？</string>
-    <string name="rong_input_prompt6">元芳怎麽看？</string>
     <!--头像上传-->
     <string name="sd_card_not_exist">sd卡不存在</string>
     <string name="install_the_gallery">請先安裝圖庫</string>
@@ -1087,14 +1089,14 @@
     <string name="info_center_type1">本賽季贏盤概率</string>
     <string name="info_center_type2">本賽季輸盤概率</string>
     <string name="info_center_type3">近期比賽已連續%1$s場贏盤</string>
-    <string name="info_center_type4">%1$s盤口下贏盤概率</string>
-    <string name="info_center_type5">%1$s盤口下輸盤概率</string>
+    <string name="info_center_type4">%1$s盤口贏盤概率</string>
+    <string name="info_center_type5">%1$s盤口輸盤概率</string>
     <string name="info_center_type6">本賽季大球概率</string>
     <string name="info_center_type7">本賽季小球概率</string>
     <string name="info_center_type8">近期比賽已連續%1$s場大球</string>
     <string name="info_center_type9">近期比賽已連續%1$s場小球</string>
-    <string name="info_center_type10">%1$s盤口下大球概率</string>
-    <string name="info_center_type11">%1$s盤口下小球概率</string>
+    <string name="info_center_type10">%1$s盤口大球概率</string>
+    <string name="info_center_type11">%1$s盤口小球概率</string>
     <string name="info_center_type12">近期比賽已取得%1$s連勝</string>
     <string name="info_center_type13">凈勝對手2球或以上的場次概率</string>
     <string name="info_center_type14">凈輸對手2球或以上的場次概率</string>
@@ -1104,26 +1106,26 @@
     <string name="info_center_type18">上半場贏盤概率</string>
     <string name="info_center_type19">上半場輸盤概率</string>
     <string name="info_center_type20">已連續%1$s場上半場贏盤</string>
-    <string name="info_center_type21">%1$s盤口下上半場贏盤概率</string>
-    <string name="info_center_type22">%1$s盤口下上半場輸盤概率</string>
+    <string name="info_center_type21">%1$s盤口上半場贏盤概率</string>
+    <string name="info_center_type22">%1$s盤口上半場輸盤概率</string>
     <string name="info_center_type23">上半場大球概率</string>
     <string name="info_center_type24">上半場小球概率</string>
     <string name="info_center_type25">已連續%1$s場上半場大球</string>
     <string name="info_center_type26">已連續%1$s場上半場小球</string>
-    <string name="info_center_type27">%1$s盤口下上半場大球概率</string>
-    <string name="info_center_type28">%1$s盤口下上半場小球概率</string>
+    <string name="info_center_type27">%1$s盤口上半場大球概率</string>
+    <string name="info_center_type28">%1$s盤口上半場小球概率</string>
     <string name="info_center_type29">已取得上半場%1$s連勝</string>
     <string name="info_center_other_type1">%1$s贏盤概率</string>
     <string name="info_center_other_type2">%1$s輸盤概率</string>
     <string name="info_center_other_type3">已連續%1$s場贏盤</string>
-    <string name="info_center_other_type4">%1$s盤口下贏盤概率</string>
-    <string name="info_center_other_type5">%1$s盤口下輸盤概率</string>
+    <string name="info_center_other_type4">%1$s盤口贏盤概率</string>
+    <string name="info_center_other_type5">%1$s盤口輸盤概率</string>
     <string name="info_center_other_type6">%1$s大球概率</string>
     <string name="info_center_other_type7">%1$s小球概率</string>
     <string name="info_center_other_type8">已連續%1$s場大球</string>
     <string name="info_center_other_type9">已連續%1$s場小球</string>
-    <string name="info_center_other_type10">%1$s盤口下大球概率</string>
-    <string name="info_center_other_type11">%1$s盤口下小球概率</string>
+    <string name="info_center_other_type10">%1$s盤口大球概率</string>
+    <string name="info_center_other_type11">%1$s盤口小球概率</string>
     <string name="info_center_other_type12">已取得%1$s%2$s連勝</string>
     <string name="info_center_other_type13">凈勝對手2球或以上的場次概率</string>
     <string name="info_center_other_type14">凈輸對手2球或以上的場次概率</string>
@@ -1133,14 +1135,14 @@
     <string name="info_center_other_type18">%1$s上半場贏盤概率</string>
     <string name="info_center_other_type19">%1$s上半場輸盤概率</string>
     <string name="info_center_other_type20">已連續%1$s場上半場贏盤</string>
-    <string name="info_center_other_type21">%1$s盤口下上半場贏盤概率</string>
-    <string name="info_center_other_type22">%1$s盤口下上半場輸盤概率</string>
+    <string name="info_center_other_type21">%1$s盤口上半場贏盤概率</string>
+    <string name="info_center_other_type22">%1$s盤口上半場輸盤概率</string>
     <string name="info_center_other_type23">%1$s上半場大球概率</string>
     <string name="info_center_other_type24">%1$s上半場小球概率</string>
     <string name="info_center_other_type25">已連續%1$s場上半場大球</string>
     <string name="info_center_other_type26">已連續%1$s場上半場小球</string>
-    <string name="info_center_other_type27">%1$s盤口下上半場大球概率</string>
-    <string name="info_center_other_type28">%1$s盤口下上半場小球概率</string>
+    <string name="info_center_other_type27">%1$s盤口上半場大球概率</string>
+    <string name="info_center_other_type28">%1$s盤口上半場小球概率</string>
     <string name="info_center_other_type29">上半場%1$s連勝</string>
     <string name="info_center_other_type30">%1$s盤口贏盤概率</string>
     <string name="info_center_other_type31">%1$s盤口輸盤概率</string>
