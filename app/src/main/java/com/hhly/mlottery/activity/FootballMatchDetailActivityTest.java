@@ -127,9 +127,10 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private final static int ROLLBALL_FG = 0;
     private final static int LIVE_FG = 1;
     private final static int ANALYZE_FG = 2;
-    private final static int ODDS_FG = 3;
-    private final static int STATISTICS_FG = 4;
+    private final static int STATISTICS_FG = 3;
+    private final static int ODDS_FG = 4;
     private final static int TALKBALL_FG = 5;
+    private int infoCenter = -1;// 情报中心中转标记
 
 
     //事件直播
@@ -332,6 +333,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BUNDLE_PARAM_THIRDID, "1300");
             currentFragmentId = getIntent().getExtras().getInt("currentFragmentId");
+            infoCenter = getIntent().getExtras().getInt("info_center");
         }
 
         EventBus.getDefault().register(this);//注册EventBus
@@ -347,8 +349,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
          * 足球内页头部ViewPager
          */
         mPreHeadInfoFrament = PreHeadInfoFrament.newInstance();
-        mLiveHeadInfoFragment = new LiveHeadInfoFragment().newInstance();
-        mAnimHeadLiveFragment = new AnimHeadLiveFragment().newInstance(mThirdId);
+        mLiveHeadInfoFragment = LiveHeadInfoFragment.newInstance();
+        mAnimHeadLiveFragment = AnimHeadLiveFragment.newInstance(mThirdId);
 
         basePagerAdapter.addFragments(mPreHeadInfoFrament, mLiveHeadInfoFragment, mAnimHeadLiveFragment);
         mHeadviewpager.setAdapter(basePagerAdapter);
@@ -807,8 +809,13 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
     private void initViewPager(MatchDetail matchDetail) {
         if ("0".equals(matchDetail.getLiveStatus())) { //赛前
 
-            //赛前进入分析
-            mViewPager.setCurrentItem(ANALYZE_FG, false);
+            if (infoCenter == 1) {
+                // 情报
+                mViewPager.setCurrentItem(STATISTICS_FG, false);
+            } else {
+                //赛前进入分析
+                mViewPager.setCurrentItem(ANALYZE_FG, false);
+            }
 
 
             mHeadviewpager.setIsScrollable(false);
@@ -836,7 +843,12 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         } else {
 
-            mViewPager.setCurrentItem(ROLLBALL_FG, false);
+            if (infoCenter == 1) {
+                // 情报
+                mViewPager.setCurrentItem(STATISTICS_FG, false);
+            } else {
+                mViewPager.setCurrentItem(ROLLBALL_FG, false);
+            }
 
 
             mHeadviewpager.setIsScrollable(true);
@@ -862,11 +874,14 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
                 //获取完场事件直播
                 eventMatchTimeLiveList = new ArrayList<>();
-                for (MatchTimeLiveBean m : mMatchDetail.getMatchInfo().getMatchTimeLive()) {
-                    if ("2".equals(m.getState()) && "1".equals(m.getCode())) {   //2在完场时间直播中为中场，中场加入中场比分halfScore  放在isHome字段位置
-                        eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), halfScore, m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
-                    } else {
-                        eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), m.isHome(), m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+
+                if (mMatchDetail.getMatchInfo().getMatchTimeLive() != null && mMatchDetail.getMatchInfo().getMatchTimeLive().size() > 0) {
+                    for (MatchTimeLiveBean m : mMatchDetail.getMatchInfo().getMatchTimeLive()) {
+                        if ("2".equals(m.getState()) && "1".equals(m.getCode())) {   //2在完场时间直播中为中场，中场加入中场比分halfScore  放在isHome字段位置
+                            eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), halfScore, m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+                        } else {
+                            eventMatchTimeLiveList.add(new MatchTimeLiveBean(m.getTime(), m.getCode(), m.isHome(), m.getMsgId(), m.getState(), m.getPlayInfo(), m.getEnNum(), 0));
+                        }
                     }
                 }
                 //99999999任意置值 加入完场状态
@@ -1011,7 +1026,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
         if (!isInitedViewPager) {
 
-            if (BEFOURLIVE.equals(mMatchDetail.getLiveStatus()) || ONLIVE.equals(mMatchDetail.getLiveStatus())) {
+            if (ONLIVE.equals(mMatchDetail.getLiveStatus())) {
                 L.d(TAG, "第一次启动socket");
                 L.d("456789", "第一次启动socket");
                 startWebsocket();
@@ -2491,6 +2506,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                 loadData();
                 break;
             case R.id.iv_join_room_foot:
+                MobclickAgent.onEvent(mContext, "Football_Join_Room");
                 joinRoom();
                 break;
             default:
@@ -2507,7 +2523,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
             iv_join_room_foot.setVisibility(View.GONE);
 
             // 判断融云服务器是否连接OK
-            if(!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))){
+            if (!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))) {
                 RongYunUtils.initRongIMConnect(mContext);// 连接融云服务器
             }
 

@@ -32,8 +32,8 @@ public class AppConstants {
     public static String SearchType = "searchType=0&";// 搜索类型
 
     // 融云环境KEY
-    public static String APPKEY_RONGYUN = "3argexb6r6c1e";
-    public static String APPSECRET_RONGYUN = "l0Fu9Kn0uqO";
+    public static String APPKEY_RONGYUN = "ik1qhw0919m8p";
+    public static String APPSECRET_RONGYUN = "oyHzmKPlNKG";
 
     // public static String i18n = "en";// 测试英文语言环境
 
@@ -181,13 +181,6 @@ public class AppConstants {
         } else {
             ACCESS_LINK = CHAONENG_API_PUBLISH;
         }
-        if(isTestEnv){
-            APPKEY_RONGYUN = "3argexb6r6c1e";
-            APPSECRET_RONGYUN = "l0Fu9Kn0uqO";
-        }else{
-            APPKEY_RONGYUN = "ik1qhw0919m8p";
-            APPSECRET_RONGYUN = "oyHzmKPlNKG";
-        }
     }
 
     // 首页跳转key_value
@@ -195,6 +188,7 @@ public class AppConstants {
     public static final int FOTTBALL_SCORE_VALUE = 0;// 足球比分跳转value
     public static final int BASKETBALL_SCORE_VALUE = 5;// 篮球比分跳转value
     public static final int FOTTBALL_INFORMATION_VALUE = 1;// 足球资讯跳转value
+    public static final String FOTTBALL_INFO_LABEL_KEY = "sportsInfoIndex";// 足球资讯标签Key
     public static final int FOTTBALL_DATA_VALUE = 2;// 足球数据跳转value
     public static final int FOTTBALL_VIDEO_VALUE = 3;// 足球视频跳转value
     public static final int FOTTBALL_EXPONENT_VALUE = 4;// 足球指数跳转value

@@ -58,6 +58,8 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
      * 倒计时 默认60s , 间隔1s
      */
     private CountDown countDown;
+    public static final int TIMEOUT = 59699;
+    public static final int TIMEOUT_INTERVEL = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
 
     private void initView() {
 
-        countDown = CountDown.getDefault(new CountDown.CountDownCallback() {
+        countDown = CountDown.getDefault(TIMEOUT, TIMEOUT_INTERVEL, new CountDown.CountDownCallback() {
             @Override
             public void onFinish() {
                 enableVeryCode();

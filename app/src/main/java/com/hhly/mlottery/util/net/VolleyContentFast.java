@@ -132,7 +132,7 @@ public class VolleyContentFast {
             @Override
             public void onResponse(String response) {
                 L.d(TAG, "request success.");
-                if (L.isDebug){//会导致内存泄漏
+                if (AppConstants.isTestEnv){//会导致内存泄漏
                     L.i(TAG, "[ response = " + response + " ]");
                 }
 
@@ -231,7 +231,7 @@ public class VolleyContentFast {
                 @Override
                 public void onResponse(String response) {
                     L.d(TAG, "request success.");
-                    if (L.isDebug){//会导致内存泄漏
+                    if (AppConstants.isTestEnv){//会导致内存泄漏
                         L.i(TAG, "[ response = " + response + " ]");
                     }
 
@@ -528,7 +528,7 @@ public class VolleyContentFast {
             @Override
             public void onResponse(String response) {
                 L.d(TAG, "request success.");
-                if (L.isDebug) {//会导致内存泄漏
+                if (AppConstants.isTestEnv) {//会导致内存泄漏
                     L.i(TAG, "[ response = " + response + " ]");
                 }
 

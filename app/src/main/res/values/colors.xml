@@ -17,7 +17,7 @@
     <color name="odds_details">#ff6600</color>
     <color name="odds_left">#00DB1A</color>
     <color name="material_red">#F44336</color>
-
+    <color name="direct_seeding">#0090FF</color>
 
     <!-- 主题颜色 -->
     <color name="new_colorPrimary">#800049BF</color>
@@ -63,6 +63,7 @@
     <color name="chart_room_bg_color">#88CCCCCC</color>
     <color name="grey">#ff5b5a5a</color>
     <color name="deep_gray">#ff3b3b3b</color>
+    <color name="new_deep_gray">#000000</color>
     <color name="transparency">#00000000</color>
     <color name="shadow">#1e000000</color>
     <color name="green">#ff4f8c0b</color>
@@ -76,6 +77,7 @@
     <color name="bg_gray">#FFE3E3E7</color>
     <color name="orange">#FFE84E0E</color>
     <color name="bg">#FFF39200</color>
+    <color name="info_data_bg">#FFEA00</color>
     <color name="lightblue">#FF007AA2</color>
     <color name="lightorange">#FFACBA00</color>
     <color name="transparentdarkgray">#CC292929</color>
@@ -205,6 +207,8 @@
     <!--分析-->
     <color name="analyze_left">#ff6a6a</color>
     <color name="analyze_right">#598cff</color>
+    <color name="info_center_right">#4779b6</color>
+    <color name="info_center_left">#c53f3f</color>
     <color name="analyze_opinion_title">#0078ff</color>
     <color name="analyze_date">#999</color>
 

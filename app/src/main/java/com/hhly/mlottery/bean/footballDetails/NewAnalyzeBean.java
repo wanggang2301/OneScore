@@ -19,7 +19,7 @@ public class NewAnalyzeBean {
     private AsiaTrendEntity asiaTrend;
     private BothRecordEntity bothRecord;
     private String recommend;
-    private Object leagueType;
+    private Integer leagueType;
 
     public String getResult() {
         return result;
@@ -101,11 +101,11 @@ public class NewAnalyzeBean {
         this.recommend = recommend;
     }
 
-    public Object getLeagueType() {
+    public Integer getLeagueType() {
         return leagueType;
     }
 
-    public void setLeagueType(Object leagueType) {
+    public void setLeagueType(Integer leagueType) {
         this.leagueType = leagueType;
     }
 
@@ -1009,6 +1009,14 @@ public class NewAnalyzeBean {
 
         public static class HomeEntity {
             private int historyWin;
+            private int historyDraw;
+
+            public int getHistoryDraw() {
+                return historyDraw;
+            }
+            public void setHistoryDraw(int historyDraw) {
+                this.historyDraw = historyDraw;
+            }
 
             private FutureMatchEntity futureMatch;
             private List<Integer> recentRecord;

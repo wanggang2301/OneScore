@@ -83,4 +83,6 @@ public class ResultDateUtil {
 		}
 		return new ScheduleDateAdapter(datelist, context,position);
 	}
+
+
 }

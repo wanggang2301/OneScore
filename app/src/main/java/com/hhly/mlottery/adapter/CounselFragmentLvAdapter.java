@@ -100,6 +100,7 @@ public class CounselFragmentLvAdapter extends BaseAdapter {
             holder.tv_ybf = (TextView) convertView.findViewById(R.id.tv_ybf);
             holder.imagenotleft = (RelativeLayout) convertView.findViewById(R.id.imagenotleft);
             holder.imageleft = (RelativeLayout) convertView.findViewById(R.id.imageleft);
+            holder.video_button= (ImageView) convertView.findViewById(R.id.video_button);
             convertView.setTag(holder);
         }else {
             holder= (Holder) convertView.getTag();
@@ -121,6 +122,7 @@ public class CounselFragmentLvAdapter extends BaseAdapter {
             //ImagaeLoader -- 加载图片
             universalImageLoader.displayImage(mInfosList.get(position).getPicUrl(), holder.leftimage, optionsleft);
         } else {
+            holder.video_button.setVisibility(View.GONE);
             holder.imagenotleft.setVisibility(View.VISIBLE);
             holder.imageleft.setVisibility(View.GONE);
             holder.titlenoleft.setText(mInfosList.get(position).getTitle());
@@ -134,6 +136,10 @@ public class CounselFragmentLvAdapter extends BaseAdapter {
             holder.image_notleft_counselfragment_listviewitem.setTag(mInfosList.get(position).getPicUrl());
             //ImagaeLoader -- 加载图片
             universalImageLoader.displayImage(mInfosList.get(position).getPicUrl(), holder.image_notleft_counselfragment_listviewitem, options);
+            if(mInfosList.get(position).getIsvideonews()!=null&&mInfosList.get(position).getIsvideonews().equals("1")) { //视频的点击播放
+                holder.video_button.setVisibility(View.VISIBLE);
+
+            }
         }
         return convertView;
     }
@@ -151,6 +157,7 @@ public class CounselFragmentLvAdapter extends BaseAdapter {
         TextView titlenoleft;//标题
         TextView subtitle;//副标题
         RelativeLayout imagenotleft;
+        ImageView video_button;
 
 
     }

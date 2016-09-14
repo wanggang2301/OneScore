@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,10 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
-import com.hhly.mlottery.activity.FootballInformationActivity;
+import com.hhly.mlottery.activity.FootballDatabaseDetailsActivity;
 import com.hhly.mlottery.adapter.football.AnalyzeAsiaAdapter;
 import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -34,7 +34,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.sina.weibo.sdk.api.share.Base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +65,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private ProgressBar mProgressBar;
     private TextView mProgressHomeWin;
     private TextView mProgressGuestWin;
+    private TextView mProgressDraw;
     /**
      * 近期战绩
      */
@@ -213,6 +213,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private String mThirdId="1111";
 
     private NewAnalyzeBean mAnalyzeBean;
+
     public AnalyzeFragment() {
         // Required empty public constructor
     }
@@ -261,11 +262,12 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
 
         return mView;
 }
-
     private void initView() {
         mProgressBar = (ProgressBar) mView.findViewById(R.id.football_analyze__progressbar);
+        mProgressBar.setSecondaryProgress(50);//默认 显示一半绿色
         mProgressHomeWin= (TextView) mView.findViewById(R.id.football_progressbar_home);
         mProgressGuestWin= (TextView) mView.findViewById(R.id.football_progressbar_guest);
+        mProgressDraw= (TextView) mView.findViewById(R.id.football_progressbar_draw);
         //近期比赛
         mHomeRecent1= (ImageView) mView.findViewById(R.id.football_img_recent_home1);
         mHomeRecent2= (ImageView) mView.findViewById(R.id.football_img_recent_home2);
@@ -581,23 +583,38 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         }
 
         int progress;
+        int secondaryProgress;
         if(analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&getActivity()!=null){
 
             int homeWin=analyzeBean.getBothRecord().getHome().getHistoryWin();
             int guestWin=analyzeBean.getBothRecord().getGuest().getHistoryWin();
-            if (homeWin == 0 && guestWin == 0) {
-                progress = 50;
-            } else if (homeWin == 0) {
-                progress = 0;
-            } else if (guestWin == 0) {
-                progress = 100;
-            } else {
-                progress = homeWin * 100 / (guestWin+homeWin);
+            int draw = analyzeBean.getBothRecord().getHome().getHistoryDraw();
+
+            //无 “平”情况
+            if (draw == 0) {
+                if (homeWin == 0 && guestWin == 0) {
+                    progress = 50;
+                } else if (homeWin == 0) {
+                    progress = 0;
+                } else if (guestWin == 0) {
+                    progress = 100;
+                } else {
+                    progress = homeWin * 100 / (guestWin+homeWin);
+                }
+                mProgressBar.setProgress(progress);
+                mProgressBar.setSecondaryProgress(progress);
+            }else{
+                // 有打平时显示二次进度。。
+                progress = (homeWin+draw) * 100 / (guestWin + homeWin + draw);//主胜+平  得到的是主胜和平的和值
+                secondaryProgress = homeWin * 100 / (guestWin + homeWin + draw);// 二次覆盖前次身下平的概率
+                mProgressBar.setProgress(progress);
+                mProgressBar.setSecondaryProgress(secondaryProgress);
             }
-            mProgressBar.setProgress(progress);
+
             if(getActivity()!=null){
                 mProgressHomeWin.setText(homeWin + getActivity().getResources().getString(R.string.analyze_win));
                 mProgressGuestWin.setText(guestWin+ getActivity().getResources().getString(R.string.analyze_win));
+                mProgressDraw.setText(draw + getActivity().getResources().getString(R.string.analyze_equ));
             }
         }
 
@@ -663,8 +680,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 mGuestGoalOrLose.setText(entity.getGuest().getGoal()+"/"+entity.getGuest().getMiss());
                 mGuestGoalDifference.setText(entity.getGuest().getGoalDiff()+"");
                 mGuestIntegral.setText(entity.getGuest().getIntegral()+"");
-
-
             }
 
         }
@@ -1157,9 +1172,18 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.football_analyze_integral_table:
-                Intent intent1=new Intent(getActivity(), FootballInformationActivity.class);
-                intent1.putExtra("lid",mAnalyzeBean.getLeagueId()+"");
-                intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType()+"");
+//                Intent intent1=new Intent(getActivity(), FootballInformationActivity.class);
+//                intent1.putExtra("lid",mAnalyzeBean.getLeagueId()+"");
+//                intent1.putExtra("leagueType",mAnalyzeBean.getLeagueType()+"");
+//                startActivity(intent1);
+
+                Intent intent1 = new Intent(getActivity(),FootballDatabaseDetailsActivity.class);
+
+                DataBaseBean bean = new DataBaseBean();
+                bean.setKind(mAnalyzeBean.getLeagueType() + "");
+                bean.setLeagueId(mAnalyzeBean.getLeagueId() + "");
+                intent1.putExtra("league", bean);
+                intent1.putExtra("isIntegral" , true);
                 startActivity(intent1);
                 break;
         }

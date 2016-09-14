@@ -17,6 +17,7 @@ public class BasketMatchBean {
     private boolean hot;//	false
     private String leagueColor;//	#006699
     private String leagueId;//	30951
+    private Integer matchType;//	30951
     private String leagueName;//	立陶甲
 //    private Map<String, BasketOddBean> matchOdds;//	-- 赔率数据bean  BasketOddBean
     private Map<String, BasketAllOddBean> matchOdds;//	-- 赔率数据bean  BasketOddBean
@@ -39,6 +40,13 @@ public class BasketMatchBean {
 
     private boolean isHomeAnim;
     private boolean isGuestAnim;
+    public Integer getMatchType() {
+        return matchType;
+    }
+
+    public void setMatchType(Integer matchType) {
+        this.matchType = matchType;
+    }
 
     public boolean isGuestAnim() {
         return isGuestAnim;

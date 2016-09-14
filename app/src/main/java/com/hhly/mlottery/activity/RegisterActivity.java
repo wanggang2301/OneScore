@@ -59,7 +59,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 倒计时 默认60s , 间隔1s
      */
     private CountDown countDown;
-
+    public static final int TIMEOUT = 59699;
+    public static final int TIMEOUT_INTERVEL = 1000;
     private ProgressDialog progressBar;
 
     //新需求，点击获取验证码的时候显示一个progressbar,服务器返回结果后再开始倒计时。
@@ -139,7 +140,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void initData() {
 
-        countDown = CountDown.getDefault(new CountDown.CountDownCallback() {
+        countDown = CountDown.getDefault(TIMEOUT, TIMEOUT_INTERVEL, new CountDown.CountDownCallback() {
             @Override
             public void onFinish() {
                 enableVeryCode();

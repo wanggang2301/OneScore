@@ -40,10 +40,12 @@ public class CountDown extends CountDownTimer {
 
     /**
      * 获取一个时长60s,间隔1s的倒计时
-     * @param callback
-     * @return
+     *
+     * @param TIMEOUT
+     * @param TIMEOUT_INTERVEL
+     *@param callback  @return
      */
-    public static CountDown getDefault(CountDownCallback callback){
+    public static CountDown getDefault(int TIMEOUT, int TIMEOUT_INTERVEL, CountDownCallback callback){
         return new CountDown(TIMEOUT , TIMEOUT_INTERVEL , callback);
     }
 

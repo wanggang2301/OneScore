@@ -43,6 +43,13 @@
     <string name="basket_info_zhouji">洲际赛事</string>
     <string name="basket_info_country">国家赛事</string>
 
+    <string name="basket_info_zhouji2">国际赛事</string>
+    <string name="basket_info_shatan">沙滩赛事</string>
+
+    <string name="football_info_title">足球资料库</string>
+    <string name="football_info_oceania">大洋洲</string>
+
+
     <!--足球内页改版(滚球等)-->
     <string name="foot_details_roolball">滚球</string>
     <string name="foot_details_talkball">聊球</string>
@@ -787,6 +794,14 @@
     <string name="basket_database_details_leagueMost_homematch">主场</string>
     <string name="basket_database_details_leagueMost_guestmatch">客场</string>
 
+    <!--足球资料库-->
+    <string name="football_database_details_integral">积分</string>
+    <string name="football_database_details_stage">阶段</string>
+
+    <string name="football_database_details_integral_num_title">已赛</string>
+    <string name="football_database_details_integral_win_draw_lose_title">胜/平/负</string>
+    <string name="football_database_details_integral_gain_loss_title">得/失球</string>
+    <string name="football_database_details_integral_itnis_title">净胜球</string>
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
@@ -900,6 +915,8 @@
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">找不到相关信息</string>
+    <string name="find_search">正在查找......</string>
+    <string name="skip">"秒 | 跳过"</string>
     <!--1.1.2 begin-->
     <string name="weixin_installed">请先安装微信客户端!</string>
     <string name="Login_register">登录/注册</string>
@@ -1057,12 +1074,6 @@
     <string name="rong_chart_room">聊天</string>
     <string name="rong_chart_bg_pb">透明度</string>
 
-    <string name="rong_input_prompt1">珍爱生命,远离喷子！</string>
-    <string name="rong_input_prompt2">路见不平一声吼！！！</string>
-    <string name="rong_input_prompt3">我来聊两句...</string>
-    <string name="rong_input_prompt4">我从不说谎，除啦这句话以外。</string>
-    <string name="rong_input_prompt5">沉默是金.沉默久了就会有很多金子吗？</string>
-    <string name="rong_input_prompt6">元芳怎么看？</string>
     <!--头像上传-->
     <string name="sd_card_not_exist">sd卡不存在</string>
     <string name="install_the_gallery">请先安装图库</string>
@@ -1083,4 +1094,116 @@
     <string name="continue_download">继续下载</string>
 
     <string name="is_uploading">努力上传中..........</string>
+    <!--情报中心 start-->
+    <string name="title_info_center">情报中心</string>
+    <string name="info_center_end_index">今日完场盘指数</string>
+    <string name="info_center_results_index">赛果指数</string>
+    <string name="info_center_size_disc_index">大小盘指数</string>
+    <string name="info_center_asian_plate_index">亚盘指数</string>
+    <string name="info_center_type1">本赛季赢盘概率</string>
+    <string name="info_center_type2">本赛季输盘概率</string>
+    <string name="info_center_type3">近期比赛已连续%1$s场赢盘</string>
+    <string name="info_center_type4">%1$s盘口赢盘概率</string>
+    <string name="info_center_type5">%1$s盘口输盘概率</string>
+    <string name="info_center_type6">本赛季大球概率</string>
+    <string name="info_center_type7">本赛季小球概率</string>
+    <string name="info_center_type8">近期比赛已连续%1$s场大球</string>
+    <string name="info_center_type9">近期比赛已连续%1$s场小球</string>
+    <string name="info_center_type10">%1$s盘口大球概率</string>
+    <string name="info_center_type11">%1$s盘口小球概率</string>
+    <string name="info_center_type12">近期比赛已取得%1$s连胜</string>
+    <string name="info_center_type13">净胜对手2球或以上的场次概率</string>
+    <string name="info_center_type14">净输对手2球或以上的场次概率</string>
+    <string name="info_center_type15">先入球后赛果胜的概率</string>
+    <string name="info_center_type16">先失球后赛果胜的概率</string>
+    <string name="info_center_type17">进0球的场次概率</string>
+    <string name="info_center_type18">上半场赢盘概率</string>
+    <string name="info_center_type19">上半场输盘概率</string>
+    <string name="info_center_type20">已连续%1$s场上半场赢盘</string>
+    <string name="info_center_type21">%1$s盘口上半场赢盘概率</string>
+    <string name="info_center_type22">%1$s盘口上半场输盘概率</string>
+    <string name="info_center_type23">上半场大球概率</string>
+    <string name="info_center_type24">上半场小球概率</string>
+    <string name="info_center_type25">已连续%1$s场上半场大球</string>
+    <string name="info_center_type26">已连续%1$s场上半场小球</string>
+    <string name="info_center_type27">%1$s盘口上半场大球概率</string>
+    <string name="info_center_type28">%1$s盘口上半场小球概率</string>
+    <string name="info_center_type29">已取得上半场%1$s连胜</string>
+    <string name="info_center_other_type1">%1$s赢盘概率</string>
+    <string name="info_center_other_type2">%1$s输盘概率</string>
+    <string name="info_center_other_type3">已连续%1$s场赢盘</string>
+    <string name="info_center_other_type4">%1$s盘口赢盘概率</string>
+    <string name="info_center_other_type5">%1$s盘口输盘概率</string>
+    <string name="info_center_other_type6">%1$s大球概率</string>
+    <string name="info_center_other_type7">%1$s小球概率</string>
+    <string name="info_center_other_type8">已连续%1$s场大球</string>
+    <string name="info_center_other_type9">已连续%1$s场小球</string>
+    <string name="info_center_other_type10">%1$s盘口大球概率</string>
+    <string name="info_center_other_type11">%1$s盘口小球概率</string>
+    <string name="info_center_other_type12">已取得%1$s%2$s连胜</string>
+    <string name="info_center_other_type13">净胜对手2球或以上的场次概率</string>
+    <string name="info_center_other_type14">净输对手2球或以上的场次概率</string>
+    <string name="info_center_other_type15">先入球后赛果胜的概率</string>
+    <string name="info_center_other_type16">先失球后赛果胜的概率</string>
+    <string name="info_center_other_type17">进0球的场次概率</string>
+    <string name="info_center_other_type18">%1$s上半场赢盘概率</string>
+    <string name="info_center_other_type19">%1$s上半场输盘概率</string>
+    <string name="info_center_other_type20">已连续%1$s场上半场赢盘</string>
+    <string name="info_center_other_type21">%1$s盘口上半场赢盘概率</string>
+    <string name="info_center_other_type22">%1$s盘口上半场输盘概率</string>
+    <string name="info_center_other_type23">%1$s上半场大球概率</string>
+    <string name="info_center_other_type24">%1$s上半场小球概率</string>
+    <string name="info_center_other_type25">已连续%1$s场上半场大球</string>
+    <string name="info_center_other_type26">已连续%1$s场上半场小球</string>
+    <string name="info_center_other_type27">%1$s盘口上半场大球概率</string>
+    <string name="info_center_other_type28">%1$s盘口上半场小球概率</string>
+    <string name="info_center_other_type29">上半场%1$s连胜</string>
+    <string name="info_center_other_type30">%1$s盘口赢盘概率</string>
+    <string name="info_center_other_type31">%1$s盘口输盘概率</string>
+    <string name="info_center_other_type32">%1$s盘口大球概率</string>
+    <string name="info_center_other_type33">%1$s盘口小球概率</string>
+    <string name="info_center_other_type34">%1$s盘口胜概率</string>
+    <string name="info_center_other_type35">%1$s盘口平概率</string>
+    <string name="info_center_other_type36">%1$s盘口负概率</string>
+    <string name="info_center_other_type37">%1$s盘口上半场赢盘概率</string>
+    <string name="info_center_other_type38">%1$s盘口上半场输盘概率</string>
+    <string name="info_center_other_type39">%1$s盘口上半场大球概率</string>
+    <string name="info_center_other_type40">%1$s盘口上半场小球概率</string>
+    <string name="info_center_other_type41">%1$s盘口上半场胜概率</string>
+    <string name="info_center_other_type42">%1$s盘口上半场平概率</string>
+    <string name="info_center_other_type43">%1$s盘口上半场负概率</string>
+    <!--情报中心 end-->
+
+    <!--今日赛事提点-->
+    <string name="league_statistics_today_title">今日赛事提点</string>
+    <string name="league_statistics_today_tab1">胜平负</string>
+    <string name="league_statistics_today_tab2">亚盘</string>
+    <string name="league_statistics_today_tab3">大小盘</string>
+    <string name="league_statistics_today_tab4">半场亚盘</string>
+    <string name="league_statistics_today_tab5">半场大小</string>
+
+    <string name="league_statistics_today_date">数据统计时间：</string>
+    <string name="league_statistics_today_rank">排名</string>
+    <string name="league_statistics_today_race">联赛</string>
+    <string name="league_statistics_today_finish">已赛</string>
+    <string name="league_statistics_today_victor">胜</string>
+    <string name="league_statistics_today_flat">平</string>
+    <string name="league_statistics_today_loss">负</string>
+    <string name="league_statistics_today_win">赢</string>
+    <string name="league_statistics_today_failed">输</string>
+    <string name="league_statistics_today_go">走</string>
+    <string name="league_statistics_today_big">大</string>
+    <string name="league_statistics_today_small">小</string>
+    <string name="league_statistics_today_tip1">*温馨提示：点击列表头部的</string>
+    <string name="league_statistics_today_tip2">胜、平、负</string>
+    <string name="league_statistics_today_tip3">；可以排序</string>
+    <string name="league_statistics_today_notice">说明</string>
+    <string name="league_statistics_today_noticetitle">什么是今日联赛提点？</string>
+    <string name="league_statistics_today_noticetext">是对今日有开盘的比赛参赛的所有联赛，各项数据在近期比赛或者某一个时间段内的排名。</string>
+
+    <!--视频直播-->
+    <string name="direct_seedinging">直播中</string>
+    <string name="baskball">篮球</string>
+    <string name="comprehensive">综合</string>
+    <string name="direct_seeding">直播</string>
 </resources>

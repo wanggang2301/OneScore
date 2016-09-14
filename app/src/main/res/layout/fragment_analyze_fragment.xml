@@ -65,7 +65,8 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:progress="50"
-                android:progressDrawable="@drawable/basket_progressbar_color"
+                android:secondaryProgress="0"
+                android:progressDrawable="@drawable/football_progressbar_color"
                 />
 
             <LinearLayout
@@ -81,17 +82,27 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:text="--"
                     android:textColor="@color/history_win"
                     android:textSize="@dimen/text_size_13"/>
+                <TextView
+                    android:id="@+id/football_progressbar_draw"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="--"
+                    android:textColor="@color/history_win"
+                    android:textSize="@dimen/text_size_13"/>
+
 
                 <TextView
                     android:id="@+id/football_progressbar_guest"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:text="--"
                     android:textColor="@color/history_win"
                     android:textSize="@dimen/text_size_13"/>
@@ -602,7 +613,6 @@
             android:gravity="center"
             android:visibility="gone"
             />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"

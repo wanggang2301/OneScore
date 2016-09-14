@@ -9,15 +9,14 @@
         android:id="@+id/info_loading_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
+        <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/loading_txt"
-            android:textColor="@color/loading_txt_color" />
+            android:paddingTop="30dp" />
 
     </LinearLayout>
 
@@ -41,7 +40,7 @@
             android:background="@drawable/radio_button_left"
             android:checked="true"
             android:text="@string/basket_info_zhouji"
-            android:textColor="@drawable/info_text_color"/>
+            android:textColor="@drawable/info_text_color" />
 
         <RadioButton
             android:id="@+id/info_country_match"
@@ -52,7 +51,7 @@
             android:background="@drawable/radio_button_right"
             android:checked="false"
             android:text="@string/basket_info_country"
-            android:textColor="@drawable/info_text_color"/>
+            android:textColor="@drawable/info_text_color" />
 
     </RadioGroup>
 

@@ -107,7 +107,7 @@
                 android:layout_weight="1"
                 android:gravity="center|right"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/live_right_time_txt"

@@ -26,17 +26,19 @@
             android:layout_below="@id/iv_icon"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5.0dip"
+            android:gravity="center"
             android:maxLines="1"
+            android:paddingBottom="2dp"
             android:textColor="@color/black"
-            android:textSize="13sp"
-            android:paddingBottom="2dp"/>
+            android:textSize="13sp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/tv_name"
+            android:layout_centerHorizontal="true"
             android:src="@mipmap/info_down"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
     </RelativeLayout>
 
 </RelativeLayout>

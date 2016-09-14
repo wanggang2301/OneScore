@@ -41,7 +41,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!--<intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
@@ -60,6 +60,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 情报中心 -->
+        <activity
+            android:name=".activity.InfoCenterActivity"
+            android:screenOrientation="portrait" />
+
         <!-- 引导页 -->
         <activity
             android:name=".activity.WelcomeViewActivity"
@@ -86,6 +92,8 @@
         <activity
             android:name=".activity.NumberCustomizeActivity"
             android:screenOrientation="portrait" />
+        <!-- 彩种定制 -->
+
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
@@ -135,6 +143,11 @@
         <!-- 足球分析明细 -->
         <activity
             android:name=".activity.FootballAnalyzeDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 足球资料库详情 -->
+        <activity
+            android:name=".activity.FootballDatabaseDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--
@@ -283,8 +296,7 @@
             android:theme="@style/AppThemeDark.NoActionBar" />
         <activity
             android:name=".activity.BasketballInformationActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeDark.NoActionBar">
+            android:screenOrientation="portrait">
 
             <!--
             <intent-filter>
@@ -299,7 +311,10 @@
         <activity
             android:name=".activity.BasketballInformationSerachActivity"
             android:screenOrientation="portrait" />
-
+        <!-- 足球资料库模糊搜索 -->
+        <activity
+            android:name=".activity.FootballInformationSerachActivity"
+            android:screenOrientation="portrait" />
         <!-- 融云会话列表 -->
         <activity
             android:name=".frame.ConversationFragment"
@@ -318,6 +333,24 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.FootballDatabaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LeagueStatisticsTodayActivity"
+            android:screenOrientation="portrait">
+
+            <!--
+              <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>
+            -->
+        </activity>
+        <!--独家访谈界面-->
+        <activity android:name=".activity.PLVideoTextureActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

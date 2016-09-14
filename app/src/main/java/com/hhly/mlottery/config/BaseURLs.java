@@ -35,7 +35,7 @@ public class BaseURLs {
             } else if (url_config == DebugConfigActivity.URL_93) {
                 return "183.61.172.93:8096"; // 典哥新加
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
-                return PreferenceUtil.getString("DIY_INPUT","m.13322.com"); // 自定义环境地址
+                return PreferenceUtil.getString("DIY_INPUT", "m.13322.com"); // 自定义环境地址
             } else {
                 return "m.13322.com";
             }
@@ -100,7 +100,7 @@ public class BaseURLs {
                 return "192.168.10.242:61634";
 //                return "192.168.12.242:61634";//余勇俊测试
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
-                return PreferenceUtil.getString("DIY_INPUT","m.13322.com/ws");// 自定义
+                return PreferenceUtil.getString("DIY_INPUT", "m.13322.com/ws");// 自定义
             } else {
                 return "m.13322.com/ws";
             }
@@ -713,12 +713,17 @@ public class BaseURLs {
     //篮球资料库
     public final static String URL_BASKET_INFORMATION = URL_API_HOST + "basketballData.findLeagueHierarchy.do";
 
+
     //篮球资料库详情
     public final static String URL_BASKET_DATABASE_DETAILS = URL_API_HOST + "basketballData.findLeagueHeader.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findLeagueHeader.do
     // 赛程
     public final static String URL_BASKET_DATABASE_SCHEDULE = URL_API_HOST + "basketballData.findSchedule.do";
     // 排行
     public final static String URL_BASKET_DATABASE_RANKING = URL_API_HOST + "basketballData.findRanking.do";
+
+    //篮球资料库积分
+//    public final static String URL_FOOTBALL_DATABASE_INTEGRAL = "http://192.168.10.242:8181/mlottery/core/basketballData.findRanking117.do";
+    public final static String URL_FOOTBALL_DATABASE_INTEGRAL = URL_API_HOST + "basketballData.findRanking117.do";
     //让分盘
     public final static String URL_BASKET_DATABASE_HANDICAP_DETAILS = URL_API_HOST + "basketballData.findAsiaLet.do"; // http://192.168.31.43:8888/mlottery/core/basketballData.findAsiaLet.do
     //大小盘
@@ -744,6 +749,19 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_LEAGUERACE = URL_API_HOST + "footballLeagueData.qLeagueRace.do";
 
     //足球资料库
+    public final static String URL_FOOTBALL_DATABASE = URL_API_HOST + "androidLeagueData.findAndroidDataMenu.do";
+
+    //足球资料库赛程
+    public final static String URL_FOOTBALL_DATABASE_SCHEDULE_FIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRound.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
+    public final static String URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRace.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do";
+    //足球资料库积分
+    public final static String URL_FOOTBALL_DATABASE_INTEGRAL_FIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueScore.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueScore.do";
+    //足球资料库详情头部
+    public final static String URL_FOOTBALL_DATABASE_HEADER = URL_API_HOST + "androidLeagueData.findAndroidFootballLeagueHeader.do";//http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do
+
+    //足球赛事提点
+    public final static String URL_LEAGUESTATISTICSTODAY = URL_API_HOST + "toDayMatchStatistics.findTodayMatchStatistics.do";
+
     //联赛列表
     public final static String URL_QLIBARYLEAGUES = "footballLeagueData.qLibaryLeagues.do";
     public final static String URL_INFORMATION = URL_API_HOST + URL_QLIBARYLEAGUES;
@@ -756,9 +774,9 @@ public class BaseURLs {
     // 联赛 qLeagueRace
 
     //足球资讯列表请求url
-    public final static String URL_FOOTBALL_INFOLIST = URL_API_HOST + "info.findAndroidLstInfo.do";
+    public final static String URL_FOOTBALL_INFOLIST = URL_API_HOST + "info.findAndroidInfoLstWithVideo.do";
     //足球资讯头和首页请求url
-    public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfo.do";
+    public final static String URL_FOOTBALL_INFOINDEX = URL_API_HOST + "info.findAndroidIndexInfoWithVideo.do";
 
     public final static String URL_FEEDBACK_ADD = URL_API_HOST + "feedback.addFeedBack.do";
     /**
@@ -842,4 +860,9 @@ public class BaseURLs {
     public final static String UPLOADIMAGE = NEW_URL_API_PHOST + "uploadImage.do";
     /*头像URL上传*/
     public final static String UPDATEHEADICON = URL_API_HOST + "androidUserCenter.updateHeadIcon.do";
+
+    // 情报中心
+    public final static String URL_INFO_CENTER = URL_API_HOST +  "footBallMatch.findIntelligenceList.do";
+    /*头像URL上传*/
+    public final static String VIDEOINFO = URL_API_HOST+ "matchVideo.findAndroidVideoinfo.do";
 }

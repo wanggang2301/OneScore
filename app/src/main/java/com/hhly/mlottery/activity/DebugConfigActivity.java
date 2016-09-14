@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -16,7 +15,7 @@ import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
-public class DebugConfigActivity extends BaseActivity{
+public class DebugConfigActivity extends BaseActivity {
 
     private final static String TAG = "DebugConfigActivity";
 
@@ -29,7 +28,6 @@ public class DebugConfigActivity extends BaseActivity{
     public final static int WS_242 = 4;
     public final static int WS_82 = 6;
     public final static int DIY_INPUT = 8;
-
 
 
     @Override
@@ -107,9 +105,9 @@ public class DebugConfigActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
 
-                EditText ed =  (EditText)findViewById(R.id.et_input);
+                EditText ed = (EditText) findViewById(R.id.et_input);
                 String str = ed.getText().toString();
-                if(TextUtils.isEmpty(str)){
+                if (TextUtils.isEmpty(str)) {
                     Toast.makeText(DebugConfigActivity.this, "不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -122,6 +120,7 @@ public class DebugConfigActivity extends BaseActivity{
                 System.exit(0);
             }
         });
+
 
     }
 

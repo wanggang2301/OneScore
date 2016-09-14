@@ -63,6 +63,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
         implements AppBarLayout.OnOffsetChangedListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String LEAGUE = "league";
+    public static final String IS_RANKING = "isRanking";
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -101,6 +102,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
     private TextView mLeagueName;
     private TextView mSportsText;
     private LeagueBean mLeague;
+    private boolean mCurrentIsRanking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
 
         if (getIntent().getExtras() != null) {
             mLeague = getIntent().getExtras().getParcelable(LEAGUE);
+            mCurrentIsRanking = getIntent().getExtras().getBoolean(IS_RANKING);
         }
 
         /**
@@ -198,6 +201,7 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
                 mStatisticsFragment);
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
+        if (mCurrentIsRanking) mViewPager.setCurrentItem(1);
         mTabLayout.setupWithViewPager(mViewPager);
 
         appBarLayout.addOnOffsetChangedListener(this);

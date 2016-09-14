@@ -14,7 +14,6 @@ import android.os.SystemClock;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +44,6 @@ import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -89,6 +87,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     public final static String BASKET_THIRD_ID = "thirdId";
     public final static String BASKET_MATCH_STATUS = "MatchStatus";
+    public final static String BASKET_MATCH_LEAGUEID = "leagueId";
+    public final static String BASKET_MATCH_MATCHTYPE = "matchType";
     //    0:未开赛,1:一节,2:二节,5:1'OT，以此类推
 //            -1:完场,-2:待定,-3:中断,-4:取消,-5:推迟,50中场
     private final static int PRE_MATCH = 0;//赛前
@@ -219,6 +219,8 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     private ImageView iv_join_room_basket;// 聊天室悬浮按钮
     private ProgressDialog pd;// 加载框
     private boolean isExit = false;// 是否取消进入聊天室动作
+    private String mLeagueId; // 联赛ID
+    private Integer mMatchType; //联赛类型
 
 
     @Override
@@ -230,6 +232,10 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         mContext = this;
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
+            mLeagueId = getIntent().getExtras().getString(BASKET_MATCH_LEAGUEID);
+            mMatchType = getIntent().getExtras().getInt(BASKET_MATCH_MATCHTYPE);
+
+
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
@@ -358,6 +364,12 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     public String getmThirdId() {
         return mThirdId;
+    }
+    public String getmLeagueId() {
+        return mLeagueId;
+    }
+    public Integer getmMatchType() {
+        return mMatchType;
     }
 
     /**
@@ -575,6 +587,11 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
                     initData(basketDetailsBean);
+
+//                    mLeagueId = basketDetailsBean.getMatch().getLeagueId();
+//                    mMatchType = basketDetailsBean.getMatch().getMatchType();
+
+
                     /**
                      * 启动秒闪烁
                      */
@@ -618,6 +635,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 }
                 break;
             case R.id.iv_join_room_basket:
+                MobclickAgent.onEvent(mContext, "Basketball_Join_Room");
                 joinRoom();
                 break;
         }
