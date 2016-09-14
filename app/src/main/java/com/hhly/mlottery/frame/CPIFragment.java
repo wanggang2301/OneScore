@@ -25,6 +25,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.enums.OddsTypeEnum;
 import com.hhly.mlottery.bean.oddsbean.NewOddsInfo;
 import com.hhly.mlottery.bean.websocket.WebSocketCPIResult;
@@ -50,10 +51,7 @@ import java.util.List;
  * 作    者：longs@13322.com
  * 时    间：2016/6/21.
  */
-public class CPIFragment extends Fragment implements
-        HappySocketClient.SocketResponseCloseListener,
-        HappySocketClient.SocketResponseErrorListener,
-        HappySocketClient.SocketResponseMessageListener {
+public class CPIFragment extends BaseWebSocketFragment  {
 
     private static final int startFilterRequestCode = 10086;
 
@@ -80,8 +78,15 @@ public class CPIFragment extends Fragment implements
     private String currentDate; // 当前日期
     private String choosenDate; // 选中日期
 
-    private URI socketUri;
-    private HappySocketClient socketClient; // WebSocket 客户端
+//    private URI socketUri;
+//    private HappySocketClient socketClient; // WebSocket 客户端
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setTopic("USER.topic.indexcenter");
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -158,6 +163,7 @@ public class CPIFragment extends Fragment implements
             @Override
             public void onRefresh() {
                 refreshAllChildFragments();
+                connectWebSocket();
             }
         });
 
@@ -174,7 +180,8 @@ public class CPIFragment extends Fragment implements
             }
         });
 
-        startWebSocket();
+//        startWebSocket();
+        connectWebSocket();
     }
 
     @SuppressWarnings("unchecked")
@@ -196,21 +203,21 @@ public class CPIFragment extends Fragment implements
         }
     }
 
-    /**
-     * 开启 webSocket
-     */
-    private void startWebSocket() {
-        try {
-            socketUri = new URI(BaseURLs.URL_CPI_SOCKET);
-            socketClient = new HappySocketClient(socketUri, new Draft_17());
-            socketClient.setSocketResponseCloseListener(this);
-            socketClient.setSocketResponseErrorListener(this);
-            socketClient.setSocketResponseMessageListener(this);
-            socketClient.connect();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * 开启 webSocket
+//     */
+//    private void startWebSocket() {
+//        try {
+//            socketUri = new URI(BaseURLs.URL_CPI_SOCKET);
+//            socketClient = new HappySocketClient(socketUri, new Draft_17());
+//            socketClient.setSocketResponseCloseListener(this);
+//            socketClient.setSocketResponseErrorListener(this);
+//            socketClient.setSocketResponseMessageListener(this);
+//            socketClient.connect();
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 显示日期选择 dialog
@@ -359,36 +366,36 @@ public class CPIFragment extends Fragment implements
         return new CPIFragment();
     }
 
-    @Override
-    public void onMessage(String message) {
-        if (message.startsWith("CONNECTED")) {
-            String id = "android" + DeviceInfo.getDeviceId(MyApp.getContext());
-            id = MD5Util.getMD5(id);
-            // USER.topic.indexcenter
-            socketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
-        } else if (message.startsWith("MESSAGE")) {
-            final String jsonString = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
-            Log.d("CPINewFragment", jsonString);
-            mTabLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    handleMessage(jsonString);
-                }
-            });
-        }
-    }
+//    @Override
+//    public void onMessage(String message) {
+//        if (message.startsWith("CONNECTED")) {
+//            String id = "android" + DeviceInfo.getDeviceId(MyApp.getContext());
+//            id = MD5Util.getMD5(id);
+//            // USER.topic.indexcenter
+//            socketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.indexcenter" + "\n\n");
+//        } else if (message.startsWith("MESSAGE")) {
+//            final String jsonString = message.substring(message.indexOf("{"), message.lastIndexOf("}") + 1);
+//            Log.d("CPINewFragment", jsonString);
+//            mTabLayout.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    handleMessage(jsonString);
+//                }
+//            });
+//        }
+//    }
 
-    @Override
-    public void onError(Exception exception) {
-        exception.printStackTrace();
-    }
-
-    @Override
-    public void onClose(String message) {
-        Log.d("CPINewFragment", "webSocket has been closed!");
-        Log.d("CPINewFragment", message);
-        startWebSocket();
-    }
+//    @Override
+//    public void onError(Exception exception) {
+//        exception.printStackTrace();
+//    }
+//
+//    @Override
+//    public void onClose(String message) {
+//        Log.d("CPINewFragment", "webSocket has been closed!");
+//        Log.d("CPINewFragment", message);
+//        startWebSocket();
+//    }
 
     /**
      * 处理 websocket 传来的数据
@@ -459,6 +466,31 @@ public class CPIFragment extends Fragment implements
     public void showRightButton() {
         mCompanyButton.setVisibility(View.VISIBLE);
         mFilterButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onTextResult(final String text) {
+        mTabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                handleMessage(text);
+            }
+        });
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
     }
 
     /**

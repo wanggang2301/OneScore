@@ -36,19 +36,19 @@ import java.util.List;
  */
 public class FootballActivity extends BaseActivity {
 
-    private final static int SCORES_FRAGMENT = 0; //比分
-    private final static int NEWS_FRAGMENT = 1;   //资讯
-    private final static int DATA_FRAGMENT = 2;   //数据
-    private final static int VIDEO_FRAGMENT = 3;  //视频
-    private final static int CPI_FRAGMENT = 4;    //指数
-    private final static int BASKET_FRAGMENT = 5;    //篮球
+    public final static int SCORES_FRAGMENT = 0; //比分
+    public final static int NEWS_FRAGMENT = 1;   //资讯
+    public final static int DATA_FRAGMENT = 2;   //数据
+    public final static int VIDEO_FRAGMENT = 3;  //视频
+    public final static int CPI_FRAGMENT = 4;    //指数
+    public final static int BASKET_FRAGMENT = 5;    //篮球
     private Context mContext;
 
     private RadioGroup mRadioGroup;
     private List<Fragment> fragments = new ArrayList<>();
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
-    private int currentPosition = 0;// 足球界面Fragment下标
+    public int currentPosition = 0;// 足球界面Fragment下标
     public int infoPagerLabel = 0;// 足球资讯pager下标
     public int basketCurrentPosition = 0;// 篮球界面Fragment下标
     public LinearLayout ly_tab_bar;
@@ -64,6 +64,10 @@ public class FootballActivity extends BaseActivity {
         currentPosition = getIntent().getIntExtra(AppConstants.FOTTBALL_KEY, 0);// 足球fragment下标
         infoPagerLabel = getIntent().getIntExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, 0);// 足球资讯pager下标
         basketCurrentPosition = getIntent().getIntExtra(AppConstants.BASKETBALL_KEY,0);// 篮球fragment下标
+
+//        currentPosition = AppConstants.BASKETBALL_SCORE_VALUE;
+//        basketCurrentPosition = AppConstants.BASKETBALL_SCORE_KEY;
+
         initView();
         initData();
     }
@@ -124,21 +128,35 @@ public class FootballActivity extends BaseActivity {
                         break;
                     case R.id.rb_news:
                         MobclickAgent.onEvent(mContext, "Football_News");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
                         currentPosition = NEWS_FRAGMENT;
                         switchFragment(NEWS_FRAGMENT);
+
                         break;
                     case R.id.rb_data:
                         MobclickAgent.onEvent(mContext, "Football_Data");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
                         currentPosition = DATA_FRAGMENT;
                         switchFragment(DATA_FRAGMENT);
                         break;
                     case R.id.rb_video:
                         MobclickAgent.onEvent(mContext, "Football_Video");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
                         currentPosition = VIDEO_FRAGMENT;
                         switchFragment(VIDEO_FRAGMENT);
+
                         break;
                     case R.id.rb_cpi:
                         MobclickAgent.onEvent(mContext, "Football_CPI");
+//                        if (currentPosition == SCORES_FRAGMENT) {
+//                            ((ScoresFragment) currentFragment).disconnectWebSocket();
+//                        }
                         currentPosition = CPI_FRAGMENT;
                         switchFragment(CPI_FRAGMENT);
                         break;
@@ -151,7 +169,7 @@ public class FootballActivity extends BaseActivity {
 
     public void switchFragment(int position) {
         fragmentIndex = position;// 当前fragment下标
-        L.d("xxx","当前Fragment下标：" + fragmentIndex);
+        L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getSupportFragmentManager();
         currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content, currentFragment,
                 fragments.get(position).getClass(), null, false,
