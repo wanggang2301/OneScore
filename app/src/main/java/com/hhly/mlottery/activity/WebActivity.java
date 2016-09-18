@@ -181,12 +181,14 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
             });
             if (url != null) {
-                //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-                ChatFragment chatFragment = new ChatFragment();
-                CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
-                if (url.contains("comment=false")) {
-                    getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
+                if(!url.contains("comment=false")){
+                    //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
+                    ChatFragment chatFragment = new ChatFragment();
+                    CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
                 }
+//                else if (url.contains("comment=false")) {
+//                    getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
+//                }
                 if (url.contains("share=false")) {
                     public_btn_set.setVisibility(View.GONE);//隐藏分享
                 }
