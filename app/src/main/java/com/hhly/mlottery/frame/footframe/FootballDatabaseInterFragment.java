@@ -97,7 +97,7 @@ public class FootballDatabaseInterFragment extends Fragment implements ExactSwip
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_basket_inter_infomation, container, false);
+        mView = inflater.inflate(R.layout.fragment_football_inter_infomation, container, false);
 
         mContext = getActivity();
 
