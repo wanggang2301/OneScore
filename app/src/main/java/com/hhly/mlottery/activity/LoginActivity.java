@@ -470,7 +470,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String userName = et_username.getText().toString();
         String passWord = et_password.getText().toString();
 
-        if (UiUtils.isMobileNO(this, userName)) {
             if (UiUtils.checkPassword_JustLength(this, passWord)) {
                 // 登录
                 progressBar.show();
@@ -522,7 +521,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     }
                 }, Register.class);
             }
-        }
     }
 
     private void sendUserInfoToServer(Register register) {
