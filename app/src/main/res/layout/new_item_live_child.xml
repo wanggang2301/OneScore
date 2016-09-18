@@ -116,7 +116,6 @@
                 android:id="@+id/live_right_time_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:text="(100:100)"
                 android:textColor="#666666"
                 android:layout_marginTop="1dp"
