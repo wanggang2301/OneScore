@@ -1158,6 +1158,7 @@
     <string name="info_center_other_type41">%1$s盤口上半場勝概率</string>
     <string name="info_center_other_type42">%1$s盤口上半場平概率</string>
     <string name="info_center_other_type43">%1$s盤口上半場負概率</string>
+    <string name="info_center_txt_def">采樣不足</string>
     <!--情报中心 end-->
 
     <!--今日赛事提点-->

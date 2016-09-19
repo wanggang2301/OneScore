@@ -2,9 +2,10 @@ package com.hhly.mlottery.adapter.homePagerAdapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,17 +20,20 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
+import com.hhly.mlottery.activity.HomePagerActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeOtherListsEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
+import com.hhly.mlottery.frame.HomeMuenFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HomeNumbersSplit;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.widget.MyGridView;
+import com.hhly.mlottery.widget.WrapContentHeightViewPager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
@@ -48,7 +52,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private ViewHolder mViewHolder;// ViewHolder
     private ViewHolderOther mViewHolderOther;// ViewHolderOther
     private HomePagerEntity mHomePagerEntity;// 首页实体对象
-    private HomeGridAdapter mGridAdapter;// GridView数据适配器
+    //    private HomeGridAdapter mGridAdapter;// GridView数据适配器
     private HomePagerAdapter mPagerAdapter;// ViewPager数据适配器
     private DisplayImageOptions optionsScore;// 设置热门赛事ImageLoder参数
     private DisplayImageOptions optionsDataInfo;// 设置热门资讯ImageLoder参数
@@ -73,6 +77,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private final int MIN_CLICK_DELAY_TIME = 1000;// 控件点击间隔时间
     private long lastClickTime = 0;
 
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private int len = 0;// 入口小圆点
+
     /**
      * 构造
      *
@@ -84,8 +91,24 @@ public class HomeListBaseAdapter extends BaseAdapter {
         this.mHomePagerEntity = homePagerEntity;
 
         settingPicOptions();
+        initData();
         init();// 初始化
         initEvent();// 初始化事件
+    }
+
+    private void initData() {
+        len = mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
+        int size = mHomePagerEntity.getMenus().getContent().size();
+        for (int i = 0; i < len; i++) {
+            List<HomeContentEntity> list = new ArrayList<>();
+            int startIndex = i * 8;
+            int endIndex = (i + 1) * 8 <= size ? (i + 1) * 8 : size;
+            for (int j = startIndex; j < endIndex; j++) {
+                list.add(mHomePagerEntity.getMenus().getContent().get(j));
+            }
+            fragmentList.add(HomeMuenFragment.newInstance(list));
+        }
+        L.d("xxx", "fragmentList:" + fragmentList.size());
     }
 
     public void start() {
@@ -1036,8 +1059,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     mViewHolder = new ViewHolder();
                     convertView = View.inflate(mContext, R.layout.home_page_item_menu, null);
                     mViewHolder.mViewPager = (ViewPager) convertView.findViewById(R.id.home_page_item_viewPager);
-                    mViewHolder.mGridView = (MyGridView) convertView.findViewById(R.id.home_page_item_gridView);
+                    mViewHolder.mViewPagerMenu = (WrapContentHeightViewPager) convertView.findViewById(R.id.home_view_pager);
                     mViewHolder.ll_point = (LinearLayout) convertView.findViewById(R.id.ll_point);
+                    mViewHolder.ll_menu_point = (LinearLayout) convertView.findViewById(R.id.ll_menu_point);
 
                     mPagerAdapter = new HomePagerAdapter(mContext, mHomePagerEntity, mViewHolder);
                     mViewHolder.mViewPager.setAdapter(mPagerAdapter);// 轮播图适配数据
@@ -1045,6 +1069,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         if (mHomePagerEntity == null || mHomePagerEntity.getBanners() == null || mHomePagerEntity.getBanners().getContent() == null || mHomePagerEntity.getBanners().getContent().size() == 0) {
 
                         } else {
+                            len = mHomePagerEntity.getBanners().getContent().size();
                             int currentIndex = (Integer.MAX_VALUE / 2) % mHomePagerEntity.getBanners().getContent().size() == 0 ? (Integer.MAX_VALUE / 2) : (Integer.MAX_VALUE / 2) - (Integer.MAX_VALUE / 2) % mHomePagerEntity.getBanners().getContent().size();
                             mViewHolder.mViewPager.setCurrentItem(currentIndex);// 设置当前轮播图下标
                         }
@@ -1052,8 +1077,50 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         L.d("设置轮播图下标失败：" + e.getMessage());
                     }
 
-                    mGridAdapter = new HomeGridAdapter(mContext, mHomePagerEntity, mViewHolder);
-                    mViewHolder.mGridView.setAdapter(mGridAdapter);// 入口种类数据
+                    int dp = DisplayUtil.dip2px(mContext, 5);// 添加小圆点
+                    for (int i = 0; i < len; i++) {
+                        View view = new View(mContext);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp, dp);
+                        if (i != 0) {
+                            lp.leftMargin = dp;
+                        }
+                        view.setEnabled(i == 0 ? true : false);
+                        view.setBackgroundResource(R.drawable.v_lunbo_point_selector);
+                        view.setLayoutParams(lp);
+                        mViewHolder.ll_menu_point.addView(view);
+                    }
+
+                    mViewHolder.mViewPagerMenu.setAdapter(new FragmentStatePagerAdapter(((HomePagerActivity) mContext).getSupportFragmentManager()) {
+                        @Override
+                        public Fragment getItem(int position) {
+                            return fragmentList.get(position);
+                        }
+
+                        @Override
+                        public int getCount() {
+                            return mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
+                        }
+                    });
+                    final int finalLen = len;
+                    mViewHolder.mViewPagerMenu.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                        @Override
+                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                        }
+
+                        @Override
+                        public void onPageSelected(int position) {
+                            for (int i = 0; i < finalLen; i++) {
+                                mViewHolder.ll_menu_point.getChildAt(i).setEnabled(i == position % finalLen ? true : false);
+                            }
+                        }
+
+                        @Override
+                        public void onPageScrollStateChanged(int state) {
+
+                        }
+                    });
+
                     convertView.setTag(mViewHolder);
                     break;
                 case 1:
@@ -1159,8 +1226,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     public static class ViewHolder {
         ViewPager mViewPager;// 轮播图
-        MyGridView mGridView;// 主入口
+        WrapContentHeightViewPager mViewPagerMenu;// 主入口
         LinearLayout ll_point;// 小圆点
+        LinearLayout ll_menu_point;// 小圆点
     }
 
     /**
