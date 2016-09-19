@@ -31,37 +31,48 @@
             android:textColor="@android:color/white"
             android:textSize="20sp"/>
     </LinearLayout>
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
-        android:layout_gravity="top"
-        android:layout_margin="20dp">
+        android:layout_margin="25dp"
+        android:layout_marginTop="30dp"
+        >
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/video_back"
             android:onClick="onClickBack"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
             />
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/video_rotate"
             android:onClick="onClickRotate"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:padding="10dp"
 
-        <ImageButton
+            />
+
+        <ImageView
+            android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/video_switch_screen"
             android:onClick="onClickSwitchScreen"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_toLeftOf="@id/imageView2"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+           />
 
     </RelativeLayout>
 

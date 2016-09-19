@@ -108,7 +108,9 @@ public class PLVideoTextureActivity extends AppCompatActivity {
      */
     public void onClickSwitchScreen(View v) {
         mDisplayAspectRatio = (mDisplayAspectRatio + 1) % 5;
-        mVideoView.setDisplayAspectRatio(mDisplayAspectRatio);
+        if(mDisplayAspectRatio!=2){
+            mVideoView.setDisplayAspectRatio(mDisplayAspectRatio);
+        }
         switch (mVideoView.getDisplayAspectRatio()) {
             case PLVideoTextureView.ASPECT_RATIO_ORIGIN:
                 showToastTips("Origin mode");
