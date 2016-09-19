@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -393,8 +392,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             mFirstRecyclerView.setLayoutManager(firstGridLayoutManager);
             final FirstAdapter firstAdapter = new FirstAdapter(mFirstData , currentFirstPosition);
 
-            Toast.makeText(getContext(), "mDataMatch===>>" + mFirstData.size(), Toast.LENGTH_SHORT).show();
-
             mFirstRecyclerView.setAdapter(firstAdapter);
 
             mSecondRecyclerView = (RecyclerView) view.findViewById(R.id.second_recycler_view);
@@ -532,7 +529,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             case R.id.title_button:
                 if (isLoad) {
                     setDialog();
-                    Toast.makeText(getContext(), "111111AAAAA", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.left_button:
@@ -582,7 +578,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             }
 
             if (position == currentFirstPosition) {
-                Toast.makeText(mContext, "====>>" + position + "***" +currentFirstPosition , Toast.LENGTH_SHORT).show();
                 textView.setSelected(true);
             }else{
                 textView.setSelected(false);
