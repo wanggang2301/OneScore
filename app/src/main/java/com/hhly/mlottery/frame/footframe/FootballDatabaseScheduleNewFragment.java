@@ -274,8 +274,10 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                         if (result.getData() != null) {
                             if (result.getCurrentGroup() != null) {
                                 mRoundString = result.getData().get(result.getCurrentGroup());
+                                arr =  result.getData().get(result.getCurrentGroup());
                             }else{
                                 mRoundString = result.getData().get("emp");
+                                arr =  result.getData().get(result.getCurrentGroup());
                             }
 
                             /**
