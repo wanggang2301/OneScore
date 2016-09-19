@@ -300,7 +300,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     /**
      * Fragment页面统计
      */
-    private boolean isFragment0 = false;// 赛程
+    private boolean isFragment0 = true;// 赛程
     private boolean is0 = false;
     private boolean isFragment1 = false;// 积分
     private boolean is1 = false;
@@ -318,14 +318,18 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         }
         if (isFragment0) {
             if (is1) {
+                MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_RankingFragment");
                 is1 = false;
             }
+            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_ScheduleFragment");
             is0 = true;
         }
         if (isFragment1) {
             if (is0) {
+                MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_ScheduleFragment");
                 is0 = false;
             }
+            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_RankingFragment");
             is1 = true;
         }
     }
@@ -336,9 +340,11 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         MobclickAgent.onResume(this);
         if (isFragment0) {
             is0 = true;
+            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_ScheduleFragment");
         }
         if (isFragment1) {
             is1 = true;
+            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_RankingFragment");
         }
     }
 
@@ -348,9 +354,11 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         MobclickAgent.onPause(this);
         if (is0) {
             is0 = false;
+            MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_ScheduleFragment");
         }
         if (is1) {
             is1 = false;
+            MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_RankingFragment");
         }
     }
 

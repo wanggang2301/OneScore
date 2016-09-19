@@ -66,10 +66,10 @@ public class IntelligenceRecentAdapter extends BaseAdapter{
         }else {
             holder= (ViewHolder) convertView.getTag();
         }
-        holder.homeNum.setText(list.get(position).getHome()+"");
-        holder.homePro.setProgress(Integer.parseInt(list.get(position).getHome()));
-        holder.guestNum.setText(list.get(position).getGuest());
-        holder.guestPro.setProgress(Integer.parseInt(list.get(position).getGuest()));
+        holder.homeNum.setText(list.get(position).getHome()==null?"--":list.get(position).getHome());
+        holder.homePro.setProgress(Integer.parseInt(String.valueOf(list.get(position).getHome()==null?0:list.get(position).getHome())));
+        holder.guestNum.setText(list.get(position).getGuest()==null?"--":list.get(position).getGuest());
+        holder.guestPro.setProgress(Integer.parseInt(String.valueOf(list.get(position).getGuest()==null?0:list.get(position).getGuest())));
         switch (list.get(position).getType()){
             case 20:
                 holder.imageView.setImageResource(R.mipmap.recent_win_number);

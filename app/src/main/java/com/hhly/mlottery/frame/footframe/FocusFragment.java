@@ -1,14 +1,10 @@
 package com.hhly.mlottery.frame.footframe;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,32 +43,22 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StringUtils;
-import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.websocket.HappySocketClient;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseCloseListener;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseErrorListener;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseMessageListener;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
-import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
@@ -82,7 +68,7 @@ import de.greenrobot.event.EventBus;
  * @Description: 关注
  * @date 2015-10-15 上午9:57:25
  */
-public class FocusFragment extends Fragment implements OnClickListener, SocketResponseErrorListener, SocketResponseCloseListener, SocketResponseMessageListener, SwipeRefreshLayout.OnRefreshListener {
+public class FocusFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -104,7 +90,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
-    private RelativeLayout mUnconection;
+    private LinearLayout mUnconectionLayout;
     private ExactSwipeRefrashLayout mSwipeRefreshLayout;
 
     private View mUnFocusLayout;
@@ -122,7 +108,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
 
     private boolean isWebSocketStart = false;// 不使用websocket时可设置为true
 
-    private HappySocketClient mSocketClient;
+//    private HappySocketClient mSocketClient;
 
     private int mHandicap = 1;// 盘口 1.亚盘 2.大小球 3.欧赔 4.不显示
 
@@ -199,14 +185,12 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
-        try {
-            socketUri = new URI(BaseURLs.WS_SERVICE);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            socketUri = new URI(BaseURLs.WS_SERVICE);
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
 
         focusEventBus = new EventBus();
         focusEventBus.register(this);
@@ -242,7 +226,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
         initView();
 
         initMedia();
-        initBroadCase();
+//        initBroadCase();
 
         return mView;
     }
@@ -265,17 +249,17 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     }
 */
 
-    private FocusNetStateReceiver mNetStateReceiver;
+//    private FocusNetStateReceiver mNetStateReceiver;
 
-    private void initBroadCase() {
-        if (getActivity() != null) {
-            mNetStateReceiver = new FocusNetStateReceiver();
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            getActivity().registerReceiver(mNetStateReceiver, filter);
-        }
-
-    }
+//    private void initBroadCase() {
+//        if (getActivity() != null) {
+//            mNetStateReceiver = new FocusNetStateReceiver();
+//            IntentFilter filter = new IntentFilter();
+//            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//            getActivity().registerReceiver(mNetStateReceiver, filter);
+//        }
+//
+//    }
 
     private void initMedia() {
         mVibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
@@ -321,8 +305,8 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
 
         mUnFocusLayout = mView.findViewById(R.id.football_immediate_unfocus_ll);
 
-        mUnconection = (RelativeLayout) mView.findViewById(R.id.unconection_layout);
-        mUnconection.setOnClickListener(new OnClickListener() {
+        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);
+        mUnconectionLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Settings.ACTION_SETTINGS));
@@ -404,6 +388,8 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     private final static int VIEW_STATUS_NO_ANY_DATA = 2;
     private final static int VIEW_STATUS_SUCCESS = 3;
     private final static int VIEW_STATUS_NET_ERROR = 4;
+    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
+    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -424,7 +410,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                     mErrorLayout.setVisibility(View.GONE);
                     //如果不隐藏mSwipeRefreshLayout，会出现没关注的页面和一条比赛。
                     mSwipeRefreshLayout.setVisibility(View.GONE);
-                    //mUnconection.setVisibility(View.GONE);
+                    //mUnconectionLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mUnFocusLayout.setVisibility(View.VISIBLE);
                     break;
@@ -432,7 +418,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                     mLoadingLayout.setVisibility(View.GONE);
 //                    mListView.setVisibility(View.VISIBLE);
                     mErrorLayout.setVisibility(View.GONE);
-                    mUnconection.setVisibility(View.GONE);
+//                    mUnconectionLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mUnFocusLayout.setVisibility(View.GONE);
@@ -440,12 +426,13 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                 case VIEW_STATUS_NET_ERROR:
                     mLoadingLayout.setVisibility(View.GONE);
 //                    mListView.setVisibility(View.GONE);
-//                    mUnconection.setVisibility(View.GONE);
+//                    mUnconectionLayout.setVisibility(View.GONE);
 
                     mSwipeRefreshLayout.setRefreshing(false);
 
                     if (isLoadedData) {
-                        if (!isPause && getActivity() != null && !isError) {
+//                        if (!isPause && getActivity() != null && !isError) {
+                        if (getActivity() != null) {
                             Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                         }
                     } else {
@@ -453,6 +440,16 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                         mLoadingLayout.setVisibility(View.GONE);
                         mErrorLayout.setVisibility(View.VISIBLE);
                         mUnFocusLayout.setVisibility(View.GONE);
+                    }
+                    break;
+                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
+                    if (mUnconectionLayout != null) {
+                        mUnconectionLayout.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
+                    if (mUnconectionLayout != null) {
+                        mUnconectionLayout.setVisibility(View.GONE);
                     }
                     break;
                 default:
@@ -493,10 +490,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
 
                 teamLogoSuff=json.getTeamLogoSuff();
 
-
-
                 mMatchs = new ArrayList<Match>();
-
 
                 // mMatchs.addAll(mAllMatchs);//用这种方式是把all的引用赋给它了，操作起来比较麻烦
 
@@ -588,31 +582,31 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
                                 }
                             });*/
                 } else {
-                    mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                    mAdapter.setmFocusMatchClickListener(mFocusClickListener);
 
+                    if(mAdapter==null){
+                        mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                        mAdapter.setmFocusMatchClickListener(mFocusClickListener);
+                        mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, String data) {
+                                String thirdId = data;
+                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                                intent.putExtra("thirdId", thirdId);
+                                intent.putExtra("currentFragmentId", 3);
 
-                    mRecyclerView.setAdapter(mAdapter);
-
-                    mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, String data) {
-                            String thirdId = data;
-                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
-                            intent.putExtra("thirdId", thirdId);
-                            intent.putExtra("currentFragmentId", 3);
-
-                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-                        }
-                    });
-
-
+                                getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                            }
+                        });
+                        mRecyclerView.setAdapter(mAdapter);
+                    }else{
+                        updateAdapter();
+                    }
                 }
 
                 isLoadedData = true;
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 
-                startWebsocket();
+//                startWebsocket();
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -629,25 +623,25 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
 
     }
 
-    private URI socketUri = null;
+//    private URI socketUri = null;
 
-    private synchronized void startWebsocket() {
+//    private synchronized void startWebsocket() {
+//
+//
+//        if (mSocketClient == null || (mSocketClient != null && mSocketClient.isClosed())) {
+//            mSocketClient = new HappySocketClient(socketUri, new Draft_17());
+//            mSocketClient.setSocketResponseMessageListener(this);
+//            mSocketClient.setSocketResponseCloseListener(this);
+//            mSocketClient.setSocketResponseErrorListener(this);
+//            mSocketClient.connect();
+//            if (isError) {
+//                initData();
+//            }
+//            isError = false;
+//        }
+//    }
 
-
-        if (mSocketClient == null || (mSocketClient != null && mSocketClient.isClosed())) {
-            mSocketClient = new HappySocketClient(socketUri, new Draft_17());
-            mSocketClient.setSocketResponseMessageListener(this);
-            mSocketClient.setSocketResponseCloseListener(this);
-            mSocketClient.setSocketResponseErrorListener(this);
-            mSocketClient.connect();
-            if (isError) {
-                initData();
-            }
-            isError = false;
-        }
-    }
-
-    Handler socketHandler = new Handler() {
+    Handler mSocketHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -1131,115 +1125,142 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
     @Override
     public void onResume() {
         super.onResume();
-        isPause = false;
+//        isPause = false;
         L.v(TAG, "___onResume___");
 
-        String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
-        if ("".equals(fucus_id) || ",".equals(fucus_id)) {
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-            return;
-        }
 
-        if (isDestroy) {
-            return;
-        }
+
+//        if (isDestroy) {
+//            return;
+//        }
 
 
 
-        if (!isLoadedData) {
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-            mLoadHandler.postDelayed(mLoadingDataThread, 0);
-        } else {
-
-        }
+//        if (!isLoadedData) {
+//            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+//            mLoadHandler.postDelayed(mLoadingDataThread, 0);
+//        } else {
+//
+//        }
 
 
     }
 
-    private boolean isError = false;
+//    private boolean isError = false;
 
-    @Override
-    public void onError(Exception exception) {
-        isError = true;
-        restartSocket();
-    }
+//    @Override
+//    public void onError(Exception exception) {
+//        isError = true;
+//        restartSocket();
+//    }
+//
+//    @Override
+//    public void onClose(String message) {
+//        if (!isError) {
+//            restartSocket();
+//        }
+//    }
 
-    @Override
-    public void onClose(String message) {
-        if (!isError) {
-            restartSocket();
-        }
-    }
+//    @Override
+//    public void onMessage(String message) {
+//        L.w(TAG, "message = " + message);
+//
+//        if (message.startsWith("CONNECTED")) {
+//            String id = "android" + DeviceInfo.getDeviceId(getActivity());
+//            id = MD5Util.getMD5(id);
+//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.app\n\n");
+//            isWebSocketStart = true;
+//            return;
+//        } else if (message.startsWith("MESSAGE")) {
+//            String[] msgs = message.split("\n");
+//            String ws_json = msgs[msgs.length - 1];
+//            String type = "";
+//            try {
+//                JSONObject jsonObject = new JSONObject(ws_json);
+//                type = jsonObject.getString("type");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (!"".equals(type)) {
+//                Message msg = Message.obtain();
+//                msg.obj = ws_json;
+//                msg.arg1 = Integer.parseInt(type);
+//
+//                mSocketHandler.sendMessage(msg);
+//            }
+//        }
+//        mSocketClient.send("\n");
+//    }
 
-    @Override
-    public void onMessage(String message) {
-        L.w(TAG, "message = " + message);
+//    private Timer timer = new Timer();
+//    private boolean isTimerStart = false;
 
-        if (message.startsWith("CONNECTED")) {
-            String id = "android" + DeviceInfo.getDeviceId(getActivity());
-            id = MD5Util.getMD5(id);
-            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.app\n\n");
-            isWebSocketStart = true;
-            return;
-        } else if (message.startsWith("MESSAGE")) {
-            String[] msgs = message.split("\n");
-            String ws_json = msgs[msgs.length - 1];
-            String type = "";
-            try {
-                JSONObject jsonObject = new JSONObject(ws_json);
-                type = jsonObject.getString("type");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//    private synchronized void restartSocket() {
+//        if (!isDestroy) {
+//            if (!isTimerStart) {
+//                TimerTask timerTask = new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        if (!isDestroy) {
+//                            startWebsocket();
+//                        } else {
+//                            timer.cancel();
+//                        }
+//                    }
+//                };
+//                timer.schedule(timerTask, 2000, 5000);
+//                isTimerStart = true;
+//            }
+//        }
+//    }
 
-            if (!"".equals(type)) {
-                Message msg = Message.obtain();
-                msg.obj = ws_json;
-                msg.arg1 = Integer.parseInt(type);
-
-                socketHandler.sendMessage(msg);
-            }
-        }
-        mSocketClient.send("\n");
-    }
-
-    private Timer timer = new Timer();
-    private boolean isTimerStart = false;
-
-    private synchronized void restartSocket() {
-        if (!isDestroy) {
-            if (!isTimerStart) {
-                TimerTask timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (!isDestroy) {
-                            startWebsocket();
-                        } else {
-                            timer.cancel();
-                        }
-                    }
-                };
-                timer.schedule(timerTask, 2000, 5000);
-                isTimerStart = true;
-            }
-        }
-    }
-
-    private boolean isDestroy = false;
+//    private boolean isDestroy = false;
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "__onDestroy___");
-        if (mSocketClient != null) {
-            isDestroy = true;
-            mSocketClient.close();
+//        if (mSocketClient != null) {
+//            isDestroy = true;
+//            mSocketClient.close();
+//        }
+//
+//        if (getActivity() != null && mNetStateReceiver != null) {
+//            getActivity().unregisterReceiver(mNetStateReceiver);
+//        }
+    }
+
+    public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
+        if (mAdapter == null) {
+            return;
         }
 
-        if (getActivity() != null && mNetStateReceiver != null) {
-            getActivity().unregisterReceiver(mNetStateReceiver);
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(entity.text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!"".equals(type)) {
+            Message msg = Message.obtain();
+            msg.obj = entity.text;
+            msg.arg1 = Integer.parseInt(type);
+
+            mSocketHandler.sendMessage(msg);
         }
     }
+
+    public void connectFail() {
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
+    }
+
+    public void connectSuccess() {
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
+    }
+
 
     /**
      * EventBus设置
@@ -1272,9 +1293,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
      * 接受消息的页面实现
      */
     public void onEventMainThread(String currentFragmentId) {
-        if (isDestroy) {
-            return;
-        }
+//        if (isDestroy) {
+//            return;
+//        }
 
         if ("".equals(PreferenceUtil.getString(FocusFragment.FOCUS_ISD, ""))) {
             if (mMatchs != null) {
@@ -1343,77 +1364,79 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
         }
     }*/
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (hidden) {
-            isPause = true;
-            if (mSocketClient != null) {
-                isDestroy = true;
-                mSocketClient.close();
-            }
-        } else {
-            isPause = false;
-            isDestroy = false;
-            String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
-            if ("".equals(fucus_id) || ",".equals(fucus_id)) {
-                mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-                return;
-            }
-//            if(isLoadedData){
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-            mLoadHandler.postDelayed(mLoadingDataThread, 0);
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (hidden) {
+//            isPause = true;
+//            if (mSocketClient != null) {
+//                isDestroy = true;
+//                mSocketClient.close();
 //            }
-        }
-    }
+//        } else {
+//            isPause = false;
+//            isDestroy = false;
+//            String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
+//            if ("".equals(fucus_id) || ",".equals(fucus_id)) {
+//                mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
+//                return;
+//            }
+////            if(isLoadedData){
+//            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+//            mLoadHandler.postDelayed(mLoadingDataThread, 0);
+////            }
+//        }
+//    }
 
 
     public void reLoadData(){
-        mLoadHandler.postDelayed(mLoadingDataThread, 0);
+        String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
+        if ("".equals(fucus_id) || ",".equals(fucus_id)) {
+            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
+            return;
+        }
+        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+        mLoadHandler.post(mLoadingDataThread);
     }
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                initData();
-            }
-        }, 0);
+        mLoadHandler.post(mLoadingDataThread);
+        ((ScoresFragment) getParentFragment()).reconnectWebSocket();
     }
 
 //    private boolean isInitData = false;
 
-    public class FocusNetStateReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context con, Intent arg1) {
-            L.d(TAG, "NetState ___ onReceive ");
-
-            ConnectivityManager manager = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-            if (activeNetwork == null || !activeNetwork.isAvailable()) {
-                if (mErrorLayout.getVisibility() != View.VISIBLE) {
-                    mUnconection.setVisibility(View.VISIBLE);
-                }
-
-                isWebSocketStart = false;
-                if (mSocketClient != null) {
-                    mSocketClient.close();
-                }
-                mSocketClient = null;
-            } else {
-                mUnconection.setVisibility(View.GONE);
-            }
+//    public class FocusNetStateReceiver extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context con, Intent arg1) {
+//            L.d(TAG, "NetState ___ onReceive ");
+//
+//            ConnectivityManager manager = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
+//            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+//            if (activeNetwork == null || !activeNetwork.isAvailable()) {
+//                if (mErrorLayout.getVisibility() != View.VISIBLE) {
+//                    mUnconectionLayout.setVisibility(View.VISIBLE);
+//                }
+//
+//                isWebSocketStart = false;
+//                if (mSocketClient != null) {
+//                    mSocketClient.close();
+//                }
+//                mSocketClient = null;
+//            } else {
+//                mUnconectionLayout.setVisibility(View.GONE);
+//            }
 //            else {
 //                if (isInitData) {
 //                    mSwipeRefreshLayout.setRefreshing(true);
-//                    mUnconection.setVisibility(View.GONE);
+//                    mUnconectionLayout.setVisibility(View.GONE);
 //                    onRefresh();
 //                }
 //            }
-        }
-    }
+//        }
+//    }
 
 
     /**
@@ -1468,11 +1491,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SocketRe
         PreferenceUtil.commitString(FocusFragment.FOCUS_ISD, sb.toString());
     }
 
-    private boolean isPause = false;
+//    private boolean isPause = false;
 
     @Override
     public void onPause() {
         super.onPause();
-        isPause = true;
+//        isPause = true;
     }
 }
