@@ -80,6 +80,7 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                                 //无搜索  隐藏删除键
                                 mSearch_iv_delete.setVisibility(View.GONE);
                                 basketballInforSerachAdapter.clearData();
+                                mNo_serach_tv.setVisibility(View.GONE);
                             }
 
                             return false;
