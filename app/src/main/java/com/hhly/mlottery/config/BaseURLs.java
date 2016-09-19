@@ -751,7 +751,7 @@ public class BaseURLs {
     //足球资料库
     public final static String URL_FOOTBALL_DATABASE = URL_API_HOST + "androidLeagueData.findAndroidDataMenu.do";
 
-    //足球资料库赛程
+    //足球资料库赛程   http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=60
     public final static String URL_FOOTBALL_DATABASE_SCHEDULE_FIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRound.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
     public final static String URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST = URL_API_HOST + "androidLeagueData.findAndroidLeagueRace.do";//"http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRace.do";
     //足球资料库积分
