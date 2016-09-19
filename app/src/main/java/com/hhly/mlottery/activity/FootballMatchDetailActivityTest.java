@@ -15,7 +15,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -64,27 +63,20 @@ import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DateUtil;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.FootballLiveTextComparator;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.StadiumUtils;
-import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.CustomViewpager;
 import com.hhly.mlottery.widget.DepthPageTransformer;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
 
-import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -583,7 +575,6 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
     private void loadData() {
 
 
-
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
 
@@ -1023,7 +1014,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                     if ("1".equals(mMatchDetail.getLiveStatus())) {
                         mHeadviewpager.setCurrentItem(2, false);
                     } else if ("-1".equals(mMatchDetail.getLiveStatus())) {
-                        mHeadviewpager.setCurrentItem(1, true);
+                        mHeadviewpager.setCurrentItem(1, false);
 
                     }
                 }
