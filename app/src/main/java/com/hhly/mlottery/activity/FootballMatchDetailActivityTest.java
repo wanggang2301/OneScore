@@ -2544,6 +2544,8 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                 popWindow(iv_setting);
                 break;
             case R.id.reLoading_details:
+                mHandler.sendEmptyMessage(STARTLOADING);
+
                 loadData();
                 break;
             case R.id.iv_join_room_foot:
