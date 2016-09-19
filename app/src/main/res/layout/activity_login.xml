@@ -167,6 +167,7 @@
 
 
     <LinearLayout
+        android:id="@+id/login_display"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.08"
@@ -204,6 +205,8 @@
     </LinearLayout>
 
     <LinearLayout
+
+        android:id="@+id/login_three"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="17dp"
@@ -211,6 +214,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/login_qq"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -219,6 +223,7 @@
             />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/login_sina"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -227,6 +232,7 @@
             />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/login_weixin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -867,4 +867,6 @@ public class BaseURLs {
     public final static String VIDEOINFO = URL_API_HOST+ "matchVideo.findAndroidVideoinfo.do";
     /*视频直播*/
     public final static String SEARCHMATCHLEAGUES ="/androidLeagueData.searchMatchLeagues.do";
+    /*检测第三方登录*/
+    public final static String TESTINGISLOGIN =URL_API_HOST+"systemSettings.findThirdPartyLoginSettings.do";
 }
