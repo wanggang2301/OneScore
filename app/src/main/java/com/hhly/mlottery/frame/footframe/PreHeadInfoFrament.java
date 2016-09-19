@@ -108,7 +108,6 @@ public class PreHeadInfoFrament extends Fragment {
         mMatchType2 = (TextView) mView.findViewById(R.id.football_match_detail_matchtype2);
 
 
-
     }
 
 
@@ -127,13 +126,13 @@ public class PreHeadInfoFrament extends Fragment {
         universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
         universalImageLoader.init(config);
 
-        if (flag) {
-            int random = new Random().nextInt(20);
-            String url = baseUrl + random + ".png";
-            if (universalImageLoader != null) {
-                universalImageLoader.displayImage(url, iv_bg, options);
-            }
+        // if (flag) {
+        int random = new Random().nextInt(20);
+        String url = baseUrl + random + ".png";
+        if (universalImageLoader != null) {
+            universalImageLoader.displayImage(url, iv_bg, options);
         }
+        // }
 
 
         loadImage(mMatchDetail.getHomeTeamInfo().getUrl(), iv_home_icon);

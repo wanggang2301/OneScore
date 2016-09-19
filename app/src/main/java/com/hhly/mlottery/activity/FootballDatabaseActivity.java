@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseFragment;
+import com.hhly.mlottery.frame.footframe.FootballDatabaseInterFragment;
 
 /**
  * @author: Wangg
@@ -76,7 +77,7 @@ public class FootballDatabaseActivity extends BaseActivity implements View.OnCli
                 FootballDatabaseFragment.newInstance(ASIA),
                 FootballDatabaseFragment.newInstance(AFRICA),
                 FootballDatabaseFragment.newInstance(OCEANIA),
-                FootballDatabaseFragment.newInstance(INTER));
+                FootballDatabaseInterFragment.newInstance(INTER));
         viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);
