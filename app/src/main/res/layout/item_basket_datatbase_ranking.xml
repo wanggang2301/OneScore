@@ -65,6 +65,7 @@
                 android:textSize="@dimen/text_size_10"/>
 
             <TextView
+                android:id="@+id/basket_recent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

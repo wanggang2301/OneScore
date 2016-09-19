@@ -32,6 +32,11 @@ public class BasketballDatabaseRankingAdapter
     private static final int TYPE_FORM_TITLE = 1;
 
     private int type = RankingResult.SINGLE_LEAGUE;
+    private int matchType = 0;
+
+    public void setMatchType(int matchType) {
+        this.matchType = matchType;
+    }
 
     public BasketballDatabaseRankingAdapter(List<Section> data) {
         super(R.layout.item_basket_datatbase_ranking_team, R.layout.item_basket_datatbase_ranking_title, data);
@@ -75,6 +80,14 @@ public class BasketballDatabaseRankingAdapter
     @Override
     protected void convert(BaseViewHolder holder, Section section) {
         RankingTeam team = section.t;
+
+        if (holder instanceof FormTitleViewHolder) {
+            if (0 == matchType) {
+                holder.setVisible(R.id.basket_recent , true);
+            }else{
+                holder.setVisible(R.id.basket_recent , false);
+            }
+        }
         if (team == null) return;
 
         TextView rank = holder.getView(R.id.rank);
@@ -91,6 +104,13 @@ public class BasketballDatabaseRankingAdapter
                 .setText(R.id.win_rate, String.format(Locale.getDefault(), "%.1f", team.getWinRate()))
                 .setText(R.id.win_offset, String.format(Locale.getDefault(), "%d", team.getGameBehind()))
                 .setText(R.id.recent, "0".equals(teamRecent) ? "-" : teamRecent);
+
+        if (0 == matchType) {
+            holder.setVisible(R.id.recent , true);
+        }else{
+            holder.setVisible(R.id.recent , false);
+        }
+
 
         if (ranking <= 3) {
             rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
