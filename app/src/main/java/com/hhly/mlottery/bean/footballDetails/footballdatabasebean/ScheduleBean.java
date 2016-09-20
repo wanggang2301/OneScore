@@ -24,7 +24,7 @@ public class ScheduleBean {
     private String currentGroup;
     private int type;
     private int currentRoundIndex;
-    private LinkedHashMap<String , String[]> data;
+    private LinkedHashMap<String , List<DataBean>> data;
     private List<ScheduleRaceBean> race;
 
     public int getCode() {
@@ -59,11 +59,11 @@ public class ScheduleBean {
         this.currentRoundIndex = currentRoundIndex;
     }
 
-    public LinkedHashMap<String , String[]> getData() {
+    public LinkedHashMap<String , List<DataBean>> getData() {
         return data;
     }
 
-    public void setData(LinkedHashMap<String , String[]> data) {
+    public void setData(LinkedHashMap<String , List<DataBean>> data) {
         this.data = data;
     }
 
