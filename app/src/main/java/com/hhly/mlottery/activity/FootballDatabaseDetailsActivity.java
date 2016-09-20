@@ -32,7 +32,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.FootballDatabaseHeaderBean;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseIntegralFragment;
-import com.hhly.mlottery.frame.footframe.FootballDatabaseScheduleFragment;
+import com.hhly.mlottery.frame.footframe.FootballDatabaseScheduleNewFragment;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -89,7 +89,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private String mCurrentSports = "";
     Handler mHandlerData = new Handler();
     private FootballDatabaseIntegralFragment mIntegralFragment;
-    private FootballDatabaseScheduleFragment mScheduleFragment;
+//    private FootballDatabaseScheduleFragment mScheduleFragment;
+    private FootballDatabaseScheduleNewFragment mScheduleNewFragment;
     private boolean mIsCurrenIntegral;//是否默认显示积分页
 
     @Override
@@ -106,7 +107,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         /**
          * 第一次加载默认赛季数据，不需要season ==》（-1）
          */
-        mScheduleFragment = FootballDatabaseScheduleFragment.newInstance(mLeague , null);//赛程
+//        mScheduleFragment = FootballDatabaseScheduleFragment.newInstance(mLeague , null);//赛程
+        mScheduleNewFragment = FootballDatabaseScheduleNewFragment.newInstance(mLeague , null);//赛程
         mIntegralFragment = FootballDatabaseIntegralFragment.newInstance(mLeague , null); //积分
 
         mOptions = new DisplayImageOptions.Builder()
@@ -160,7 +162,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         tabsAdapter = new TabsAdapter(getSupportFragmentManager());
         tabsAdapter.setTitles(titles);
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
-        tabsAdapter.addFragments(mScheduleFragment,mIntegralFragment);
+        tabsAdapter.addFragments(mScheduleNewFragment,mIntegralFragment);
 
         mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
         mViewPager.setAdapter(tabsAdapter);
@@ -292,7 +294,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
 
                 mIntegralFragment.update();
-                mScheduleFragment.update();
+                mScheduleNewFragment.update();
             }
         }, 1000);
 
@@ -300,7 +302,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     /**
      * Fragment页面统计
      */
-    private boolean isFragment0 = false;// 赛程
+    private boolean isFragment0 = true;// 赛程
     private boolean is0 = false;
     private boolean isFragment1 = false;// 积分
     private boolean is1 = false;
@@ -318,14 +320,18 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         }
         if (isFragment0) {
             if (is1) {
+                MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_RankingFragment");
                 is1 = false;
             }
+            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_ScheduleFragment");
             is0 = true;
         }
         if (isFragment1) {
             if (is0) {
+                MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_ScheduleFragment");
                 is0 = false;
             }
+            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_RankingFragment");
             is1 = true;
         }
     }
@@ -336,9 +342,11 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         MobclickAgent.onResume(this);
         if (isFragment0) {
             is0 = true;
+            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_ScheduleFragment");
         }
         if (isFragment1) {
             is1 = true;
+            MobclickAgent.onPageStart("FootballDatabaseDetailsActivity_RankingFragment");
         }
     }
 
@@ -348,9 +356,11 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         MobclickAgent.onPause(this);
         if (is0) {
             is0 = false;
+            MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_ScheduleFragment");
         }
         if (is1) {
             is1 = false;
+            MobclickAgent.onPageEnd("FootballDatabaseDetailsActivity_RankingFragment");
         }
     }
 
@@ -441,8 +451,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
 
                 //赛程
-                mScheduleFragment.setSeason(newData);
-                mScheduleFragment.update();
+                mScheduleNewFragment.setSeason(newData);
+                mScheduleNewFragment.update();
                 //积分
                 mIntegralFragment.setSeason(newData);
                 mIntegralFragment.update();

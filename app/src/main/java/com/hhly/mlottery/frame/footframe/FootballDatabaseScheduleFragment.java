@@ -310,47 +310,71 @@ public class FootballDatabaseScheduleFragment extends Fragment implements View.O
         ScrollView scrollview = (ScrollView) view.findViewById(R.id.basket_sports_scroll);//数据多时显示
         ScrollTouchListView scrollListview = (ScrollTouchListView) view.findViewById(R.id.sport_date_scroll);
         ListView listview = (ListView) view.findViewById(R.id.sport_date);//数据少时显示
-        if (data.size() > 5) {
-            scrollListview.setAdapter(mDialogAdapter);
-            scrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        if (data.size() > 5) {
+//            scrollListview.setAdapter(mDialogAdapter);
+//            scrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                    currentPosition = position;
+//                    mDialogAdapter.updateDatas(position);
+//                    mDialogAdapter.notifyDataSetChanged();
+//
+//                    mAlertDialog.dismiss();
+//                    String newData = mRoundString[currentPosition];
+//                    mLeagueRound = newData;
+//                    url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
+//                    handleHeadViewNew(mRoundString ,currentPosition);
+//                    initData();
+//                }
+//            });
+//            scrollview.setVisibility(View.VISIBLE);
+////            scrollview.scrollTo(0 , 500);
+//            listview.setVisibility(View.GONE);
+//        } else {
+//            listview.setAdapter(mDialogAdapter);
+//            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                    currentPosition = position;
+//                    mDialogAdapter.updateDatas(position);
+//                    mDialogAdapter.notifyDataSetChanged();
+//
+//                    mAlertDialog.dismiss();
+//                    String newData = mRoundString[currentPosition];
+//                    mLeagueRound = newData;
+//                    url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
+//                    handleHeadViewNew(mRoundString ,currentPosition);
+//                    initData();
+//                }
+//            });
+//            scrollview.setVisibility(View.GONE);
+//            listview.setVisibility(View.VISIBLE);
+//        }
 
-                    currentPosition = position;
-                    mDialogAdapter.updateDatas(position);
-                    mDialogAdapter.notifyDataSetChanged();
+        listview.setAdapter(mDialogAdapter);
+        listview.setSelection(currentPosition);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    mAlertDialog.dismiss();
-                    String newData = mRoundString[currentPosition];
-                    mLeagueRound = newData;
-                    url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
-                    handleHeadViewNew(mRoundString ,currentPosition);
-                    initData();
-                }
-            });
-            scrollview.setVisibility(View.VISIBLE);
-            listview.setVisibility(View.GONE);
-        } else {
-            listview.setAdapter(mDialogAdapter);
-            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                currentPosition = position;
+                mDialogAdapter.updateDatas(position);
+                mDialogAdapter.notifyDataSetChanged();
 
-                    currentPosition = position;
-                    mDialogAdapter.updateDatas(position);
-                    mDialogAdapter.notifyDataSetChanged();
+                mAlertDialog.dismiss();
+                String newData = mRoundString[currentPosition];
+                mLeagueRound = newData;
+                url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
+                handleHeadViewNew(mRoundString ,currentPosition);
+                initData();
+            }
+        });
+        scrollview.setVisibility(View.GONE);
+        listview.setVisibility(View.VISIBLE);
 
-                    mAlertDialog.dismiss();
-                    String newData = mRoundString[currentPosition];
-                    mLeagueRound = newData;
-                    url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
-                    handleHeadViewNew(mRoundString ,currentPosition);
-                    initData();
-                }
-            });
-            scrollview.setVisibility(View.GONE);
-            listview.setVisibility(View.VISIBLE);
-        }
+
         mAlertDialog.show();
         mAlertDialog.getWindow().setContentView(view);
     }

@@ -145,6 +145,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
             holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
             holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
+            holder.live_right_child_txt.setPadding(0,0,0,0);
         }
         else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 2){
             if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==1){
@@ -175,6 +176,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
             holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
             holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
+            holder.live_right_child_txt.setPadding(0,0,0,0);
         }
         else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 3){
             //直播综合
@@ -226,7 +228,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             //显示直播中的布局
             holder.direct_seeding_photo.setVisibility(View.VISIBLE);
             holder.live_right_child_txt.setText(mContext.getResources().getString(R.string.direct_seedinging));
-
             holder.live_right_child_txt.setPadding(20,0,0,0);
             holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.direct_seeding));
         }

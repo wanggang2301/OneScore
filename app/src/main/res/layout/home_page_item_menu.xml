@@ -20,21 +20,27 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" />
 
-        </LinearLayout>
     </RelativeLayout>
-    <!--主入口处-->
-    <com.hhly.mlottery.widget.MyGridView
-        android:id="@+id/home_page_item_gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="30dp"
-        android:numColumns="4"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:scrollbars="none"
-        android:verticalSpacing="5dp"></com.hhly.mlottery.widget.MyGridView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!--主入口处-->
+        <com.hhly.mlottery.widget.WrapContentHeightViewPager
+            android:id="@+id/home_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!--点-->
+        <LinearLayout
+            android:id="@+id/ll_menu_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" />
+
+    </RelativeLayout>
 </LinearLayout>

@@ -440,7 +440,33 @@ public class VolleyContentFast {
 
         return url;
     }
+   /*只返回语言参数*/
+    public static String returenLanguage() {
 
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            return BaseURLs.LANGUAGE_SWITCHING_CN;
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            return BaseURLs.LANGUAGE_SWITCHING_TW;
+        } else if (MyApp.isLanguage.equals("rEN")) {
+            // 如果是英文环境
+            return BaseURLs.LANGUAGE_SWITCHING_EN;
+        } else if (MyApp.isLanguage.equals("rKO")) {
+            // 如果是韩语环境
+            return BaseURLs.LANGUAGE_SWITCHING_KO;
+        } else if (MyApp.isLanguage.equals("rID")) {
+            // 如果是印尼语
+            return BaseURLs.LANGUAGE_SWITCHING_ID;
+        } else if (MyApp.isLanguage.equals("rTH")) {
+            // 如果是泰语
+            return BaseURLs.LANGUAGE_SWITCHING_TH;
+        } else if (MyApp.isLanguage.equals("rVI")) {
+            // 如果是越南语
+            return BaseURLs.LANGUAGE_SWITCHING_VI;
+        }
+        return null ;
+    }
     /**
      * 添加语言类型
      *
