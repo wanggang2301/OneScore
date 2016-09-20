@@ -1,6 +1,5 @@
 package com.hhly.mlottery.frame;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,15 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ForeignInfomationAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,19 +23,14 @@ import butterknife.ButterKnife;
  * @des 资讯—境外新闻
  */
 public class ForeignInfomationFragment extends Fragment {
-
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private View mView;
     private View moreView;  //加载更多
-
     private ForeignInfomationAdapter foreignInfomationAdapter;
-
     private List<Integer> list;
     private Context mContext;
-
     private boolean isCreated = false;//当前碎片是否createview
-
     private int pageSize = 0;
 
     public static ForeignInfomationFragment newInstance() {

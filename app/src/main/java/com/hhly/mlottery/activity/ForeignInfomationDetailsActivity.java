@@ -20,8 +20,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ForeignInfomationDetailsActivity extends BaseActivity {
 
+/**
+ * 描述:  境外资讯详情Activity
+ * 作者:  wangg@13322.com
+ * 时间:  2016/9/12 12:11
+ */
+
+public class ForeignInfomationDetailsActivity extends BaseActivity {
     @BindView(R.id.recycler_view_details)
     RecyclerView recyclerViewDetails;
     @BindView(R.id.public_img_back)
@@ -51,11 +57,8 @@ public class ForeignInfomationDetailsActivity extends BaseActivity {
     @BindView(R.id.iv_comment)
     ImageView ivComment;
     private ForeignInfomationDetailsAdapter foreignInfomationDetailsAdapter;
-
     private List<Integer> list;
-
     private boolean focusable = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +69,6 @@ public class ForeignInfomationDetailsActivity extends BaseActivity {
         Intent intent = getIntent();
         focusable = intent.getBooleanExtra("focusable", false);
         initView();
-
-
-
 
 
         list = new ArrayList<>();
@@ -85,13 +85,9 @@ public class ForeignInfomationDetailsActivity extends BaseActivity {
         recyclerViewDetails.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         if (focusable) {
             recyclerViewDetails.setFocusable(true);
-
         } else {
             recyclerViewDetails.setFocusable(false);
-
         }
-
-
     }
 
     @OnClick({R.id.public_img_back, R.id.tv_comment, R.id.iv_photo})
@@ -104,15 +100,11 @@ public class ForeignInfomationDetailsActivity extends BaseActivity {
                 break;
 
             case R.id.iv_photo:
-
                 String url = "http://pic2.qinzhou360.com/qinzhoubbs/forum/201506/05/194201nvwbd3d1s7b1d38u.png";
-
                 Intent intent = new Intent(ForeignInfomationDetailsActivity.this, PicturePreviewActivity.class);
                 intent.putExtra("url", url);
                 startActivity(intent);
                 break;
         }
     }
-
-
 }

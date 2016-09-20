@@ -116,7 +116,6 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
                 android:src="@mipmap/new_tight_s" />
-
             <TextView
                 android:id="@+id/tv_tight"
                 android:layout_width="wrap_content"
@@ -125,7 +124,6 @@
                 android:textColor="@color/mdy_666"
                 android:textSize="@dimen/text_size_13" />
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/ll_cmt"
@@ -142,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:src="@mipmap/new_message" />
+                android:src="@mipmap/new_write" />
             <TextView
                 android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"
@@ -151,6 +149,5 @@
                 android:textColor="@color/mdy_666"
                 android:textSize="@dimen/text_size_13" />
         </LinearLayout>
-
     </RelativeLayout>
 </LinearLayout>

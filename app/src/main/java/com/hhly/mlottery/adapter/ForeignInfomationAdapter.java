@@ -15,7 +15,7 @@ import com.hhly.mlottery.activity.PicturePreviewActivity;
 import java.util.List;
 
 /**
- * 描述:  ${TODO}
+ * 描述:  境外资讯Adapter
  * 作者:  wangg@13322.com
  * 时间:  2016/9/12 12:11
  */
@@ -60,7 +60,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("focusable", true);
+                intent.putExtra("focusable", false);
                 mContext.startActivity(intent);
             }
         });
