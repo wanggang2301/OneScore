@@ -22,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
+import com.hhly.mlottery.R;
 import com.pili.pldroid.player.IMediaController;
 
 import java.util.Locale;
@@ -495,7 +497,7 @@ public class MediaController extends FrameLayout implements IMediaController {
 
                     mWindow.setAnimationStyle(mAnimStyle);
                     mWindow.showAtLocation(mAnchor, Gravity.BOTTOM,
-                            anchorRect.left, 0);
+                            anchorRect.left, 50);
                 } else {
                     Rect anchorRect = new Rect(location[0], location[1],
                             location[0] + mRoot.getWidth(), location[1]
@@ -503,7 +505,7 @@ public class MediaController extends FrameLayout implements IMediaController {
 
                     mWindow.setAnimationStyle(mAnimStyle);
                     mWindow.showAtLocation(mRoot, Gravity.BOTTOM,
-                            anchorRect.left, 0);
+                            anchorRect.left, 50);
                 }
             }
             mShowing = true;

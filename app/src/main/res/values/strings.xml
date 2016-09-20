@@ -920,7 +920,7 @@
     <string name="logout_check">确认退出登录?</string>
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
-    <string name="not_find_search">找不到相关信息</string>
+    <string name="not_find_search">对不起,找不到相关信息</string>
     <string name="find_search">正在查找......</string>
     <string name="skip">"秒 | 跳过"</string>
     <!--1.1.2 begin-->Login / register
@@ -1181,6 +1181,7 @@
     <string name="info_center_other_type41">%1$s盘口上半场胜概率</string>
     <string name="info_center_other_type42">%1$s盘口上半场平概率</string>
     <string name="info_center_other_type43">%1$s盘口上半场负概率</string>
+    <string name="info_center_txt_def">采样不足</string>
     <!--情报中心 end-->
 
 

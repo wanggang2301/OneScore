@@ -289,7 +289,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
         });
     }
     public void updataAdapter(int type){
-
+        mAdapter.setMatchType(type);
         if (type == 0) {
             mSections.clear();
             if (mResult.getRankingObj().getAll() == null || mResult.getRankingObj().getAll().equals("")){

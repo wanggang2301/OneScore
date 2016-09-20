@@ -174,14 +174,14 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     view.loadUrl(url);
-                    L.d("lzfshiping",url);
+                    L.d("lzfshiping", url);
                     System.out.println("lzfshiping" + url);
                     return true;
                 }
 
             });
             if (url != null) {
-                if(!url.contains("comment=false")){
+                if (!url.contains("comment=false")) {
                     //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
                     ChatFragment chatFragment = new ChatFragment();
                     CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
@@ -196,7 +196,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 url = url.replace("{deviceToken}", deviceId);
             }
 
-            L.d("lzfshiping",url);
+            L.d("lzfshiping", url);
 
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);

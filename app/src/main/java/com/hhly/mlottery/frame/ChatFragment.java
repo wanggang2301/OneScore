@@ -387,11 +387,21 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     public void loadTopic(String url, String title, int pagenum) {
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+        L.d("chart", "url=" + url);
+        L.d("chart", "title=" + title);
+        L.d("chart", "pagenum=" + pagenum);
+
+
+
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;//文章id
                 cmt_sum = topicLoadResp.cmt_sum;//评论总数
+                L.d("chart", "topicid=" + topicid);
+                L.d("chart", "cmt_sum=" + cmt_sum);
+
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
                 if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
