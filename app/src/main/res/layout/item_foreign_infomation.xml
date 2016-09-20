@@ -60,6 +60,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_content_en"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -71,6 +72,7 @@
         android:textSize="@dimen/text_size_13" />
 
     <TextView
+        android:id="@+id/tv_content_zh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -116,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
                 android:src="@mipmap/new_tight_s" />
+
             <TextView
                 android:id="@+id/tv_tight"
                 android:layout_width="wrap_content"
@@ -135,12 +138,14 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="10dp">
+
             <ImageView
                 android:id="@+id/iv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
                 android:src="@mipmap/new_write" />
+
             <TextView
                 android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"

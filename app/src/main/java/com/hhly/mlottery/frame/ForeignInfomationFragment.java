@@ -8,12 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ForeignInfomationAdapter;
+import com.hhly.mlottery.bean.foreigninfomation.ForeignInfomationBean;
+import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,6 +39,8 @@ public class ForeignInfomationFragment extends Fragment {
     private Context mContext;
     private boolean isCreated = false;//当前碎片是否createview
     private int pageSize = 0;
+
+    private List<OverseasInformationListBean> mList;
 
     public static ForeignInfomationFragment newInstance() {
         ForeignInfomationFragment fragment = new ForeignInfomationFragment();
@@ -57,8 +66,32 @@ public class ForeignInfomationFragment extends Fragment {
     }
 
     private void loadData() {
-        setList();
-        foreignInfomationAdapter = new ForeignInfomationAdapter(mContext, list);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("pageNum", "1");
+        String url = "http://192.168.31.9:8080/mlottery/core/overseasInformation.findOverseasInformation.do";
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ForeignInfomationBean>() {
+                    @Override
+                    public void onResponse(ForeignInfomationBean foreignInfomationBean) {
+                        if (!foreignInfomationBean.getResult().equals("200")) {
+                            return;
+                        }
+
+
+                        mList = foreignInfomationBean.getOverseasInformationList();
+                        initViewData();
+                    }
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    }
+                }, ForeignInfomationBean.class
+        );
+    }
+
+
+    private void initViewData() {
+        foreignInfomationAdapter = new ForeignInfomationAdapter(mContext, mList);
         recyclerView.setAdapter(foreignInfomationAdapter);
         foreignInfomationAdapter.openLoadMore(0, true);
         foreignInfomationAdapter.setLoadingView(moreView);
@@ -68,10 +101,10 @@ public class ForeignInfomationFragment extends Fragment {
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < 10; i++) {
+                      /*  for (int i = 0; i < 10; i++) {
                             list.add(new Random().nextInt(50));
                         }
-                        foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
+                        foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);*/
                     }
                 });
             }

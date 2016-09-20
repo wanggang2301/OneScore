@@ -476,7 +476,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 if (CommonUtils.isLogin()) {
                     CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                 }
-
             }
         }
     }
