@@ -91,7 +91,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             //视频直播开始时间
             holder.live_right_time_txt = (TextView) convertView.findViewById(R.id.live_right_time_txt);
             //暂未直播layout
-          //  holder.live_right_child_layout = (LinearLayout) convertView.findViewById(R.id.live_right_child_layout);
+            //  holder.live_right_child_layout = (LinearLayout) convertView.findViewById(R.id.live_right_child_layout);
             //直播中txt..
             holder.live_right_child_txt = (TextView) convertView.findViewById(R.id.live_right_child_txt);
             holder.direct_seeding_photo= (ImageView) convertView.findViewById(R.id.direct_seeding_photo);
@@ -116,14 +116,14 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         state = mChildrenDataList.get(groupPosition).get(childPosition).statusOrigin;
         //联赛类型
         mMatchKind = mChildrenDataList.get(groupPosition).get(childPosition).matchKind;
-       // System.out.println("mMatchKind>>>>>>>>>>>>>>>>"+mMatchKind);
+        // System.out.println("mMatchKind>>>>>>>>>>>>>>>>"+mMatchKind);
 
         //主队图片
         String home_images = mPreurl + mChildrenDataList.get(groupPosition).get(childPosition).hmId + mFix;
         //客队图片
         String guest_images = mPreurl + mChildrenDataList.get(groupPosition).get(childPosition).awId + mFix;
         //综合图片
-       // String zonghe_images =  mChildrenDataList.get(groupPosition).get(childPosition).zonghePic;
+        // String zonghe_images =  mChildrenDataList.get(groupPosition).get(childPosition).zonghePic;
         //System.out.println(">>D"+mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ);
 
 
@@ -148,22 +148,17 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.live_right_child_txt.setPadding(0,0,0,0);
         }
         else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 2){
-            if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==1){
-                //未直播篮足球
-                ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
-                //客队icon
-                ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
-            }else  if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==2){
-                //未直播篮足球
-                ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
-                //客队icon
-                ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
-            }
-            //主队
-            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
-            // 客队
-            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
+            //未直播综合
+            holder.live_left_bottom_child_txt.setVisibility(View.GONE);
+            holder.live_guest_icon_img.setVisibility(View.GONE);
+            holder.live_left_child_txt.setVisibility(View.GONE);
+            holder.rl_iv.setVisibility(View.GONE);
+            holder.rl_iv1.setVisibility(View.VISIBLE);
+            //主队con
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+
             holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
+
 
             holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
             holder.live_guest_icon_img.setVisibility(View.VISIBLE);
@@ -193,7 +188,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 
             //////////////////////
             holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
-           //显示直播中的布局
+            //显示直播中的布局
             holder.direct_seeding_photo.setVisibility(View.VISIBLE);
             holder.live_right_child_txt.setText(mContext.getResources().getString(R.string.direct_seedinging));
             holder.live_right_child_txt.setPadding(20,0,0,0);
@@ -201,23 +196,37 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 
         }
         else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 4){
+           //非对战足篮球
+            //直播综合
+            holder.live_left_bottom_child_txt.setVisibility(View.GONE);
+            holder.live_guest_icon_img.setVisibility(View.GONE);
+            holder.live_left_child_txt.setVisibility(View.GONE);
+            holder.rl_iv.setVisibility(View.GONE);
+            holder.rl_iv1.setVisibility(View.VISIBLE);
+            //主队icon
+            // ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img, options);
+            ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+            //holder.live_home_icon_img.setPadding(0,200,0,0);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
+
+            //主队icon
+            holder.direct_seeding_photo.setVisibility(View.GONE);
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+            holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
+            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
+            holder.live_right_child_txt.setPadding(0,0,0,0);
+
+        }else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 5){
+            //对战 直播综合
             holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
             holder.live_guest_icon_img.setVisibility(View.VISIBLE);
             holder.live_left_child_txt.setVisibility(View.VISIBLE);
             holder.rl_iv.setVisibility(View.VISIBLE);
             holder.rl_iv1.setVisibility(View.GONE);
-            //直播篮足球
-            if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==1){
-                //未直播篮足球
-                ImageLoader.getInstance().displayImage(home_images, holder.live_home_icon_img, options);
-                //客队icon
-                ImageLoader.getInstance().displayImage(guest_images, holder.live_guest_icon_img, options);
-            }else  if (mChildrenDataList.get(groupPosition).get(childPosition).matchKind==2){
-                //未直播篮足球
-                ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
-                //客队icon
-                ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
-            }
+            //主队篮足球
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
+            //客队icon
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
             //主队
             holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
             // 客队
@@ -230,6 +239,81 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.live_right_child_txt.setText(mContext.getResources().getString(R.string.direct_seedinging));
             holder.live_right_child_txt.setPadding(20,0,0,0);
             holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.direct_seeding));
+        }else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 6){
+            //对战直播篮球
+            holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
+            holder.live_guest_icon_img.setVisibility(View.VISIBLE);
+            holder.live_left_child_txt.setVisibility(View.VISIBLE);
+            holder.rl_iv.setVisibility(View.VISIBLE);
+            holder.rl_iv1.setVisibility(View.GONE);
+            //主队篮足球
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
+            //客队icon
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
+            //主队
+            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
+            // 客队
+            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
+            ////////////////////////
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+            //显示直播中的布局
+            holder.direct_seeding_photo.setVisibility(View.VISIBLE);
+            holder.live_right_child_txt.setText(mContext.getResources().getString(R.string.direct_seedinging));
+            holder.live_right_child_txt.setPadding(20,0,0,0);
+            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.direct_seeding));
+        }else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 7){
+            //对战未直播综合
+
+            holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
+            holder.live_guest_icon_img.setVisibility(View.VISIBLE);
+            holder.live_left_child_txt.setVisibility(View.VISIBLE);
+            holder.rl_iv.setVisibility(View.VISIBLE);
+            holder.rl_iv1.setVisibility(View.GONE);
+            //主队篮足球
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
+            //客队icon
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
+            //主队
+            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
+            // 客队
+            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).round);
+            ////////////////////////
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+
+            //主队icon
+            holder.direct_seeding_photo.setVisibility(View.GONE);
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+            holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
+            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
+            holder.live_right_child_txt.setPadding(0,0,0,0);
+
+        }else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 8){
+           //位直播足篮球
+            //主队icon
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
+            //客队icon
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
+            //主队
+            holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
+            // 客队
+            holder.live_left_bottom_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).awName);
+            holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
+
+            holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
+            holder.live_guest_icon_img.setVisibility(View.VISIBLE);
+            holder.live_left_child_txt.setVisibility(View.VISIBLE);
+            holder.rl_iv.setVisibility(View.VISIBLE);
+            holder.rl_iv1.setVisibility(View.GONE);
+            /***********************************/
+            //主队icon
+            holder.direct_seeding_photo.setVisibility(View.GONE);
+            holder.live_right_time_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).lgName);
+            holder.live_right_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).matchTime);
+            holder.live_right_child_txt.setTextColor(mContext.getResources().getColor(R.color.res_name_color));
+            holder.live_right_child_txt.setPadding(0,0,0,0);
+
         }
 
 
@@ -307,10 +391,10 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         TextView live_left_bottom_child_txt; //客队名称
         TextView live_right_child_txt; //视频直播中..
 
-      //  LinearLayout live_right_child_layout; //视频暂未开始的layout
+        //  LinearLayout live_right_child_layout; //视频暂未开始的layout
         TextView live_right_time_txt; //(视频暂未开始)开始时间
 
-       // ImageView live_right_child_img; //直播或者未直播的图片
+        // ImageView live_right_child_img; //直播或者未直播的图片
         ImageView live_home_icon_img; //主队图标
         ImageView live_guest_icon_img; //客队图标
 

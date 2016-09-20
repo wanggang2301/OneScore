@@ -141,7 +141,9 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                             // showpop(resultListBeen);
                         }
                     }
+
                 });
+
     }
 
     private void initView() {
