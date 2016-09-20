@@ -50,7 +50,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center"
-                        android:src="@mipmap/basket_default" />
+                        android:src="@mipmap/score_default" />
 
                     <TextView
                         android:id="@+id/football_database_leaguename"

@@ -33,9 +33,9 @@ public class FootballDatabaseScheduleSectionAdapter
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_default)   //默认图片
-                .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .showImageOnLoading(R.mipmap.score_default)   //默认图片
+                .showImageForEmptyUri(R.mipmap.score_default)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.score_default)// 加载失败显示的图片
                 .resetViewBeforeLoading(true)
                 .build();
     }
@@ -66,7 +66,40 @@ public class FootballDatabaseScheduleSectionAdapter
 //            holder.setText(R.id.home_score, match.getHomeScore() + "")
 //                    .setText(R.id.guest_score, match.getGuestScore() + "");
 //        }
-        holder.setText(R.id.time , match.getMatchResult());
+
+        /**
+         * 比赛状态 0:未开, 1:上半场, 2:中场, 3:下半场, 4:加时, 5:点球, -1:完场, -10:取消, -11:待定, -12:腰斩,
+         * -13:中断, -14:推迟
+         */
+        switch (match.getMatchState()){
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case -1:
+                holder.setText(R.id.time , match.getMatchResult());
+                break;
+            case -10:
+//                holder.setText(R.id.time , "取消");
+                holder.setText(R.id.time , mContext.getString(R.string.fragme_home_quxiao_text));
+                break;
+            case -11:
+                holder.setText(R.id.time , mContext.getString(R.string.fragme_home_daiding_text));
+                break;
+            case -12:
+                holder.setText(R.id.time , mContext.getString(R.string.fragme_home_yaozhan_text));
+                break;
+            case -13:
+                holder.setText(R.id.time , mContext.getString(R.string.fragme_home_zhongduan_text));
+                break;
+            case -14:
+                holder.setText(R.id.time , mContext.getString(R.string.fragme_home_tuichi_text));
+                break;
+
+        }
+//        holder.setText(R.id.time , match.getMatchResult());
         holder.setVisible(R.id.time , true);
         holder.setText(R.id.middle_line , "");
 

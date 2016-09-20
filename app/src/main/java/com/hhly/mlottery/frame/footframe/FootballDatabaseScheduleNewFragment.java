@@ -25,6 +25,7 @@ import com.hhly.mlottery.adapter.basketball.BasketballDatabaseScheduleSectionAda
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.FootballDatabaseScheduleSectionAdapter;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
+import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DataBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDatasBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleRaceBean;
@@ -83,7 +84,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     private List<FootballDatabaseScheduleSectionAdapter.Section> mSectionsNew;
     private BasketballDatabaseScheduleSectionAdapter mAdapter;
     private FootballDatabaseScheduleSectionAdapter mAdapterNew;
-    private String[] mRoundString;
+    private List<DataBean> mRoundString;
     private String mLeagueRound = "";
     private String mLeagueGroup = "";
     private boolean isLoad = false;//是否可选择
@@ -97,7 +98,8 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     private List<String> mFirstData;
     private List<String> mSecondData = new ArrayList<>();
     private boolean chooseSecond = false;
-    private String[] arr;
+    private List<DataBean> arr;
+    private Integer[] array;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -165,19 +167,22 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
         if (chooseSecond) {
             currentSecondPosition = currPosition - 1;
+            secondIndex = currPosition - 1;
             if (currentSecondPosition <= 0) {
-                mLeagueRound = arr[0];
+                mLeagueRound = arr.get(0).getRound();
             }else{
-                mLeagueRound = arr[currentSecondPosition];
+                mLeagueRound = arr.get(currentSecondPosition).getRound();
             }
             handleHeadViewNew(arr ,currentSecondPosition);
             initData();
         }else{
             currentPosition = currPosition - 1;
             if (currentPosition <= 0) {
-                mLeagueRound = mRoundString[0];
+//                mLeagueRound = mRoundString[0];
+                mLeagueRound = 1+"";
             }else{
-                mLeagueRound = mRoundString[currentPosition];
+//                mLeagueRound = mRoundString[currentPosition];
+                mLeagueRound = currentPosition + 1 + "";
             }
             handleHeadViewNew(mRoundString ,currentPosition);
             initData();
@@ -191,19 +196,22 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
         if (chooseSecond) {
             currentSecondPosition = currPosition + 1;
-            if (currentSecondPosition >= arr.length-1) {
-                mLeagueRound = arr[arr.length-1];
+            secondIndex = currPosition + 1;
+            if (currentSecondPosition >= arr.size()-1) {
+                mLeagueRound = arr.get(arr.size()-1).getRound();
             }else{
-                mLeagueRound = arr[currentSecondPosition];
+                mLeagueRound = arr.get(currentSecondPosition).getRound();
             }
             handleHeadViewNew(arr ,currentSecondPosition);
             initData();
         }else{
             currentPosition = currPosition + 1;
-            if (currentPosition >= mRoundString.length-1) {
-                mLeagueRound = mRoundString[mRoundString.length-1];
+            if (currentPosition >= mRoundString.size()-1) {
+//                mLeagueRound = mRoundString[mRoundString.length-1];
+                mLeagueRound = mRoundString.size() +"";
             }else{
-                mLeagueRound = mRoundString[currentPosition];
+//                mLeagueRound = mRoundString[currentPosition];
+                mLeagueRound = currentPosition + 1 +"";
             }
             handleHeadViewNew(mRoundString ,currentPosition);
             initData();
@@ -295,6 +303,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                                 for (int i = 0; i < mFirstData.size(); i++) {
                                     if (mFirstData.get(i).equals(result.getCurrentGroup())) {
                                         currentFirstPosition = i;
+                                        firstIndex = i;
                                     }
                                 }
                             }
@@ -302,17 +311,36 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                             /**
                              * 获得二级菜单数据
                              */
-                            for (int i = 0; i < mRoundString.length; i++) {
-                                mSecondData.add(mRoundString[i]);
+                            for (int i = 0; i < mRoundString.size(); i++) {
+                                mSecondData.add(mRoundString.get(i).getRound());
                             }
                             currentSecondPosition = result.getCurrentRoundIndex()-1;
+                            secondIndex = result.getCurrentRoundIndex()-1;
+
+                            /**
+                             * 获得子菜单默认选中项
+                             */
+                            if (array == null) {
+                                array = new Integer[mFirstData.size()];
+                                for (int i = 0; i < mFirstData.size(); i++) {
+                                    for (int j = 0; j < result.getData().get(mFirstData.get(i)).size(); j++) {
+                                        if (result.getData().get(mFirstData.get(i)).get(j).getIsCurrent() == 1) {
+                                            array[i] = j;
+                                        }
+                                    }
+                                }
+                            }
                         }
 
-                        if (mRoundString != null && mRoundString.length != 0) {
+                        if (mRoundString != null && mRoundString.size() != 0) {
                             isLoad = true;
                         }
                         if (currentPosition == -1) {
-                            currentPosition = result.getCurrentRoundIndex()-1;
+                            if (result.getType() == 2) {
+                                currentPosition = result.getCurrentRoundIndex(); //杯赛返回索引
+                            }else{
+                                currentPosition = result.getCurrentRoundIndex()-1; // 联赛返回位置（so  -1）
+                            }
                             handleHeadViewNew(mRoundString ,currentPosition);
                         }
                         handleDataNew(result.getRace());
@@ -334,16 +362,16 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
      * @param data  阶段选择内容
      * @param currnIndex 当前选择的position
      */
-    private void handleHeadViewNew(String[] data , Integer currnIndex){
+    private void handleHeadViewNew(List<DataBean> data , Integer currnIndex){
 
-        if (data == null || data.length == 0) {
+        if (data == null || data.size() == 0) {
             mTitleTextView.setText("");
         }else{
-            mTitleTextView.setText(data[currnIndex]);
+            mTitleTextView.setText(data.get(currnIndex).getRound());
         }
 
         mLeftButton.setVisibility(currnIndex <= 0 ? View.GONE : View.VISIBLE);
-        mRightButton.setVisibility(currnIndex >= data.length-1 ? View.GONE : View.VISIBLE);
+        mRightButton.setVisibility(currnIndex >= data.size()-1 ? View.GONE : View.VISIBLE);
 
     }
 
@@ -371,6 +399,10 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     /**
      * 选中器弹框
      */
+
+    private int firstIndex;
+    private int secondIndex;
+
     public void setDialog(){
 //        if (mResultNew == null) {
 //            return;
@@ -392,29 +424,33 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             GridLayoutManager firstGridLayoutManager =
                     new GridLayoutManager(getContext(), mResultNew.getData().size());
             mFirstRecyclerView.setLayoutManager(firstGridLayoutManager);
-            final FirstAdapter firstAdapter = new FirstAdapter(mFirstData , currentFirstPosition);
-
+            final FirstAdapter firstAdapter = new FirstAdapter(mFirstData , firstIndex);
             mFirstRecyclerView.setAdapter(firstAdapter);
 
             mSecondRecyclerView = (RecyclerView) view.findViewById(R.id.second_recycler_view);
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 5);
             mSecondRecyclerView.setLayoutManager(gridLayoutManager);
-            final SecondAdapter secondAdapter = new SecondAdapter(mSecondData , currentSecondPosition);
+            final SecondAdapter secondAdapter = new SecondAdapter(mSecondData , secondIndex);
             mSecondRecyclerView.setAdapter(secondAdapter);
 
+//            if (array == null) {
+//                array = new Integer[mFirstData.size()];
+//                for (int i = 0; i < mFirstData.size(); i++) {
+//                    array[i] = -1;
+//                }
+//            }
+//            array[currentFirstPosition] = currentSecondPosition;
             firstAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-
                     currentFirstPosition=position;
                     firstAdapter.notifyDataSetChanged();
-
                     mSecondData.clear();
-                    String[] newSecondData = mResultNew.getData().get(mFirstData.get(position));
-                    for (int i = 0; i < newSecondData.length; i++) {
-                        mSecondData.add(newSecondData[i]);
+                    List<DataBean> newSecondData = mResultNew.getData().get(mFirstData.get(position));
+                    for (int i = 0; i < newSecondData.size(); i++) {
+                        mSecondData.add(newSecondData.get(i).getRound());
                     }
-                    currentSecondPosition = 0;
+                    currentSecondPosition = array[position];
                     secondAdapter.notifyDataSetChanged();
                 }
             });
@@ -424,6 +460,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                 public void onItemClick(int position) {
 
                     currentSecondPosition=position;
+                    array[currentFirstPosition] = position;
                     secondAdapter.notifyDataSetChanged();
                 }
             });
@@ -438,6 +475,9 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                 @Override
                 public void onClick(View v) {
                     url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
+
+                    firstIndex = currentFirstPosition;
+                    secondIndex = currentSecondPosition;
 
                     mLeagueGroup = mFirstData.get(currentFirstPosition);
                     mLeagueRound = mSecondData.get(currentSecondPosition);
@@ -460,7 +500,11 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             titleView.setText(getString(R.string.football_database_details_stage));
 
             final List<String> data = new ArrayList<>();
-            Collections.addAll(data, mRoundString);
+            String[] mArray = new String[mRoundString.size()];
+            for (int i = 0; i < mRoundString.size(); i++) {
+                mArray[i] = mRoundString.get(i).getRound();
+            }
+            Collections.addAll(data, mArray);
 
             final SportsDialogAdapter mDialogAdapter = new SportsDialogAdapter(data, getContext(), currentPosition);
 
@@ -482,8 +526,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                     mDialogAdapter.updateDatas(position);
                     mDialogAdapter.notifyDataSetChanged();
                     mAlertDialog.dismiss();
-                    String newData = mRoundString[currentPosition];
-                    mLeagueRound = newData;
+                    mLeagueRound = position + 1 +"";
                     url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
                     handleHeadViewNew(mRoundString ,currentPosition);
                     initData();
