@@ -22,6 +22,7 @@ import java.util.List;
 public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
     private Context mContext;
     private List<Integer> list;
+    private int num = 0;
 
     public ForeignInfomationAdapter(Context context, List<Integer> data) {
         super(R.layout.item_foreign_infomation, data);
@@ -36,18 +37,30 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
     }
 
     @Override
-    protected void convert(BaseViewHolder viewHolder, Integer b) {
+    protected void convert(final BaseViewHolder viewHolder, Integer b) {
 
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
 
         viewHolder.setText(R.id.tv_time, b + "分钟以前");
 
 
-        linearLayout.findViewById(R.id.tv_comment).setOnClickListener(new View.OnClickListener() {
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("focusable", false);
+                mContext.startActivity(intent);
+            }
+        });
+
+
+        linearLayout.findViewById(R.id.ll_cmt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("focusable", true);
                 mContext.startActivity(intent);
             }
         });
@@ -60,9 +73,16 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<Integer> {
                 Intent intent = new Intent(mContext, PicturePreviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("url", url);
-
-
                 mContext.startActivity(intent);
+            }
+        });
+
+
+        linearLayout.findViewById(R.id.ll_zan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.setText(R.id.tv_tight, (num++) + "");
+
             }
         });
 

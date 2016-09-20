@@ -357,7 +357,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         mHeadviewpager.setOffscreenPageLimit(2);
         mIndicator.setViewPager(mHeadviewpager);
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
-        mHeadviewpager.setCurrentItem(0);
+        mHeadviewpager.setCurrentItem(0,false);
 
         mHeadviewpager.setIsScrollable(false);
         mIndicator.setVisibility(View.GONE);
@@ -822,7 +822,6 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                 mViewPager.setCurrentItem(ANALYZE_FG, false);
             }
 
-
             mHeadviewpager.setIsScrollable(false);
             mIndicator.setVisibility(View.GONE);
 
@@ -832,7 +831,6 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
             head_home_name.setText(matchDetail.getHomeTeamInfo().getName());
             head_guest_name.setText(matchDetail.getGuestTeamInfo().getName());
             head_score.setText("VS");
-
 
             mDetailsRollballFragment.setMatchData(DetailsRollballFragment.DETAILSROLLBALL_TYPE_PRE, matchDetail);
             mStatisticsFragment.setEventMatchLive(mMatchDetail.getLiveStatus(), null);

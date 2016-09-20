@@ -97,44 +97,60 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp">
+        android:paddingRight="10dp">
 
-        <TextView
-            android:id="@+id/tv_tight"
+        <LinearLayout
+            android:id="@+id/ll_zan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="0"
-            android:textColor="@color/mdy_666"
-            android:textSize="@dimen/text_size_13" />
+            android:paddingTop="10dp">
 
-        <ImageView
-            android:id="@+id/iv_tight"
+            <ImageView
+                android:id="@+id/iv_tight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:src="@mipmap/new_tight_s" />
+
+            <TextView
+                android:id="@+id/tv_tight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/mdy_666"
+                android:textSize="@dimen/text_size_13" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_cmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/tv_tight"
-            android:paddingRight="5dp"
-            android:src="@mipmap/new_tight_s" />
-
-        <TextView
-            android:id="@+id/tv_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/iv_tight"
+            android:layout_toLeftOf="@id/ll_zan"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="0"
-            android:textColor="@color/mdy_666"
-            android:textSize="@dimen/text_size_13" />
+            android:paddingTop="10dp">
+            <ImageView
+                android:id="@+id/iv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:src="@mipmap/new_message" />
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="写评论"
+                android:textColor="@color/mdy_666"
+                android:textSize="@dimen/text_size_13" />
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/tv_comment"
-            android:paddingRight="5dp"
-            android:src="@mipmap/new_message" />
     </RelativeLayout>
 </LinearLayout>

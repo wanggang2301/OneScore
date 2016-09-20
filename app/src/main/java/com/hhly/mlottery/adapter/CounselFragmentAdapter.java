@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
-import com.hhly.mlottery.frame.CounselChildFragment;
-
 import java.util.List;
 
 /**
@@ -17,12 +15,12 @@ import java.util.List;
  * @date
  */
 public class CounselFragmentAdapter extends FragmentStatePagerAdapter {
-    private List<CounselChildFragment> mList;
+    private List<Fragment> mList;
     private FragmentManager mFragmentManager;
     private List<String> mTitles;
     private Context mContext;
 
-    public CounselFragmentAdapter(FragmentManager fm, List<CounselChildFragment> list,List<String> mTitles,Context mContext) {
+    public CounselFragmentAdapter(FragmentManager fm, List<Fragment> list,List<String> mTitles,Context mContext) {
         super(fm);
         this.mFragmentManager = fm;
         this.mList = list;

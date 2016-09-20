@@ -54,13 +54,23 @@ public class ForeignInfomationDetailsActivity extends BaseActivity {
 
     private List<Integer> list;
 
+    private boolean focusable = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foreign_infomation_details);
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        focusable = intent.getBooleanExtra("focusable", false);
         initView();
+
+
+
+
+
         list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             list.add(i);
@@ -73,7 +83,13 @@ public class ForeignInfomationDetailsActivity extends BaseActivity {
     private void initView() {
         publicBtnSet.setVisibility(View.GONE);
         recyclerViewDetails.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
-        recyclerViewDetails.setFocusable(false);
+        if (focusable) {
+            recyclerViewDetails.setFocusable(true);
+
+        } else {
+            recyclerViewDetails.setFocusable(false);
+
+        }
 
 
     }
