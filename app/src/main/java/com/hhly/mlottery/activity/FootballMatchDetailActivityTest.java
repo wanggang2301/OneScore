@@ -2526,7 +2526,7 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
 
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
-                appBarLayout.setExpanded(true);// 显示头部内容
+//                appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
             } else {
                 new Thread() {
@@ -2540,7 +2540,8 @@ public class FootballMatchDetailActivityTest extends AppCompatActivity implement
                                 @Override
                                 public void run() {
                                     pd.dismiss();
-                                    appBarLayout.setExpanded(true);// 显示头部内容
+//                                    appBarLayout.setExpanded(true);// 显示头部内容
+
                                     RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                                 }
                             });

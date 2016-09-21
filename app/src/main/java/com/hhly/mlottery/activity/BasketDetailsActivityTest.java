@@ -658,7 +658,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
-                appBarLayout.setExpanded(true);// 显示头部内容
+//                appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
             } else {
                 new Thread() {
@@ -672,7 +672,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                                 @Override
                                 public void run() {
                                 pd.dismiss();
-                                    appBarLayout.setExpanded(true);// 显示头部内容
+//                                    appBarLayout.setExpanded(true);// 显示头部内容
                                     RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                                 }
                             });
