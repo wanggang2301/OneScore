@@ -294,7 +294,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
 
                 mIntegralFragment.update();
-                mScheduleNewFragment.update();
+                mScheduleNewFragment.update(false);
             }
         }, 1000);
 
@@ -444,7 +444,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 
                 //赛程
                 mScheduleNewFragment.setSeason(newData);
-                mScheduleNewFragment.update();
+                mScheduleNewFragment.update(true);
                 //积分
                 mIntegralFragment.setSeason(newData);
                 mIntegralFragment.update();
