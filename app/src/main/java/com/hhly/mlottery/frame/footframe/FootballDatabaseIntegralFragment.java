@@ -52,7 +52,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
     private static final String PARAM_FIRST_STAGE_ID = "firstStageId";
 
     private static final String PARAM_DATE = "leagueDate";
-    private static final String PARAM_MATCH_ROUND = "leagueRound";
+    private static final String PARAM_MATCH_ROUND = "condition";
 
     private static final int STATUS_LOADING = 1;
     private static final int STATUS_ERROR = 2;
