@@ -32,7 +32,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 描  述：
+ * 描  述：首页菜单入口 Fragment
  * 作  者：tangrr@13322.com
  * 时  间：2016/9/19
  */

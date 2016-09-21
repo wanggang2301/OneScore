@@ -78,7 +78,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private long lastClickTime = 0;
 
     private List<Fragment> fragmentList = new ArrayList<>();
-    private int len = 0;// 入口小圆点
+    private int circularSize = 0;// 入口小圆点
 
     /**
      * 构造
@@ -97,9 +97,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
     }
 
     private void initData() {
-        len = mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
+        circularSize = mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
         int size = mHomePagerEntity.getMenus().getContent().size();
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < circularSize; i++) {
             List<HomeContentEntity> list = new ArrayList<>();
             int startIndex = i * 8;
             int endIndex = (i + 1) * 8 <= size ? (i + 1) * 8 : size;
@@ -1069,7 +1069,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         if (mHomePagerEntity == null || mHomePagerEntity.getBanners() == null || mHomePagerEntity.getBanners().getContent() == null || mHomePagerEntity.getBanners().getContent().size() == 0) {
 
                         } else {
-                            len = mHomePagerEntity.getBanners().getContent().size();
                             int currentIndex = (Integer.MAX_VALUE / 2) % mHomePagerEntity.getBanners().getContent().size() == 0 ? (Integer.MAX_VALUE / 2) : (Integer.MAX_VALUE / 2) - (Integer.MAX_VALUE / 2) % mHomePagerEntity.getBanners().getContent().size();
                             mViewHolder.mViewPager.setCurrentItem(currentIndex);// 设置当前轮播图下标
                         }
@@ -1077,8 +1076,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         L.d("设置轮播图下标失败：" + e.getMessage());
                     }
 
+                    /*给首页菜单入口添加小圆点标记--------start--------------------*/
                     int dp = DisplayUtil.dip2px(mContext, 5);// 添加小圆点
-                    for (int i = 0; i < len; i++) {
+                    for (int i = 0; i < circularSize; i++) {
                         View view = new View(mContext);
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp, dp);
                         if (i != 0) {
@@ -1089,7 +1089,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         view.setLayoutParams(lp);
                         mViewHolder.ll_menu_point.addView(view);
                     }
-
+                    /*给首页菜单入口添加小圆点标记--------end--------------------*/
                     mViewHolder.mViewPagerMenu.setAdapter(new FragmentStatePagerAdapter(((HomePagerActivity) mContext).getSupportFragmentManager()) {
                         @Override
                         public Fragment getItem(int position) {
@@ -1101,7 +1101,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             return mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
                         }
                     });
-                    final int finalLen = len;
+                    final int finalLen = circularSize;
                     mViewHolder.mViewPagerMenu.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                         @Override
                         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
