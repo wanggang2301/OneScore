@@ -97,8 +97,13 @@ public class HomeListBaseAdapter extends BaseAdapter {
     }
 
     private void initData() {
-        circularSize = mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
-        int size = mHomePagerEntity.getMenus().getContent().size();
+        int size = 0;
+        if(mHomePagerEntity == null || mHomePagerEntity.getMenus() == null || mHomePagerEntity.getMenus().getContent() == null || mHomePagerEntity.getMenus().getContent().size() == 0){
+
+        }else{
+            circularSize = mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
+            size = mHomePagerEntity.getMenus().getContent().size();
+        }
         for (int i = 0; i < circularSize; i++) {
             List<HomeContentEntity> list = new ArrayList<>();
             int startIndex = i * 8;
