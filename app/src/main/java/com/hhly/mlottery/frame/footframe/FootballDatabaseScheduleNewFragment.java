@@ -265,7 +265,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         mSectionsNew.clear();
         mAdapterNew.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
-
+        isLoad = false;
         //http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=60&type=0&timeZone=8
 //        String murl = "192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
         Map<String , String> map = new HashMap();
