@@ -63,7 +63,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     }
 
     @Override
-    protected void convert(final BaseViewHolder viewHolder, OverseasInformationListBean o) {
+    protected void convert(final BaseViewHolder viewHolder, final OverseasInformationListBean o) {
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
 
 
@@ -72,7 +72,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         long mNumberTime = o.getCurrentTimestamp() - o.getTimestamp();
 
         long month = mNumberTime / (1000 * 60 * 60 * 24 * 30);// 获取月
-
 
         long dd = mNumberTime / (1000 * 60 * 60 * 24);// 获取天
 
@@ -128,6 +127,9 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("focusable", false);
+                // intent.putExtra("detailsData", o);
+
+
                 mContext.startActivity(intent);
             }
         });
@@ -137,8 +139,11 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             public void onClick(View v) {
 
                 String url = "http://hiphotos.baidu.com/%B3%F5%BC%B6%BE%D1%BB%F7%CA%D6/pic/item/929b56443840bfc6b3b7dc64.jpg";
+
+
                 Intent intent = new Intent(mContext, PicturePreviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 intent.putExtra("url", url);
                 mContext.startActivity(intent);
             }

@@ -2,43 +2,63 @@ package com.hhly.mlottery.frame;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ForeignInfomationAdapter;
 import com.hhly.mlottery.bean.foreigninfomation.ForeignInfomationBean;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author wang gang
  * @date 2016/9/20 10:00
  * @des 资讯—境外新闻
  */
-public class ForeignInfomationFragment extends Fragment {
+public class ForeignInfomationFragment extends Fragment implements ExactSwipeRefrashLayout.OnRefreshListener {
+
+    private static final int DATA_STATUS_LOADING = 1;
+    private static final int DATA_STATUS_SUCCESS = 2;
+    private static final int DATA_STATUS_ERROR = -1;
+
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.refresh)
+    ExactSwipeRefrashLayout refresh;
+    @BindView(R.id.network_exception_reload_btn)
+    TextView networkExceptionReloadBtn;
+    @BindView(R.id.network_exception_reload_layout)
+    LinearLayout networkExceptionReloadLayout;
+    @BindView(R.id.network_exception_layout)
+    LinearLayout networkExceptionLayout;
     private View mView;
     private View moreView;  //加载更多
     private ForeignInfomationAdapter foreignInfomationAdapter;
     private List<Integer> list;
     private Context mContext;
     private boolean isCreated = false;//当前碎片是否createview
-    private int pageSize = 0;
+    private int pageSize = 1;
 
     private List<OverseasInformationListBean> mList;
 
@@ -62,13 +82,22 @@ public class ForeignInfomationFragment extends Fragment {
 
     private void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        refresh.setOnRefreshListener(this);
+        refresh.setColorSchemeResources(R.color.bg_header);
+        refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         isCreated = true;
     }
 
-    private void loadData() {
+    private Runnable mLoadingDataThread = new Runnable() {
+        @Override
+        public void run() {
+            loadData();
+        }
+    };
 
+    private void loadData() {
         Map<String, String> params = new HashMap<>();
-        params.put("pageNum", "1");
+        params.put("pageNum", pageSize + "");
         String url = "http://192.168.31.9:8080/mlottery/core/overseasInformation.findOverseasInformation.do";
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ForeignInfomationBean>() {
                     @Override
@@ -76,14 +105,14 @@ public class ForeignInfomationFragment extends Fragment {
                         if (!foreignInfomationBean.getResult().equals("200")) {
                             return;
                         }
-
-
                         mList = foreignInfomationBean.getOverseasInformationList();
                         initViewData();
+                        mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS);
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                        mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
                     }
                 }, ForeignInfomationBean.class
         );
@@ -101,23 +130,59 @@ public class ForeignInfomationFragment extends Fragment {
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-                      /*  for (int i = 0; i < 10; i++) {
-                            list.add(new Random().nextInt(50));
-                        }
-                        foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);*/
+                        pullUpLoadMoreData();
                     }
                 });
             }
         });
     }
 
-    private void setList() {
-        list = new ArrayList<>();
-        for (int i = 1; i < 20; i++) {
-            list.add(i);
-        }
-    }
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case DATA_STATUS_LOADING:
+                    refresh.setRefreshing(true);
+                    refresh.setVisibility(View.VISIBLE);
+                    networkExceptionLayout.setVisibility(View.GONE);
+                    break;
+                case DATA_STATUS_SUCCESS:
+                    break;
+                case DATA_STATUS_ERROR:
+                    refresh.setRefreshing(false);
+                    refresh.setVisibility(View.GONE);
+                    networkExceptionLayout.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
+
+
+    /**
+     * 上拉加载更多
+     */
+    private void pullUpLoadMoreData() {
+        pageSize++;
+        Map<String, String> params = new HashMap<>();
+        params.put("pageNum", pageSize + "");
+        String url = "http://192.168.31.9:8080/mlottery/core/overseasInformation.findOverseasInformation.do";
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ForeignInfomationBean>() {
+                    @Override
+                    public void onResponse(ForeignInfomationBean foreignInfomationBean) {
+                        if (!foreignInfomationBean.getResult().equals("200")) {
+                            return;
+                        }
+                        mList.addAll(foreignInfomationBean.getOverseasInformationList());
+                        foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);
+                    }
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    }
+                }, ForeignInfomationBean.class
+        );
+    }
 
     //fg切换时回调该方法
     //用来取消viewpager的预加载机制  减少初始化开销
@@ -136,6 +201,26 @@ public class ForeignInfomationFragment extends Fragment {
      * 可见
      */
     protected void onVisible() {
-        loadData();
+        mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
+        new Handler().postDelayed(mLoadingDataThread, 0);
+    }
+
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+
+    }
+
+    /**
+     * 网络异常重新请求
+     */
+    @OnClick(R.id.network_exception_reload_btn)
+    public void onClick() {
+        pageSize = 1;
+        mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
+        new Handler().postDelayed(mLoadingDataThread, 5000);
     }
 }
