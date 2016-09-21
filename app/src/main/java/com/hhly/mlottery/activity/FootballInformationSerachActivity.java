@@ -77,11 +77,11 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
                             mNo_serach_tv.setText(R.string.find_search);
                             return true;
                         }else{
+                            mNo_serach_tv.setVisibility(View.GONE);
                             if (basketballInforSerachAdapter!=null){
                                 //无搜索  隐藏删除键
                                 mSearch_iv_delete.setVisibility(View.GONE);
                                 basketballInforSerachAdapter.clearData();
-                                mNo_serach_tv.setVisibility(View.GONE);
                             }
 
                             return false;
