@@ -1,5 +1,8 @@
 package com.hhly.mlottery.bean.foreigninfomation;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author: Wangg
  * @Name：OverseasInformationListBean
@@ -7,11 +10,8 @@ package com.hhly.mlottery.bean.foreigninfomation;
  * @Created on:2016/9/20  17:18.
  */
 
-public class OverseasInformationListBean   {
-    private String createBy;
-    private long createDate;
-    private String lastModifiedBy;
-    private long lastModifiedDate;
+public class OverseasInformationListBean implements Parcelable {
+
     private int id;
     private long timestamp;
     private String fullname;
@@ -23,54 +23,8 @@ public class OverseasInformationListBean   {
     private String contentTranslationThTw;
     private String photo;
     private int favorite;
-    private int isdisplay;
-    private String description;
-    private int isValid;
-
     private long currentTimestamp;
 
-
-    public long getCurrentTimestamp() {
-        return currentTimestamp;
-    }
-
-    public void setCurrentTimestamp(long currentTimestamp) {
-        this.currentTimestamp = currentTimestamp;
-    }
-
-
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    public long getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(long createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public long getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(long lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
 
     public int getId() {
         return id;
@@ -160,27 +114,62 @@ public class OverseasInformationListBean   {
         this.favorite = favorite;
     }
 
-    public int getIsdisplay() {
-        return isdisplay;
+    public long getCurrentTimestamp() {
+        return currentTimestamp;
     }
 
-    public void setIsdisplay(int isdisplay) {
-        this.isdisplay = isdisplay;
+    public void setCurrentTimestamp(long currentTimestamp) {
+        this.currentTimestamp = currentTimestamp;
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeLong(this.timestamp);
+        dest.writeString(this.fullname);
+        dest.writeString(this.fullnameTranslation);
+        dest.writeString(this.fullnameTranslationThTw);
+        dest.writeString(this.avatar);
+        dest.writeString(this.content);
+        dest.writeString(this.contentTranslation);
+        dest.writeString(this.contentTranslationThTw);
+        dest.writeString(this.photo);
+        dest.writeInt(this.favorite);
+        dest.writeLong(this.currentTimestamp);
     }
 
-    public int getIsValid() {
-        return isValid;
+    public OverseasInformationListBean() {
     }
 
-    public void setIsValid(int isValid) {
-        this.isValid = isValid;
+    protected OverseasInformationListBean(Parcel in) {
+        this.id = in.readInt();
+        this.timestamp = in.readLong();
+        this.fullname = in.readString();
+        this.fullnameTranslation = in.readString();
+        this.fullnameTranslationThTw = in.readString();
+        this.avatar = in.readString();
+        this.content = in.readString();
+        this.contentTranslation = in.readString();
+        this.contentTranslationThTw = in.readString();
+        this.photo = in.readString();
+        this.favorite = in.readInt();
+        this.currentTimestamp = in.readLong();
     }
+
+    public static final Parcelable.Creator<OverseasInformationListBean> CREATOR = new Parcelable.Creator<OverseasInformationListBean>() {
+        @Override
+        public OverseasInformationListBean createFromParcel(Parcel source) {
+            return new OverseasInformationListBean(source);
+        }
+
+        @Override
+        public OverseasInformationListBean[] newArray(int size) {
+            return new OverseasInformationListBean[size];
+        }
+    };
 }

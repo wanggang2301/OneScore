@@ -116,6 +116,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("focusable", false);
+                intent.putExtra("detailsData", o);
                 mContext.startActivity(intent);
             }
         });
@@ -127,9 +128,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("focusable", false);
-                // intent.putExtra("detailsData", o);
-
-
+                intent.putExtra("detailsData", o);
                 mContext.startActivity(intent);
             }
         });
@@ -138,9 +137,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             @Override
             public void onClick(View v) {
 
-                String url = "http://hiphotos.baidu.com/%B3%F5%BC%B6%BE%D1%BB%F7%CA%D6/pic/item/929b56443840bfc6b3b7dc64.jpg";
-
-
+                String url = o.getPhoto();
                 Intent intent = new Intent(mContext, PicturePreviewActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

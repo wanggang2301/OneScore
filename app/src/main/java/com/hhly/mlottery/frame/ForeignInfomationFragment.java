@@ -20,6 +20,7 @@ import com.hhly.mlottery.bean.foreigninfomation.ForeignInfomationBean;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
@@ -105,6 +106,8 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                         if (!foreignInfomationBean.getResult().equals("200")) {
                             return;
                         }
+
+                        L.d("2334","請求成功");
                         mList = foreignInfomationBean.getOverseasInformationList();
                         initViewData();
                         mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS);
@@ -148,6 +151,10 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                     networkExceptionLayout.setVisibility(View.GONE);
                     break;
                 case DATA_STATUS_SUCCESS:
+                    refresh.setRefreshing(false);
+                    refresh.setVisibility(View.VISIBLE);
+                    networkExceptionLayout.setVisibility(View.GONE);
+
                     break;
                 case DATA_STATUS_ERROR:
                     refresh.setRefreshing(false);
@@ -211,7 +218,8 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
      */
     @Override
     public void onRefresh() {
-
+        pageSize = 1;
+        new Handler().postDelayed(mLoadingDataThread, 5000);
     }
 
     /**

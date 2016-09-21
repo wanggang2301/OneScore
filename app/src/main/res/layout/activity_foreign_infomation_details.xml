@@ -74,6 +74,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_content_en"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -85,6 +86,7 @@
                 android:textSize="@dimen/text_size_13" />
 
             <TextView
+                android:id="@+id/tv_content_zh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -151,21 +153,6 @@
                     android:paddingRight="5dp"
                     android:src="@mipmap/new_message" />
             </RelativeLayout>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:src="@mipmap/new_tight" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="获得1314个赞" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_details"

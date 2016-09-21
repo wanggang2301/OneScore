@@ -338,8 +338,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
 
 
         ll_trend_main = (LinearLayout) mView.findViewById(R.id.ll_trend_main);
-        ff = (FrameLayout) mView.findViewById(R.id.fl_main);
-        ff_corner = (FrameLayout) mView.findViewById(R.id.fl_main_corner);
+
         fl_attackTrend_loading = (FrameLayout) mView.findViewById(R.id.fl_attackTrend_loading);
         fl_attackTrend_networkError = (FrameLayout) mView.findViewById(R.id.fl_attackTrend_networkError);
         //  sv_attack = (ScrollView) mView.findViewById(R.id.sv_attack);
