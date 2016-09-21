@@ -137,3 +137,15 @@
 -dontnote com.android.vending.licensing.ILicensingService
 
 -keep class org.android.spdy.** { *; }
+
+#融云
+-keep public class io.rong.** { *; }
+-dontwarn io.rong.**
+
+#pldroid
+-keep public class com.pili.pldroid.** { *; }
+-dontwarn com.pili.pldroid.**
+
+#retrofit
+-keep public class retrofit.appengine.** { *; }
+-dontwarn retrofit.appengine.**

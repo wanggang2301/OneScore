@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.CpiFiltrateActivity;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
@@ -33,15 +31,8 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.oddfragment.CPIOddsFragment;
 import com.hhly.mlottery.frame.oddfragment.CompanyChooseDialogFragment;
 import com.hhly.mlottery.frame.oddfragment.DateChooseDialogFragment;
-import com.hhly.mlottery.util.DeviceInfo;
-import com.hhly.mlottery.util.cipher.MD5Util;
-import com.hhly.mlottery.util.websocket.HappySocketClient;
-
-import org.java_websocket.drafts.Draft_17;
 
 import java.io.Serializable;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

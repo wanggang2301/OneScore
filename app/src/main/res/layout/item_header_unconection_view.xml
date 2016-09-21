@@ -5,7 +5,6 @@
     android:orientation="horizontal"
     android:background="#F9EEB6"
     android:id="@+id/unconection_layout"
-    android:visibility="gone"
      >
     
     <ImageView 
@@ -21,9 +20,10 @@
 
 	<TextView
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:text="@string/immediate_unconection"
 		android:layout_weight="1"
+		android:gravity="center"
 		/>
 
     

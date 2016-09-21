@@ -1,13 +1,9 @@
 package com.hhly.mlottery.frame.basketballframe;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,35 +38,25 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.ScoresFragment;
 import com.hhly.mlottery.util.DateUtil;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
-import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.websocket.HappySocketClient;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseCloseListener;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseErrorListener;
-import com.hhly.mlottery.util.websocket.HappySocketClient.SocketResponseMessageListener;
 import com.hhly.mlottery.view.PinnedHeaderExpandableListView;
 import com.umeng.analytics.MobclickAgent;
 
-import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
