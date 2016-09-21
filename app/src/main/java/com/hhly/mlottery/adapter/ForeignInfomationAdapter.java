@@ -155,9 +155,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                 viewHolder.setText(R.id.tv_tight, (num++) + "");
             }
         });
-
-
     }
-
 }
 
