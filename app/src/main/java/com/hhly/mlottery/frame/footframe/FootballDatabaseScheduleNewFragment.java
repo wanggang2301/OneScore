@@ -30,7 +30,6 @@ import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDatasBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleRaceBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.LocaleFactory;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -96,10 +95,12 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     private RecyclerView mFirstRecyclerView;
     private RecyclerView mSecondRecyclerView;
     private List<String> mFirstData;
-    private List<String> mSecondData = new ArrayList<>();
+    private List<String> mSecondData;
     private boolean chooseSecond = false;
     private List<DataBean> arr;
     private Integer[] array;
+    private boolean isCup;
+    private boolean isFirstIn = true;//是否为加载成功过（判断第一次进入未加载成功刷新是用第一个URL）
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -142,7 +143,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         mLeftButton.setOnClickListener(this);
         mRightButton.setOnClickListener(this);
 
-        initData();
+        initData(true);
     }
 
     private void initEmptyView() {
@@ -154,7 +155,9 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         mRefreshTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData();
+                //url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //非第一次进入的url
+//                url = null;
+                initData(false);
             }
         });
     }
@@ -174,18 +177,27 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                 mLeagueRound = arr.get(currentSecondPosition).getRound();
             }
             handleHeadViewNew(arr ,currentSecondPosition);
-            initData();
+            initData(false);
         }else{
             currentPosition = currPosition - 1;
             if (currentPosition <= 0) {
 //                mLeagueRound = mRoundString[0];
-                mLeagueRound = 1+"";
+                if (isCup) {
+                    mLeagueRound = "0";
+                }  else{
+                    mLeagueRound = "1";
+                }
             }else{
 //                mLeagueRound = mRoundString[currentPosition];
-                mLeagueRound = currentPosition + 1 + "";
+                if (isCup) {
+                    mLeagueRound = currentPosition + "";
+                }else{
+                    mLeagueRound = currentPosition + 1 +"";
+                }
+//                mLeagueRound = currentPosition + 1 + "";
             }
             handleHeadViewNew(mRoundString ,currentPosition);
-            initData();
+            initData(false);
         }
     }
     /**
@@ -203,26 +215,38 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                 mLeagueRound = arr.get(currentSecondPosition).getRound();
             }
             handleHeadViewNew(arr ,currentSecondPosition);
-            initData();
+            initData(false);
         }else{
             currentPosition = currPosition + 1;
             if (currentPosition >= mRoundString.size()-1) {
 //                mLeagueRound = mRoundString[mRoundString.length-1];
-                mLeagueRound = mRoundString.size() +"";
+                if (isCup) {
+                    mLeagueRound = mRoundString.size() -1 + "";
+                }else{
+                    mLeagueRound = mRoundString.size() +"";
+                }
+
+                mLeagueRound = isCup? mRoundString.size()-1 + "" : mRoundString.size() + "";
             }else{
 //                mLeagueRound = mRoundString[currentPosition];
-                mLeagueRound = currentPosition + 1 +"";
+                if (isCup) {
+                    mLeagueRound = currentPosition + "";
+                }else{
+                    mLeagueRound = currentPosition + 1 +"";
+                }
+//                mLeagueRound = currentPosition + 1 +"";
             }
             handleHeadViewNew(mRoundString ,currentPosition);
-            initData();
+            initData(false);
         }
     }
 
     /**
      * 刷新数据
      */
-    public void update() {
-        initData();
+    public void update(boolean type) {
+//        url = null;
+        initData(type);
     }
 
     /**
@@ -236,50 +260,73 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         mErrorLayout.setVisibility(status == STATUS_ERROR ? View.VISIBLE : View.GONE);
     }
 
-    private void initData(){
+    private void initData(final boolean isNewLoad){
+
         mSectionsNew.clear();
         mAdapterNew.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
-
-        // http://192.168.31.115:8888/mlottery/core/basketballData.findSchedule.do?lang=zh&leagueId=1&season=2015-2016
-        //http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=36&type=0&leagueDate=2016-2017&leagueRound=4
+        isLoad = false;
         //http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=60&type=0&timeZone=8
 //        String murl = "192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
         Map<String , String> map = new HashMap();
         map.put(PARAM_ID , league.getLeagueId());
-//        map.put(PARAM_ID , "273");
         map.put(PARAM_TYPE , league.getKind());
-//        map.put(PARAM_TYPE , "1");
+        if (mLeagueGroup != null && !mLeagueGroup.equals("")) {
+            map.put(PARAM_LEAGUE_GROUP , mLeagueGroup + "");
+        }
+
         if (mLeagueDate != null) {
             map.put(PARAM_DATE , mLeagueDate);
         }
+
         if (mLeagueRound != null && !mLeagueRound.equals("")) {
             map.put(PARAM_MATCH_ROUND , mLeagueRound);
         }
-        if (mLeagueGroup != null && !mLeagueGroup.equals("")) {
-            map.put(PARAM_LEAGUE_GROUP , mLeagueGroup);
-        }
 
-        if (url == null || url == "") {
+        if (url == null || url == "" || isNewLoad) {
             url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST; //第一次进入的url
+        }else{
+            url = ((mLeagueGroup == null || mLeagueGroup.equals("")) && (mLeagueRound == null || mLeagueRound.equals("")))
+                    ? BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST : BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST;
+//            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //非第一次进入的url
         }
-        VolleyContentFast.requestJsonByGet(url, map,
+//        Toast.makeText(getContext(), "isFirstIn==>>" +url + isFirstIn, Toast.LENGTH_SHORT).show();
+        VolleyContentFast.requestJsonByPost(url, map,
                 new VolleyContentFast.ResponseSuccessListener<ScheduleBean>() {
                     @Override
                     public void onResponse(ScheduleBean result) {
                         if (result == null || result.getRace() == null) {
+
+                           // Toast.makeText(getContext(), result.getRace().size() +"", Toast.LENGTH_SHORT).show();
                             setStatus(STATUS_NO_DATA);
-                            mButtonFrame.setVisibility(View.GONE);
+//                            mButtonFrame.setVisibility(View.GONE);
                             return;
                         }
-                        mButtonFrame.setVisibility(View.VISIBLE);
-
+//                        mButtonFrame.setVisibility(View.VISIBLE);
+//                        if(result.getCode() == 200){
+//                            isFirstIn = false; // false  已加载成功过 刷新用second的Url
+//                        }
                         if (result.getCurrentGroup() != null && result.getType() == 1) {
                             mResultNew = result;
                             chooseSecond = true;
                         }
+                        if (result.getType() == 2) {
+                            isCup = true;
+                        }
+
+                        /**
+                         * 第一次加载成功后赋值（ps：防止加载后直接刷新无数据（url不同））
+                         */
+                        if (mLeagueRound == null || mLeagueRound.equals("")) {
+                            mLeagueRound = result.getCurrentRoundIndex() + "";
+                        }
+                        if (mLeagueGroup == null || mLeagueGroup.equals("")) {
+                            mLeagueGroup = result.getCurrentGroup();
+                        }
+//                        Toast.makeText(getContext(), "aaaaaaa==>>" +mLeagueRound +"---" + mLeagueGroup+ "AA", Toast.LENGTH_SHORT).show();
 
                         if (result.getData() != null) {
+                            mRoundString = new ArrayList<DataBean>();
                             if (result.getCurrentGroup() != null) {
                                 mRoundString = result.getData().get(result.getCurrentGroup());
                                 arr =  result.getData().get(result.getCurrentGroup());
@@ -292,7 +339,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                              * 获得一级菜单数据
                              */
                             mFirstData = new ArrayList<>();
-
                             Set key = result.getData().keySet();//得到map所有的key
                             Iterator iter = key.iterator();//遍历key ==》 list
                             while (iter.hasNext()) {
@@ -311,6 +357,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                             /**
                              * 获得二级菜单数据
                              */
+                            mSecondData = new ArrayList<>();
                             for (int i = 0; i < mRoundString.size(); i++) {
                                 mSecondData.add(mRoundString.get(i).getRound());
                             }
@@ -320,13 +367,12 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                             /**
                              * 获得子菜单默认选中项
                              */
-                            if (array == null) {
-                                array = new Integer[mFirstData.size()];
-                                for (int i = 0; i < mFirstData.size(); i++) {
-                                    for (int j = 0; j < result.getData().get(mFirstData.get(i)).size(); j++) {
-                                        if (result.getData().get(mFirstData.get(i)).get(j).getIsCurrent() == 1) {
-                                            array[i] = j;
-                                        }
+
+                            array = new Integer[mFirstData.size()];
+                            for (int i = 0; i < mFirstData.size(); i++) {
+                                for (int j = 0; j < result.getData().get(mFirstData.get(i)).size(); j++) {
+                                    if (result.getData().get(mFirstData.get(i)).get(j).getIsCurrent() == 1) {
+                                        array[i] = j;
                                     }
                                 }
                             }
@@ -335,12 +381,14 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                         if (mRoundString != null && mRoundString.size() != 0) {
                             isLoad = true;
                         }
-                        if (currentPosition == -1) {
-                            if (result.getType() == 2) {
-                                currentPosition = result.getCurrentRoundIndex(); //杯赛返回索引
-                            }else{
-                                currentPosition = result.getCurrentRoundIndex()-1; // 联赛返回位置（so  -1）
-                            }
+//                        if (currentPosition == -1) {
+//
+//                            currentPosition = result.getType()==2 ? result.getCurrentRoundIndex() : result.getCurrentRoundIndex()-1;
+////                            Toast.makeText(getContext(), "=====123456>>> " + currentPosition, Toast.LENGTH_SHORT).show();
+//                        }
+                        if (isNewLoad || currentPosition == -1) {
+                            currentPosition = result.getType()==2 ? result.getCurrentRoundIndex() : result.getCurrentRoundIndex()-1;
+//                            Toast.makeText(getContext(), "=====aaaaa===>>> " + currentPosition, Toast.LENGTH_SHORT).show();
                             handleHeadViewNew(mRoundString ,currentPosition);
                         }
                         handleDataNew(result.getRace());
@@ -364,10 +412,15 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
      */
     private void handleHeadViewNew(List<DataBean> data , Integer currnIndex){
 
+//        Toast.makeText(getContext(), "=====123456>>> " + currnIndex, Toast.LENGTH_SHORT).show();
         if (data == null || data.size() == 0) {
             mTitleTextView.setText("");
         }else{
-            mTitleTextView.setText(data.get(currnIndex).getRound());
+            if (currnIndex < 0 || currnIndex >= data.size()) {
+                mTitleTextView.setText(data.get(0).getRound());
+            }else{
+                mTitleTextView.setText(data.get(currnIndex).getRound());
+            }
         }
 
         mLeftButton.setVisibility(currnIndex <= 0 ? View.GONE : View.VISIBLE);
@@ -380,7 +433,8 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
      * @param matchData
      */
     private void handleDataNew(List<ScheduleRaceBean> matchData) {
-        if (CollectionUtils.notEmpty(matchData)) {
+//        if (CollectionUtils.notEmpty(matchData)) {
+        if (matchData != null && matchData.size() != 0) {
             for (ScheduleRaceBean matchDay : matchData) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd E", LocaleFactory.get());
                 mSectionsNew.add(new FootballDatabaseScheduleSectionAdapter
@@ -392,7 +446,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             }
         } else {
             setStatus(STATUS_NO_DATA);
-            mButtonFrame.setVisibility(View.GONE);
+//            mButtonFrame.setVisibility(View.GONE);
         }
     }
 
@@ -421,8 +475,8 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             mAlertDialog.setCanceledOnTouchOutside(true);//设置空白处点击 dialog消失
 
             mFirstRecyclerView = (RecyclerView) view.findViewById(R.id.first_recycler_view);
-            GridLayoutManager firstGridLayoutManager =
-                    new GridLayoutManager(getContext(), mResultNew.getData().size());
+//            GridLayoutManager firstGridLayoutManager = new GridLayoutManager(getContext(), mResultNew.getData().size());
+            GridLayoutManager firstGridLayoutManager = new GridLayoutManager(getContext(), 3);
             mFirstRecyclerView.setLayoutManager(firstGridLayoutManager);
             final FirstAdapter firstAdapter = new FirstAdapter(mFirstData , firstIndex);
             mFirstRecyclerView.setAdapter(firstAdapter);
@@ -484,7 +538,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                     arr = mResultNew.getData().get(mFirstData.get(currentFirstPosition));
 
                     handleHeadViewNew(arr,currentSecondPosition);
-                    initData();
+                    initData(false);
                     mAlertDialog.dismiss();
                 }
             });
@@ -526,10 +580,15 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                     mDialogAdapter.updateDatas(position);
                     mDialogAdapter.notifyDataSetChanged();
                     mAlertDialog.dismiss();
-                    mLeagueRound = position + 1 +"";
+
+                    if (isCup) {
+                        mLeagueRound = position + "";
+                    }else{
+                        mLeagueRound = position + 1 +"";
+                    }
                     url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //选择后的URL
                     handleHeadViewNew(mRoundString ,currentPosition);
-                    initData();
+                    initData(false);
                 }
             });
             scrollview.setVisibility(View.GONE);

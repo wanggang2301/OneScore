@@ -685,7 +685,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
-                appBarLayout.setExpanded(true);// 显示头部内容
+//                appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
             } else {
                 new Thread() {
@@ -698,8 +698,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    pd.dismiss();
-                                    appBarLayout.setExpanded(true);// 显示头部内容
+                                pd.dismiss();
+//                                    appBarLayout.setExpanded(true);// 显示头部内容
                                     RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                                 }
                             });
