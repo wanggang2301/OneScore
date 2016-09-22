@@ -155,8 +155,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         mRefreshTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //非第一次进入的url
-//                url = null;
                 initData(false);
             }
         });
@@ -181,20 +179,17 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         }else{
             currentPosition = currPosition - 1;
             if (currentPosition <= 0) {
-//                mLeagueRound = mRoundString[0];
                 if (isCup) {
                     mLeagueRound = "0";
                 }  else{
                     mLeagueRound = "1";
                 }
             }else{
-//                mLeagueRound = mRoundString[currentPosition];
                 if (isCup) {
                     mLeagueRound = currentPosition + "";
                 }else{
                     mLeagueRound = currentPosition + 1 +"";
                 }
-//                mLeagueRound = currentPosition + 1 + "";
             }
             handleHeadViewNew(mRoundString ,currentPosition);
             initData(false);
@@ -219,7 +214,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         }else{
             currentPosition = currPosition + 1;
             if (currentPosition >= mRoundString.size()-1) {
-//                mLeagueRound = mRoundString[mRoundString.length-1];
                 if (isCup) {
                     mLeagueRound = mRoundString.size() -1 + "";
                 }else{
@@ -228,13 +222,11 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
 
                 mLeagueRound = isCup? mRoundString.size()-1 + "" : mRoundString.size() + "";
             }else{
-//                mLeagueRound = mRoundString[currentPosition];
                 if (isCup) {
                     mLeagueRound = currentPosition + "";
                 }else{
                     mLeagueRound = currentPosition + 1 +"";
                 }
-//                mLeagueRound = currentPosition + 1 +"";
             }
             handleHeadViewNew(mRoundString ,currentPosition);
             initData(false);
@@ -266,46 +258,53 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         mAdapterNew.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
         isLoad = false;
-        //http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=60&type=0&timeZone=8
-//        String murl = "192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
         Map<String , String> map = new HashMap();
         map.put(PARAM_ID , league.getLeagueId());
         map.put(PARAM_TYPE , league.getKind());
+
+        /**
+         * URL 切换
+         */
+        if (url == null || url == "" || isNewLoad) {
+            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST; //第一次进入的url
+            //初始化参数，第一次请求不带参数
+            mLeagueGroup = null;
+            mLeagueRound = null;
+        }else{
+            //过滤第一次请求数据不成功刷新时 仍用第一次请求接口（ps：二次接口不带参无数据）
+            url = ((mLeagueGroup == null || mLeagueGroup.equals("")) && (mLeagueRound == null || mLeagueRound.equals("")))
+                    ? BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST : BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST;
+            //如果是第一次接口，清空参数
+            if (url.equals(BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST)) {
+                mLeagueGroup = null;
+                mLeagueRound = null;
+            }
+        }
         if (mLeagueGroup != null && !mLeagueGroup.equals("")) {
             map.put(PARAM_LEAGUE_GROUP , mLeagueGroup + "");
         }
-
         if (mLeagueDate != null) {
             map.put(PARAM_DATE , mLeagueDate);
         }
-
         if (mLeagueRound != null && !mLeagueRound.equals("")) {
             map.put(PARAM_MATCH_ROUND , mLeagueRound);
         }
-
-        if (url == null || url == "" || isNewLoad) {
-            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST; //第一次进入的url
-        }else{
-            url = ((mLeagueGroup == null || mLeagueGroup.equals("")) && (mLeagueRound == null || mLeagueRound.equals("")))
-                    ? BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST : BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST;
-//            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //非第一次进入的url
-        }
-//        Toast.makeText(getContext(), "isFirstIn==>>" +url + isFirstIn, Toast.LENGTH_SHORT).show();
+        /**
+         * 这里只能用post（ps：用get请求是参数带中文，4.4手机请求不到数据...）
+         */
+        //http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do?lang=zh&leagueId=60&type=0&timeZone=8
+//        String murl = "192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidLeagueRound.do";
         VolleyContentFast.requestJsonByPost(url, map,
                 new VolleyContentFast.ResponseSuccessListener<ScheduleBean>() {
                     @Override
                     public void onResponse(ScheduleBean result) {
                         if (result == null || result.getRace() == null) {
 
-                           // Toast.makeText(getContext(), result.getRace().size() +"", Toast.LENGTH_SHORT).show();
                             setStatus(STATUS_NO_DATA);
 //                            mButtonFrame.setVisibility(View.GONE);
                             return;
                         }
 //                        mButtonFrame.setVisibility(View.VISIBLE);
-//                        if(result.getCode() == 200){
-//                            isFirstIn = false; // false  已加载成功过 刷新用second的Url
-//                        }
                         if (result.getCurrentGroup() != null && result.getType() == 1) {
                             mResultNew = result;
                             chooseSecond = true;
@@ -323,8 +322,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                         if (mLeagueGroup == null || mLeagueGroup.equals("")) {
                             mLeagueGroup = result.getCurrentGroup();
                         }
-//                        Toast.makeText(getContext(), "aaaaaaa==>>" +mLeagueRound +"---" + mLeagueGroup+ "AA", Toast.LENGTH_SHORT).show();
-
                         if (result.getData() != null) {
                             mRoundString = new ArrayList<DataBean>();
                             if (result.getCurrentGroup() != null) {
@@ -334,7 +331,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                                 mRoundString = result.getData().get("emp");
                                 arr =  result.getData().get(result.getCurrentGroup());
                             }
-
                             /**
                              * 获得一级菜单数据
                              */
@@ -353,7 +349,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                                     }
                                 }
                             }
-
                             /**
                              * 获得二级菜单数据
                              */
@@ -363,11 +358,9 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                             }
                             currentSecondPosition = result.getCurrentRoundIndex()-1;
                             secondIndex = result.getCurrentRoundIndex()-1;
-
                             /**
                              * 获得子菜单默认选中项
                              */
-
                             array = new Integer[mFirstData.size()];
                             for (int i = 0; i < mFirstData.size(); i++) {
                                 for (int j = 0; j < result.getData().get(mFirstData.get(i)).size(); j++) {
@@ -377,18 +370,11 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                                 }
                             }
                         }
-
                         if (mRoundString != null && mRoundString.size() != 0) {
                             isLoad = true;
                         }
-//                        if (currentPosition == -1) {
-//
-//                            currentPosition = result.getType()==2 ? result.getCurrentRoundIndex() : result.getCurrentRoundIndex()-1;
-////                            Toast.makeText(getContext(), "=====123456>>> " + currentPosition, Toast.LENGTH_SHORT).show();
-//                        }
                         if (isNewLoad || currentPosition == -1) {
                             currentPosition = result.getType()==2 ? result.getCurrentRoundIndex() : result.getCurrentRoundIndex()-1;
-//                            Toast.makeText(getContext(), "=====aaaaa===>>> " + currentPosition, Toast.LENGTH_SHORT).show();
                             handleHeadViewNew(mRoundString ,currentPosition);
                         }
                         handleDataNew(result.getRace());
@@ -412,7 +398,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
      */
     private void handleHeadViewNew(List<DataBean> data , Integer currnIndex){
 
-//        Toast.makeText(getContext(), "=====123456>>> " + currnIndex, Toast.LENGTH_SHORT).show();
         if (data == null || data.size() == 0) {
             mTitleTextView.setText("");
         }else{
@@ -422,10 +407,8 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                 mTitleTextView.setText(data.get(currnIndex).getRound());
             }
         }
-
         mLeftButton.setVisibility(currnIndex <= 0 ? View.GONE : View.VISIBLE);
         mRightButton.setVisibility(currnIndex >= data.size()-1 ? View.GONE : View.VISIBLE);
-
     }
 
     /**
@@ -433,7 +416,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
      * @param matchData
      */
     private void handleDataNew(List<ScheduleRaceBean> matchData) {
-//        if (CollectionUtils.notEmpty(matchData)) {
         if (matchData != null && matchData.size() != 0) {
             for (ScheduleRaceBean matchDay : matchData) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd E", LocaleFactory.get());
@@ -458,9 +440,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     private int secondIndex;
 
     public void setDialog(){
-//        if (mResultNew == null) {
-//            return;
-//        }
         /**
          * type == 1 子联赛（二级菜单）
          */
@@ -475,7 +454,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             mAlertDialog.setCanceledOnTouchOutside(true);//设置空白处点击 dialog消失
 
             mFirstRecyclerView = (RecyclerView) view.findViewById(R.id.first_recycler_view);
-//            GridLayoutManager firstGridLayoutManager = new GridLayoutManager(getContext(), mResultNew.getData().size());
             GridLayoutManager firstGridLayoutManager = new GridLayoutManager(getContext(), 3);
             mFirstRecyclerView.setLayoutManager(firstGridLayoutManager);
             final FirstAdapter firstAdapter = new FirstAdapter(mFirstData , firstIndex);
@@ -487,13 +465,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             final SecondAdapter secondAdapter = new SecondAdapter(mSecondData , secondIndex);
             mSecondRecyclerView.setAdapter(secondAdapter);
 
-//            if (array == null) {
-//                array = new Integer[mFirstData.size()];
-//                for (int i = 0; i < mFirstData.size(); i++) {
-//                    array[i] = -1;
-//                }
-//            }
-//            array[currentFirstPosition] = currentSecondPosition;
             firstAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
