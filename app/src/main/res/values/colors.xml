@@ -209,6 +209,7 @@
     <color name="analyze_right">#598cff</color>
     <color name="info_center_right">#4779b6</color>
     <color name="info_center_left">#c53f3f</color>
+    <color name="info_center_mask">#66000000</color>
     <color name="analyze_opinion_title">#0078ff</color>
     <color name="analyze_date">#999</color>
 
