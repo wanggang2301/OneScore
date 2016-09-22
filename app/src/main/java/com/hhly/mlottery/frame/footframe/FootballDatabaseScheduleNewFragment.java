@@ -30,7 +30,6 @@ import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleDatasBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.ScheduleRaceBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.LocaleFactory;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -262,6 +261,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     }
 
     private void initData(final boolean isNewLoad){
+
         mSectionsNew.clear();
         mAdapterNew.notifyDataSetChanged();
         setStatus(STATUS_LOADING);
@@ -271,32 +271,38 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         Map<String , String> map = new HashMap();
         map.put(PARAM_ID , league.getLeagueId());
         map.put(PARAM_TYPE , league.getKind());
+        if (mLeagueGroup != null && !mLeagueGroup.equals("")) {
+            map.put(PARAM_LEAGUE_GROUP , mLeagueGroup + "");
+        }
+
         if (mLeagueDate != null) {
             map.put(PARAM_DATE , mLeagueDate);
         }
+
         if (mLeagueRound != null && !mLeagueRound.equals("")) {
             map.put(PARAM_MATCH_ROUND , mLeagueRound);
-        }
-        if (mLeagueGroup != null && !mLeagueGroup.equals("")) {
-            map.put(PARAM_LEAGUE_GROUP , mLeagueGroup);
         }
 
         if (url == null || url == "" || isNewLoad) {
             url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST; //第一次进入的url
         }else{
-            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //非第一次进入的url
+            url = ((mLeagueGroup == null || mLeagueGroup.equals("")) && (mLeagueRound == null || mLeagueRound.equals("")))
+                    ? BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST : BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST;
+//            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //非第一次进入的url
         }
 //        Toast.makeText(getContext(), "isFirstIn==>>" +url + isFirstIn, Toast.LENGTH_SHORT).show();
-        VolleyContentFast.requestJsonByGet(url, map,
+        VolleyContentFast.requestJsonByPost(url, map,
                 new VolleyContentFast.ResponseSuccessListener<ScheduleBean>() {
                     @Override
                     public void onResponse(ScheduleBean result) {
                         if (result == null || result.getRace() == null) {
+
+                           // Toast.makeText(getContext(), result.getRace().size() +"", Toast.LENGTH_SHORT).show();
                             setStatus(STATUS_NO_DATA);
-                            mButtonFrame.setVisibility(View.GONE);
+//                            mButtonFrame.setVisibility(View.GONE);
                             return;
                         }
-                        mButtonFrame.setVisibility(View.VISIBLE);
+//                        mButtonFrame.setVisibility(View.VISIBLE);
 //                        if(result.getCode() == 200){
 //                            isFirstIn = false; // false  已加载成功过 刷新用second的Url
 //                        }
@@ -308,12 +314,15 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
                             isCup = true;
                         }
 
-//                        if (mLeagueRound == null && mLeagueRound.equals("")) {
-//                            mLeagueRound = result.getCurrentRoundIndex() + "";
-//                        }
-//                        if (mLeagueGroup == null && mLeagueGroup.equals("")) {
-//                            mLeagueGroup = result.getCurrentGroup();
-//                        }
+                        /**
+                         * 第一次加载成功后赋值（ps：防止加载后直接刷新无数据（url不同））
+                         */
+                        if (mLeagueRound == null || mLeagueRound.equals("")) {
+                            mLeagueRound = result.getCurrentRoundIndex() + "";
+                        }
+                        if (mLeagueGroup == null || mLeagueGroup.equals("")) {
+                            mLeagueGroup = result.getCurrentGroup();
+                        }
 //                        Toast.makeText(getContext(), "aaaaaaa==>>" +mLeagueRound +"---" + mLeagueGroup+ "AA", Toast.LENGTH_SHORT).show();
 
                         if (result.getData() != null) {
@@ -424,7 +433,8 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
      * @param matchData
      */
     private void handleDataNew(List<ScheduleRaceBean> matchData) {
-        if (CollectionUtils.notEmpty(matchData)) {
+//        if (CollectionUtils.notEmpty(matchData)) {
+        if (matchData != null && matchData.size() != 0) {
             for (ScheduleRaceBean matchDay : matchData) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd E", LocaleFactory.get());
                 mSectionsNew.add(new FootballDatabaseScheduleSectionAdapter
@@ -436,7 +446,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             }
         } else {
             setStatus(STATUS_NO_DATA);
-            mButtonFrame.setVisibility(View.GONE);
+//            mButtonFrame.setVisibility(View.GONE);
         }
     }
 

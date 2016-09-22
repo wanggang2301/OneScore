@@ -92,7 +92,7 @@ public class FootballDatabaseIntegralAdapter
 
 //        if (type == 2 ? holder.getPosition() <= 4 : holder.getPosition() <= 3) {
 //        if (type != 2 &&(type == 0 ? holder.getPosition() <= 3 : holder.getPosition() <= 4)) {
-        if (ranking <= 3) {
+        if (ranking <= 2) {
             rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             rank.setBackgroundResource(R.drawable.basket_databae_round_dra);
             name.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
