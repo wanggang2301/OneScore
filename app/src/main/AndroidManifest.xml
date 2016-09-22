@@ -334,9 +334,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.FootballDatabaseActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.LeagueStatisticsTodayActivity"
             android:screenOrientation="portrait">
 
