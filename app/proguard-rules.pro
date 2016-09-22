@@ -149,3 +149,10 @@
 #retrofit
 -keep public class retrofit.appengine.** { *; }
 -dontwarn retrofit.appengine.**
+
+#畅言
+-keep public class com.sohu.cyan.** { *; }
+-dontwarn com.sohu.cyan.**
+
+
+-keep class com.hhly.mlottery.activity.WebActivity$YBFJavascriptHandler { *;}
