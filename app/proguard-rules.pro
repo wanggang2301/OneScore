@@ -154,5 +154,8 @@
 -keep public class com.sohu.cyan.** { *; }
 -dontwarn com.sohu.cyan.**
 
-
+#JS调用WebView接口
 -keep class com.hhly.mlottery.activity.WebActivity$YBFJavascriptHandler { *;}
+
+-keep class pl.droidsonroids.gif.** { *;}
+
