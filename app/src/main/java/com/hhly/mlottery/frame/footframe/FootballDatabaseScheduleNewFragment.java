@@ -100,7 +100,6 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
     private List<DataBean> arr;
     private Integer[] array;
     private boolean isCup;
-    private boolean isFirstIn = true;//是否为加载成功过（判断第一次进入未加载成功刷新是用第一个URL）
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
