@@ -136,7 +136,7 @@
             android:orientation="horizontal"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
-            android:paddingRight="10dp"
+            android:paddingRight="0dp"
             android:paddingTop="10dp">
 
             <ImageView
@@ -144,15 +144,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:src="@mipmap/new_write" />
+                android:src="@mipmap/new_message" />
 
             <TextView
                 android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="写评论"
+                android:text="0"
                 android:textColor="@color/mdy_666"
                 android:textSize="@dimen/text_size_13" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
+

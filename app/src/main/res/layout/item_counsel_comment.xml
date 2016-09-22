@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="10dp"
-    >
+    android:paddingTop="10dp">
 
     <TextView
         android:id="@+id/tv_nickname"
@@ -14,8 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
+        android:text="张三"
         android:textColor="#0085e1"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tv_time"
@@ -24,8 +23,9 @@
         android:layout_below="@+id/tv_nickname"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
+        android:text="2016"
         android:textColor="#999999"
-        android:textSize="11sp"/>
+        android:textSize="11sp" />
 
     <TextView
         android:id="@+id/tv_content"
@@ -35,15 +35,16 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
+        android:text="呵呵"
         android:textColor="#000"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@+id/tv_content"
         android:layout_marginTop="15dp"
-        android:background="#dddddd"/>
+        android:background="#dddddd" />
 
 </RelativeLayout>
 

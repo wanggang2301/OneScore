@@ -45,9 +45,9 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                 .cacheInMemory(true).cacheOnDisc(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.score_default)   //默认图片
-                .showImageForEmptyUri(R.mipmap.score_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.score_default)// 加载失败显示的图片
+                .showImageOnLoading(R.mipmap.counsel_depth)   //默认图片
+                .showImageForEmptyUri(R.mipmap.counsel_depth)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.counsel_depth)// 加载失败显示的图片
                 .resetViewBeforeLoading(true)
                 .build();
 
@@ -95,6 +95,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             timeMsg = "刚刚";
         }
 
+        o.setSendtime(timeMsg);
 
         viewHolder.setText(R.id.tv_time, timeMsg);
 
@@ -103,8 +104,14 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         viewHolder.setText(R.id.tv_name_ch, o.getFullnameTranslation());
         viewHolder.setText(R.id.tv_content_en, o.getContent());
 
+        if (o.getContentTranslation() == null) {
+            viewHolder.getView(R.id.tv_content_zh).setVisibility(View.GONE);
+        } else {
+            viewHolder.getView(R.id.tv_content_zh).setVisibility(View.VISIBLE);
+            viewHolder.setText(R.id.tv_content_zh, o.getContentTranslation());
+        }
 
-        viewHolder.setText(R.id.tv_content_zh, o.getContentTranslation());
+
         viewHolder.setText(R.id.tv_tight, o.getFavorite() + "");
 
         universalImageLoader.displayImage(o.getPhoto(), (ImageView) viewHolder.getView(R.id.iv_photo), options);
@@ -115,7 +122,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("focusable", false);
                 intent.putExtra("detailsData", o);
                 mContext.startActivity(intent);
             }
@@ -127,7 +133,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("focusable", false);
+
                 intent.putExtra("detailsData", o);
                 mContext.startActivity(intent);
             }

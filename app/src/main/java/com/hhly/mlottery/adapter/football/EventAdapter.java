@@ -9,6 +9,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 
 import java.util.List;
@@ -222,6 +223,9 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getItemCount() {
+        L.d("ddff","getItemCountsdsd");
+
+
         return matchTimeLiveBeans.size();
     }
 

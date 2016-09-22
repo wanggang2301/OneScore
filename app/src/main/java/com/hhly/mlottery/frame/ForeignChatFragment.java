@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -23,9 +26,10 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.CounselCommentActivity;
 import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
+import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -35,6 +39,10 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.view.PullUpRefreshListView;
+import com.hhly.mlottery.widget.CircleImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.Comment;
 import com.sohu.cyan.android.sdk.exception.CyanException;
@@ -46,13 +54,34 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author hhly204
  * @ClassName: ChatFragment    注意  装此碎片的容器，只有评论框时必须是scrollview 有评论框和评论列表时  必须是RelativeLayout
  * @Description: 全部评论页面
  * @date 2016-6-3
  */
-public class ChatFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, CyanRequestListener<SubmitResp> {
+public class ForeignChatFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, CyanRequestListener<SubmitResp> {
+    @BindView(R.id.civ_logo)
+    CircleImageView civLogo;
+    @BindView(R.id.tv_name_en)
+    TextView tvNameEn;
+    @BindView(R.id.tv_name_ch)
+    TextView tvNameCh;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.tv_content_en)
+    TextView tvContentEn;
+    @BindView(R.id.tv_content_zh)
+    TextView tvContentZh;
+
+    @BindView(R.id.tv_tight)
+    TextView tvTight;
+
+    @BindView(R.id.tv_comment)
+    TextView tvComment;
     private View mView;
     private TextView mCommentCount;//评论数
     private EditText mEditText;//输入评论
@@ -80,24 +109,74 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     private onKeyBoardHiddenLisener mKeyBoardHiddenLisener;
     private onPullDownRefreshLisener mOnPullDownRefreshLisener;
 
+    private View headview;
+
+    private ImageView ivPhone;
+    private LinearLayout ll_zan;
+
+    private OverseasInformationListBean oilBean;
+
+    private DisplayImageOptions options; //
+    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
+
+
+    public static ForeignChatFragment newInstance() {
+
+
+      /*  Bundle args = new Bundle();
+        args.putParcelable("oilbean", overseasInformationListBean);*/
+
+
+        ForeignChatFragment fragment = new ForeignChatFragment();
+        // fragment.setArguments(args);
+        return fragment;
+    }
+
+
+    public void setOilBean(OverseasInformationListBean oilBean) {
+        this.oilBean = oilBean;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_chat, null);
+        headview = inflater.inflate(R.layout.item_foreign_chart, null);
+        ButterKnife.bind(this, headview);
+
         initData();
         initView();
         initScrollView();//解决adjustresize和透明状态栏的冲突
         initListView();
         pullUpLoad();//上拉加载更多
+        CyUtils.hideKeyBoard(getActivity());
+        mEditText.clearFocus();
+
         return mView;
     }
 
     private void initData() {
         mContext = getActivity() == null ? MyApp.getContext() : getActivity();
+
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.mipmap.counsel_depth)   //默认图片
+                .showImageForEmptyUri(R.mipmap.counsel_depth)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.counsel_depth)// 加载失败显示的图片
+                .resetViewBeforeLoading(true)
+                .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
+        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
+        universalImageLoader.init(config);
+
+
         sdk = CyanSdk.getInstance(mContext);
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             souceid = bundle.getString(CyUtils.INTENT_PARAMS_SID);
-            L.i("lzfsouceidfg" + souceid);
             title = bundle.getString(CyUtils.INTENT_PARAMS_TITLE);
             isHiddenCommentCount = bundle.getBoolean(CyUtils.ISHIDDENCOMMENTCOUNT);
             isShowComment = bundle.getBoolean(CyUtils.ISSHOWCOMMENT);
@@ -107,6 +186,35 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
             CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
         }
         model = DeviceInfo.getModel().replace(" ", "");
+        initHeadViewData();
+    }
+
+
+    private void initHeadViewData() {
+        ivPhone = (ImageView) headview.findViewById(R.id.iv_photo);
+        ll_zan = (LinearLayout) headview.findViewById(R.id.ll_zan);
+        ivPhone.setOnClickListener(this);
+        ll_zan.setOnClickListener(this);
+
+
+        universalImageLoader.displayImage(oilBean.getAvatar(), civLogo, options);
+
+        tvNameEn.setText(oilBean.getFullname());
+        tvNameCh.setText(oilBean.getFullnameTranslation());
+        tvContentEn.setText(oilBean.getContent());
+
+        if (oilBean.getContentTranslation() == null) {
+            tvContentZh.setVisibility(View.GONE);
+        } else {
+            tvContentZh.setVisibility(View.VISIBLE);
+            tvContentZh.setText(oilBean.getContentTranslation());
+        }
+
+
+        tvTime.setText(oilBean.getSendtime());
+
+        universalImageLoader.displayImage(oilBean.getPhoto(), ivPhone, options);
+        tvTight.setText(oilBean.getFavorite() + "");
     }
 
     private void initListView() {
@@ -116,6 +224,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     }
 
     private void initView() {
+
 
         mNoData = (TextView) mView.findViewById(R.id.nodata);
         mListView = (PullUpRefreshListView) mView.findViewById(R.id.comment_lv);
@@ -127,7 +236,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
             }
         });
 
-
+        mListView.addHeaderView(headview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.comment_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -135,7 +244,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
 
         mCommentCount = (TextView) mView.findViewById(R.id.tv_commentcount);
-        mCommentCount.setOnClickListener(this);
+
         mEditText = (EditText) mView.findViewById(R.id.et_comment);
         mEditText.requestFocus();
         mEditText.setSelected(true);
@@ -347,6 +456,20 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.iv_photo:
+                String url = oilBean.getPhoto();
+                Intent intent = new Intent(mContext, PicturePreviewActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("url", url);
+                mContext.startActivity(intent);
+                break;
+
+            case R.id.ll_zan:
+
+                break;
+
+
             case R.id.iv_send://发送评论
                 MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");
                 mCurrentPager = 1;//这里也要归1，不然在上拉加载到没有数据  再发送评论的时候  就无法再上拉加载了
@@ -375,30 +498,22 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
                 }
                 break;
-            case R.id.tv_commentcount://评论数
 
-                L.d("wwweee","单机小");
-                MobclickAgent.onEvent(mContext, "Football_DataInfo_CommentCount");
-                Intent intent = new Intent(mContext, CounselCommentActivity.class);
-                intent.putExtra(CyUtils.INTENT_PARAMS_SID, souceid);
-                intent.putExtra(CyUtils.INTENT_PARAMS_TITLE, title);
-                startActivityForResult(intent, CyUtils.JUMP_QUESTCODE);
-                break;
         }
 
     }
 
     //获取评论的一切消息  无需登录  并刷新listview
-    public void loadTopic(String url, String title, int pagenum) {
+    public void loadTopic(String souceid, String title, int pagenum) {
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
 
-        L.d("chart", "url=" + url);
+        L.d("chart", "url=" + souceid);
         L.d("chart", "title=" + title);
         L.d("chart", "pagenum=" + pagenum);
 
 
-        sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
+        sdk.loadTopic(souceid, "", title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;//文章id
@@ -406,15 +521,17 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 L.d("chart", "topicid=" + topicid);
                 L.d("chart", "cmt_sum=" + cmt_sum);
 
+                tvComment.setText(cmt_sum + "");
+
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
                 if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
-                    mSwipeRefreshLayout.setVisibility(View.GONE);
-                    if (isShowComment) {//显示评论的时候 mNoData显示
-                        mNoData.setVisibility(View.VISIBLE);
-                    } else {
-                        mNoData.setVisibility(View.GONE);//不显示评论的时候 mNoData不显示
-                    }
+
+                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+
+                    // mNoData.setVisibility(View.GONE);//不显示评论的时候 mNoData不显示
+
                 } else {
 
                     mAdapter.setInfosList(mCommentArrayList);
@@ -425,8 +542,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                     L.i("lzfnotifyDataSetChanged==");
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
-                L.i("lzf最新列表=" + mCommentArrayList.size());
-                L.i("lzf最热列表=" + topicLoadResp.hots.size());
+
+
                 if (getActivity() != null) {
                     getActivity().setResult(2, new Intent().putExtra("cmt_sum", cmt_sum));
                 }
@@ -439,8 +556,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 if (mCommentArrayList != null && mCommentArrayList.size() != 0) {//已经有数据  说明不是第一次操作  既是下拉刷新的操作
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                 } else {//没有数据  说明是第一次操作
-                    mSwipeRefreshLayout.setVisibility(View.GONE);
-                    mNoData.setVisibility(View.VISIBLE);
+                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                    mNoData.setVisibility(View.GONE);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -471,6 +588,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                     }
                     String commentcount = data.getIntExtra("cmt_sum", defaultnum) + "";
                     mCommentCount.setText(commentcount);
+                    tvComment.setText(cmt_sum + "");
                 }
             }
         }
@@ -510,6 +628,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     public void setOnPullDownRefreshLisener(onPullDownRefreshLisener mOnPullDownRefreshLisener) {
         this.mOnPullDownRefreshLisener = mOnPullDownRefreshLisener;
     }
+
 
     public interface onKeyBoardHiddenLisener {
         void keyBoardHidden();

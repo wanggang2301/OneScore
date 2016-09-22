@@ -3,11 +3,11 @@ package com.hhly.mlottery.util;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.fastjson.JSON;
-import com.hhly.mlottery.frame.ChatFragment;
 import com.sohu.cyan.android.sdk.api.CallBack;
 import com.sohu.cyan.android.sdk.api.Config;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
@@ -59,7 +59,7 @@ public class CyUtils {
     }
 
     //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
-    public static void addComment(ChatFragment fragment, String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager, int container) {
+    public static void addComment(Fragment fragment, String url, String title, boolean ishiddencommentcount, boolean isshowcomment, FragmentManager fragmentManager, int container) {
         Bundle bundle = new Bundle();
         bundle.putString(CyUtils.INTENT_PARAMS_SID, url);//需要评论的文章的url或者其他唯一标识
         bundle.putString(CyUtils.INTENT_PARAMS_TITLE, title);//需要评论的文章的标题

@@ -99,7 +99,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
     private void loadData() {
         Map<String, String> params = new HashMap<>();
         params.put("pageNum", pageSize + "");
-        String url = "http://192.168.31.9:8080/mlottery/core/overseasInformation.findOverseasInformation.do";
+        String url = "http://192.168.31.178:8080/mlottery/core/overseasInformation.findOverseasInformation.do";
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ForeignInfomationBean>() {
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {
@@ -107,7 +107,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                             return;
                         }
 
-                        L.d("2334","請求成功");
+                        L.d("2334", "請求成功");
                         mList = foreignInfomationBean.getOverseasInformationList();
                         initViewData();
                         mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS);
@@ -173,7 +173,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         pageSize++;
         Map<String, String> params = new HashMap<>();
         params.put("pageNum", pageSize + "");
-        String url = "http://192.168.31.9:8080/mlottery/core/overseasInformation.findOverseasInformation.do";
+        String url = "http://192.168.31.178:8080/mlottery/core/overseasInformation.findOverseasInformation.do";
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ForeignInfomationBean>() {
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {
@@ -210,6 +210,8 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
     protected void onVisible() {
         mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
+
+        //mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
     }
 
 
@@ -230,5 +232,12 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         pageSize = 1;
         mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 5000);
+/*
+        Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("focusable", false);
+        intent.putExtra("detailsData", new OverseasInformationListBean());
+        mContext.startActivity(intent);*/
+
     }
 }

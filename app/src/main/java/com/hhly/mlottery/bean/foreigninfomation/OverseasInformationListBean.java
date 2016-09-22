@@ -24,7 +24,15 @@ public class OverseasInformationListBean implements Parcelable {
     private String photo;
     private int favorite;
     private long currentTimestamp;
+    private String sendtime;
 
+    public String getSendtime() {
+        return sendtime;
+    }
+
+    public void setSendtime(String sendtime) {
+        this.sendtime = sendtime;
+    }
 
     public int getId() {
         return id;
@@ -141,6 +149,7 @@ public class OverseasInformationListBean implements Parcelable {
         dest.writeString(this.photo);
         dest.writeInt(this.favorite);
         dest.writeLong(this.currentTimestamp);
+        dest.writeString(this.sendtime);
     }
 
     public OverseasInformationListBean() {
@@ -159,6 +168,7 @@ public class OverseasInformationListBean implements Parcelable {
         this.photo = in.readString();
         this.favorite = in.readInt();
         this.currentTimestamp = in.readLong();
+        this.sendtime = in.readString();
     }
 
     public static final Parcelable.Creator<OverseasInformationListBean> CREATOR = new Parcelable.Creator<OverseasInformationListBean>() {
