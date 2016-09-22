@@ -90,16 +90,29 @@ public class FootballDatabaseIntegralAdapter
                 .setText(R.id.win_offset, String.format(Locale.getDefault(), "%d", team.getAbs()))
                 .setText(R.id.recent, "0".equals(teamIntegral) ? "0" : teamIntegral);
 
-//        if (type == 2 ? holder.getPosition() <= 4 : holder.getPosition() <= 3) {
-//        if (type != 2 &&(type == 0 ? holder.getPosition() <= 3 : holder.getPosition() <= 4)) {
-        if (ranking <= 2) {
-            rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
-            rank.setBackgroundResource(R.drawable.basket_databae_round_dra);
-            name.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
-        } else {
-            rank.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
-            rank.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
-            name.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
+        /**
+         * 联赛标记前三名 ， 杯赛、小组赛（子联赛）标记前两名
+         */
+        if (type == 0) {
+            if (ranking <= 3) {
+                rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                rank.setBackgroundResource(R.drawable.basket_databae_round_dra);
+                name.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
+            } else {
+                rank.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
+                rank.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
+                name.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
+            }
+        }else{
+            if (ranking <= 2) {
+                rank.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                rank.setBackgroundResource(R.drawable.basket_databae_round_dra);
+                name.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
+            } else {
+                rank.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
+                rank.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
+                name.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
+            }
         }
     }
 
