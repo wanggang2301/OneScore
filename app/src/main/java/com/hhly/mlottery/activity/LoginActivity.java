@@ -178,6 +178,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 progressBar.dismiss();
                 L.e(TAG, " 请求失败");
                 // UiUtils.toast(LoginActivity.this, exception.toString());
+                mViewHandler.sendEmptyMessage(ALL_CLOSE);
             }
         }, IsTestLoginBean.class);
 

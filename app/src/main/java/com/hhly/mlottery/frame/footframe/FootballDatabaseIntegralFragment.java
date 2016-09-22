@@ -59,6 +59,8 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
     private static final int STATUS_NO_DATA = 3;
     private static final int STATUS_LOAD_SUCCESS = 4;
 
+    private static final int CUP_TYPE = 2;
+
     View mButtonFrame;
     TextView mTitleTextView;
     ImageView mLeftButton;
@@ -306,7 +308,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                 mTitleTextView.setText(data[currnIndex]);
             }
             // 杯赛且大于1才显示
-            if (data.length > 1 && mAdapter.getHeaderViewsCount() == 0 && mResult.getRankingType() == 2) {
+            if (data.length > 1 && mAdapter.getHeaderViewsCount() == 0 && mResult.getRankingType() == CUP_TYPE) {
                 mAdapter.addHeaderView(mButtonFrame);
                 mAdapter.setEmptyView(true, mEmptyView);
             }

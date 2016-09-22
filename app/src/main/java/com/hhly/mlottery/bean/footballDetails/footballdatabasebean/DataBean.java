@@ -9,22 +9,26 @@ package com.hhly.mlottery.bean.footballDetails.footballdatabasebean;
 
 public class DataBean {
 
-    private String dataName;
-    private boolean isChoose; //是否选中
+    /**
+     *  round: "1",
+        isCurrent: 0
+     */
+    private String round;
+    private int isCurrent;
 
-    public String getDataName() {
-        return dataName;
+    public String getRound() {
+        return round;
     }
 
-    public void setDataName(String dataName) {
-        this.dataName = dataName;
+    public void setRound(String round) {
+        this.round = round;
     }
 
-    public boolean isChoose() {
-        return isChoose;
+    public int getIsCurrent() {
+        return isCurrent;
     }
 
-    public void setChoose(boolean choose) {
-        isChoose = choose;
+    public void setIsCurrent(int isCurrent) {
+        this.isCurrent = isCurrent;
     }
 }
