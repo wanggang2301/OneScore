@@ -286,7 +286,9 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
         if (url == null || url == "" || isNewLoad) {
             url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST; //第一次进入的url
         }else{
-            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //非第一次进入的url
+            url = ((mLeagueGroup == null || mLeagueGroup.equals("")) && (mLeagueRound == null || mLeagueRound.equals("")))
+                    ? BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_FIRST : BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST;
+//            url = BaseURLs.URL_FOOTBALL_DATABASE_SCHEDULE_UNFIRST; //非第一次进入的url
         }
 //        Toast.makeText(getContext(), "isFirstIn==>>" +url + isFirstIn, Toast.LENGTH_SHORT).show();
         VolleyContentFast.requestJsonByPost(url, map,
@@ -297,10 +299,10 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
 
                            // Toast.makeText(getContext(), result.getRace().size() +"", Toast.LENGTH_SHORT).show();
                             setStatus(STATUS_NO_DATA);
-                            mButtonFrame.setVisibility(View.GONE);
+//                            mButtonFrame.setVisibility(View.GONE);
                             return;
                         }
-                        mButtonFrame.setVisibility(View.VISIBLE);
+//                        mButtonFrame.setVisibility(View.VISIBLE);
 //                        if(result.getCode() == 200){
 //                            isFirstIn = false; // false  已加载成功过 刷新用second的Url
 //                        }
@@ -444,7 +446,7 @@ public class FootballDatabaseScheduleNewFragment extends Fragment implements Vie
             }
         } else {
             setStatus(STATUS_NO_DATA);
-            mButtonFrame.setVisibility(View.GONE);
+//            mButtonFrame.setVisibility(View.GONE);
         }
     }
 
