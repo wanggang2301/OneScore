@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -64,6 +65,10 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
 
     private RadioGroup radioGroup;
+
+    private RadioButton info_inter_match;
+    private RadioButton info_country_match;
+
     private GridView gridviewInter;
 
     private LinearLayout ll_loading;
@@ -116,6 +121,10 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
 
     private void initView() {
         radioGroup = (RadioGroup) mView.findViewById(R.id.radio_group);
+
+        info_inter_match = (RadioButton) mView.findViewById(R.id.info_inter_match);
+        info_country_match = (RadioButton) mView.findViewById(R.id.info_country_match);
+
         gridviewInter = (GridView) mView.findViewById(R.id.gridview_inter);
         expandableGridView = (ExpandableListView) mView.findViewById(R.id.listview);
         mExactSwipeRefrashLayout = (ExactSwipeRefrashLayout) mView.findViewById(R.id.info_swiperefreshlayout);
@@ -187,6 +196,7 @@ public class FootballDatabaseFragment extends Fragment implements ExactSwipeRefr
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
                     case R.id.info_inter_match:
+
                         fl_inter.setVisibility(View.VISIBLE);
                         fl_country.setVisibility(View.GONE);
                         break;

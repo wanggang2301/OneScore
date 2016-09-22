@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
@@ -79,6 +81,9 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     private final static int VIEW_STATUS_SUCCESS = 3001;
     private final static int VIEW_STATUS_NET_ERROR = 4001;
     private final static int VIEW_STATUS_FLITER_NO_DATA = 5001;
+    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
+    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
+
     private final static int DELAY_REQUEST_API = 60 * 1000; // 10 min
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -92,22 +97,26 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     ExactSwipeRefrashLayout swipeRefreshLayout;
     @BindView(R.id.titleContainer)
     PercentRelativeLayout titleContainer;
+    @BindView(R.id.unconection_layout)
+    LinearLayout mUnconectionLayout;// 没有网络提示
 
     //    private BorderDividerItemDecration dataDecration;
     public static EventBus eventBus;
-    private ApiHandler apiHandler;
+    private ApiHandler apiHandler = new ApiHandler(this);
     private RollBallAdapter adapter;
-    private HappySocketClient socketClient;
+//    private HappySocketClient socketClient;
     private LinearLayoutManager layoutManager;
     private Subscription subscription;
     private boolean resestTheLifeCycle;
     private boolean loadingMoreData;
-    private long checkoutWebsocketIsConnectedNow;
-    private static long onNewMessageCount, onOldMessageCount;
+//    private long checkoutWebsocketIsConnectedNow;
+//    private static long onNewMessageCount, onOldMessageCount;
     public LeagueCup[] checkedLeagueCup; // 记录筛选过的联赛
     public List<LeagueCup> leagueCupLists; // 全部联赛
     private List<Match> allDataLists; // 所有数据
     private List<Match> feedAdapterLists; // 要展示的数据
+
+    private boolean isLoadedData = false;
 
     public static RollBallFragment newInstance(int index) {
         Bundle bundle = new Bundle();
@@ -124,7 +133,6 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     protected void initViews(View self, Bundle savedInstanceState) {
-        if (null == apiHandler) apiHandler = new ApiHandler(this);
         this.setupEventBus();
         this.setupRecyclerView();
         this.setupAdapter();
@@ -133,6 +141,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     protected void initListeners() {
+        mUnconectionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.ACTION_SETTINGS));
+            }
+        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private boolean moveToDown = false;
 
@@ -185,8 +199,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     protected void initData() {
         this.requestApi();
-        this.setupWebSocketClient();
-        this.checkedOutWebsocketIsConnected();
+//        this.setupWebSocketClient();
+//        this.checkedOutWebsocketIsConnected();
     }
 
     @Override
@@ -217,8 +231,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         if (subscription != null && subscription.isUnsubscribed()) subscription.unsubscribe();
         if (apiHandler != null) apiHandler.removeCallbacksAndMessages(null);
         if (adapter != null) adapter.getSharedPreperences().edit().clear().commit();
-        this.restoreSocketClient();
-        this.restoreSocketConnectedFieldCount();
+//        this.restoreSocketClient();
+//        this.restoreSocketConnectedFieldCount();
     }
 
     @Override
@@ -238,91 +252,122 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     @Override
     public void onRefresh() {
         this.initData();
+        ((ScoresFragment) getParentFragment()).reconnectWebSocket();
     }
 
-    private synchronized void setupWebSocketClient() {
-        if (socketClient == null || (socketClient != null && socketClient.isClosed())) {
-            try {
-                socketClient = new HappySocketClient(new URI(BaseURLs.WS_SERVICE), new Draft_17(), new HappySocketClient.Callback() {
-                    @Override
-                    public void onMessage(String message) {
-                        ++onNewMessageCount;
-                        if (message.startsWith("CONNECTED")) {
-                            socketClient.send("SUBSCRIBE\nid:" + MD5Util.getMD5(
-                                    "android" + DeviceInfo.getDeviceId(getActivity())) + "\ndestination:/topic/USER.topic.app\n\n");
-                            return;
-                        } else if (message.startsWith("MESSAGE")) {
-                            String[] msgs = message.split("\n");
-                            String ws_json = msgs[msgs.length - 1];
-                            String type = "";
-                            try {
-                                JSONObject jsonObject = new JSONObject(ws_json);
-                                type = jsonObject.getString("type");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            if (!TextUtils.isEmpty(type)) {
-                                Message msg = Message.obtain();
-                                msg.obj = ws_json;
-                                msg.arg1 = Integer.parseInt(type);
-                                apiHandler.sendMessage(msg);
-                            }
-                        }
-                        socketClient.send("\n");
-                    }
+//    private synchronized void setupWebSocketClient() {
+//        if (socketClient == null || (socketClient != null && socketClient.isClosed())) {
+//            try {
+//                socketClient = new HappySocketClient(new URI(BaseURLs.WS_SERVICE), new Draft_17(), new HappySocketClient.Callback() {
+//                    @Override
+//                    public void onMessage(String message) {
+//                        ++onNewMessageCount;
+//                        if (message.startsWith("CONNECTED")) {
+//                            socketClient.send("SUBSCRIBE\nid:" + MD5Util.getMD5(
+//                                    "android" + DeviceInfo.getDeviceId(getActivity())) + "\ndestination:/topic/USER.topic.app\n\n");
+//                            return;
+//                        } else if (message.startsWith("MESSAGE")) {
+//                            String[] msgs = message.split("\n");
+//                            String ws_json = msgs[msgs.length - 1];
+//                            String type = "";
+//                            try {
+//                                JSONObject jsonObject = new JSONObject(ws_json);
+//                                type = jsonObject.getString("type");
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                            if (!TextUtils.isEmpty(type)) {
+//                                Message msg = Message.obtain();
+//                                msg.obj = ws_json;
+//                                msg.arg1 = Integer.parseInt(type);
+//                                apiHandler.sendMessage(msg);
+//                            }
+//                        }
+//                        socketClient.send("\n");
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception exception) {
+//                        RollBallFragment.this.restoreSocketClient();
+//                    }
+//
+//                    @Override
+//                    public void onClose(String message) {
+//                        RollBallFragment.this.restoreSocketClient();
+//                    }
+//                });
+//
+//                socketClient.connect();
+//            } catch (Exception e) {
+//                RollBallFragment.this.restoreSocketClient();
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
-                    @Override
-                    public void onError(Exception exception) {
-                        RollBallFragment.this.restoreSocketClient();
-                    }
+//    private synchronized void restoreSocketClient() {
+//        if (socketClient != null) {
+//            socketClient.close();
+//            socketClient = null;
+//        }
+//    }
 
-                    @Override
-                    public void onClose(String message) {
-                        RollBallFragment.this.restoreSocketClient();
-                    }
-                });
+    public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
+        if (adapter == null) {
+            return;
+        }
 
-                socketClient.connect();
-            } catch (Exception e) {
-                RollBallFragment.this.restoreSocketClient();
-                e.printStackTrace();
-            }
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(entity.text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (!TextUtils.isEmpty(type)) {
+            Message msg = Message.obtain();
+            msg.obj = entity.text;
+            msg.arg1 = Integer.parseInt(type);
+            apiHandler.sendMessage(msg);
         }
     }
 
-    private synchronized void restoreSocketClient() {
-        if (socketClient != null) {
-            socketClient.close();
-            socketClient = null;
-        }
+    public void connectFail() {
+        apiHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
+    }
+
+    public void connectSuccess() {
+        apiHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
     }
 
 
-    private void checkedOutWebsocketIsConnected() {
-        Observable.timer(25000, TimeUnit.MILLISECONDS).subscribe(new Action1<Long>() {
-            @Override
-            public void call(Long aLong) {
-                checkoutWebsocketIsConnectedNow = onOldMessageCount;
-                onOldMessageCount = onNewMessageCount;
-                // 一定是断开socket连接了
-                if (checkoutWebsocketIsConnectedNow == onOldMessageCount) {
-                    RollBallFragment.this.restoreSocketConnectedFieldCount();
-                    RollBallFragment.this.reConnectionWebSocket();
-                }
-                if (eventBus != null) RollBallFragment.this.checkedOutWebsocketIsConnected();
-            }
-        });
-    }
 
-    private void restoreSocketConnectedFieldCount() {
-        checkoutWebsocketIsConnectedNow = 0;
-        onOldMessageCount = 0;
-        onNewMessageCount = 0;
-    }
+
+//    private void checkedOutWebsocketIsConnected() {
+//        Observable.timer(25000, TimeUnit.MILLISECONDS).subscribe(new Action1<Long>() {
+//            @Override
+//            public void call(Long aLong) {
+//                checkoutWebsocketIsConnectedNow = onOldMessageCount;
+//                onOldMessageCount = onNewMessageCount;
+//                // 一定是断开socket连接了
+//                if (checkoutWebsocketIsConnectedNow == onOldMessageCount) {
+//                    RollBallFragment.this.restoreSocketConnectedFieldCount();
+//                    RollBallFragment.this.reConnectionWebSocket();
+//                }
+//                if (eventBus != null) RollBallFragment.this.checkedOutWebsocketIsConnected();
+//            }
+//        });
+//    }
+
+//    private void restoreSocketConnectedFieldCount() {
+//        checkoutWebsocketIsConnectedNow = 0;
+//        onOldMessageCount = 0;
+//        onNewMessageCount = 0;
+//    }
 
     private void reConnectionWebSocket() {
-        RollBallFragment.this.restoreSocketClient();
-        RollBallFragment.this.setupWebSocketClient();
+//        RollBallFragment.this.restoreSocketClient();
+//        RollBallFragment.this.setupWebSocketClient();
     }
 
     private void setupTitleAnimations(View titleView, int translationY, Animator.AnimatorListener animatorListener) {
@@ -479,6 +524,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                 }
                                 RollBallFragment.this.feedAdapter(feedAdapterLists);
                                 apiHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                                isLoadedData = true;
                             }
                         });
                     }
@@ -555,7 +601,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         return checkedLeagueCup;
     }
 
-    private static class ApiHandler extends Handler {
+    private class ApiHandler extends Handler {
         private WeakReference<RollBallFragment> weakReference;
 
         ApiHandler(RollBallFragment fragment) {
@@ -625,18 +671,32 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
                         break;
                     case VIEW_STATUS_NET_ERROR:
-                        fragment.titleContainer.setVisibility(View.GONE);
+                        if(isLoadedData){
+                            Toast.makeText(fragment.getContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                        }else{
+                            fragment.titleContainer.setVisibility(View.GONE);
+                            fragment.networkExceptionLayout.setVisibility(View.VISIBLE);
+                            fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
+                            fragment.adapter.setList(null);
+                            fragment.adapter.notifyDataSetChanged();
+                        }
                         fragment.swipeRefreshLayout.setRefreshing(false);
-                        fragment.networkExceptionLayout.setVisibility(View.VISIBLE);
-                        fragment.footballImmediateUnfocusLl.setVisibility(View.GONE);
-                        fragment.adapter.setList(null);
-                        fragment.adapter.notifyDataSetChanged();
                         break;
                     case VIEW_STATUS_FLITER_NO_DATA:
                         fragment.swipeRefreshLayout.setRefreshing(false);
                         fragment.networkExceptionLayout.setVisibility(View.GONE);
                         fragment.titleContainer.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.VISIBLE);
+                        break;
+                    case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
+                        if (fragment.mUnconectionLayout != null) {
+                            fragment.mUnconectionLayout.setVisibility(View.VISIBLE);
+                        }
+                        break;
+                    case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
+                        if (fragment.mUnconectionLayout != null) {
+                            fragment.mUnconectionLayout.setVisibility(View.GONE);
+                        }
                         break;
                 }
             }

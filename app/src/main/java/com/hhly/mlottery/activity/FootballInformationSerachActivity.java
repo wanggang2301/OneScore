@@ -15,6 +15,8 @@ import com.hhly.mlottery.adapter.FootaballSerachAdapter;
 import com.hhly.mlottery.bean.FootBallSerachBean;
 import com.hhly.mlottery.bean.FootballLeagueBean;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.List;
@@ -44,7 +46,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
     private TextView mNo_serach_tv;
     private static final String SEARCHKEYWORD= "searchKeyword";
     private ImageView mSearch_iv_delete;
-
+    public final static String LANGUAGE_SWITCHING="";
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.serach_layout);
@@ -52,7 +54,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
         //ButterKnife.bind(this);
         //BaseURLs.NEW_URL_API_HOST
 
-        RestAdapter retrofit = new RestAdapter.Builder().setEndpoint("http://192.168.10.242:8181/mlottery/core")
+        RestAdapter retrofit = new RestAdapter.Builder().setEndpoint(BaseURLs.NEW_URL_API_HOST)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter(new Gson()))
                 .build();
@@ -75,6 +77,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
                             mNo_serach_tv.setText(R.string.find_search);
                             return true;
                         }else{
+                            mNo_serach_tv.setVisibility(View.GONE);
                             if (basketballInforSerachAdapter!=null){
                                 //无搜索  隐藏删除键
                                 mSearch_iv_delete.setVisibility(View.GONE);
@@ -90,7 +93,7 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
                     @Override public rx.Observable<FootBallSerachBean> call(CharSequence charSequence) {
                         // 搜索
 
-                        return service.searchProdcut("zh", charSequence.toString());
+                        return service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
                     }
                 })
                 // .retryWhen(new RetryWithConnectivityIncremental(BasketballInformationSerachActivity.this, 5, 15, TimeUnit.MILLISECONDS))
@@ -208,10 +211,9 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
 
         }
     }
-
     interface SearchService {
         //@GET("/sug") Observable<Data> searchProdcut(@Query("code") String code, @Query("q") String keyword);
-        @GET("/androidLeagueData.searchMatchLeagues.do") rx.Observable<FootBallSerachBean> searchProdcut(@Query("lang") String code, @Query("matchStr") String keyword);
+        @GET(BaseURLs.SEARCHMATCHLEAGUES) rx.Observable<FootBallSerachBean> searchProdcut(@Query("lang") String code, @Query("matchStr") String keyword);
     }
 
 }

@@ -186,6 +186,66 @@ public class ComprehensiveVideoFragment extends Fragment  implements View.OnClic
                             childDataList.add(groupMatchVideoList.get(i).sptVideoMoreInfoDtoList);
 
                         }
+                        for (int j = 0; j <groupMatchVideoList.size() ; j++) {
+                            for (int k = 0; k < groupMatchVideoList.get(j).sptVideoMoreInfoDtoList.size(); k++) {
+                                NewMatchVideoinfo.MatchVideoBean.SptVideoMoreInfoDtoListBean bean= groupMatchVideoList.get(j).sptVideoMoreInfoDtoList.get(k);
+                           /*
+                                if("0".equals(bean.statusOrigin)){//没直播
+
+                                    if(bean.matchKind==1 || bean.matchKind ==2){
+                                        childDataList.get(j).get(k).liveAndBFZ=2;
+                                    }else
+                                        childDataList.get(j).get(k).liveAndBFZ=1;
+                                }
+                                else if(!"0".equals(bean.statusOrigin)){//直播中
+
+                                    if(bean.matchKind==1 || bean.matchKind ==2){
+                                        //篮球足球
+                                        childDataList.get(j).get(k).liveAndBFZ=4;
+                                    }else
+                                        //综合
+                                        childDataList.get(j).get(k).liveAndBFZ=3;
+                                }*/
+                                if("0".equals(bean.displayType)){   //对战
+                                    if("0".equals(bean.statusOrigin)){//没直播
+
+                                        if(bean.matchKind==1 || bean.matchKind ==2){
+                                            childDataList.get(j).get(k).liveAndBFZ=8;
+                                        }else
+                                            childDataList.get(j).get(k).liveAndBFZ=7;
+                                    }
+                                    else if(!"0".equals(bean.statusOrigin)){//直播中
+
+                                        if(bean.matchKind==1 || bean.matchKind ==2){
+                                            //篮球足球
+                                            childDataList.get(j).get(k).liveAndBFZ=6;
+                                        }else
+                                            //综合
+                                            childDataList.get(j).get(k).liveAndBFZ=5;
+                                    }
+
+                                }else if("1".equals(bean.displayType)){   //非对战
+                                    if("0".equals(bean.statusOrigin)){//没直播
+                                        if(bean.matchKind==1 || bean.matchKind ==2){
+                                            childDataList.get(j).get(k).liveAndBFZ=2;
+                                        }else
+                                            childDataList.get(j).get(k).liveAndBFZ=1;
+                                    }
+                                    else if(!"0".equals(bean.statusOrigin)){//直播中
+
+                                        if(bean.matchKind==1 || bean.matchKind ==2){
+                                            //篮球足球
+                                            childDataList.get(j).get(k).liveAndBFZ=4;
+                                        }else
+                                            //综合
+                                            childDataList.get(j).get(k).liveAndBFZ=3;
+                                    }
+
+                                }
+                            }
+                        }
+
+
                         pheadapter = new PinnedHeaderExpandableAdapter(childDataList, groupDataList, mContext, explistview_live, stPreurl, stFix);
                         explistview_live.setAdapter(pheadapter);
                         pheadapter.notifyDataSetChanged();

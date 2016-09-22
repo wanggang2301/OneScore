@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.PLVideoTextureActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.CounselFragmentLvAdapter;
 import com.hhly.mlottery.adapter.CounselPageAdapter;
@@ -373,59 +374,68 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
         boolean isRelateMatch;//是否关联比赛
         String ThirdId;//联赛id
         int type;//联赛id类型  1篮球 2足球
-        if (index == 0) {
-            if (mAdsList != null && mAdsList.size() != 0) {//有轮播图
-                //因为头部下标是0，item下标变成从1开始，所以要减去1
-                jumpurl = mInfosList.get(position - 1).getInfoUrl();
-                title = mInfosList.get(position - 1).getTitle();
-                subtitle = mInfosList.get(position - 1).getSubTitle();
-                imageurl = mInfosList.get(position - 1).getPicUrl();
+        if(index!=0&&mInfos.size()!=0&&mInfos.get(position).getIsvideonews()!=null&&mInfos.get(position).getIsvideonews().equals("1")){ //视频的点击播放
 
-                ThirdId = mInfosList.get(position - 1).getThirdId();
-                isRelateMatch = mInfosList.get(position - 1).isRelateMatch();
-                type = mInfosList.get(position - 1).getType();
-            } else {//没有轮播图
-                jumpurl = mInfosList.get(position).getInfoUrl();
-                title = mInfosList.get(position).getTitle();
-                subtitle = mInfosList.get(position).getSubTitle();
-                imageurl = mInfosList.get(position).getPicUrl();
+            Intent intent1=new Intent(mContext, PLVideoTextureActivity.class);
+            intent1.putExtra("videoPath",mInfos.get(position).getVideourl());
+            mContext.startActivity(intent1);
+        }
+        else{ //除了视频的，按照之前的逻辑
+            if (index == 0) {
+                if (mAdsList != null && mAdsList.size() != 0) {//有轮播图
+                    //因为头部下标是0，item下标变成从1开始，所以要减去1
+                    jumpurl = mInfosList.get(position - 1).getInfoUrl();
+                    title = mInfosList.get(position - 1).getTitle();
+                    subtitle = mInfosList.get(position - 1).getSubTitle();
+                    imageurl = mInfosList.get(position - 1).getPicUrl();
 
-                ThirdId = mInfosList.get(position).getThirdId();
-                isRelateMatch = mInfosList.get(position).isRelateMatch();
-                type = mInfosList.get(position).getType();
-            }
+                    ThirdId = mInfosList.get(position - 1).getThirdId();
+                    isRelateMatch = mInfosList.get(position - 1).isRelateMatch();
+                    type = mInfosList.get(position - 1).getType();
+                } else {//没有轮播图
+                    jumpurl = mInfosList.get(position).getInfoUrl();
+                    title = mInfosList.get(position).getTitle();
+                    subtitle = mInfosList.get(position).getSubTitle();
+                    imageurl = mInfosList.get(position).getPicUrl();
+
+                    ThirdId = mInfosList.get(position).getThirdId();
+                    isRelateMatch = mInfosList.get(position).isRelateMatch();
+                    type = mInfosList.get(position).getType();
+                }
 
 
-        } else {
-            if (mInfos.size() != 0) {
-                jumpurl = mInfos.get(position).getInfoUrl();
-                title = mInfos.get(position).getTitle();
-                subtitle = mInfos.get(position).getSubTitle();
-                imageurl = mInfos.get(position).getPicUrl();
-                ThirdId = mInfos.get(position).getThirdId();
-                isRelateMatch = mInfos.get(position).isRelateMatch();
-                type = mInfos.get(position).getType();
             } else {
-                jumpurl = "";
-                title = "";
-                subtitle = "";
-                imageurl = "";
-                ThirdId = "";
-                isRelateMatch = false;
-                type = 1;
-            }
+                if (mInfos.size() != 0) {
+                    jumpurl = mInfos.get(position).getInfoUrl();
+                    title = mInfos.get(position).getTitle();
+                    subtitle = mInfos.get(position).getSubTitle();
+                    imageurl = mInfos.get(position).getPicUrl();
+                    ThirdId = mInfos.get(position).getThirdId();
+                    isRelateMatch = mInfos.get(position).isRelateMatch();
+                    type = mInfos.get(position).getType();
+                } else {
+                    jumpurl = "";
+                    title = "";
+                    subtitle = "";
+                    imageurl = "";
+                    ThirdId = "";
+                    isRelateMatch = false;
+                    type = 1;
+                }
 
+            }
+            if (isRelateMatch) {
+                intent.putExtra(INTENT_PARAM_THIRDID, ThirdId);
+                intent.putExtra(INTENT_PARAM_TYPE, type);
+            }
+            intent.putExtra(INTENT_PARAM_TITLE, mHeadName);//头部名称
+            intent.putExtra(INTENT_PARAM_JUMPURL, jumpurl);
+            intent.putExtra("title", title);
+            intent.putExtra("subtitle", subtitle);
+            intent.putExtra("imageurl", imageurl);
+            mContext.startActivity(intent);
         }
-        if (isRelateMatch) {
-            intent.putExtra(INTENT_PARAM_THIRDID, ThirdId);
-            intent.putExtra(INTENT_PARAM_TYPE, type);
-        }
-        intent.putExtra(INTENT_PARAM_TITLE, mHeadName);//头部名称
-        intent.putExtra(INTENT_PARAM_JUMPURL, jumpurl);
-        intent.putExtra("title", title);
-        intent.putExtra("subtitle", subtitle);
-        intent.putExtra("imageurl", imageurl);
-        mContext.startActivity(intent);
+
     }
 
     //添加图片轮播功能

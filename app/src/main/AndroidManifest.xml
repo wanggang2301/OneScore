@@ -56,13 +56,15 @@
             android:theme="@style/AppTheme.BlackStatusBar.ColorGreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!--情报中心-->
-        <activity android:name=".activity.InfoCenterActivity"
-            android:screenOrientation="portrait"/>
+        <!-- 情报中心 -->
+        <activity
+            android:name=".activity.InfoCenterActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 引导页 -->
         <activity
@@ -331,18 +333,24 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.FootballDatabaseActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LeagueStatisticsTodayActivity"
             android:screenOrientation="portrait">
-            <!--  <intent-filter>
+
+            <!--
+              <intent-filter>
                   <action android:name="android.intent.action.MAIN" />
                   <category android:name="android.intent.category.LAUNCHER" />
-              </intent-filter>-->
+              </intent-filter>
+            -->
         </activity>
+        <!--独家访谈界面-->
+        <activity android:name=".activity.PLVideoTextureActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

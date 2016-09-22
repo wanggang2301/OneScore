@@ -23,6 +23,8 @@ import com.hhly.mlottery.activity.BasketballInformationActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
+import com.hhly.mlottery.base.BaseWebSocketFragment;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.BallSelectArrayAdapter;
@@ -38,7 +40,7 @@ import java.util.List;
  * @Description: 篮球比分
  */
 @SuppressLint("NewApi")
-public class BasketScoresFragment extends Fragment implements View.OnClickListener {
+public class BasketScoresFragment extends BaseWebSocketFragment implements View.OnClickListener {
 
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
@@ -109,6 +111,13 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.basketball");
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getActivity();
         mView = View.inflate(mContext, R.layout.frage_new_basketball, null);
@@ -129,6 +138,7 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
                 if (mContext.getResources().getString(R.string.football_frame_txt).equals(mItems[position])) {// 选择足球
                     ((FootballActivity) mContext).ly_tab_bar.setVisibility(View.VISIBLE);
                     ((FootballActivity) mContext).switchFragment(0);
+                    closeWebSocket();
                 }
             }
 
@@ -190,6 +200,7 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mViewPager.setCurrentItem(currentFragmentId);
+        mViewPager.setOffscreenPageLimit(4);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -248,7 +259,37 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
     @Override
     public void onDestroy() {
         super.onDestroy();
+
     }
+
+    @Override
+    protected void onTextResult(String text) {
+        ((ImmedBasketballFragment)fragments.get(0)).handleSocketMessage(text);
+        ((FocusBasketballFragment)fragments.get(3)).handleSocketMessage(text);
+
+
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
+    }
+
+    public void reconnectWebSocket() {
+        connectWebSocket();
+    }
+
+
 
 
     @Override
@@ -561,6 +602,9 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
                 L.d("xxx", "FocusFragment>>>显示");
             }
         }
+        if (getActivity() != null && ((FootballActivity) mContext).fragmentIndex == FootballActivity.BASKET_FRAGMENT) {
+            connectWebSocket();
+        }
     }
 
     @Override
@@ -598,5 +642,11 @@ public class BasketScoresFragment extends Fragment implements View.OnClickListen
 //            L.d("xxx", ">>>篮球>>>>show");
             onResume();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 }

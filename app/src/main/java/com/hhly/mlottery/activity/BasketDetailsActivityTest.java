@@ -83,7 +83,7 @@ import io.rong.imkit.RongIM;
  *         Created by A on 2016/3/21.
  * @Description: 篮球详情的 Activity
  */
-public class BasketDetailsActivityTest extends AppCompatActivity implements ExactSwipeRefrashLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener, HappySocketClient.SocketResponseErrorListener, HappySocketClient.SocketResponseCloseListener, HappySocketClient.SocketResponseMessageListener {
+public class BasketDetailsActivityTest extends BaseWebSocketActivity implements ExactSwipeRefrashLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
     public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     public final static String BASKET_THIRD_ID = "thirdId";
     public final static String BASKET_MATCH_STATUS = "MatchStatus";
@@ -127,10 +127,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     BasketOddsFragment mOddsEuro;
     BasketOddsFragment mOddsLet;
     BasketOddsFragment mOddsSize;
-    private HappySocketClient mSocketClient;//客户端  socket;
-    private URI mSocketUri = null;
+//    private HappySocketClient mSocketClient;//客户端  socket;
+//    private URI mSocketUri = null;
 
-    private String TAG = BasketDetailsActivityTest.class.getName();
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -225,11 +224,6 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basket_details_activity_test);
-        /**不统计当前的Activity界面，只统计Fragment界面*/
-        MobclickAgent.openActivityDurationTrack(false);
-        mContext = this;
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mLeagueId = getIntent().getExtras().getString(BASKET_MATCH_LEAGUEID);
@@ -247,6 +241,14 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
 
 //            L.d("BASKET_MATCH_STATUS>>>>>>", mMatchStatus);
         }
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.basketball.score." + mThirdId);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_basket_details_activity_test);
+        /**不统计当前的Activity界面，只统计Fragment界面*/
+        MobclickAgent.openActivityDurationTrack(false);
+        mContext = this;
+
 
         EventBus.getDefault().register(this);//注册EventBus
         RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
@@ -275,11 +277,11 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         mImageLoader.init(config);
 
 
-        try {
-            mSocketUri = new URI(BaseURLs.WS_SERVICE);//地址
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            mSocketUri = new URI(BaseURLs.WS_SERVICE);//地址
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
 
         initView();
         setListener();
@@ -297,69 +299,69 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
         });
     }
 
-    /**
-     * 开启socket
-     */
-    private synchronized void startWebsocket() {
-        if (mSocketClient != null) {
-            if (!mSocketClient.isClosed()) {
-                mSocketClient.close();
-            }
-
-            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
-            mSocketClient.setSocketResponseMessageListener(this);
-            mSocketClient.setSocketResponseCloseListener(this);
-            mSocketClient.setSocketResponseErrorListener(this);
-            try {
-                mSocketClient.connect();
-            } catch (IllegalThreadStateException e) {
-                mSocketClient.close();
-            }
-        } else {
-            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
-            mSocketClient.setSocketResponseMessageListener(this);
-            mSocketClient.setSocketResponseCloseListener(this);
-            mSocketClient.setSocketResponseErrorListener(this);
-            try {
-                mSocketClient.connect();
-            } catch (IllegalThreadStateException e) {
-                mSocketClient.close();
-            }
-        }
-
-
-    }
+//    /**
+//     * 开启socket
+//     */
+//    private synchronized void startWebsocket() {
+//        if (mSocketClient != null) {
+//            if (!mSocketClient.isClosed()) {
+//                mSocketClient.close();
+//            }
+//
+//            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
+//            mSocketClient.setSocketResponseMessageListener(this);
+//            mSocketClient.setSocketResponseCloseListener(this);
+//            mSocketClient.setSocketResponseErrorListener(this);
+//            try {
+//                mSocketClient.connect();
+//            } catch (IllegalThreadStateException e) {
+//                mSocketClient.close();
+//            }
+//        } else {
+//            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
+//            mSocketClient.setSocketResponseMessageListener(this);
+//            mSocketClient.setSocketResponseCloseListener(this);
+//            mSocketClient.setSocketResponseErrorListener(this);
+//            try {
+//                mSocketClient.connect();
+//            } catch (IllegalThreadStateException e) {
+//                mSocketClient.close();
+//            }
+//        }
+//
+//
+//    }
 
     private long pushStartTime;
 
-    private Timer computeWebSocketConnTimer = new Timer();
+//    private Timer computeWebSocketConnTimer = new Timer();
 
-    /**
-     * 检测socket连接状态。
-     */
-    private void computeWebSocket() {
-        TimerTask tt = new TimerTask() {
-            @Override
-            public void run() {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                L.i(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + mSocketClient.isOpen() + ",Connecting=" + mSocketClient.isConnecting() + ",Close=" + mSocketClient.isClosed() + ",Closing=" + mSocketClient.isClosing());
-                long pushEndTime = System.currentTimeMillis();
-                if ((pushEndTime - pushStartTime) >= 30000) {
-                    L.i(TAG, "重新启动socket");
-                    if (mSocketClient.isClosed()) {
-                        startWebsocket();
-                    }
-
-                }
-            }
-        };
-        try {
-            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
-        } catch (Exception e) {
-
-        }
-
-    }
+//    /**
+//     * 检测socket连接状态。
+//     */
+//    private void computeWebSocket() {
+//        TimerTask tt = new TimerTask() {
+//            @Override
+//            public void run() {
+//                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+//                L.i(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + mSocketClient.isOpen() + ",Connecting=" + mSocketClient.isConnecting() + ",Close=" + mSocketClient.isClosed() + ",Closing=" + mSocketClient.isClosing());
+//                long pushEndTime = System.currentTimeMillis();
+//                if ((pushEndTime - pushStartTime) >= 30000) {
+//                    L.i(TAG, "重新启动socket");
+//                    if (mSocketClient.isClosed()) {
+//                        startWebsocket();
+//                    }
+//
+//                }
+//            }
+//        };
+//        try {
+//            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
+//        } catch (Exception e) {
+//
+//        }
+//
+//    }
 
 
     public String getmThirdId() {
@@ -501,13 +503,48 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     protected void onDestroy() { //关闭socket
         super.onDestroy();
         isExit = true;
-        if (mSocketClient != null) {
-            if (!mSocketClient.isClosed()) {
-                mSocketClient.close();
-            }
-        }
-        computeWebSocketConnTimer.cancel();
+//        if (mSocketClient != null) {
+//            if (!mSocketClient.isClosed()) {
+//                mSocketClient.close();
+//            }
+//        }
+//        computeWebSocketConnTimer.cancel();
         EventBus.getDefault().unregister(this);//取消注册EventBus
+    }
+
+    @Override
+    protected void onTextResult(String text) {
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!"".equals(type)) {
+            Message msg = Message.obtain();
+            msg.obj = text;
+            msg.arg1 = Integer.parseInt(type);
+            L.e(TAG, type + "____________________");
+
+            mSocketHandler.sendMessage(msg);
+        }
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
     }
 
     /**
@@ -597,8 +634,9 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                      */
                     setApos();
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
-                        startWebsocket();
-                        computeWebSocket();
+//                        startWebsocket();
+//                        computeWebSocket();
+                        connectWebSocket();
                     }
                 }
             }
@@ -635,6 +673,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                 }
                 break;
             case R.id.iv_join_room_basket:
+                MobclickAgent.onEvent(mContext, "Basketball_Join_Room");
                 joinRoom();
                 break;
         }
@@ -649,15 +688,15 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
             iv_join_room_basket.setVisibility(View.GONE);
 
             // 判断融云服务器是否连接OK
-            L.d("xxx","融云服务器是否连接::" + RongIM.getInstance().getCurrentConnectionStatus());
-            if(!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))){
+            L.d("xxx", "融云服务器是否连接::" + RongIM.getInstance().getCurrentConnectionStatus());
+            if (!"CONNECTED".equals(String.valueOf(RongIM.getInstance().getCurrentConnectionStatus()))) {
                 RongYunUtils.initRongIMConnect(mContext);// 连接融云服务器
-                L.d("xxx","融云服务器重新连接 。。。。。。");
+                L.d("xxx", "融云服务器重新连接 。。。。。。");
             }
 
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
-                appBarLayout.setExpanded(true);// 显示头部内容
+//                appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
             } else {
                 new Thread() {
@@ -671,7 +710,7 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
                                 @Override
                                 public void run() {
                                 pd.dismiss();
-                                    appBarLayout.setExpanded(true);// 显示头部内容
+//                                    appBarLayout.setExpanded(true);// 显示头部内容
                                     RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                                 }
                             });
@@ -1042,49 +1081,49 @@ public class BasketDetailsActivityTest extends AppCompatActivity implements Exac
     }
 
 
-    @Override
-    public void onClose(String message) {
+//    @Override
+//    public void onClose(String message) {
+//
+//    }
+//
+//    @Override
+//    public void onError(Exception exception) {
+//
+//    }
 
-    }
-
-    @Override
-    public void onError(Exception exception) {
-
-    }
-
-    @Override
-    public void onMessage(String message) {
-        L.w(TAG, "message = " + message);
-
-        pushStartTime = System.currentTimeMillis(); // 记录起始时间
-
-        if (message.startsWith("CONNECTED")) {
-            String id = "android" + DeviceInfo.getDeviceId(this);
-            id = MD5Util.getMD5(id);
-            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.basketball.score." + mThirdId + "\n\n");
-            return;
-        } else if (message.startsWith("MESSAGE")) {
-            String[] msgs = message.split("\n");
-            String ws_json = msgs[msgs.length - 1];
-            String type = "";
-            try {
-                JSONObject jsonObject = new JSONObject(ws_json);
-                type = jsonObject.getString("type");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (!"".equals(type)) {
-                Message msg = Message.obtain();
-                msg.obj = ws_json;
-                msg.arg1 = Integer.parseInt(type);
-                L.e(TAG, type + "____________________");
-
-                mSocketHandler.sendMessage(msg);
-            }
-        }
-        mSocketClient.send("\n");//你来我往的心跳。。。
-    }
+//    @Override
+//    public void onMessage(String message) {
+//        L.w(TAG, "message = " + message);
+//
+//        pushStartTime = System.currentTimeMillis(); // 记录起始时间
+//
+//        if (message.startsWith("CONNECTED")) {
+//            String id = "android" + DeviceInfo.getDeviceId(this);
+//            id = MD5Util.getMD5(id);
+//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.basketball.score." + mThirdId + "\n\n");
+//            return;
+//        } else if (message.startsWith("MESSAGE")) {
+//            String[] msgs = message.split("\n");
+//            String ws_json = msgs[msgs.length - 1];
+//            String type = "";
+//            try {
+//                JSONObject jsonObject = new JSONObject(ws_json);
+//                type = jsonObject.getString("type");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (!"".equals(type)) {
+//                Message msg = Message.obtain();
+//                msg.obj = ws_json;
+//                msg.arg1 = Integer.parseInt(type);
+//                L.e(TAG, type + "____________________");
+//
+//                mSocketHandler.sendMessage(msg);
+//            }
+//        }
+//        mSocketClient.send("\n");//你来我往的心跳。。。
+//    }
 
     Handler mSocketHandler = new Handler() {
         @Override

@@ -25,11 +25,11 @@
             android:scrollbars="vertical"
             android:scrollingCache="true" />
 
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
     <TextView
+        android:layout_marginTop="100dp"
         android:id="@+id/live_no_data_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

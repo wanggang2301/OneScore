@@ -184,6 +184,35 @@ public class CounselBean {
             private String lastModifyTime;
             private boolean relateMatch;
             private String thirdId;
+            private String videourl;
+            private String isvideonews;
+
+            public boolean isPlaying() {
+                return isPlaying;
+            }
+
+            public void setPlaying(boolean playing) {
+                isPlaying = playing;
+            }
+
+            private boolean isPlaying = false;
+
+            public String getIsvideonews() {
+                return isvideonews;
+            }
+
+            public void setIsvideonews(String isvideonews) {
+                this.isvideonews = isvideonews;
+            }
+
+            public String getVideourl() {
+                return videourl;
+            }
+
+            public void setVideourl(String videourl) {
+                this.videourl = videourl;
+            }
+
             private int type;//id类型 1篮球 2
 
             public int getType() {
@@ -265,6 +294,8 @@ public class CounselBean {
             public void setRelateMatch(boolean relateMatch) {
                 this.relateMatch = relateMatch;
             }
+
+
         }
     }
 }

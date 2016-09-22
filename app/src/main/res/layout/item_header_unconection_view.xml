@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="#F9EEB6"
     android:id="@+id/unconection_layout"
     android:visibility="gone"
@@ -13,29 +13,29 @@
         android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
         android:src="@mipmap/unconection_warn"
-        android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_centerVertical="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         />
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/immediate_unconection"
+		android:layout_weight="1"
+		/>
+
     
-    <TextView 
+    <ImageView
+		android:id="@+id/unconection_image2"
         android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_toRightOf="@id/unconection_image"
-    	android:text="@string/immediate_unconection"
-    	android:layout_centerVertical="true"
-        />
-    
-    <ImageView 
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_alignParentRight="true"
-    	android:background="@mipmap/unconection_next"
+    	android:layout_height="match_parent"
+    	android:src="@mipmap/unconection_next"
     	android:layout_marginRight="5dp"
-    	android:layout_centerVertical="true"
+		android:scaleType="centerInside"
         />
 
-</RelativeLayout>
+
+
+</LinearLayout>

@@ -15,6 +15,7 @@ import com.hhly.mlottery.adapter.BasketballInforSerachAdapter;
 import com.hhly.mlottery.bean.BasketSerach;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.List;
@@ -75,10 +76,12 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                             mNo_serach_tv.setText(R.string.find_search);
                             return true;
                         }else{
+                            mNo_serach_tv.setVisibility(View.GONE);
                             if (basketballInforSerachAdapter!=null){
                                 //无搜索  隐藏删除键
                                 mSearch_iv_delete.setVisibility(View.GONE);
                                 basketballInforSerachAdapter.clearData();
+
                             }
 
                             return false;
@@ -89,7 +92,7 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                 .switchMap(new Func1<CharSequence, rx.Observable<BasketSerach>>() {
                     @Override public rx.Observable<BasketSerach> call(CharSequence charSequence) {
                         // 搜索
-                        return service.searchProdcut("zh", charSequence.toString());
+                        return service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
                     }
                 })
                 // .retryWhen(new RetryWithConnectivityIncremental(BasketballInformationSerachActivity.this, 5, 15, TimeUnit.MILLISECONDS))
@@ -139,7 +142,9 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                             // showpop(resultListBeen);
                         }
                     }
+
                 });
+
     }
 
     private void initView() {

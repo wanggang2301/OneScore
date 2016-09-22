@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -20,12 +22,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.IsTestLoginBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AccessTokenKeeper;
@@ -79,6 +83,49 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public static IWXAPI mApi;
     private String mWeixincode;
 
+    private final static int ALL_CLOSE = 1111;
+    private final static int QQ_CLOSE = 111;
+    private final static int WEIXIN_CLOSE = 222;
+    private final static int SINA_CLOSE = 333;
+    private final static int QQ_DISPLAY = 11;
+    private final static int WEIXIN_DISPLAY = 22;
+    private final static int SINA_DISPLAY = 33;
+    private Handler mViewHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case QQ_DISPLAY:
+                    mLogin_qq.setVisibility(View.VISIBLE);
+                    break;
+                case WEIXIN_DISPLAY:
+                    mLogin_weixin.setVisibility(View.VISIBLE);
+                    break;
+                case SINA_DISPLAY:
+                    mLogin_sina.setVisibility(View.VISIBLE);
+                    break;
+                case QQ_CLOSE:
+                    mLogin_qq.setVisibility(View.GONE);
+                    break;
+                case WEIXIN_CLOSE:
+                    mLogin_weixin.setVisibility(View.GONE);
+                    break;
+
+                case SINA_CLOSE:
+                    mLogin_sina.setVisibility(View.GONE);
+                    break;
+                case ALL_CLOSE:
+                    mLogin_display.setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    private LinearLayout mLogin_display;
+    private LinearLayout mLogin_three;
+    private ImageView mLogin_qq;
+    private ImageView mLogin_sina;
+    private ImageView mLogin_weixin;
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +137,51 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         initView();
+        TestingIsLogin();
+    }
+
+    private void TestingIsLogin() {
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.TESTINGISLOGIN, new VolleyContentFast.ResponseSuccessListener<IsTestLoginBean>() {
+            @Override
+            public void onResponse(IsTestLoginBean register) {
+
+
+                if(register==null){
+
+                }else {
+
+                    if (register.data.qq == 1) {
+                        mViewHandler.sendEmptyMessage(QQ_DISPLAY);
+                    }else{
+                        mViewHandler.sendEmptyMessage(QQ_CLOSE);
+                    }
+                    if (register.data.weChat == 1){
+                        mViewHandler.sendEmptyMessage(WEIXIN_DISPLAY);
+                    }else{
+                        mViewHandler.sendEmptyMessage(WEIXIN_CLOSE);
+                    }
+                    if (register.data.weibo == 1){
+                        mViewHandler.sendEmptyMessage(SINA_DISPLAY);
+                    }else{
+                        mViewHandler.sendEmptyMessage(SINA_CLOSE);
+                    }
+                    if(register.data.qq != 1&&register.data.weibo != 1&&register.data.weChat != 1){
+                        mViewHandler.sendEmptyMessage(ALL_CLOSE);
+                    }
+                }
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                progressBar.dismiss();
+                L.e(TAG, " 请求失败");
+                // UiUtils.toast(LoginActivity.this, exception.toString());
+                mViewHandler.sendEmptyMessage(ALL_CLOSE);
+            }
+        }, IsTestLoginBean.class);
+
     }
 
 
@@ -150,12 +242,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.tv_register).setOnClickListener(this);
 
         //第三方qq登录
-        findViewById(R.id.login_qq).setOnClickListener(this);
+        mLogin_qq = (ImageView) findViewById(R.id.login_qq);
+        mLogin_qq.setOnClickListener(this);
         findViewById(R.id.tv_forgetpw).setOnClickListener(this);
         //第三方新浪微博登录
-        findViewById(R.id.login_sina).setOnClickListener(this);
+        mLogin_sina = (ImageView) findViewById(R.id.login_sina);
+        mLogin_sina.setOnClickListener(this);
         //第三方微信登录
-        findViewById(R.id.login_weixin).setOnClickListener(this);
+        mLogin_weixin = (ImageView) findViewById(R.id.login_weixin);
+        mLogin_weixin.setOnClickListener(this);
+
+        //第三方登录图标显示
+        mLogin_display = (LinearLayout) findViewById(R.id.login_display);
+        mLogin_three = (LinearLayout) findViewById(R.id.login_three);
     }
 
     @Override
@@ -314,9 +413,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         @Override
         public void onComplete(Bundle bundle) {
 
-
             if (bundle == null) {
-
                 return;
             }
 
@@ -343,7 +440,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 // 2. 当您注册的应用程序包名与签名不正确时；
                 // 3. 当您在平台上注册的包名和签名与您当前测试的应用的包名和签名不匹配时。
                 // String code = values.getString("code");
-
             }
 
         }
@@ -470,7 +566,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String userName = et_username.getText().toString();
         String passWord = et_password.getText().toString();
 
-        if (UiUtils.isMobileNO(this, userName)) {
             if (UiUtils.checkPassword_JustLength(this, passWord)) {
                 // 登录
                 progressBar.show();
@@ -522,7 +617,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     }
                 }, Register.class);
             }
-        }
     }
 
     private void sendUserInfoToServer(Register register) {

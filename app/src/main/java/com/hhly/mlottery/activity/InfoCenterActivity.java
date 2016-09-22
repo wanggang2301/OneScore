@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,6 +45,8 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
     private InfoCenterPW mInfoCenterPW;
     private LinearLayout ll_error;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ImageView iv_left;
+    private ImageView iv_right;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,8 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
                     if (jsonObject.result == 200) {
 
                         mRecyclerView.setVisibility(View.VISIBLE);
+                        iv_left.setVisibility(View.VISIBLE);
+                        iv_right.setVisibility(View.VISIBLE);
                         ll_error.setVisibility(View.GONE);
 
                         mInfoCenterBean = jsonObject;
@@ -107,6 +112,8 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                iv_left.setVisibility(View.GONE);
+                iv_right.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.GONE);
                 ll_error.setVisibility(View.VISIBLE);
             }
@@ -129,10 +136,12 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
         title.setText(R.string.title_info_center);
 
         findViewById(R.id.public_img_back).setOnClickListener(this);
-        findViewById(R.id.iv_left).setOnClickListener(this);
-        findViewById(R.id.iv_right).setOnClickListener(this);
         findViewById(R.id.tv_current_reLoading).setOnClickListener(this);
 
+        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left.setOnClickListener(this);
+        iv_right = (ImageView) findViewById(R.id.iv_right);
+        iv_right.setOnClickListener(this);
         ll_error = (LinearLayout) findViewById(R.id.ll_loading_error);
         rl_top = (RelativeLayout) findViewById(R.id.rl_top);
         tv_data_content = (TextView) findViewById(R.id.tv_data_content);
@@ -168,14 +177,15 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
                 if (currentIndexDate > 0) {
                     currentIndexDate--;
                 }
+                showSelectInfo(currentIndexDate);
                 break;
             case R.id.iv_right:
                 if (currentIndexDate < mInfoCenterBean.intelligences.size() - 1) {
                     currentIndexDate++;
                 }
+                showSelectInfo(currentIndexDate);
                 break;
         }
-        showSelectInfo(currentIndexDate);
     }
 
     public void showSelectInfo(int indexDate) {
