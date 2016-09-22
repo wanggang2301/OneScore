@@ -915,6 +915,7 @@
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">对不起,找不到相关信息</string>
+    <string name="network_suck">网络不给力......</string>
     <string name="find_search">正在查找......</string>
     <string name="skip">"秒 | 跳过"</string>
     <!--1.1.2 begin-->
