@@ -160,13 +160,15 @@ public abstract class BaseWebSocketFragment extends Fragment {
      */
     private void connect() {
         try {
-            synchronized (ws){
-                if (ws.getState().equals(WebSocketState.CREATED)) {
-                    L.d(TAG, "before connect ws.getState() = " + ws.getState());
-                    ws.connect();
-                    L.d(TAG, "after connect ws.getState() = " + ws.getState());
-                } else if (ws.getState().equals(WebSocketState.CLOSED)) {
-                    ws = ws.recreate().connect();
+            if (ws != null) {
+                synchronized (ws) {
+                    if (ws.getState().equals(WebSocketState.CREATED)) {
+                        L.d(TAG, "before connect ws.getState() = " + ws.getState());
+                        ws.connect();
+                        L.d(TAG, "after connect ws.getState() = " + ws.getState());
+                    } else if (ws.getState().equals(WebSocketState.CLOSED)) {
+                        ws = ws.recreate().connect();
+                    }
                 }
             }
         } catch (WebSocketException | IOException e) {

@@ -48,7 +48,7 @@ public class BaseActivity extends FragmentActivity {
         // 获得window最顶层的View
         view.setBackgroundColor(Color.WHITE);// 设置全局背景颜色
 
-        AppManager.getAppManager().addActivity(this);
+//        AppManager.getAppManager().addActivity(this);
         pd = new ProgressDialog(this);
         pd.setMessage("玩命加载中...");
         pd.setCanceledOnTouchOutside(false);
@@ -158,14 +158,14 @@ public class BaseActivity extends FragmentActivity {
 
     @Override
     protected void onDestroy() {
-        AppManager.getAppManager().finishActivity(this);
+//        AppManager.getAppManager().finishActivity(this);
         super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        AppManager.getAppManager().finishActivity(this);
+//        AppManager.getAppManager().finishActivity(this);
     }
 
     @Override

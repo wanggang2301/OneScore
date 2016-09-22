@@ -364,7 +364,8 @@ public class HomeLanguageActivity extends BaseActivity implements View.OnClickLi
                     }
                     MyApp.isLanguage = PreferenceUtil.getString("language","");
                     MyApp.mResources.updateConfiguration(MyApp.mConfiguration, MyApp.mDm);
-                    AppManager.getAppManager().finishAllActivity();// 结束所有任务栈
+//                    AppManager.getAppManager().finishAllActivity();// 结束所有任务栈
+                    System.exit(0);
                     Intent intent = new Intent();
                     intent.setClass(this,HomePagerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

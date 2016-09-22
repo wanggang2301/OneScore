@@ -393,7 +393,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
         L.d("chart", "pagenum=" + pagenum);
 
 
-
         sdk.loadTopic("", url, title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
@@ -404,7 +403,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
-                if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
+                if (mCommentArrayList == null || mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     if (isShowComment) {//显示评论的时候 mNoData显示
                         mNoData.setVisibility(View.VISIBLE);
@@ -421,8 +420,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                     L.i("lzfnotifyDataSetChanged==");
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
-                L.i("lzf最新列表=" + mCommentArrayList.size());
-                L.i("lzf最热列表=" + topicLoadResp.hots.size());
+//                L.i("lzf最新列表=" + mCommentArrayList.size());
+//                L.i("lzf最热列表=" + topicLoadResp.hots.size());
                 if (getActivity() != null) {
                     getActivity().setResult(2, new Intent().putExtra("cmt_sum", cmt_sum));
                 }
