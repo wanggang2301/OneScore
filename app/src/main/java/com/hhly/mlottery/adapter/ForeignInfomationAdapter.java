@@ -80,7 +80,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
 
 
-        universalImageLoader.displayImage(o.getAvatar(), (CircleImageView) viewHolder.getView(R.id.civ_logo), optionsLogo);
+        universalImageLoader.displayImage(o.getAvatar()+"ccc", (CircleImageView) viewHolder.getView(R.id.civ_logo), optionsLogo);
 
         long mNumberTime = o.getCurrentTimestamp() - o.getTimestamp();
 
