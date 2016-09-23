@@ -16,7 +16,16 @@ public class HomeContentEntity implements Serializable {
     private String picUrl;//图标URL
     private int labType;// 标签标识	1、	热门赛事 2、	热点资讯 3、	彩票开奖
     private String reqMethod;// 请求方式
+    private Integer labSeq;// 体育资讯类型
     private List<HomeBodysEntity> bodys;
+
+    public Integer getLabSeq() {
+        return labSeq;
+    }
+
+    public void setLabSeq(Integer labSeq) {
+        this.labSeq = labSeq;
+    }
 
     public String getReqMethod() {
         return reqMethod;
