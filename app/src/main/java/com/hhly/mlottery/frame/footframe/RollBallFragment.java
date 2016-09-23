@@ -35,22 +35,17 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.RxBus;
-import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
-import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +54,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import de.greenrobot.event.EventBus;
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

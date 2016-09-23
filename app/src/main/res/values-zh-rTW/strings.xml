@@ -903,6 +903,7 @@
     <!--模糊搜索-->
     <string name="fuzzy_search">請輸入聯賽名</string>
     <string name="not_find_search">對不起,找不到相關資訊</string>
+    <string name="network_suck">網絡不給力......</string>
     <string name="find_search">正寻找中......</string>
     <string name="skip">"秒 | 跳过"</string>
     <!--1.1.2 begin-->

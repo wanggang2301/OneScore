@@ -137,3 +137,25 @@
 -dontnote com.android.vending.licensing.ILicensingService
 
 -keep class org.android.spdy.** { *; }
+
+#融云
+-keep public class io.rong.** { *; }
+-dontwarn io.rong.**
+
+#pldroid
+-keep public class com.pili.pldroid.** { *; }
+-dontwarn com.pili.pldroid.**
+
+#retrofit
+-keep public class retrofit.appengine.** { *; }
+-dontwarn retrofit.appengine.**
+
+#畅言
+-keep public class com.sohu.cyan.** { *; }
+-dontwarn com.sohu.cyan.**
+
+#JS调用WebView接口
+-keep class com.hhly.mlottery.activity.WebActivity$YBFJavascriptHandler { *;}
+
+-keep class pl.droidsonroids.gif.** { *;}
+

@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -47,6 +48,7 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ImageView iv_left;
     private ImageView iv_right;
+    public FrameLayout fl_mask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,6 +140,7 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.tv_current_reLoading).setOnClickListener(this);
 
+        fl_mask = (FrameLayout) findViewById(R.id.fl_mask);
         iv_left = (ImageView) findViewById(R.id.iv_left);
         iv_left.setOnClickListener(this);
         iv_right = (ImageView) findViewById(R.id.iv_right);

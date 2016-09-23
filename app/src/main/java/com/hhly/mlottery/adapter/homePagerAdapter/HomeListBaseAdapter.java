@@ -98,9 +98,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
     private void initData() {
         int size = 0;
-        if(mHomePagerEntity == null || mHomePagerEntity.getMenus() == null || mHomePagerEntity.getMenus().getContent() == null || mHomePagerEntity.getMenus().getContent().size() == 0){
+        if (mHomePagerEntity == null || mHomePagerEntity.getMenus() == null || mHomePagerEntity.getMenus().getContent() == null || mHomePagerEntity.getMenus().getContent().size() == 0) {
 
-        }else{
+        } else {
             circularSize = mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
             size = mHomePagerEntity.getMenus().getContent().size();
         }
@@ -1103,7 +1103,11 @@ public class HomeListBaseAdapter extends BaseAdapter {
 
                         @Override
                         public int getCount() {
-                            return mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
+                            if (mHomePagerEntity == null || mHomePagerEntity.getMenus() == null || mHomePagerEntity.getMenus().getContent() == null || mHomePagerEntity.getMenus().getContent().size() == 0) {
+                                return 0;
+                            } else {
+                                return mHomePagerEntity.getMenus().getContent().size() % 8 == 0 ? mHomePagerEntity.getMenus().getContent().size() / 8 : mHomePagerEntity.getMenus().getContent().size() / 8 + 1;
+                            }
                         }
                     });
                     final int finalLen = circularSize;
