@@ -162,12 +162,13 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             @Override
             public void onClick(View v) {
 
-                String url = o.getPhoto();
-                Intent intent = new Intent(mContext, PicturePreviewActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                intent.putExtra("url", url);
-                mContext.startActivity(intent);
+                if (o.getPhoto() != null) {
+                    String url = o.getPhoto();
+                    Intent intent = new Intent(mContext, PicturePreviewActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("url", url);
+                    mContext.startActivity(intent);
+                }
             }
         });
 

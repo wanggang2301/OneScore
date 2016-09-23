@@ -476,11 +476,13 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
 
             case R.id.iv_photo:
-                String url = oilBean.getPhoto();
-                Intent intent = new Intent(mContext, PicturePreviewActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("url", url);
-                mContext.startActivity(intent);
+                if (oilBean.getPhoto() != null) {
+                    String url = oilBean.getPhoto();
+                    Intent intent = new Intent(mContext, PicturePreviewActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("url", url);
+                    mContext.startActivity(intent);
+                }
                 break;
 
             case R.id.ll_zan:
