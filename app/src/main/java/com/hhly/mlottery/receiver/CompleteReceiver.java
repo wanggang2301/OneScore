@@ -4,7 +4,9 @@ import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
+import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.L;
 
 /**
@@ -24,10 +26,14 @@ public class CompleteReceiver extends BroadcastReceiver {
         Intent openIntent = new Intent();
         openIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         openIntent.setAction(android.content.Intent.ACTION_VIEW);
-        L.d("xxx","url = "+downloadManager.getUriForDownloadedFile(id).toString());
-        L.d("xxx","path = "+downloadManager.getUriForDownloadedFile(id).getPath());
+//        L.d("xxx","url = "+downloadManager.getUriForDownloadedFile(id).toString());
+//        L.d("xxx","path = "+downloadManager.getUriForDownloadedFile(id).getPath());
 
-        openIntent.setDataAndType(downloadManager.getUriForDownloadedFile(id),"application/vnd.android.package-archive");
-        context.startActivity(openIntent);
+        if (downloadManager.getUriForDownloadedFile(id) != null) {
+            openIntent.setDataAndType(downloadManager.getUriForDownloadedFile(id), "application/vnd.android.package-archive");
+            context.startActivity(openIntent);
+        }else{
+            Toast.makeText(context, context.getResources().getString(R.string.download_error), Toast.LENGTH_SHORT).show();
+        }
     }
 }
