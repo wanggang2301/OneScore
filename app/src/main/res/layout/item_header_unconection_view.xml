@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:background="#F9EEB6"
     android:id="@+id/unconection_layout"
+	android:visibility="gone"
      >
     
     <ImageView 
