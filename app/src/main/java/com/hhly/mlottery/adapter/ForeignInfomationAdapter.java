@@ -133,7 +133,12 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
 
         viewHolder.setText(R.id.tv_tight, o.getFavorite() + "");
 
-        universalImageLoader.displayImage(o.getPhoto(), (ImageView) viewHolder.getView(R.id.iv_photo), options);
+        if (o.getPhoto() == null) {
+            viewHolder.getView(R.id.iv_photo).setVisibility(View.GONE);
+        } else {
+            viewHolder.getView(R.id.iv_photo).setVisibility(View.VISIBLE);
+            universalImageLoader.displayImage(o.getPhoto(), (ImageView) viewHolder.getView(R.id.iv_photo), options);
+        }
 
 
         linearLayout.setOnClickListener(new View.OnClickListener() {

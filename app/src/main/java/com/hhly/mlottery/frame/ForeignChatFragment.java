@@ -227,10 +227,15 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
             tvContentZh.setText(oilBean.getContentTranslation());
         }
 
-
         tvTime.setText(oilBean.getSendtime());
 
-        universalImageLoader.displayImage(oilBean.getPhoto(), ivPhone, options);
+        if (oilBean.getPhoto() == null) {
+            ivPhone.setVisibility(View.GONE);
+        } else {
+            ivPhone.setVisibility(View.VISIBLE);
+            universalImageLoader.displayImage(oilBean.getPhoto(), ivPhone, options);
+        }
+
         tvTight.setText(oilBean.getFavorite() + "");
         tightCount = oilBean.getFavorite();
     }
