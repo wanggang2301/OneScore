@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -29,7 +30,7 @@ import java.util.List;
 public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformationListBean> {
     private Context mContext;
     private List<OverseasInformationListBean> list;
-    private int num = 0;
+
 
     private DisplayImageOptions options; //
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
@@ -155,7 +156,10 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         linearLayout.findViewById(R.id.ll_zan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.setText(R.id.tv_tight, (num++) + "");
+
+                int count = Integer.parseInt(((TextView) viewHolder.getView(R.id.tv_tight)).getText().toString());
+
+                viewHolder.setText(R.id.tv_tight, count++ + "");
             }
         });
     }
