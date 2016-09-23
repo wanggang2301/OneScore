@@ -32,6 +32,9 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     private List<OverseasInformationListBean> list;
 
 
+    private DisplayImageOptions optionsLogo; //
+
+
     private DisplayImageOptions options; //
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
 
@@ -41,6 +44,15 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         this.mContext = context;
         this.list = data;
 
+        optionsLogo = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.mipmap.center_head)   //默认图片
+                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
+                .resetViewBeforeLoading(true)
+                .build();
 
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
@@ -68,7 +80,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
 
 
-        universalImageLoader.displayImage(o.getAvatar(), (CircleImageView) viewHolder.getView(R.id.civ_logo), options);
+        universalImageLoader.displayImage(o.getAvatar(), (CircleImageView) viewHolder.getView(R.id.civ_logo), optionsLogo);
 
         long mNumberTime = o.getCurrentTimestamp() - o.getTimestamp();
 
@@ -156,10 +168,9 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         linearLayout.findViewById(R.id.ll_zan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                int count = Integer.parseInt(((TextView) viewHolder.getView(R.id.tv_tight)).getText().toString());
-
-                viewHolder.setText(R.id.tv_tight, count++ + "");
+                int count = Integer.parseInt(((TextView) viewHolder.getView(R.id.tv_tight)).getText().toString()) + 1;
+                o.setFavorite(count);
+                viewHolder.setText(R.id.tv_tight, count + "");
             }
         });
     }

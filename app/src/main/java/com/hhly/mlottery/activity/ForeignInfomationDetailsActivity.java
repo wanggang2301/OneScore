@@ -1,15 +1,19 @@
 package com.hhly.mlottery.activity;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
+import com.hhly.mlottery.callback.ForeignInfomationEvent;
 import com.hhly.mlottery.frame.ForeignChatFragment;
 import com.hhly.mlottery.util.CyUtils;
 import com.umeng.analytics.MobclickAgent;
+
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -25,6 +29,8 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
     private String title;
 
     private OverseasInformationListBean oilbean;
+
+    private ForeignChatFragment foreignChatFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +64,23 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
                 CyUtils.hideKeyBoard(this);
                 // setResult(2, new Intent().putExtra("cmt_sum", ChatFragment.cmt_sum));
                 MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Exit");
+                EventBus.getDefault().post(new ForeignInfomationEvent(oilbean.getId(), ForeignChatFragment.tightCount));
                 finish();
                 break;
         }
 
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            CyUtils.hideKeyBoard(this);
+            MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Exit");
+            EventBus.getDefault().post(new ForeignInfomationEvent(oilbean.getId(), ForeignChatFragment.tightCount));
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

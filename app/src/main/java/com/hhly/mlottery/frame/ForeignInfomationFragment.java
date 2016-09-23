@@ -18,6 +18,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.ForeignInfomationAdapter;
 import com.hhly.mlottery.bean.foreigninfomation.ForeignInfomationBean;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
+import com.hhly.mlottery.callback.ForeignInfomationEvent;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -25,12 +26,14 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * @author wang gang
@@ -74,6 +77,9 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         moreView = inflater.inflate(R.layout.view_load_more, container, false);
         ButterKnife.bind(this, mView);
         mContext = getActivity();
+
+        EventBus.getDefault().register(this);
+
         initView();
         if (getUserVisibleHint()) {
             onVisible();
@@ -239,5 +245,32 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         intent.putExtra("detailsData", new OverseasInformationListBean());
         mContext.startActivity(intent);*/
 
+    }
+
+    /**
+     * 国外资讯由详情页退出时返回点赞数量更新列表数据源
+     *
+     */
+    public void onEventMainThread(ForeignInfomationEvent foreignInfomationEvent) {
+        int id = foreignInfomationEvent.getId();
+        int tight = foreignInfomationEvent.getFavroite();
+        Iterator<OverseasInformationListBean> iterator = mList.iterator();
+        while (iterator.hasNext()) {
+
+            OverseasInformationListBean o = iterator.next();
+            if (o.getId() == id) {
+                o.setFavorite(tight);
+                break;
+            }
+        }
+
+        foreignInfomationAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

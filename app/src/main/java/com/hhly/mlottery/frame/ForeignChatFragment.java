@@ -116,19 +116,16 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
 
     private OverseasInformationListBean oilBean;
 
+    private DisplayImageOptions optionsLogo; //
+
     private DisplayImageOptions options; //
     private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
 
+    public static int tightCount;
+
 
     public static ForeignChatFragment newInstance() {
-
-
-      /*  Bundle args = new Bundle();
-        args.putParcelable("oilbean", overseasInformationListBean);*/
-
-
         ForeignChatFragment fragment = new ForeignChatFragment();
-        // fragment.setArguments(args);
         return fragment;
     }
 
@@ -156,6 +153,18 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
 
     private void initData() {
         mContext = getActivity() == null ? MyApp.getContext() : getActivity();
+
+
+        optionsLogo = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
+                .showImageOnLoading(R.mipmap.center_head)   //默认图片
+                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
+                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
+                .resetViewBeforeLoading(true)
+                .build();
+
 
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisc(true)
@@ -197,7 +206,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         ll_zan.setOnClickListener(this);
 
 
-        universalImageLoader.displayImage(oilBean.getAvatar(), civLogo, options);
+        universalImageLoader.displayImage(oilBean.getAvatar(), civLogo, optionsLogo);
 
         tvNameEn.setText(oilBean.getFullname());
         tvNameCh.setText(oilBean.getFullnameTranslation());
@@ -215,6 +224,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
 
         universalImageLoader.displayImage(oilBean.getPhoto(), ivPhone, options);
         tvTight.setText(oilBean.getFavorite() + "");
+        tightCount = oilBean.getFavorite();
     }
 
     private void initListView() {
@@ -466,9 +476,11 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.ll_zan:
+                tvTight.setText((Integer.parseInt(tvTight.getText().toString()) + 1) + "");
+
+                tightCount = Integer.parseInt(tvTight.getText().toString());
 
                 break;
-
 
             case R.id.iv_send://发送评论
                 MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Send");

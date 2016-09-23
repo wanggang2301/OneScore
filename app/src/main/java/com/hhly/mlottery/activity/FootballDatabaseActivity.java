@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
-import com.hhly.mlottery.frame.footframe.FootballDatabaseFragment;
-import com.hhly.mlottery.frame.footframe.FootballDatabaseInterFragment;
+import com.hhly.mlottery.frame.ForeignInfomationFragment;
 
 /**
  * @author: Wangg
@@ -70,14 +69,22 @@ public class FootballDatabaseActivity extends BaseActivity implements View.OnCli
 
         String[] titles = getApplicationContext().getResources().getStringArray(R.array.football_info_tabs);
         mTabsAdapter = new TabsAdapter(fragmentManager);
-        mTabsAdapter.setTitles(titles);
+      /*  mTabsAdapter.setTitles(titles);
         mTabsAdapter.addFragments(FootballDatabaseFragment.newInstance(HOT),
                 FootballDatabaseFragment.newInstance(EUR),
                 FootballDatabaseFragment.newInstance(AMERICA),
                 FootballDatabaseFragment.newInstance(ASIA),
                 FootballDatabaseFragment.newInstance(AFRICA),
                 FootballDatabaseFragment.newInstance(OCEANIA),
-                FootballDatabaseInterFragment.newInstance(INTER));
+                FootballDatabaseInterFragment.newInstance(INTER));*/
+
+
+        String[] tex = {"测试"};
+
+        mTabsAdapter.setTitles(tex);
+        mTabsAdapter.addFragments(ForeignInfomationFragment.newInstance());
+
+
         viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);
