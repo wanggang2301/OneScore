@@ -209,7 +209,15 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         universalImageLoader.displayImage(oilBean.getAvatar(), civLogo, optionsLogo);
 
         tvNameEn.setText(oilBean.getFullname());
-        tvNameCh.setText(oilBean.getFullnameTranslation());
+
+
+        if (oilBean.getFullnameTranslation() == null) {
+            tvNameCh.setVisibility(View.GONE);
+        } else {
+            tvNameCh.setVisibility(View.VISIBLE);
+            tvNameCh.setText(oilBean.getFullnameTranslation());
+        }
+
         tvContentEn.setText(oilBean.getContent());
 
         if (oilBean.getContentTranslation() == null) {

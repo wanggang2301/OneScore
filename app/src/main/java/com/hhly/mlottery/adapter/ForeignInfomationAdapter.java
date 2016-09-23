@@ -80,7 +80,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
 
 
-        universalImageLoader.displayImage(o.getAvatar()+"ccc", (CircleImageView) viewHolder.getView(R.id.civ_logo), optionsLogo);
+        universalImageLoader.displayImage(o.getAvatar(), (CircleImageView) viewHolder.getView(R.id.civ_logo), optionsLogo);
 
         long mNumberTime = o.getCurrentTimestamp() - o.getTimestamp();
 
@@ -114,7 +114,13 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
 
 
         viewHolder.setText(R.id.tv_name_en, o.getFullname());
-        viewHolder.setText(R.id.tv_name_ch, o.getFullnameTranslation());
+
+        if (o.getFullnameTranslation() == null) {
+            viewHolder.getView(R.id.tv_name_ch).setVisibility(View.GONE);
+        } else {
+            viewHolder.getView(R.id.tv_name_ch).setVisibility(View.VISIBLE);
+            viewHolder.setText(R.id.tv_name_ch, o.getFullnameTranslation());
+        }
         viewHolder.setText(R.id.tv_content_en, o.getContent());
 
         if (o.getContentTranslation() == null) {
