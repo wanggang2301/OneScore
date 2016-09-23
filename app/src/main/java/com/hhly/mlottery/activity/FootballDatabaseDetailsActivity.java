@@ -207,6 +207,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         String url = BaseURLs.URL_FOOTBALL_DATABASE_HEADER;
         Map<String, String> params = new HashMap<>();
         params.put("leagueId", mLeague.getLeagueId());
+        params.put("type" , mLeague.getKind());
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseHeaderBean>() {
 
             @Override
