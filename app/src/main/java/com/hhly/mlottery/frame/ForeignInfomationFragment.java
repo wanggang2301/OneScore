@@ -19,7 +19,6 @@ import com.hhly.mlottery.adapter.ForeignInfomationAdapter;
 import com.hhly.mlottery.bean.foreigninfomation.ForeignInfomationBean;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.callback.ForeignInfomationEvent;
-import com.hhly.mlottery.callback.ForeignTightCallBack;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
