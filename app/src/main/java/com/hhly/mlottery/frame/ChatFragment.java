@@ -330,13 +330,13 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
-            if (isShowComment) {
+//            if (isShowComment) {
                 RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
                 lp.setMargins(0, 0, 0, h - def);
-            } else {
-                ScrollView.LayoutParams lp = (ScrollView.LayoutParams) scrollview.getLayoutParams();
-                lp.setMargins(0, 0, 0, h - def);
-            }
+//            } else {
+//                ScrollView.LayoutParams lp = (ScrollView.LayoutParams) scrollview.getLayoutParams();
+//                lp.setMargins(0, 0, 0, h - def);
+//            }
             scrollview.requestLayout();
         }
     }
