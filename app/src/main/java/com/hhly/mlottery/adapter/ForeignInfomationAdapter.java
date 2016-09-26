@@ -161,7 +161,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ForeignInfomationDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 intent.putExtra("detailsData", o);
                 mContext.startActivity(intent);
             }
@@ -170,7 +169,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         linearLayout.findViewById(R.id.iv_photo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (o.getPhoto() != null) {
                     String url = o.getPhoto();
                     Intent intent = new Intent(mContext, PicturePreviewActivity.class);
@@ -189,7 +187,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         });
     }
 
-
     private void tightClick(final TextView textView, final OverseasInformationListBean oil) {
         Map<String, String> params = new HashMap<>();
         params.put("id", oil.getId() + "");
@@ -200,7 +197,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                 if (!tightBean.getResult().equals("200")) {
                     return;
                 }
-
                 textView.setText(tightBean.getFavorite() + "");
                 oil.setFavorite(tightBean.getFavorite());
 
