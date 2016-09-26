@@ -30,6 +30,7 @@ import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
+import com.hhly.mlottery.bean.foreigninfomation.TightBean;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -38,6 +39,7 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PullUpRefreshListView;
 import com.hhly.mlottery.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -53,6 +55,8 @@ import com.sohu.cyan.android.sdk.http.response.TopicLoadResp;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,6 +127,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
 
     public static int tightCount;
 
+    private boolean isFirstRequestComment = true;
 
     public static ForeignChatFragment newInstance() {
         ForeignChatFragment fragment = new ForeignChatFragment();
@@ -491,9 +496,8 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.ll_zan:
-                tvTight.setText((Integer.parseInt(tvTight.getText().toString()) + 1) + "");
 
-                tightCount = Integer.parseInt(tvTight.getText().toString());
+                tightClick();
 
                 break;
 
@@ -522,12 +526,38 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                         Intent intent1 = new Intent(mContext, LoginActivity.class);
                         startActivityForResult(intent1, CyUtils.JUMP_COMMENT_QUESTCODE);
                     }
-
                 }
                 break;
 
         }
 
+    }
+
+
+    private void tightClick() {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", oilBean.getId() + "");
+        String url = "http://192.168.31.178:8080/mlottery/core/overseasInformation.updLike.do";
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<TightBean>() {
+                    @Override
+                    public void onResponse(TightBean tightBean) {
+                        if (!tightBean.getResult().equals("200")) {
+                            return;
+                        }
+
+                        tvTight.setText(tightBean.getFavorite() + "");
+                        tightCount = tightBean.getFavorite();
+
+                        L.d("789456", "fg====" + tightBean.getFavorite());
+
+
+                    }
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    }
+                }, TightBean.class
+        );
     }
 
     //获取评论的一切消息  无需登录  并刷新listview
@@ -553,9 +583,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
                 if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
-
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-
 
                     // mNoData.setVisibility(View.GONE);//不显示评论的时候 mNoData不显示
 
@@ -565,7 +593,14 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                     mAdapter.notifyDataSetChanged();
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mNoData.setVisibility(View.GONE);
-                    mListView.setSelection(0);
+
+                    if (isFirstRequestComment) {
+                        mListView.setSelection(0);
+                        isFirstRequestComment = false;
+                    } else {
+                        mListView.setSelection(1);
+
+                    }
                     L.i("lzfnotifyDataSetChanged==");
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -597,6 +632,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         //下拉刷新后当前页数重新为1，不然先上拉加载到没有数据  再回去下拉刷新  然后再上拉就没有数据了，其实是有的
         mCurrentPager = 1;
         mLoadMore.setText(R.string.foot_loadmore);
+        isFirstRequestComment = true;
         loadTopic(souceid, title, CyUtils.SINGLE_PAGE_COMMENT);
         if (mOnPullDownRefreshLisener != null) {
             mOnPullDownRefreshLisener.onPullDownRefresh();

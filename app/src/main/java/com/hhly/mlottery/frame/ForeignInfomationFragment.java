@@ -19,6 +19,7 @@ import com.hhly.mlottery.adapter.ForeignInfomationAdapter;
 import com.hhly.mlottery.bean.foreigninfomation.ForeignInfomationBean;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.callback.ForeignInfomationEvent;
+import com.hhly.mlottery.callback.ForeignTightCallBack;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -66,6 +67,9 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
 
     private List<OverseasInformationListBean> mList;
 
+    private ForeignTightCallBack foreignTightCallBack;
+
+
     public static ForeignInfomationFragment newInstance() {
         ForeignInfomationFragment fragment = new ForeignInfomationFragment();
         return fragment;
@@ -77,8 +81,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         moreView = inflater.inflate(R.layout.view_load_more, container, false);
         ButterKnife.bind(this, mView);
         mContext = getActivity();
-
-        EventBus.getDefault().register(this);
+         EventBus.getDefault().register(this);
 
         initView();
         if (getUserVisibleHint()) {
@@ -93,7 +96,9 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         isCreated = true;
+
     }
+
 
     private Runnable mLoadingDataThread = new Runnable() {
         @Override
@@ -249,7 +254,6 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
 
     /**
      * 国外资讯由详情页退出时返回点赞数量更新列表数据源
-     *
      */
     public void onEventMainThread(ForeignInfomationEvent foreignInfomationEvent) {
         int id = foreignInfomationEvent.getId();
@@ -271,6 +275,6 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+          EventBus.getDefault().unregister(this);
     }
 }

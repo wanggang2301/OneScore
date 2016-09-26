@@ -25,12 +25,8 @@ import de.greenrobot.event.EventBus;
 public class ForeignInfomationDetailsActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mPublic_img_back;// 返回
     private TextView mPublic_txt_title;// 标题
-    private String url;
-    private String title;
 
     private OverseasInformationListBean oilbean;
-
-    private ForeignChatFragment foreignChatFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

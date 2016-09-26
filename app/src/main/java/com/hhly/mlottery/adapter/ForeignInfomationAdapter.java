@@ -15,12 +15,17 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ForeignInfomationDetailsActivity;
 import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
+import com.hhly.mlottery.bean.foreigninfomation.TightBean;
+import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 描述:  境外资讯Adapter
@@ -180,11 +185,33 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         linearLayout.findViewById(R.id.ll_zan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count = Integer.parseInt(((TextView) viewHolder.getView(R.id.tv_tight)).getText().toString()) + 1;
-                o.setFavorite(count);
-                viewHolder.setText(R.id.tv_tight, count + "");
+                tightClick((TextView) viewHolder.getView(R.id.tv_tight), o);
             }
         });
+    }
+
+
+    private void tightClick(final TextView textView, final OverseasInformationListBean oil) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", oil.getId() + "");
+        String url = "http://192.168.31.178:8080/mlottery/core/overseasInformation.updLike.do";
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<TightBean>() {
+            @Override
+            public void onResponse(TightBean tightBean) {
+                if (!tightBean.getResult().equals("200")) {
+                    return;
+                }
+                L.d("789456", "adapter====" + tightBean.getFavorite());
+
+                textView.setText(tightBean.getFavorite() + "");
+                oil.setFavorite(tightBean.getFavorite());
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        }, TightBean.class);
     }
 }
 
