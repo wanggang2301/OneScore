@@ -16,7 +16,6 @@ import com.hhly.mlottery.activity.ForeignInfomationDetailsActivity;
 import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.bean.foreigninfomation.TightBean;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
