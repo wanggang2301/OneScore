@@ -201,7 +201,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                 if (!tightBean.getResult().equals("200")) {
                     return;
                 }
-                L.d("789456", "adapter====" + tightBean.getFavorite());
 
                 textView.setText(tightBean.getFavorite() + "");
                 oil.setFavorite(tightBean.getFavorite());

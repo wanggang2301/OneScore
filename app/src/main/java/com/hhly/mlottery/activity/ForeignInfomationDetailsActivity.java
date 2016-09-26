@@ -45,7 +45,6 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
 
     }
 
-    //hhly2016999
     private void initData() {
         ForeignChatFragment foreignChatFragment = ForeignChatFragment.newInstance();
         foreignChatFragment.setOilBean(oilbean);

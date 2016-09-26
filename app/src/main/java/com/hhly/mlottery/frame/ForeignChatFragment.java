@@ -544,13 +544,8 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                         if (!tightBean.getResult().equals("200")) {
                             return;
                         }
-
                         tvTight.setText(tightBean.getFavorite() + "");
                         tightCount = tightBean.getFavorite();
-
-                        L.d("789456", "fg====" + tightBean.getFavorite());
-
-
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
@@ -565,18 +560,11 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
 
-        L.d("chart", "url=" + souceid);
-        L.d("chart", "title=" + title);
-        L.d("chart", "pagenum=" + pagenum);
-
-
         sdk.loadTopic(souceid, "", title, null, pagenum, pagenum, "", null, 1, 10, new CyanRequestListener<TopicLoadResp>() {
             @Override
             public void onRequestSucceeded(TopicLoadResp topicLoadResp) {
                 topicid = topicLoadResp.topic_id;//文章id
                 cmt_sum = topicLoadResp.cmt_sum;//评论总数
-                L.d("chart", "topicid=" + topicid);
-                L.d("chart", "cmt_sum=" + cmt_sum);
 
                 tvComment.setText(cmt_sum + "");
 
