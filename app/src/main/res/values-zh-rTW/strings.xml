@@ -1193,4 +1193,5 @@
     <string name="baskball">籃球</string>
     <string name="comprehensive">綜合</string>
     <string name="direct_seeding">直播</string>
+    <string name="download_error">下載失敗!</string>
 </resources>
