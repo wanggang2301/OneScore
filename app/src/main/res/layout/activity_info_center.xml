@@ -20,7 +20,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:padding="10dp"
-            android:src="@mipmap/info_left_icon" />
+            android:src="@mipmap/info_left_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_data_content"
@@ -40,7 +41,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:padding="10dp"
-            android:src="@mipmap/info_right_icon" />
+            android:src="@mipmap/info_right_icon"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -63,11 +65,11 @@
 
         <FrameLayout
             android:id="@+id/fl_mask"
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/info_center_mask"
-            android:visibility="gone"/>
+            android:clickable="true"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_loading_error"
