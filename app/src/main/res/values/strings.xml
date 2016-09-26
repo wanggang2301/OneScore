@@ -1217,4 +1217,14 @@
     <string name="baskball">篮球</string>
     <string name="comprehensive">综合</string>
     <string name="direct_seeding">直播</string>
+
+    <!--墙外资讯-->
+    <string name="foreign_month">月前</string>
+    <string name="foreign_day">天前</string>
+    <string name="foreign_hour">小时前</string>
+    <string name="foreign_minites">分钟前</string>
+    <string name="foreign_now">刚刚</string>
+    <string name="foreign_writecmt">写评论</string>
+    <string name="foreign_title">国外资讯</string>
+
 </resources>

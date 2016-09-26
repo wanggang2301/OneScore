@@ -102,15 +102,15 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         String timeMsg = "";
 
         if (month != 0) {
-            timeMsg = dd + "月前";
+            timeMsg = dd + mContext.getResources().getString(R.string.foreign_month);
         } else if (dd != 0) {
-            timeMsg = dd + "天前";
+            timeMsg = dd + mContext.getResources().getString(R.string.foreign_day);
         } else if (hh != 0) {
-            timeMsg = hh + "小时前";
+            timeMsg = hh + mContext.getResources().getString(R.string.foreign_hour);
         } else if (mm != 0) {
-            timeMsg = mm + "分钟前";
+            timeMsg = mm + mContext.getResources().getString(R.string.foreign_minites);
         } else {
-            timeMsg = "刚刚";
+            timeMsg = mContext.getResources().getString(R.string.foreign_now);
         }
 
         o.setSendtime(timeMsg);

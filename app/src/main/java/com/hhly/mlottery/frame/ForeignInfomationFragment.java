@@ -66,9 +66,6 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
 
     private List<OverseasInformationListBean> mList;
 
-    private ForeignTightCallBack foreignTightCallBack;
-
-
     public static ForeignInfomationFragment newInstance() {
         ForeignInfomationFragment fragment = new ForeignInfomationFragment();
         return fragment;

@@ -1192,4 +1192,14 @@
     <string name="baskball">籃球</string>
     <string name="comprehensive">綜合</string>
     <string name="direct_seeding">直播</string>
+
+    <!--墙外资讯-->
+    <string name="foreign_month">月前</string>
+    <string name="foreign_day">天前</string>
+    <string name="foreign_hour">小時前</string>
+    <string name="foreign_minites">分鐘前</string>
+    <string name="foreign_now">剛剛</string>
+    <string name="foreign_writecmt">寫評論</string>
+    <string name="foreign_title">國外資訊</string>
+
 </resources>

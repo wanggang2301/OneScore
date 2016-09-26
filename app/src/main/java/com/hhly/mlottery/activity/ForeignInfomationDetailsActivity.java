@@ -38,7 +38,7 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
 
         mPublic_img_back = (ImageView) findViewById(R.id.public_img_back);
         mPublic_txt_title = (TextView) findViewById(R.id.public_txt_title);
-        mPublic_txt_title.setText("国外资讯");
+        mPublic_txt_title.setText(getApplicationContext().getResources().getString(R.string.foreign_title));
         mPublic_img_back.setOnClickListener(this);
 
         initData();
@@ -59,7 +59,7 @@ public class ForeignInfomationDetailsActivity extends BaseActivity implements Vi
             case R.id.public_img_back://返回
                 CyUtils.hideKeyBoard(this);
                 // setResult(2, new Intent().putExtra("cmt_sum", ChatFragment.cmt_sum));
-                MobclickAgent.onEvent(mContext, "Football_CounselCommentActivity_Exit");
+                MobclickAgent.onEvent(mContext, "ForeignInfomationDetailsActivity_Exit");
                 EventBus.getDefault().post(new ForeignInfomationEvent(oilbean.getId(), ForeignChatFragment.tightCount));
                 finish();
                 break;
