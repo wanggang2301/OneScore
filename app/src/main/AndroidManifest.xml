@@ -103,7 +103,11 @@
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/AppTheme.ColorPrimaryStatusBar"
+
+
+            />
         <!-- 评论activity -->
         <activity
             android:name=".activity.CounselCommentActivity"

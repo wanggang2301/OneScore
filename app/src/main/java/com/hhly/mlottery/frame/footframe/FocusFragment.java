@@ -88,7 +88,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
-    private LinearLayout mUnconectionLayout;
+//    private LinearLayout mUnconectionLayout;
     private ExactSwipeRefrashLayout mSwipeRefreshLayout;
 
     private View mUnFocusLayout;
@@ -303,13 +303,13 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
         mUnFocusLayout = mView.findViewById(R.id.football_immediate_unfocus_ll);
 
-        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);
-        mUnconectionLayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Settings.ACTION_SETTINGS));
-            }
-        });
+//        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);
+//        mUnconectionLayout.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(Settings.ACTION_SETTINGS));
+//            }
+//        });
 
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
@@ -386,8 +386,8 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private final static int VIEW_STATUS_NO_ANY_DATA = 2;
     private final static int VIEW_STATUS_SUCCESS = 3;
     private final static int VIEW_STATUS_NET_ERROR = 4;
-    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
-    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
+//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
+//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -440,16 +440,16 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                         mUnFocusLayout.setVisibility(View.GONE);
                     }
                     break;
-                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
-                    if (mUnconectionLayout != null) {
-                        mUnconectionLayout.setVisibility(View.VISIBLE);
-                    }
-                    break;
-                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
-                    if (mUnconectionLayout != null) {
-                        mUnconectionLayout.setVisibility(View.GONE);
-                    }
-                    break;
+//                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
+//                    if (mUnconectionLayout != null) {
+//                        mUnconectionLayout.setVisibility(View.VISIBLE);
+//                    }
+//                    break;
+//                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
+//                    if (mUnconectionLayout != null) {
+//                        mUnconectionLayout.setVisibility(View.GONE);
+//                    }
+//                    break;
                 default:
                     break;
             }
@@ -1251,13 +1251,13 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         }
     }
 
-    public void connectFail() {
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
-    }
-
-    public void connectSuccess() {
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
-    }
+//    public void connectFail() {
+//        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
+//    }
+//
+//    public void connectSuccess() {
+//        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
+//    }
 
 
     /**
