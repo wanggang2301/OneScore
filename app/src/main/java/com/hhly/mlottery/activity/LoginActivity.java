@@ -68,6 +68,7 @@ import java.util.TimerTask;
 public class LoginActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
 
+
     private EditText et_username, et_password;
     private ImageView iv_eye;
     private ProgressDialog progressBar;
