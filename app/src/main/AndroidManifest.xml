@@ -70,17 +70,11 @@
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation" />
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation"></activity>
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
         <activity
             android:name=".activity.FootballInformationActivity"
@@ -103,7 +97,11 @@
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/AppTheme.ColorPrimaryStatusBar"
+
+
+            />
         <!-- 评论activity -->
         <activity
             android:name=".activity.CounselCommentActivity"
@@ -340,9 +338,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.FootballDatabaseActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.LeagueStatisticsTodayActivity"
             android:screenOrientation="portrait">
 
@@ -362,6 +357,10 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.PicturePreviewActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".activity.FootballDatabaseActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

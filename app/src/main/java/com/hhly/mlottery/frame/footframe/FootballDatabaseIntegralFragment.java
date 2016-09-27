@@ -47,17 +47,17 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
 
     private static final String LEAGUE = "league";
     private static final String PARAM_ID = "leagueId";
-    private static final String PARAM_SEASON = "season";
     private static final String PARAM_TYPE = "type";
-    private static final String PARAM_FIRST_STAGE_ID = "firstStageId";
 
     private static final String PARAM_DATE = "leagueDate";
-    private static final String PARAM_MATCH_ROUND = "leagueRound";
+    private static final String PARAM_MATCH_ROUND = "condition";
 
     private static final int STATUS_LOADING = 1;
     private static final int STATUS_ERROR = 2;
     private static final int STATUS_NO_DATA = 3;
     private static final int STATUS_LOAD_SUCCESS = 4;
+
+    private static final int CUP_TYPE = 2;
 
     View mButtonFrame;
     TextView mTitleTextView;
@@ -241,7 +241,10 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
         if (mLeagueDate != null) map.put(PARAM_DATE , mLeagueDate);
         if (mLeagueRound != null && !mLeagueRound.equals("")) map.put(PARAM_MATCH_ROUND , mLeagueRound);
         String url = BaseURLs.URL_FOOTBALL_DATABASE_INTEGRAL_FIRST;
-        VolleyContentFast.requestJsonByGet(url, map,
+        /**
+         * 这里只能用post（ps：用get请求是参数带中文，4.4手机请求不到数据...）
+         */
+        VolleyContentFast.requestJsonByPost(url, map,
                 new VolleyContentFast.ResponseSuccessListener<FootballIntegralResult>() {
                     @Override
                     public void onResponse(FootballIntegralResult result) {
@@ -306,7 +309,7 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
                 mTitleTextView.setText(data[currnIndex]);
             }
             // 杯赛且大于1才显示
-            if (data.length > 1 && mAdapter.getHeaderViewsCount() == 0 && mResult.getRankingType() == 2) {
+            if (data.length > 1 && mAdapter.getHeaderViewsCount() == 0 && mResult.getRankingType() == CUP_TYPE) {
                 mAdapter.addHeaderView(mButtonFrame);
                 mAdapter.setEmptyView(true, mEmptyView);
             }

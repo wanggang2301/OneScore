@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/inputmethodlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <!--头-->
-    <RelativeLayout
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/header_height"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/top"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/header_height_short"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:background="@color/colorPrimary">-->
 
         <include layout="@layout/layout_header" />
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
     <!--为了查看详细数据按钮不吸底-->
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/comment"
-        android:layout_below="@+id/top">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
 
         <TextView
             android:id="@+id/tv_check_info"
@@ -48,10 +48,10 @@
             android:layout_above="@id/tv_check_info" />
     </RelativeLayout>
     <!--解决adjustresize和透明状态栏的冲突-->
-    <ScrollView
+    <RelativeLayout
         android:id="@+id/comment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"></ScrollView>
-</RelativeLayout>
+        android:layout_height="62dp"
+        />
+</LinearLayout>
 

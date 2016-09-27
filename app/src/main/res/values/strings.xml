@@ -809,6 +809,7 @@
     <string name="football_database_details_integral_itnis_title">净胜球</string>
 
 
+
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
     <string name="football_analyze_details_time">时间</string>
@@ -921,6 +922,7 @@
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">对不起,找不到相关信息</string>
+    <string name="network_suck">网络不给力......</string>
     <string name="find_search">正在查找......</string>
     <string name="skip">"秒 | 跳过"</string>
     <!--1.1.2 begin-->Login / register
@@ -1217,6 +1219,7 @@
     <string name="baskball">篮球</string>
     <string name="comprehensive">综合</string>
     <string name="direct_seeding">直播</string>
+    <string name="download_error">下载失败!</string>
 
     <!--墙外资讯-->
     <string name="foreign_month">月前</string>

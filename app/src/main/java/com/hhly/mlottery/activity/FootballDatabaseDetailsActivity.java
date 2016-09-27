@@ -115,8 +115,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 .cacheInMemory(true).cacheOnDisk(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageForEmptyUri(R.mipmap.basket_default)
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
+                .showImageForEmptyUri(R.mipmap.score_default)
+                .showImageOnFail(R.mipmap.score_default)// 加载失败显示的图片
                 .build();
 
         mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
@@ -294,7 +294,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
 
                 mIntegralFragment.update();
-                mScheduleNewFragment.update();
+                mScheduleNewFragment.update(false);
             }
         }, 1000);
 
@@ -452,7 +452,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 
                 //赛程
                 mScheduleNewFragment.setSeason(newData);
-                mScheduleNewFragment.update();
+                mScheduleNewFragment.update(true);
                 //积分
                 mIntegralFragment.setSeason(newData);
                 mIntegralFragment.update();

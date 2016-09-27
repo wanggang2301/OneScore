@@ -333,13 +333,13 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//api大于19透明状态栏才有效果，这时候才重新布局
-            if (isShowComment) {
+//            if (isShowComment) {
                 RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
                 lp.setMargins(0, 0, 0, h - def);
-            } else {
-                ScrollView.LayoutParams lp = (ScrollView.LayoutParams) scrollview.getLayoutParams();
-                lp.setMargins(0, 0, 0, h - def);
-            }
+//            } else {
+//                ScrollView.LayoutParams lp = (ScrollView.LayoutParams) scrollview.getLayoutParams();
+//                lp.setMargins(0, 0, 0, h - def);
+//            }
             scrollview.requestLayout();
         }
     }
@@ -408,7 +408,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 
                 mCommentCount.setText(cmt_sum + "");
                 mCommentArrayList = topicLoadResp.comments;//最新评论列表  这样写既每次调用该方法时，都会是最新的数据，不用再清除数据  可适应下拉刷新
-                if (mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
+                if (mCommentArrayList == null || mCommentArrayList.size() == 0) {//，没请求到数据 mNoData显示
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     if (isShowComment) {//显示评论的时候 mNoData显示
                         mNoData.setVisibility(View.VISIBLE);
@@ -425,8 +425,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                     L.i("lzfnotifyDataSetChanged==");
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
-                L.i("lzf最新列表=" + mCommentArrayList.size());
-                L.i("lzf最热列表=" + topicLoadResp.hots.size());
+//                L.i("lzf最新列表=" + mCommentArrayList.size());
+//                L.i("lzf最热列表=" + topicLoadResp.hots.size());
                 if (getActivity() != null) {
                     getActivity().setResult(2, new Intent().putExtra("cmt_sum", cmt_sum));
                 }

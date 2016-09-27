@@ -35,22 +35,17 @@ import com.hhly.mlottery.bean.websocket.WebSocketMatchStatus;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.RxBus;
-import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
-import org.java_websocket.drafts.Draft_17;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +54,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import de.greenrobot.event.EventBus;
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -97,8 +91,8 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     ExactSwipeRefrashLayout swipeRefreshLayout;
     @BindView(R.id.titleContainer)
     PercentRelativeLayout titleContainer;
-    @BindView(R.id.unconection_layout)
-    LinearLayout mUnconectionLayout;// 没有网络提示
+//    @BindView(R.id.unconection_layout)
+//    LinearLayout mUnconectionLayout;// 没有网络提示
 
     //    private BorderDividerItemDecration dataDecration;
     public static EventBus eventBus;
@@ -141,12 +135,12 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     protected void initListeners() {
-        mUnconectionLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Settings.ACTION_SETTINGS));
-            }
-        });
+//        mUnconectionLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(Settings.ACTION_SETTINGS));
+//            }
+//        });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private boolean moveToDown = false;
 
@@ -332,13 +326,13 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         }
     }
 
-    public void connectFail() {
-        apiHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
-    }
-
-    public void connectSuccess() {
-        apiHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
-    }
+//    public void connectFail() {
+//        apiHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
+//    }
+//
+//    public void connectSuccess() {
+//        apiHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
+//    }
 
 
 
@@ -688,16 +682,16 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         fragment.titleContainer.setVisibility(View.GONE);
                         fragment.footballImmediateUnfocusLl.setVisibility(View.VISIBLE);
                         break;
-                    case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
-                        if (fragment.mUnconectionLayout != null) {
-                            fragment.mUnconectionLayout.setVisibility(View.VISIBLE);
-                        }
-                        break;
-                    case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
-                        if (fragment.mUnconectionLayout != null) {
-                            fragment.mUnconectionLayout.setVisibility(View.GONE);
-                        }
-                        break;
+//                    case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
+//                        if (fragment.mUnconectionLayout != null) {
+//                            fragment.mUnconectionLayout.setVisibility(View.VISIBLE);
+//                        }
+//                        break;
+//                    case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
+//                        if (fragment.mUnconectionLayout != null) {
+//                            fragment.mUnconectionLayout.setVisibility(View.GONE);
+//                        }
+//                        break;
                 }
             }
         }

@@ -32,7 +32,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 描  述：
+ * 描  述：首页菜单入口 Fragment
  * 作  者：tangrr@13322.com
  * 时  间：2016/9/19
  */
@@ -95,6 +95,7 @@ public class HomeMuenFragment extends Fragment {
                         HomeContentEntity homeContentEntity = mData.get(position);
                         int jumpType = homeContentEntity.getJumpType();// 跳转类型
                         String jumpAddr = homeContentEntity.getJumpAddr();// 跳转地址
+                        Integer labSeq = homeContentEntity.getLabSeq();// 体育资讯下标
                         String title = homeContentEntity.getTitle();// 跳转标题
                         String reqMethod = homeContentEntity.getReqMethod();// 跳转方式
                         if (!TextUtils.isEmpty(jumpAddr)) {
@@ -123,23 +124,24 @@ public class HomeMuenFragment extends Fragment {
                                     }
                                     break;
                                 }
-                                case 4:
-                                    int sportsInfoIndex = 0;
-                                    if (jumpAddr.contains("&")) {
-                                        String str = jumpAddr.substring(0, jumpAddr.lastIndexOf("&"));
-                                        sportsInfoIndex = Integer.parseInt(jumpAddr.substring(jumpAddr.lastIndexOf("&") + 1, jumpAddr.length())) - 1;
-                                        jumpAddr = str;
-                                    }
-                                    switch (jumpAddr) {
-                                        case "12":// 体育资讯指定label页
-                                            Intent intent = new Intent(getContext(), FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
-                                            intent.putExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, sportsInfoIndex);
-                                            getContext().startActivity(intent);
-                                            break;
-                                    }
-                                    break;
+//                                case 4:
+//                                    int sportsInfoIndex = 0;
+//                                    if (jumpAddr.contains("&")) {
+//                                        String str = jumpAddr.substring(0, jumpAddr.lastIndexOf("&"));
+//                                        sportsInfoIndex = Integer.parseInt(jumpAddr.substring(jumpAddr.lastIndexOf("&") + 1, jumpAddr.length())) - 1;
+//                                        jumpAddr = str;
+//                                    }
+//                                    switch (jumpAddr) {
+//                                        case "12":// 体育资讯指定label页
+//                                            Intent intent = new Intent(getContext(), FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
+//                                            intent.putExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, sportsInfoIndex);
+//                                            getContext().startActivity(intent);
+//                                            break;
+//                                    }
+//                                    break;
                                 case 2:// 跳内页
+                                    int sportsInfoIndex = 0;
                                     switch (jumpAddr) {
                                         case "10":// 足球指数
                                         {
@@ -159,8 +161,12 @@ public class HomeMuenFragment extends Fragment {
                                         break;
                                         case "12":// 足球资讯
                                         {
+                                            if (labSeq != null) {
+                                                sportsInfoIndex = labSeq - 1;
+                                            }
                                             Intent intent = new Intent(mContext, FootballActivity.class);
                                             intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
+                                            intent.putExtra(AppConstants.FOTTBALL_INFO_LABEL_KEY, sportsInfoIndex);
                                             mContext.startActivity(intent);
                                             MobclickAgent.onEvent(mContext, "HomePager_Menu_Football_Information");
                                         }
@@ -422,15 +428,15 @@ public class HomeMuenFragment extends Fragment {
                                             mContext.startActivity(new Intent(mContext, LeagueStatisticsTodayActivity.class));
                                         }
                                         break;
-                                        case "51":// 独家访谈
-                                        {
-                                            Intent intent = new Intent(mContext, FootballActivity.class);
-                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
-                                            intent.putExtra("isVideo", "isVideo");
-                                            // 差一个跳转标记
-                                            mContext.startActivity(intent);
-                                        }
-                                        break;
+//                                        case "51":// 独家访谈
+//                                        {
+//                                            Intent intent = new Intent(mContext, FootballActivity.class);
+//                                            intent.putExtra(AppConstants.FOTTBALL_KEY, AppConstants.FOTTBALL_INFORMATION_VALUE);
+//                                            intent.putExtra("isVideo", "isVideo");
+//                                            // 差一个跳转标记
+//                                            mContext.startActivity(intent);
+//                                        }
+//                                        break;
                                     }
                                     break;
                             }

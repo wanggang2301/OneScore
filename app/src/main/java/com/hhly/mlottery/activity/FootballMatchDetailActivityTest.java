@@ -2569,7 +2569,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
 
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
-                appBarLayout.setExpanded(true);// 显示头部内容
+//                appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
             } else {
                 new Thread() {
@@ -2583,7 +2583,8 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                                 @Override
                                 public void run() {
                                     pd.dismiss();
-                                    appBarLayout.setExpanded(true);// 显示头部内容
+//                                    appBarLayout.setExpanded(true);// 显示头部内容
+
                                     RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                                 }
                             });

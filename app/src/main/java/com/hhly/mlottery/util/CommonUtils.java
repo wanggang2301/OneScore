@@ -151,6 +151,10 @@ public class CommonUtils {
         return deviceToken;
     }
 
+    public static String getToken(){
+        return PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, "");
+    }
+
 
     /**
      * 请求账户信息返回统一处理

@@ -565,25 +565,25 @@ public class ScoresFragment extends BaseWebSocketFragment {
     @Override
     protected void onConnectFail() {
         L.d(TAG, "__onConnectFail__");
-        ((RollBallFragment) fragments.get(0)).connectFail();
-        ((ImmediateFragment) fragments.get(1)).connectFail();
-        ((FocusFragment) fragments.get(4)).connectFail();
+//        ((RollBallFragment) fragments.get(0)).connectFail();
+//        ((ImmediateFragment) fragments.get(1)).connectFail();
+//        ((FocusFragment) fragments.get(4)).connectFail();
     }
 
     @Override
     protected void onDisconnected() {
         L.d(TAG, "__onDisconnected__");
-        ((RollBallFragment) fragments.get(0)).connectFail();
-        ((ImmediateFragment) fragments.get(1)).connectFail();
-        ((FocusFragment) fragments.get(4)).connectFail();
+//        ((RollBallFragment) fragments.get(0)).connectFail();
+//        ((ImmediateFragment) fragments.get(1)).connectFail();
+//        ((FocusFragment) fragments.get(4)).connectFail();
     }
 
     @Override
     protected void onConnected() {
         L.d(TAG, "__onConnected__");
-        ((RollBallFragment) fragments.get(0)).connectSuccess();
-        ((ImmediateFragment) fragments.get(1)).connectSuccess();
-        ((FocusFragment) fragments.get(4)).connectSuccess();
+//        ((RollBallFragment) fragments.get(0)).connectSuccess();
+//        ((ImmediateFragment) fragments.get(1)).connectSuccess();
+//        ((FocusFragment) fragments.get(4)).connectSuccess();
     }
 
     public void reconnectWebSocket() {
