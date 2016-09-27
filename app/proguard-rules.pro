@@ -159,3 +159,17 @@
 
 -keep class pl.droidsonroids.gif.** { *;}
 
+## okhttp
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.{*;}
+#retrofit
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+
+-keepattributes Signature
+-keepattributes Exceptions
+-dontwarn okio.**
+
+-keep class com.hhly.mlottery.activity.FootballInformationSerachActivity{ *;}
+-keep class com.hhly.mlottery.activity.BasketballInformationSerachActivity{ *;}
+-keep class com.hhly.mlottery.callback.SearchService { *; }

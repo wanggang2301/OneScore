@@ -14,6 +14,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.BasketballInforSerachAdapter;
 import com.hhly.mlottery.bean.BasketSerach;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.callback.BasketSearchservice;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -23,8 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
-import retrofit.http.GET;
-import retrofit.http.Query;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -59,7 +58,7 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                 .setConverter(new GsonConverter(new Gson()))
                 .build();
 
-        final SearchService service = retrofit.create(SearchService.class);
+        final BasketSearchservice service = retrofit.create(BasketSearchservice.class);
         //保存数据源
         RxTextView.textChanges(et_keyword)
                 // 上面的对 tv_result 的操作需要在主线程
@@ -93,7 +92,8 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                 .map(new Func1<CharSequence,CharSequence >() {
                     @Override
                     public CharSequence call(CharSequence charSequence) {
-                       Observable<BasketSerach> observable= service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
+                       Observable<BasketSerach> observable=
+                               service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
                         observable.subscribeOn(Schedulers.io())
                                 //将 data 转换成 ArrayList<ArrayList<String>>
                                 .map(new Func1<BasketSerach, List<LeagueBean>>() {
@@ -253,11 +253,11 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
 
         }
     }
-
+/*
     interface SearchService {
         //@GET("/sug") Observable<Data> searchProdcut(@Query("code") String code, @Query("q") String keyword);
         @GET(BaseURLs.FUZZYSEARCH) rx.Observable<BasketSerach> searchProdcut(@Query("lang") String code, @Query(SEARCHKEYWORD) String keyword);
-    }
+    }*/
 
 
 }

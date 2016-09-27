@@ -128,7 +128,6 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
 
         }
     }
-
     public void LoadThread(final String isFrist) {
         new Thread(new Runnable() {
             public void run() {
@@ -142,6 +141,7 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
                             } else {//重复加载
                                 mWebView.reload();
                                 mHandler.sendEmptyMessage(SUCCESS);
+
                             }
                         }
                     });
@@ -194,4 +194,9 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
 //        MobclickAgent.onPageEnd("PlayWebViewActivity");
     }
 
+    @Override
+    protected void onDestroy() {
+        mWebView.destroy();
+        super.onDestroy();
+    }
 }
