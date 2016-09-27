@@ -16,6 +16,7 @@ import com.hhly.mlottery.activity.ForeignInfomationDetailsActivity;
 import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.bean.foreigninfomation.TightBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -190,7 +191,9 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     private void tightClick(final TextView textView, final OverseasInformationListBean oil) {
         Map<String, String> params = new HashMap<>();
         params.put("id", oil.getId() + "");
-        String url = "http://192.168.31.178:8080/mlottery/core/overseasInformation.updLike.do";
+          String url = BaseURLs.URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE;
+
+
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<TightBean>() {
             @Override
             public void onResponse(TightBean tightBean) {

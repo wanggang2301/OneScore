@@ -31,6 +31,7 @@ import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.bean.foreigninfomation.TightBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -537,7 +538,9 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
     private void tightClick() {
         Map<String, String> params = new HashMap<>();
         params.put("id", oilBean.getId() + "");
-        String url = "http://192.168.31.178:8080/mlottery/core/overseasInformation.updLike.do";
+        String url = BaseURLs.URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE;
+
+
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<TightBean>() {
                     @Override
                     public void onResponse(TightBean tightBean) {

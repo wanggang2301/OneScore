@@ -862,11 +862,23 @@ public class BaseURLs {
     public final static String UPDATEHEADICON = URL_API_HOST + "androidUserCenter.updateHeadIcon.do";
 
     // 情报中心
-    public final static String URL_INFO_CENTER = URL_API_HOST +  "footBallMatch.findIntelligenceList.do";
+    public final static String URL_INFO_CENTER = URL_API_HOST + "footBallMatch.findIntelligenceList.do";
     /*视频直播*/
-    public final static String VIDEOINFO = URL_API_HOST+ "matchVideo.findAndroidVideoInfo.do";
+    public final static String VIDEOINFO = URL_API_HOST + "matchVideo.findAndroidVideoInfo.do";
     /*模糊搜索*/
-    public final static String SEARCHMATCHLEAGUES ="/androidLeagueData.searchMatchLeagues.do";
+    public final static String SEARCHMATCHLEAGUES = "/androidLeagueData.searchMatchLeagues.do";
     /*检测第三方登录*/
-    public final static String TESTINGISLOGIN =URL_API_HOST+"systemSettings.findThirdPartyLoginSettings.do";
+    public final static String TESTINGISLOGIN = URL_API_HOST + "systemSettings.findThirdPartyLoginSettings.do";
+
+
+    /**
+     * 国外资讯
+     */
+    //  public final static String URL_FOREIGN_INFOMATION = URL_API_HOST + "overseasInformation.findOverseasInformation.do";
+    // public final static String URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE = URL_API_HOST + "overseasInformation.updLike.do";
+
+    public final static String URL_FOREIGN_INFOMATION = "http://192.168.31.178:8080/mlottery/core/" + "overseasInformation.findOverseasInformation.do";
+    public final static String URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE = "http://192.168.31.178:8080/mlottery/core/" + "overseasInformation.updLike.do";
+
+
 }
