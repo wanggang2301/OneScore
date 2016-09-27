@@ -170,6 +170,10 @@
 -keepattributes Exceptions
 -dontwarn okio.**
 
+## 视频播放
+-keep class com.pili.pldroid.player.** { *; }
+-keep class tv.danmaku.ijk.media.player.** {*;}
+
 -keep class com.hhly.mlottery.activity.FootballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.activity.BasketballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.callback.SearchService { *; }
