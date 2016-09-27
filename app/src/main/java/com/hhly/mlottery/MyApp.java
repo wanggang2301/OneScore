@@ -22,6 +22,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.Locale;
 
+import cn.finalteam.okhttpfinal.OkHttpFinal;
+import cn.finalteam.okhttpfinal.OkHttpFinalConfiguration;
 import io.rong.imkit.RongIM;
 
 
@@ -58,8 +60,8 @@ public class MyApp extends Application {
         switchLanguage(PreferenceUtil.getString("language", ""));
         isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
         // 捕获异常
-//        CrashException crashException = CrashException.getInstance();
-//        crashException.init(getApplicationContext());
+        CrashException crashException = CrashException.getInstance();
+        crashException.init(getApplicationContext());
         VolleyContentFast.init(this);
         //初始化畅言
         CyUtils.initCy(this);
@@ -72,6 +74,12 @@ public class MyApp extends Application {
             // 初始化融云
             RongIM.init(this);
         }
+
+        /**
+         * OkHttpFinal(此初始化只是简单赋值不会阻塞线程)
+         */
+        OkHttpFinalConfiguration.Builder builder = new OkHttpFinalConfiguration.Builder();
+        OkHttpFinal.getInstance().init(builder.build());
 
         super.onCreate();
     }

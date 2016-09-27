@@ -159,9 +159,21 @@
 
 -keep class pl.droidsonroids.gif.** { *;}
 
-## okhttp
+#--------------- BEGIN: okhttp ----------
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
 -dontwarn com.squareup.okhttp.**
--keep class com.squareup.okhttp.{*;}
+#--------------- END: okhttp ----------
+
+#--------------- BEGIN: okio ----------
+-keep class sun.misc.Unsafe { *; }
+-dontwarn java.nio.file.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn okio.**
+#--------------- END: okio ----------
+
 #retrofit
 -dontwarn retrofit.**
 -keep class retrofit.** { *; }
@@ -170,6 +182,11 @@
 -keepattributes Exceptions
 -dontwarn okio.**
 
+##模糊搜索
 -keep class com.hhly.mlottery.activity.FootballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.activity.BasketballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.callback.SearchService { *; }
+
+##独家访谈视频播放
+-keep class com.hhly.mlottery.activity.PLVideoTextureActivity{*;}
+-keep class com.hhly.mlottery.widget.MediaController{*;}
