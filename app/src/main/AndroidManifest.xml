@@ -41,7 +41,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation">
 
-            <!-- <intent-filter>
+             <!--<intent-filter>
                  <action android:name="android.intent.action.MAIN" />
                  <category android:name="android.intent.category.LAUNCHER" />
              </intent-filter>-->
@@ -71,17 +71,13 @@
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation"/>
+
         <!-- 内地版的key-begin -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5625a606e0f55aad6700244f" />
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="BETA" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
+        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
         <!-- 内地版的key-end -->
+
         <activity
             android:name=".activity.FootballInformationActivity"
             android:screenOrientation="portrait" />
@@ -104,10 +100,7 @@
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:theme="@style/AppTheme.ColorPrimaryStatusBar"
-
-
-            />
+            android:theme="@style/AppTheme.ColorPrimaryStatusBar"/>
         <!-- 评论activity -->
         <activity
             android:name=".activity.CounselCommentActivity"
@@ -306,16 +299,7 @@
             android:theme="@style/AppThemeDark.NoActionBar" />
         <activity
             android:name=".activity.BasketballInformationActivity"
-            android:screenOrientation="portrait">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-
-        </activity>
+            android:screenOrientation="portrait"/>
 
         <!-- 篮球资料库模糊搜索 -->
         <activity
@@ -345,15 +329,8 @@
         </activity>
         <activity
             android:name=".activity.LeagueStatisticsTodayActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
 
-            <!--
-              <intent-filter>
-                  <action android:name="android.intent.action.MAIN" />
-                  <category android:name="android.intent.category.LAUNCHER" />
-              </intent-filter>
-            -->
-        </activity>
         <!--独家访谈界面-->
         <activity
             android:name=".activity.PLVideoTextureActivity"
