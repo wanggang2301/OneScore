@@ -189,6 +189,7 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
 
     public void onPause() {//继承自Activity
         mWebView.reload();
+        mWebView.destroy();
         super.onPause();
 //        MobclickAgent.onPause(this);
 //        MobclickAgent.onPageEnd("PlayWebViewActivity");

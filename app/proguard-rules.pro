@@ -173,3 +173,4 @@
 -keep class com.hhly.mlottery.activity.FootballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.activity.BasketballInformationSerachActivity{ *;}
 -keep class com.hhly.mlottery.callback.SearchService { *; }
+-keep class com.hhly.mlottery.callback.BasketSearchservice{ *; }
