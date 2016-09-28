@@ -22,7 +22,6 @@ import com.hhly.mlottery.callback.ForeignInfomationEvent;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 
@@ -116,8 +115,6 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                         if (!foreignInfomationBean.getResult().equals("200")) {
                             return;
                         }
-
-                        L.d("2334", "請求成功");
                         mList = foreignInfomationBean.getOverseasInformationList();
                         initViewData();
                         mHandler.sendEmptyMessage(DATA_STATUS_SUCCESS);
