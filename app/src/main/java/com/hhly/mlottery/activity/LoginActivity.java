@@ -68,6 +68,7 @@ import java.util.TimerTask;
 public class LoginActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
 
+
     private EditText et_username, et_password;
     private ImageView iv_eye;
     private ProgressDialog progressBar;
@@ -95,22 +96,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             switch (msg.what) {
                 case QQ_DISPLAY:
                     mLogin_qq.setVisibility(View.VISIBLE);
+                    mLogin_display.setVisibility(View.VISIBLE);
                     break;
                 case WEIXIN_DISPLAY:
                     mLogin_weixin.setVisibility(View.VISIBLE);
+                    mLogin_display.setVisibility(View.VISIBLE);
                     break;
                 case SINA_DISPLAY:
                     mLogin_sina.setVisibility(View.VISIBLE);
+                    mLogin_display.setVisibility(View.VISIBLE);
                     break;
                 case QQ_CLOSE:
                     mLogin_qq.setVisibility(View.GONE);
+                    mLogin_display.setVisibility(View.VISIBLE);
                     break;
                 case WEIXIN_CLOSE:
                     mLogin_weixin.setVisibility(View.GONE);
+                    mLogin_display.setVisibility(View.VISIBLE);
                     break;
 
                 case SINA_CLOSE:
                     mLogin_sina.setVisibility(View.GONE);
+                    mLogin_display.setVisibility(View.VISIBLE);
                     break;
                 case ALL_CLOSE:
                     mLogin_display.setVisibility(View.GONE);

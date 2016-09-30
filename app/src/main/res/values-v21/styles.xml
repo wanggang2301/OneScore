@@ -21,6 +21,10 @@
         <item_share name="android:colorControlHighlight">@color/colorPrimaryDark</item_share>-->
     </style>
 
+    <style name="AppTheme.ColorPrimaryStatusBar">
+
+    </style>
+
 
     <style name="AppTheme.NoActionBarFootBallDetails">
         <item name="windowActionBar">false</item>

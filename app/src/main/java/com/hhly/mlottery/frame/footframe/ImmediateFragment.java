@@ -334,13 +334,13 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         mNoDataTextView = (TextView) mView.findViewById(R.id.football_immediate_no_data_tv);
         mNoDataTextView.setText(R.string.immediate_no_data);
 
-        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);// 没有网络板块
-        mUnconectionLayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Settings.ACTION_SETTINGS));
-            }
-        });
+//        mUnconectionLayout = (LinearLayout) mView.findViewById(R.id.unconection_layout);// 没有网络板块
+//        mUnconectionLayout.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(Settings.ACTION_SETTINGS));
+//            }
+//        });
 
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);// Loading板块
         mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);// 网络错误板块
@@ -382,8 +382,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private final static int VIEW_STATUS_SUCCESS = 3;
     private final static int VIEW_STATUS_NET_ERROR = 4;
     private final static int VIEW_STATUS_FLITER_NO_DATA = 5;
-    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
-    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
+//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS = 6;
+//    private final static int VIEW_STATUS_WEBSOCKET_CONNECT_FAIL = 7;
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -446,16 +446,16 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mNoDataLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     break;
-                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
-                    if (mUnconectionLayout != null) {
-                        mUnconectionLayout.setVisibility(View.VISIBLE);
-                    }
-                    break;
-                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
-                    if (mUnconectionLayout != null) {
-                        mUnconectionLayout.setVisibility(View.GONE);
-                    }
-                    break;
+//                case VIEW_STATUS_WEBSOCKET_CONNECT_FAIL:
+//                    if (mUnconectionLayout != null) {
+//                        mUnconectionLayout.setVisibility(View.VISIBLE);
+//                    }
+//                    break;
+//                case VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS:
+//                    if (mUnconectionLayout != null) {
+//                        mUnconectionLayout.setVisibility(View.GONE);
+//                    }
+//                    break;
                 default:
                     break;
             }
@@ -1591,13 +1591,13 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         }
     }
 
-    public void connectFail() {
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
-    }
-
-    public void connectSuccess() {
-        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
-    }
+//    public void connectFail() {
+//        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
+//    }
+//
+//    public void connectSuccess() {
+//        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
+//    }
 
 
 //    public static boolean isPause = false;

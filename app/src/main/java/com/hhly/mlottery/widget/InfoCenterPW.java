@@ -51,7 +51,8 @@ public class InfoCenterPW extends PopupWindow {
         this.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
-                backgroundAlpha(mContext, 1f);
+//                backgroundAlpha(mContext, 1f);
+                ((InfoCenterActivity)mContext).fl_mask.setVisibility(View.GONE);
             }
         });
 
@@ -88,23 +89,25 @@ public class InfoCenterPW extends PopupWindow {
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {
             this.showAsDropDown(parent, parent.getLayoutParams().width / 2, 0);// 以下拉方式显示popupwindow
-            backgroundAlpha(mContext, 0.5f);
+//            backgroundAlpha(mContext, 0.5f);
+            ((InfoCenterActivity)mContext).fl_mask.setVisibility(View.VISIBLE);
         } else {
             this.dismiss();
+            ((InfoCenterActivity)mContext).fl_mask.setVisibility(View.GONE);
         }
     }
 
     /**
      * 设置添加屏幕的背景透明度
      *
-     * @param bgAlpha
+     * @param
      */
-    private void backgroundAlpha(Activity context, float bgAlpha) {
-        WindowManager.LayoutParams lp = context.getWindow().getAttributes();
-        lp.alpha = bgAlpha;
-        context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        context.getWindow().setAttributes(lp);
-    }
+//    private void backgroundAlpha(Activity context, float bgAlpha) {
+//        WindowManager.LayoutParams lp = context.getWindow().getAttributes();
+//        lp.alpha = bgAlpha;
+//        context.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+//        context.getWindow().setAttributes(lp);
+//    }
 
     public void notifyChanged(int indexPosition) {
         mRecyclerView.scrollToPosition(indexPosition);

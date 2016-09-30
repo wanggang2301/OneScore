@@ -922,6 +922,7 @@
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">对不起,找不到相关信息</string>
+    <string name="network_suck">网络不给力......</string>
     <string name="find_search">正在查找......</string>
     <string name="skip">"秒 | 跳过"</string>
     <!--1.1.2 begin-->Login / register
@@ -1218,4 +1219,6 @@
     <string name="baskball">篮球</string>
     <string name="comprehensive">综合</string>
     <string name="direct_seeding">直播</string>
+    <string name="download_error">下载失败!</string>
+    <string name="download_update">正在更新中，请稍后...</string>
 </resources>

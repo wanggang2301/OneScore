@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,12 +33,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
+
 
 /**
- * 首页用户设置选项
- * Created by hhly107 on 2016/4/6.
+ * @ClassName: OneScoreGit
+ * @author:Administrator luyao
+ * @Description:  用户中心首页
+ * @data: 2016/4/8 15:04
  */
 public class HomeUserOptionsActivity extends BaseActivity implements View.OnClickListener {
 

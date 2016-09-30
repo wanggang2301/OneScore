@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,29 +25,17 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PlayerInfo;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 import com.hhly.mlottery.util.StringUtils;
-import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.util.websocket.HappySocketClient;
 import com.hhly.mlottery.widget.DetailsRollOdd;
 
-import org.java_websocket.drafts.Draft_17;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author wang gang

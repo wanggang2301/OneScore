@@ -11,7 +11,7 @@
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="@color/info_data_bg">
+        android:background="@color/home_item_bg">
 
         <ImageView
             android:id="@+id/iv_left"
@@ -20,7 +20,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:padding="10dp"
-            android:src="@mipmap/info_left_icon" />
+            android:src="@mipmap/info_left_icon"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_data_content"
@@ -40,7 +41,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:padding="10dp"
-            android:src="@mipmap/info_right_icon" />
+            android:src="@mipmap/info_right_icon"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -60,6 +62,14 @@
                 android:background="@color/number_info_two_bg"
                 android:visibility="visible" />
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/info_center_mask"
+            android:clickable="true"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_loading_error"

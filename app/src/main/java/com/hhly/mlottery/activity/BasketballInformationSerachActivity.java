@@ -14,6 +14,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.BasketballInforSerachAdapter;
 import com.hhly.mlottery.bean.BasketSerach;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.callback.BasketSearchservice;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -23,10 +24,9 @@ import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 /**
@@ -58,7 +58,7 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
                 .setConverter(new GsonConverter(new Gson()))
                 .build();
 
-        final SearchService service = retrofit.create(SearchService.class);
+        final BasketSearchservice service = retrofit.create(BasketSearchservice.class);
         //保存数据源
         RxTextView.textChanges(et_keyword)
                 // 上面的对 tv_result 的操作需要在主线程
@@ -89,61 +89,102 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
 //                        return charSequence.length() > 0;
                     }
                 })
-                .switchMap(new Func1<CharSequence, rx.Observable<BasketSerach>>() {
-                    @Override public rx.Observable<BasketSerach> call(CharSequence charSequence) {
-                        // 搜索
-                        return service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
-                    }
-                })
-                // .retryWhen(new RetryWithConnectivityIncremental(BasketballInformationSerachActivity.this, 5, 15, TimeUnit.MILLISECONDS))
-                // 网络操作在io线程
-                .subscribeOn(Schedulers.io())
-                //将 data 转换成 ArrayList<ArrayList<String>>
-                .map(new Func1<BasketSerach, List<LeagueBean>>() {
-                    @Override public List<LeagueBean> call(BasketSerach data) {
-
-                        return data.resultList;
-                    }
-                })
-
-                .filter(new Func1<List<LeagueBean>, Boolean>() {
+                .map(new Func1<CharSequence,CharSequence >() {
                     @Override
-                    public Boolean call(List<LeagueBean> resultListBeen) {
+                    public CharSequence call(CharSequence charSequence) {
+                       Observable<BasketSerach> observable=
+                               service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
+                        observable.subscribeOn(Schedulers.io())
+                                //将 data 转换成 ArrayList<ArrayList<String>>
+                                .map(new Func1<BasketSerach, List<LeagueBean>>() {
+                                    @Override public List<LeagueBean> call(BasketSerach data) {
 
-                        return  resultListBeen.size() >= 0;
-                    }
+                                        return data.resultList;
+                                    }
+                                })
 
-                })
+                                .filter(new Func1<List<LeagueBean>, Boolean>() {
+                                    @Override
+                                    public Boolean call(List<LeagueBean> resultListBeen) {
 
-                // 发生错误后不要调用 onError，而是转到 onErrorResumeNext
+                                        return  resultListBeen.size() >= 0;
+                                    }
+
+                                })
+
+                                // 发生错误后不要调用 onError，而是转到 onErrorResumeNext
    /*             .onErrorResumeNext((Observable<? extends List<BasketSerach.ResultListBean>>) new Func1<Throwable, Observable<String>>() {
-            @Override public Observable<String> call(Throwable throwable) {
+                @Override public Observable<String> call(Throwable throwable) {
                 return Observable.just("error result");
             }
         })*/
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<LeagueBean>>() {
-                    @Override
-                    public void call(List<LeagueBean> resultListBeen) {
-                        //设置适配数据
-                        if (resultListBeen != null) {
-                            if (resultListBeen.isEmpty()) {
-                                //搜索详情
-                                //UiUtils.toast(MyApp.getInstance(), "找不到相关信息!");
-                                mNo_serach_tv.setText(R.string.not_find_search);
-                                mTv_result.setVisibility(View.GONE);
-                                mNo_serach_tv.setVisibility(View.VISIBLE);
+                                .observeOn(AndroidSchedulers.mainThread())
+                                /*.subscribe(new Action1<List<LeagueBean>>() {
+                                    @Override
+                                    public void call(List<LeagueBean> resultListBeen) {
+                                        //设置适配数据
+                                        if (resultListBeen != null) {
+                                            if (resultListBeen.isEmpty()) {
+                                                //搜索详情
+                                                //UiUtils.toast(MyApp.getInstance(), "找不到相关信息!");
+                                                mNo_serach_tv.setText(R.string.not_find_search);
+                                                mTv_result.setVisibility(View.GONE);
+                                                mNo_serach_tv.setVisibility(View.VISIBLE);
 
-                            } else {
-                                mTv_result.setVisibility(View.VISIBLE);
-                                mNo_serach_tv.setVisibility(View.GONE);
-                                showpop(resultListBeen, et_keyword.getText().toString());
-                            }
-                            // showpop(resultListBeen);
-                        }
+                                            } else {
+                                                mTv_result.setVisibility(View.VISIBLE);
+                                                mNo_serach_tv.setVisibility(View.GONE);
+                                                showpop(resultListBeen, et_keyword.getText().toString());
+                                            }
+                                            // showpop(resultListBeen);
+                                        }
+                                    }
+
+                                });*/
+                            .subscribe(new Observer<List<LeagueBean>>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    mNo_serach_tv.setText(R.string.network_suck);
+                                }
+
+                                @Override
+                                public void onNext(List<LeagueBean> leagueBeen) {
+                                    //设置适配数据
+                                    if (leagueBeen != null) {
+                                        if (leagueBeen.isEmpty()) {
+                                            //搜索详情
+                                            //UiUtils.toast(MyApp.getInstance(), "找不到相关信息!");
+                                            mNo_serach_tv.setText(R.string.not_find_search);
+                                            mTv_result.setVisibility(View.GONE);
+                                            mNo_serach_tv.setVisibility(View.VISIBLE);
+
+                                        } else {
+                                            mTv_result.setVisibility(View.VISIBLE);
+                                            mNo_serach_tv.setVisibility(View.GONE);
+                                            showpop(leagueBeen, et_keyword.getText().toString());
+                                        }
+                                        // showpop(resultListBeen);
+                                    }
+
+                                }
+                            });
+                        return charSequence;
                     }
+                })
+                .subscribe();
+           /*     .switchMap(new Func1<CharSequence, Observable<BasketSerach>>() {
+                    @Override public Observable<BasketSerach> call(CharSequence charSequence) {
+                        // 搜索
+                        return service.searchProdcut(VolleyContentFast.returenLanguage(), charSequence.toString());
+                    }
+                })*/
+                // .retryWhen(new RetryWithConnectivityIncremental(BasketballInformationSerachActivity.this, 5, 15, TimeUnit.MILLISECONDS))
 
-                });
 
     }
 
@@ -212,11 +253,11 @@ public class BasketballInformationSerachActivity extends BaseActivity implements
 
         }
     }
-
+/*
     interface SearchService {
         //@GET("/sug") Observable<Data> searchProdcut(@Query("code") String code, @Query("q") String keyword);
         @GET(BaseURLs.FUZZYSEARCH) rx.Observable<BasketSerach> searchProdcut(@Query("lang") String code, @Query(SEARCHKEYWORD) String keyword);
-    }
+    }*/
 
 
 }

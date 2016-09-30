@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -47,6 +48,8 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ImageView iv_left;
     private ImageView iv_right;
+    public FrameLayout fl_mask;
+    private View emptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,8 +94,12 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
                         mInfoCenterBean = jsonObject;
                         getCurrentDateInfoIndex();
 
-                        infoCenterAdapter.getData().clear();
-                        infoCenterAdapter.addData(mInfoCenterBean.intelligences.get(currentIndexDate).list);
+                        if(mInfoCenterBean.intelligences.get(currentIndexDate).list.size() == 0){
+                            infoCenterAdapter.setEmptyView(emptyView);
+                        }else{
+                            infoCenterAdapter.getData().clear();
+                            infoCenterAdapter.addData(mInfoCenterBean.intelligences.get(currentIndexDate).list);
+                        }
 
                         tv_data_content.setText(getCurrentDate(mInfoCenterBean.intelligences.get(currentIndexDate).date, mInfoCenterBean.intelligences.get(currentIndexDate).count));
 
@@ -138,6 +145,7 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.tv_current_reLoading).setOnClickListener(this);
 
+        fl_mask = (FrameLayout) findViewById(R.id.fl_mask);
         iv_left = (ImageView) findViewById(R.id.iv_left);
         iv_left.setOnClickListener(this);
         iv_right = (ImageView) findViewById(R.id.iv_right);
@@ -159,6 +167,8 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
+
+        emptyView = View.inflate(this,R.layout.layout_nodata,null);
     }
 
     @Override
@@ -194,6 +204,7 @@ public class InfoCenterActivity extends BaseActivity implements View.OnClickList
         if (mInfoCenterBean.intelligences.get(indexDate).count != 0) {
             infoCenterAdapter.addData(mInfoCenterBean.intelligences.get(indexDate).list);
         } else {
+            infoCenterAdapter.setEmptyView(emptyView);
             infoCenterAdapter.notifyDataSetChanged();
         }
         tv_data_content.setText(getCurrentDate(mInfoCenterBean.intelligences.get(indexDate).date, mInfoCenterBean.intelligences.get(indexDate).count));

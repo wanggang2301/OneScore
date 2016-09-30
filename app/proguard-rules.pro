@@ -137,3 +137,57 @@
 -dontnote com.android.vending.licensing.ILicensingService
 
 -keep class org.android.spdy.** { *; }
+
+#融云
+-keep public class io.rong.** { *; }
+-dontwarn io.rong.**
+
+#pldroid
+-keep public class com.pili.pldroid.** { *; }
+-dontwarn com.pili.pldroid.**
+
+#retrofit
+-keep public class retrofit.appengine.** { *; }
+-dontwarn retrofit.appengine.**
+
+#畅言
+-keep public class com.sohu.cyan.** { *; }
+-dontwarn com.sohu.cyan.**
+
+#JS调用WebView接口
+-keep class com.hhly.mlottery.activity.WebActivity$YBFJavascriptHandler { *;}
+
+-keep class pl.droidsonroids.gif.** { *;}
+
+#--------------- BEGIN: okhttp ----------
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn com.squareup.okhttp.**
+#--------------- END: okhttp ----------
+
+#--------------- BEGIN: okio ----------
+-keep class sun.misc.Unsafe { *; }
+-dontwarn java.nio.file.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn okio.**
+#--------------- END: okio ----------
+
+#retrofit
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+
+-keepattributes Signature
+-keepattributes Exceptions
+-dontwarn okio.**
+
+## 视频播放
+-keep class com.pili.pldroid.player.** { *; }
+-keep class tv.danmaku.ijk.media.player.** {*;}
+
+##模糊搜索
+-keep class com.hhly.mlottery.activity.FootballInformationSerachActivity{ *;}
+-keep class com.hhly.mlottery.activity.BasketballInformationSerachActivity{ *;}
+-keep class com.hhly.mlottery.callback.SearchService { *; }
+-keep class com.hhly.mlottery.callback.BasketSearchservice{ *; }

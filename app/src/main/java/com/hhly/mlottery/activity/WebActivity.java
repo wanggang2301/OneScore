@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import com.hhly.mlottery.frame.ChatFragment;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
 import com.umeng.analytics.MobclickAgent;
@@ -91,6 +94,11 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
 
     private void initView() {
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.header_layout);
+        linearLayout.setLayoutParams(
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        getResources().getDimensionPixelOffset(R.dimen.header_height_short)));
+        linearLayout.setPadding(0, 0, 0, 0);
         ImageView public_btn_filter = (ImageView) findViewById(R.id.public_btn_filter);
         public_btn_filter.setVisibility(View.GONE);
         public_btn_set = (ImageView) findViewById(R.id.public_btn_set);
@@ -113,6 +121,11 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         mWebView.setOnCustomScroolChangeListener(new ProgressWebView.ScrollInterface() {
             @Override
             public void onSChanged(int l, int t, int oldl, int oldt) {
+                L.d("___onSChanged___");
+                L.d("l = " + l);
+                L.d("t = " + t);
+                L.d("oldl = " + oldl);
+                L.d("oldt = " + oldt);
                 y = mWebView.getContentHeight() * mWebView.getScale() - (mWebView.getHeight() + mWebView.getScrollY());
                 if (y < 3) {
                     //已经处于底端
@@ -137,6 +150,9 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 //                initAnimosion(t - oldt);
             }
         });
+
+        mWebView.addJavascriptInterface(new YBFJavascriptHandler(), "YBF");
+
         WebSettings webSettings = mWebView.getSettings();
         // 不用缓存
         webSettings.setAppCacheEnabled(false);
@@ -185,6 +201,8 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                     //添加评论功能  评论功能已单独封装成一个模块  调用的时候  只要以下代码就行
                     ChatFragment chatFragment = new ChatFragment();
                     CyUtils.addComment(chatFragment, url, title, false, false, getSupportFragmentManager(), R.id.comment);
+                } else {
+                    findViewById(R.id.comment).setVisibility(View.GONE);
                 }
 //                else if (url.contains("comment=false")) {
 //                    getSupportFragmentManager().beginTransaction().remove(chatFragment).commit();//移除评论
@@ -283,6 +301,48 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public class YBFJavascriptHandler {
+        @JavascriptInterface
+        public void openShare(String url, String imageurl, String title, String subtitle) {
+            ShareBean shareBean = new ShareBean();
+            String summary;
+            if (subtitle == null || "".equals(subtitle)) {
+                summary = getString(R.string.share_summary_default);
+            } else {
+                summary = subtitle;
+            }
+            shareBean.setTitle(title != null ? title : mContext.getResources().getString(R.string.share_recommend));
+            shareBean.setSummary(summary);
+            shareBean.setTarget_url(url != null ? url : "http://m.13322.com");
+            shareBean.setImage_url(imageurl != null ? imageurl : "");
+            shareBean.setCopy(url);
+
+            mShareFragment = ShareFragment.newInstance(shareBean);
+            mShareFragment.show(getSupportFragmentManager(), "bottomShare");
+        }
+
+        @JavascriptInterface
+        public void openLoginWindow() {
+            startActivity(new Intent(WebActivity.this, LoginActivity.class));
+        }
+
+        @JavascriptInterface
+        public String getLoginToken() {
+            return AppConstants.register.getData().getLoginToken();
+        }
+
+        @JavascriptInterface
+        public String getDeviceId() {
+            return DeviceInfo.getDeviceId(getApplicationContext());
+        }
+
+        @JavascriptInterface
+        public String getLoginUserId() {
+            return AppConstants.register.getData().getUser().getUserId();
+        }
+
     }
 
 }
