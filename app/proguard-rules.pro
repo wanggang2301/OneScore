@@ -56,7 +56,7 @@
 -keep class com.hhly.mlottery.wxapi.** { *; }
 # tencent
 -dontwarn com.tencent.**
-#-keep class com.tencent.mm.sdk.** { *; }
+-keep class com.tencent.mm.sdk.** { *; }
 
 -dontnote org.apache.http.**
 -dontwarn org.apache.http.**

@@ -60,8 +60,10 @@ public class MyApp extends Application {
         switchLanguage(PreferenceUtil.getString("language", ""));
         isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
         // 捕获异常
-//        CrashException crashException = CrashException.getInstance();
-//        crashException.init(getApplicationContext());
+        if (AppConstants.isTestEnv) {
+            CrashException crashException = CrashException.getInstance();
+            crashException.init(getApplicationContext());
+        }
         VolleyContentFast.init(this);
         //初始化畅言
         CyUtils.initCy(this);
@@ -92,6 +94,7 @@ public class MyApp extends Application {
 
     /**
      * 获取当前进程名
+     *
      * @param context
      * @return
      */
