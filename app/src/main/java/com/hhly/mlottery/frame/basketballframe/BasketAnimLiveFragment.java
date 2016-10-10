@@ -16,13 +16,12 @@ import com.hhly.mlottery.R;
  */
 public class BasketAnimLiveFragment extends Fragment {
 
-
-    public static BasketAnimLiveFragment newInstance(){
-        BasketAnimLiveFragment basketAnimLiveFragment=new BasketAnimLiveFragment();
+    public static BasketAnimLiveFragment newInstance() {
+        BasketAnimLiveFragment basketAnimLiveFragment = new BasketAnimLiveFragment();
         return basketAnimLiveFragment;
     }
+
     public BasketAnimLiveFragment() {
-        // Required empty public constructor
     }
 
 
@@ -30,5 +29,4 @@ public class BasketAnimLiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_basket_anim_live, container, false);
     }
-
 }
