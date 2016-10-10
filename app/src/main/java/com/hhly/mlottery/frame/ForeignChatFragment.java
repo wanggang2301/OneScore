@@ -378,7 +378,6 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
                 }
             }
         });
-
     }
 
 
