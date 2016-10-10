@@ -17,6 +17,10 @@ import com.hhly.mlottery.R;
 public class BasketAnimLiveFragment extends Fragment {
 
 
+    public static BasketAnimLiveFragment newInstance(){
+        BasketAnimLiveFragment basketAnimLiveFragment=new BasketAnimLiveFragment();
+        return basketAnimLiveFragment;
+    }
     public BasketAnimLiveFragment() {
         // Required empty public constructor
     }

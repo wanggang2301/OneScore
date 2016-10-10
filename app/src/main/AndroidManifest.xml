@@ -351,9 +351,5 @@
         <activity
             android:name=".activity.FootballDatabaseActivity"
             android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.hhly.mlottery.activity.BasketDetailsActivityTest2"
-            android:screenOrientation="portrait"></activity>
     </application>
 </manifest>
