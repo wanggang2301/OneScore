@@ -56,7 +56,7 @@
 -keep class com.hhly.mlottery.wxapi.** { *; }
 # tencent
 -dontwarn com.tencent.**
-#-keep class com.tencent.mm.sdk.** { *; }
+-keep class com.tencent.mm.sdk.** { *; }
 
 -dontnote org.apache.http.**
 -dontwarn org.apache.http.**
@@ -159,3 +159,35 @@
 
 -keep class pl.droidsonroids.gif.** { *;}
 
+#--------------- BEGIN: okhttp ----------
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn com.squareup.okhttp.**
+#--------------- END: okhttp ----------
+
+#--------------- BEGIN: okio ----------
+-keep class sun.misc.Unsafe { *; }
+-dontwarn java.nio.file.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn okio.**
+#--------------- END: okio ----------
+
+#retrofit
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+
+-keepattributes Signature
+-keepattributes Exceptions
+-dontwarn okio.**
+
+## 视频播放
+-keep class com.pili.pldroid.player.** { *; }
+-keep class tv.danmaku.ijk.media.player.** {*;}
+
+##模糊搜索
+-keep class com.hhly.mlottery.activity.FootballInformationSerachActivity{ *;}
+-keep class com.hhly.mlottery.activity.BasketballInformationSerachActivity{ *;}
+-keep class com.hhly.mlottery.callback.SearchService { *; }
+-keep class com.hhly.mlottery.callback.BasketSearchservice{ *; }

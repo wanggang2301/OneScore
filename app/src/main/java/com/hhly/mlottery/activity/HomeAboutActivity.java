@@ -3,6 +3,7 @@ package com.hhly.mlottery.activity;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,8 +34,12 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.XRTextView;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import cn.finalteam.okhttpfinal.FileDownloadCallback;
+import cn.finalteam.okhttpfinal.HttpRequest;
 
 /**
  * 关于我们
@@ -65,6 +70,8 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
 
     private boolean isCheckVersion = true;// 是否正在请求版本更新
     private TextView mTv9;
+    private ProgressDialog progressBar;
+    private File saveFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,28 +273,49 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
      * 开始下载升级
      */
     private void downloadUpgrade() {
-        Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
-        DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri uri = Uri.parse(mUpdateInfo.getUrl());
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        //指定在WIFI状态下，执行下载操作。
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-        //是否允许漫游状态下，执行下载操作
-        request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
-        //request.setTitle("一比分新版本下载");
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setMimeType("application/vnd.android.package-archive");
-        L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-        String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"), mUpdateInfo.getUrl().length());
-        L.d("xxx", "mAppName:>>" + mAppName);
-//                    request.setDestinationInExternalFilesDir(getApplicationContext(),Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(),mAppName);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mAppName);
-        // 设置为可被媒体扫描器找到
-        request.allowScanningByMediaScanner();
-        // 设置为可见和可管理
-        request.setVisibleInDownloadsUi(true);
-        long id = downloadManager.enqueue(request);
-        L.d("xxx", "id = " + id);
+        progressBar = new ProgressDialog(this);
+        progressBar.setCanceledOnTouchOutside(false);
+        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressBar.setMessage(mContext.getResources().getString(R.string.download_update));
+        progressBar.setMax(100);
+        progressBar.setProgress(0);
+        saveFile = new File(Environment.getExternalStorageDirectory().getPath() + "/ybf_full_GF1001.apk");
+        HttpRequest.download(mUpdateInfo.getUrl(), saveFile, new FileDownloadCallback() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                progressBar.show();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onProgress(int progress, long networkSpeed) {
+                super.onProgress(progress, networkSpeed);
+                progressBar.setProgress(progress);
+            }
+
+            @Override
+            public void onFailure() {
+                super.onFailure();
+                progressBar.dismiss();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.download_error), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDone() {
+                super.onDone();
+                progressBar.dismiss();
+                installAPK(saveFile);
+            }
+        });
+    }
+
+    private void installAPK(File file) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        startActivity(intent);
     }
 
     /**

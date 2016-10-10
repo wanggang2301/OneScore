@@ -15,6 +15,7 @@ import com.hhly.mlottery.adapter.FootaballSerachAdapter;
 import com.hhly.mlottery.bean.FootBallSerachBean;
 import com.hhly.mlottery.bean.FootballLeagueBean;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
+import com.hhly.mlottery.callback.SearchService;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -24,8 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
-import retrofit.http.GET;
-import retrofit.http.Query;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -233,10 +232,10 @@ public class FootballInformationSerachActivity extends BaseActivity implements  
 
         }
     }
-    interface SearchService {
+ /*   interface SearchService {
         //@GET("/sug") Observable<Data> searchProdcut(@Query("code") String code, @Query("q") String keyword);
         @GET(BaseURLs.SEARCHMATCHLEAGUES) rx.Observable<FootBallSerachBean> searchProdcut(@Query("lang") String code, @Query("matchStr") String keyword);
-    }
+    }*/
   /*  private static class HttpResponseFunc <String> implements Func1<Throwable, Observable<String>>{
         @Override public Observable<String> call(Throwable t) {
             return Observable.error(ExceptionHandle.handleException(t));

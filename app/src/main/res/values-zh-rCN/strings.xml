@@ -1209,6 +1209,7 @@
     <string name="comprehensive">综合</string>
     <string name="direct_seeding">直播</string>
     <string name="download_error">下载失败!</string>
+    <string name="download_update">正在更新中，请稍后...</string>
 
     <!--墙外资讯-->
     <string name="foreign_month">月前</string>

@@ -1,6 +1,8 @@
 package com.hhly.mlottery.activity;
 
-import android.app.DownloadManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +24,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,11 +52,15 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import cn.finalteam.okhttpfinal.FileDownloadCallback;
+import cn.finalteam.okhttpfinal.HttpRequest;
 
 /**
  * 首页Activity
@@ -91,6 +98,8 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private final int MIN_CLICK_DELAY_TIME = 2000;// 控件点击间隔时间
     private long lastClickTime = 0;
     private int clickCount = 0;// 点击次数
+    private ProgressDialog progressBar;
+
 
     /**
      * 跳转其他Activity 的requestcode
@@ -98,6 +107,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     public static final int REQUESTCODE_LOGIN = 100;
     public static final int REQUESTCODE_LOGOUT = 110;
     private ImageView iv_account;
+    private File saveFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -584,12 +594,47 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         }
     };
 
-
     /**
      * 开始下载升级
      */
     private void downloadUpgrade() {
-        Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
+        progressBar = new ProgressDialog(this);
+        progressBar.setCanceledOnTouchOutside(false);
+        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressBar.setMessage(mContext.getResources().getString(R.string.download_update));
+        progressBar.setMax(100);
+        progressBar.setProgress(0);
+        saveFile = new File(Environment.getExternalStorageDirectory().getPath() + "/ybf_full_GF1001.apk");
+        HttpRequest.download(mUpdateInfo.getUrl(), saveFile, new FileDownloadCallback() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                progressBar.show();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onProgress(int progress, long networkSpeed) {
+                super.onProgress(progress, networkSpeed);
+                progressBar.setProgress(progress);
+            }
+
+            @Override
+            public void onFailure() {
+                super.onFailure();
+                progressBar.dismiss();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.download_error), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDone() {
+                super.onDone();
+                progressBar.dismiss();
+                installAPK(saveFile);
+            }
+        });
+
+        /*Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
         DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(mUpdateInfo.getUrl());
         DownloadManager.Request request = new DownloadManager.Request(uri);
@@ -598,9 +643,9 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         //是否允许漫游状态下，执行下载操作
         request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
         //是否允许“计量式的网络连接”执行下载操作
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        *//*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             request.setAllowedOverMetered(false);// 默认是允许的。
-        }*/
+        }*//*
         //request.setTitle("一比分新版本下载");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setMimeType("application/vnd.android.package-archive");
@@ -613,7 +658,15 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         // 设置为可见和可管理
         request.setVisibleInDownloadsUi(true);
         long id = downloadManager.enqueue(request);
-        L.d("xxx", "id = " + id);
+        L.d("xxx", "id = " + id);*/
+    }
+
+    private void installAPK(File file) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        startActivity(intent);
     }
 
     /**
@@ -761,7 +814,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     private void goToUserOptionsActivity() {
-       startActivityForResult(new Intent(this, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
+        startActivityForResult(new Intent(this, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
     }
 
     private void goToAccountActivity() {

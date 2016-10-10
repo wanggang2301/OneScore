@@ -1082,17 +1082,20 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     }
 
                     /*给首页菜单入口添加小圆点标记--------start--------------------*/
-                    int dp = DisplayUtil.dip2px(mContext, 5);// 添加小圆点
-                    for (int i = 0; i < circularSize; i++) {
-                        View view = new View(mContext);
-                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp, dp);
-                        if (i != 0) {
-                            lp.leftMargin = dp;
+                    mViewHolder.ll_menu_point.removeAllViews();
+                    if (circularSize >= 2) {
+                        int dp = DisplayUtil.dip2px(mContext, 5);// 添加小圆点
+                        for (int i = 0; i < circularSize; i++) {
+                            View view = new View(mContext);
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp, dp);
+                            if (i != 0) {
+                                lp.leftMargin = dp;
+                            }
+                            view.setEnabled(i == 0);
+                            view.setBackgroundResource(R.drawable.v_lunbo_point_selector);
+                            view.setLayoutParams(lp);
+                            mViewHolder.ll_menu_point.addView(view);
                         }
-                        view.setEnabled(i == 0 ? true : false);
-                        view.setBackgroundResource(R.drawable.v_lunbo_point_selector);
-                        view.setLayoutParams(lp);
-                        mViewHolder.ll_menu_point.addView(view);
                     }
                     /*给首页菜单入口添加小圆点标记--------end--------------------*/
                     mViewHolder.mViewPagerMenu.setAdapter(new FragmentStatePagerAdapter(((HomePagerActivity) mContext).getSupportFragmentManager()) {
