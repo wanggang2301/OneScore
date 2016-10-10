@@ -4,14 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/basket_details_back"
@@ -34,48 +32,48 @@
             android:paddingRight="21dp"
             android:src="@mipmap/basketball_collect" />
 
-            <RelativeLayout
-                android:id="@+id/ll_basket_title_score"
-                android:layout_width="300dp"
+        <RelativeLayout
+            android:id="@+id/ll_basket_title_score"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/title_vs"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="visible"
-                >
-                <TextView
-                    android:id="@+id/title_vs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="VS"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:textColor="#ffffff"
-                    android:padding="2.5dp"
-                    android:textSize="@dimen/text_size_16"/>
+                android:gravity="center"
+                android:padding="2.5dp"
+                android:text="VS"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_size_16" />
 
-                <TextView
-                    android:id="@+id/title_guest_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_centerInParent="true"
-                    android:textColor="#ffffff"
-                    android:singleLine="true"
-                    android:layout_marginRight="2.5dp"
-                    android:layout_toLeftOf="@id/title_vs"
-                    android:textSize="@dimen/text_size_16"/>
+            <TextView
+                android:id="@+id/title_guest_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="2.5dp"
+                android:layout_toLeftOf="@id/title_vs"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_size_16" />
 
-                <TextView
-                    android:id="@+id/title_home_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_toRightOf="@id/title_vs"
-                    android:textColor="#ffffff"
-                    android:singleLine="true"
-                    android:layout_marginLeft="2.5dp"
-                    android:layout_centerInParent="true"
-                    android:textSize="@dimen/text_size_16" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/title_home_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="2.5dp"
+                android:layout_toRightOf="@id/title_vs"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_size_16" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>
