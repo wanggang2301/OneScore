@@ -15,7 +15,6 @@ import com.hhly.mlottery.R;
  * 时间:  2016/10/10 10:35
  */
 public class BasketAnimLiveFragment extends Fragment {
-
     public static BasketAnimLiveFragment newInstance() {
         BasketAnimLiveFragment basketAnimLiveFragment = new BasketAnimLiveFragment();
         return basketAnimLiveFragment;
@@ -23,7 +22,6 @@ public class BasketAnimLiveFragment extends Fragment {
 
     public BasketAnimLiveFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
