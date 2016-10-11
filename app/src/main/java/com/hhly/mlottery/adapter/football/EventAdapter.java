@@ -244,5 +244,4 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
             return VIEW_TYPE_DEFAULT;
         }
     }
-
 }

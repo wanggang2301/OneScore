@@ -130,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="5dp"
                     android:paddingTop="10dp">
 
                     <ImageView
@@ -146,6 +146,22 @@
                         android:text="@string/foot_event_goal"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
+                        android:src="@mipmap/event_penalty" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="@string/foot_event_penalty"
+                        android:textColor="@color/res_pl_color"
+                        android:textSize="@dimen/text_size_10" />
+
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -193,6 +209,17 @@
                         android:text="@string/foot_event_ytor"
                         android:textColor="@color/res_pl_color"
                         android:textSize="@dimen/text_size_10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="5dp">
+
 
                     <ImageView
                         android:layout_width="wrap_content"
