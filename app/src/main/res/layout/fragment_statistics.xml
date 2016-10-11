@@ -151,7 +151,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="10dp"
                         android:src="@mipmap/event_penalty" />
 
                     <TextView
@@ -167,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="10dp"
                         android:src="@mipmap/event_rc" />
 
                     <TextView
@@ -183,7 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
 
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="10dp"
                         android:src="@mipmap/event_yc" />
 
                     <TextView
@@ -198,7 +198,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="10dp"
 
                         android:src="@mipmap/event_ytor" />
 
@@ -225,7 +225,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="10dp"
 
                         android:src="@mipmap/event_player" />
 
@@ -241,7 +241,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="10dp"
 
                         android:src="@mipmap/event_corner" />
 
@@ -257,7 +257,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="10dp"
 
                         android:src="@mipmap/event_half" />
 
@@ -273,7 +273,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginLeft="10dp"
 
                         android:src="@mipmap/event_finish" />
 
