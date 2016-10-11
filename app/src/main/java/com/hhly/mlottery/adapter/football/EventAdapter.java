@@ -9,7 +9,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 
 import java.util.List;
@@ -35,6 +34,8 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
     private static final String SUBSTITUTION = "1055";
     private static final String CORNER = "1025";
     private static final String YTORED = "1045";//两黄变一红
+    private static final String DIANQIU = "1031";//两黄变一红
+
     //客队事件
     private static final String SCORE1 = "2053";//客队进球
     private static final String RED_CARD1 = "2056";
@@ -42,6 +43,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
     private static final String SUBSTITUTION1 = "2079";
     private static final String CORNER1 = "2049";
     private static final String YTORED1 = "2069";//两黄变一红
+    private static final String DIANQIU1 = "2055";//两黄变一红
 
 
     /**
@@ -171,6 +173,9 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
             } else if (YTORED.equals(m.getCode())) {
                 msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_ychanger));
                 iv_left.setImageResource(R.mipmap.event_ytor);
+            }else if (DIANQIU.equals(m.getCode())){
+                msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge));
+                iv_left.setImageResource(R.mipmap.event_penalty);
             }
 
 
@@ -211,6 +216,9 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
             } else if (YTORED1.equals(m.getCode())) {
                 msg_right.setText(mContext.getResources().getString(R.string.foot_event_ychanger) + m.getPlayInfo());
                 iv_right.setImageResource(R.mipmap.event_ytor);
+            }else if (DIANQIU1.equals(m.getCode())){
+                msg_right.setText(mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge) + m.getPlayInfo());
+                iv_right.setImageResource(R.mipmap.event_penalty);
             }
         }
     }
@@ -223,9 +231,6 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getItemCount() {
-        L.d("ddff","getItemCountsdsd");
-
-
         return matchTimeLiveBeans.size();
     }
 

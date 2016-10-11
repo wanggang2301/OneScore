@@ -16,8 +16,8 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/basket_details_appbar"
             android:layout_width="match_parent"
-            android:background="@color/black"
             android:layout_height="wrap_content"
+            android:background="@color/black"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -28,21 +28,20 @@
                 app:contentScrim="@color/black"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <include layout="@layout/layout_basket_header"/>
+                <include layout="@layout/layout_basket_header" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/basket_details_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
-                    app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="scroll|enterAlways"
                     android:background="@color/transparency"
                     app:contentInsetStart="0dp"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" >
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
 
                     <include layout="@layout/basket_details_header" />
-
-                    </android.support.v7.widget.Toolbar>
+                </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -73,11 +72,11 @@
                 android:id="@+id/iv_join_room_basket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="60dp"
                 android:layout_marginRight="20dp"
+                android:clickable="true"
                 android:src="@mipmap/join_room_icon" />
         </RelativeLayout>
 

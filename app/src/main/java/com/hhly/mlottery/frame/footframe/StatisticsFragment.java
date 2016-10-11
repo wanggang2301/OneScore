@@ -72,11 +72,14 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
     private static final String RED_CARD = "1032";
     private static final String YELLOW_CARD = "1034";
     private static final String CORNER = "1025";
+    private static final String DIANQIU = "1031";
+
     //客队事件
     private static final String SCORE1 = "2053";//客队进球
     private static final String RED_CARD1 = "2056";
     private static final String YELLOW_CARD1 = "2058";
     private static final String CORNER1 = "2049";
+    private static final String DIANQIU1 = "2055";
 
 
     //走势图表
@@ -287,11 +290,7 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                 getVolleyDataStatic();
 
                 break;
-
-
         }
-
-
     }
 
     /**
@@ -584,10 +583,13 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
         int homeRc = 0;
         int homeYc = 0;
         int homeCorner = 0;
+        int homeDianQiu = 0;
         int guestGoal = 0;
         int guestRc = 0;
         int guestYc = 0;
         int guestCorner = 0;
+        int guestDianQiu = 0;
+
         int statusEqual2 = 0; //计算List里面出现的state=2 code=1多次出现，只需要一个
 
         Iterator<MatchTimeLiveBean> iterator = eventMatchLive.iterator();
@@ -614,6 +616,9 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                     } else if (CORNER.equals(m.getCode())) {
                         homeCorner++;
                         m.setEventnum(homeCorner);
+                    } else if (DIANQIU.equals(m.getCode())) {
+                        homeDianQiu++;
+                        m.setEventnum(homeDianQiu);
                     }
                 } else {
                     if (SCORE1.equals(m.getCode())) {
@@ -628,11 +633,13 @@ public class StatisticsFragment extends Fragment implements View.OnClickListener
                     } else if (CORNER1.equals(m.getCode())) {
                         guestCorner++;
                         m.setEventnum(guestCorner);
+                    } else if (DIANQIU1.equals(m.getCode())) {
+                        guestDianQiu++;
+                        m.setEventnum(guestDianQiu);
                     }
                 }
             }
         }
-
     }
 
 
