@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.footframe;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -39,6 +40,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  *  足球分析界面
@@ -165,6 +169,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private TextView mLetRecentGuestWinRate;
     private TextView mLetRecentHomeWinText;// 皇马赢盘率
     private TextView mLetRecentGuestWinText;
+    //比分红色为主队
+     TextView mLetDescription;
 
 
     //大小球走势
@@ -202,6 +208,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private TextView mSizeRecentGuestSmallRate;
     private TextView mSizeRecentGuestDraw;
     private TextView mSizeRecentGuestVsCount;
+    TextView mSizeDescription;
 
 
     /**亚盘里的listView*/
@@ -367,6 +374,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mLetRecentGuestProgress= (RoundProgressBar) mView.findViewById(R.id.analyze_let_recent_guest_progress);
         mLetRecentGuestWinRate= (TextView) mView.findViewById(R.id.analyze_let_recent_guest_vs_count);
         mLetRecentGuestWinText= (TextView) mView.findViewById(R.id.analyze_let_recent_guest_win_text);
+        mLetDescription= (TextView) mView.findViewById(R.id.analyze_asia_description);
 
         //大小球走势
         mllSize= (LinearLayout) mView.findViewById(R.id.ll_analyze_size);
@@ -407,6 +415,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         mSizeRecentGuestSmallRate= (TextView) mView.findViewById(R.id.analyze_size_recent_guest_small_ball);
         mSizeRecentGuestDraw= (TextView) mView.findViewById(R.id.analyze_size_recent_guest_draw_percent);
         mSizeRecentGuestVsCount= (TextView) mView.findViewById(R.id.analyze_size_recent_guest_vs_count);
+        mSizeDescription= (TextView) mView.findViewById(R.id.analyze_size_description);
 
         mLetHistoryProgressBar.setTextIsDisplayable(false);
         mLetRecentHomeProgress.setTextIsDisplayable(false);
@@ -490,6 +499,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     case R.id.let_rb_history:
                         mLinearLetHistory.setVisibility(View.VISIBLE);
                         mLinearLetRecent.setVisibility(View.GONE);
+                        mLetDescription.setVisibility(View.VISIBLE);
                         //亞盤
                         if(mAnalyzeBean.getAsiaTrend()!=null&&mAnalyzeBean.getAsiaTrend().getBattleHistory()!=null&&mAnalyzeBean.getAsiaTrend().getBattleHistory().getStatistics()!=null){
                             setLetHistoryText(mAnalyzeBean.getAsiaTrend().getBattleHistory().getStatistics());
@@ -503,6 +513,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                         break;
                     case R.id.let_rb_recent:
                         mLinearLetRecent.setVisibility(View.VISIBLE);
+                        mLetDescription.setVisibility(View.INVISIBLE);
                         mLinearLetHistory.setVisibility(View.GONE);
                         //亞盤
                         if(mAnalyzeBean.getAsiaTrend()!=null&&mAnalyzeBean.getAsiaTrend().getHomeRecent()!=null&&mAnalyzeBean.getAsiaTrend().getHomeRecent().getStatistics()!=null){
@@ -531,6 +542,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     case R.id.size_rb_history:
                         mLinearSizeHistory.setVisibility(View.VISIBLE);
                         mLinearSizeRecent.setVisibility(View.GONE);
+                        mSizeDescription.setVisibility(View.VISIBLE);
                         //大小球
                         if(mAnalyzeBean.getSizeTrend()!=null&&mAnalyzeBean.getSizeTrend().getBattleHistory()!=null&&mAnalyzeBean.getSizeTrend().getBattleHistory().getStatistics()!=null){
                             setSizeHistoryText(mAnalyzeBean.getSizeTrend().getBattleHistory().getStatistics());
@@ -543,6 +555,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                     case R.id.size_rb_recent:
                         mLinearSizeRecent.setVisibility(View.VISIBLE);
                         mLinearSizeHistory.setVisibility(View.GONE);
+                        mSizeDescription.setVisibility(View.INVISIBLE);
                         //大小球
                         if(mAnalyzeBean.getSizeTrend()!=null&&mAnalyzeBean.getSizeTrend().getHomeRecent()!=null&&mAnalyzeBean.getSizeTrend().getHomeRecent().getStatistics()!=null){
                             setSizeRecentHomeText(mAnalyzeBean.getSizeTrend().getHomeRecent().getStatistics());

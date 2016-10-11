@@ -629,6 +629,7 @@
                 android:id="@+id/textView3" />
 
             <TextView
+                android:id="@+id/analyze_asia_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mdy_999"
@@ -636,6 +637,7 @@
                 android:layout_toRightOf="@id/textView3"
                 android:textSize="10sp"
                 android:paddingLeft="10dp"
+                android:visibility="invisible"
                 />
         </RelativeLayout>
         <RadioGroup
