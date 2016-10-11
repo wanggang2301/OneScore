@@ -2,6 +2,7 @@ package com.hhly.mlottery;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Notification;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -19,6 +20,9 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.entity.UMessage;
 
 import java.util.Locale;
 
@@ -46,7 +50,16 @@ public class MyApp extends Application {
 
     @Override
     public void onCreate() {
+//        PushAgent pushAgent-
+        UmengMessageHandler handler=new UmengMessageHandler(){
+            @Override
+            public Notification getNotification(Context context, UMessage uMessage) {
+                return super.getNotification(context, uMessage);
+
+            }
+        };
         appcontext = this;
+
         initImageLoader(this);
 //		CyUtils.initCy(this);
         // 初始化PreferenceUtil
