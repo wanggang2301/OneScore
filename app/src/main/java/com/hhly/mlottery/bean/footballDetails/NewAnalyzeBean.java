@@ -20,6 +20,24 @@ public class NewAnalyzeBean {
     private BothRecordEntity bothRecord;
     private String recommend;
     private Integer leagueType;
+    private String homeTeam;
+    private String guestTeam;
+
+    public String getHomeTeam() {
+        return homeTeam;
+    }
+
+    public void setHomeTeam(String homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    public String getGuestTeam() {
+        return guestTeam;
+    }
+
+    public void setGuestTeam(String guestTeam) {
+        this.guestTeam = guestTeam;
+    }
 
     public String getResult() {
         return result;

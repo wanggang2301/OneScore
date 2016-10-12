@@ -40,6 +40,7 @@ public interface MyConstants {
 	String SCORE_DIFFERENCE = "score_difference"; //总分差 提示
 	String SINGLE_SCORE = "single_score";//单节得分
 	String HOST_RANKING = "Host_ranking";//主客排名
+	String BASKETBALL_PUSH_FOCUS ="is_push";
 
 	//篮球 赔率提示
 	String BASKETBALL_RBSECOND = "basketball_rbSecond";// 亚盘

@@ -261,8 +261,8 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_analyze_fragment, container, false);
         mAnalyzeBean=new NewAnalyzeBean();
-        mHomeName=getString(R.string.intelligent_home);
-        mGuestName=getString(R.string.intelligent_guest);
+//        mHomeName=getString(R.string.intelligent_home);
+//        mGuestName=getString(R.string.intelligent_guest);
         initView();
         initData();
         setListener();
@@ -580,6 +580,16 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * 加载数据
      */
     private void loadData(NewAnalyzeBean analyzeBean){
+
+        mHomeName=analyzeBean.getHomeTeam()==null?"":analyzeBean.getHomeTeam();
+        mGuestName=analyzeBean.getGuestTeam()==null?"":analyzeBean.getGuestTeam();
+        mHomeTeamName.setText(mHomeName);
+        mGuestTeamName.setText(mGuestName);
+        mLetHomeTeam.setText(mHomeName);
+        mSizeHomeTeam.setText(mHomeName);
+        mLetGuestTeam.setText(mGuestName);
+        mSizeGuestTeam.setText(mGuestName);
+
         if(getActivity()!=null){
             if(mAnalyzeBean.getAsiaTrend()!=null&&mAnalyzeBean.getAsiaTrend().getHomeRecent()!=null&&mAnalyzeBean.getAsiaTrend().getHomeRecent().getStatistics()!=null){
                 setLetRecentHomeText(mAnalyzeBean.getAsiaTrend().getHomeRecent().getStatistics());
@@ -1139,21 +1149,16 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    /**
-     * 设置队员信息的主客队队名
-     * @param home
-     * @param guest
-     */
-    public void setTeamName(String home,String guest){
-        mHomeTeamName.setText(home);
-        mGuestTeamName.setText(guest);
-        mLetHomeTeam.setText(home);
-        mSizeHomeTeam.setText(home);
-        mLetGuestTeam.setText(guest);
-        mSizeGuestTeam.setText(guest);
-        mHomeName=home;
-        mGuestName=guest;
-    }
+//    /**
+//     * 设置队员信息的主客队队名
+//     * @param home
+//     * @param guest
+//     */
+//    public void setTeamName(String home,String guest){
+//
+////        mHomeName=home;
+////        mGuestName=guest;
+//    }
     /**
      * 设置近期战绩图片  胜平负
      * @param mImage

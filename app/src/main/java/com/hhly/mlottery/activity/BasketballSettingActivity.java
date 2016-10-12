@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.R.string;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
@@ -23,6 +25,7 @@ import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.UmengRegistrar;
 
 /**
  * @ClassName: BasketballSettingActivity 
@@ -47,6 +50,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 	private SwitchCompat mTb_Point_spread; //总分差
 	private SwitchCompat mTb_single_score; //单节比分
 	private SwitchCompat mTb_ranking; //排名
+	private SwitchCompat mTb_push; //推送关注消息
 	
 	private ImageView mBack;
 	
@@ -92,6 +96,8 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		mTb_single_score.setOnCheckedChangeListener(this);
 		mTb_ranking = (SwitchCompat) findViewById(R.id.tb_ranking);
 		mTb_ranking.setOnCheckedChangeListener(this);
+		mTb_push= (SwitchCompat) findViewById(R.id.tb_push);
+		mTb_push.setOnCheckedChangeListener(this);
 		
 		mBack = (ImageView) findViewById(R.id.public_img_back);
 		mBack.setOnClickListener(this);
@@ -129,6 +135,14 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			mTb_ranking.setChecked(true);
 		}else{
 			mTb_ranking.setChecked(false);
+		}
+
+		//推送关注比赛按钮
+		mTb_push.setChecked(PreferenceUtil.getBoolean(MyConstants.BASKETBALL_PUSH_FOCUS,true));
+		if(PreferenceUtil.getBoolean(MyConstants.BASKETBALL_PUSH_FOCUS,true)){
+			mTb_push.setChecked(true);
+		}else {
+			mTb_push.setChecked(false);
 		}
 
 		resultstring = "";
@@ -232,6 +246,13 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 			MobclickAgent.onEvent(mContext,"Basketball_Setting_Ranking");
 			PreferenceUtil.commitBoolean(MyConstants.HOST_RANKING, mTb_ranking.isChecked());
 			break;
+		case R.id.tb_push:
+			PreferenceUtil.commitBoolean(MyConstants.BASKETBALL_PUSH_FOCUS, mTb_push.isChecked());
+
+			//TODO:把是否接受推送消息的状态传给服务器
+//			Log.e("BBB",UmengRegistrar.getRegistrationId(MyApp.getContext()));
+
+				break;
 
 		default:
 			break;
