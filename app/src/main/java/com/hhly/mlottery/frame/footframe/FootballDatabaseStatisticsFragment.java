@@ -281,7 +281,6 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
     private void initData(){
 
         mHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        //http://192.168.31.115:8080/mlottery/core/basketballData.findStatistic.do?lang=zh&leagueId=123456&season=2016-2017
         String url = "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do" ;
 //        String url = BaseURLs.URL_BASKET_DATABASE_STATISTIC_DETAILS;
         Map<String , String> params = new HashMap<>();
