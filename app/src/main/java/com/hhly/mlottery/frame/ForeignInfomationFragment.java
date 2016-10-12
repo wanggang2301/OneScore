@@ -180,7 +180,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         pageSize++;
         Map<String, String> params = new HashMap<>();
         params.put("pageNum", pageSize + "");
-        String url = "http://192.168.31.178:8080/mlottery/core/overseasInformation.findOverseasInformation.do";
+        String url = BaseURLs.URL_FOREIGN_INFOMATION;
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ForeignInfomationBean>() {
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {

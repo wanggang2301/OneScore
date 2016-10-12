@@ -874,11 +874,11 @@ public class BaseURLs {
     /**
      * 国外资讯
      */
-    //  public final static String URL_FOREIGN_INFOMATION = URL_API_HOST + "overseasInformation.findOverseasInformation.do";
-    // public final static String URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE = URL_API_HOST + "overseasInformation.updLike.do";
+      public final static String URL_FOREIGN_INFOMATION = URL_API_HOST + "overseasInformation.findOverseasInformation.do";
+     public final static String URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE = URL_API_HOST + "overseasInformation.updLike.do";
 
-    public final static String URL_FOREIGN_INFOMATION = "http://192.168.31.178:8080/mlottery/core/" + "overseasInformation.findOverseasInformation.do";
-    public final static String URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE = "http://192.168.31.178:8080/mlottery/core/" + "overseasInformation.updLike.do";
+   // public final static String URL_FOREIGN_INFOMATION = "http://192.168.31.178:8080/mlottery/core/" + "overseasInformation.findOverseasInformation.do";
+  //  public final static String URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE = "http://192.168.31.178:8080/mlottery/core/" + "overseasInformation.updLike.do";
 
 
 }
