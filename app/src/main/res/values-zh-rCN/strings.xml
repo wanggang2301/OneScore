@@ -783,6 +783,7 @@
     <string name="basket_database_details_statistic_nogp">未赛 :</string>
     <string name="basket_database_details_statistic_allgp">总赛场次 :</string>
 
+    <string name="basket_database_details_leagueMost_wintop">胜平负最多</string>
     <string name="basket_database_details_leagueMost_strongestAttack">攻击力最强</string>
     <string name="basket_database_details_leagueMost_weakestAttack">攻击力最弱</string>
     <string name="basket_database_details_leagueMost_strongestDefense">防守最强</string>
@@ -802,6 +803,20 @@
     <string name="football_database_details_integral_win_draw_lose_title">胜/平/负</string>
     <string name="football_database_details_integral_gain_loss_title">得/失球</string>
     <string name="football_database_details_integral_itnis_title">净胜球</string>
+    <string name="football_database_details_most_top_win">胜/已赛:</string>
+    <string name="football_database_details_most_top_avg">胜率:</string>
+    <string name="football_database_details_statistic_home_draw">平局 :</string>
+
+    <string name="football_database_details_wdl_statistic">胜平负统计</string>
+    <string name="football_database_details_goal_statistic">进球统计</string>
+    <string name="football_database_details_big_small_statistic">大小球统计</string>
+    <string name="football_database_details_home_score_avg">主场场均进球</string>
+    <string name="football_database_details_guest_score_avg">客场场均进球</string>
+    <string name="football_database_details_moreZero">高于0.5</string>
+    <string name="football_database_details_moreOne">高于1.5</string>
+    <string name="football_database_details_moreTwo">高于2.5</string>
+    <string name="football_database_details_moreThree">高于3.5</string>
+    <string name="football_database_details_chang">场</string>
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明细</string>
