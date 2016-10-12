@@ -150,7 +150,6 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
             } else if (YELLOW_CARD.equals(m.getCode())) {
                 msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang));
                 iv_left.setImageResource(R.mipmap.event_yc);
-
             } else if (RED_CARD.equals(m.getCode())) {
                 msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_zhang));
                 iv_left.setImageResource(R.mipmap.event_rc);

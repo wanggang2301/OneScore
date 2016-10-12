@@ -41,7 +41,6 @@ import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
@@ -88,7 +87,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     private LinearLayout mLoadingLayout;
     private LinearLayout mErrorLayout;
 
-//    private LinearLayout mUnconectionLayout;
+    //    private LinearLayout mUnconectionLayout;
     private ExactSwipeRefrashLayout mSwipeRefreshLayout;
 
     private View mUnFocusLayout;
@@ -194,7 +193,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         focusEventBus.register(this);
 
 
-
     }
 
     @Override
@@ -285,7 +283,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerview_focus);
 
         mRecyclerView.setLayoutManager(layoutManager);
-
 
 
         /**需要修改**/
@@ -484,9 +481,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
                 mAllMatchs = json.getFocus();
 
-                teamLogoPre=json.getTeamLogoPre();
+                teamLogoPre = json.getTeamLogoPre();
 
-                teamLogoSuff=json.getTeamLogoSuff();
+                teamLogoSuff = json.getTeamLogoSuff();
 
                 mMatchs = new ArrayList<Match>();
 
@@ -569,42 +566,29 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
 
-                if (AppConstants.isGOKeyboard) {
-                           /* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
-                            // mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                            getActivity().runOnUiThread(new Runnable() {
+                if (mAdapter == null) {
+                    mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
+                    mAdapter.setmFocusMatchClickListener(mFocusClickListener);
+                    mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, String data) {
+                            String thirdId = data;
+                            Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
+                            intent.putExtra("thirdId", thirdId);
+                            intent.putExtra("currentFragmentId", 3);
 
-                                @Override
-                                public void run() {
-                                    mRecyclerView.setAdapter(mInternationalAdapter);
-                                }
-                            });*/
+                            getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
+                        }
+                    });
+                    mRecyclerView.setAdapter(mAdapter);
                 } else {
-
-                    if(mAdapter==null){
-                        mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                        mAdapter.setmFocusMatchClickListener(mFocusClickListener);
-                        mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, String data) {
-                                String thirdId = data;
-                                Intent intent = new Intent(getActivity(), FootballMatchDetailActivityTest.class);
-                                intent.putExtra("thirdId", thirdId);
-                                intent.putExtra("currentFragmentId", 3);
-
-                                getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
-                            }
-                        });
-                        mRecyclerView.setAdapter(mAdapter);
-                    }else{
-                        updateAdapter();
-                    }
+                    updateAdapter();
                 }
+
 
                 isLoadedData = true;
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 
-//                startWebsocket();
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -1083,19 +1067,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     }
 
     public void updateAdapter() {
-        if (AppConstants.isGOKeyboard) {
-            if (mInternationalAdapter == null) {
-                return;
-            }
-            mInternationalAdapter.updateDatas(mMatchs);
-            mInternationalAdapter.notifyDataSetChanged();
-        } else {
-            if (mAdapter == null) {
-                return;
-            }
-            mAdapter.updateDatas(mMatchs);
-            mAdapter.notifyDataSetChanged();
+        if (mAdapter == null) {
+            return;
         }
+        mAdapter.updateDatas(mMatchs);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -1127,11 +1103,9 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         L.v(TAG, "___onResume___");
 
 
-
 //        if (isDestroy) {
 //            return;
 //        }
-
 
 
 //        if (!isLoadedData) {
@@ -1387,7 +1361,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 //    }
 
 
-    public void reLoadData(){
+    public void reLoadData() {
         String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
         if ("".equals(fucus_id) || ",".equals(fucus_id)) {
             mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
