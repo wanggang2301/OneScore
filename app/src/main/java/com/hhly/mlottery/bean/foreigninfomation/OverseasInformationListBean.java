@@ -14,6 +14,7 @@ public class OverseasInformationListBean implements Parcelable {
 
     private int id;
     private long timestamp;
+    private String infoType;
     private String fullname;
     private String fullnameTranslation;
     private String fullnameTranslationThTw;
@@ -22,16 +23,24 @@ public class OverseasInformationListBean implements Parcelable {
     private String contentTranslation;
     private String contentTranslationThTw;
     private String photo;
+    private String video;
     private int favorite;
     private long currentTimestamp;
-    private String sendtime;
 
-    public String getSendtime() {
-        return sendtime;
+    public String getInfoType() {
+        return infoType;
     }
 
-    public void setSendtime(String sendtime) {
-        this.sendtime = sendtime;
+    public void setInfoType(String infoType) {
+        this.infoType = infoType;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
     }
 
     public int getId() {
@@ -139,6 +148,7 @@ public class OverseasInformationListBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeLong(this.timestamp);
+        dest.writeString(this.infoType);
         dest.writeString(this.fullname);
         dest.writeString(this.fullnameTranslation);
         dest.writeString(this.fullnameTranslationThTw);
@@ -147,9 +157,9 @@ public class OverseasInformationListBean implements Parcelable {
         dest.writeString(this.contentTranslation);
         dest.writeString(this.contentTranslationThTw);
         dest.writeString(this.photo);
+        dest.writeString(this.video);
         dest.writeInt(this.favorite);
         dest.writeLong(this.currentTimestamp);
-        dest.writeString(this.sendtime);
     }
 
     public OverseasInformationListBean() {
@@ -158,6 +168,7 @@ public class OverseasInformationListBean implements Parcelable {
     protected OverseasInformationListBean(Parcel in) {
         this.id = in.readInt();
         this.timestamp = in.readLong();
+        this.infoType = in.readString();
         this.fullname = in.readString();
         this.fullnameTranslation = in.readString();
         this.fullnameTranslationThTw = in.readString();
@@ -166,9 +177,9 @@ public class OverseasInformationListBean implements Parcelable {
         this.contentTranslation = in.readString();
         this.contentTranslationThTw = in.readString();
         this.photo = in.readString();
+        this.video = in.readString();
         this.favorite = in.readInt();
         this.currentTimestamp = in.readLong();
-        this.sendtime = in.readString();
     }
 
     public static final Parcelable.Creator<OverseasInformationListBean> CREATOR = new Parcelable.Creator<OverseasInformationListBean>() {
