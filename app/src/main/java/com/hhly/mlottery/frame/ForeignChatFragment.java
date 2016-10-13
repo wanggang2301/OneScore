@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.activity.PLVideoTextureActivity;
 import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.adapter.CounselComentLvAdapter;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
@@ -117,6 +118,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
     private View headview;
 
     private ImageView ivPhone;
+    private ImageView ivVideo;
     private LinearLayout ll_zan;
 
     private OverseasInformationListBean oilBean;
@@ -207,6 +209,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
 
     private void initHeadViewData() {
         ivPhone = (ImageView) headview.findViewById(R.id.iv_photo);
+        ivVideo = (ImageView) headview.findViewById(R.id.iv_video);
         ll_zan = (LinearLayout) headview.findViewById(R.id.ll_zan);
         ivPhone.setOnClickListener(this);
         ll_zan.setOnClickListener(this);
@@ -237,9 +240,16 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
 
         if (oilBean.getPhoto() == null) {
             ivPhone.setVisibility(View.GONE);
+            ivVideo.setVisibility(View.GONE);
         } else {
             ivPhone.setVisibility(View.VISIBLE);
             universalImageLoader.displayImage(oilBean.getPhoto(), ivPhone, options);
+            if ("2".equals(oilBean.getInfoType())) {
+                ivVideo.setVisibility(View.VISIBLE);
+            } else {
+                ivVideo.setVisibility(View.GONE);
+            }
+
         }
 
         tvTight.setText(oilBean.getFavorite() + "");
@@ -484,14 +494,22 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.iv_photo:
-                if (oilBean.getPhoto() != null) {
-                    String url = oilBean.getPhoto();
-                    Intent intent = new Intent(mContext, PicturePreviewActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("url", url);
-                    mContext.startActivity(intent);
+                if ("2".equals(oilBean.getInfoType())) {
+                    if (oilBean.getVideo() != null) {
+                        Intent intent = new Intent(mContext, PLVideoTextureActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("videoPath", oilBean.getVideo());
+                        mContext.startActivity(intent);
+                    }
+                } else {
+                    if (oilBean.getPhoto() != null) {
+                        String url = oilBean.getPhoto();
+                        Intent intent = new Intent(mContext, PicturePreviewActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("url", url);
+                        mContext.startActivity(intent);
+                    }
                 }
                 break;
 

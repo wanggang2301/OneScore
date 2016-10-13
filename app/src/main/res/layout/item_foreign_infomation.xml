@@ -87,14 +87,29 @@
         android:textColor="@color/mdy_333"
         android:textSize="@dimen/text_size_13" />
 
-    <ImageView
-        android:id="@+id/iv_photo"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:src="@mipmap/home_carousel_default" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:src="@mipmap/home_carousel_default" />
+
+        <ImageView
+            android:id="@+id/iv_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/video_default"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.ForeignInfomationDetailsActivity;
+import com.hhly.mlottery.activity.PLVideoTextureActivity;
 import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.bean.foreigninfomation.TightBean;
@@ -140,9 +141,15 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
 
         if (o.getPhoto() == null) {
             viewHolder.getView(R.id.iv_photo).setVisibility(View.GONE);
+            viewHolder.getView(R.id.iv_video).setVisibility(View.GONE);
         } else {
             viewHolder.getView(R.id.iv_photo).setVisibility(View.VISIBLE);
             universalImageLoader.displayImage(o.getPhoto(), (ImageView) viewHolder.getView(R.id.iv_photo), options);
+            if ("2".equals(o.getInfoType())) {
+                viewHolder.getView(R.id.iv_video).setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.getView(R.id.iv_video).setVisibility(View.GONE);
+            }
         }
 
 
@@ -170,12 +177,21 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         linearLayout.findViewById(R.id.iv_photo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (o.getPhoto() != null) {
-                    String url = o.getPhoto();
-                    Intent intent = new Intent(mContext, PicturePreviewActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("url", url);
-                    mContext.startActivity(intent);
+                if ("2".equals(o.getInfoType())) {
+                    if (o.getVideo() != null) {
+                        Intent intent = new Intent(mContext, PLVideoTextureActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("videoPath", o.getVideo());
+                        mContext.startActivity(intent);
+                    }
+                } else {
+                    if (o.getPhoto() != null) {
+                        String url = o.getPhoto();
+                        Intent intent = new Intent(mContext, PicturePreviewActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("url", url);
+                        mContext.startActivity(intent);
+                    }
                 }
             }
         });
@@ -191,7 +207,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     private void tightClick(final TextView textView, final OverseasInformationListBean oil) {
         Map<String, String> params = new HashMap<>();
         params.put("id", oil.getId() + "");
-          String url = BaseURLs.URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE;
+        String url = BaseURLs.URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE;
 
 
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<TightBean>() {
