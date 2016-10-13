@@ -270,13 +270,13 @@ public class FootballTypeSettingDetailsActivity extends BaseActivity implements 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Intent intent = new Intent();
             intent.putExtra("resultType", resultstring);
-            if (currentFragmentId == 0) {
+            if (currentFragmentId == IMMEDIA_FRAGMENT) {
                 ImmediateFragment.imEventBus.post(currentFragmentId);
-            } else if (currentFragmentId == 1) {
+            } else if (currentFragmentId == RESULT_FRAGMENT) {
                 ResultFragment.resultEventBus.post(currentFragmentId);
-            } else if (currentFragmentId == 2) {
+            } else if (currentFragmentId == SCHEDULE_FRAGMENT) {
                 ScheduleFragment.schEventBus.post(currentFragmentId);
-            } else if (currentFragmentId == 3) {
+            } else if (currentFragmentId == FOCUS_FRAGMENT) {
                 FocusFragment.focusEventBus.post(currentFragmentId);
             }
 
