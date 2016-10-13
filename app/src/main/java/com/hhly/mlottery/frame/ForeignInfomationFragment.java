@@ -113,6 +113,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {
                         if (!foreignInfomationBean.getResult().equals("200")) {
+                            mHandler.sendEmptyMessage(DATA_STATUS_ERROR);
                             return;
                         }
                         mList = foreignInfomationBean.getOverseasInformationList();
