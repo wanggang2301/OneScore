@@ -73,7 +73,6 @@ import io.rong.imkit.RongIM;
  * @Description: 篮球详情的 Activity
  */
 public class BasketDetailsActivityTest extends BaseWebSocketActivity implements ExactSwipeRefrashLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
-    public final static String BASKET_FOCUS_IDS = "basket_focus_ids";
     public final static String BASKET_THIRD_ID = "thirdId";
     public final static String BASKET_MATCH_STATUS = "MatchStatus";
     public final static String BASKET_MATCH_LEAGUEID = "leagueId";
@@ -654,10 +653,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             case R.id.basket_details_collect:
                 MobclickAgent.onEvent(MyApp.getContext(), "BasketDetailsActivity_Attention");
                 if (isFocusId(mThirdId)) {
-                    deleteFocusId(mThirdId);
+                    FocusBasketballFragment.deleteFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collect);
                 } else {
-                    addFocusId(mThirdId);
+                    FocusBasketballFragment.addFocusId(mThirdId);
                     mCollect.setImageResource(R.mipmap.basketball_collected);
                 }
                 break;
@@ -989,7 +988,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * @return true已关注，false还没关注
      */
     private boolean isFocusId(String thirdId) {
-        String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
+        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
 
         if ("".equals(focusIds)) {
             return false;
@@ -1005,42 +1004,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
             return isFocus;
         }
-    }
-
-    /**
-     * 添加关注
-     *
-     * @param thirdId
-     */
-    private void addFocusId(String thirdId) {
-        String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
-        if ("".equals(focusIds)) {
-            PreferenceUtil.commitString(BASKET_FOCUS_IDS, thirdId);
-        } else {
-            PreferenceUtil.commitString(BASKET_FOCUS_IDS, focusIds + "," + thirdId);
-        }
-    }
-
-    /**
-     * 取消关注
-     *
-     * @param thirdId
-     */
-    private void deleteFocusId(String thirdId) {
-        String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
-        String[] idArray = focusIds.split(",");
-        StringBuffer sb = new StringBuffer();
-        for (String id : idArray) {
-            if (!id.equals(thirdId)) {
-                if ("".equals(sb.toString())) {
-                    sb.append(id);
-                } else {
-                    sb.append("," + id);
-                }
-
-            }
-        }
-        PreferenceUtil.commitString(BASKET_FOCUS_IDS, sb.toString());
     }
 
     /**

@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.DefaultRetryPolicy;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
 import com.hhly.mlottery.bean.InformationBean;
@@ -44,6 +45,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.service.umengPushService;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -51,6 +53,7 @@ import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.ALIAS_TYPE;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
@@ -78,7 +81,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     private ListView home_page_list;// 首页列表
     private HomeListBaseAdapter mListBaseAdapter;// ListView数据适配器
     private TextView public_txt_title;
-    public static PushAgent mPushAgent;
+    public  PushAgent mPushAgent;
 
     public HomePagerEntity mHomePagerEntity;// 首页实体对象
     private UpdateInfo mUpdateInfo;// 版本更新对象
@@ -183,13 +186,18 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         MobclickAgent.setDebugMode(AppConstants.isTestEnv);//测试的时候的数据需要设置debug模式
         mPushAgent = PushAgent.getInstance(mContext);
         mPushAgent.enable();// 开启推送
+        String device_token=UmengRegistrar.getRegistrationId(this);
+        PreferenceUtil.commitString(AppConstants.uMengDeviceToken,device_token); //存入友盟的deviceToken
+        Log.e("AAA",device_token+"???");
         mPushAgent.onAppStart();// 统计应用启动
         pushMessageSkip();// 页面跳转处理
 //        mPushAgent.setNotificationPlaySound(R.raw.sound1);
 //        mPushAgent.setDisplayNotificationNumber();
 //        mPushAgent.setAlias("s","s");
-//        String device_token=UmengRegistrar.getRegistrationId(this);
-//        Log.e("AAA",device_token);
+
+        String device_id= DeviceInfo.getDeviceId(MyApp.getContext());
+        Log.e("AAAid",device_id);
+//        mPushAgent.setAlias(device_id, ALIAS_TYPE.BAIDU);
 
         // 使用友盟统计分析Android 4.6.3 对Fragment统计，开发者需要：来禁止默认的Activity页面统计方式。首先在程序入口处调用
 //        MobclickAgent.openActivityDurationTrack(false);
@@ -882,5 +890,11 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 L.d("xxx", "推送资讯访问ERROR！");
             }
         }, InformationBean.class);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

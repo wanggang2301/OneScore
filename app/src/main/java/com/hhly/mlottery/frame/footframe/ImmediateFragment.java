@@ -860,37 +860,39 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                         }
                     }
 
-                    if ((isSetFocus && isFocus) || (!isSetFocus)) {//
+                    if ((isSetFocus && isFocus) || (!isSetFocus)) { //
 
-                        if ("1".equals(eventType) || "2".equals(eventType)) {
-                            int soundId = PreferenceUtil.getInt(MyConstants.HOSTTEAMINDEX, 1);
-                            if (soundId != 4) {
-                                mSoundPool.play(mSoundMap.get(soundId), 1, 1, 0, 0, 1);
-                            }
-                            boolean isShake = PreferenceUtil.getBoolean(MyConstants.VIBRATEGOALHINT, true);
-                            if (isShake) {
+                        boolean isCheckedGoal=PreferenceUtil.getBoolean(MyConstants.GOAL,true);//进球
+                        boolean isCheckedRed=PreferenceUtil.getBoolean(MyConstants.RED_CARD,true); //红牌
+                        boolean isCheckedShake=PreferenceUtil.getBoolean(MyConstants.SHAKE,true);//震动
+                        boolean isCheckedSound=PreferenceUtil.getBoolean(MyConstants.SOUND,true); //声音
+
+                        if ("1".equals(eventType) || "2".equals(eventType)) { //主队进球或者取消进球
+
+                            if(isCheckedGoal&&isCheckedShake){ //选中进球跟震动。则震动
                                 mVibrator.vibrate(1000);
                             }
-
-                        } else if ("5".equals(eventType) || "6".equals(eventType)) {
-                            int soundId = PreferenceUtil.getInt(MyConstants.GUESTTEAM, 2);
-                            if (soundId != 4) {
-                                mSoundPool.play(mSoundMap.get(soundId), 1, 1, 0, 0, 1);
+                            if(isCheckedGoal&&isCheckedSound){
+                                mSoundPool.play(mSoundMap.get(1),1,1,0,0,1); //主队进球第一个声音
                             }
-                            boolean isShake = PreferenceUtil.getBoolean(MyConstants.VIBRATEGOALHINT, true);
-                            if (isShake) {
+
+
+                        } else if ("5".equals(eventType) || "6".equals(eventType)) { //客队进球或者取消进球
+                            if(isCheckedGoal&&isCheckedShake){ //选中进球跟震动。则震动
                                 mVibrator.vibrate(1000);
                             }
-                        } else if ("3".equals(eventType) || "4".equals(eventType) || "7".equals(eventType) || "8".equals(eventType)) {
-
-                            boolean isShoud = PreferenceUtil.getBoolean(MyConstants.VOICEREDHINT, true);
-                            if (isShoud) {
-                                mSoundPool.play(mSoundMap.get(3), 1, 1, 0, 0, 1);
+                            if(isCheckedGoal&&isCheckedSound){
+                                mSoundPool.play(mSoundMap.get(2),1,1,0,0,1); //客队进球第2个声音
                             }
 
-                            boolean isShake = PreferenceUtil.getBoolean(MyConstants.VIBRATEREDHINT, true);
-                            if (isShake) {
+
+                        } else if ("3".equals(eventType) || "4".equals(eventType) || "7".equals(eventType) || "8".equals(eventType)) { //主队红牌或者客队红牌
+
+                            if(isCheckedRed&&isCheckedShake){ //选中红牌跟震动。则震动
                                 mVibrator.vibrate(1000);
+                            }
+                            if(isCheckedRed&&isCheckedSound){
+                                mSoundPool.play(mSoundMap.get(3),1,1,0,0,1); //红牌使用第三个声音
                             }
                         }
                     }

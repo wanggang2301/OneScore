@@ -14,10 +14,16 @@ import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.frame.footframe.ImmediateFragment;
+import com.hhly.mlottery.frame.footframe.ResultFragment;
+import com.hhly.mlottery.frame.footframe.ScheduleFragment;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -29,26 +35,28 @@ import java.util.HashMap;
  */
 public class FootballTypeSettingActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
 
-    private SwitchCompat cb_goal_shake;
-
-    private RelativeLayout rl_hometeam_goal;
-    private RelativeLayout rl_guestteam_goal;
-
-    private RelativeLayout rl_odd;
-
-    private SwitchCompat cb_rc_shake;
-
-    private SwitchCompat cb_rc_sound;
-
     private SwitchCompat cb_notice;
+
+    private SwitchCompat sb_goal;
+    private SwitchCompat sb_red;
+    private SwitchCompat sb_shake;
+    private SwitchCompat sb_sound;
+    private SwitchCompat sb_push;
+
 
     private ImageView ib_back;
 
-    private TextView tv_home_sound_type;
-    private TextView tv_guest_sound_type;
-    private TextView tv_odd_type;
+    private RelativeLayout mAlet; //亚盘
+    private RelativeLayout mEur;  //欧赔
+    private RelativeLayout mAsize;//大小球
+    private RelativeLayout mNoshow; // 无
 
-    private Intent intent;
+    private RadioButton mRd_alet;
+    private RadioButton mRd_eur;
+    private RadioButton mRd_asize;
+    private RadioButton mRd_noshow;
+
+    String resultstring;
 
     Vibrator vibrator;
 
@@ -56,16 +64,13 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
 
     HashMap<Integer, Integer> soundMap = new HashMap<Integer, Integer>();
 
-    private final static int HOMETEAMGOAL = 0x10;
-    private final static int GUESTTEAMGOAL = 0x20;
-    private final static int ODDS = 0x30;
-
     private int currentFragmentId=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // requestWindowFeature(Window.FEATURE_NO_TITLE);// 不显示标题
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.mlottery_type_setting);
 
         initView();// 初始化界面
         initData();// 初始化数据
@@ -76,12 +81,17 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     }
 
     private void initEvent() {
-        cb_goal_shake.setOnCheckedChangeListener(this);
-        cb_rc_shake.setOnCheckedChangeListener(this);
-        cb_rc_sound.setOnCheckedChangeListener(this);
+
         cb_notice.setOnCheckedChangeListener(this);
 
         ib_back.setOnClickListener(this);
+        //
+        sb_goal.setOnCheckedChangeListener(this);
+        sb_red.setOnCheckedChangeListener(this);
+        sb_shake.setOnCheckedChangeListener(this);
+        sb_shake.setOnCheckedChangeListener(this);
+        sb_push.setOnCheckedChangeListener(this);
+
 
     }
 
@@ -89,26 +99,18 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         Intent intent=getIntent();
         currentFragmentId=intent.getIntExtra("currentFragmentId",0);
 
-        cb_goal_shake.setChecked(PreferenceUtil.getBoolean(MyConstants.VIBRATEGOALHINT, true));
-        if (PreferenceUtil.getBoolean(MyConstants.VIBRATEGOALHINT, true)) {
-            cb_goal_shake.setChecked(true);
-        } else {
-            cb_goal_shake.setChecked(false);
-        }
+        //第一次进来根据文件选择选中哪个。默认是亚盘
+        boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
+        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, false);
+        boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
+        boolean noshow = PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false);
 
-        cb_rc_shake.setChecked(PreferenceUtil.getBoolean(MyConstants.VIBRATEREDHINT, true));
-        if (PreferenceUtil.getBoolean(MyConstants.VIBRATEREDHINT, true)) {
-            cb_rc_shake.setChecked(true);
-        } else {
-            cb_rc_shake.setChecked(false);
-        }
+        mRd_alet.setChecked(alet);
+        mRd_eur.setChecked(eur);
+        mRd_asize.setChecked(asize);
+        mRd_noshow.setChecked(noshow);
 
-        cb_rc_sound.setChecked(PreferenceUtil.getBoolean(MyConstants.VOICEREDHINT, true));
-        if (PreferenceUtil.getBoolean(MyConstants.VOICEREDHINT, true)) {
-            cb_rc_sound.setChecked(true);
-        } else {
-            cb_rc_sound.setChecked(false);
-        }
+        //设置按钮开关的选中状态
 
         cb_notice.setChecked(PreferenceUtil.getBoolean(MyConstants.GAMEATTENTION, true));
         if (PreferenceUtil.getBoolean(MyConstants.GAMEATTENTION, true)) {
@@ -117,66 +119,66 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
             cb_notice.setChecked(false);
         }
 
-
-        setHomeSoundTxt();
-        setGuestSoundText();
-
-
-
-
-
-        boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
-        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, false);
-        boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
-        boolean noshow = PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false);
-        if (asize) {
-            tv_odd_type.setText(R.string.set_asiasize_txt);
+        if(PreferenceUtil.getBoolean(MyConstants.GOAL,true)){
+            sb_goal.setChecked(true);
+        }else {
+            sb_goal.setChecked(false);
+        }
+        if(PreferenceUtil.getBoolean(MyConstants.RED_CARD,true)){
+            sb_red.setChecked(true);
+        }else {
+            sb_red.setChecked(false);
+        }
+        if(PreferenceUtil.getBoolean(MyConstants.SHAKE,true)){
+            sb_shake.setChecked(true);
+        }else {
+            sb_shake.setChecked(false);
+        }
+        if(PreferenceUtil.getBoolean(MyConstants.SOUND,true)){
+            sb_sound.setChecked(true);
+        }else {
+            sb_sound.setChecked(false);
         }
 
-        if (eur) {
-            tv_odd_type.setText(R.string.set_euro_txt);
-        }
-
-        if (alet) {
-            tv_odd_type.setText(R.string.set_asialet_txt);
-        }
-
-        if (noshow) {
-            tv_odd_type.setText(R.string.set_oddghide_txt);
+        //推送关注比赛
+        if(PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)){
+            sb_push.setChecked(true);
+        }else {
+            sb_push.setChecked(false);
         }
 
 
     }
 
     private void initView() {
-        setContentView(R.layout.mlottery_type_setting);
 
-        cb_goal_shake = (SwitchCompat) findViewById(R.id.goal_shake);
+        ib_back= (ImageView) findViewById(R.id.public_img_back);
+        //赔率提示
+        mAlet = (RelativeLayout) findViewById(R.id.rl_set_alet);
+        mAlet.setOnClickListener(this);
+        mEur = (RelativeLayout) findViewById(R.id.rl_set_eur);
+        mEur.setOnClickListener(this);
+        mAsize = (RelativeLayout) findViewById(R.id.rl_set_asize);
+        mAsize.setOnClickListener(this);
+        mNoshow = (RelativeLayout) findViewById(R.id.rl_set_noshow);
+        mNoshow.setOnClickListener(this);
 
-        rl_hometeam_goal = (RelativeLayout) findViewById(R.id.rl_hometeam_goal);
-        rl_guestteam_goal = (RelativeLayout) findViewById(R.id.rl_guestteam_goal);
-        rl_odd = (RelativeLayout) findViewById(R.id.rl_odd);
+        mRd_alet = (RadioButton) findViewById(R.id.set_rd_alet);
+        mRd_eur = (RadioButton) findViewById(R.id.set_rd_eur);
+        mRd_asize = (RadioButton) findViewById(R.id.set_rd_asize);
+        mRd_noshow = (RadioButton) findViewById(R.id.set_rd_noshow);
 
-        cb_rc_shake = (SwitchCompat) findViewById(R.id.rc_shake);
+        //震动提示
+        sb_goal= (SwitchCompat) findViewById(R.id.sb_goal);
+        sb_red= (SwitchCompat) findViewById(R.id.sb_red_card);
+        sb_shake= (SwitchCompat) findViewById(R.id.sb_shake);
+        sb_sound= (SwitchCompat) findViewById(R.id.sb_sound);
+        cb_notice= (SwitchCompat) findViewById(R.id.cb_notice);
+        sb_push= (SwitchCompat) findViewById(R.id.sb_push);
 
-        cb_rc_sound = (SwitchCompat) findViewById(R.id.rc_sound);
-
-        cb_notice = (SwitchCompat) findViewById(R.id.cb_notice);
-
-        ib_back = (ImageView) findViewById(R.id.public_img_back);
-        ib_back.setImageResource(R.mipmap.back);
-
-        tv_guest_sound_type = (TextView) findViewById(R.id.guest_sound_type);
-        tv_home_sound_type = (TextView) findViewById(R.id.home_sound_type);
-        tv_odd_type = (TextView) findViewById(R.id.odd_type);
 
         vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
 
-        rl_hometeam_goal.setOnClickListener(this);
-
-        rl_guestteam_goal.setOnClickListener(this);
-
-        rl_odd.setOnClickListener(this);
 
         ((TextView) findViewById(R.id.public_txt_title)).setText(R.string.set_txt);
 
@@ -188,37 +190,57 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //赔率提示
 
-            case R.id.rl_hometeam_goal:
-                MobclickAgent.onEvent(mContext,"Football_Setting_HomeTeam_Goal");
-                intent = new Intent(FootballTypeSettingActivity.this, FootballTypeSettingDetailsActivity.class);
-                intent.putExtra("type", "home");
-                startActivityForResult(intent, HOMETEAMGOAL);
-
+            case R.id.rl_set_alet:
+                mRd_alet.setChecked(true);
+                mRd_eur.setChecked(false);
+                mRd_asize.setChecked(false);
+                mRd_noshow.setChecked(false);
+                save();
                 break;
-            case R.id.rl_guestteam_goal:
-                MobclickAgent.onEvent(mContext,"Football_Setting_GuestTeam_Goal");
-                intent = new Intent(FootballTypeSettingActivity.this, FootballTypeSettingDetailsActivity.class);
-                intent.putExtra("type", "guest");
-                startActivityForResult(intent, GUESTTEAMGOAL);
-
+            case R.id.rl_set_eur:
+                mRd_alet.setChecked(false);
+                mRd_eur.setChecked(true);
+                mRd_asize.setChecked(false);
+                mRd_noshow.setChecked(false);
+                save();
+                break;
+            case R.id.rl_set_asize:
+                mRd_alet.setChecked(false);
+                mRd_eur.setChecked(false);
+                mRd_asize.setChecked(true);
+                mRd_noshow.setChecked(false);
+                save();
+                break;
+            case R.id.rl_set_noshow:
+                mRd_alet.setChecked(false);
+                mRd_eur.setChecked(false);
+                mRd_asize.setChecked(false);
+                mRd_noshow.setChecked(true);
+                save();
                 break;
 
-            case R.id.rl_odd:
-                MobclickAgent.onEvent(mContext,"Football_Setting_Rl_Odd");
-                intent = new Intent(FootballTypeSettingActivity.this, FootballTypeSettingDetailsActivity.class);
-                intent.putExtra("type", "odd");
-                Bundle bundle=new Bundle();
-                bundle.putInt("currentFragmentId",currentFragmentId);
-                intent.putExtras(bundle);
-
-                startActivityForResult(intent, ODDS);
-                break;
             case R.id.public_img_back:
                 MobclickAgent.onEvent(mContext,"Football_Setting_Exit");
              //   setResult(Activity.RESULT_OK);
-                finish();
+                Intent intent = new Intent();
+                intent.putExtra("resultType", resultstring);
 
+                if (currentFragmentId==1){
+                    ImmediateFragment.imEventBus.post(currentFragmentId);
+                }else if (currentFragmentId==2){
+                    ResultFragment.resultEventBus.post(currentFragmentId);
+
+                }else if (currentFragmentId==3){
+                    L.i("102","赛程发送");
+                    ScheduleFragment.schEventBus.post(currentFragmentId);
+                }else if (currentFragmentId==4){
+                    FocusFragment.focusEventBus.post(currentFragmentId);
+                }
+                setResult(Activity.RESULT_OK,intent);
+                finish();
+                overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             default:
                 break;
@@ -230,143 +252,91 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
          //   setResult(Activity.RESULT_OK);
+            Intent intent = new Intent();
+            intent.putExtra("resultType", resultstring);
+
+            if (currentFragmentId==1){
+                ImmediateFragment.imEventBus.post(currentFragmentId);
+            }else if (currentFragmentId==2){
+                ResultFragment.resultEventBus.post(currentFragmentId);
+
+            }else if (currentFragmentId==3){
+                L.i("102","赛程发送");
+                ScheduleFragment.schEventBus.post(currentFragmentId);
+            }else if (currentFragmentId==4){
+                FocusFragment.focusEventBus.post(currentFragmentId);
+            }
+            setResult(Activity.RESULT_OK,intent);
             finish();
+            overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-
-        intent = data;
-        if (requestCode == HOMETEAMGOAL && resultCode == Activity.RESULT_OK) {
-
-            if (!intent.getStringExtra("resultType").equals("")) {
-                tv_home_sound_type.setText(intent.getStringExtra("resultType"));
-            } else {
-                setHomeSoundTxt();
-
-            }
-
-        }
-
-        if (requestCode == GUESTTEAMGOAL && resultCode == Activity.RESULT_OK) {
-            if (!intent.getStringExtra("resultType").equals("")) {
-                tv_guest_sound_type.setText(intent.getStringExtra("resultType"));
-            } else {
-                setGuestSoundText();
-            }
-
-        }
-
-        if (requestCode == ODDS && resultCode == Activity.RESULT_OK) {
-            if (!intent.getStringExtra("resultType").equals("")) {
-                tv_odd_type.setText(intent.getStringExtra("resultType"));
-            } else {
-                boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
-                boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, false);
-                boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
-                boolean noshow = PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false);
-                if (asize) {
-                    tv_odd_type.setText(R.string.set_asiasize_txt);
-                }
-                if (eur) {
-                    tv_odd_type.setText(R.string.set_euro_txt);
-                }
-
-                if (alet) {
-                    tv_odd_type.setText(R.string.set_asialet_txt);
-                }
-
-                if (noshow) {
-                    tv_odd_type.setText(R.string.set_oddghide_txt);
-                }
-
-            }
-
-        }
-    }
-
-    private void setHomeSoundTxt(){
-        switch (PreferenceUtil.getInt(MyConstants.HOSTTEAMINDEX, 1)){
-            case 1:
-                tv_home_sound_type.setText(R.string.set_sound1_txt);
-                break;
-            case 2:
-                tv_home_sound_type.setText(R.string.set_sound2_txt);
-                break;
-            case 3:
-                tv_home_sound_type.setText(R.string.set_sound3_txt);
-                break;
-            case 4:
-                tv_home_sound_type.setText(R.string.set_nosound_txt);
-                break;
-            default:
-                tv_home_sound_type.setText(R.string.set_sound1_txt);
-                break;
-        }
-
-    }
-
-    public void setGuestSoundText(){
-        switch (PreferenceUtil.getInt(MyConstants.GUESTTEAM, 2)){
-            case 1:
-                tv_guest_sound_type.setText(R.string.set_sound1_txt);
-                break;
-            case 2:
-                tv_guest_sound_type.setText(R.string.set_sound2_txt);
-                break;
-            case 3:
-                tv_guest_sound_type.setText(R.string.set_sound3_txt);
-                break;
-            case 4:
-                tv_guest_sound_type.setText(R.string.set_nosound_txt);
-                break;
-            default:
-                tv_guest_sound_type.setText(R.string.set_sound1_txt);
-                break;
-        }
-    }
 
     @Override
     public void onCheckedChanged(CompoundButton button, boolean isChecked) {
         // TODO Auto-generated method stub
 
         switch (button.getId()) {
-            case R.id.goal_shake:
-                MobclickAgent.onEvent(mContext,"Football_Setting_Goal_Shake");
-                PreferenceUtil.commitBoolean(MyConstants.VIBRATEGOALHINT, cb_goal_shake.isChecked());
-                if (cb_goal_shake.isChecked()) {
+            case R.id.sb_goal:
+                PreferenceUtil.commitBoolean(MyConstants.GOAL, sb_goal.isChecked());
+//                if (cb_goal_shake.isChecked()) {
+//                    vibrator.vibrate(1000);
+//                }
+
+                break;
+            case R.id.sb_red_card:
+                PreferenceUtil.commitBoolean(MyConstants.RED_CARD, sb_red.isChecked());
+//                if (cb_rc_shake.isChecked()) {
+//                    vibrator.vibrate(1000);
+//                }
+                break;
+
+            case R.id.sb_shake:
+                PreferenceUtil.commitBoolean(MyConstants.SHAKE, sb_shake.isChecked());
+                if (sb_shake.isChecked()) {
                     vibrator.vibrate(1000);
                 }
 
                 break;
-            case R.id.rc_shake:
-                MobclickAgent.onEvent(mContext,"Football_Setting_Rc_Shake");
-                PreferenceUtil.commitBoolean(MyConstants.VIBRATEREDHINT, cb_rc_shake.isChecked());
-                if (cb_rc_shake.isChecked()) {
-                    vibrator.vibrate(1000);
-                }
-                break;
+            case R.id.sb_sound:
+                PreferenceUtil.commitBoolean(MyConstants.SOUND, sb_sound.isChecked());
 
-            case R.id.rc_sound:
-                MobclickAgent.onEvent(mContext,"Football_Setting_Rc_Sound");
-                PreferenceUtil.commitBoolean(MyConstants.VOICEREDHINT, cb_rc_sound.isChecked());
-                if (cb_rc_sound.isChecked()) {
+                if (sb_sound.isChecked()) {
                     soundPool.play(soundMap.get(1), 1, 1, 0, 0, 1);
                 }
-
                 break;
             case R.id.cb_notice:
-                MobclickAgent.onEvent(mContext,"Football_Setting_Cb_Notice");
-                PreferenceUtil.commitBoolean(MyConstants.GAMEATTENTION, cb_notice.isChecked());
+                PreferenceUtil.commitBoolean(MyConstants.GAMEATTENTION,cb_notice.isChecked());
                 break;
+            case R.id.sb_push:
+                PreferenceUtil.commitBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,sb_push.isChecked());
 
+                //TODO:把是否接受推送消息的状态传给服务器
             default:
                 break;
+        }
+
+    }
+    private void save(){
+        PreferenceUtil.commitBoolean(MyConstants.RBSECOND, mRd_alet.isChecked()); //亚盘
+        PreferenceUtil.commitBoolean(MyConstants.RBOCOMPENSATE, mRd_eur.isChecked());//欧赔
+        PreferenceUtil.commitBoolean(MyConstants.rbSizeBall, mRd_asize.isChecked());//大小球
+        PreferenceUtil.commitBoolean(MyConstants.RBNOTSHOW, mRd_noshow.isChecked()); //不显示
+
+        if (mRd_alet.isChecked()) {
+            resultstring = getResources().getString(R.string.set_asialet_txt);
+        }
+        if (mRd_asize.isChecked()) {
+            resultstring = getResources().getString(R.string.set_asiasize_txt);
+        }
+        if (mRd_eur.isChecked()) {
+            resultstring = getResources().getString(R.string.set_euro_txt);
+        }
+        if (mRd_noshow.isChecked()) {
+            resultstring = getResources().getString(R.string.set_oddghide_txt);
         }
 
     }

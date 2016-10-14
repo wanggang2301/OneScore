@@ -323,29 +323,14 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {// 插入数据
-                    if ("".equals(focusIds)) {
-                        String newIds = third;
-                        PreferenceUtil.commitString("focus_ids", newIds);
-                    } else {
-                        String newIds = focusIds + "," + third;
-                        PreferenceUtil.commitString("focus_ids", newIds);
-                    }
+                   FocusFragment.addFocusId(third);
 
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
                     view.setTag(true);
                 } else {// 删除
-                    String[] idArray = focusIds.split("[,]");
-                    StringBuffer sb = new StringBuffer();
-                    for (String id : idArray) {
-                        if (!id.equals(third)) {
-                            if ("".equals(sb.toString())) {
-                                sb.append(id);
-                            } else {
-                                sb.append("," + id);
-                            }
-                        }
-                    }
-                    PreferenceUtil.commitString("focus_ids", sb.toString());
+                    FocusFragment.deleteFocusId(third);
+
+
 
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
 

@@ -475,32 +475,14 @@ public class ScheduleBasketballFragment extends Fragment implements View.OnClick
             @Override
             public void FocusOnClick(View v, BasketMatchBean root) {
 
-                String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
                 boolean isCheck = (Boolean) v.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {//未关注->关注
-                    if ("".equals(focusIds)) {
-                        String newIds = root.getThirdId();
-                        PreferenceUtil.commitString(BASKET_FOCUS_IDS, newIds);
-                    } else {
-                        String newIds = focusIds + "," + root.getThirdId();
-                        PreferenceUtil.commitString(BASKET_FOCUS_IDS, newIds);
-                    }
+                    FocusBasketballFragment.addFocusId(root.getThirdId());
                     v.setTag(true);
 
                 } else {//关注->未关注
-                    String[] idArray = focusIds.split("[,]");
-                    StringBuffer sb = new StringBuffer();
-                    for (String id : idArray) {
-                        if (!id.equals(root.getThirdId())) {
-                            if ("".equals(sb.toString())) {
-                                sb.append(id);
-                            } else {
-                                sb.append("," + id);
-                            }
-                        }
-                    }
-                    PreferenceUtil.commitString(BASKET_FOCUS_IDS, sb.toString());
+                   FocusBasketballFragment.deleteFocusId(root.getThirdId());
                     v.setTag(false);
                     //判断 如果是关注页面
                     if (mBasketballType == TYPE_FOCUS) {

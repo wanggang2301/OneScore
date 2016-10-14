@@ -104,7 +104,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 
 		findViewById(R.id.public_btn_set).setVisibility(View.GONE); //隐藏设置按键
 		findViewById(R.id.public_btn_filter).setVisibility(View.GONE); //隐藏筛选按键
-		
+
 	}
 
 	private void initData(){
@@ -224,6 +224,11 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		}
 	}
 
+	/**
+	 * 开关的选择与否
+	 * @param cb
+	 * @param ischecked
+     */
 	@Override
 	public void onCheckedChanged(CompoundButton cb , boolean ischecked){
 		switch (cb.getId()) {

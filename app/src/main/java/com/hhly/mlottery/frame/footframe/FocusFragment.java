@@ -334,29 +334,11 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
                 if (!isCheck) {// 插入数据
-                    if ("".equals(focusIds)) {
-                        String newIds = third;
-                        PreferenceUtil.commitString("focus_ids", newIds);
-                    } else {
-                        String newIds = focusIds + "," + third;
-                        PreferenceUtil.commitString("focus_ids", newIds);
-                    }
+                 addFocusId(third);
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
 
                 } else {// 删除
-                    String[] idArray = focusIds.split("[,]");
-                    StringBuffer sb = new StringBuffer();
-                    for (String id : idArray) {
-                        if (!id.equals(third)) {
-                            if ("".equals(sb.toString())) {
-                                sb.append(id);
-                            } else {
-                                sb.append("," + id);
-                            }
-
-                        }
-                    }
-                    PreferenceUtil.commitString("focus_ids", sb.toString());
+                   deleteFocusId(third);
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
 
                     List<Match> allList = new ArrayList<Match>();
@@ -816,42 +798,41 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     }
                 }
 
-                if ((isSetFocus && isFocus) || (!isSetFocus)) {//
+                if ((isSetFocus && isFocus) || (!isSetFocus)) { //
 
-                    if ("1".equals(eventType) || "2".equals(eventType)) {
-                        int soundId = PreferenceUtil.getInt(MyConstants.HOSTTEAMINDEX, 1);
-                        if (soundId != 4) {
-                            mSoundPool.play(mSoundMap.get(soundId), 1, 1, 0, 0, 1);
-                        }
-                        boolean isShake = PreferenceUtil.getBoolean(MyConstants.VIBRATEGOALHINT, true);
-                        if (isShake) {
+                    boolean isCheckedGoal=PreferenceUtil.getBoolean(MyConstants.GOAL,true);//进球
+                    boolean isCheckedRed=PreferenceUtil.getBoolean(MyConstants.RED_CARD,true); //红牌
+                    boolean isCheckedShake=PreferenceUtil.getBoolean(MyConstants.SHAKE,true);//震动
+                    boolean isCheckedSound=PreferenceUtil.getBoolean(MyConstants.SOUND,true); //声音
+
+                    if ("1".equals(eventType) || "2".equals(eventType)) { //主队进球或者取消进球
+
+                        if(isCheckedGoal&&isCheckedShake){ //选中进球跟震动。则震动
                             mVibrator.vibrate(1000);
                         }
-
-                    } else if ("5".equals(eventType) || "6".equals(eventType)) {
-                        int soundId = PreferenceUtil.getInt(MyConstants.GUESTTEAM, 2);
-                        if (soundId != 4) {
-                            mSoundPool.play(mSoundMap.get(soundId), 1, 1, 0, 0, 1);
+                        if(isCheckedGoal&&isCheckedSound){
+                            mSoundPool.play(mSoundMap.get(1),1,1,0,0,1); //主队进球第一个声音
                         }
-                        boolean isShake = PreferenceUtil.getBoolean(MyConstants.VIBRATEGOALHINT, true);
-                        if (isShake) {
+
+
+                    } else if ("5".equals(eventType) || "6".equals(eventType)) { //客队进球或者取消进球
+                        if(isCheckedGoal&&isCheckedShake){ //选中进球跟震动。则震动
                             mVibrator.vibrate(1000);
+                        }
+                        if(isCheckedGoal&&isCheckedSound){
+                            mSoundPool.play(mSoundMap.get(2),1,1,0,0,1); //客队进球第2个声音
+                        }
+
+
+                    } else if ("3".equals(eventType) || "4".equals(eventType) || "7".equals(eventType) || "8".equals(eventType)) { //主队红牌或者客队红牌
+
+                        if(isCheckedRed&&isCheckedShake){ //选中红牌跟震动。则震动
+                            mVibrator.vibrate(1000);
+                        }
+                        if(isCheckedRed&&isCheckedSound){
+                            mSoundPool.play(mSoundMap.get(3),1,1,0,0,1); //红牌使用第三个声音
                         }
                     }
-
-                    if ("3".equals(eventType) || "4".equals(eventType) || "7".equals(eventType) || "8".equals(eventType)) {
-
-                        boolean isShoud = PreferenceUtil.getBoolean(MyConstants.VOICEREDHINT, true);
-                        if (isShoud) {
-                            mSoundPool.play(mSoundMap.get(3), 1, 1, 0, 0, 1);
-                        }
-
-                        boolean isShake = PreferenceUtil.getBoolean(MyConstants.VIBRATEREDHINT, true);
-                        if (isShake) {
-                            mVibrator.vibrate(1000);
-                        }
-                    }
-
                 }
                 break;
             }
@@ -1126,107 +1107,13 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 //        isPause = false;
         L.v(TAG, "___onResume___");
 
-
-
-//        if (isDestroy) {
-//            return;
-//        }
-
-
-
-//        if (!isLoadedData) {
-//            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-//            mLoadHandler.postDelayed(mLoadingDataThread, 0);
-//        } else {
-//
-//        }
-
-
     }
 
-//    private boolean isError = false;
-
-//    @Override
-//    public void onError(Exception exception) {
-//        isError = true;
-//        restartSocket();
-//    }
-//
-//    @Override
-//    public void onClose(String message) {
-//        if (!isError) {
-//            restartSocket();
-//        }
-//    }
-
-//    @Override
-//    public void onMessage(String message) {
-//        L.w(TAG, "message = " + message);
-//
-//        if (message.startsWith("CONNECTED")) {
-//            String id = "android" + DeviceInfo.getDeviceId(getActivity());
-//            id = MD5Util.getMD5(id);
-//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.app\n\n");
-//            isWebSocketStart = true;
-//            return;
-//        } else if (message.startsWith("MESSAGE")) {
-//            String[] msgs = message.split("\n");
-//            String ws_json = msgs[msgs.length - 1];
-//            String type = "";
-//            try {
-//                JSONObject jsonObject = new JSONObject(ws_json);
-//                type = jsonObject.getString("type");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (!"".equals(type)) {
-//                Message msg = Message.obtain();
-//                msg.obj = ws_json;
-//                msg.arg1 = Integer.parseInt(type);
-//
-//                mSocketHandler.sendMessage(msg);
-//            }
-//        }
-//        mSocketClient.send("\n");
-//    }
-
-//    private Timer timer = new Timer();
-//    private boolean isTimerStart = false;
-
-//    private synchronized void restartSocket() {
-//        if (!isDestroy) {
-//            if (!isTimerStart) {
-//                TimerTask timerTask = new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        if (!isDestroy) {
-//                            startWebsocket();
-//                        } else {
-//                            timer.cancel();
-//                        }
-//                    }
-//                };
-//                timer.schedule(timerTask, 2000, 5000);
-//                isTimerStart = true;
-//            }
-//        }
-//    }
-
-//    private boolean isDestroy = false;
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         L.d(TAG, "__onDestroy___");
-//        if (mSocketClient != null) {
-//            isDestroy = true;
-//            mSocketClient.close();
-//        }
-//
-//        if (getActivity() != null && mNetStateReceiver != null) {
-//            getActivity().unregisterReceiver(mNetStateReceiver);
-//        }
     }
 
     public void onEventMainThread(ScoresFragment.FootballScoresWebSocketEntity entity) {
@@ -1250,15 +1137,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
             mSocketHandler.sendMessage(msg);
         }
     }
-
-//    public void connectFail() {
-//        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_FAIL);
-//    }
-//
-//    public void connectSuccess() {
-//        mViewHandler.sendEmptyMessage(VIEW_STATUS_WEBSOCKET_CONNECT_SUCCESS);
-//    }
-
 
     /**
      * EventBus设置
@@ -1462,6 +1340,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         }
     }
 
+    /**
+     * 添加focusId
+     * @param thirdId
+     */
     public static void addFocusId(String thirdId) {
         String focusIds = PreferenceUtil.getString(FocusFragment.FOCUS_ISD, "");
         if ("".equals(focusIds)) {
@@ -1469,9 +1351,21 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         } else {
             PreferenceUtil.commitString(FocusFragment.FOCUS_ISD, focusIds + "," + thirdId);
         }
+        //TODO:把用户id,deviceId,deviceToken 传给服务器
+        String deviceId=AppConstants.deviceToken;
+        String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+        String userId=AppConstants.register.getData().getUser().getUserId();
+        String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
+        //thirdId
+
+
     }
 
 
+    /**
+     * 删除focusId
+     * @param thirdId
+     */
     public static void deleteFocusId(String thirdId) {
         String focusIds = PreferenceUtil.getString(FocusFragment.FOCUS_ISD, "");
         String[] idArray = focusIds.split("[,]");
@@ -1487,6 +1381,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
             }
         }
         PreferenceUtil.commitString(FocusFragment.FOCUS_ISD, sb.toString());
+
+        String deviceId=AppConstants.deviceToken;
+        String userId=AppConstants.register.getData().getUser().getUserId();
+        //TODO:请求后台
     }
 
 //    private boolean isPause = false;

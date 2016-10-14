@@ -38,10 +38,13 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.frame.footframe.FocusFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -472,32 +475,14 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
             @Override
             public void FocusOnClick(View v, BasketMatchBean root) {
 
-                String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
                 boolean isCheck = (Boolean) v.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {//未关注->关注
-                    if ("".equals(focusIds)) {
-                        String newIds = root.getThirdId();
-                        PreferenceUtil.commitString(BASKET_FOCUS_IDS, newIds);
-                    } else {
-                        String newIds = focusIds + "," + root.getThirdId();
-                        PreferenceUtil.commitString(BASKET_FOCUS_IDS, newIds);
-                    }
+                   addFocusId(root.getThirdId());
                     v.setTag(true);
 
                 } else {//关注->未关注
-                    String[] idArray = focusIds.split("[,]");
-                    StringBuffer sb = new StringBuffer();
-                    for (String id : idArray) {
-                        if (!id.equals(root.getThirdId())) {
-                            if ("".equals(sb.toString())) {
-                                sb.append(id);
-                            } else {
-                                sb.append("," + id);
-                            }
-                        }
-                    }
-                    PreferenceUtil.commitString(BASKET_FOCUS_IDS, sb.toString());
+                   deleteFocusId(root.getThirdId());
                     v.setTag(false);
                     //判断 如果是关注页面
                     if (mBasketballType == TYPE_FOCUS) {
@@ -533,6 +518,53 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 ((BasketScoresFragment) getParentFragment()).focusCallback();
             }
         };
+    }
+
+    /**
+     * 添加focusId
+     * @param thirdId
+     */
+    public static void addFocusId(String thirdId) {
+        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        if ("".equals(focusIds)) {
+            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, thirdId);
+        } else {
+            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, focusIds + "," + thirdId);
+        }
+        //TODO:把用户id,deviceId,deviceToken 传给服务器
+        String deviceId= AppConstants.deviceToken;
+        String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+        String userId=AppConstants.register.getData().getUser().getUserId();
+        String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
+        //thirdId
+
+
+    }
+
+
+    /**
+     * 删除focusId
+     * @param thirdId
+     */
+    public static void deleteFocusId(String thirdId) {
+        String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
+        String[] idArray = focusIds.split("[,]");
+        StringBuffer sb = new StringBuffer();
+        for (String id : idArray) {
+            if (!id.equals(thirdId)) {
+                if ("".equals(sb.toString())) {
+                    sb.append(id);
+                } else {
+                    sb.append("," + id);
+                }
+
+            }
+        }
+        PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, sb.toString());
+
+        String deviceId=AppConstants.deviceToken;
+        String userId=AppConstants.register.getData().getUser().getUserId();
+        //TODO:请求后台
     }
 
     /**

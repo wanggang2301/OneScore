@@ -547,6 +547,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     setResult(RESULT_OK);
                     //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                     sendUserInfoToServer(register);
+                    //TODO: 请求获取用户关注
+                    getFootballUserFocus(register);
                     finish();
                     RongYunUtils.initRongIMConnect(mContext);// 登录成功后初始化融云
                 } else {
@@ -609,6 +611,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             sendUserInfoToServer(register);
                             finish();
                             RongYunUtils.initRongIMConnect(mContext);// 登录成功后初始化融云
+                            //TODO:发送请求，从后台获取该用户的关注信息
+                            getFootballUserFocus(register);
+
                         } else {
                             CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                         }
@@ -624,6 +629,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     }
                 }, Register.class);
             }
+    }
+
+    /**
+     * 获取用户关注列表列表
+     */
+    private void getFootballUserFocus(Register register) {
+        String url="";
+        String userId=register.getData().getUser().getUserId();
+        //devideID;
+        String deviceToken=AppConstants.deviceToken;
+        //devicetoken 友盟。
+        String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+        Log.e("CCC",umengDeviceToken);
+        //volley请求
+        //会得到一个字符串保存着关注的赛事id.
+//        String
+
+
+
     }
 
     private void sendUserInfoToServer(Register register) {

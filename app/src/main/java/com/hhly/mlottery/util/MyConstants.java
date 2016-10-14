@@ -19,6 +19,12 @@ public interface MyConstants {
 	String VIBRATEREDHINT = "vibrateRedHint";// 红牌提示是否振动boolean
 	
 	String GAMEATTENTION = "gameAttention";// 赛事关注boolean
+	String FOOTBALL_PUSH_FOCUS="football_push";
+	//新版设置
+	String GOAL="goal";
+	String RED_CARD="red_card";
+	String SHAKE="shake";
+	String SOUND="sound";
 	//String ODDSSHOW = "oddsShow";// 赔率显示
 	//String REFRESHTIME = "refreshTime";// 页面刷新时间
 	

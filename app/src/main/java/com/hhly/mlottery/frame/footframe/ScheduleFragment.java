@@ -485,30 +485,13 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 boolean isCheck = (Boolean) v.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {// 插入数据 未关注
-                    if ("".equals(focusIds)) {
-                        String newIds = match.getThirdId();
-                        PreferenceUtil.commitString("focus_ids", newIds);
-                    } else {
-                        String newIds = focusIds + "," + match.getThirdId();
-                        PreferenceUtil.commitString("focus_ids", newIds);
-                    }
+                    FocusFragment.addFocusId(match.getThirdId());
                     ((ImageView) v).setImageResource(R.mipmap.football_focus);
 
                     v.setTag(true);
 
                 } else {// 删除  已关注
-                    String[] idArray = focusIds.split("[,]");
-                    StringBuffer sb = new StringBuffer();
-                    for (String id : idArray) {
-                        if (!id.equals(match.getThirdId())) {
-                            if ("".equals(sb.toString())) {
-                                sb.append(id);
-                            } else {
-                                sb.append("," + id);
-                            }
-                        }
-                    }
-                    PreferenceUtil.commitString("focus_ids", sb.toString());
+                   FocusFragment.deleteFocusId(match.getThirdId());
                     ((ImageView) v).setImageResource(R.mipmap.football_nomal);
                     v.setTag(false);
                 }
