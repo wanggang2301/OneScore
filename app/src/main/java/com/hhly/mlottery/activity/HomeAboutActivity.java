@@ -330,6 +330,7 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
         } else {
             map.put("versionType", COMP_VER);
         }
+        map.put("localeType", AppConstants.LOCALETYPE_ZH);// 国内版升级参数
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_VERSION_UPDATE, map, new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
             @Override
             public synchronized void onResponse(final UpdateInfo json) {

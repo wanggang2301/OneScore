@@ -1,8 +1,11 @@
 package com.hhly.mlottery.util;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
+
+import java.util.TimeZone;
 
 public class AppConstants {
 	/** 是否是测试环境，true为测试，false为生产环境 */
@@ -16,7 +19,32 @@ public class AppConstants {
 	/**
 	 * 判断是否上传奔溃日志到友盟
 	 */
-	public static final boolean isUploadCrash = true;
+	public static final boolean isUploadCrash = false;
+
+    /**
+     * 项目时区 8中国，7泰国、越南 ，0英语
+     */
+    public static int timeZone = 8;// 默认为中国时区
+
+    /**
+     * 版本升级区分
+     */
+    public static final String LOCALETYPE_ZH = "1";// 国内版升级
+    public static final String LOCALETYPE_I18N = "2";// 国际版升级
+    public static final String LOCALETYPE_VN_HN = "20";// 越南北版升级
+    public static final String LOCALETYPE_VN = "21";// 越南版升级
+    public static final String LOCALETYPE_TH = "22";// 泰语版升级
+    public static final String LOCALETYPE_UK = "23";// 英文版升级
+
+    /**
+     * 包名
+     * @desc 用包名判断当前的时区或参数的选择
+     */
+    public static final String PACKGER_NAME_ZH = "com.hhly.mlottery";      // 国内版包名
+    public static final String PACKGER_NAME_TH = "com.th.hhly.mlottery";   // 泰国版包名
+    public static final String PACKGER_NAME_VN_HN = "vn.hn.hhly.mlottery"; // 越南北包名
+    public static final String PACKGER_NAME_VN = "vn.hhly.mlottery";       // 越南南包名
+    public static final String PACKGER_NAME_UK = "uk.hhly.mlottery";       // 英文版包名
 
     public static String ACCESS_LINK = "";// API
     public static String USER_AGENT = "";
@@ -32,8 +60,8 @@ public class AppConstants {
     public static String SearchType = "searchType=0&";// 搜索类型
 
     // 融云环境KEY
-    public static String APPKEY_RONGYUN = "ik1qhw0919m8p";
-    public static String APPSECRET_RONGYUN = "oyHzmKPlNKG";
+    public static String APPKEY_RONGYUN = "";
+    public static String APPSECRET_RONGYUN = "";
 
     // public static String i18n = "en";// 测试英文语言环境
 
@@ -180,6 +208,14 @@ public class AppConstants {
             ACCESS_LINK = CHAONENG_API_TECH;
         } else {
             ACCESS_LINK = CHAONENG_API_PUBLISH;
+        }
+
+        if (isGOKeyboard) {
+            APPKEY_RONGYUN = "bmdehs6pddeds";
+            APPSECRET_RONGYUN = "2gFKWZMbtEj7";
+        } else {
+            APPKEY_RONGYUN = "ik1qhw0919m8p";
+            APPSECRET_RONGYUN = "oyHzmKPlNKG";
         }
     }
 

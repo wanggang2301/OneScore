@@ -127,6 +127,7 @@ public class BaseURLs {
     private final static String URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
 
     public final static String LANGUAGE_PARAM = "lang";
+    public final static String TIMEZONE_PARAM = "timeZone";
 
     /**
      * 繁体
