@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -66,6 +67,9 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
 
     private List<OverseasInformationListBean> mList;
 
+    private TextView loadmore_text;
+    private ProgressBar progressBar;
+
     public static ForeignInfomationFragment newInstance() {
         ForeignInfomationFragment fragment = new ForeignInfomationFragment();
         return fragment;
@@ -78,7 +82,6 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
         ButterKnife.bind(this, mView);
         mContext = getActivity();
         EventBus.getDefault().register(this);
-
         initView();
         if (getUserVisibleHint()) {
             onVisible();
@@ -87,6 +90,8 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
     }
 
     private void initView() {
+        loadmore_text = (TextView) moreView.findViewById(R.id.loadmore_text);
+        progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
@@ -186,7 +191,12 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {
                         if (!foreignInfomationBean.getResult().equals("200")) {
+                            loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
+                            progressBar.setVisibility(View.GONE);
                             return;
+                        } else {
+                            loadmore_text.setText(mContext.getResources().getString(R.string.loading_data_txt));
+                            progressBar.setVisibility(View.VISIBLE);
                         }
                         mList.addAll(foreignInfomationBean.getOverseasInformationList());
                         foreignInfomationAdapter.notifyDataChangedAfterLoadMore(true);

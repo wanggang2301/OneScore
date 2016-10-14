@@ -20,5 +20,5 @@
         android:layout_gravity="center"
         android:paddingLeft="10dp"
         android:text="@string/loading_data_txt"
-        android:textSize="15dip" />
+        android:textSize="@dimen/text_size_15" />
 </LinearLayout>
