@@ -18,6 +18,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.FootballDatabaseDetailsAdapter;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseBigSmallBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.FootballDatabaseBigSmallBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;
 
@@ -150,8 +151,8 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
 
         mHandler.sendEmptyMessage(VIEW_STATUS_LOADING); // loading....
 
-//        String url = BaseURLs.URL_BASKET_DATABASE_BIG_SMALL_DETAILS;
-        String url = "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueHdp.do";
+        String url = BaseURLs.URL_FOOTBALL_DATABASE_HANDICAP_DETAILS;
+//        String url = "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueHdp.do";
         Map<String, String> params = new HashMap<>();
         if (!mSeason.equals("-1")) {
             params.put("season" , mSeason);

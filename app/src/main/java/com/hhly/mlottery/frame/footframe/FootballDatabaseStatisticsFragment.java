@@ -23,6 +23,7 @@ import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseStati
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseTopBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.FootballDatabaseStatisticBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.TopDetailsBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -281,8 +282,8 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
     private void initData(){
 
         mHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        String url = "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do" ;
-//        String url = BaseURLs.URL_BASKET_DATABASE_STATISTIC_DETAILS;
+//        String url = "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do" ;
+        String url = BaseURLs.URL_FOOTBALL_DATABASE_STATISTIC_DETAILS;
         Map<String , String> params = new HashMap<>();
         if (!mSeason.equals("-1")) {
             params.put("season" , mSeason);
