@@ -323,6 +323,12 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private boolean is0 = false;
     private boolean isFragment1 = false;// 积分
     private boolean is1 = false;
+    private boolean isFragment2 = false;
+    private boolean is2 = false;
+    private boolean isFragment3 = false;
+    private boolean is3 = false;
+    private boolean isFragment4 = false;
+    private boolean is4 = false;
 
     private void isHindShow(int position) {
         switch (position) {

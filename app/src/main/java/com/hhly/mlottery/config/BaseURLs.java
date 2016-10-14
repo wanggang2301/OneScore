@@ -760,12 +760,12 @@ public class BaseURLs {
     public final static String URL_FOOTBALL_DATABASE_HEADER = URL_API_HOST + "androidLeagueData.findAndroidFootballLeagueHeader.do";//http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do
 
     //让分盘
-    public final static String URL_FOOTBALL_DATABASE_HANDICAP_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidLeagueHdp.do"; // http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueHdp.do
+    public final static String URL_FOOTBALL_DATABASE_HANDICAP_DETAILS = "http://m.1332255.com:81/mlottery/core/" + "androidLeagueData.findAndroidLeagueHdp.do"; // http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueHdp.do
     //大小盘
-    public final static String URL_FOOTBALL_DATABASE_BIG_SMALL_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidLeagueOu.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueOu.do";
+    public final static String URL_FOOTBALL_DATABASE_BIG_SMALL_DETAILS = "http://m.1332255.com:81/mlottery/core/" + "androidLeagueData.findAndroidLeagueOu.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueOu.do";
 
     //统计
-    public final static String URL_FOOTBALL_DATABASE_STATISTIC_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidStatics.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do";
+    public final static String URL_FOOTBALL_DATABASE_STATISTIC_DETAILS = "http://m.1332255.com:81/mlottery/core/" + "androidLeagueData.findAndroidStatics.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do";
 
 
 
