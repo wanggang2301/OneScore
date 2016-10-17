@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * 功能描述：完成与日期相关的各种操作
@@ -83,7 +84,6 @@ public class DateUtil {
     /**
      * 把毫秒转化成日期
      *
-     * @param dateFormat(日期格式 例如 MM-dd HH:mm)  24小时制
      * @param millSec(毫秒数)
      * @return
      */
@@ -385,9 +385,24 @@ public class DateUtil {
     }
 
     public static Long getCurrentTime(String nextTime) throws ParseException {
+        TimeZone time = TimeZone.getTimeZone("GMT+8");// 默认国内版
+        switch (MyApp.isPackageName) {
+            case AppConstants.PACKGER_NAME_ZH:// 国内版
+                time = TimeZone.getTimeZone("GMT+8");
+                break;
+            case AppConstants.PACKGER_NAME_TH:// 泰国版
+            case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
+            case AppConstants.PACKGER_NAME_VN:// 越南南版
+                time = TimeZone.getTimeZone("GMT+7");
+                break;
+            case AppConstants.PACKGER_NAME_UK:// 英文版
+                time = TimeZone.getTimeZone("GMT+0");
+                break;
+        }
+        TimeZone.setDefault(time);// 设置时区
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         Date data = sdf.parse(nextTime);
+        sdf.setTimeZone(TimeZone.getDefault());
         return data.getTime();
     }
 

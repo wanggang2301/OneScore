@@ -127,6 +127,7 @@ public class BaseURLs {
     private final static String URL_MATCHVIDEO_DATA = "matchVideo.findVideoInfoApp.do";
 
     public final static String LANGUAGE_PARAM = "lang";
+    public final static String TIMEZONE_PARAM = "timeZone";
 
     /**
      * 繁体
@@ -759,6 +760,18 @@ public class BaseURLs {
     //足球资料库详情头部
     public final static String URL_FOOTBALL_DATABASE_HEADER = URL_API_HOST + "androidLeagueData.findAndroidFootballLeagueHeader.do";//http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do
 
+    //让分盘
+    public final static String URL_FOOTBALL_DATABASE_HANDICAP_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidLeagueHdp.do"; // http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueHdp.do
+    //大小盘
+    public final static String URL_FOOTBALL_DATABASE_BIG_SMALL_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidLeagueOu.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueOu.do";
+
+    //统计
+    public final static String URL_FOOTBALL_DATABASE_STATISTIC_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidStatics.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do";
+
+
+
+
+
     //足球赛事提点
     public final static String URL_LEAGUESTATISTICSTODAY = URL_API_HOST + "toDayMatchStatistics.findTodayMatchStatistics.do";
 
@@ -862,11 +875,18 @@ public class BaseURLs {
     public final static String UPDATEHEADICON = URL_API_HOST + "androidUserCenter.updateHeadIcon.do";
 
     // 情报中心
-    public final static String URL_INFO_CENTER = URL_API_HOST +  "footBallMatch.findIntelligenceList.do";
+    public final static String URL_INFO_CENTER = URL_API_HOST + "footBallMatch.findIntelligenceList.do";
     /*视频直播*/
-    public final static String VIDEOINFO = URL_API_HOST+ "matchVideo.findAndroidVideoInfo.do";
+    public final static String VIDEOINFO = URL_API_HOST + "matchVideo.findAndroidVideoInfo.do";
     /*模糊搜索*/
-    public final static String SEARCHMATCHLEAGUES ="/androidLeagueData.searchMatchLeagues.do";
+    public final static String SEARCHMATCHLEAGUES = "/androidLeagueData.searchMatchLeagues.do";
     /*检测第三方登录*/
-    public final static String TESTINGISLOGIN =URL_API_HOST+"systemSettings.findThirdPartyLoginSettings.do";
+    public final static String TESTINGISLOGIN = URL_API_HOST + "systemSettings.findThirdPartyLoginSettings.do";
+
+
+    /**
+     * 国外资讯
+     */
+    public final static String URL_FOREIGN_INFOMATION = URL_API_HOST + "overseasInformation.findOverseasInformation.do";
+    public final static String URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE = URL_API_HOST + "overseasInformation.updLike.do";
 }

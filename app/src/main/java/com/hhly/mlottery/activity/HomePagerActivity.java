@@ -332,6 +332,7 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         } else {
             map.put("versionType", COMP_VER);
         }
+        map.put("localeType", AppConstants.LOCALETYPE_ZH);// 国内版升级参数
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_VERSION_UPDATE, map, new DefaultRetryPolicy(2000, 1, 1), new VolleyContentFast.ResponseSuccessListener<UpdateInfo>() {
             @Override
             public synchronized void onResponse(final UpdateInfo json) {
@@ -642,32 +643,6 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
                 installAPK(saveFile);
             }
         });
-
-        /*Toast.makeText(mContext, mContext.getResources().getString(R.string.version_update_title), Toast.LENGTH_SHORT).show();
-        DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri uri = Uri.parse(mUpdateInfo.getUrl());
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        //指定在WIFI和手机数据状态下，执行下载操作。
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-        //是否允许漫游状态下，执行下载操作
-        request.setAllowedOverRoaming(false);//方法来设置，是否同意漫游状态下 执行操作。 （true，允许； false 不允许；默认是允许的。）
-        //是否允许“计量式的网络连接”执行下载操作
-        *//*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            request.setAllowedOverMetered(false);// 默认是允许的。
-        }*//*
-        //request.setTitle("一比分新版本下载");
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setMimeType("application/vnd.android.package-archive");
-        L.d("xxx", "download path = " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-        String mAppName = mUpdateInfo.getUrl().substring(mUpdateInfo.getUrl().lastIndexOf("/"), mUpdateInfo.getUrl().length());
-        L.d("xxx", "mAppName:>>" + mAppName);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, mAppName);
-        // 设置为可被媒体扫描器找到
-        request.allowScanningByMediaScanner();
-        // 设置为可见和可管理
-        request.setVisibleInDownloadsUi(true);
-        long id = downloadManager.enqueue(request);
-        L.d("xxx", "id = " + id);*/
     }
 
     private void installAPK(File file) {

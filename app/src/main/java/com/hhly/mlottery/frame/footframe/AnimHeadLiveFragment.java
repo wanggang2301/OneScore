@@ -28,9 +28,6 @@ public class AnimHeadLiveFragment extends Fragment {
 
     private static final String TAG = "AnimHeadLiveFragment";
     private static final String THIRDID = "thirdId";
-
-    private static final String baseURL = "http://192.168.31.107:9000/live/footballodds_graphic.html?thirdId=";
-
     private String thirdId;
     private Context context;
     private View mView;
@@ -69,9 +66,6 @@ public class AnimHeadLiveFragment extends Fragment {
 
 
         url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
-        //url = "http://192.168.31.107:9000/live/footballodds_graphic.html?thirdId=354584";
-
-        // loadAnim();
 
         return mView;
 

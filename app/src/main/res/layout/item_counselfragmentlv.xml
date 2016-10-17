@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/imagenotleft"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:background="#F5F5F5"
-        android:padding="5dp"
-
-        >
-
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/image_notleft_counselfragment_listviewitem"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:scaleType="fitXY"
-            />
+            android:scaleType="fitXY" />
+
         <ImageView
             android:id="@+id/video_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/video_default"
             android:layout_centerInParent="true"
-            android:visibility="gone"
-            />
+            android:src="@mipmap/video_default"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,8 +30,7 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/shape_gradient_ads_bg"
             android:orientation="vertical"
-            android:padding="5dp"
-            >
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/titlenoleft"
@@ -55,8 +49,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:textColor="@color/white"
-                android:textSize="13sp"
-                />
+                android:textSize="13sp" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -64,8 +57,7 @@
     <RelativeLayout
         android:id="@+id/imageleft"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/lay"
@@ -82,8 +74,7 @@
                 android:layout_width="91dp"
                 android:layout_height="68dp"
                 android:layout_marginBottom="10dp"
-                android:scaleType="fitXY"
-                />
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/lefttitle"
@@ -97,7 +88,7 @@
                 android:gravity="left"
                 android:maxLines="2"
                 android:textColor="#333333"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tv_tj"
@@ -112,7 +103,7 @@
                 android:gravity="center"
                 android:text="@string/foot_tujian"
                 android:textColor="#ffffff"
-                android:textSize="10sp"/>
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/tv_subtitle"
@@ -127,7 +118,7 @@
                 android:gravity="left"
                 android:singleLine="true"
                 android:textColor="#333333"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tv_ybf"
@@ -139,7 +130,7 @@
                 android:layout_marginBottom="14dp"
                 android:textColor="#999999"
 
-                android:textSize="10sp"/>
+                android:textSize="10sp" />
 
         </RelativeLayout>
 
@@ -147,8 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_below="@+id/lay"
-            android:background="#DDDDDD"
-            >
+            android:background="#DDDDDD">
 
         </View>
     </RelativeLayout>

@@ -143,7 +143,6 @@ public class BaskballVideoFragemnt extends Fragment implements View.OnClickListe
        // String url = "http://192.168.10.242:8181/mlottery/core/matchVideo.findAndroidVideoinfo.do";
         Map<String, String> myPostParams = new HashMap<>();
         //第二次请求需要日期
-        myPostParams.put("timeZone", "8");
         myPostParams.put("liveType", "2");
 
         VolleyContentFast.requestJsonByGet(BaseURLs.VIDEOINFO, myPostParams,new VolleyContentFast.ResponseSuccessListener<NewMatchVideoinfo>() {

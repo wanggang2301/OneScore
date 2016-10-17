@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
-            android:text="@string/intelligent_full"
+            android:text="@string/intelligent_guest"
             android:textSize="@dimen/text_size_10"
             android:textColor="@color/mdy_999"
             android:id="@+id/textView3" />
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:text="@string/intelligent_guest"
+            android:text="@string/intelligent_home"
             android:textSize="@dimen/text_size_10"
             android:textColor="@color/mdy_999"
             android:layout_toLeftOf="@id/image_small_circular"

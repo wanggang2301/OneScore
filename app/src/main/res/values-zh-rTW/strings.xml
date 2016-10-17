@@ -15,6 +15,7 @@
     <string name="foot_event_corner">角球</string>
     <string name="foot_event_half">半場</string>
     <string name="foot_event_finish">全場</string>
+    <string name="foot_event_penalty">點球</string>
     <string name="foot_event_di">第</string>
     <string name="foot_event_ge">個</string>
     <string name="foot_event_zhang">張</string>
@@ -777,6 +778,7 @@
     <string name="basket_database_details_statistic_nogp">未賽 :</string>
     <string name="basket_database_details_statistic_allgp">總賽場次 :</string>
 
+    <string name="basket_database_details_leagueMost_wintop">勝平負最多</string>
     <string name="basket_database_details_leagueMost_strongestAttack">攻擊力最強</string>
     <string name="basket_database_details_leagueMost_weakestAttack">攻擊力最弱</string>
     <string name="basket_database_details_leagueMost_strongestDefense">防守最強</string>
@@ -796,6 +798,20 @@
     <string name="football_database_details_integral_win_draw_lose_title">勝/平/負</string>
     <string name="football_database_details_integral_gain_loss_title">得/失球</string>
     <string name="football_database_details_integral_itnis_title">凈勝球</string>
+    <string name="football_database_details_most_top_win">勝/已賽:</string>
+    <string name="football_database_details_most_top_avg">勝率:</string>
+    <string name="football_database_details_statistic_home_draw">平局 :</string>
+
+    <string name="football_database_details_wdl_statistic">勝平負統計</string>
+    <string name="football_database_details_goal_statistic">進球統計</string>
+    <string name="football_database_details_big_small_statistic">大小球統計</string>
+    <string name="football_database_details_home_score_avg">主場場均進球</string>
+    <string name="football_database_details_guest_score_avg">客場場均進球</string>
+    <string name="football_database_details_moreZero">高於0.5</string>
+    <string name="football_database_details_moreOne">高於1.5</string>
+    <string name="football_database_details_moreTwo">高於2.5</string>
+    <string name="football_database_details_moreThree">高於3.5</string>
+    <string name="football_database_details_chang">場</string>
 
     <!--足球分析详情-->
     <string name="football_analyze_details">分析明細</string>
@@ -1195,4 +1211,14 @@
     <string name="direct_seeding">直播</string>
     <string name="download_error">下載失敗!</string>
     <string name="download_update">正在更新中，請稍後...</string>
+
+    <!--墙外资讯-->
+    <string name="foreign_month">月前</string>
+    <string name="foreign_day">天前</string>
+    <string name="foreign_hour">小時前</string>
+    <string name="foreign_minites">分鐘前</string>
+    <string name="foreign_now">剛剛</string>
+    <string name="foreign_writecmt">寫評論</string>
+    <string name="foreign_title">國外資訊</string>
+
 </resources>

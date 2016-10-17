@@ -264,6 +264,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mViewPager.setOffscreenPageLimit(5);
     }
 
 
@@ -548,9 +549,12 @@ public class ScoresFragment extends BaseWebSocketFragment {
 
     @Override
     protected void onTextResult(String text) {
-        ImmediateFragment.imEventBus.post(new FootballScoresWebSocketEntity(text));
-        FocusFragment.focusEventBus.post(new FootballScoresWebSocketEntity(text));
-        RollBallFragment.eventBus.post(new FootballScoresWebSocketEntity(text));
+        if (ImmediateFragment.imEventBus != null)
+            ImmediateFragment.imEventBus.post(new FootballScoresWebSocketEntity(text));
+        if (FocusFragment.focusEventBus != null)
+            FocusFragment.focusEventBus.post(new FootballScoresWebSocketEntity(text));
+        if (RollBallFragment.eventBus != null)
+            RollBallFragment.eventBus.post(new FootballScoresWebSocketEntity(text));
     }
 
     public class FootballScoresWebSocketEntity {

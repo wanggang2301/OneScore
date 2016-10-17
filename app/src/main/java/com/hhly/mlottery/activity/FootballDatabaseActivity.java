@@ -78,6 +78,8 @@ public class FootballDatabaseActivity extends BaseActivity implements View.OnCli
                 FootballDatabaseFragment.newInstance(AFRICA),
                 FootballDatabaseFragment.newInstance(OCEANIA),
                 FootballDatabaseInterFragment.newInstance(INTER));
+
+
         viewpager.setOffscreenPageLimit(1);//设置预加载页面的个数。
         viewpager.setAdapter(mTabsAdapter);
         tabLayout.setupWithViewPager(viewpager);

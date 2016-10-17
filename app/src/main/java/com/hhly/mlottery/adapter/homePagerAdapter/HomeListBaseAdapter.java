@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -1013,6 +1014,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     case "猴":
                         zod = MyApp.getContext().getResources().getString(R.string.number_bjsc_hou);
                         break;
+                }
+                String zodIndex = "牛马羊鸡狗猪鼠虎兔龙蛇猴龍馬雞豬猴";
+                if (zodIndex.indexOf(zod) != -1) {
+                    hk_zodiacs.get(k).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);// 中文
+                } else {
+                    hk_zodiacs.get(k).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);// 英文
                 }
                 hk_zodiacs.get(k).setText(zod);
             }

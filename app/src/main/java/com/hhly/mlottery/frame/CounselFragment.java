@@ -37,6 +37,9 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private View mView;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+
+    private static final int FOREIGNNEWS = 14; //境外新闻单独有一个fragment
+
     public static final int HEAD_LOADING = 0;//头部正在加载
     public static final int HEAD_NODATA = 1;//头部没有数据
     public static final int HEAD_NETERROR = 2;//头部网络错误
@@ -47,7 +50,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     private LinearLayout reloadwhenfail;//头数据加载失败时的视图
     private TextView reLoading;//头数据加载失败时，点击重新加载
     private TextView nodataorloading;//头数据加载失败时，点击重新加载
-    private List<CounselChildFragment> mList = new ArrayList();
+    private List<Fragment> mList = new ArrayList();
     private CounselFragmentAdapter mCounselFragmentAdapter;
     private List<Boolean> isImageLeft = new ArrayList<>();//是否图片左边布局
     private ImageView public_img_back, public_btn_filter, public_btn_set;
@@ -179,27 +182,33 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     //根据头数据的长度  来构建viewpager的数据源
     private void initData() {
         for (int i = 0; i < mHeadName.size(); i++) {
-            CounselChildFragment mCounselChildFragment = new CounselChildFragment();
-            Bundle bundle = new Bundle();
-            //传递数据给第一个fg
-            if (i == 0) {
-                mCounselChildFragment.setInfosList(mInfosList);
-                mCounselChildFragment.setAdsList(mAdsList);
+
+            if (FOREIGNNEWS != mHeadList.get(i).getInfoType()) {
+                CounselChildFragment mCounselChildFragment = new CounselChildFragment();
+                Bundle bundle = new Bundle();
+                //传递数据给第一个fg
+                if (i == 0) {
+                    mCounselChildFragment.setInfosList(mInfosList);
+                    mCounselChildFragment.setAdsList(mAdsList);
+                }
+                bundle.putString(BUNDLE_PARM_TITLE, mHeadName.get(i));//头名称
+                bundle.putInt("index", i);//当前fg标识
+                bundle.putBoolean("isImageLeft", isImageLeft.get(i));//是否图片左边布局
+                bundle.putInt(BUNDLE_PARM_INFOTYPE, infotype.get(i));//信息类型集合
+                mCounselChildFragment.setArguments(bundle);
+                mList.add(mCounselChildFragment);
+            } else { //墙外资讯
+                ForeignInfomationFragment mForeignInfomationFragment = ForeignInfomationFragment.newInstance();
+                mList.add(mForeignInfomationFragment);
             }
-            bundle.putString(BUNDLE_PARM_TITLE, mHeadName.get(i));//头名称
-            bundle.putInt("index", i);//当前fg标识
-            bundle.putBoolean("isImageLeft", isImageLeft.get(i));//是否图片左边布局
-            bundle.putInt(BUNDLE_PARM_INFOTYPE, infotype.get(i));//信息类型集合
-            mCounselChildFragment.setArguments(bundle);
-            mList.add(mCounselChildFragment);
         }
     }
 
 
     private void setupViewPager() {
-        if (mHeadName.size()>4){
+        if (mHeadName.size() > 4) {
             mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        }else {
+        } else {
             mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         }
         for (int i = 0; i < mHeadName.size(); i++) {
@@ -210,7 +219,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
         mViewPager.setAdapter(mCounselFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setCurrentItem(((FootballActivity)mContext).infoPagerLabel);
+        mViewPager.setCurrentItem(((FootballActivity) mContext).infoPagerLabel);
         mTabLayout.setTabsFromPagerAdapter(mCounselFragmentAdapter);
     }
 
@@ -269,6 +278,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     }
 
     private boolean isHidden;// 当前Fragment是否显示
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -289,7 +299,7 @@ public class CounselFragment extends Fragment implements View.OnClickListener, S
     @Override
     public void onPause() {
         super.onPause();
-        if(!isHidden){
+        if (!isHidden) {
             MobclickAgent.onPageEnd("CounselChildFragment");
         }
     }

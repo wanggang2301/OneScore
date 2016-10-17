@@ -120,8 +120,6 @@ public class DebugConfigActivity extends BaseActivity {
                 System.exit(0);
             }
         });
-
-
     }
 
 }

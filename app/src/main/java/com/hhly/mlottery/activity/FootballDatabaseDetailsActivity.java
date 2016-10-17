@@ -31,8 +31,11 @@ import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.FootballDatabaseHeaderBean;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.footframe.FootballDatabaseBigSmallFragment;
+import com.hhly.mlottery.frame.footframe.FootballDatabaseHandicapFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseIntegralFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseScheduleNewFragment;
+import com.hhly.mlottery.frame.footframe.FootballDatabaseStatisticsFragment;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -91,6 +94,10 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private FootballDatabaseIntegralFragment mIntegralFragment;
 //    private FootballDatabaseScheduleFragment mScheduleFragment;
     private FootballDatabaseScheduleNewFragment mScheduleNewFragment;
+    private FootballDatabaseBigSmallFragment mFootballDatabaseBigSmallFragment;
+    private FootballDatabaseHandicapFragment mFootballDatabaseHandicapFragment;
+    private FootballDatabaseStatisticsFragment mFootballDatabaseStatisticsFragment;
+
     private boolean mIsCurrenIntegral;//是否默认显示积分页
 
     @Override
@@ -110,6 +117,9 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 //        mScheduleFragment = FootballDatabaseScheduleFragment.newInstance(mLeague , null);//赛程
         mScheduleNewFragment = FootballDatabaseScheduleNewFragment.newInstance(mLeague , null);//赛程
         mIntegralFragment = FootballDatabaseIntegralFragment.newInstance(mLeague , null); //积分
+        mFootballDatabaseHandicapFragment = FootballDatabaseHandicapFragment.newInstance(mLeague.getLeagueId() , "-1");//让分盘
+        mFootballDatabaseBigSmallFragment = FootballDatabaseBigSmallFragment.newInstance(mLeague.getLeagueId() , "-1");//大小球
+        mFootballDatabaseStatisticsFragment = FootballDatabaseStatisticsFragment.newInstance(mLeague.getLeagueId() , "-1");//统计
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true)
@@ -142,6 +152,9 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         String[] titles = new String[]{
                 getString(R.string.basket_database_details_schedule),
                 getString(R.string.football_database_details_integral),
+                getString(R.string.basket_database_details_handicapname),
+                getString(R.string.basket_database_details_bigsmallname),
+                getString(R.string.basket_database_details_statistic)
         };
 
         toolbar = (Toolbar)findViewById(R.id.football_database_details_toolbar);
@@ -162,9 +175,9 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         tabsAdapter = new TabsAdapter(getSupportFragmentManager());
         tabsAdapter.setTitles(titles);
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
-        tabsAdapter.addFragments(mScheduleNewFragment,mIntegralFragment);
+        tabsAdapter.addFragments(mScheduleNewFragment,mIntegralFragment,mFootballDatabaseHandicapFragment,mFootballDatabaseBigSmallFragment,mFootballDatabaseStatisticsFragment);
 
-        mViewPager.setOffscreenPageLimit(2);//设置预加载页面的个数。
+        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(tabsAdapter);
         if (mIsCurrenIntegral) {
             mViewPager.setCurrentItem(1);//判断分析页面进来默认显示积分页
@@ -207,6 +220,7 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         String url = BaseURLs.URL_FOOTBALL_DATABASE_HEADER;
         Map<String, String> params = new HashMap<>();
         params.put("leagueId", mLeague.getLeagueId());
+        params.put("type" , mLeague.getKind());
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseHeaderBean>() {
 
             @Override
@@ -295,6 +309,9 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 
                 mIntegralFragment.update();
                 mScheduleNewFragment.update(false);
+                mFootballDatabaseHandicapFragment.upDate();
+                mFootballDatabaseBigSmallFragment.upDate();
+                mFootballDatabaseStatisticsFragment.upData();
             }
         }, 1000);
 
@@ -442,12 +459,9 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
             @Override
             public void onClick(View v) {
                 mAlertDialog.dismiss();
-
                 currentDialogPosition = currentPosition;
                 String newData = mSports[currentDialogPosition];
-
                 mCurrentSports = newData;
-
                 mHandlerData.postDelayed(mRun, 500); // 加载数据
 
                 //赛程
@@ -456,8 +470,15 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 //积分
                 mIntegralFragment.setSeason(newData);
                 mIntegralFragment.update();
-
-
+                //让分盘
+                mFootballDatabaseHandicapFragment.setSeason(newData);
+                mFootballDatabaseHandicapFragment.upDate();
+                //大小盘
+                mFootballDatabaseBigSmallFragment.setSeason(newData);
+                mFootballDatabaseBigSmallFragment.upDate();
+                //统计
+                mFootballDatabaseStatisticsFragment.setSeason(newData);
+                mFootballDatabaseStatisticsFragment.upData();
             }
         });
         mAlertDialog.show();

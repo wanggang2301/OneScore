@@ -71,7 +71,7 @@ import java.util.Map;
 /**
  * @author wang gang
  * @date 2016/6/15 14:58
- * @des ${TODO}
+ * @des 社会化分享
  */
 public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHandler.Response {
 
