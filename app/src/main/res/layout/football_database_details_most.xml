@@ -11,12 +11,53 @@
         >
 
         <LinearLayout
-            android:id="@+id/basket_database_details_data"
+            android:id="@+id/football_database_details_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
 
+            <!--胜平负最多-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="@string/basket_database_details_leagueMost_wintop"
+                    android:textColor="@color/statistics_textcolor"
+                    android:textSize="@dimen/text_size_13"/>
+
+                <!--分割线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_football_footer"
+                    />
+
+                <com.hhly.mlottery.widget.NoScrollListView
+                    android:id="@+id/football_database_leagueMost_list0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/linecolor"
+                    android:dividerHeight="0.5px"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_football_footer"
+                    />
+                <!--分割线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30px"
+                    android:background="@color/home_item_bg" />
+            </LinearLayout>
             <!--攻击力最强-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +82,7 @@
                     />
 
                 <com.hhly.mlottery.widget.NoScrollListView
-                    android:id="@+id/basket_database_leagueMost_list1"
+                    android:id="@+id/football_database_leagueMost_list1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/linecolor"
@@ -82,7 +123,7 @@
                     android:background="@color/line_football_footer" />
 
                 <com.hhly.mlottery.widget.NoScrollListView
-                    android:id="@+id/basket_database_leagueMost_list2"
+                    android:id="@+id/football_database_leagueMost_list2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/linecolor"
@@ -121,7 +162,7 @@
                     android:background="@color/line_football_footer" />
 
                 <com.hhly.mlottery.widget.NoScrollListView
-                    android:id="@+id/basket_database_leagueMost_list3"
+                    android:id="@+id/football_database_leagueMost_list3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/linecolor"
@@ -160,7 +201,7 @@
                     android:background="@color/line_football_footer" />
 
                 <com.hhly.mlottery.widget.NoScrollListView
-                    android:id="@+id/basket_database_leagueMost_list4"
+                    android:id="@+id/football_database_leagueMost_list4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/linecolor"

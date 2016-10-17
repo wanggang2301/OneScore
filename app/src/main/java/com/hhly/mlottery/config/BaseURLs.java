@@ -760,6 +760,18 @@ public class BaseURLs {
     //足球资料库详情头部
     public final static String URL_FOOTBALL_DATABASE_HEADER = URL_API_HOST + "androidLeagueData.findAndroidFootballLeagueHeader.do";//http://192.168.31.8:8080/mlottery/core/androidLeagueData.findAndroidFootballLeagueHeader.do
 
+    //让分盘
+    public final static String URL_FOOTBALL_DATABASE_HANDICAP_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidLeagueHdp.do"; // http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueHdp.do
+    //大小盘
+    public final static String URL_FOOTBALL_DATABASE_BIG_SMALL_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidLeagueOu.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueOu.do";
+
+    //统计
+    public final static String URL_FOOTBALL_DATABASE_STATISTIC_DETAILS = URL_API_HOST + "androidLeagueData.findAndroidStatics.do"; // "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do";
+
+
+
+
+
     //足球赛事提点
     public final static String URL_LEAGUESTATISTICSTODAY = URL_API_HOST + "toDayMatchStatistics.findTodayMatchStatistics.do";
 
