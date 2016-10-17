@@ -70,10 +70,11 @@ public class TextProgressBar extends ProgressBar {
     {
         this.mPaint = new Paint();
         this.mPaint.setAntiAlias(true);// 设置抗锯齿;;;;
+        this.mPaint.setColor(getResources().getColor(R.color.white));
 
         this.mPaintTo = new Paint();
         this.mPaintTo.setAntiAlias(true);// 设置抗锯齿;;;;
-//        this.mPaint.setColor(Color.WHITE);
+        this.mPaintTo.setColor(getResources().getColor(R.color.white));
     }
 
     // 设置文字内容
