@@ -387,7 +387,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="推送关注比赛"
+                    android:text="@string/push_focus_match"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_15"/>
 

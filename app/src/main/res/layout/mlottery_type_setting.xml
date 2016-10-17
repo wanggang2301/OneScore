@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="进球"
+                    android:text="@string/push_type_goal"
                     android:textColor="#000"
                     android:textSize="@dimen/item_football_hometeam"
                     android:layout_marginTop="15dp"
@@ -268,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="红牌"
+                    android:text="@string/push_red"
                     android:textColor="#000"
                     android:textSize="@dimen/item_football_hometeam"
                     android:layout_marginTop="15dp"
@@ -305,7 +305,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="震动"
+                    android:text="@string/push_shake"
                     android:textColor="#000"
                     android:textSize="@dimen/item_football_hometeam" />
 
@@ -337,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="声音"
+                    android:text="@string/push_sound"
                     android:textColor="#000"
                     android:textSize="@dimen/item_football_hometeam" />
 
@@ -402,7 +402,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="推送关注比赛"
+                    android:text="@string/push_focus_match"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_15"/>
 

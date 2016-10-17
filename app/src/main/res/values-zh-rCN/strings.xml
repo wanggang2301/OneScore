@@ -1210,4 +1210,10 @@
     <string name="direct_seeding">直播</string>
     <string name="download_error">下载失败!</string>
     <string name="download_update">正在更新中，请稍后...</string>
+    <!--推送模块-->
+    <string name="push_type_goal">进球</string>
+    <string name="push_red">红牌</string>
+    <string name="push_shake">震动</string>
+    <string name="push_sound">声音</string>
+    <string name="push_focus_match">推送关注比赛</string>
 </resources>
