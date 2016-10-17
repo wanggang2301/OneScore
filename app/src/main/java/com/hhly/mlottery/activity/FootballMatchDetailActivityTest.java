@@ -436,7 +436,6 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
 
-
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
         mHeadviewpager = new CustomViewpager(mContext);
