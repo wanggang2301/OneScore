@@ -38,7 +38,7 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
 
     private View mView;
     private static final String PARAM_ID = "leagueId";
-    private static final String PARAM_LEAGUEDATA = "leagueData";
+    private static final String PARAM_LEAGUEDATA = "leagueDate";
     private static final String PARAM_TYPE = "type";
     private RadioGroup mRadioGroup;
     private RadioButton mAllRB;

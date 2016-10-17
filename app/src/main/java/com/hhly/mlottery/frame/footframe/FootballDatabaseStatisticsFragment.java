@@ -48,7 +48,7 @@ import java.util.Map;
 public class FootballDatabaseStatisticsFragment extends Fragment implements View.OnClickListener {
 
     private static final String PARAM_ID = "leagueId";
-    private static final String PARAM2_LEAGUEDATA = "leagueData";
+    private static final String PARAM2_LEAGUEDATA = "leagueDate";
     private static final String PARAM_TYPE = "type";
 
     private View mView;
