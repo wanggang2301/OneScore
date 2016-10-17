@@ -33,6 +33,7 @@ import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsHeadFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
@@ -58,6 +59,7 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
+import me.relex.circleindicator.CircleIndicator;
 
 /**
  * @author yixq
@@ -160,6 +162,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private Integer mMatchType; //联赛类型
     private CustomViewpager mHeadviewpager;
     private BasketDetailsHeadFragment mBasketDetailsHeadFragment;
+    private BasketAnimLiveFragment mBasketAnimLiveFragment;
+    private CircleIndicator mIndicator;
+
+
     private BasePagerAdapter basePagerAdapter;
     private FragmentManager fragmentManager;
     private boolean isRquestSuccess = true;
@@ -193,11 +199,16 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         initView();
         mBasketDetailsHeadFragment = BasketDetailsHeadFragment.newInstance();
+        mBasketAnimLiveFragment = BasketAnimLiveFragment.newInstance("");
         basePagerAdapter.addFragments(mBasketDetailsHeadFragment);
+        basePagerAdapter.addFragments(mBasketAnimLiveFragment);
         mHeadviewpager.setAdapter(basePagerAdapter);
-        mHeadviewpager.setOffscreenPageLimit(2);
-        mHeadviewpager.setCurrentItem(0,false);
-        mHeadviewpager.setIsScrollable(false);
+        mHeadviewpager.setOffscreenPageLimit(1);
+        mIndicator.setViewPager(mHeadviewpager);
+        basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
+
+        mHeadviewpager.setCurrentItem(0, false);
+        //mHeadviewpager.setIsScrollable(false);
 
         setListener();
         loadData();
@@ -213,6 +224,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
         });
     }
+
     public String getmThirdId() {
         return mThirdId;
     }
@@ -237,7 +249,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         iv_join_room_basket = (ImageView) findViewById(R.id.iv_join_room_basket);
         iv_join_room_basket.setOnClickListener(this);
 
-        TITLES = new String[]{getResources().getString(R.string.basket_analyze),getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
+        TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
@@ -246,6 +258,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         mHeadviewpager = new CustomViewpager(mContext);
         mHeadviewpager = (CustomViewpager) findViewById(R.id.headviewpager);
+        mIndicator = (CircleIndicator) findViewById(R.id.indicator);
 
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         mViewPager = (ViewPager) findViewById(R.id.basket_details_view_pager);
@@ -393,7 +406,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 if (basketDetailsBean.getMatch() != null) {
                     isRquestSuccess = true;
 //                    initData(basketDetailsBean);
-                    mBasketDetailsHeadFragment.initData(basketDetailsBean , mTalkAboutBallFragment , mTitleGuest , mTitleHome , mTitleVS);
+                    mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
 
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         connectWebSocket();
@@ -535,6 +548,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     /**
      * 判断thirdId是否已经关注
+     *
      * @param thirdId
      * @return true已关注，false还没关注
      */
@@ -624,7 +638,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      */
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
 
-        mBasketDetailsHeadFragment.updateData(basketBallDetails , mTalkAboutBallFragment , mTitleGuest , mTitleHome , mTitleVS);
+        mBasketDetailsHeadFragment.updateData(basketBallDetails, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
 
     }
 
