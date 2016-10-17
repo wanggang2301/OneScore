@@ -117,9 +117,9 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
 //        mScheduleFragment = FootballDatabaseScheduleFragment.newInstance(mLeague , null);//赛程
         mScheduleNewFragment = FootballDatabaseScheduleNewFragment.newInstance(mLeague , null);//赛程
         mIntegralFragment = FootballDatabaseIntegralFragment.newInstance(mLeague , null); //积分
-        mFootballDatabaseHandicapFragment = FootballDatabaseHandicapFragment.newInstance(mLeague.getLeagueId() , "-1");//让分盘
-        mFootballDatabaseBigSmallFragment = FootballDatabaseBigSmallFragment.newInstance(mLeague.getLeagueId() , "-1");//大小球
-        mFootballDatabaseStatisticsFragment = FootballDatabaseStatisticsFragment.newInstance(mLeague.getLeagueId() , "-1");//统计
+        mFootballDatabaseHandicapFragment = FootballDatabaseHandicapFragment.newInstance(mLeague.getLeagueId() ,mLeague.getKind(), "-1");//让分盘
+        mFootballDatabaseBigSmallFragment = FootballDatabaseBigSmallFragment.newInstance(mLeague.getLeagueId() ,mLeague.getKind(), "-1");//大小球
+        mFootballDatabaseStatisticsFragment = FootballDatabaseStatisticsFragment.newInstance(mLeague.getLeagueId() ,mLeague.getKind(), "-1");//统计
 
         mOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true)
@@ -477,13 +477,13 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                 mIntegralFragment.setSeason(newData);
                 mIntegralFragment.update();
                 //让分盘
-                mFootballDatabaseHandicapFragment.setSeason(newData);
+                mFootballDatabaseHandicapFragment.setLeagueData(newData);
                 mFootballDatabaseHandicapFragment.upDate();
                 //大小盘
-                mFootballDatabaseBigSmallFragment.setSeason(newData);
+                mFootballDatabaseBigSmallFragment.setLeagueData(newData);
                 mFootballDatabaseBigSmallFragment.upDate();
                 //统计
-                mFootballDatabaseStatisticsFragment.setSeason(newData);
+                mFootballDatabaseStatisticsFragment.setLeagueData(newData);
                 mFootballDatabaseStatisticsFragment.upData();
             }
         });

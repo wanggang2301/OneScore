@@ -38,7 +38,8 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
 
     private View mView;
     private static final String PARAM_ID = "leagueId";
-    private static final String PARAM2_SEASON = "season";
+    private static final String PARAM_LEAGUEDATA = "leagueData";
+    private static final String PARAM_TYPE = "type";
     private RadioGroup mRadioGroup;
     private RadioButton mAllRB;
     private RadioButton mHomeRB;
@@ -55,8 +56,9 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
     private final static int VIEW_STATUS_NET_NODATA = 4; // 暂无数据
 
     private int mTypeSelect = 0;// 主客场选中type（默认全部）【All: 0 、 主场：1 、 客场：2】
-    private String mSeason; // 赛季
+    private String mLeagueData; // 赛季
     private String mLeagueId; // 联赛ID
+    private String mType;//联赛类型
 
     private List<DatabaseBigSmallBean> mAllList = new ArrayList<>();
     private List<DatabaseBigSmallBean> mHomeList = new ArrayList<>();
@@ -65,12 +67,13 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
     private FootballDatabaseDetailsAdapter mAdapter;
     Handler mHandlerData = new Handler();
 
-    public static FootballDatabaseHandicapFragment newInstance(String leagueId , String season) {
+    public static FootballDatabaseHandicapFragment newInstance(String leagueId ,String type , String leagueData) {
 
         FootballDatabaseHandicapFragment fragment = new FootballDatabaseHandicapFragment();
         Bundle args = new Bundle();
         args.putString(PARAM_ID , leagueId);
-        args.putString(PARAM2_SEASON , season);
+        args.putString(PARAM_LEAGUEDATA, leagueData);
+        args.putString(PARAM_TYPE , type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,7 +82,8 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLeagueId = getArguments().getString(PARAM_ID);
-        mSeason = getArguments().getString(PARAM2_SEASON);
+        mLeagueData = getArguments().getString(PARAM_LEAGUEDATA);
+        mType = getArguments().getString(PARAM_TYPE);
     }
 
     @Nullable
@@ -154,10 +158,11 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
         String url = BaseURLs.URL_FOOTBALL_DATABASE_HANDICAP_DETAILS;
 //        String url = "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidLeagueHdp.do";
         Map<String, String> params = new HashMap<>();
-        if (!mSeason.equals("-1")) {
-            params.put("season" , mSeason);
+        if (!mLeagueData.equals("-1")) {
+            params.put(PARAM_LEAGUEDATA , mLeagueData);
         }
-        params.put("leagueId", mLeagueId);
+        params.put(PARAM_ID, mLeagueId);
+        params.put(PARAM_TYPE , mType);
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseBigSmallBean>() {
 
             @Override
@@ -204,8 +209,8 @@ public class FootballDatabaseHandicapFragment extends Fragment implements View.O
         }, FootballDatabaseBigSmallBean.class);
     }
 
-    public void setSeason(String season){
-        this.mSeason = season;
+    public void setLeagueData(String leagueData){
+        this.mLeagueData = leagueData;
     }
     /**
      * 外部调用更新数据

@@ -48,7 +48,8 @@ import java.util.Map;
 public class FootballDatabaseStatisticsFragment extends Fragment implements View.OnClickListener {
 
     private static final String PARAM_ID = "leagueId";
-    private static final String PARAM2_SEASON = "season";
+    private static final String PARAM2_LEAGUEDATA = "leagueData";
+    private static final String PARAM_TYPE = "type";
 
     private View mView;
     private NoScrollListView mListView1;
@@ -79,8 +80,9 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
     Handler mHandlerData = new Handler();
     private TextView mRefresh;
 
-    private String mSeason; // 赛季
+    private String mLeagueData; // 赛季
     private String mLeagueId; // 联赛ID
+    private String mType;
 
     private boolean isUpdata = true;//[true:统计  false:之最 ]
 
@@ -107,11 +109,12 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
     private ProgressBar mBigSmallProgress4;
     private NoScrollListView mListView0;
 
-    public static FootballDatabaseStatisticsFragment newInstance(String leagueId , String season) {
+    public static FootballDatabaseStatisticsFragment newInstance(String leagueId ,String type , String leagueData) {
         FootballDatabaseStatisticsFragment fragment = new FootballDatabaseStatisticsFragment();
         Bundle args = new Bundle();
         args.putString(PARAM_ID, leagueId);
-        args.putString(PARAM2_SEASON, season);
+        args.putString(PARAM2_LEAGUEDATA, leagueData);
+        args.putString(PARAM_TYPE , type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -132,8 +135,9 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
         mImageLoader = ImageLoader.getInstance();
         mImageLoader.init(config);
 
-        mSeason = getArguments().getString(PARAM2_SEASON);
+        mLeagueData = getArguments().getString(PARAM2_LEAGUEDATA);
         mLeagueId = getArguments().getString(PARAM_ID);
+        mType = getArguments().getString(PARAM_TYPE);
 
     }
 
@@ -153,8 +157,8 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
         mHandlerData.postDelayed(mRun , 500);
     }
 
-    public void setSeason(String season){
-        this.mSeason = season;
+    public void setLeagueData(String leagueData){
+        this.mLeagueData = leagueData;
     }
 
     private void initView(){
@@ -285,10 +289,11 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
 //        String url = "http://192.168.33.32:8080/mlottery/core/androidLeagueData.findAndroidStatics.do" ;
         String url = BaseURLs.URL_FOOTBALL_DATABASE_STATISTIC_DETAILS;
         Map<String , String> params = new HashMap<>();
-        if (!mSeason.equals("-1")) {
-            params.put("season" , mSeason);
+        if (!mLeagueData.equals("-1")) {
+            params.put(PARAM2_LEAGUEDATA , mLeagueData);
         }
-        params.put("leagueId" , mLeagueId);
+        params.put(PARAM_ID , mLeagueId);
+        params.put(PARAM_TYPE , mType);
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<FootballDatabaseStatisticBean>() {
             @Override
             public void onResponse(FootballDatabaseStatisticBean bean) {
@@ -305,11 +310,11 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
                 DatabaseTopBean data2 = bean.getTop();
 
                 //之最
-                mAdapter0 = new MostAdapter(getContext(),data2.getWinTop(),R.layout.football_database_most_item);//胜平负最多
-                mAdapter1 = new MostAdapter(getContext() , data2.getAtkTop(), R.layout.football_database_most_item);//攻击力最强
-                mAdapter2 = new MostAdapter(getContext() , data2.getAtkWeak(), R.layout.football_database_most_item);//攻击力最弱
-                mAdapter3 = new MostAdapter(getContext() , data2.getDefTop(), R.layout.football_database_most_item);//防守最强
-                mAdapter4 = new MostAdapter(getContext() , data2.getDefWeak(), R.layout.football_database_most_item);//防守最弱
+                mAdapter0 = new MostAdapter(getContext(),data2.getWinTop(),R.layout.football_database_most_item , true);//胜平负最多
+                mAdapter1 = new MostAdapter(getContext() , data2.getAtkTop(), R.layout.football_database_most_spf_item , false);//攻击力最强
+                mAdapter2 = new MostAdapter(getContext() , data2.getAtkWeak(), R.layout.football_database_most_spf_item ,false);//攻击力最弱
+                mAdapter3 = new MostAdapter(getContext() , data2.getDefTop(), R.layout.football_database_most_spf_item , false);//防守最强
+                mAdapter4 = new MostAdapter(getContext() , data2.getDefWeak(), R.layout.football_database_most_spf_item , false);//防守最弱
 
                 mListView0.setAdapter(mAdapter0);
                 mListView1.setAdapter(mAdapter1);
@@ -481,10 +486,13 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
 
     class MostAdapter extends CommonAdapter<TopDetailsBean>{
 
-        public MostAdapter(Context context, List<TopDetailsBean> datas, int layoutId) {
+        boolean isSPF;//是否胜平负最多
+
+        public MostAdapter(Context context, List<TopDetailsBean> datas, int layoutId , boolean isSPFMost) {
             super(context, datas, layoutId);
 
             this.mContext = context;
+            this.isSPF = isSPFMost;
         }
         @Override
         public void convert(ViewHolder holder, TopDetailsBean basketDatabaseMostDat) {
@@ -493,17 +501,50 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
                 return;
             }
             holder.setText(R.id.football_database_most_item_name , basketDatabaseMostDat.getTeamName());
-            holder.setText(R.id.football_database_most_item_total_score , basketDatabaseMostDat.getTotal()+"");
             holder.setText(R.id.football_database_most_item_avg_score , basketDatabaseMostDat.getPer() + "");
+            if (isSPF) {
+                holder.setText(R.id.football_database_most_item_total_score , basketDatabaseMostDat.getTotal()+"/"+basketDatabaseMostDat.getMatchCount());
+            }else{
+                holder.setText(R.id.football_database_most_item_total_score , basketDatabaseMostDat.getTotal()+"");
+            }
+
+            if (isSPF) {
+                switch (holder.getPosition()){
+                    case 0:
+                        holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_statistic_w_num));
+                        break;
+                    case 1:
+                        holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_statistic_d_num));
+                        break;
+                    case 2:
+                        holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_statistic_l_num));
+                        break;
+                }
+            }else{
+                holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_most_top_avg));
+            }
+
 
             if (holder.getPosition() == 0) {
-                holder.setText(R.id.football_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_allmatch));
+                if (isSPF) {
+                    holder.setText(R.id.football_database_most_item_match , getResources().getString(R.string.football_database_details_statistic_w_avgnum));
+                }else{
+                    holder.setText(R.id.football_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_allmatch));
+                }
                 holder.setBackgroundColor(R.id.football_database_most_item_left_color , getResources().getColor(R.color.statistics_most_all_color));
             }else if(holder.getPosition() == 1){
-                holder.setText(R.id.football_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_homematch));
+                if (isSPF) {
+                    holder.setText(R.id.football_database_most_item_match , getResources().getString(R.string.football_database_details_statistic_d_avgnum));
+                }else {
+                    holder.setText(R.id.football_database_most_item_match, getResources().getString(R.string.basket_database_details_leagueMost_homematch));
+                }
                 holder.setBackgroundColor(R.id.football_database_most_item_left_color , getResources().getColor(R.color.statistics_most_home_color));
             }else if(holder.getPosition() == 2){
-                holder.setText(R.id.football_database_most_item_match , getResources().getString(R.string.basket_database_details_leagueMost_guestmatch));
+                if (isSPF) {
+                    holder.setText(R.id.football_database_most_item_match , getResources().getString(R.string.football_database_details_statistic_l_avgnum));
+                }else {
+                    holder.setText(R.id.football_database_most_item_match, getResources().getString(R.string.basket_database_details_leagueMost_guestmatch));
+                }
                 holder.setBackgroundColor(R.id.football_database_most_item_left_color , getResources().getColor(R.color.statistics_most_guest_color));
             }
 

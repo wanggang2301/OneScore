@@ -83,7 +83,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/football_database_details_wdl_statistic"
-                        android:textSize="@dimen/text_size_15"
+                        android:textSize="@dimen/text_size_13"
                         android:textColor="@color/statistics_textcolor"/>
 
                     <!--分割线-->
@@ -242,7 +242,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/football_database_details_goal_statistic"
-                        android:textSize="@dimen/text_size_15"
+                        android:textSize="@dimen/text_size_13"
                         android:textColor="@color/statistics_textcolor"/>
 
                     <!--分割线-->
@@ -460,7 +460,7 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="@string/football_database_details_big_small_statistic"
-                        android:textSize="@dimen/text_size_15"
+                        android:textSize="@dimen/text_size_13"
                         android:textColor="@color/statistics_textcolor"/>
 
                     <!--分割线-->

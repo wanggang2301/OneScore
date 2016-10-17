@@ -811,6 +811,15 @@
     <string name="football_database_details_most_top_win">胜/已赛:</string>
     <string name="football_database_details_most_top_avg">胜率:</string>
     <string name="football_database_details_statistic_home_draw">平局 :</string>
+    <string name="football_database_details_statistic_all_num">总进球数 :</string>
+    <string name="football_database_details_statistic_avg_num">场均 :</string>
+    <string name="football_database_details_statistic_w_num">赢球概率 :</string>
+    <string name="football_database_details_statistic_d_num">打平概率 :</string>
+    <string name="football_database_details_statistic_l_num">输球概率 :</string>
+    <string name="football_database_details_statistic_w_avgnum">获胜</string>
+    <string name="football_database_details_statistic_d_avgnum">打平</string>
+    <string name="football_database_details_statistic_l_avgnum">输球</string>
+
 
     <string name="football_database_details_wdl_statistic">胜平负统计</string>
     <string name="football_database_details_goal_statistic">进球统计</string>

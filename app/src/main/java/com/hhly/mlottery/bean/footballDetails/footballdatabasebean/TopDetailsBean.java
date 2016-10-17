@@ -14,6 +14,8 @@ public class TopDetailsBean {
     icon: "http://pic.13322.com/icons/teams/100/649.png",
     total: "4",
     per: "0.57"
+
+    matchCount: "13"
      */
 
     private String teamId;
@@ -21,6 +23,15 @@ public class TopDetailsBean {
     private String icon;
     private String total;
     private String per;
+    private String matchCount;
+
+    public String getMatchCount() {
+        return matchCount;
+    }
+
+    public void setMatchCount(String matchCount) {
+        this.matchCount = matchCount;
+    }
 
     public String getTeamId() {
         return teamId;
