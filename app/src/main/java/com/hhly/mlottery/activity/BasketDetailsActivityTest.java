@@ -18,7 +18,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,14 +43,11 @@ import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CustomViewpager;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -62,7 +58,6 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
-import me.relex.circleindicator.CircleIndicator;
 
 /**
  * @author yixq
@@ -113,9 +108,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     BasketOddsFragment mOddsEuro;
     BasketOddsFragment mOddsLet;
     BasketOddsFragment mOddsSize;
-//    private HappySocketClient mSocketClient;//客户端  socket;
-//    private URI mSocketUri = null;
-
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -123,16 +115,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private TabLayout mTabLayout;
     private TabsAdapter mTabsAdapter;
     private Toolbar toolbar;
-    private FrameLayout mBasketLayoutHeader;
     private CoordinatorLayout mCoordinatorLayout;
-
-
     private String[] TITLES;
 
-
-    private DisplayImageOptions mOptions;
-    private DisplayImageOptions mOptionsHead;
-    private ImageLoader mImageLoader;
     /**
      * 返回按钮
      */
@@ -147,37 +132,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      */
     private RelativeLayout mTitleScore;
 
-    //    private TextView mLeagueName;
-//    private TextView mHomeTeam;
-//    private TextView mGuestTeam;
-//    private TextView mHomeRanking;
-//    private TextView mGuestRanking;
     private TextView mHomeScore;
     private TextView mGuestScore;
-//    private TextView mVS;//比分的冒号
-//    private TextView mMatchState;
-//    private TextView mRemainTime;
-//
-//    private TextView mHome1;
-//    private TextView mHome2;
-//    private TextView mHome3;
-//    private TextView mHome4;
-//    private TextView mHomeOt1;
-//    private TextView mHomeOt2;
-//    private TextView mHomeOt3;
-//    private TextView mSmallHomeScore;//每节比分的后面的总分
-//    private TextView mSmallGuestScore;
-//    private TextView mGuest1;
-//    private TextView mGuest2;
-//    private TextView mGuest3;
-//    private TextView mGuest4;
-//    private TextView mGuestOt1;
-//    private TextView mGuestOt2;
-//    private TextView mGuestOt3;
-//
-//    private ImageView mHomeIcon;
-//    private ImageView mGuestIcon;
-//    private ImageView mHeadImage;
 
     private TextView mTitleHome;//主队比分/队名
     private TextView mTitleGuest;//客队比分/队名
@@ -188,10 +144,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private LinearLayout mLayoutOt1;
     private LinearLayout mLayoutOt2;
     private LinearLayout mLayoutOt3;
-//    BasketballDetailsBean.MatchEntity mMatch;
-    //    private TextView mApos;
-    private int mGuestNum = 0;
-    private int mHomeNum = 0;
 
     private int mCurrentId;
     private final int IMMEDIA_FRAGMENT = 0;
@@ -210,8 +162,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private BasketDetailsHeadFragment mBasketDetailsHeadFragment;
     private BasePagerAdapter basePagerAdapter;
     private FragmentManager fragmentManager;
-    private CircleIndicator mIndicator;
-
+    private boolean isRquestSuccess = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,45 +188,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         /**不统计当前的Activity界面，只统计Fragment界面*/
         MobclickAgent.openActivityDurationTrack(false);
         mContext = this;
-
-
         EventBus.getDefault().register(this);//注册EventBus
         RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
 
-//        mOptions = new DisplayImageOptions.Builder()
-//                .cacheInMemory(true).cacheOnDisc(true)
-//                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-//                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-//                //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
-//                .showImageForEmptyUri(R.mipmap.basket_default)
-//                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-//                .build();
-//
-//
-//        mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
-//                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-//                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-//                .showImageOnLoading(R.color.black)
-//                .showImageForEmptyUri(R.color.black)
-//                .showImageOnFail(R.color.black)// 加载失败显示的图片
-//                .displayer(new FadeInBitmapDisplayer(2000))
-//                .build();
-//
-//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
-//        mImageLoader = ImageLoader.getInstance(); //初始化
-//        mImageLoader.init(config);
-
-
-//        try {
-//            mSocketUri = new URI(BaseURLs.WS_SERVICE);//地址
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-
         initView();
-
         mBasketDetailsHeadFragment = BasketDetailsHeadFragment.newInstance();
-
         basePagerAdapter.addFragments(mBasketDetailsHeadFragment);
         mHeadviewpager.setAdapter(basePagerAdapter);
         mHeadviewpager.setOffscreenPageLimit(2);
@@ -296,72 +213,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
         });
     }
-
-//    /**
-//     * 开启socket
-//     */
-//    private synchronized void startWebsocket() {
-//        if (mSocketClient != null) {
-//            if (!mSocketClient.isClosed()) {
-//                mSocketClient.close();
-//            }
-//
-//            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
-//            mSocketClient.setSocketResponseMessageListener(this);
-//            mSocketClient.setSocketResponseCloseListener(this);
-//            mSocketClient.setSocketResponseErrorListener(this);
-//            try {
-//                mSocketClient.connect();
-//            } catch (IllegalThreadStateException e) {
-//                mSocketClient.close();
-//            }
-//        } else {
-//            mSocketClient = new HappySocketClient(mSocketUri, new Draft_17());
-//            mSocketClient.setSocketResponseMessageListener(this);
-//            mSocketClient.setSocketResponseCloseListener(this);
-//            mSocketClient.setSocketResponseErrorListener(this);
-//            try {
-//                mSocketClient.connect();
-//            } catch (IllegalThreadStateException e) {
-//                mSocketClient.close();
-//            }
-//        }
-//
-//
-//    }
-
-    private long pushStartTime;
-
-//    private Timer computeWebSocketConnTimer = new Timer();
-
-//    /**
-//     * 检测socket连接状态。
-//     */
-//    private void computeWebSocket() {
-//        TimerTask tt = new TimerTask() {
-//            @Override
-//            public void run() {
-//                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-//                L.i(TAG, df.format(new Date()) + "---监听socket连接状态:Open=" + mSocketClient.isOpen() + ",Connecting=" + mSocketClient.isConnecting() + ",Close=" + mSocketClient.isClosed() + ",Closing=" + mSocketClient.isClosing());
-//                long pushEndTime = System.currentTimeMillis();
-//                if ((pushEndTime - pushStartTime) >= 30000) {
-//                    L.i(TAG, "重新启动socket");
-//                    if (mSocketClient.isClosed()) {
-//                        startWebsocket();
-//                    }
-//
-//                }
-//            }
-//        };
-//        try {
-//            computeWebSocketConnTimer.schedule(tt, 15000, 15000);
-//        } catch (Exception e) {
-//
-//        }
-//
-//    }
-
-
     public String getmThirdId() {
         return mThirdId;
     }
@@ -386,13 +237,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         iv_join_room_basket = (ImageView) findViewById(R.id.iv_join_room_basket);
         iv_join_room_basket.setOnClickListener(this);
 
-        TITLES = new String[]{getResources().getString(R.string.basket_analyze),
-                getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
+        TITLES = new String[]{getResources().getString(R.string.basket_analyze),getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
 
-        mBasketLayoutHeader = (FrameLayout) findViewById(R.id.basket_layout_header);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 
         mHeadviewpager = new CustomViewpager(mContext);
@@ -405,7 +254,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mTabsAdapter.setTitles(TITLES);
 
-        MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, toolbar);
 
         // TODO
         mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
@@ -438,51 +286,19 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             }
         });
-
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.basket_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
-//        mLeagueName = (TextView) this.findViewById(R.id.basket_details_matches_name);
-//        mHomeTeam = (TextView) this.findViewById(R.id.basket_details_home_name);
-//        mGuestTeam = (TextView) this.findViewById(R.id.basket_details_guest_name);
-//        mHomeRanking = (TextView) this.findViewById(R.id.basket_details_home_Ranking);
-//        mGuestRanking = (TextView) this.findViewById(R.id.basket_details_guest_Ranking);
         mHomeScore = (TextView) this.findViewById(R.id.basket_details_home_all_score);
         mGuestScore = (TextView) this.findViewById(R.id.basket_details_guest_all_score);
-//        mVS = (TextView) this.findViewById(R.id.basket_score_maohao);
-//        mMatchState = (TextView) this.findViewById(R.id.basket_details_state);
-//        mRemainTime = (TextView) this.findViewById(R.id.basket_details_remain_time);
-//        mHome1 = (TextView) this.findViewById(R.id.basket_details_home_first);
-//        mHome2 = (TextView) this.findViewById(R.id.basket_details_home_second);
-//        mHome3 = (TextView) this.findViewById(R.id.basket_details_home_third);
-//        mHome4 = (TextView) this.findViewById(R.id.basket_details_home_fourth);
-//        mHomeOt1 = (TextView) this.findViewById(R.id.basket_details_home_ot1);
-//        mHomeOt2 = (TextView) this.findViewById(R.id.basket_details_home_ot2);
-//        mHomeOt3 = (TextView) this.findViewById(R.id.basket_details_home_ot3);
-//        mSmallHomeScore = (TextView) this.findViewById(R.id.basket_details_home_small_total);
-//
-//        mGuest1 = (TextView) this.findViewById(R.id.basket_details_guest_first);
-//        mGuest2 = (TextView) this.findViewById(R.id.basket_details_guest_second);
-//        mGuest3 = (TextView) this.findViewById(R.id.basket_details_guest_third);
-//        mGuest4 = (TextView) this.findViewById(R.id.basket_details_guest_fourth);
-//        mGuestOt1 = (TextView) this.findViewById(R.id.basket_details_guest_ot1);
-//        mGuestOt2 = (TextView) this.findViewById(R.id.basket_details_guest_ot2);
-//        mGuestOt3 = (TextView) this.findViewById(R.id.basket_details_guest_ot3);
-//        mSmallGuestScore = (TextView) this.findViewById(R.id.basket_details_guest_small_total);
-//
-//        mHomeIcon = (ImageView) this.findViewById(R.id.basket_details_home_icon);
-//        mGuestIcon = (ImageView) this.findViewById(R.id.basket_details_guest_icon);
 
         mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
         mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
         mTitleVS = (TextView) this.findViewById(R.id.title_vs);
 
-//        mHeadImage = (ImageView) this.findViewById(R.id.image_background);
-
         mLayoutOt1 = (LinearLayout) this.findViewById(R.id.basket_details_llot1);
         mLayoutOt2 = (LinearLayout) this.findViewById(R.id.basket_details_llot2);
         mLayoutOt3 = (LinearLayout) this.findViewById(R.id.basket_details_llot3);
-
 
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
 
@@ -495,24 +311,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         } else {
             mCollect.setImageResource(R.mipmap.basketball_collect);
         }
-
-//        mApos = (TextView) this.findViewById(R.id.backetball_details_apos);
-//        mApos.setVisibility(View.GONE);
-
-
-//        setApos();
     }
 
     @Override
     protected void onDestroy() { //关闭socket
         super.onDestroy();
         isExit = true;
-//        if (mSocketClient != null) {
-//            if (!mSocketClient.isClosed()) {
-//                mSocketClient.close();
-//            }
-//        }
-//        computeWebSocketConnTimer.cancel();
         EventBus.getDefault().unregister(this);//取消注册EventBus
     }
 
@@ -568,47 +372,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     /**
-     * 秒闪烁
-     */
-//    private void setApos() {
-//        mApos.setText("\'");
-//
-//        final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
-//        anim1.setDuration(500);
-//        final AlphaAnimation anim2 = new AlphaAnimation(0, 0);
-//        anim2.setDuration(500);
-//        anim1.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                mApos.startAnimation(anim2);
-//            }
-//        });
-//        anim2.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                mApos.startAnimation(anim1);
-//            }
-//        });
-//        mApos.startAnimation(anim1);
-//    }
-
-    /**
      * 设置监听
      */
     private void setListener() {
@@ -621,20 +384,17 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * 请求网络数据
      */
     public void loadData() {
+        isRquestSuccess = false;
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DETAILS, params, new VolleyContentFast.ResponseSuccessListener<BasketballDetailsBean>() {
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
-
+                    isRquestSuccess = true;
 //                    initData(basketDetailsBean);
                     mBasketDetailsHeadFragment.initData(basketDetailsBean , mTalkAboutBallFragment , mTitleGuest , mTitleHome , mTitleVS);
 
-                    /**
-                     * 启动秒闪烁
-                     */
-//                    setApos();
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         connectWebSocket();
                     }
@@ -643,7 +403,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                mApos.setVisibility(View.GONE);
+                isRquestSuccess = false;
             }
         }, BasketballDetailsBean.class);
     }
@@ -696,7 +456,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             if (RongYunUtils.isRongConnent && RongYunUtils.isCreateChartRoom) {
                 pd.dismiss();
-//                appBarLayout.setExpanded(true);// 显示头部内容
                 RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
             } else {
                 new Thread() {
@@ -710,7 +469,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                                 @Override
                                 public void run() {
                                     pd.dismiss();
-//                                    appBarLayout.setExpanded(true);// 显示头部内容
                                     RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                                 }
                             });
@@ -776,222 +534,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     /**
-     * 请求数据之后展示
-     */
-//    private void initData(BasketballDetailsBean bean) {
-//
-//        BasketballDetailsBean.MatchEntity.MatchScoreEntity score = bean.getMatch().getMatchScore();//比分
-//        mMatch = bean.getMatch();
-//
-//        String state; //傳給老龍
-//        state = mMatch.getGuestTeam() + "vs" + mMatch.getHomeTeam() + "_" + bean.getMatch().getDate() + "  " + bean.getMatch().getTime();
-//
-//        mTalkAboutBallFragment.setTitle(state);
-//
-//        if (score != null) {
-//            mGuestNum = score.getGuestScore();
-//            mHomeNum = score.getHomeScore();
-//        }
-//
-//        //联赛名
-//        mLeagueName.setText(mMatch.getLeagueName());
-//        mLeagueName.setTextColor(Color.parseColor(mMatch.getLeagueColor()));
-//
-//        mHomeTeam.setText(mMatch.getHomeTeam());
-//        mGuestTeam.setText(mMatch.getGuestTeam());
-//        if (mMatch.getHomeRanking().equals("")) {
-//            mHomeRanking.setText("");
-//        } else {
-//            mHomeRanking.setText("[ " + mMatch.getHomeRanking() + " ]");
-//        }
-//        if (mMatch.getGuestRanking().equals("")) {
-//            mGuestRanking.setText("");
-//        } else {
-//            mGuestRanking.setText("[ " + mMatch.getGuestRanking() + " ]");
-//        }
-//
-//        //图标
-//        mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
-//
-//        mImageLoader.displayImage(mMatch.getGuestLogoUrl(), mGuestIcon, mOptions);
-//        mImageLoader.displayImage(bean.getBgUrl(), mHeadImage, mOptionsHead);
-//
-//
-//        if (mMatch.getSection() == 2) { //只有上下半场
-//            mGuest2.setVisibility(View.INVISIBLE);
-//            mGuest4.setVisibility(View.INVISIBLE);
-//            mHome2.setVisibility(View.INVISIBLE);
-//            mHome4.setVisibility(View.INVISIBLE);
-//        }
-//
-//        switch (mMatch.getMatchStatus()) {
-//            case PRE_MATCH: ///赛前
-//            case DETERMINED://待定
-//            case GAME_CANCLE: //比赛取消
-//            case GAME_CUT: //比赛中断
-//            case GAME_DELAY: //比赛推迟
-//                //赛前显示 客队 VS  主队
-//                mGuestScore.setText("");
-//                mHomeScore.setText("");
-////                mGuestScore.setVisibility(View.GONE);
-////                mHomeScore.setVisibility(View.GONE);
-//
-//                mVS.setText("VS");
-//                mTitleGuest.setText(bean.getMatch().getGuestTeam());
-//                mTitleHome.setText(bean.getMatch().getHomeTeam());
-//                mTitleVS.setText("VS");
-//                if (mMatch.getMatchStatus() == PRE_MATCH) {
-//                    mMatchState.setText(bean.getMatch().getDate() + "  " + bean.getMatch().getTime() + "   " + getResources().getString(R.string.basket_begin_game));
-//                } else if (mMatch.getMatchStatus() == DETERMINED) {
-//                    mMatchState.setText(R.string.basket_undetermined);
-//                } else if (mMatch.getMatchStatus() == GAME_CANCLE) {
-//                    mMatchState.setText(R.string.basket_cancel);
-//                } else if (mMatch.getMatchStatus() == GAME_CUT) {
-//                    mMatchState.setText(R.string.basket_interrupt);
-//                } else {
-//                    mMatchState.setText(R.string.basket_postpone);
-//                }
-//                mApos.setVisibility(View.GONE);
-//                mRemainTime.setText("");
-//                if (mMatch.getMatchStatus() == PRE_MATCH) {
-//                    mTalkAboutBallFragment.setClickableLikeBtn(true);
-//                }
-//                break;
-//            case END://完场
-//                mTalkAboutBallFragment.setClickableLikeBtn(false);
-//
-//                mGuestScore.setText(score.getGuestScore() + "");
-//                mHomeScore.setText(score.getHomeScore() + "");
-//                mMatchState.setText(R.string.finished_txt);
-//                mGuest1.setText(score.getGuest1() + "");
-//                mGuest2.setText(score.getGuest2() + "");
-//                mGuest3.setText(score.getGuest3() + "");
-//                mGuest4.setText(score.getGuest4() + "");
-//                mHome1.setText(score.getHome1() + "");
-//                mHome2.setText(score.getHome2() + "");
-//                mHome3.setText(score.getHome3() + "");
-//                mHome4.setText(score.getHome4() + "");
-//
-//                mTitleHome.setText(score.getHomeScore() + "");
-//                mTitleGuest.setText(score.getGuestScore() + "");
-//                mSmallGuestScore.setText(score.getGuestScore() + "");
-//                mSmallHomeScore.setText(score.getHomeScore() + "");
-//                mVS.setText(":");
-//                mTitleVS.setText(":");
-//                if (score.getAddTime() == 3) {//三个加时
-//                    mLayoutOt3.setVisibility(View.VISIBLE);
-//                    mLayoutOt2.setVisibility(View.VISIBLE);
-//                    mLayoutOt1.setVisibility(View.VISIBLE);
-//                    mGuestOt1.setText(score.getGuestOt1() + "");
-//                    mHomeOt1.setText(score.getHomeOt1() + "");
-//                    mGuestOt2.setText(score.getGuestOt2() + "");
-//                    mHomeOt2.setText(score.getHomeOt2() + "");
-//                    mGuestOt3.setText(score.getGuestOt3() + "");
-//                    mHomeOt3.setText(score.getHomeOt3() + "");
-//                } else if (score.getAddTime() == 2) {
-//                    mLayoutOt2.setVisibility(View.VISIBLE);
-//                    mLayoutOt1.setVisibility(View.VISIBLE);
-//                    mGuestOt1.setText(score.getGuestOt1() + "");
-//                    mHomeOt1.setText(score.getHomeOt1() + "");
-//                    mGuestOt2.setText(score.getGuestOt2() + "");
-//                    mHomeOt2.setText(score.getHomeOt2() + "");
-//                } else if (score.getAddTime() == 1) {
-//                    mLayoutOt1.setVisibility(View.VISIBLE);
-//                    mGuestOt1.setText(score.getGuestOt1() + "");
-//                    mHomeOt1.setText(score.getHomeOt1() + "");
-//                }
-//                mApos.setVisibility(View.GONE);
-//                mRemainTime.setText("");
-//                break;
-//            case OT3:
-//                mLayoutOt3.setVisibility(View.VISIBLE);
-//                setScore(score.getGuestOt3(), mGuestOt3, score.getHomeOt3(), mHomeOt3);
-//            case OT2:
-//                mLayoutOt2.setVisibility(View.VISIBLE);
-//                setScore(score.getGuestOt2(), mGuestOt2, score.getHomeOt2(), mHomeOt2);
-//
-//            case OT1:
-//                mLayoutOt1.setVisibility(View.VISIBLE);
-//                setScore(score.getGuestOt1(), mGuestOt1, score.getHomeOt1(), mHomeOt1);
-//
-//            case FOURTH_QUARTER:
-//                setScore(score.getGuest4(), mGuest4, score.getHome4(), mHome4);
-//
-//            case THIRD_QUARTER:
-//                setScore(score.getGuest3(), mGuest3, score.getHome3(), mHome3);
-//
-//            case HALF_GAME: //中场
-//            case SECOND_QUARTER:
-//                setScore(score.getGuest2(), mGuest2, score.getHome2(), mHome2);
-//            case FIRST_QUARTER:
-//                setScore(score.getGuest1(), mGuest1, score.getHome1(), mHome1);
-//                //不管是第几节都设置总比分,设置剩余时间
-//                setScore(score.getGuestScore(), mGuestScore, score.getHomeScore(), mHomeScore);
-//                setScore(score.getGuestScore(), mSmallGuestScore, score.getHomeScore(), mSmallHomeScore);
-//                mTitleHome.setText(score.getHomeScore() + "");
-//                mTitleGuest.setText(score.getGuestScore() + "");
-//                mVS.setText(":");
-//                mTitleVS.setText(":");
-//
-//                mTalkAboutBallFragment.setClickableLikeBtn(true); //聊球可点赞
-//
-//                //设置比赛时间及状态
-//                if (mMatch.getMatchStatus() == FIRST_QUARTER) {
-//                    if (mMatch.getSection() == 2) {
-//                        mMatchState.setText("1st half  ");
-//                    } else {
-//                        mMatchState.setText("1st  ");
-//                    }
-//                    mApos.setVisibility(View.VISIBLE);
-//                } else if (mMatch.getMatchStatus() == SECOND_QUARTER) {
-//                    if (mMatch.getSection() == 2) {
-//                        mMatchState.setText("1st half  ");
-//                    } else {
-//                        mMatchState.setText("2nd  ");
-//                    }
-//                    mApos.setVisibility(View.VISIBLE);
-//                } else if (mMatch.getMatchStatus() == HALF_GAME) {
-//                    mMatchState.setText("half time  ");
-//                    mApos.setVisibility(View.GONE);
-//                } else if (mMatch.getMatchStatus() == THIRD_QUARTER) {
-//                    if (mMatch.getSection() == 2) {
-//                        mMatchState.setText("2nd half");
-//                    } else {
-//                        mMatchState.setText("3rd  ");
-//                    }
-//                    mApos.setVisibility(View.VISIBLE);
-//                } else if (mMatch.getMatchStatus() == FOURTH_QUARTER) {
-//                    if (mMatch.getSection() == 2) {
-//                        mMatchState.setText("2nd half  ");
-//                    } else {
-//                        mMatchState.setText("4th  ");
-//                    }
-//                    mApos.setVisibility(View.VISIBLE);
-//                } else if (mMatch.getMatchStatus() == OT1) {
-//                    mMatchState.setText("OT1  ");
-//                    mApos.setVisibility(View.VISIBLE);
-//                } else if (mMatch.getMatchStatus() == OT2) {
-//                    mMatchState.setText("OT2  ");
-//                    mApos.setVisibility(View.VISIBLE);
-//                } else {
-//                    mMatchState.setText("OT3  ");
-//                    mApos.setVisibility(View.VISIBLE);
-//                }
-//
-//                mRemainTime.setText(score.getRemainTime());//剩余时间
-//                if (mMatch.getMatchStatus() == HALF_GAME) {
-//                    mRemainTime.setText("");//中场时无剩余时间。。后台可能中场也给时间。没办法
-//                }
-//                if (score.getRemainTime() == null || score.getRemainTime().equals("")) {//没有剩余时间的时候
-//                    mApos.setVisibility(View.GONE);
-//                }
-//                break;
-//        }
-//
-//    }
-
-
-    /**
      * 判断thirdId是否已经关注
      * @param thirdId
      * @return true已关注，false还没关注
@@ -1051,77 +593,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         PreferenceUtil.commitString(BASKET_FOCUS_IDS, sb.toString());
     }
 
-//    /**
-//     * 设置比分
-//     *
-//     * @param guestScore 客队得分
-//     * @param guest      客队显示比分的textview
-//     * @param homeScore  主队比分
-//     * @param home       主队显示比分的textview
-//     */
-
-//    private void setScore(int guestScore, TextView guest, int homeScore, TextView home) {
-//
-//        guest.setText(guestScore + "");
-//        home.setText(homeScore + "");
-//        if (guestScore > homeScore) {//得分少的用灰色
-//            guest.setTextColor(getResources().getColor(R.color.basket_score_white));
-//            home.setTextColor(getResources().getColor(R.color.basket_score_gray));
-//        } else if (guestScore < homeScore) {
-//            guest.setTextColor(getResources().getColor(R.color.basket_score_gray));
-//            home.setTextColor(getResources().getColor(R.color.basket_score_white));
-//        } else {
-//            guest.setTextColor(getResources().getColor(R.color.basket_score_white));
-//            home.setTextColor(getResources().getColor(R.color.basket_score_white));
-//        }
-//    }
-
-
-//    @Override
-//    public void onClose(String message) {
-//
-//    }
-//
-//    @Override
-//    public void onError(Exception exception) {
-//
-//    }
-
-//    @Override
-//    public void onMessage(String message) {
-//        L.w(TAG, "message = " + message);
-//
-//        pushStartTime = System.currentTimeMillis(); // 记录起始时间
-//
-//        if (message.startsWith("CONNECTED")) {
-//            String id = "android" + DeviceInfo.getDeviceId(this);
-//            id = MD5Util.getMD5(id);
-//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.basketball.score." + mThirdId + "\n\n");
-//            return;
-//        } else if (message.startsWith("MESSAGE")) {
-//            String[] msgs = message.split("\n");
-//            String ws_json = msgs[msgs.length - 1];
-//            String type = "";
-//            try {
-//                JSONObject jsonObject = new JSONObject(ws_json);
-//                type = jsonObject.getString("type");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (!"".equals(type)) {
-//                Message msg = Message.obtain();
-//                msg.obj = ws_json;
-//                msg.arg1 = Integer.parseInt(type);
-//                L.e(TAG, type + "____________________");
-//
-//                mSocketHandler.sendMessage(msg);
-//            }
-//        }
-//        mSocketClient.send("\n");//你来我往的心跳。。。
-//    }
-
-
     Handler mSocketHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -1152,59 +623,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * @param basketBallDetails 推送过来消息封装的实体类
      */
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
-//        WebSocketBasketBallDetails.DataEntity score = basketBallDetails.getData();
 
         mBasketDetailsHeadFragment.updateData(basketBallDetails , mTalkAboutBallFragment , mTitleGuest , mTitleHome , mTitleVS);
 
-//        switch (basketBallDetails.getData().getMatchStatus()) {
-//            case DETERMINED://待定
-//            case GAME_CANCLE: //比赛取消
-//            case GAME_CUT: //比赛中断
-//            case GAME_DELAY: //比赛推迟
-//                mTalkAboutBallFragment.setClickableLikeBtn(false);
-//                break;
-//
-//            case END://完场
-//                mTalkAboutBallFragment.setClickableLikeBtn(false);
-//                mTitleHome.setText(score.getHomeScore() + "");
-//                mTitleGuest.setText(score.getGuestScore() + "");
-//                mTitleVS.setText(":");
-//
-//            case FIRST_QUARTER:
-//                mTitleVS.setText(":");
-//
-//                if (mGuestNum != score.getGuestScore()) {
-//                    scoreAnimation(mGuestScore);
-//                    mGuestNum = score.getGuestScore();
-//                }
-//                if (mHomeNum != score.getHomeScore()) {
-//                    scoreAnimation(mHomeScore);
-//                    mHomeNum = score.getHomeScore();
-//                }
-//                mTalkAboutBallFragment.setClickableLikeBtn(true);//聊球可点赞
-//
-//                mTitleHome.setText(score.getHomeScore() + "");
-//                mTitleGuest.setText(score.getGuestScore() + "");
-//                break;
-//        }
     }
-
-
-//    /**
-//     * 设置比分变化时的的翻转动画
-//     */
-//    public void scoreAnimation(final TextView changeText) {
-//        float cX = changeText.getWidth() / 2.0f;
-//        float cY = changeText.getHeight() / 2.0f;
-//
-//        MyRotateAnimation rotateAnim = new MyRotateAnimation(cX, cY, MyRotateAnimation.ROTATE_DECREASE);
-//
-//        rotateAnim.setFillAfter(true);
-//
-//        changeText.startAnimation(rotateAnim);
-//
-//    }
-
 
     private void eventBusPost() {
         if (ImmedBasketballFragment.BasketImmedEventBus != null) {
@@ -1231,18 +653,23 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        int flexibleSpaceImageHeight = getResources().getDimensionPixelSize(R.dimen.flexible_space_image_height);
-        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < flexibleSpaceImageHeight) {
-            mRefreshLayout.setEnabled(false);
-        } else {
-            mRefreshLayout.setEnabled(true);
-        }
+
         if ((-verticalOffset) == appBarLayout.getTotalScrollRange()) {
             mTitleScore.setVisibility(View.VISIBLE);
             headLayout.setBackgroundColor(getResources().getColor(R.color.black));
         } else {
             mTitleScore.setVisibility(View.INVISIBLE);
             headLayout.setBackgroundColor(getResources().getColor(R.color.transparency));
+        }
+
+        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
+            mRefreshLayout.setEnabled(false);   //收缩
+        } else {
+            if (isRquestSuccess) {
+                mRefreshLayout.setEnabled(true); //展开
+            } else {
+                mRefreshLayout.setEnabled(false); //展开
+            }
         }
 
     }
