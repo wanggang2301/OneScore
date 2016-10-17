@@ -70,7 +70,7 @@
         <activity
             android:name=".activity.WelcomeViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation"></activity>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentNavigation"/>
         <!-- 内地版的key-begin -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -338,15 +338,15 @@
         <!--独家访谈界面-->
         <activity
             android:name=".activity.PLVideoTextureActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.ForeignInfomationDetailsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.PicturePreviewActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.FootballDatabaseActivity"
