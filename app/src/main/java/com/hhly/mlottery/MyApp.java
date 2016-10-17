@@ -44,6 +44,11 @@ public class MyApp extends Application {
      */
     public static String isLanguage;
 
+    /**
+     * 获取当前包名
+     */
+    public static String isPackageName;
+
     @Override
     public void onCreate() {
         appcontext = this;
@@ -68,6 +73,10 @@ public class MyApp extends Application {
         //初始化畅言
         CyUtils.initCy(this);
         initUserInfo();
+        // 获取当前包名
+        isPackageName = this.getPackageName();
+        // 设置时区
+        settingTimeZone();
         /**
          * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIMClient 的进程和 Push 进程执行了 init。
          * io.rong.push 为融云 push 进程名称，不可修改。
@@ -84,6 +93,25 @@ public class MyApp extends Application {
         OkHttpFinal.getInstance().init(builder.build());
 
         super.onCreate();
+    }
+
+    /**
+     * 设置时区
+     */
+    private void settingTimeZone(){
+        switch (isPackageName) {
+            case AppConstants.PACKGER_NAME_ZH:// 国内版
+                AppConstants.timeZone = 8;
+                break;
+            case AppConstants.PACKGER_NAME_TH:// 泰国版
+            case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
+            case AppConstants.PACKGER_NAME_VN:// 越南南版
+                AppConstants.timeZone = 7;
+                break;
+            case AppConstants.PACKGER_NAME_UK:// 英文版
+                AppConstants.timeZone = 0;
+                break;
+        }
     }
 
     @Override
@@ -151,11 +179,9 @@ public class MyApp extends Application {
                 // 设置应用语言类型
                 if (language.equals("rTW")) {// 选择中文繁体
                     mConfiguration.locale = Locale.TAIWAN;
-                }
-//			else if (language.equals("rCN")) {// 选择中文简体
-//				mConfiguration.locale = Locale.SIMPLIFIED_CHINESE;
-//			}
-                else if (language.equals("rEN")) {// 选择英文
+                } else if (language.equals("rCN")) {// 选择中文简体
+                    mConfiguration.locale = Locale.SIMPLIFIED_CHINESE;
+                } else if (language.equals("rEN")) {// 选择英文
                     mConfiguration.locale = Locale.US;
                 } else if (language.equals("rKO")) {// 选着韩文
                     mConfiguration.locale = Locale.KOREA;
@@ -170,43 +196,50 @@ public class MyApp extends Application {
                 // 保存设置语言的类型
                 PreferenceUtil.commitString("language", language);
             } else if ("".equals(language)) {//如果语言初始化的值等于空
-                // 设置应用语言类型
-                //如果当前语言环境为简体
-//			if(mLocale.toString().equals(Locale.SIMPLIFIED_CHINESE.toString())){
-//				mConfiguration.locale = Locale.SIMPLIFIED_CHINESE;
-//				language = "rCN";
-//			}
-                //如果当前语言环境为繁体
-                if (mLocale.toString().equals(Locale.TAIWAN.toString())) {
-                    mConfiguration.locale = Locale.TAIWAN;
-                    language = "rTW";
-                }
-                //如果当前语言环境为英语
-                else if (mLocale.toString().equals(Locale.US.toString())) {
-                    mConfiguration.locale = Locale.US;
-                    language = "rEN";
-                }
-                //如果当前语言环境为韩语
-                else if (mLocale.toString().equals(Locale.KOREA.toString())) {
-                    mConfiguration.locale = Locale.KOREA;
-                    language = "rKO";
-                }
-                //如果当前语言环境为印度尼西亚
-                else if (mLocale.toString().equals("in_ID")) {
-                    mConfiguration.locale = new Locale("in", "ID");
-                    language = "rID";
-                }
-                //如果当前语言环境为泰语
-                else if (mLocale.toString().equals("th_TH")) {
-                    mConfiguration.locale = new Locale("th", "TH");
-                    language = "rTH";
-                }
-                //如果当前语言环境为越南语
-                else if (mLocale.toString().equals("vi_VN")) {
-                    mConfiguration.locale = new Locale("vi", "VN");
-                    language = "rVI";
-                } else {//默认英语
-                    language = "rEN";
+                switch (MyApp.isPackageName) {
+                    case AppConstants.PACKGER_NAME_TH:// 泰国版
+                        if (mLocale.toString().equals(Locale.TAIWAN.toString())) {
+                            mConfiguration.locale = Locale.TAIWAN;
+                            language = "rTW";
+                        } else if (mLocale.toString().equals(Locale.US.toString())) {
+                            mConfiguration.locale = Locale.US;
+                            language = "rEN";
+                        } else if (mLocale.toString().equals("th_TH")) {
+                            mConfiguration.locale = new Locale("th", "TH");
+                            language = "rTH";
+                        } else {
+                            language = "rTH";
+                        }
+                        break;
+                    case AppConstants.PACKGER_NAME_VN_HN:// 越南北版
+                    case AppConstants.PACKGER_NAME_VN:// 越南南版
+                        if (mLocale.toString().equals(Locale.TAIWAN.toString())) {
+                            mConfiguration.locale = Locale.TAIWAN;
+                            language = "rTW";
+                        } else if (mLocale.toString().equals(Locale.US.toString())) {
+                            mConfiguration.locale = Locale.US;
+                            language = "rEN";
+                        } else if (mLocale.toString().equals("th_TH")) {
+                            mConfiguration.locale = new Locale("th", "TH");
+                            language = "rVI";
+                        } else {
+                            language = "rVI";
+                        }
+                        break;
+                    case AppConstants.PACKGER_NAME_UK:// 英文版
+                        if (mLocale.toString().equals(Locale.TAIWAN.toString())) {
+                            mConfiguration.locale = Locale.TAIWAN;
+                            language = "rTW";
+                        } else if (mLocale.toString().equals(Locale.US.toString())) {
+                            mConfiguration.locale = Locale.US;
+                            language = "rEN";
+                        } else if (mLocale.toString().equals("th_TH")) {
+                            mConfiguration.locale = new Locale("th", "TH");
+                            language = "rCN";
+                        } else {
+                            language = "rEN";
+                        }
+                        break;
                 }
             }
 

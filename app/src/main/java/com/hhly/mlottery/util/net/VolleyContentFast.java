@@ -40,6 +40,8 @@ public class VolleyContentFast {
 
     private static RequestQueue mQueue;
 
+    private static int timeZone;
+
     /**
      * 初始化，在Application上初始化，只初始化一次赛
      *
@@ -49,6 +51,7 @@ public class VolleyContentFast {
         if (mQueue == null) {
             mQueue = Volley.newRequestQueue(context);
         }
+        timeZone = AppConstants.timeZone;
     }
 
     /**
@@ -105,6 +108,7 @@ public class VolleyContentFast {
 
         if (method == Request.Method.GET) {
             tempUrl = appendLanguage(url);
+            tempUrl = appendTimeZone(tempUrl);
             if (params != null) {
                 for (String key : params.keySet()) {
                     if (tempUrl.contains("?")) {
@@ -118,6 +122,7 @@ public class VolleyContentFast {
             Log.i("URL", "************GET****************[ " + tempUrl + " ]**************GET**************");
         } else {
             appendMapLanguage(params);
+            appendMapTimeZone(params);
             L.i(TAG, "request method post url = [ " + url + " ]");
             Log.i("URL", "************POST****************[ " + url + " ]***************POST*************");
             if (params != null && params.size() != 0) {
@@ -405,6 +410,34 @@ public class VolleyContentFast {
         ImageRequest imageRequest = new ImageRequest(url, listener, maxWidth, maxHeight, decodeConfig, errorListener);
 
         mQueue.add(imageRequest);
+    }
+
+    /**
+     * 添加时区
+     *
+     * @param url
+     * @return
+     */
+    private static String appendTimeZone(String url) {
+//        L.d(TAG, "timeZone = " + timeZone);
+        StringBuffer urlBuffer = new StringBuffer(url);
+        if (url.contains("?")) {
+            urlBuffer.append("&");
+        } else {
+            urlBuffer.append("?");
+        }
+        urlBuffer.append(BaseURLs.TIMEZONE_PARAM + "=" + timeZone);
+        return urlBuffer.toString();
+    }
+
+    /**
+     * 添加时区
+     *
+     * @param params 参数
+     * @return
+     */
+    private static void appendMapTimeZone(Map params) {
+        params.put(BaseURLs.TIMEZONE_PARAM, "" + timeZone);
     }
 
     /**

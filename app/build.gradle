@@ -39,8 +39,8 @@ android {
         applicationId "com.hhly.mlottery"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 20
-        versionName "1.1.7.0918"
+        versionCode 21
+        versionName "1.1.8.1014"
         multiDexEnabled true
     }
 
@@ -50,19 +50,22 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    repositories {
-        flatDir {
-            dirs 'libs'
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
 
 dependencies {
     compile(name: 'IMKit-release', ext: 'aar')
