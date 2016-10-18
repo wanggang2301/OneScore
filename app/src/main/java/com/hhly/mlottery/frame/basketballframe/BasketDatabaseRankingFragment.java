@@ -180,7 +180,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
                             });
                             dialog.show(getChildFragmentManager(), "stageChoose");
                         } else {
-                            ToastTools.showQuick(getContext(), "稍候，获取数据中");
+                            ToastTools.showQuick(getContext(), getResources().getString(R.string.basket_database_details_toast));
                         }
                     }
                 });

@@ -750,6 +750,7 @@
     <string name="basket_database_details_up">上盘</string>
     <string name="basket_database_details_down">下盘</string>
     <string name="basket_database_details_yzs">赢/走/输</string>
+    <string name="basket_database_details_toast">稍候，获取数据中</string>
 
     <string name="basket_database_details_ranking_title">排名/球队</string>
     <string name="basket_database_details_match_num_title">赛</string>

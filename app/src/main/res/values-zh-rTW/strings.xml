@@ -744,6 +744,7 @@
     <string name="basket_database_details_up">上盤</string>
     <string name="basket_database_details_down">下盤</string>
     <string name="basket_database_details_yzs">贏/走/輸</string>
+    <string name="basket_database_details_toast">稍候，獲取數據中</string>
 
     <string name="basket_database_details_ranking_title">排名/球隊</string>
     <string name="basket_database_details_match_num_title">賽</string>
