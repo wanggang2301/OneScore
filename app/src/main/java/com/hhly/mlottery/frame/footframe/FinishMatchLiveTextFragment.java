@@ -127,7 +127,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
 
         mView = View.inflate(mContext, R.layout.football_live_text, null);  //文字直播
 
-        moreView = View.inflate(mContext, R.layout.finish_live_text_loadmore, null);  //文字直播
+        moreView = View.inflate(mContext, R.layout.load, null);  //文字直播
         initView();
         initData();
 
