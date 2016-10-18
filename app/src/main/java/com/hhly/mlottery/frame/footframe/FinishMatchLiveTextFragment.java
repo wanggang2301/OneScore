@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.footframe;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,8 @@ import com.hhly.mlottery.adapter.FootBallLiveTextAdapter;
 import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -107,10 +111,9 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     }
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        moreView = inflater.inflate(R.layout.load, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // moreView = inflater.inflate(R.layout.finish_live_text_loadmore, container, false);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -123,6 +126,8 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         }
 
         mView = View.inflate(mContext, R.layout.football_live_text, null);  //文字直播
+
+        moreView = View.inflate(mContext, R.layout.finish_live_text_loadmore, null);  //文字直播
         initView();
         initData();
 
@@ -169,6 +174,13 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
 
 
     private void initView() {
+        Resources resources = this.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        int width3 = dm.widthPixels;
+
+        int left = width3 / 2 - DisplayUtil.dip2px(mContext, 120)/2;
+        moreView.setPadding(left, 0, 0, 0);
+
 
         close_image = (ImageView) mView.findViewById(R.id.close_image);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.timerecyclerView);
@@ -188,7 +200,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
         if (matchTextLiveBeansList.size() > 0) {
             if ("3".equals(matchTextLiveBeansList.get(0).getCode())) {
                 //999代表完场  time位置显示黄色“完场”
-                matchTextLiveBeansList.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt) + "", "", "", "0", "", "","",""));
+                matchTextLiveBeansList.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt) + "", "", "", "0", "", "", "", ""));
             }
         }
         filterLiveText(matchTextLiveBeansList);
@@ -198,7 +210,7 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
 
         mRecyclerView.setAdapter(mLiveTextAdapter);
 
-        mLiveTextAdapter.openLoadMore(count, true);
+        mLiveTextAdapter.openLoadMore(0, true);
 
         mLiveTextAdapter.setLoadingView(moreView);
 
@@ -245,8 +257,6 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
     };
 
     private synchronized void loadMoreData() { //加载更多数据
-        //mHandler.sendEmptyMessage(STARTLOADING);
-
         String url = BaseURLs.URL_FOOTBALL_LIVE_TEXT_INFO;
         // 设置参数
         if (getActivity() == null) {
@@ -270,6 +280,8 @@ public class FinishMatchLiveTextFragment extends BottomSheetDialogFragment {
                 if (jsonObject != null && "200".equals(jsonObject.getResult())) {
                     preLiveTextList = new ArrayList<MatchTextLiveBean>();
                     preLiveTextList = (ArrayList<MatchTextLiveBean>) jsonObject.getLive();// 获取当前页的下一页数据
+
+                    L.d("ddffgg", "加载更多成功");
 
                     if (preLiveTextList.size() > 0) {
                         filterLiveText(preLiveTextList);

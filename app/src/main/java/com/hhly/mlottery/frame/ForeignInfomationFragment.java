@@ -191,7 +191,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {
                         if (!foreignInfomationBean.getResult().equals("200")) {
-                            loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
+                           loadmore_text.setText(mContext.getResources().getString(R.string.nodata_txt));
                             progressBar.setVisibility(View.GONE);
                             return;
                         } else {
