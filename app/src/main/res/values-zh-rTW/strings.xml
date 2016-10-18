@@ -745,6 +745,7 @@
     <string name="basket_database_details_up">上盤</string>
     <string name="basket_database_details_down">下盤</string>
     <string name="basket_database_details_yzs">贏/走/輸</string>
+    <string name="basket_database_details_toast">稍候，獲取數據中</string>
 
     <string name="basket_database_details_ranking_title">排名/球隊</string>
     <string name="basket_database_details_match_num_title">賽</string>
@@ -801,6 +802,14 @@
     <string name="football_database_details_most_top_win">勝/已賽:</string>
     <string name="football_database_details_most_top_avg">勝率:</string>
     <string name="football_database_details_statistic_home_draw">平局 :</string>
+    <string name="football_database_details_statistic_all_num">總進球數 :</string>
+    <string name="football_database_details_statistic_avg_num">場均 :</string>
+    <string name="football_database_details_statistic_w_num">贏球概率 :</string>
+    <string name="football_database_details_statistic_d_num">打平概率 :</string>
+    <string name="football_database_details_statistic_l_num">輸球概率 :</string>
+    <string name="football_database_details_statistic_w_avgnum">獲勝</string>
+    <string name="football_database_details_statistic_d_avgnum">打平</string>
+    <string name="football_database_details_statistic_l_avgnum">輸球</string>
 
     <string name="football_database_details_wdl_statistic">勝平負統計</string>
     <string name="football_database_details_goal_statistic">進球統計</string>

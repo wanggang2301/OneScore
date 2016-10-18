@@ -44,7 +44,7 @@ public class FootballDatabaseDetailsAdapter extends CommonAdapter<DatabaseBigSma
         }
 
         holder.setText(R.id.football_database_details_finished_big_small, bean.getMatchCount());
-        holder.setText(R.id.football_database_dzx , bean.getLeft()+ "/" + bean.getMidd() + "/" + bean.getLeft());
+        holder.setText(R.id.football_database_dzx , bean.getLeft()+ "/" + bean.getMidd() + "/" + bean.getRight());
 
         if (bean.getLvg() != null) {
             String left = bean.getLvg().trim();

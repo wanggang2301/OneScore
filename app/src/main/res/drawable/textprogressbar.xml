@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="5dip" /> // 圆角
+            <gradient
+                android:endColor="#F15353"
+                android:startColor="#F15353" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/progress">
+        <!-- 定义ClipDrawable的剪裁方向为垂直 -->
+        <clip
+            android:clipOrientation="horizontal"
+            >
+            <shape>
+                <corners android:radius="5dip" />  // 圆角
+                <!--<gradient-->
+                    <!--android:endColor="#A5CF32"-->
+                    <!--android:startColor="#A5CF32" />-->
+                <gradient
+                    android:endColor="#0090FF"
+                    android:startColor="#0090FF" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>
