@@ -800,6 +800,7 @@
     <string name="football_database_details_integral_itnis_title">凈勝球</string>
     <string name="football_database_details_most_top_win">勝/已賽:</string>
     <string name="football_database_details_most_top_avg">勝率:</string>
+    <string name="football_database_details_most_score_avg">場均進球:</string>
     <string name="football_database_details_statistic_home_draw">平局 :</string>
     <string name="football_database_details_statistic_all_num">總進球數 :</string>
     <string name="football_database_details_statistic_avg_num">場均 :</string>

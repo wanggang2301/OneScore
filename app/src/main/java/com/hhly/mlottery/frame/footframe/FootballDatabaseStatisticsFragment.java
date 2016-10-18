@@ -500,12 +500,41 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
             if (basketDatabaseMostDat == null) {
                 return;
             }
-            holder.setText(R.id.football_database_most_item_name , basketDatabaseMostDat.getTeamName());
-            holder.setText(R.id.football_database_most_item_avg_score , basketDatabaseMostDat.getPer() + "");
-            if (isSPF) {
-                holder.setText(R.id.football_database_most_item_total_score , basketDatabaseMostDat.getTotal()+"/"+basketDatabaseMostDat.getMatchCount());
+
+            if (basketDatabaseMostDat.getTeamName() == null || basketDatabaseMostDat.getTeamName().equals("")) {
+                holder.setText(R.id.football_database_most_item_name , "--");
             }else{
-                holder.setText(R.id.football_database_most_item_total_score , basketDatabaseMostDat.getTotal()+"");
+                holder.setText(R.id.football_database_most_item_name , basketDatabaseMostDat.getTeamName());
+            }
+
+            if (basketDatabaseMostDat.getPer() == null || basketDatabaseMostDat.getPer().equals("")) {
+                holder.setText(R.id.football_database_most_item_avg_score , "--");
+            }else{
+                holder.setText(R.id.football_database_most_item_avg_score , basketDatabaseMostDat.getPer() + "");
+            }
+
+            if (isSPF) {
+                String total;
+                String count;
+
+                if (basketDatabaseMostDat.getTotal() == null || basketDatabaseMostDat.getTotal().equals("")) {
+                    total = "--";
+                }else{
+                    total = basketDatabaseMostDat.getTotal();
+                }
+                if (basketDatabaseMostDat.getMatchCount() == null || basketDatabaseMostDat.getMatchCount().equals("")) {
+                    count = "--";
+                }else{
+                    count = basketDatabaseMostDat.getMatchCount();
+                }
+
+                holder.setText(R.id.football_database_most_item_total_score , total +"/"+ count);
+            }else{
+                if (basketDatabaseMostDat.getTotal() == null || basketDatabaseMostDat.getTotal().equals("")) {
+                    holder.setText(R.id.football_database_most_item_total_score , "--");
+                }else{
+                    holder.setText(R.id.football_database_most_item_total_score , basketDatabaseMostDat.getTotal()+"");
+                }
             }
 
             if (isSPF) {
@@ -521,7 +550,7 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
                         break;
                 }
             }else{
-                holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_most_top_avg));
+                holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_most_score_avg));
             }
 
 

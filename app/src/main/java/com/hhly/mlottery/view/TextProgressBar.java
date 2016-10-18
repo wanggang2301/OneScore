@@ -26,17 +26,17 @@ public class TextProgressBar extends ProgressBar {
 
     public TextProgressBar(Context context) {
         super(context);
-        initText();
+//        initText();
     }
 
     public TextProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initText();
+//        initText();
     }
 
     public TextProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initText();
+//        initText();
     }
 
     @Override
@@ -49,6 +49,9 @@ public class TextProgressBar extends ProgressBar {
     @Override
     protected synchronized void onDraw(Canvas canvas){
         super.onDraw(canvas);
+
+        initText();
+
         Rect rect = new Rect();
         this.mPaint.getTextBounds(this.str, 0, this.str.length(), rect);
 //        int x = (getWidth() / 2) - rect.centerX();// 让现实的字体处于中心位置;
