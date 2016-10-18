@@ -64,7 +64,6 @@ public class AnimHeadLiveFragment extends Fragment {
         tv_nopage = (TextView) mView.findViewById(R.id.tv_nopage);
         mWebView = (ProgressWebView) mView.findViewById(R.id.webview);
 
-
         url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
 
         return mView;
