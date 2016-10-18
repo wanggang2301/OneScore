@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballMatchDetailActivityTest;
 import com.hhly.mlottery.adapter.ImmediateAdapter;
@@ -32,6 +33,8 @@ import com.hhly.mlottery.adapter.ImmediateInternationalAdapter;
 import com.hhly.mlottery.bean.Focus;
 import com.hhly.mlottery.bean.Match;
 import com.hhly.mlottery.bean.MatchOdd;
+import com.hhly.mlottery.bean.focusAndPush.CancelConcernBean;
+import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchChange;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchEvent;
 import com.hhly.mlottery.bean.websocket.WebSocketMatchOdd;
@@ -49,6 +52,7 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
+import com.umeng.message.UmengRegistrar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1357,6 +1361,28 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         String userId=AppConstants.register.getData().getUser().getUserId();
         String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
         //thirdId
+        String url="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.customConcernVS.do";
+        Map<String,String> params=new HashMap<>();
+
+        params.put("deviceId",deviceId);
+        params.put("deviceToken",uMengDeviceToken==""? UmengRegistrar.getRegistrationId(MyApp.getContext()):uMengDeviceToken);// 第一次获取的时候可能没得到
+        //这样可以再次尝试获取deviceToken
+        params.put("userId",userId);
+        params.put("isNotice",isPushFocus);
+        params.put("concernThirdIds",thirdId);
+
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
+            @Override
+            public void onResponse(ConcernBean concernBean) {
+                Log.e("AAAA","concern");
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },ConcernBean.class);
 
 
     }
@@ -1385,6 +1411,24 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         String deviceId=AppConstants.deviceToken;
         String userId=AppConstants.register.getData().getUser().getUserId();
         //TODO:请求后台
+        Map<String ,String > params=new HashMap<>();
+        String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.cancelCustomConcernVS.do";
+        params.put("userId",userId);
+        params.put("deviceId",deviceId);
+        params.put("cancelThirdIds",thirdId);
+
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
+            @Override
+            public void onResponse(CancelConcernBean jsonObject) {
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },CancelConcernBean.class);
+
     }
 
 //    private boolean isPause = false;

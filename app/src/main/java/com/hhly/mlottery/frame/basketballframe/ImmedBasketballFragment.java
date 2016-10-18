@@ -24,6 +24,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
@@ -32,12 +33,14 @@ import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.bean.basket.BasketScoreBean;
+import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
@@ -153,6 +156,8 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
 //    public static EventBus BasketResultEventBus;
 //    public static EventBus BasketScheduleEventBus;
 //    public static EventBus BasketFocusEventBus;
+    /**请求关注列表后的返回结果*/
+    public static  boolean requestSuccess=false;
 
 
     /**
@@ -340,8 +345,15 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     }
 
     private int mSize; //记录共有几天的数据
+    public static void requestSuccess(){
+        requestSuccess=true;
+
+    }
 
     private void initData() {
+
+        ((BasketScoresFragment)getParentFragment()).getBasketballUserConcern(); //获取关注列表
+
         Map<String, String> params = new HashMap<>();
         String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
 
@@ -1120,71 +1132,6 @@ public class ImmedBasketballFragment extends Fragment implements View.OnClickLis
     private Timer timer = new Timer();
     private boolean isTimerStart = false;
 
-//    /**
-//     * 计时器
-//     */
-//    private synchronized void restartSocket() {
-//        if (!isDestroy) {
-//            if (!isTimerStart) {
-//                TimerTask timerTask = new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        if (!isDestroy) {
-//                            startWebsocket();
-//                        } else {
-//                            timer.cancel();
-//                        }
-//                    }
-//                };
-//                timer.schedule(timerTask, 2000, 5000);
-//                isTimerStart = true;
-//            }
-//        }
-//    }
-
-//    /**
-//     * 启动 WebSocket
-//     */
-//    private synchronized void startWebsocket() {
-//
-//        if (mSocketClient != null) {
-//            // client.close();
-//            if (mSocketClient.isClosed()) {
-//                mSocketClient = new HappySocketClient(mScoketuri, new Draft_17());
-//                mSocketClient.setSocketResponseMessageListener(this);
-//                mSocketClient.setSocketResponseCloseListener(this);
-//                mSocketClient.setSocketResponseErrorListener(this);
-//                try {
-//                    mSocketClient.connect();
-//                } catch (IllegalThreadStateException e) {
-//                    mSocketClient.close();
-//                    L.e(TAG, "IllegalThreadStateException.........");
-//                }
-//
-//                isError = false;
-//            }
-//        } else {
-//            mSocketClient = new HappySocketClient(mScoketuri, new Draft_17());
-//            mSocketClient.setSocketResponseMessageListener(this);
-//            mSocketClient.setSocketResponseCloseListener(this);
-//            mSocketClient.setSocketResponseErrorListener(this);
-//            try {
-//                mSocketClient.connect();
-//            } catch (IllegalThreadStateException e) {
-//                mSocketClient.close();
-//                L.e(TAG, "IllegalThreadStateException.........");
-//            }
-//            isError = false;
-//        }
-//
-//        L.d(TAG, "websocket start status..");
-//        L.e(TAG, "websocket isClosed = " + mSocketClient.isClosed());
-//        L.e(TAG, "websocket isClosing = " + mSocketClient.isClosing());
-//        L.e(TAG, "websocket isConnecting = " + mSocketClient.isConnecting());
-//        L.e(TAG, "websocket isFlushAndClose = " + mSocketClient.isFlushAndClose());
-//        L.e(TAG, "websocket isOpen = " + mSocketClient.isOpen());
-//        L.e(TAG, "isWebSocketStart = " + isWebSocketStart);
-//    }
 
     /**
      * 设置返回

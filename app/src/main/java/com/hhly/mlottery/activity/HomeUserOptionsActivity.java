@@ -16,6 +16,8 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
+import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
@@ -238,6 +240,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                     RongYunUtils.isRongConnent = false;// 设置融云断开状态
                     PreferenceUtil.commitString(RongYunUtils.USER_TOKEN, "");// 清除用户本地token
                     PreferenceUtil.commitString(RongYunUtils.USER_ID, "");// 清除用户本地id
+                    PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
+                    PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }

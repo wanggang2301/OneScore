@@ -20,10 +20,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableFocusAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
@@ -32,6 +34,9 @@ import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.bean.basket.BasketRoot;
 import com.hhly.mlottery.bean.basket.BasketRootBean;
 import com.hhly.mlottery.bean.basket.BasketScoreBean;
+import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
+import com.hhly.mlottery.bean.focusAndPush.CancelConcernBean;
+import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.bean.websocket.WebBasketAllOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketMatch;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds;
@@ -50,6 +55,7 @@ import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PinnedHeaderExpandableListView;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.UmengRegistrar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -307,6 +313,90 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
     private int mSize; //记录共有几天的数据
 
     private void initData() {
+
+        request1();
+
+        request2();
+
+
+
+
+    }
+
+    private void request2() {
+        //请求后台，及时更新关注赛事内容
+        String userId= AppConstants.register.getData().getUser().getUserId();
+        if(userId!=null&&userId!=""){
+            String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
+            String deviceId=AppConstants.deviceToken;
+            //devicetoken 友盟。
+            String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+            Map<String,String > params=new HashMap<>();
+            params.put("userId",userId);
+            Log.e("AAA",userId+"用户名");
+            params.put("deviceId",deviceId);
+//        params.put("deviceToken",umengDeviceToken);
+            VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
+                @Override
+                public void onResponse(BasketballConcernListBean jsonObject) {
+                    if(jsonObject.getResult().equals("200")){
+                        Log.e("AAA","登陆后请求的篮球关注列表");
+                        if(jsonObject.getConcerns()!=null&&jsonObject.getConcerns().size()!=0){ //有关注
+                            //将关注写入文件
+                            StringBuffer sb=new StringBuffer();
+                            for(String thirdId:jsonObject.getConcerns()){
+                                if("".equals(sb.toString())){
+                                    sb.append(thirdId);
+                                }else {
+                                    sb.append(","+thirdId);
+                                }
+
+                            }
+                            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,sb.toString());
+                            ((BasketScoresFragment) getParentFragment()).focusCallback();
+//                            // 更新列表
+//                            List<List<BasketMatchBean>> newDate = new ArrayList<>();
+//                            List<BasketMatchBean> bean=new ArrayList<>();
+//
+//                            for (String id : jsonObject.getConcerns()) {
+//
+//                                for (int i=0;i<childrenDataList.size();i++) {
+//                                    if(childrenDataList.get(i).size()==0){
+//                                        groupDataList.remove(i);
+//                                    }else {
+//                                        for (int j = 0; j < childrenDataList.get(i).size(); j++) {
+//                                            if (childrenDataList.get(i).get(j).getThirdId().equals(id)) {
+//                                                bean.add(childrenDataList.get(i).get(j));
+//                                            }
+//                                        }
+//                                    }
+//                                    newDate.add(bean);
+//                                }
+//
+//                            }
+//                            childrenDataList.clear();
+//                            childrenDataList.addAll(newDate);
+//                            updatePushAdapter(childrenDataList,groupDataList);
+
+
+                        }
+
+                    }
+
+                }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+
+                }
+            },BasketballConcernListBean.class);
+
+        }
+
+    }
+
+    private void request1() {
         Map<String, String> params = new HashMap<>();
         String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
 
@@ -537,6 +627,29 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         String userId=AppConstants.register.getData().getUser().getUserId();
         String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
         //thirdId
+        String url="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.customConcernVS.do";
+        Map<String,String> params=new HashMap<>();
+
+        params.put("deviceId",deviceId);
+        params.put("deviceToken",uMengDeviceToken==""? UmengRegistrar.getRegistrationId(MyApp.getContext()):uMengDeviceToken);// 第一次获取的时候可能没得到
+        //这样可以再次尝试获取deviceToken
+        params.put("userId",userId);
+        params.put("isNotice",isPushFocus);
+        params.put("concernThirdIds",thirdId);
+        Log.e("AAA",thirdId+"");
+
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
+            @Override
+            public void onResponse(ConcernBean concernBean) {
+                Log.e("AAAA","concern");
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },ConcernBean.class);
 
 
     }
@@ -565,6 +678,23 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         String deviceId=AppConstants.deviceToken;
         String userId=AppConstants.register.getData().getUser().getUserId();
         //TODO:请求后台
+        Map<String ,String > params=new HashMap<>();
+        String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.cancelCustomConcernVS.do";
+        params.put("userId",userId);
+        params.put("deviceId",deviceId);
+        params.put("cancelThirdIds",thirdId);
+
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
+            @Override
+            public void onResponse(CancelConcernBean jsonObject) {
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },CancelConcernBean.class);
     }
 
     /**
@@ -573,8 +703,9 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
     @Override
     public void onRefresh() {
         isLoad = -1;
-        mLoadHandler.postDelayed(mRun, 0);
         ((BasketScoresFragment) getParentFragment()).reconnectWebSocket();
+        mLoadHandler.postDelayed(mRun, 0);
+
     }
 
     /**
@@ -665,6 +796,18 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * 关注的即时更新Adapter
+     */
+    public void updatePushAdapter(List<List<BasketMatchBean>> childrenDataList,List<String> groupDataList){
+        if (adapter == null) {
+            return;
+        }
+        adapter.updateDatas(childrenDataList,groupDataList);
+        adapter.notifyDataSetChanged();
+
+    }
+
     public void LoadData() {
         mSwipeRefreshLayout.setRefreshing(true);
         mLoadHandler.post(mRun);
@@ -690,75 +833,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
             mSocketHandler.sendMessage(msg);
         }
     }
-
-    /**
-     * 广播接收者
-     */
-//    public class ImmediateStateBroadcastReceiver extends BroadcastReceiver {
-//        @Override
-//        public void onReceive(Context con, Intent arg1) {
-//            L.d(TAG, "NetState ___ onReceive ");
-//            L.d(TAG, "action  " + arg1.getAction());
-//            ConnectivityManager manager = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
-//            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-//            if (activeNetwork == null || !activeNetwork.isAvailable()) {
-//                isWebSocketStart = false;
-//                if (mSocketClient != null) {
-//                    mSocketClient.close();
-//                }
-//                mSocketClient = null;
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onError(Exception exception) {
-//        L.e(TAG, "websocket error");
-//        isError = true;
-//        restartSocket();
-//    }
-//
-//    @Override
-//    public void onClose(String message) {
-//        L.e(TAG, "websocket close");
-//
-//        if (!isError) {
-//            restartSocket();
-//        }
-//    }
-
-//    @Override
-//    public void onMessage(String message) { //启动信息
-//        L.w(TAG, "message = " + message);
-//        if (message.startsWith("CONNECTED")) {
-//            String id = "android" + DeviceInfo.getDeviceId(getActivity());
-//            id = MD5Util.getMD5(id);
-////            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.app\n\n");
-//            mSocketClient.send("SUBSCRIBE\nid:" + id + "\ndestination:/topic/USER.topic.basketball\n\n");
-//            isWebSocketStart = true;
-//            return;
-//        } else if (message.startsWith("MESSAGE")) {
-//            String[] msgs = message.split("\n");
-//            String ws_json = msgs[msgs.length - 1];
-//
-//            String type = "";
-//            try {
-//                JSONObject jsonObject = new JSONObject(ws_json);
-//                type = jsonObject.getString("type");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (!"".equals(type)) {
-//                Message msg = Message.obtain();
-//                msg.obj = ws_json;
-//                msg.arg1 = Integer.parseInt(type);
-//
-//                mSocketHandler.sendMessage(msg);
-//            }
-//        }
-//        mSocketClient.send("\n");
-//    }
 
     Handler mSocketHandler = new Handler() {
         @Override
