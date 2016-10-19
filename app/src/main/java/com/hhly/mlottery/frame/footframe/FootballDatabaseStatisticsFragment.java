@@ -311,10 +311,10 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
 
                 //之最
                 mAdapter0 = new MostAdapter(getContext(),data2.getWinTop(),R.layout.football_database_most_item , true);//胜平负最多
-                mAdapter1 = new MostAdapter(getContext() , data2.getAtkTop(), R.layout.football_database_most_spf_item , false);//攻击力最强
-                mAdapter2 = new MostAdapter(getContext() , data2.getAtkWeak(), R.layout.football_database_most_spf_item ,false);//攻击力最弱
-                mAdapter3 = new MostAdapter(getContext() , data2.getDefTop(), R.layout.football_database_most_spf_item , false);//防守最强
-                mAdapter4 = new MostAdapter(getContext() , data2.getDefWeak(), R.layout.football_database_most_spf_item , false);//防守最弱
+                mAdapter1 = new MostAdapter(getContext() , data2.getAtkTop(), R.layout.football_database_most_item , false);//攻击力最强
+                mAdapter2 = new MostAdapter(getContext() , data2.getAtkWeak(), R.layout.football_database_most_item ,false);//攻击力最弱
+                mAdapter3 = new MostAdapter(getContext() , data2.getDefTop(), R.layout.football_database_most_item , false);//防守最强
+                mAdapter4 = new MostAdapter(getContext() , data2.getDefWeak(), R.layout.football_database_most_item , false);//防守最弱
 
                 mListView0.setAdapter(mAdapter0);
                 mListView1.setAdapter(mAdapter1);
@@ -389,7 +389,7 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
 
         double honeProgress = ((homeAvg*100) / ((homeAvg+awayAvg)*100))*100;
         mAvgProgress.setProgress((int)honeProgress);
-        mAvgProgress.setText(data.getHomeAvg()+"" , data.getAwayAvg()+"");
+        mAvgProgress.setText(homeAvg+"" , awayAvg+"");
 
         /**
          * 大小球统计
@@ -541,16 +541,20 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
                 switch (holder.getPosition()){
                     case 0:
                         holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_statistic_w_num));
+                        holder.setText(R.id.football_database_most_item_num , getResources().getString(R.string.football_database_details_most_top_win));
                         break;
                     case 1:
                         holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_statistic_d_num));
+                        holder.setText(R.id.football_database_most_item_num , getResources().getString(R.string.football_database_details_most_top_draw));
                         break;
                     case 2:
                         holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_statistic_l_num));
+                        holder.setText(R.id.football_database_most_item_num , getResources().getString(R.string.football_database_details_most_top_lost));
                         break;
                 }
             }else{
                 holder.setText(R.id.football_database_most_item_avg_num , getResources().getString(R.string.football_database_details_most_score_avg));
+                holder.setText(R.id.football_database_most_item_num , getResources().getString(R.string.football_database_details_statistic_all_num));
             }
 
 
