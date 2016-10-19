@@ -8,6 +8,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,12 +24,15 @@ import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 足球设置
@@ -315,11 +319,46 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
                 PreferenceUtil.commitBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,sb_push.isChecked());
 
                 //TODO:把是否接受推送消息的状态传给服务器
+                if(sb_push.isChecked()){
+                    requestServer("true");
+                }else {
+                    requestServer("false");
+                }
             default:
                 break;
         }
 
     }
+    /**
+     * 把是否接受关注提交给后台
+     * @param isPush
+     */
+    private void requestServer(String isPush) {
+        String deviceId= AppConstants.deviceToken;
+        String userId=AppConstants.register.getData().getUser().getUserId();
+        String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+        Map<String ,String> params=new HashMap<>();
+        params.put("deviceId",deviceId);
+        params.put("userId",userId);
+        params.put("statusPush",isPush);
+        params.put("deviceToken",uMengDeviceToken);
+        params.put("appNo","11");
+        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followUserPushSetting.do";
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<String>() {
+            @Override
+            public void onResponse(String jsonObject) {
+                Log.e("AAA","足球推送开关请求成功");
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },String.class);
+
+    }
+
     private void save(){
         PreferenceUtil.commitBoolean(MyConstants.RBSECOND, mRd_alet.isChecked()); //亚盘
         PreferenceUtil.commitBoolean(MyConstants.RBOCOMPENSATE, mRd_eur.isChecked());//欧赔

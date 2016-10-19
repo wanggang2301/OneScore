@@ -459,6 +459,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             return;
         }
 
+        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
+
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ResultMatchs, new VolleyContentFast.ResponseSuccessListener<ResultMatch>() {
             @Override
             public synchronized void onResponse(final ResultMatch json) {

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,19 +27,25 @@ import com.hhly.mlottery.activity.FootballTypeSettingActivity;
 import com.hhly.mlottery.adapter.PureViewPagerAdapter;
 import com.hhly.mlottery.base.BaseWebSocketFragment;
 import com.hhly.mlottery.bean.LeagueCup;
+import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
 import com.hhly.mlottery.frame.footframe.RollBallFragment;
 import com.hhly.mlottery.frame.footframe.ScheduleFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.BallSelectArrayAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tenney
@@ -425,6 +432,55 @@ public class ScoresFragment extends BaseWebSocketFragment {
 
             }
         });
+    }
+    /**
+     * 请求关注列表。登录后跟刷新，都会请求
+     */
+    public void getFootballUserConcern(){
+
+        String userId= AppConstants.register.getData().getUser().getUserId();
+        if(userId!=null&&userId!=""){
+            //devideID;
+            String deviceId=AppConstants.deviceToken;
+            //devicetoken 友盟。
+            String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+            String appNo="11";
+            String url="http://192.168.31.73:8080/mlottery/core/pushSetting.loginUserFindMatch.do";
+            Map<String,String> params=new HashMap<>();
+            params.put("appNo",appNo);
+            params.put("userId",userId);
+            params.put("deviceToken",umengDeviceToken);
+            params.put("deviceId",deviceId);
+
+            Log.e("CCC",umengDeviceToken);
+            //volley请求
+            VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
+                @Override
+                public void onResponse(BasketballConcernListBean jsonObject) {
+                    if(jsonObject.getResult().equals("200")){
+                        Log.e("AAA","登陆后请求的足球关注列表");
+                        //将关注写入文件
+                        StringBuffer sb=new StringBuffer();
+                        for(String thirdId:jsonObject.getConcerns()){
+                            if("".equals(sb.toString())){
+                                sb.append(thirdId);
+                            }else {
+                                sb.append(","+thirdId);
+                            }
+                        }
+                        PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,sb.toString());
+                        focusCallback();
+                    }
+
+                }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+
+                }
+            },BasketballConcernListBean.class);
+        }
     }
 
 

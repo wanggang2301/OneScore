@@ -350,6 +350,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     private void initData(final int position) {
 
+        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
+
         String url = BaseURLs.URL_CeaselessMatchs;
         Map<String, String> params = new HashMap<String, String>();
 

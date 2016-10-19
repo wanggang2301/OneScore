@@ -504,46 +504,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 PreferenceUtil.commitString("focus_ids", sb.toString());
                 ((ScoresFragment) getParentFragment()).focusCallback();
 
-              /*  new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (Match m : mAllMatchs) {//
-                            mMatchs.add(m);
-                        }
-
-                        if (mMatchs.size() == 0) {//没有比赛
-                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-                            return;
-                        }
-
-
-                        if (AppConstants.isGOKeyboard) {
-                           *//* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
-                            // mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                            getActivity().runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    mRecyclerView.setAdapter(mInternationalAdapter);
-                                }
-                            });*//*
-                        } else {
-                            mAdapter = new ImmediateAdapter(mContext, mMatchs);
-                            mRecyclerView.setLayoutManager(layoutManager);
-                            mAdapter.setmFocusMatchClickListener(mFocusClickListener);
-
-                            getActivity().runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    mRecyclerView.setAdapter(mAdapter);
-                                }
-                            });
-                        }
-
-                    }
-                }).start();*/
-
 
                 for (Match m : mAllMatchs) {//
                     mMatchs.add(m);
@@ -1358,18 +1318,20 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         //TODO:把用户id,deviceId,deviceToken 传给服务器
         String deviceId=AppConstants.deviceToken;
         String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+        Log.e("AAA",uMengDeviceToken+"???");
         String userId=AppConstants.register.getData().getUser().getUserId();
         String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
         //thirdId
-        String url="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.customConcernVS.do";
+        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
         Map<String,String> params=new HashMap<>();
 
         params.put("deviceId",deviceId);
-        params.put("deviceToken",uMengDeviceToken==""? UmengRegistrar.getRegistrationId(MyApp.getContext()):uMengDeviceToken);// 第一次获取的时候可能没得到
+        params.put("deviceToken",uMengDeviceToken);// 第一次获取的时候可能没得到
         //这样可以再次尝试获取deviceToken
         params.put("userId",userId);
-        params.put("isNotice",isPushFocus);
-        params.put("concernThirdIds",thirdId);
+        params.put("follow","1");
+        params.put("thirdId",thirdId);
+        params.put("appNo","11"); //固定国内版11
 
         VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
             @Override
@@ -1408,14 +1370,22 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         }
         PreferenceUtil.commitString(FocusFragment.FOCUS_ISD, sb.toString());
 
+        //请求后台
         String deviceId=AppConstants.deviceToken;
+        String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
         String userId=AppConstants.register.getData().getUser().getUserId();
-        //TODO:请求后台
-        Map<String ,String > params=new HashMap<>();
-        String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.cancelCustomConcernVS.do";
-        params.put("userId",userId);
+        String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
+        //thirdId
+        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
+        Map<String,String> params=new HashMap<>();
+
         params.put("deviceId",deviceId);
-        params.put("cancelThirdIds",thirdId);
+        params.put("deviceToken",uMengDeviceToken==""? UmengRegistrar.getRegistrationId(MyApp.getContext()):uMengDeviceToken);// 第一次获取的时候可能没得到
+        //这样可以再次尝试获取deviceToken
+        params.put("userId",userId);
+        params.put("follow","0");
+        params.put("thirdId",thirdId);
+        params.put("appNo","11"); //固定国内版11
 
         VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
             @Override

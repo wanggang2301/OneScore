@@ -36,6 +36,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketScoresFragment;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
+import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.AccessTokenKeeper;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
@@ -643,13 +644,44 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void getFootballUserFocus(String userId) {
 
         //devideID;
-        String deviceToken=AppConstants.deviceToken;
+        String deviceId=AppConstants.deviceToken;
         //devicetoken 友盟。
         String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+        String appNo="11";
+        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.loginUserFindMatch.do";
+        Map<String,String> params=new HashMap<>();
+        params.put("appNo",appNo);
+        params.put("userId",userId);
+        params.put("deviceToken",umengDeviceToken);
+        params.put("deviceId",deviceId);
+
         Log.e("CCC",umengDeviceToken);
         //volley请求
-        //会得到一个字符串保存着关注的赛事id.
-//        String
+        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
+            @Override
+            public void onResponse(BasketballConcernListBean jsonObject) {
+                if(jsonObject.getResult().equals("200")){
+                    Log.e("AAA","登陆后请求的足球关注列表");
+                    //将关注写入文件
+                    StringBuffer sb=new StringBuffer();
+                    for(String thirdId:jsonObject.getConcerns()){
+                        if("".equals(sb.toString())){
+                            sb.append(thirdId);
+                        }else {
+                            sb.append(","+thirdId);
+                        }
+                    }
+                    PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,sb.toString());
+                }
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+
+            }
+        },BasketballConcernListBean.class);
 
     }
 

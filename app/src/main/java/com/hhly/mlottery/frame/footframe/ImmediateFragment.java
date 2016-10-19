@@ -470,6 +470,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 //        isStartInitData = true;
         L.d("imedia", "dddd");
 
+        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
+
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ImmediateMatchs, new VolleyContentFast.ResponseSuccessListener<ImmediateMatchs>() {
             @Override
             public synchronized void onResponse(final ImmediateMatchs jsonMatch) {

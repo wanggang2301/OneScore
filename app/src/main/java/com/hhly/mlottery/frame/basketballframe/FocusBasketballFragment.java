@@ -628,7 +628,7 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         String deviceId= AppConstants.deviceToken;
         String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
         String userId=AppConstants.register.getData().getUser().getUserId();
-        String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
+        String isPushFocus=PreferenceUtil.getBoolean(MyConstants.BASKETBALL_PUSH_FOCUS,true)==true?"true":"false";
         //thirdId
         String url="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.customConcernVS.do";
         Map<String,String> params=new HashMap<>();
