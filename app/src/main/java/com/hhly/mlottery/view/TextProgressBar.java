@@ -44,13 +44,16 @@ public class TextProgressBar extends ProgressBar {
     {
         super.setProgress(progress);
         this.mProgress = progress;
+
+        //重绘(更新数据时需要重绘)
+        postInvalidate();
     }
 
     @Override
     protected synchronized void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        initText();
+        initText();//每次新构画笔，防止刷新重复
 
         Rect rect = new Rect();
         this.mPaint.getTextBounds(this.str, 0, this.str.length(), rect);
@@ -66,6 +69,7 @@ public class TextProgressBar extends ProgressBar {
         int yTo = (getHeight() / 2) - (rect.centerY()*2);
         this.mPaintTo.setTextSize(getResources().getDimensionPixelOffset(R.dimen.text_size_10));
         canvas.drawText(this.strTo , xTo , yTo , this.mPaintTo);
+
     }
 
     // 初始化，画笔
@@ -83,18 +87,16 @@ public class TextProgressBar extends ProgressBar {
     // 设置文字内容
     public void setText(String textl , String text2)
     {
-//        if (textl == null) {
-//            this.str = "-";
-//        }else{
-//            this.str = textl;
-//        }
-//
-//        if (text2 == null) {
-//            this.strTo = "-";
-//        }else{
-//            this.strTo = text2;
-//        }
-        this.str = textl;
-        this.strTo = text2;
+        if (textl == null) {
+            this.str = "-";
+        }else{
+            this.str = textl;
+        }
+
+        if (text2 == null) {
+            this.strTo = "-";
+        }else{
+            this.strTo = text2;
+        }
     }
 }

@@ -24,7 +24,6 @@ import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseTopBe
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.FootballDatabaseStatisticBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.TopDetailsBean;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -389,10 +388,8 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
         double awayAvg = data.getAwayAvg();
 
         double honeProgress = ((homeAvg*100) / ((homeAvg+awayAvg)*100))*100;
-        mAvgProgress.setProgress((int)honeProgress);
         mAvgProgress.setText(homeAvg+"" , awayAvg+"");
-
-        L.d("yxq++==>> ",homeAvg + "<==>" + awaywin);
+        mAvgProgress.setProgress((int)honeProgress);
 
         /**
          * 大小球统计
