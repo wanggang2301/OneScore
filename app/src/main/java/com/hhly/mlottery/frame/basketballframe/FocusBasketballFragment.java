@@ -206,7 +206,8 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 url = BaseURLs.URL_BASKET_SCHEDULE;
                 break;
             case TYPE_FOCUS:
-                url = BaseURLs.URL_BASKET_FOCUS;
+//                url = BaseURLs.URL_BASKET_FOCUS;
+                url="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";
                 break;
             default:
                 break;
@@ -308,15 +309,17 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
 
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
+        fucusChicked();
     }
 
     private int mSize; //记录共有几天的数据
 
     private void initData() {
 
-        request1();
+        request1("");
 
-        request2();
+//        request2();
 
 
 
@@ -396,28 +399,18 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
 
     }
 
-    private void request1() {
+    private void request1(String thirdId) {
+        String url1="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";
         Map<String, String> params = new HashMap<>();
-        String version = getAppVersionCode(mContext);//获得当前版本号 android:versionCode="5"
+        String deviceId=AppConstants.deviceToken;
+        String userId= AppConstants.register.getData().getUser().getUserId();
 
-        if (mBasketballType == TYPE_FOCUS) { //判断是否是关注页面
+        params.put("userId",userId);
+        params.put("deviceId",deviceId);
+        params.put("cancelThirdIds",thirdId);
 
-            String fucusid = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
 
-            if ("".equals(fucusid) || ",".equals(fucusid) || fucusid.length() == 0) {
-                mbasketball_unfocus.setVisibility(View.VISIBLE); // 暂无关注
-                mLoadingLayout.setVisibility(View.GONE);
-                mSwipeRefreshLayout.setRefreshing(false);
-                mSwipeRefreshLayout.setVisibility(View.GONE);
-                return;
-            } else {
-                params.put("favourite", fucusid);
-            }
-        }
-        params.put("version", version);//接口添加 version=xx 字段
-        params.put("appType", "2");//接口添加 &appType=2 字段
-
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
+        VolleyContentFast.requestJsonByGet(url1, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
             @Override
             public void onResponse(BasketRoot json) {
 
@@ -439,6 +432,7 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 }
 
                 mMatchdata = json.getMatchData();
+
 
                 if (mBasketballType != TYPE_FOCUS) { //非关注页面
                     mAllFilter = json.getMatchFilter();
@@ -534,6 +528,10 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 mLoadingLayout.setVisibility(View.GONE);
                 mErrorLayout.setVisibility(View.GONE);
 
+                ((BasketScoresFragment) getParentFragment()).focusCallback();
+
+
+
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             /**
@@ -554,7 +552,7 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 mErrorLayout.setVisibility(View.VISIBLE);
             }
         }, BasketRoot.class);
-        fucusChicked();//点击关注监听
+
     }
 
     /**
@@ -564,49 +562,41 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         mFocusClickListener = new BasketFocusClickListener() {
             @Override
             public void FocusOnClick(View v, BasketMatchBean root) {
-
+                String focusIds = PreferenceUtil.getString(BASKET_FOCUS_IDS, "");
                 boolean isCheck = (Boolean) v.getTag();// 检查之前是否被选中
 
-                if (!isCheck) {//未关注->关注
-                   addFocusId(root.getThirdId());
+                if (!isCheck) { //未关注->关注
+                    if ("".equals(focusIds)) {
+                        String newIds = root.getThirdId();
+                        PreferenceUtil.commitString(BASKET_FOCUS_IDS, newIds);
+                    } else {
+                        String newIds = focusIds + "," + root.getThirdId();
+                        PreferenceUtil.commitString(BASKET_FOCUS_IDS, newIds);
+                    }
                     v.setTag(true);
 
-                } else {//关注->未关注
-                   deleteFocusId(root.getThirdId());
-                    v.setTag(false);
-                    //判断 如果是关注页面
-                    if (mBasketballType == TYPE_FOCUS) {
-                        List<BasketMatchBean> emptyMatchs = null;
-                        for (int i = 0; i < childrenDataList.size(); i++) {
-                            childrenDataList.get(i).remove(root);
-                            if (childrenDataList.get(i).size() == 0) {
-                                groupDataList.remove(i);
-                                emptyMatchs = childrenDataList.get(i);
+                } else { //关注->未关注
+                    String[] idArray = focusIds.split("[,]");
+                    StringBuffer sb = new StringBuffer();
+                    for (String id : idArray) {
+                        if (!id.equals(root.getThirdId())) {
+                            if ("".equals(sb.toString())) {
+                                sb.append(id);
+                            } else {
+                                sb.append("," + id);
                             }
                         }
-                        if (emptyMatchs != null) {
-                            childrenDataList.remove(emptyMatchs);
-                        }
-                        if (groupDataList.size() == 0) {
-                            mbasketball_unfocus.setVisibility(View.VISIBLE); // 暂无关注
-                            mSwipeRefreshLayout.setVisibility(View.GONE);
-                            mLoadingLayout.setVisibility(View.GONE);
-                        } else {
-                            adapter = new PinnedHeaderExpandableFocusAdapter(childrenDataList, groupDataList, getActivity(), explistview);
-                            explistview.setAdapter(adapter);
-                            adapter.setmFocus(mFocusClickListener);//设置关注
-                        }
-                        //全部展开
-                        for (int i = 0; i < groupDataList.size(); i++) {
-                            explistview.expandGroup(i);
-                        }
-                        ((BasketScoresFragment) getParentFragment()).focusCallback();
-                        return;
                     }
+                    PreferenceUtil.commitString(BASKET_FOCUS_IDS, sb.toString());
+                    v.setTag(false);
+
+
+
+
                 }
-                updateAdapter();//防止复用
-                ((BasketScoresFragment) getParentFragment()).focusCallback();
+                request1(root.getThirdId());
             }
+
         };
     }
 
@@ -749,25 +739,7 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 break;
 
-//            case R.id.public_btn_filter: //筛选
-//                if (isLoad == 1) {
-//                    MobclickAgent.onEvent(mContext, "Basketball_Filter");
-//                    Intent intent = new Intent(getActivity(), BasketFiltrateActivity.class);
-//                    intent.putExtra("MatchAllFilterDatas", (Serializable) mAllFilter);//Serializable 序列化传值（所有联赛数据）
-//                    intent.putExtra("MatchChickedFilterDatas", (Serializable) mChickedFilter);//Serializable 序列化传值（选中的联赛数据）
-////                getParentFragment().startActivityForResult(intent, REQUEST_FILTERCODE);
-////                    getActivity().startActivityForResult(intent, REQUEST_FILTERCODE);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("currentfragment" , mBasketballType);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-//                    getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
-//                }else if(isLoad == 0){
-//                    Toast.makeText(mContext, getResources().getText(R.string.immediate_unconection), Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(mContext, getResources().getText(R.string.basket_loading_txt), Toast.LENGTH_SHORT).show();
-//                }
-//                break;
+//
             case R.id.public_img_back:  //返回
                 MobclickAgent.onEvent(mContext, "Basketball_Exit");
                 getActivity().finish();
@@ -796,17 +768,6 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     * 关注的即时更新Adapter
-     */
-    public void updatePushAdapter(List<List<BasketMatchBean>> childrenDataList,List<String> groupDataList){
-        if (adapter == null) {
-            return;
-        }
-        adapter.updateDatas(childrenDataList,groupDataList);
-        adapter.notifyDataSetChanged();
-
-    }
 
     public void LoadData() {
         mSwipeRefreshLayout.setRefreshing(true);
