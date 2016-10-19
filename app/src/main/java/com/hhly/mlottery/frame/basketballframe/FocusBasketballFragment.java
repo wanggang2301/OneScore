@@ -25,7 +25,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.activity.BasketFiltrateActivity;
 import com.hhly.mlottery.activity.BasketballSettingActivity;
-import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.basketball.PinnedHeaderExpandableFocusAdapter;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
@@ -43,7 +42,6 @@ import com.hhly.mlottery.bean.websocket.WebBasketOdds;
 import com.hhly.mlottery.bean.websocket.WebBasketOdds5;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -428,10 +426,25 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
                     mLoadingLayout.setVisibility(View.GONE);
                     mErrorLayout.setVisibility(View.GONE);
                     mNoDataLayout.setVisibility(View.VISIBLE);
+
+                    ((BasketScoresFragment) getParentFragment()).focusCallback();
                     return;
                 }
 
                 mMatchdata = json.getMatchData();
+
+                StringBuffer sb=new StringBuffer();
+                for (BasketRootBean databean : mMatchdata) {
+                    for (BasketMatchBean listMatch : databean.getMatch()) {
+                            if("".equals(sb.toString())){
+                                sb.append(listMatch.getThirdId());
+                            }else {
+                                sb.append(","+listMatch.getThirdId());
+                            }
+                        PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,sb.toString());
+                    }
+                }
+                ((BasketScoresFragment) getParentFragment()).focusCallback();
 
 
                 if (mBasketballType != TYPE_FOCUS) { //非关注页面
