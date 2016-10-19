@@ -83,16 +83,18 @@ public class TextProgressBar extends ProgressBar {
     // 设置文字内容
     public void setText(String textl , String text2)
     {
-        if (textl == null) {
-            this.str = "-";
-        }else{
-            this.str = textl;
-        }
-
-        if (text2 == null) {
-            this.strTo = "-";
-        }else{
-            this.strTo = text2;
-        }
+//        if (textl == null) {
+//            this.str = "-";
+//        }else{
+//            this.str = textl;
+//        }
+//
+//        if (text2 == null) {
+//            this.strTo = "-";
+//        }else{
+//            this.strTo = text2;
+//        }
+        this.str = textl;
+        this.strTo = text2;
     }
 }
