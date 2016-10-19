@@ -94,11 +94,12 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:id="@+id/football_database_most_item_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/content_txt_black"
-                        android:text="@string/football_database_details_most_top_win"/>
+                        android:text="--"/>
                     <TextView
                         android:id="@+id/football_database_most_item_total_score"
                         android:layout_width="wrap_content"
@@ -119,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/content_txt_black"
-                        android:text="@string/football_database_details_most_top_avg"/>
+                        android:text="--"/>
                     <TextView
                         android:id="@+id/football_database_most_item_avg_score"
                         android:layout_width="wrap_content"

@@ -811,7 +811,10 @@
     <string name="football_database_details_integral_gain_loss_title">得/失球</string>
     <string name="football_database_details_integral_itnis_title">净胜球</string>
     <string name="football_database_details_most_top_win">胜/已赛:</string>
+    <string name="football_database_details_most_top_draw">平/已赛:</string>
+    <string name="football_database_details_most_top_lost">输/已赛:</string>
     <string name="football_database_details_most_top_avg">胜率:</string>
+    <string name="football_database_details_most_score_avg">场均进球:</string>
     <string name="football_database_details_statistic_home_draw">平局 :</string>
     <string name="football_database_details_statistic_all_num">总进球数 :</string>
     <string name="football_database_details_statistic_avg_num">场均 :</string>
