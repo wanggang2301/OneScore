@@ -657,7 +657,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         Log.e("CCC",umengDeviceToken);
         //volley请求
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
             @Override
             public void onResponse(BasketballConcernListBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){

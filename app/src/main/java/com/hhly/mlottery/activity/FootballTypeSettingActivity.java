@@ -344,7 +344,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         params.put("deviceToken",uMengDeviceToken);
         params.put("appNo","11");
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followUserPushSetting.do";
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<String>() {
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
                 Log.e("AAA","足球推送开关请求成功");

@@ -317,86 +317,13 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
 
         request1("");
 
-//        request2();
-
-
-
-
     }
 
-    private void request2() {
-        //请求后台，及时更新关注赛事内容
-        String userId= AppConstants.register.getData().getUser().getUserId();
-        if(userId!=null&&userId!=""){
-            String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
-            String deviceId=AppConstants.deviceToken;
-            //devicetoken 友盟。
-            String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-            Map<String,String > params=new HashMap<>();
-            params.put("userId",userId);
-            Log.e("AAA",userId+"用户名");
-            params.put("deviceId",deviceId);
-//        params.put("deviceToken",umengDeviceToken);
-            VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
-                @Override
-                public void onResponse(BasketballConcernListBean jsonObject) {
-                    if(jsonObject.getResult().equals("200")){
-                        Log.e("AAA","登陆后请求的篮球关注列表");
-                        if(jsonObject.getConcerns()!=null&&jsonObject.getConcerns().size()!=0){ //有关注
-                            //将关注写入文件
-                            StringBuffer sb=new StringBuffer();
-                            for(String thirdId:jsonObject.getConcerns()){
-                                if("".equals(sb.toString())){
-                                    sb.append(thirdId);
-                                }else {
-                                    sb.append(","+thirdId);
-                                }
 
-                            }
-                            PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,sb.toString());
-                            ((BasketScoresFragment) getParentFragment()).focusCallback();
-//                            // 更新列表
-//                            List<List<BasketMatchBean>> newDate = new ArrayList<>();
-//                            List<BasketMatchBean> bean=new ArrayList<>();
-//
-//                            for (String id : jsonObject.getConcerns()) {
-//
-//                                for (int i=0;i<childrenDataList.size();i++) {
-//                                    if(childrenDataList.get(i).size()==0){
-//                                        groupDataList.remove(i);
-//                                    }else {
-//                                        for (int j = 0; j < childrenDataList.get(i).size(); j++) {
-//                                            if (childrenDataList.get(i).get(j).getThirdId().equals(id)) {
-//                                                bean.add(childrenDataList.get(i).get(j));
-//                                            }
-//                                        }
-//                                    }
-//                                    newDate.add(bean);
-//                                }
-//
-//                            }
-//                            childrenDataList.clear();
-//                            childrenDataList.addAll(newDate);
-//                            updatePushAdapter(childrenDataList,groupDataList);
-
-
-                        }
-
-                    }
-
-                }
-            }, new VolleyContentFast.ResponseErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-
-                }
-            },BasketballConcernListBean.class);
-
-        }
-
-    }
-
+    /**
+     * 请求关注数据
+     * @param thirdId
+     */
     private void request1(String thirdId) {
         String url1="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";
         Map<String, String> params = new HashMap<>();

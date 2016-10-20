@@ -338,30 +338,46 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
                 if (!isCheck) {// 插入数据
-                 addFocusId(third);
+                    if ("".equals(focusIds)) {
+                        String newIds = third;
+                        PreferenceUtil.commitString(FOCUS_ISD, newIds);
+                    } else {
+                        String newIds = focusIds + "," + third;
+                        PreferenceUtil.commitString(FOCUS_ISD, newIds);
+                    }
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
 
                 } else {// 删除
-                   deleteFocusId(third);
-                    ((ImageView) view).setImageResource(R.mipmap.football_nomal);
-
-                    List<Match> allList = new ArrayList<Match>();
-                    for (Match m : mAllMatchs) {
-                        if (!m.getThirdId().equals(third)) {
-                            allList.add(m);
+                    String[] idArray = focusIds.split("[,]");
+                    StringBuffer sb = new StringBuffer();
+                    for (String id : idArray) {
+                        if (!id.equals(third)) {
+                            if ("".equals(sb.toString())) {
+                                sb.append(id);
+                            } else {
+                                sb.append("," + id);
+                            }
                         }
                     }
+                    PreferenceUtil.commitString(FOCUS_ISD, sb.toString());
+                    ((ImageView) view).setImageResource(R.mipmap.football_nomal);
 
-                    mAllMatchs = allList;
-                    mMatchs = allList;
-                    updateAdapter();
-                    // mListView.slideBack();
-
-                    if (mMatchs.size() == 0) {
-                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-                    }
-
-                    ((ScoresFragment) getParentFragment()).focusCallback();
+//                    List<Match> allList = new ArrayList<Match>();
+//                    for (Match m : mAllMatchs) {
+//                        if (!m.getThirdId().equals(third)) {
+//                            allList.add(m);
+//                        }
+//                    }
+//
+//                    mAllMatchs = allList;
+//                    mMatchs = allList;
+//                    updateAdapter();
+//                    // mListView.slideBack();
+//
+//                    if (mMatchs.size() == 0) {
+//                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
+//                    }
+                    request(third);
                 }
             }
         };
@@ -445,16 +461,28 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     // 初始化数据
     public void initData() {
 
+        request("");
+
+
+    }
+
+    /**
+     * 点击取消关注或者刷新请求后台
+     */
+    private void request(String thirdId) {
         if (getActivity() == null) {
             return;
         }
-        String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
+        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.findFocusMatchs.do";
+
         Map<String, String> params = new HashMap<String, String>();
-        params.put("focusString", fucus_id);
+        String deviceId=AppConstants.deviceToken;
+        String userId= AppConstants.register.getData().getUser().getUserId();
+        params.put("userId",userId);
+        params.put("deviceId",deviceId);
+        params.put("thirdId",thirdId);
 
-//        isInitData = true;
-
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FocusMatchs, params, new VolleyContentFast.ResponseSuccessListener<Focus>() {
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<Focus>() {
             @Override
             public synchronized void onResponse(final Focus json) {
                 if (getActivity() == null) {
@@ -567,23 +595,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
     }
 
-//    private URI socketUri = null;
-
-//    private synchronized void startWebsocket() {
-//
-//
-//        if (mSocketClient == null || (mSocketClient != null && mSocketClient.isClosed())) {
-//            mSocketClient = new HappySocketClient(socketUri, new Draft_17());
-//            mSocketClient.setSocketResponseMessageListener(this);
-//            mSocketClient.setSocketResponseCloseListener(this);
-//            mSocketClient.setSocketResponseErrorListener(this);
-//            mSocketClient.connect();
-//            if (isError) {
-//                initData();
-//            }
-//            isError = false;
-//        }
-//    }
 
     Handler mSocketHandler = new Handler() {
         @Override
@@ -1155,80 +1166,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     }
 
 
-
-
-
-
-   /* public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SET_CODE && resultCode == Activity.RESULT_OK) {
-            if (PreferenceUtil.getBoolean(MyConstants.RBSECOND, true)) {
-                mHandicap = 1;
-            } else if (PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false)) {
-                mHandicap = 2;// 大小球
-            } else if (PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, false)) {
-                mHandicap = 3;
-            } else if (PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false)) {
-                mHandicap = 4;
-            }
-            if (mMatchs == null) {
-                return;
-            }
-            synchronized (mMatchs) {
-                for (Match match : mMatchs) {
-                    resetOddColor(match);
-                }
-                updateAdapter();
-            }
-        } else if (requestCode == REQUEST_DETAIL_CODE && resultCode == Activity.RESULT_OK) {
-            //updateAdapter();
-
-            if (isDestroy) {
-                return;
-            }
-
-            if ("".equals(PreferenceUtil.getString(FocusFragment.FOCUS_ISD, ""))) {
-                if (mMatchs != null) {
-                    mMatchs.clear();
-                }
-
-                if (mAllMatchs != null) {
-                    mAllMatchs.clear();
-                }
-                updateAdapter();
-            }
-
-            ((ScoresFragment) getParentFragment()).focusCallback();
-
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-            mLoadHandler.postDelayed(mLoadingDataThread, 0);
-        }
-    }*/
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (hidden) {
-//            isPause = true;
-//            if (mSocketClient != null) {
-//                isDestroy = true;
-//                mSocketClient.close();
-//            }
-//        } else {
-//            isPause = false;
-//            isDestroy = false;
-//            String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
-//            if ("".equals(fucus_id) || ",".equals(fucus_id)) {
-//                mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-//                return;
-//            }
-////            if(isLoadedData){
-//            mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-//            mLoadHandler.postDelayed(mLoadingDataThread, 0);
-////            }
-//        }
-//    }
-
-
     public void reLoadData(){
         String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
         if ("".equals(fucus_id) || ",".equals(fucus_id)) {
@@ -1244,39 +1181,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         mLoadHandler.post(mLoadingDataThread);
         ((ScoresFragment) getParentFragment()).reconnectWebSocket();
     }
-
-//    private boolean isInitData = false;
-
-//    public class FocusNetStateReceiver extends BroadcastReceiver {
-//
-//        @Override
-//        public void onReceive(Context con, Intent arg1) {
-//            L.d(TAG, "NetState ___ onReceive ");
-//
-//            ConnectivityManager manager = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
-//            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-//            if (activeNetwork == null || !activeNetwork.isAvailable()) {
-//                if (mErrorLayout.getVisibility() != View.VISIBLE) {
-//                    mUnconectionLayout.setVisibility(View.VISIBLE);
-//                }
-//
-//                isWebSocketStart = false;
-//                if (mSocketClient != null) {
-//                    mSocketClient.close();
-//                }
-//                mSocketClient = null;
-//            } else {
-//                mUnconectionLayout.setVisibility(View.GONE);
-//            }
-//            else {
-//                if (isInitData) {
-//                    mSwipeRefreshLayout.setRefreshing(true);
-//                    mUnconectionLayout.setVisibility(View.GONE);
-//                    onRefresh();
-//                }
-//            }
-//        }
-//    }
 
 
     /**
@@ -1320,7 +1224,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
         Log.e("AAA",uMengDeviceToken+"???");
         String userId=AppConstants.register.getData().getUser().getUserId();
-        String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
         //thirdId
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
         Map<String,String> params=new HashMap<>();
@@ -1329,7 +1232,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         params.put("deviceToken",uMengDeviceToken);// 第一次获取的时候可能没得到
         //这样可以再次尝试获取deviceToken
         params.put("userId",userId);
-        params.put("follow","1");
+        params.put("follow","true");
         params.put("thirdId",thirdId);
         params.put("appNo","11"); //固定国内版11
 
@@ -1374,7 +1277,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         String deviceId=AppConstants.deviceToken;
         String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
         String userId=AppConstants.register.getData().getUser().getUserId();
-        String isPushFocus=PreferenceUtil.getBoolean(MyConstants.FOOTBALL_PUSH_FOCUS,true)==true?"true":"false";
         //thirdId
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
         Map<String,String> params=new HashMap<>();
@@ -1383,7 +1285,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         params.put("deviceToken",uMengDeviceToken==""? UmengRegistrar.getRegistrationId(MyApp.getContext()):uMengDeviceToken);// 第一次获取的时候可能没得到
         //这样可以再次尝试获取deviceToken
         params.put("userId",userId);
-        params.put("follow","0");
+        params.put("follow","false");
         params.put("thirdId",thirdId);
         params.put("appNo","11"); //固定国内版11
 

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
@@ -242,6 +244,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                     PreferenceUtil.commitString(RongYunUtils.USER_ID, "");// 清除用户本地id
                     PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
                     PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
+                    request(); //推送需要
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
@@ -254,6 +257,32 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 UiUtils.toast(MyApp.getInstance(), R.string.immediate_unconection);
             }
         }, Register.class);
+    }
+
+    /**
+     * 用户注销把用户状态改成0
+     */
+    private void request() {
+        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.exitUpdateOnlile.do";
+        Map<String ,String> params=new HashMap<>();
+        params.put("deviceToken",AppConstants.deviceToken);
+        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
+            @Override
+            public void onResponse(ConcernBean jsonObject) {
+                //注销成功
+                Log.e("AAA","注销成功");
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },ConcernBean.class);
+
+
+
+
     }
 
     @Override
