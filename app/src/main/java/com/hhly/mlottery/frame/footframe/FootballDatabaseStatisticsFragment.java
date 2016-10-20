@@ -388,8 +388,8 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
         double awayAvg = data.getAwayAvg();
 
         double honeProgress = ((homeAvg*100) / ((homeAvg+awayAvg)*100))*100;
-        mAvgProgress.setProgress((int)honeProgress);
         mAvgProgress.setText(homeAvg+"" , awayAvg+"");
+        mAvgProgress.setProgress((int)honeProgress);
 
         /**
          * 大小球统计
