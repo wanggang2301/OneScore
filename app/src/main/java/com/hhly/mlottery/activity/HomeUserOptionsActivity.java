@@ -23,6 +23,7 @@ import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
@@ -265,12 +266,15 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     private void request() {
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.exitUpdateOnlile.do";
         Map<String ,String> params=new HashMap<>();
-        params.put("deviceToken",AppConstants.deviceToken);
+        params.put("deviceToken",PreferenceUtil.getString(AppConstants.uMengDeviceToken,""));
         VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
             @Override
             public void onResponse(ConcernBean jsonObject) {
-                //注销成功
-                Log.e("AAA","注销成功");
+                if(jsonObject.getResult().equals("200")){
+                    //注销成功
+                    Log.e("AAA","注销成功");
+
+                }
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
