@@ -226,8 +226,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mTalkAboutBallFragment = TalkAboutBallFragment.newInstance(mThirdId, mMatchStatus, 1, "");
 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
-
-//            L.d("BASKET_MATCH_STATUS>>>>>>", mMatchStatus);
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic("USER.topic.basketball.score." + mThirdId);
@@ -355,9 +353,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     public String getmThirdId() {
         return mThirdId;
     }
+
     public String getmLeagueId() {
         return mLeagueId;
     }
+
     public Integer getmMatchType() {
         return mMatchType;
     }
@@ -697,7 +697,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                pd.dismiss();
+                                    pd.dismiss();
 //                                    appBarLayout.setExpanded(true);// 显示头部内容
                                     RongYunUtils.joinChatRoom(mContext, mThirdId);// 进入聊天室
                                 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author   lzf
+ * @author lzf
  * @ClassName:
  * @Description:
  * @date
@@ -115,4 +115,6 @@ public class ChatballAdapter extends BaseQuickAdapter<Comment> {
     public interface PullUpLoading {
         void onPullUpLoading();
     }
+
+
 }

@@ -16,46 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-            <!--&lt;!&ndash;分割线&ndash;&gt;-->
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
-                <!--android:background="@color/content_txt_light_grad" />-->
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/selected_bg"
-                android:visibility="gone">
-
-                <RadioGroup
-                    android:id="@+id/head_radiogroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:layout_margin="13dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    >
-                    <!--联赛统计-->
-                    <RadioButton
-                        android:id="@+id/basket_database_details_statistics"
-                        style="@style/odds_radio_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/odds_selected_plate"
-                        android:checked="true"
-                        android:text="联赛统计"/>
-                    <!--联赛之最-->
-                    <RadioButton
-                        android:id="@+id/basket_database_details_most"
-                        style="@style/odds_radio_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/odds_selected_big"
-                        android:text="联赛之最"/>
-
-                </RadioGroup>
-            </FrameLayout>
             <!--攻击力最强-->
             <LinearLayout
                 android:layout_width="match_parent"

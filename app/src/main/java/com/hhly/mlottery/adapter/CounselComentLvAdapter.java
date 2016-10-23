@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.L;
 import com.sohu.cyan.android.sdk.entity.Comment;
 
 import java.util.ArrayList;
@@ -49,11 +50,15 @@ public class CounselComentLvAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+
+        L.d("lzfdddd","getCount");
+
         return mInfosList == null ? 0 : mInfosList.size();
     }
 
     @Override
     public Object getItem(int position) {
+
         return mInfosList == null ? null : mInfosList.get(position);
     }
 

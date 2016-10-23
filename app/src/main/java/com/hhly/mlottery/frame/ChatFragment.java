@@ -112,6 +112,7 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
     private void initListView() {
         mAdapter = new CounselComentLvAdapter(getActivity());
         mListView.setAdapter(mAdapter);
+
     }
 
     private void initView() {
@@ -125,6 +126,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
 //                ToastTools.showQuickCenter(CounselCommentActivity.this,position+"");
             }
         });
+
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.comment_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -373,6 +376,8 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 }
                 break;
             case R.id.tv_commentcount://评论数
+
+                L.d("wwweee","单机小");
                 MobclickAgent.onEvent(mContext, "Football_DataInfo_CommentCount");
                 Intent intent = new Intent(mContext, CounselCommentActivity.class);
                 intent.putExtra(CyUtils.INTENT_PARAMS_SID, souceid);
@@ -475,7 +480,6 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Swip
                 if (CommonUtils.isLogin()) {
                     CyUtils.loginSso(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), sdk);
                 }
-
             }
         }
     }

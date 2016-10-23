@@ -71,6 +71,8 @@ public class LeagueStatisticsTodayRecyclerViewAdapter extends BaseRecyclerViewAd
             tv_league_loss_percent.setText(datas.get(position).getDrawPercent() + "%");
             tv_league_loss_num.setText(datas.get(position).getDrawCount());
         }
+
+
     }
 
 

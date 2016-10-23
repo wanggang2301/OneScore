@@ -160,11 +160,11 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
 
 
-            holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
+         /*   holder.live_left_bottom_child_txt.setVisibility(View.VISIBLE);
             holder.live_guest_icon_img.setVisibility(View.VISIBLE);
             holder.live_left_child_txt.setVisibility(View.VISIBLE);
             holder.rl_iv.setVisibility(View.VISIBLE);
-            holder.rl_iv1.setVisibility(View.GONE);
+            holder.rl_iv1.setVisibility(View.GONE);*/
             /***********************************/
             //主队icon
             holder.direct_seeding_photo.setVisibility(View.GONE);

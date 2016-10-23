@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingBottom="16dp">
 
                 <FrameLayout
                     android:layout_width="0dp"
@@ -344,6 +344,7 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp"
                 >
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -366,6 +367,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/new_analyze_changci"
+                                android:textSize="@dimen/text_size_11"
                                 android:layout_gravity="center"/>
                             <TextView
                                 android:id="@+id/analyze_size_recent_home_vs_count"
@@ -377,8 +379,8 @@
 
                         <com.hhly.mlottery.view.RoundProgressBar
                             android:id="@+id/analyze_size_recent_home_progress"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             />
                     </FrameLayout>
@@ -386,7 +388,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="2dp"
                         android:gravity="center"
                         >
                         <LinearLayout
@@ -428,7 +430,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp">
+                                android:layout_marginTop="1dp">
 
                                 <View
                                     android:layout_width="12dp"
@@ -457,7 +459,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp">
+                                android:layout_marginTop="1dp">
 
                                 <View
                                     android:layout_width="12dp"
@@ -510,7 +512,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/new_analyze_changci"
-                                android:layout_gravity="center"/>
+                                android:layout_gravity="center"
+                                android:textSize="@dimen/text_size_11"
+                                />
                             <TextView
                                 android:id="@+id/analyze_size_recent_guest_vs_count"
                                 android:layout_width="wrap_content"
@@ -521,8 +525,8 @@
 
                         <com.hhly.mlottery.view.RoundProgressBar
                             android:id="@+id/analyze_size_recent_guest_progress"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             />
                     </FrameLayout>
@@ -530,7 +534,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="2dp"
                         android:gravity="center"
                         >
                         <LinearLayout
@@ -572,7 +576,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp">
+                                android:layout_marginTop="1dp">
 
                                 <View
                                     android:layout_width="12dp"
@@ -601,7 +605,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp">
+                                android:layout_marginTop="1dp">
 
                                 <View
                                     android:layout_width="12dp"

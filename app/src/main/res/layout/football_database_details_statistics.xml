@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/football_database_details_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <!--分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/content_txt_light_grad"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/home_item_bg">
+
+                <RadioGroup
+                    android:id="@+id/head_radiogroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginTop="13dp"
+                    android:weightSum="3"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+                    <!--联赛统计-->
+                    <RadioButton
+                        android:id="@+id/football_database_details_statistics"
+                        style="@style/odds_radio_button"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/radio_button_left"
+                        android:checked="true"
+                        android:text="@string/basket_database_details_league_statistic"
+                        android:textSize="@dimen/text_size_15"/>
+                    <!--联赛之最-->
+                    <RadioButton
+                        android:id="@+id/football_database_details_most"
+                        style="@style/odds_radio_button"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/radio_button_right"
+                        android:text="@string/basket_database_details_leagueMost"
+                        android:textSize="@dimen/text_size_15"
+                        />
+                </RadioGroup>
+            </FrameLayout>
+
+            <!-- 联赛统计 -->
+            <LinearLayout
+                android:id="@+id/football_database_statistic_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <!--胜平负统计-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="@string/football_database_details_wdl_statistic"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/statistics_textcolor"/>
+
+                    <!--分割线-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_football_footer" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/basket_database_details_statistic_num"
+                                    android:layout_gravity="center"/>
+                                <TextView
+                                    android:id="@+id/football_database_cc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="--"
+                                    android:layout_gravity="center"/>
+                            </LinearLayout>
+
+                            <com.hhly.mlottery.view.RoundProgressBar
+                                android:id="@+id/progress_statistic_win_lost"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_gravity="center"
+                                />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.1"
+                            android:orientation="vertical"
+                            android:layout_gravity="center">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_h"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_home_win"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/football_database_win_lost_home"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
+                                    android:text="--"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_progress"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/football_database_details_statistic_home_draw"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/football_database_win_lost_draw"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"
+                                    android:text="--"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/basket_database_details_statistic_guest_win"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                                <TextView
+                                    android:id="@+id/football_database_win_lost_guest"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="3dp"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"
+                                    android:text="--"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <!--分割线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30px"
+                    android:background="@color/home_item_bg" />
+                <!--进球统计-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="@string/football_database_details_goal_statistic"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/statistics_textcolor"/>
+
+                    <!--分割线-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_football_footer" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:id="@+id/view2" />
+
+                        <TextView
+                            android:id="@+id/football_database_total"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="#F15353"
+                            android:text="---"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="#666666"
+                            android:text="÷"/>
+                        <TextView
+                            android:id="@+id/football_database_gp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="#F15353"
+                            android:text="---"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="#666666"
+                            android:text="="/>
+                        <TextView
+                            android:id="@+id/football_database_average"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="#F15353"
+                            android:text="---"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:textSize="10sp"
+                            android:textColor="#666666"
+                            android:text="@string/basket_database_details_statistic_all_score"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=" "
+                            android:id="@+id/textView7" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:textSize="10sp"
+                            android:textColor="#666666"
+                            android:text="@string/basket_database_details_statistic_gp_num"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=" "
+                            android:id="@+id/textView8" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:gravity="center"
+                            android:textSize="10sp"
+                            android:textColor="#666666"
+                            android:text="@string/basket_database_details_statistic_average"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:orientation="vertical">
+                        <com.hhly.mlottery.view.TextProgressBar
+                            android:id="@+id/avg_progressbar"
+                            android:layout_width="300dp"
+                            android:layout_height="15dp"
+                            android:indeterminateOnly="false"
+                            android:progress="70"
+                            android:progressDrawable="@drawable/textprogressbar"
+                            />
+                        <LinearLayout
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:gravity="center">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/football_database_details_home_score_avg"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <View
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:background="@color/basket_database_statistics_background_h"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="@string/football_database_details_guest_score_avg"
+                                    android:textSize="@dimen/text_size_13"
+                                    android:textColor="@color/content_txt_black"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!--分割线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="30px"
+                    android:background="@color/home_item_bg" />
+                <!--大小球统计-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="@string/football_database_details_big_small_statistic"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/statistics_textcolor"/>
+
+                    <!--分割线-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/line_football_footer" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="center"
+                                android:text="@string/football_database_details_moreZero"
+                                android:textSize="@dimen/text_size_11"/>
+                            <TextView
+                                android:id="@+id/big_small_statistic_avg1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="right"
+                                android:text="--"
+                                android:textSize="@dimen/text_size_11"/>
+                            <TextView
+                                android:id="@+id/big_small_statistic_num1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="right"
+                                android:text="--"
+                                android:textSize="@dimen/text_size_11"/>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5">
+                                <ProgressBar
+                                    android:id="@+id/big_small_statistic_progressbar1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="5dp"
+                                    android:indeterminateOnly="false"
+                                    android:paddingRight="5dp"
+                                    android:paddingLeft="5dp"
+                                    android:progress="70"
+                                    android:progressDrawable="@drawable/pro"
+                                    />
+                                <!--<ProgressBar-->
+                                    <!--android:id="@+id/prohome_team"-->
+                                    <!--style="@style/StyleProgressBarguest_statics" />-->
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="center"
+                                android:text="@string/football_database_details_moreOne"
+                                android:textSize="@dimen/text_size_11"/>
+                            <TextView
+                                android:id="@+id/big_small_statistic_avg2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="right"
+                                android:text="--"
+                                android:textSize="@dimen/text_size_11"/>
+
+                            <TextView
+                                android:id="@+id/big_small_statistic_num2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="right"
+                                android:text="--"
+                                android:textSize="@dimen/text_size_11"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5">
+                                <ProgressBar
+                                    android:id="@+id/big_small_statistic_progressbar2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="5dp"
+                                    android:indeterminateOnly="false"
+                                    android:paddingRight="5dp"
+                                    android:paddingLeft="5dp"
+                                    android:progress="70"
+                                    android:progressDrawable="@drawable/pro"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="center"
+                                android:text="@string/football_database_details_moreTwo"
+                                android:textSize="@dimen/text_size_11"/>
+                            <TextView
+                                android:id="@+id/big_small_statistic_avg3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="right"
+                                android:text="--"
+                                android:textSize="@dimen/text_size_11"/>
+                            <TextView
+                                android:id="@+id/big_small_statistic_num3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="right"
+                                android:text="--"
+                                android:textSize="@dimen/text_size_11"/>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5">
+                                <ProgressBar
+                                    android:id="@+id/big_small_statistic_progressbar3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="5dp"
+                                    android:indeterminateOnly="false"
+                                    android:paddingRight="5dp"
+                                    android:paddingLeft="5dp"
+                                    android:progress="70"
+                                    android:progressDrawable="@drawable/pro"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="center"
+                                android:text="@string/football_database_details_moreThree"
+                                android:textSize="@dimen/text_size_11"/>
+                            <TextView
+                                android:id="@+id/big_small_statistic_avg4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="right"
+                                android:text="--"
+                                android:textSize="@dimen/text_size_11"/>
+                            <TextView
+                                android:id="@+id/big_small_statistic_num4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.2"
+                                android:gravity="right"
+                                android:text="--"
+                                android:textSize="@dimen/text_size_11"/>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5">
+
+                                <ProgressBar
+                                    android:id="@+id/big_small_statistic_progressbar4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="5dp"
+                                    android:indeterminateOnly="false"
+                                    android:paddingRight="5dp"
+                                    android:paddingLeft="5dp"
+                                    android:progress="70"
+                                    android:progressDrawable="@drawable/pro"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 联赛之最 -->
+            <LinearLayout
+                android:id="@+id/football_database_most_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/football_database_details_most"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--正在加载中显示进度条-->
+        <FrameLayout
+            android:id="@+id/football_database_loading_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="15dp"
+            android:visibility="gone"
+            >
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <!--网络不给力提示-->
+        <LinearLayout
+            android:id="@+id/football_database_details_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/refresh" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/exp_net_status_txt"
+                android:textColor="@color/version"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dip"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip"
+                    android:text="@string/exp__check_txt"
+                    android:textColor="@color/msg"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/reLoadin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exp_refresh_txt"
+                    android:textColor="@color/exp_refresh"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--暂无数据提示-->
+        <TextView
+            android:id="@+id/football_database_details_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text="@string/nodata"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

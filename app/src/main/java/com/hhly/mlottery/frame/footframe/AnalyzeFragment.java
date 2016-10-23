@@ -1117,12 +1117,13 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
      * @param statistics
      */
     private void setSizeHistoryText(NewAnalyzeBean.SizeTrendEntity.Statistics statistics){
-        String text=getActivity().getString(R.string.new_analyze_liangduijin)+statistics.getVsCount()+getActivity().getString(R.string.new_analyze_changjiaofeng)+"<font color='#DD2F1C'><b>"
+        String text1=getActivity().getString(R.string.new_analyze_liangduijin)+statistics.getVsCount()+getActivity().getString(R.string.new_analyze_changjiaofeng);
+        String text2="<font color='#DD2F1C'><b>"
                 + statistics.getBig() + getActivity().getString(R.string.new_analyze_cidaqiu) + "</b></font> "+
                 ","+"<font color='#21b11e'><b>" + statistics.getSmall() + getActivity().getString(R.string.new_analyze_cixiaoqiu) + "</b></font> "+","+
                 "<font color='#0090ff'><b>" + statistics.getDraw() + getActivity().getString(R.string.new_analyze_cizoupan) + "</b></font> "+";";
-        mTextSize1.setText(Html.fromHtml(text));
-        mTextSize2.setText("");
+        mTextSize1.setText(Html.fromHtml(text1));
+        mTextSize2.setText(Html.fromHtml(text2));
         mTextSize3.setText("");
     }
 
