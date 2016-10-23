@@ -229,36 +229,18 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         mLine = view.findViewById(R.id.line_football_footer);
 
         // 实现 监听 （实例化） 关注监听
-        mFocusMatchClickListener = new FocusMatchClickListener() {// 关注按钮事件
+        mFocusMatchClickListener = new FocusMatchClickListener() { // 关注按钮事件
             @Override
             public void onClick(View view, String third) {
                 String focusIds = PreferenceUtil.getString("focus_ids", "");
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {// 插入数据
-                    if ("".equals(focusIds)) {
-                        String newIds = third;
-                        PreferenceUtil.commitString("focus_ids", newIds);
-                    } else {
-                        String newIds = focusIds + "," + third;
-                        PreferenceUtil.commitString("focus_ids", newIds);
-                    }
-
+                    FocusFragment.addFocusId(third);
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
                     view.setTag(true);
                 } else {// 删除
-                    String[] idArray = focusIds.split("[,]");
-                    StringBuffer sb = new StringBuffer();
-                    for (String id : idArray) {
-                        if (!id.equals(third)) {
-                            if ("".equals(sb.toString())) {
-                                sb.append(id);
-                            } else {
-                                sb.append("," + id);
-                            }
-                        }
-                    }
-                    PreferenceUtil.commitString("focus_ids", sb.toString());
+                    FocusFragment.addFocusId(third);
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
                     view.setTag(false);
                 }
@@ -470,37 +452,10 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             }
         }, ScheduleMatchs.class);
 
-        initFocusClickListener();
+
         choiceDateList();
     }
 
-
-    private void initFocusClickListener() {
-        mSchfocusClickListener = new SchFocusClickListener() {
-            @Override
-            public void onClick(View v, SchMatch match) {
-                //左划的收回去
-                // mListView.slideBack();
-
-                String focusIds = PreferenceUtil.getString("focus_ids", "");
-
-                boolean isCheck = (Boolean) v.getTag();// 检查之前是否被选中
-
-                if (!isCheck) {// 插入数据 未关注
-                    FocusFragment.addFocusId(match.getThirdId());
-                    ((ImageView) v).setImageResource(R.mipmap.football_focus);
-
-                    v.setTag(true);
-
-                } else {// 删除  已关注
-                   FocusFragment.deleteFocusId(match.getThirdId());
-                    ((ImageView) v).setImageResource(R.mipmap.football_nomal);
-                    v.setTag(false);
-                }
-                ((ScoresFragment) getParentFragment()).focusCallback();
-            }
-        };
-    }
 
     private void choiceDateList() {
         mDateOnClickListener = new DateOnClickListener() {

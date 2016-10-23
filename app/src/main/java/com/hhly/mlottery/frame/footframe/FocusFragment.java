@@ -482,7 +482,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         params.put("deviceId",deviceId);
         params.put("thirdId",thirdId);
 
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<Focus>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.FOCUS_FRAGMENT_CONCERN, params, new VolleyContentFast.ResponseSuccessListener<Focus>() {
             @Override
             public synchronized void onResponse(final Focus json) {
                 if (getActivity() == null) {
@@ -1236,7 +1236,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         params.put("thirdId",thirdId);
         params.put("appNo","11"); //固定国内版11
 
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_ADD_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
             @Override
             public void onResponse(ConcernBean concernBean) {
                 Log.e("AAAA","concern");
@@ -1289,7 +1289,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         params.put("thirdId",thirdId);
         params.put("appNo","11"); //固定国内版11
 
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_ADD_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
             @Override
             public void onResponse(CancelConcernBean jsonObject) {
 

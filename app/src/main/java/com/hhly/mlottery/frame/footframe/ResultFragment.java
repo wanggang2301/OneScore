@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -319,18 +320,16 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             @Override
             public void onClick(View view, String third) {
 
-                String focusIds = PreferenceUtil.getString("focus_ids", "");
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {// 插入数据
+                    Log.e("AAA","有调用啊");
                    FocusFragment.addFocusId(third);
 
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
                     view.setTag(true);
                 } else {// 删除
                     FocusFragment.deleteFocusId(third);
-
-
 
                     ((ImageView) view).setImageResource(R.mipmap.football_nomal);
 

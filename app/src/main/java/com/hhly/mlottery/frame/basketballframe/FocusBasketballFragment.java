@@ -335,7 +335,7 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         params.put("cancelThirdIds",thirdId);
 
 
-        VolleyContentFast.requestJsonByGet(url1, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<BasketRoot>() {
             @Override
             public void onResponse(BasketRoot json) {
 
@@ -568,7 +568,7 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         params.put("concernThirdIds",thirdId);
         Log.e("AAA",thirdId+"");
 
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.BASKETBALL_ADD_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
             @Override
             public void onResponse(ConcernBean concernBean) {
                 Log.e("AAAA","concern");
@@ -614,7 +614,7 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         params.put("deviceId",deviceId);
         params.put("cancelThirdIds",thirdId);
 
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.BASKETBALL_DELETE_FOCUS, params, new VolleyContentFast.ResponseSuccessListener<CancelConcernBean>() {
             @Override
             public void onResponse(CancelConcernBean jsonObject) {
 

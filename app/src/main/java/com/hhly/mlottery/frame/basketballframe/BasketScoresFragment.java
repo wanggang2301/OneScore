@@ -281,7 +281,7 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
             Log.e("AAA",userId+"用户名");
             params.put("deviceId",deviceId);
 //        params.put("deviceToken",umengDeviceToken);
-            VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
+            VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
                 @Override
                 public void onResponse(BasketballConcernListBean jsonObject) {
                     if(jsonObject.getResult().equals("200")){

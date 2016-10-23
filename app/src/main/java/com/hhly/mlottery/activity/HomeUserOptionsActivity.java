@@ -266,8 +266,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     private void request() {
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.exitUpdateOnlile.do";
         Map<String ,String> params=new HashMap<>();
-        params.put("deviceToken",PreferenceUtil.getString(AppConstants.uMengDeviceToken,""));
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
+        params.put("deviceToken",AppConstants.deviceToken);
+        VolleyContentFast.requestJsonByPost(BaseURLs.EXIT_PUSH_ONLINE, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
             @Override
             public void onResponse(ConcernBean jsonObject) {
                 if(jsonObject.getResult().equals("200")){

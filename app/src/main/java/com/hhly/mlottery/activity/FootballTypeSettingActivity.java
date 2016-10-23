@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.frame.footframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footframe.ResultFragment;
@@ -344,7 +345,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         params.put("deviceToken",uMengDeviceToken);
         params.put("appNo","11");
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followUserPushSetting.do";
-        VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<String>() {
+        VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_USER_SET, params, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
                 Log.e("AAA","足球推送开关请求成功");

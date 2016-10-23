@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.R.string;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
@@ -286,7 +287,7 @@ public class BasketballSettingActivity extends BaseActivity implements OnClickLi
 		params.put("userId",userId);
 		params.put("isNotice",isPush);
 		String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.updatePushStatus.do";
-		VolleyContentFast.requestJsonByPost(url, params, new VolleyContentFast.ResponseSuccessListener<String>() {
+		VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_USER_SET, params, new VolleyContentFast.ResponseSuccessListener<String>() {
 			@Override
 			public void onResponse(String jsonObject) {
 				Log.e("AAA","篮球推送开关请求成功");

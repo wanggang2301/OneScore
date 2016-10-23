@@ -454,7 +454,7 @@ public class ScoresFragment extends BaseWebSocketFragment {
 
             Log.e("CCC",umengDeviceToken);
             //volley请求
-            VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
+            VolleyContentFast.requestJsonByGet(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
                 @Override
                 public void onResponse(BasketballConcernListBean jsonObject) {
                     if(jsonObject.getResult().equals("200")){
