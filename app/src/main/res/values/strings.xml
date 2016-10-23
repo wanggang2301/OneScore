@@ -1265,5 +1265,8 @@
     <string name="push_sound">声音</string>
     <string name="push_focus_match">推送关注比赛</string>
 
+    <!--墙外-->
+
+    <string name="foreign_pic">已保存图片到SD卡文件夹下</string>
 
 </resources>
