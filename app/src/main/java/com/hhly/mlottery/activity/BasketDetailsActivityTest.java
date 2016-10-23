@@ -170,6 +170,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private FragmentManager fragmentManager;
     private boolean isRquestSuccess = true;
 
+    private static final String LEAGUEID_NBA = "1";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -199,9 +201,13 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         initView();
         mBasketDetailsHeadFragment = BasketDetailsHeadFragment.newInstance();
-        mBasketAnimLiveFragment = BasketAnimLiveFragment.newInstance("");
+        if (LEAGUEID_NBA.equals(mLeagueId)) {
+            mBasketAnimLiveFragment = BasketAnimLiveFragment.newInstance("");
+        }
         basePagerAdapter.addFragments(mBasketDetailsHeadFragment);
-        basePagerAdapter.addFragments(mBasketAnimLiveFragment);
+        if (LEAGUEID_NBA.equals(mLeagueId)) {
+            basePagerAdapter.addFragments(mBasketAnimLiveFragment);
+        }
         mHeadviewpager.setAdapter(basePagerAdapter);
         mHeadviewpager.setOffscreenPageLimit(1);
         mIndicator.setViewPager(mHeadviewpager);

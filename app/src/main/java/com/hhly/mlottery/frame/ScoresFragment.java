@@ -209,6 +209,9 @@ public class ScoresFragment extends BaseWebSocketFragment {
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
 
 
+
+
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -262,8 +265,9 @@ public class ScoresFragment extends BaseWebSocketFragment {
         });
         mViewPager.setAdapter(pureViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+       // mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+
         mViewPager.setOffscreenPageLimit(5);
     }
 
