@@ -214,8 +214,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.head_portrait:///显示全图
                 MobclickAgent.onEvent(mContext, "ProfileActivity_SetHead");
-                Intent intent2 = new Intent(ProfileActivity.this, EnlargePhotoActivity.class);
-                startActivity(intent2);
+                 Intent intent2 = new Intent(ProfileActivity.this, EnlargePhotoActivity.class);
+                 startActivity(intent2);
+//                Intent intent2 = new Intent(ProfileActivity.this, PicturePreviewActivity.class);
+//                 intent2.putExtra("url", PreferenceUtil.getString(AppConstants.HEADICON, ""));
+//                 startActivity(intent2);
                 break;
             case R.id.modify_avatar: //修改头像
 
