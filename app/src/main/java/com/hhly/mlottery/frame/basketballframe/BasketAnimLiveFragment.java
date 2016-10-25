@@ -41,7 +41,7 @@ public class BasketAnimLiveFragment extends Fragment {
 
     public static BasketAnimLiveFragment newInstance(String thirdId) {
         Bundle bundle = new Bundle();
-        bundle.putString(THIRDID, "380472");
+        bundle.putString(THIRDID, thirdId);
         BasketAnimLiveFragment basketAnimLiveFragment = new BasketAnimLiveFragment();
         basketAnimLiveFragment.setArguments(bundle);
         return basketAnimLiveFragment;
@@ -65,8 +65,9 @@ public class BasketAnimLiveFragment extends Fragment {
         tv_nopage = (TextView) mView.findViewById(R.id.tv_nopage);
         mWebView = (ProgressWebView) mView.findViewById(R.id.webview);
 
+        url = "http://192.168.31.89:9000/live/basket_graphic.html?thirdId=" + thirdId + "&lang=" + appendLanguage();
 
-        url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
+        // url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
 
         loadAnim();
         return mView;

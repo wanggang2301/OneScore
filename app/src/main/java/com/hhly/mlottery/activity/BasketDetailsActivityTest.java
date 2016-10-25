@@ -172,13 +172,14 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     private static final String LEAGUEID_NBA = "1";
 
+    private int matchStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
             mThirdId = getIntent().getExtras().getString(BASKET_THIRD_ID);
             mLeagueId = getIntent().getExtras().getString(BASKET_MATCH_LEAGUEID);
             mMatchType = getIntent().getExtras().getInt(BASKET_MATCH_MATCHTYPE);
-
 
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
 
@@ -201,12 +202,18 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         initView();
         mBasketDetailsHeadFragment = BasketDetailsHeadFragment.newInstance();
+
+
         if (LEAGUEID_NBA.equals(mLeagueId)) {
             mBasketAnimLiveFragment = BasketAnimLiveFragment.newInstance("");
         }
         basePagerAdapter.addFragments(mBasketDetailsHeadFragment);
+
         if (LEAGUEID_NBA.equals(mLeagueId)) {
             basePagerAdapter.addFragments(mBasketAnimLiveFragment);
+            mIndicator.setVisibility(View.VISIBLE);
+        } else {
+            mIndicator.setVisibility(View.GONE);
         }
         mHeadviewpager.setAdapter(basePagerAdapter);
         mHeadviewpager.setOffscreenPageLimit(1);
@@ -214,7 +221,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
 
         mHeadviewpager.setCurrentItem(0, false);
-        //mHeadviewpager.setIsScrollable(false);
+        mHeadviewpager.setIsScrollable(false);
 
         setListener();
         loadData();
@@ -410,9 +417,20 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
+
+                    matchStatus = basketDetailsBean.getMatch().getMatchStatus();
+                    if (0 == matchStatus) { //未开赛
+                        mIndicator.setVisibility(View.GONE);
+                        mHeadviewpager.setIsScrollable(false);
+                    } else {
+                        mIndicator.setVisibility(View.VISIBLE);
+                        mHeadviewpager.setIsScrollable(true);
+                    }
+
                     isRquestSuccess = true;
 //                    initData(basketDetailsBean);
                     mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+
 
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         connectWebSocket();
