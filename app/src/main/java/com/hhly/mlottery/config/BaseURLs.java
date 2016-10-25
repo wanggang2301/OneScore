@@ -889,7 +889,7 @@ public class BaseURLs {
      */
     public final static String URL_FOREIGN_INFOMATION = URL_API_HOST + "overseasInformation.findOverseasInformation.do";
     public final static String URL_FOREIGN_INFOMATION_DETAILS_UPDLIKE = URL_API_HOST + "overseasInformation.updLike.do";
-    public final static String TESTINGISLOGIN =URL_API_HOST+"systemSettings.findThirdPartyLoginSettings.do";
+//    public final static String TESTINGISLOGIN =URL_API_HOST+"systemSettings.findThirdPartyLoginSettings.do";
 
     /**
      * 关注绑定用户与推送

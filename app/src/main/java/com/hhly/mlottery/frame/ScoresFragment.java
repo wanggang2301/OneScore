@@ -439,7 +439,11 @@ public class ScoresFragment extends BaseWebSocketFragment {
      */
     public void getFootballUserConcern(){
 
-        String userId= AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+             userId= AppConstants.register.getData().getUser().getUserId();
+        }
+
         if(userId!=null&&userId!=""){
             //devideID;
             String deviceId=AppConstants.deviceToken;
