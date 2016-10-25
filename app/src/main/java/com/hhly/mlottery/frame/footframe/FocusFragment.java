@@ -477,7 +477,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
         Map<String, String> params = new HashMap<String, String>();
         String deviceId=AppConstants.deviceToken;
-        String userId= AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
         params.put("userId",userId);
         params.put("deviceId",deviceId);
         params.put("thirdId",thirdId);
@@ -1223,7 +1226,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         String deviceId=AppConstants.deviceToken;
         String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
         Log.e("AAA",uMengDeviceToken+"???");
-        String userId=AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
         //thirdId
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
         Map<String,String> params=new HashMap<>();
@@ -1276,7 +1282,10 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
         //请求后台
         String deviceId=AppConstants.deviceToken;
         String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-        String userId=AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
         //thirdId
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.followMatch.do";
         Map<String,String> params=new HashMap<>();

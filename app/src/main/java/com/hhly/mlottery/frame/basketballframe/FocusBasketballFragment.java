@@ -328,7 +328,10 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         String url1="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findCancelAfterConcernList.do";
         Map<String, String> params = new HashMap<>();
         String deviceId=AppConstants.deviceToken;
-        String userId= AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
 
         params.put("userId",userId);
         params.put("deviceId",deviceId);
@@ -554,7 +557,10 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         //TODO:把用户id,deviceId,deviceToken 传给服务器
         String deviceId= AppConstants.deviceToken;
         String uMengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-        String userId=AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
         String isPushFocus=PreferenceUtil.getBoolean(MyConstants.BASKETBALL_PUSH_FOCUS,true)==true?"true":"false";
         //thirdId
         String url="http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.customConcernVS.do";
@@ -606,7 +612,10 @@ public class FocusBasketballFragment extends Fragment implements View.OnClickLis
         PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS, sb.toString());
 
         String deviceId=AppConstants.deviceToken;
-        String userId=AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
         //TODO:请求后台
         Map<String ,String > params=new HashMap<>();
         String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.cancelCustomConcernVS.do";

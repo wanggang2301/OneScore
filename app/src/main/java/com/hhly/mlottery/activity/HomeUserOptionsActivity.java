@@ -236,7 +236,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                     UiUtils.toast(MyApp.getInstance(), R.string.logout_succ);
                     PreferenceUtil.commitBoolean("three_login",false);
                     setResult(RESULT_OK);
-                    finish();
+
 
                     RongIM.getInstance().logout();// 退出融云账号
                     RongIM.getInstance().disconnect();// 断开融云连接
@@ -246,6 +246,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                     PreferenceUtil.commitString(FocusBasketballFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
                     PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
                     request(); //推送需要
+
+                    finish();
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
