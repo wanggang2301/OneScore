@@ -292,6 +292,6 @@ public class PicturePreviewActivity extends BaseActivity {
     @OnClick(R.id.iv_save)
     public void onClick() {
         savePhotoToSDCard(zoomBitmap(bitmap, widthPixels, heightPixels), getLocalPath(url));
-        Toast.makeText(getApplicationContext(), "已保存图片到SD卡文件夹下", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), mContext.getResources().getString(R.string.foreign_pic), Toast.LENGTH_SHORT).show();
     }
 }

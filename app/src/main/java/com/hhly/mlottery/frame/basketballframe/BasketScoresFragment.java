@@ -270,7 +270,10 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
      */
     public void getBasketballUserConcern(){
         //请求后台，及时更新关注赛事内容
-        String userId= AppConstants.register.getData().getUser().getUserId();
+        String userId="";
+        if(AppConstants.register!=null&&AppConstants.register.getData()!=null&&AppConstants.register.getData().getUser()!=null){
+            userId= AppConstants.register.getData().getUser().getUserId();
+        }
         if(userId!=null&&userId!=""){
             String url=" http://192.168.31.68:8080/mlottery/core/androidBasketballMatch.findConcernVsThirdIds.do";
             String deviceId=AppConstants.deviceToken;

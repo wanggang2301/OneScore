@@ -40,7 +40,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 21
-        versionName "1.1.8.1023"
+        versionName "1.1.8.1025"
         multiDexEnabled true
     }
 
@@ -65,6 +65,7 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -105,6 +106,7 @@ dependencies {
     compile 'com.prolificinteractive:material-calendarview:1.4.0'
     compile 'com.artemzin.rxjava:proguard-rules:1.1.3.0'
     compile 'cn.finalteam:okhttpfinal:2.0.7'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     provided 'com.android.support:support-annotations:23.4.0'

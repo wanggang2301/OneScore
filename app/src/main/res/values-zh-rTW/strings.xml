@@ -1239,4 +1239,8 @@
     <string name="push_shake">震動</string>
     <string name="push_sound">聲音</string>
     <string name="push_focus_match">推送關注比賽</string>
+
+    <!--墙外-->
+
+    <string name="foreign_pic">已保存圖片到SD卡文件夾下</string>
 </resources>
