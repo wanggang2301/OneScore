@@ -258,11 +258,14 @@ public class BasketScoresFragment extends BaseWebSocketFragment implements View.
     public  void focusCallback() {
         String focusIds = PreferenceUtil.getString(FocusBasketballFragment.BASKET_FOCUS_IDS, "");
         String[] arrayId = focusIds.split("[,]");
-        if ("".equals(focusIds) || arrayId.length == 0) {
-            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt));
-        } else {
-            mTabLayout.getTabAt(3).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+        if(getActivity()!=null){
+            if ("".equals(focusIds) || arrayId.length == 0) {
+                mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
+            } else {
+                mTabLayout.getTabAt(3).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            }
         }
+
     }
 
     /**

@@ -492,11 +492,14 @@ public class ScoresFragment extends BaseWebSocketFragment {
     public void focusCallback() {
         String focusIds = PreferenceUtil.getString("focus_ids", "");
         String[] arrayId = focusIds.split("[,]");
-        if ("".equals(focusIds) || arrayId.length == 0) {
-            mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getString(R.string.foot_guanzhu_txt));
-        } else {
-            mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+        if(getActivity()!=null){
+            if ("".equals(focusIds) || arrayId.length == 0) {
+                mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt));
+            } else {
+                mTabLayout.getTabAt(FOCUS_FRAGMENT).setText(getActivity().getResources().getString(R.string.foot_guanzhu_txt) + "(" + arrayId.length + ")");
+            }
         }
+
     }
 
     @Override
