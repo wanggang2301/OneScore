@@ -172,7 +172,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     private static final String LEAGUEID_NBA = "1";
 
-    private int matchStatus;
+  //  private int matchStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +205,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
 
         if (LEAGUEID_NBA.equals(mLeagueId)) {
-            mBasketAnimLiveFragment = BasketAnimLiveFragment.newInstance("");
+            mBasketAnimLiveFragment = BasketAnimLiveFragment.newInstance(mThirdId);
         }
         basePagerAdapter.addFragments(mBasketDetailsHeadFragment);
 
@@ -221,7 +221,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
 
         mHeadviewpager.setCurrentItem(0, false);
-        mHeadviewpager.setIsScrollable(false);
+       // mHeadviewpager.setIsScrollable(false);
 
         setListener();
         loadData();
@@ -418,14 +418,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
                 if (basketDetailsBean.getMatch() != null) {
 
-                    matchStatus = basketDetailsBean.getMatch().getMatchStatus();
-                    if (0 == matchStatus) { //未开赛
-                        mIndicator.setVisibility(View.GONE);
-                        mHeadviewpager.setIsScrollable(false);
-                    } else {
-                        mIndicator.setVisibility(View.VISIBLE);
-                        mHeadviewpager.setIsScrollable(true);
-                    }
 
                     isRquestSuccess = true;
 //                    initData(basketDetailsBean);

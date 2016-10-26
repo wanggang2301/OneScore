@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.ProgressWebView;
 
 /**
@@ -60,15 +61,17 @@ public class BasketAnimLiveFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_basket_anim_live, container, false);
         if (getArguments() != null) {
             thirdId = getArguments().getString(THIRDID);
+            L.d("fff", thirdId);
+
         }
         context = getActivity();
         tv_nopage = (TextView) mView.findViewById(R.id.tv_nopage);
         mWebView = (ProgressWebView) mView.findViewById(R.id.webview);
 
-        url = "http://192.168.31.89:9000/live/basket_graphic.html?thirdId=" + thirdId + "&lang=" + appendLanguage();
+        //url = "http://192.168.31.89:9000/live/basket_graphic.html?thirdId=" + thirdId + "&lang=" + appendLanguage();
 
-        // url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
-
+        url = BaseURLs.URL_BASKETBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
+        L.d("fff", url);
         loadAnim();
         return mView;
 

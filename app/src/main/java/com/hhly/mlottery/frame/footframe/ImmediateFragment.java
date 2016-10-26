@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +22,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,7 +73,7 @@ import de.greenrobot.event.EventBus;
  * @Description: 即时
  * @date 2015-10-15 上午9:53:24
  */
-public class ImmediateFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class  ImmediateFragment extends Fragment implements OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
