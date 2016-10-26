@@ -510,29 +510,39 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 // mMatchs.addAll(mAllMatchs);//用这种方式是把all的引用赋给它了，操作起来比较麻烦
 
 
-                //如果在服务器上请求回来的数据没有这条赛事，则删除。
-                String ids = PreferenceUtil.getString("focus_ids", "");
-                String[] arrayIds = ids.split(",");
+//                //如果在服务器上请求回来的数据没有这条赛事，则删除。
+//                String ids = PreferenceUtil.getString("focus_ids", "");
+//                String[] arrayIds = ids.split(",");
+//                StringBuffer sb = new StringBuffer("");
+//
+//                for (String id : arrayIds) {
+//                    boolean isExist = false;
+//                    for (Match m : mAllMatchs) {
+//                        if (m.getThirdId().equals(id)) {
+//                            isExist = true;
+//                            break;
+//                        }
+//                    }
+//
+//                    if (isExist) {
+//                        if (sb.toString().equals("")) {
+//                            sb.append(id);
+//                        } else {
+//                            sb.append("," + id);
+//                        }
+//                    }
+//                }
+                //把请求回来的列表存入本地
                 StringBuffer sb = new StringBuffer("");
-
-                for (String id : arrayIds) {
-                    boolean isExist = false;
-                    for (Match m : mAllMatchs) {
-                        if (m.getThirdId().equals(id)) {
-                            isExist = true;
-                            break;
-                        }
-                    }
-
-                    if (isExist) {
-                        if (sb.toString().equals("")) {
-                            sb.append(id);
-                        } else {
-                            sb.append("," + id);
-                        }
+                for(Match m:mAllMatchs){
+                    if("".equals(sb.toString())){
+                        sb.append(m.getThirdId());
+                    }else {
+                        sb.append(","+m.getThirdId());
                     }
                 }
-                PreferenceUtil.commitString("focus_ids", sb.toString());
+
+                PreferenceUtil.commitString(FOCUS_ISD, sb.toString());
                 ((ScoresFragment) getParentFragment()).focusCallback();
 
 
