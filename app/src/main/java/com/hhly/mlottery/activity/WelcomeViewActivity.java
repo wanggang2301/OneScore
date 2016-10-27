@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.MyScrollLayout;
 import com.hhly.mlottery.widget.OnViewChangeListener;
@@ -99,7 +100,8 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(params);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            iv.setImageResource(imageView[i]);
+            ImageLoader.loadFitCenter(mContext,imageView[i]).into(iv);
+//            iv.setImageResource(imageView[i]);
             list.add(iv);
         }
         // 加入适配器

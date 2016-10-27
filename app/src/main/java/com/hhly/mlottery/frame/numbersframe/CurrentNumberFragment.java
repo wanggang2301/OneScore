@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.numbersframe;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -29,6 +30,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.NumberDataUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -37,8 +39,6 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import pl.droidsonroids.gif.GifImageView;
 
 /**
  * 开奖列表内容详情
@@ -476,11 +476,12 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                     int dip = DisplayUtil.dip2px(mContext, 26);
                     params = new LinearLayout.LayoutParams(dip, dip);
 
-                    GifImageView iv = new GifImageView(mContext);
+                    ImageView iv = new ImageView(mContext);
                     iv.setLayoutParams(params);
 
                     if (j == index) {
-                        iv.setImageResource(R.mipmap.number_anim_klsf_red);// 红球
+//                        iv.setImageResource(R.mipmap.number_anim_klsf_red);// 红球
+                        ImageLoader.loadFitCenter(mContext,R.mipmap.number_anim_klsf_red,R.mipmap.number_kj_icon_def).into(iv);// 红球
                     }
 
                     ll.addView(iv);

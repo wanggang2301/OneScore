@@ -21,8 +21,6 @@ import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.droidsonroids.gif.GifImageView;
-
 /**
  * @author Tenney
  * @des 对号码还有生肖进行拆分动作
@@ -224,10 +222,11 @@ public class NumberDataUtils {
                 // 重庆幸运农场
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    GifImageView iv = new GifImageView(context);
+                    ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
 
-                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
+//                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
+                    ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
 
                     ll.addView(iv);
                 } else {
@@ -297,9 +296,9 @@ public class NumberDataUtils {
 
                         isDynamicNumber = true;
                         // 显示动态的gif图
-                        GifImageView iv = new GifImageView(context);
-                        iv.setImageResource(AppConstants.numberHKOpenGIF[i]);
-                        // iv.setImageResource(R.drawable.aaa);
+                        ImageView iv = new ImageView(context);
+//                        iv.setImageResource(AppConstants.numberHKOpenGIF[i]);
+                        ImageLoader.loadFitCenter(context,AppConstants.numberHKOpenGIF[i],R.mipmap.number_kj_icon_def).into(iv);
 
                         // 设置GIF图的大小和左右的外边距
                         params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(context, 26), DisplayUtil.dip2px(context, 26));
@@ -482,12 +481,11 @@ public class NumberDataUtils {
                 // 添加
                 if (isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    GifImageView iv = new GifImageView(context);
+                    ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
 
-                    iv.setImageResource(AppConstants.numberQXCOpenGIF[i]);
-
-                    // iv.setImageResource(R.drawable.number_qxc_test);
+//                    iv.setImageResource(AppConstants.numberQXCOpenGIF[i]);
+                    ImageLoader.loadFitCenter(context,AppConstants.numberQXCOpenGIF[i],R.mipmap.number_kj_icon_def).into(iv);
 
                     ll.addView(iv);
                 } else {
@@ -513,9 +511,10 @@ public class NumberDataUtils {
                 // 广东快乐十分,湖南快乐十分
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    GifImageView iv = new GifImageView(context);
+                    ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
-                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
+//                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
+                    ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
                     ll.addView(iv);
                 } else {
                     TextView tv_number = new TextView(context);
@@ -562,9 +561,10 @@ public class NumberDataUtils {
                 // 其它号码
                 if (isGravity == 1 && isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
-                    GifImageView iv = new GifImageView(context);
+                    ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
-                    iv.setImageResource(AppConstants.numberQXCOpenGIF[0]);
+//                    iv.setImageResource(AppConstants.numberQXCOpenGIF[0]);
+                    ImageLoader.loadFitCenter(context,AppConstants.numberQXCOpenGIF[0],R.mipmap.number_kj_icon_def).into(iv);
                     ll.addView(iv);
                 } else {
                     // 添加号码布局

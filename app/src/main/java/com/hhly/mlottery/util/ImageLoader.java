@@ -134,6 +134,23 @@ public class ImageLoader {
     }
 
     /**
+     * 加载资源图片, 并完整显示(fitCenter)
+     *
+     * @param context context
+     * @param resId   资源文件Id
+     * @param defId   默认图片Id
+     * @return ImageRequestBuilder
+     */
+    public static ImageRequestBuilder loadFitCenter(Context context, int resId , int defId) {
+        DrawableRequestBuilder<Uri> builder = Glide.with(context)
+                .load(resourceIdToUri(context, resId))
+                .placeholder(defId)
+                .fitCenter()
+                .crossFade();
+        return new ImageRequestBuilder(builder);
+    }
+
+    /**
      * 加载SD卡图片
      *
      * @param context context

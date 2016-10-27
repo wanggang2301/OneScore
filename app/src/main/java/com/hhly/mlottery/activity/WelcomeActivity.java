@@ -36,6 +36,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -47,13 +48,14 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+
 /**
  * @author Tenney
  * @ClassName: WelcomeActivity
  * @Description: 启动界面
  * @date 2015-11-5 上午11:32:35
  */
-public class WelcomeActivity extends BaseActivity  implements View.OnClickListener{
+public class WelcomeActivity extends BaseActivity implements View.OnClickListener {
     private static final int GET_SAME_SUCCESS = 1;
     private static final int GET_IMAGE_SUCCESS = 2;
     private static final int INIT_IMAGE_ERROR = 3;
@@ -90,7 +92,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-          initView();
+        initView();
         imageAD = (ImageView) findViewById(R.id.imageAD);
         mContext = this;
         mPackageManager = mContext.getPackageManager();
@@ -120,7 +122,8 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
         getUmeng();
 
         if (AppConstants.isGOKeyboard) {
-            imageAD.setBackgroundResource(R.mipmap.welcome_tw);
+            ImageLoader.load(mContext,R.mipmap.welcome_tw).into(imageAD);
+//            imageAD.setBackgroundResource(R.mipmap.welcome_tw);
            /* if (MyApp.isLanguage.equals("rTW")) {
                 imageAD.setBackgroundResource(R.mipmap.welcome_tw);
             } else {
@@ -128,11 +131,11 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
             }*/
         } else {//如果是国内版
             if (MyApp.isLanguage.equals("rCN")) {// 如果是中文简体
-                imageAD.setBackgroundResource(R.mipmap.welcome);
+//                imageAD.setBackgroundResource(R.mipmap.welcome);
+                ImageLoader.load(mContext,R.mipmap.welcome).into(imageAD);
             } else if (MyApp.isLanguage.equals("rTW")) {
-
-                                    imageAD.setBackgroundResource(R.mipmap.welcome_tw);
-
+//                imageAD.setBackgroundResource(R.mipmap.welcome_tw);
+                ImageLoader.load(mContext,R.mipmap.welcome_tw).into(imageAD);
             }
         }
 
@@ -165,8 +168,8 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
         mCount_down.setVisibility(View.GONE);
     }
 
-    private void cancelCountDown(){
-        if (countDown != null){
+    private void cancelCountDown() {
+        if (countDown != null) {
             countDown.cancel();
         }
     }
@@ -310,7 +313,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
                             //网络请求图片成功
                             imageHandler.sendEmptyMessage(GET_IMAGE_SUCCESS);
                         }
-                        mDuration = json.getDuration()*1000+699;
+                        mDuration = json.getDuration() * 1000 + 699;
 
                     }
 
@@ -333,7 +336,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
     }
 
     private void toCountdown(int duration) {
-        countDown = CountDown.getDefault(duration,TIMEOUT_INTERVEL,new CountDown.CountDownCallback() {
+        countDown = CountDown.getDefault(duration, TIMEOUT_INTERVEL, new CountDown.CountDownCallback() {
             @Override
             public void onFinish() {
                 //setHideTranslateAnimation();
@@ -343,11 +346,11 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
 
             @Override
             public void onTick(long millisUntilFinished) {
-                if (mTv_verycode != null){
+                if (mTv_verycode != null) {
 
-                    L.d(TAG,millisUntilFinished/ CountDown.TIMEOUT_INTERVEL + mContext.getResources().getString(R.string.skip));
+                    L.d(TAG, millisUntilFinished / CountDown.TIMEOUT_INTERVEL + mContext.getResources().getString(R.string.skip));
                     mTv_verycode.setVisibility(View.VISIBLE);
-                    mTv_verycode.setText(millisUntilFinished/ CountDown.TIMEOUT_INTERVEL +mContext.getResources().getString(R.string.skip));
+                    mTv_verycode.setText(millisUntilFinished / CountDown.TIMEOUT_INTERVEL + mContext.getResources().getString(R.string.skip));
                 }
             }
         });
@@ -413,8 +416,8 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
                     break;
                 case GET_IMAGE_NODATA://无图片显示
                     //setHideTranslateAnimation();
-                       mCount_down.setVisibility(View.GONE);
-                      gotoHomeActivity();
+                    mCount_down.setVisibility(View.GONE);
+                    gotoHomeActivity();
                     break;
 
                 default:
@@ -468,7 +471,6 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
 
         }
     }*/
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -482,7 +484,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.tv_verycode:
                 gotoHomeActivity();

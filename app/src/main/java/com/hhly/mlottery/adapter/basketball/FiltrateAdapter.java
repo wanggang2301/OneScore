@@ -66,7 +66,7 @@ public class FiltrateAdapter extends CommonAdapter<BasketMatchFilter> {
              * ImageLoader -->加载图片
              */
             mImage = holder.getView(R.id.item_category_icon_1);
-            mImage.setTag(url);
+//            mImage.setTag(url);
             ImageLoader.load(mContext,url,R.mipmap.basket_default).into(mImage);
 
 //            VolleyContentFast.requestImage(url, new Response.Listener<Bitmap>() {
