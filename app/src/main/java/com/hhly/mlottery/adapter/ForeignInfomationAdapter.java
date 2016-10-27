@@ -5,15 +5,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.activity.ForeignInfomationDetailsActivity;
 import com.hhly.mlottery.activity.PLVideoTextureActivity;
 import com.hhly.mlottery.activity.PicturePreviewActivity;
@@ -21,6 +24,7 @@ import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.bean.foreigninfomation.TightBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.ImageLoader;
+import com.hhly.mlottery.util.ScreenUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CircleImageView;
 
@@ -44,7 +48,6 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
         this.list = data;
 
 
-
     }
 
 
@@ -56,7 +59,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     @Override
     protected void convert(final BaseViewHolder viewHolder, final OverseasInformationListBean o) {
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
-        ImageLoader.load(mContext,o.getAvatar(),R.mipmap.center_head).into((CircleImageView) viewHolder.getView(R.id.civ_logo));
+        ImageLoader.load(mContext, o.getAvatar(), R.mipmap.center_head).into((CircleImageView) viewHolder.getView(R.id.civ_logo));
 
         long mNumberTime = o.getCurrentTimestamp() - o.getTimestamp();
 
@@ -114,7 +117,19 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             viewHolder.getView(R.id.iv_video).setVisibility(View.GONE);
         } else {
             viewHolder.getView(R.id.iv_photo).setVisibility(View.VISIBLE);
-            ImageLoader.load(mContext,o.getPhoto(),R.mipmap.counsel_depth).into((ImageView) viewHolder.getView(R.id.iv_photo));
+            Glide.with(mContext).load(o.getPhoto()).asBitmap().into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    int imageWidth = resource.getWidth();
+                    int imageHeight = resource.getHeight();
+                    int height = ScreenUtils.getScreenWidth(mContext) * imageHeight / imageWidth;
+                    ViewGroup.LayoutParams para = ((ImageView) viewHolder.getView(R.id.iv_photo)).getLayoutParams();
+                    para.height = height;
+                    ((ImageView) viewHolder.getView(R.id.iv_photo)).setLayoutParams(para);
+                    Glide.with(mContext).load(o.getPhoto()).asBitmap().into((ImageView) viewHolder.getView(R.id.iv_photo));
+                }
+            });
+            // ImageLoader.load(mContext,o.getPhoto(),R.mipmap.counsel_depth).into((ImageView) viewHolder.getView(R.id.iv_photo));
 
             if ("2".equals(o.getInfoType())) {
                 viewHolder.getView(R.id.iv_video).setVisibility(View.VISIBLE);
