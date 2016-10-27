@@ -1,8 +1,6 @@
 package com.hhly.mlottery.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.IntegralBean;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -34,7 +32,6 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
     private Context mContext;
     private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
-    private DisplayImageOptions options;
     private LinearLayout mIntegral;
     String leagueType;//联赛类型
     private List<IntegralBean.LangueScoreBean.ListBean> datas;
@@ -48,10 +45,7 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
         this.mContext = context;
         this.leagueType = leagueType;
         inflater = LayoutInflater.from(mContext);
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.live_default).showImageOnFail(R.mipmap.live_default)
-                .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
-                .cacheOnDisc(true).considerExifParams(true).build();
+
     }
     public void setAllInfor(List<List<IntegralBean.LangueScoreBean.ListBean>> childDataList, List<String> groupDataList) {
         this.mGroupDataList = groupDataList;
@@ -153,7 +147,7 @@ public class IntegralExpandableAdapter extends BaseExpandableListAdapter impleme
         //队伍名称
         holder.integral_team_name.setText(mChildrenDataList.get(groupPosition).get(childPosition).getName());
         //队徽
-        ImageLoader.getInstance().displayImage(home_images, holder.integral_team_imag, options);
+        ImageLoader.load(mContext,home_images,R.mipmap.live_default).into(holder.integral_team_imag);
         //比赛场次
         holder.integral_round.setText(mChildrenDataList.get(groupPosition).get(childPosition).getRound() + "");
         //胜

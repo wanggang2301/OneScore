@@ -1,9 +1,7 @@
 package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Build;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,24 +10,21 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketAllOddBean;
 import com.hhly.mlottery.bean.basket.BasketMatchBean;
 import com.hhly.mlottery.bean.basket.BasketOddBean;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.view.PinnedHeaderExpandableListView;
 import com.hhly.mlottery.view.PinnedHeaderExpandableListView.HeaderAdapter;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.List;
 import java.util.Map;
@@ -66,8 +61,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 //    private ImageLoader mImageLoader; //
 //    private ImageLoader.ImageCache mImageCache;
 
-    private DisplayImageOptions options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
 
     public PinnedHeaderExpandableAdapter(List<List<BasketMatchBean>> childrenDataList, List<String> groupDataList
             , Context mContext, PinnedHeaderExpandableListView listView) {
@@ -78,19 +71,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 //        this.isToday = isToday;
         inflater = LayoutInflater.from(this.mContext);
 
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_default)
-                .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
     }
 
     public void updateDatas(List<List<BasketMatchBean>> childrenDataList, List<String> groupDataList) {
@@ -224,13 +204,12 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         /**
          * 设置tag 、默认图片
          */
-        holder.home_icon.setTag(homelogourl);
-        holder.guest_icon.setTag(guestlogourl);
+        //holder.home_icon.setTag(homelogourl);
+        //holder.guest_icon.setTag(guestlogourl);
         //ImagaeLoader -- 加载图片
+        ImageLoader.load(mContext,homelogourl,R.mipmap.basket_default).into(holder.home_icon);
+        ImageLoader.load(mContext,guestlogourl,R.mipmap.basket_default).into(holder.guest_icon);
 
-
-        universalImageLoader.displayImage(homelogourl, holder.home_icon,options);
-        universalImageLoader.displayImage(guestlogourl, holder.guest_icon,options);
 
         //赔率设置
         MatchOdds = childredata.getMatchOdds();

@@ -18,21 +18,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueMost;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseLeagueStatistics;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseMostDat;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseStatisticsBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.NoScrollListView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -86,8 +84,6 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
     private MostAdapter mAdapter2;
     private MostAdapter mAdapter3;
     private MostAdapter mAdapter4;
-    private DisplayImageOptions mOptions;
-    private ImageLoader mImageLoader;
     private LinearLayout mStatisticLinear;
     private LinearLayout mMostLinear;
     private RadioGroup mRadioGroup;
@@ -124,16 +120,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageForEmptyUri(R.mipmap.basket_default)
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext()).build();
-        mImageLoader = ImageLoader.getInstance();
-        mImageLoader.init(config);
+
 
         mSeason = getArguments().getString(PARAM2_SEASON);
         mLeagueId = getArguments().getString(PARAM_ID);
@@ -500,7 +487,8 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
             }
 
             ImageView mIcon= (ImageView)holder.getConvertView().findViewById(R.id.progress_statistic);
-            mImageLoader.displayImage(basketDatabaseMostDat.getTeamIconUrl(), mIcon , mOptions);
+            ImageLoader.load(getActivity(),basketDatabaseMostDat.getTeamIconUrl(),R.mipmap.basket_default).into(mIcon);
+
         }
     }
 

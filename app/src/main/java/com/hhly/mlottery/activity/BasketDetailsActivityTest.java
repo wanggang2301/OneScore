@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
@@ -43,19 +43,16 @@ import com.hhly.mlottery.frame.basketballframe.MyRotateAnimation;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -132,9 +129,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private String[] TITLES;
 
 
-    private DisplayImageOptions mOptions;
-    private DisplayImageOptions mOptionsHead;
-    private ImageLoader mImageLoader;
     /**
      * 返回按钮
      */
@@ -238,29 +232,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
         EventBus.getDefault().register(this);//注册EventBus
         RongYunUtils.createChatRoom(mThirdId);// 创建聊天室
-
-        mOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
-                .showImageForEmptyUri(R.mipmap.basket_default)
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .build();
-
-
-        mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.color.black)
-                .showImageForEmptyUri(R.color.black)
-                .showImageOnFail(R.color.black)// 加载失败显示的图片
-                .displayer(new FadeInBitmapDisplayer(2000))
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
-        mImageLoader = ImageLoader.getInstance(); //初始化
-        mImageLoader.init(config);
 
 
 //        try {
@@ -801,11 +772,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }
 
         //图标
-        mImageLoader.displayImage(mMatch.getHomeLogoUrl(), mHomeIcon, mOptions);
-
-        mImageLoader.displayImage(mMatch.getGuestLogoUrl(), mGuestIcon, mOptions);
-        mImageLoader.displayImage(bean.getBgUrl(), mHeadImage, mOptionsHead);
-
+        ImageLoader.load(mContext,mMatch.getHomeLogoUrl(),R.mipmap.basket_default).into(mHomeIcon);
+        ImageLoader.load(mContext,mMatch.getGuestLogoUrl(),R.mipmap.basket_default).into(mGuestIcon);
+        ImageLoader.load(mContext,bean.getBgUrl()).into(mHeadImage);
 
         if (mMatch.getSection() == 2) { //只有上下半场
             mGuest2.setVisibility(View.INVISIBLE);

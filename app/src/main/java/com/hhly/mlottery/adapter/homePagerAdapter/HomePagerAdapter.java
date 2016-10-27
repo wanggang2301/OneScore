@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballActivity;
 import com.hhly.mlottery.activity.LoginActivity;
@@ -29,9 +30,8 @@ import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Field;
@@ -45,7 +45,6 @@ import java.util.List;
 public class HomePagerAdapter extends PagerAdapter {
     private Context mContext;
     private HomePagerEntity mHomePagerEntity;
-    private DisplayImageOptions options;// 设置ImageLoder参数
     private long downIime;// 轮播图按下时间
     private long upTime;// 轮播图按下松开时间
     private LunboTask mTask;// 轮播图控制器
@@ -60,10 +59,7 @@ public class HomePagerAdapter extends PagerAdapter {
         this.mContext = context;
         this.mHomePagerEntity = homePagerEntity;
         this.mTopHolder = topHolder;
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.home_carousel_default).showImageOnFail(R.mipmap.home_carousel_default)
-                .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
-                .cacheOnDisc(true).considerExifParams(true).build();
+
         setBannersDefPic();
         onDrawPoint();
         setScroller();
@@ -174,7 +170,8 @@ public class HomePagerAdapter extends PagerAdapter {
         } else {
             picUrl = mHomePagerEntity.getBanners().getContent().get(position).getPicUrl();
         }
-        ImageLoader.getInstance().displayImage(picUrl, iv, options);
+        ImageLoader.load(mContext,picUrl,R.mipmap.home_carousel_default).into(iv);
+
         final int index = position;
         iv.setOnTouchListener(new View.OnTouchListener() {
             @Override

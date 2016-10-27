@@ -1,17 +1,16 @@
 package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketMatchFilter;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+
 
 import java.util.List;
 
@@ -30,27 +29,12 @@ public class FiltrateAdapter extends CommonAdapter<BasketMatchFilter> {
 
 //    private boolean isNull = false;
 
-    private DisplayImageOptions options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
 
     private ImageView mImage;
 
     public FiltrateAdapter(Context context, List<BasketMatchFilter> datas, int layoutId) {
         super(context, datas, layoutId);
 
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，图片太多就这这个。还有其他设置//如Bitmap.Config.ARGB_8888
-                .showImageOnLoading(R.mipmap.basket_default)   //默认图片
-                .showImageForEmptyUri(R.mipmap.basket_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
 
     }
     @Override
@@ -83,7 +67,7 @@ public class FiltrateAdapter extends CommonAdapter<BasketMatchFilter> {
              */
             mImage = holder.getView(R.id.item_category_icon_1);
             mImage.setTag(url);
-            universalImageLoader.displayImage(url,mImage,options);
+            ImageLoader.load(mContext,url,R.mipmap.basket_default).into(mImage);
 
 //            VolleyContentFast.requestImage(url, new Response.Listener<Bitmap>() {
 //                @Override

@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballAnalyzeDetailsActivity;
 import com.hhly.mlottery.activity.FootballDatabaseDetailsActivity;
@@ -28,21 +29,17 @@ import com.hhly.mlottery.bean.footballDetails.NewAnalyzeBean;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.RoundProgressBar;
 import com.hhly.mlottery.widget.LineChartView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  *  足球分析界面
@@ -54,8 +51,6 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
-    private DisplayImageOptions mOptions;
-    private ImageLoader mImageLoader;
 
     private View mView;
     private Context mContext;// 上下文对象
@@ -242,17 +237,7 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         if (getArguments() != null) {
             mThirdId = getArguments().getString(ARG_PARAM1);
         }
-        mOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                        //  .showImageOnLoading(R.mipmap.basket_default)//加上这句的话会导致刷新时闪烁
-                .showImageForEmptyUri(R.mipmap.football_analyze_default)
-                .showImageOnFail(R.mipmap.football_analyze_default)// 加载失败显示的图片
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity()).build();
-        mImageLoader = ImageLoader.getInstance(); //初始化
-        mImageLoader.init(config);
+
 
     }
 
@@ -670,12 +655,14 @@ public class AnalyzeFragment extends Fragment implements View.OnClickListener{
         if(getActivity()!=null&&analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getHome()!=null&&analyzeBean.getBothRecord().getHome().getFutureMatch()!=null&&getActivity()!=null){
             mHomeFutureDate.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getDiffDays()+getActivity().getResources().getString(R.string.number_hk_dd));
             mHomeFutureName.setText(analyzeBean.getBothRecord().getHome().getFutureMatch().getTeam());
-            mImageLoader.displayImage(analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(), mHomeFutureLogo, mOptions);
+            ImageLoader.load(getActivity(),analyzeBean.getBothRecord().getHome().getFutureMatch().getLogoUrl(),R.mipmap.football_analyze_default).into(mHomeFutureLogo);
+
         }
         if(getActivity()!=null&&analyzeBean.getBothRecord()!=null&&analyzeBean.getBothRecord().getGuest()!=null&&analyzeBean.getBothRecord().getGuest().getFutureMatch()!=null&&getActivity()!=null){
             mGuestFutureDate.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getDiffDays() + getActivity().getResources().getString(R.string.number_hk_dd));
             mGuestFutureName.setText(analyzeBean.getBothRecord().getGuest().getFutureMatch().getTeam());
-            mImageLoader.displayImage(analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),mGuestFutureLogo,mOptions);
+            ImageLoader.load(getActivity(),analyzeBean.getBothRecord().getGuest().getFutureMatch().getLogoUrl(),R.mipmap.football_analyze_default).into(mGuestFutureLogo);
+
         }
 
         //积分排名

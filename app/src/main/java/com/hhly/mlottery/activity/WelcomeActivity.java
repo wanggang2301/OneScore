@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -15,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +24,10 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.android.volley.DefaultRetryPolicy;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.UmengInfo;
@@ -41,13 +47,6 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
 /**
  * @author Tenney
  * @ClassName: WelcomeActivity
@@ -76,8 +75,6 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
     public static PackageInfo mPackageInfo;
     private String mStartimageUrl;
 
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
-    private DisplayImageOptions options;
     public static final int TIMEOUT_INTERVEL = 1000;
     /**
      * 倒计时 默认3s , 间隔1s
@@ -86,6 +83,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
     private TextView mTv_verycode;
     private LinearLayout mCount_down;
     private int mDuration;
+    private SimpleTarget target;
 
     @SuppressWarnings("unused")
     @Override
@@ -102,19 +100,7 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
             e.printStackTrace();
             // 此异常不会发生
         }
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .resetViewBeforeLoading(true)
-                .build();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
-                .defaultDisplayImageOptions(options)
-                .imageDownloader(new BaseImageDownloader(mContext, 2 * 1000, 2 * 1000))
-                .build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
         // 获取经纬度
         String serviceName = Context.LOCATION_SERVICE;
         locationManager = (LocationManager) getSystemService(serviceName);
@@ -382,35 +368,34 @@ public class WelcomeActivity extends BaseActivity  implements View.OnClickListen
                 case GET_IMAGE_SUCCESS://图片获取成功
                     //判断本地缓存是否存在该图片  是显示 不是替换
                     mCount_down.setVisibility(View.VISIBLE);
-                    universalImageLoader.displayImage(mStartimageUrl, imageAD, options, new ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String s, View view) {
-                            //加载开始
-                            toCountdown(mDuration);
-                        }
 
-                        @Override
-                        public void onLoadingFailed(String s, View view, FailReason failReason) {
-                            //加载失败
-                          //  setHideTranslateAnimation();
 
-                            gotoHomeActivity();
-                        }
+                    Glide.with(mContext)
+                            .load(mStartimageUrl)
+                            .error(R.mipmap.home_menu_icon_def)
+                            .placeholder(R.mipmap.home_menu_icon_def)
+                            .crossFade()
+                            .into(new SimpleTarget<GlideDrawable>() {
+                                @Override
+                                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                                    imageAD.setImageDrawable(resource);
+                                    countDown.start();
+                                }
 
-                        @Override
-                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                            //加载成功执行
+                                @Override
+                                public void onLoadStarted(Drawable placeholder) {
+                                    super.onLoadStarted(placeholder);
+                                    //加载开始
+                                    toCountdown(mDuration);
+                                }
 
-                             countDown.start();
-                           // setHideTranslateAnimation();
-                        }
+                                @Override
+                                public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                                    super.onLoadFailed(e, errorDrawable);
+                                    gotoHomeActivity();
+                                }
+                            });
 
-                        @Override
-                        public void onLoadingCancelled(String s, View view) {
-                            //加载取消
-                            mCount_down.setVisibility(View.GONE);
-                        }
-                    });
                     PreferenceUtil.commitString(MyConstants.START_IMAGE_URL, mStartimageUrl);
                  /*   new Handler().postDelayed(new Runnable() {
                         @Override

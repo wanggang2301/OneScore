@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
@@ -32,14 +33,12 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -101,8 +100,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     private final static int Put_FAIL_PHOTO = 11;
 
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
-    private  DisplayImageOptions options;
     private final OkHttpClient client = new OkHttpClient();
 
     private static final String IMAGE_STORAGGEID = "/headview/image.png";
@@ -130,18 +127,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.center_head)   //默认图片
-                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
+
 
         initView();
     }
@@ -149,7 +135,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onStart() {
         super.onStart();
-        universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mHead_portrait, options);
+        ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mHead_portrait);
     }
 
     @Override
@@ -514,7 +500,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                    // CommonUtils.saveRegisterInfo(register);
 
                     PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
-                    universalImageLoader.displayImage(register.getData().getUser().getHeadIcon(), mHead_portrait, options);
+                    ImageLoader.load(mContext,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
+
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }

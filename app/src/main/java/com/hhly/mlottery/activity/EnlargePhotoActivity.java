@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,20 +23,21 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -59,10 +61,6 @@ import java.util.Map;
  * @data: 2016/8/22 17:53
  */
 public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickListener {
-
-    /*ImageLoader*/
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
-    private  DisplayImageOptions options;
 
     /*网络获取图片*/
     private ImageView mEblarge_photo;
@@ -117,31 +115,19 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
             }
         }
     };
+    private Bitmap photo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enlarge_photo);
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.center_head)   //默认图片
-                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
-
 
         initView();
         initData();
     }
      /*加载网络获取图片*/
     private void initData() {
-
-        universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""),mEblarge_photo , options);
+        ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mEblarge_photo);
 
     }
 
@@ -224,8 +210,19 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
             public void onClick(View v) {
                 popupWindow.dismiss();
 
-                 Bitmap photo=universalImageLoader.loadImageSync(PreferenceUtil.getString(AppConstants.HEADICON, ""), options);
+             SimpleTarget target = new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                        // do something with the bitmap
+                        // for demonstration purposes, let's just set it to an ImageView
+                        photo = bitmap;
+                    }
 
+
+                };
+                    Glide.with(mContext)
+                            .load(PreferenceUtil.getString(AppConstants.HEADICON, ""))
+                            .into(target);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     photo.compress(Bitmap.CompressFormat.PNG, 75, stream);// (0-100)压缩文件
                     //此处可以把Bitmap保存到sd卡中，具体请看：http://www.cnblogs.com/linjiqin/archive/2011/12/28/2304940.html
@@ -422,7 +419,7 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
                     progressBar.dismiss();
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                     // CommonUtils.saveRegisterInfo(register);
-                    universalImageLoader.displayImage(register.getData().getUser().getHeadIcon().toString(), mEblarge_photo, options);
+                    ImageLoader.load(mContext,register.getData().getUser().getHeadIcon().toString()).into(mEblarge_photo);
                     PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());

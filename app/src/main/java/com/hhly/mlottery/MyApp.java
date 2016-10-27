@@ -16,11 +16,6 @@ import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
 
@@ -65,7 +60,6 @@ public class MyApp extends Application {
         };
         appcontext = this;
 
-        initImageLoader(this);
 //		CyUtils.initCy(this);
         // 初始化PreferenceUtil
         PreferenceUtil.init(this);
@@ -170,15 +164,7 @@ public class MyApp extends Application {
         return appcontext;
     }
 
-    public void initImageLoader(Context context) {
-        // 用ImageLoader必须在application
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).threadPoolSize(5)
-                // 线程池内加载的数量
-                .denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config);
 
-    }
 
     /**
      * 语言切换 选择

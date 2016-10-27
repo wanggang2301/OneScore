@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.scheduleBean.AsiaLet;
 import com.hhly.mlottery.bean.scheduleBean.AsiaSize;
@@ -23,12 +24,10 @@ import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.List;
 
@@ -59,8 +58,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private String teamLogoSuff;
 
-    private DisplayImageOptions options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
 
 
     /**
@@ -99,19 +96,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.teamLogoPre = teamLogoPre;
         this.teamLogoSuff = teamLogoSuff;
 
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.score_default)   //默认图片
-                .showImageForEmptyUri(R.mipmap.score_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.score_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
     }
 
 
@@ -190,13 +174,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 final String guestlogourl = teamLogoPre + scheduleMatchDto.getSchmatchs().getGuestId().trim().trim() + teamLogoSuff;
 
 
-                scheduleViewHolder.home_icon.setTag(homelogourl);
-                scheduleViewHolder.guest_icon.setTag(guestlogourl);
+                //scheduleViewHolder.home_icon.setTag(homelogourl);
+                //scheduleViewHolder.guest_icon.setTag(guestlogourl);
                 //ImagaeLoader -- 加载图片
+                ImageLoader.load(mContext,homelogourl,R.mipmap.score_default).into(scheduleViewHolder.home_icon);
 
-
-                universalImageLoader.displayImage(homelogourl, scheduleViewHolder.home_icon, options);
-                universalImageLoader.displayImage(guestlogourl, scheduleViewHolder.guest_icon, options);
+                ImageLoader.load(mContext,guestlogourl,R.mipmap.score_default).into(scheduleViewHolder.guest_icon);
 
 
                 scheduleViewHolder.item_football_racename.setText(scheduleMatchDto.getSchmatchs().getRacename());

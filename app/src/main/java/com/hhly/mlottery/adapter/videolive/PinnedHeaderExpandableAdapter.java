@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
 import com.hhly.mlottery.util.DateUtil;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.widget.PinnedHeaderExpandableListView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -29,7 +29,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private Context mContext;
     private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
-    private DisplayImageOptions options;
     //比赛的状态
     private String state;
     private int mMatchKind;
@@ -43,10 +42,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         this.mPreurl = mPreurl;
         this.mFix = mFix;
         inflater = LayoutInflater.from(this.mContext);
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.home_score_item_icon_def).showImageOnFail(R.mipmap.home_score_item_icon_def)
-                .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
-                .cacheOnDisc(true).considerExifParams(true).build();
+
     }
 
     /**
@@ -69,10 +65,6 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     /**
      * 设置 子内容 item数据
      *
-     * @param groupPosit+on 组位置（该组内部含有子元素）
-     * @param childPosit+on 子元素位置（决定返回哪个视图）
-     * @param isLastChil+   子元素是否处于组中的最后一个
-     * @param convertVie+   重用已有的视图(View)对象。注意：在使用前你应该检查一下这个视图对象是否非空并且这个对象的类型是否合适。
      *                      由此引伸出，如果该对象不能被转换并显示正确的数据，这个方法就会调用getChildView(int, int, boolean, View, ViewGroup)来创建一个视图(View)对象。
      * @param parent        指定位置上的子元素返回的视图对象
      * @return
@@ -135,8 +127,14 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.rl_iv.setVisibility(View.GONE);
             holder.rl_iv1.setVisibility(View.VISIBLE);
             //主队con
-            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
-
+            ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).zonghePic,R.mipmap.home_score_item_icon_def).into(holder.live_home_icon_img1);
+         /*
+            Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition).get(childPosition).zonghePic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into(holder.live_home_icon_img1);*/
             holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
 
             /***********************************/
@@ -155,8 +153,14 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.rl_iv.setVisibility(View.GONE);
             holder.rl_iv1.setVisibility(View.VISIBLE);
             //主队con
-            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
-
+            //ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+           ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).zonghePic,R.mipmap.home_score_item_icon_def).into(holder.live_home_icon_img1);
+          /*  Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition).get(childPosition).zonghePic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into(holder.live_home_icon_img1);*/
             holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
 
 
@@ -182,7 +186,13 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.rl_iv1.setVisibility(View.VISIBLE);
             //主队icon
             // ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img, options);
-            ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+            //ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+           ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).zonghePic,R.mipmap.home_score_item_icon_def).into(holder.live_home_icon_img1);
+         /*   Glide.with(mContext).load( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into(holder.live_home_icon_img1);*/
             //holder.live_home_icon_img.setPadding(0,200,0,0);
             holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
 
@@ -205,7 +215,13 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.rl_iv1.setVisibility(View.VISIBLE);
             //主队icon
             // ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img, options);
-            ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+            //ImageLoader.getInstance().displayImage( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic, holder.live_home_icon_img1, options);
+         ImageLoader.load(mContext, mChildrenDataList.get(groupPosition).get(childPosition).zonghePic,R.mipmap.home_score_item_icon_def).into(holder.live_home_icon_img1);
+    /*        Glide.with(mContext).load( mChildrenDataList.get(groupPosition).get(childPosition).zonghePic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into(holder.live_home_icon_img1);*/
             //holder.live_home_icon_img.setPadding(0,200,0,0);
             holder.live_item_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).zongheName);
 
@@ -224,9 +240,25 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.rl_iv.setVisibility(View.VISIBLE);
             holder.rl_iv1.setVisibility(View.GONE);
             //主队篮足球
-            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
+            //ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
+            ImageLoader.load(mContext, mChildrenDataList.get(groupPosition)
+                    .get(childPosition).homePic,R.mipmap.home_score_item_icon_def).into( holder.live_home_icon_img);
+   /*         Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition)
+                    .get(childPosition).homePic).error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into( holder.live_home_icon_img);*/
             //客队icon
-            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
+           // ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
+            ImageLoader.load(mContext,mChildrenDataList.get(groupPosition)
+                    .get(childPosition).guestPic,R.mipmap.home_score_item_icon_def).into( holder.live_guest_icon_img);
+           /* Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition)
+                    .get(childPosition).guestPic).error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into(holder.live_guest_icon_img);*/
             //主队
             holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
             // 客队
@@ -246,10 +278,26 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.live_left_child_txt.setVisibility(View.VISIBLE);
             holder.rl_iv.setVisibility(View.VISIBLE);
             holder.rl_iv1.setVisibility(View.GONE);
-            //主队篮足球
+          /*  //主队篮足球
             ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
             //客队icon
-            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);*/
+            //主队
+            ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).homePic,R.mipmap.home_score_item_icon_def).into(holder.live_home_icon_img);
+       /*     Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition).get(childPosition).homePic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into( holder.live_home_icon_img);*/
+            //客队icon
+            ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).guestPic,R.mipmap.home_score_item_icon_def).into(holder.live_guest_icon_img);
+        /*    Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition).get(childPosition).guestPic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into(holder.live_guest_icon_img);*/
             //主队
             holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
             // 客队
@@ -270,10 +318,25 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
             holder.live_left_child_txt.setVisibility(View.VISIBLE);
             holder.rl_iv.setVisibility(View.VISIBLE);
             holder.rl_iv1.setVisibility(View.GONE);
-            //主队篮足球
+          /*  //主队篮足球
             ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
             //客队icon
-            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);*/
+            //主队
+            ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).homePic,R.mipmap.home_score_item_icon_def).into(holder.live_home_icon_img);
+       /*     Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition).get(childPosition).homePic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into( holder.live_home_icon_img);*/
+            //客队icon
+            ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).guestPic,R.mipmap.home_score_item_icon_def).into(holder.live_guest_icon_img);
+      /*      Glide.with(mContext).load(mChildrenDataList.get(groupPosition).get(childPosition).guestPic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into(holder.live_guest_icon_img);*/
             //主队
             holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
             // 客队
@@ -291,10 +354,26 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
 
         }else if(mChildrenDataList.get(groupPosition).get(childPosition).liveAndBFZ == 8){
            //位直播足篮球
-            //主队icon
+        /*    //主队icon
             ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).homePic, holder.live_home_icon_img, options);
             //客队icon
-            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);
+            ImageLoader.getInstance().displayImage(mChildrenDataList.get(groupPosition).get(childPosition).guestPic, holder.live_guest_icon_img, options);*/
+            //主队
+            ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).homePic,R.mipmap.home_score_item_icon_def).into(holder.live_home_icon_img);
+  /*          Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition).get(childPosition).homePic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into( holder.live_home_icon_img);*/
+            //客队icon
+            ImageLoader.load(mContext,mChildrenDataList.get(groupPosition).get(childPosition).guestPic,R.mipmap.home_score_item_icon_def).into(holder.live_guest_icon_img);
+       /*     Glide.with(mContext)
+                    .load(mChildrenDataList.get(groupPosition).get(childPosition).guestPic)
+                    .error(R.mipmap.home_score_item_icon_def)
+                    .placeholder(R.mipmap.home_score_item_icon_def)
+                    .crossFade()
+                    .into(holder.live_guest_icon_img);*/
             //主队
             holder.live_left_child_txt.setText(mChildrenDataList.get(groupPosition).get(childPosition).hmName);
             // 客队

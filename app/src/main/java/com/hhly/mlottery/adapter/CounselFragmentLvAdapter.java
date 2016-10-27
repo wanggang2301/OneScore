@@ -1,7 +1,6 @@
 package com.hhly.mlottery.adapter;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.bean.footballDetails.CounselBean;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.hhly.mlottery.util.ImageLoader;
 
 import java.util.List;
 
@@ -27,35 +26,13 @@ import java.util.List;
 public class CounselFragmentLvAdapter extends BaseAdapter {
     private boolean isleft;
     private List<CounselBean.InfoIndexBean.InfosBean> mInfosList;//资讯列表数据集合父fg传来
-    private DisplayImageOptions optionsleft,options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
     private Activity mActivity;
 
     public CounselFragmentLvAdapter( boolean isleft, List<CounselBean.InfoIndexBean.InfosBean> mInfosList,Activity activity) {
         this.isleft = isleft;
         this.mInfosList = mInfosList;
         this.mActivity=activity;
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.counsel_depth)   //默认图片
-                .showImageForEmptyUri(R.mipmap.counsel_depth)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.counsel_depth)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-        optionsleft = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.counse_icon)   //默认图片
-                .showImageForEmptyUri(R.mipmap.counse_icon)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.counse_icon)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mActivity).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
+
 
     }
 
@@ -118,9 +95,10 @@ public class CounselFragmentLvAdapter extends BaseAdapter {
                 holder.tv_tj.setVisibility(View.GONE);
             }
             holder.tv_ybf.setText((mInfosList.get(position).getInfoSource()));
-            holder.leftimage.setTag(mInfosList.get(position).getPicUrl());
+            //holder.leftimage.setTag(mInfosList.get(position).getPicUrl());
             //ImagaeLoader -- 加载图片
-            universalImageLoader.displayImage(mInfosList.get(position).getPicUrl(), holder.leftimage, optionsleft);
+            ImageLoader.load(mActivity,mInfosList.get(position).getPicUrl(),R.mipmap.counse_icon).into(holder.leftimage);
+
         } else {
             holder.video_button.setVisibility(View.GONE);
             holder.imagenotleft.setVisibility(View.VISIBLE);
@@ -133,12 +111,11 @@ public class CounselFragmentLvAdapter extends BaseAdapter {
                 holder.subtitle.setVisibility(View.VISIBLE);
                 holder.subtitle.setText(mInfosList.get(position).getSubTitle());
             }
-            holder.image_notleft_counselfragment_listviewitem.setTag(mInfosList.get(position).getPicUrl());
+            //holder.image_notleft_counselfragment_listviewitem.setTag(mInfosList.get(position).getPicUrl());
             //ImagaeLoader -- 加载图片
-            universalImageLoader.displayImage(mInfosList.get(position).getPicUrl(), holder.image_notleft_counselfragment_listviewitem, options);
+            ImageLoader.load(mActivity,mInfosList.get(position).getPicUrl(),R.mipmap.counsel_depth).into(holder.image_notleft_counselfragment_listviewitem);
             if(mInfosList.get(position).getIsvideonews()!=null&&mInfosList.get(position).getIsvideonews().equals("1")) { //视频的点击播放
                 holder.video_button.setVisibility(View.VISIBLE);
-
             }
         }
         return convertView;

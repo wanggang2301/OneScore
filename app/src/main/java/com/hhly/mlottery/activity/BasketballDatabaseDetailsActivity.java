@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
@@ -36,16 +37,12 @@ import com.hhly.mlottery.frame.basketballframe.BasketDatabaseHandicapFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseRankingFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseScheduleFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDatabaseStatisticsFragment;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.ScrollTouchListView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -94,9 +91,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
     private BasketDatabaseBigSmallFragment mBigSmallFragment; // 大小球
     private BasketDatabaseStatisticsFragment mStatisticsFragment; // 统计
 
-    private DisplayImageOptions mOptions;
-    private DisplayImageOptions mOptionsHead;
-    private ImageLoader mImageLoader;
     private ImageView mIcon;
     private ImageView mBackground;
     private TextView mLeagueName;
@@ -126,27 +120,6 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
         mHandicapFragment = BasketDatabaseHandicapFragment.newInstance(leagueId, "-1");
         mBigSmallFragment = BasketDatabaseBigSmallFragment.newInstance(leagueId, "-1");
         mStatisticsFragment = BasketDatabaseStatisticsFragment.newInstance(leagueId, "-1");
-
-        mOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageForEmptyUri(R.mipmap.basket_default)
-                .showImageOnFail(R.mipmap.basket_default)// 加载失败显示的图片
-                .build();
-
-        mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.color.colorPrimary)
-                .showImageForEmptyUri(R.color.colorPrimary)
-                .showImageOnFail(R.color.colorPrimary)// 加载失败显示的图片
-                .displayer(new FadeInBitmapDisplayer(2000))
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
-        mImageLoader = ImageLoader.getInstance(); //初始化
-        mImageLoader.init(config);
 
         initView();
         mHandlerData.postDelayed(mRun, 500); // 加载数据
@@ -288,8 +261,8 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
                         mLeagueName.setText(basketDatabaseBean.getLeagueName());
                     }
                     //图标
-                    mImageLoader.displayImage(basketDatabaseBean.getLeagueLogoUrl(), mIcon, mOptions);
-                    mImageLoader.displayImage(basketDatabaseBean.getBgUrl(), mBackground, mOptionsHead);
+                    ImageLoader.load(BasketballDatabaseDetailsActivity.this,basketDatabaseBean.getLeagueLogoUrl(),R.mipmap.basket_default).into(mIcon);
+                    ImageLoader.load(BasketballDatabaseDetailsActivity.this,basketDatabaseBean.getBgUrl()).into(mBackground);
 
                 }
             }
