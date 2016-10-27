@@ -78,6 +78,7 @@ public class PicturePreviewActivity extends BaseActivity {
         ctx = this;
 
         url = getIntent().getStringExtra("url");
+        System.out.println("url>>>>>>>>>>>>"+url);
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);

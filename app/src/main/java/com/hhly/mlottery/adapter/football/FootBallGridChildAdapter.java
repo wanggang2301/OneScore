@@ -8,11 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.hhly.mlottery.util.ImageLoader;
 
 import java.util.List;
 
@@ -25,26 +24,13 @@ public class FootBallGridChildAdapter extends BaseAdapter {
 
     private List<DataBaseBean> mList;
     private Context mContext;
-    private DisplayImageOptions options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
+
 
 
     public FootBallGridChildAdapter(Context context, List<DataBaseBean> list) {
         this.mContext = context;
         this.mList = list;
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_info_default)   //默认图片
-                .showImageForEmptyUri(R.mipmap.basket_info_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.basket_info_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
     }
 
 
@@ -72,7 +58,8 @@ public class FootBallGridChildAdapter extends BaseAdapter {
             if (mList.get(position).getPic() == null || "".equals(mList.get(position).getPic())) {
                 mViewHolder.icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.basket_info_default));
             } else {
-                universalImageLoader.displayImage(mList.get(position).getPic(), mViewHolder.icon, options);
+                ImageLoader.load(mContext,mList.get(position).getPic(),R.mipmap.basket_info_default).into(mViewHolder.icon);
+
             }
 
             mViewHolder.name.setText(mList.get(position).getLgName().toString());

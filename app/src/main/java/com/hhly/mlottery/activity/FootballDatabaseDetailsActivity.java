@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.SportsDialogAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
@@ -36,15 +37,11 @@ import com.hhly.mlottery.frame.footframe.FootballDatabaseHandicapFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseIntegralFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseScheduleNewFragment;
 import com.hhly.mlottery.frame.footframe.FootballDatabaseStatisticsFragment;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.hhly.mlottery.widget.ScrollTouchListView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -83,9 +80,6 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
     private ImageView mBack;
     private LinearLayout mCollect;
 
-    private DisplayImageOptions mOptions;
-    private DisplayImageOptions mOptionsHead;
-    private ImageLoader mImageLoader;
 
     private String[] mSports; // 赛季集
     private boolean isLoad = false;//赛季是否可筛选
@@ -121,26 +115,6 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
         mFootballDatabaseBigSmallFragment = FootballDatabaseBigSmallFragment.newInstance(mLeague.getLeagueId() ,mLeague.getKind(), "-1");//大小球
         mFootballDatabaseStatisticsFragment = FootballDatabaseStatisticsFragment.newInstance(mLeague.getLeagueId() ,mLeague.getKind(), "-1");//统计
 
-        mOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageForEmptyUri(R.mipmap.score_default)
-                .showImageOnFail(R.mipmap.score_default)// 加载失败显示的图片
-                .build();
-
-        mOptionsHead = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.color.colorPrimary)
-                .showImageForEmptyUri(R.color.colorPrimary)
-                .showImageOnFail(R.color.colorPrimary)// 加载失败显示的图片
-                .displayer(new FadeInBitmapDisplayer(2000))
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
-        mImageLoader = ImageLoader.getInstance(); //初始化
-        mImageLoader.init(config);
 
         initView();
         mHandlerData.postDelayed(mRun , 500);
@@ -252,9 +226,8 @@ public class FootballDatabaseDetailsActivity extends AppCompatActivity implement
                         mLeagueName.setText(basketDatabaseBean.getLeagueName());
                     }
                     //图标
-                    mImageLoader.displayImage(basketDatabaseBean.getLeagueLogo(), mIcon, mOptions);
-                    mImageLoader.displayImage(basketDatabaseBean.getRandomBg(), mBackground, mOptionsHead);
-
+                    ImageLoader.load(FootballDatabaseDetailsActivity.this,basketDatabaseBean.getLeagueLogo(),R.mipmap.score_default).into(mIcon);
+                    ImageLoader.load(FootballDatabaseDetailsActivity.this,basketDatabaseBean.getRandomBg(),R.color.colorPrimary).into(mBackground);
                 }
             }
         }, new VolleyContentFast.ResponseErrorListener() {

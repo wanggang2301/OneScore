@@ -6,14 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.InforListData;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-
 import java.util.List;
 
 
@@ -27,8 +25,7 @@ public class InformationDataAdapter extends CommonAdapter<InforListData.LeagueLi
 
 
     private final Context mContext;
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
-    private final DisplayImageOptions options;
+
     private ImageView mTeam_icon;
     private int layoutId;
     public InformationDataAdapter(Context context, List<InforListData.LeagueListBean> datas, int layoutId) {
@@ -36,18 +33,6 @@ public class InformationDataAdapter extends CommonAdapter<InforListData.LeagueLi
         mContext = context;
         this.mDatas=datas;
         this.layoutId=layoutId;
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.live_default)   //默认图片
-                .showImageForEmptyUri(R.mipmap.live_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.live_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
 
 
     }
@@ -68,7 +53,7 @@ public class InformationDataAdapter extends CommonAdapter<InforListData.LeagueLi
           String logoUrl="http://pic.13322.com/icons/league/"+leagueId+".png";
           mTeam_icon = (ImageView) holder.getConvertView().findViewById(R.id.football_logo_img);
          //加载图片
-          universalImageLoader.displayImage(logoUrl, mTeam_icon, options);
+        ImageLoader.load(mContext,logoUrl,R.mipmap.live_default).into(mTeam_icon);
 
           //获取联赛名称
           holder.setText(R.id.football_item_team, listDatas.getName());

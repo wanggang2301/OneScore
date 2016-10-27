@@ -14,13 +14,13 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.Scroller;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.footballDetails.CounselBean;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.MyLineChart;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -31,7 +31,6 @@ import java.util.List;
  */
 public class CounselPageAdapter extends PagerAdapter {
     private Context mContext;
-    private DisplayImageOptions options;// 设置ImageLoder参数
     private long downIime;// 轮播图按下时间
     private long upTime;// 轮播图按下松开时间
     private LunboTask mTask;// 轮播图控制器
@@ -50,10 +49,6 @@ public class CounselPageAdapter extends PagerAdapter {
         this.mAdsList = mAdsList;
         this.mViewPager = mViewPager;
         this.mHeadName=mHeadName;
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.counsel_binner).showImageOnFail(R.mipmap.counsel_binner)
-                .cacheInMemory(true).bitmapConfig(Bitmap.Config.RGB_565)
-                .cacheOnDisc(true).considerExifParams(true).build();
 
         if (mTask == null) {
             mTask = new LunboTask();
@@ -88,7 +83,7 @@ public class CounselPageAdapter extends PagerAdapter {
         if (mAdsList.size() != 0) {
             picUrl = mAdsList.get(position).getPicUrl();
         }
-        ImageLoader.getInstance().displayImage(picUrl, imageView, options);
+        ImageLoader.load(mContext,picUrl,R.mipmap.counsel_binner).into(imageView);
         final int index = position;
         imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override

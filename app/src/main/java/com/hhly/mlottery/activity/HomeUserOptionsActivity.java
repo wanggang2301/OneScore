@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
@@ -23,16 +24,13 @@ import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.footframe.FocusFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RongYunUtils;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -56,8 +54,6 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     /**反馈**/
     private RelativeLayout rl_user_feedback;
     private ProgressDialog progressBar;
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
-    private  DisplayImageOptions options;
     /**
      * 跳转其他Activity 的requestcode
      */
@@ -94,18 +90,6 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         super.onCreate(savedInstanceState);
 
 
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.center_head)   //默认图片
-                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
         initView();
 
     }
@@ -347,7 +331,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("HomeUserOptionsActivity");
        // UiUtils.toast(MyApp.getInstance(), "我是个人用户页面");
-        universalImageLoader.displayImage(PreferenceUtil.getString(AppConstants.HEADICON, ""), mUser_image, options);
+        ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mUser_image);
          /*判断登录状态*/
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);

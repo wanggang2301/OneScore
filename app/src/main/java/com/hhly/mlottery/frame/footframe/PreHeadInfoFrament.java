@@ -14,14 +14,13 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.MatchDetail;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.StringUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
 
 import java.util.Random;
 
@@ -70,8 +69,7 @@ public class PreHeadInfoFrament extends Fragment {
 
     private static final String baseUrl = "http://pic.13322.com/bg/";
 
-    private DisplayImageOptions options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
+
 
     public static PreHeadInfoFrament newInstance() {
         PreHeadInfoFrament fragment = new PreHeadInfoFrament();
@@ -113,25 +111,11 @@ public class PreHeadInfoFrament extends Fragment {
 
     public void initData(MatchDetail mMatchDetail, boolean flag) {
 
-        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.color.colorPrimary)
-                .showImageForEmptyUri(R.color.colorPrimary)
-                .showImageOnFail(R.color.colorPrimary)// 加载失败显示的图片
-                .displayer(new FadeInBitmapDisplayer(2000))
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
-
         // if (flag) {
         int random = new Random().nextInt(20);
         String url = baseUrl + random + ".png";
-        if (universalImageLoader != null) {
-            universalImageLoader.displayImage(url, iv_bg, options);
-        }
+        ImageLoader.load(mContext,url,R.color.colorPrimary).into(iv_bg);
+
         // }
 
 

@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
@@ -39,14 +40,12 @@ import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PullUpRefreshListView;
 import com.hhly.mlottery.widget.CircleImageView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sohu.cyan.android.sdk.api.CyanSdk;
 import com.sohu.cyan.android.sdk.entity.Comment;
 import com.sohu.cyan.android.sdk.exception.CyanException;
@@ -123,10 +122,6 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
 
     private OverseasInformationListBean oilBean;
 
-    private DisplayImageOptions optionsLogo; //
-
-    private DisplayImageOptions options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
 
     public static int tightCount;
 
@@ -163,30 +158,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         mContext = getActivity() == null ? MyApp.getContext() : getActivity();
 
 
-        optionsLogo = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.center_head)   //默认图片
-                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
 
-
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.counsel_depth)   //默认图片
-                .showImageForEmptyUri(R.mipmap.counsel_depth)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.counsel_depth)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
 
 
         sdk = CyanSdk.getInstance(mContext);
@@ -213,10 +185,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         ll_zan = (LinearLayout) headview.findViewById(R.id.ll_zan);
         ivPhone.setOnClickListener(this);
         ll_zan.setOnClickListener(this);
-
-
-        universalImageLoader.displayImage(oilBean.getAvatar(), civLogo, optionsLogo);
-
+        ImageLoader.load(mContext,oilBean.getAvatar(),R.mipmap.center_head).into(civLogo);
         tvNameEn.setText(oilBean.getFullname());
 
 
@@ -243,7 +212,7 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
             ivVideo.setVisibility(View.GONE);
         } else {
             ivPhone.setVisibility(View.VISIBLE);
-            universalImageLoader.displayImage(oilBean.getPhoto(), ivPhone, options);
+            ImageLoader.load(mContext,oilBean.getPhoto(),R.mipmap.counsel_depth).into(ivPhone);
             if ("2".equals(oilBean.getInfoType())) {
                 ivVideo.setVisibility(View.VISIBLE);
             } else {

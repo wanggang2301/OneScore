@@ -8,10 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.hhly.mlottery.util.ImageLoader;
 
 import java.util.List;
 
@@ -25,17 +25,13 @@ public class HomeGridAdapter extends BaseAdapter {
     private HomeListBaseAdapter.ViewHolder mTopHolder;// 头部ViewHolder
 
     private ViewHolder mViewHolder;// ViewHolder
-    private DisplayImageOptions options;// 设置ImageLoder参数
     List<HomeContentEntity> mData;
 
 
     public HomeGridAdapter(Context context, List<HomeContentEntity> list) {
         this.mContext = context;
         this.mData = list;
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.home_menu_icon_def).showImageOnFail(R.mipmap.home_menu_icon_def)
-                .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
-                .cacheOnDisc(true).considerExifParams(true).build();
+
     }
 
     @Override
@@ -58,7 +54,8 @@ public class HomeGridAdapter extends BaseAdapter {
         if (mContentEntity.getPicUrl() == null) {
             mViewHolder.iv_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_menu_icon_def));
         } else {
-            ImageLoader.getInstance().displayImage(mContentEntity.getPicUrl(), mViewHolder.iv_icon, options);// 设置图标
+            ImageLoader.load(mContext,mContentEntity.getPicUrl(),R.mipmap.home_menu_icon_def).into(mViewHolder.iv_icon);
+
         }
         mViewHolder.tv_name.setText(mContentEntity.getTitle());
 

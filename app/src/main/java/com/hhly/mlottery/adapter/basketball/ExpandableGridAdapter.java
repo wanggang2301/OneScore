@@ -2,7 +2,6 @@ package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,16 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
 import com.hhly.mlottery.bean.basket.infomation.NationalLeague;
 import com.hhly.mlottery.callback.BasketInfomationCallBack;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.MyGridViewInfo;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +53,6 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
     private List<LeagueBean> child_array;
     private List<List<NationalLeague>> allDatas;
-    private DisplayImageOptions options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
 
     public void setBasketInfomationCallBack(BasketInfomationCallBack basketInfomationCallBack) {
         this.basketInfomationCallBack = basketInfomationCallBack;
@@ -67,19 +63,7 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
 
         this.allDatas = lists;
 
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.basket_info_default)   //默认图片
-                .showImageForEmptyUri(R.mipmap.basket_info_default)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.basket_info_default)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
     }
 
     /**
@@ -187,7 +171,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             if (allDatas.get(groupPosition).get(0).getNationLogoUrl() == null || "".equals(allDatas.get(groupPosition).get(0).getNationLogoUrl())) {
                 listViewHolder.icon0.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.basket_info_default));
             } else {
-                universalImageLoader.displayImage(allDatas.get(groupPosition).get(0).getNationLogoUrl(), listViewHolder.icon0, options);
+                ImageLoader.load(mContext,allDatas.get(groupPosition).get(0).getNationLogoUrl(),R.mipmap.basket_info_default).into(listViewHolder.icon0);
+
             }
 
             listViewHolder.name0.setText(allDatas.get(groupPosition).get(0).getNationName().toString());
@@ -209,7 +194,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             if (allDatas.get(groupPosition).get(1).getNationLogoUrl() == null || "".equals(allDatas.get(groupPosition).get(1).getNationLogoUrl())) {
                 listViewHolder.icon1.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.basket_info_default));
             } else {
-                universalImageLoader.displayImage(allDatas.get(groupPosition).get(1).getNationLogoUrl(), listViewHolder.icon1, options);
+                ImageLoader.load(mContext,allDatas.get(groupPosition).get(1).getNationLogoUrl(),R.mipmap.basket_info_default).into(listViewHolder.icon1);
+
             }
 
             listViewHolder.name1.setText(allDatas.get(groupPosition).get(1).getNationName().toString());
@@ -233,7 +219,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             if (allDatas.get(groupPosition).get(2).getNationLogoUrl() == null || "".equals(allDatas.get(groupPosition).get(2).getNationLogoUrl())) {
                 listViewHolder.icon2.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.basket_info_default));
             } else {
-                universalImageLoader.displayImage(allDatas.get(groupPosition).get(2).getNationLogoUrl(), listViewHolder.icon2, options);
+                ImageLoader.load(mContext,allDatas.get(groupPosition).get(2).getNationLogoUrl(),R.mipmap.basket_info_default).into(listViewHolder.icon2);
+
             }
 
             listViewHolder.name2.setText(allDatas.get(groupPosition).get(2).getNationName().toString());
@@ -256,7 +243,8 @@ public class ExpandableGridAdapter extends BaseExpandableListAdapter implements 
             if (allDatas.get(groupPosition).get(3).getNationLogoUrl() == null || "".equals(allDatas.get(groupPosition).get(3).getNationLogoUrl())) {
                 listViewHolder.icon3.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.basket_info_default));
             } else {
-                universalImageLoader.displayImage(allDatas.get(groupPosition).get(3).getNationLogoUrl(), listViewHolder.icon3, options);
+                ImageLoader.load(mContext,allDatas.get(groupPosition).get(3).getNationLogoUrl(),R.mipmap.basket_info_default).into(listViewHolder.icon3);
+
             }
 
             listViewHolder.name3.setText(allDatas.get(groupPosition).get(3).getNationName().toString());

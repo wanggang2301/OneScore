@@ -2,7 +2,6 @@ package com.hhly.mlottery.adapter.homePagerAdapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -17,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
@@ -33,10 +33,9 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.HomeNumbersSplit;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.WrapContentHeightViewPager;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -55,9 +54,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private HomePagerEntity mHomePagerEntity;// 首页实体对象
     //    private HomeGridAdapter mGridAdapter;// GridView数据适配器
     private HomePagerAdapter mPagerAdapter;// ViewPager数据适配器
-    private DisplayImageOptions optionsScore;// 设置热门赛事ImageLoder参数
-    private DisplayImageOptions optionsDataInfo;// 设置热门资讯ImageLoder参数
-    private DisplayImageOptions optionsLottery;// 设置彩票ImageLoder参数
 
     private ImageView score01_icon, score01_home_icon, score01_guest_icon, data_info_icon01, hk_icon, ks01_number, ks02_number, ks03_number, qxc_icon, klsf_icon, ks_icon, ssc_icon;
     private ImageView bjsc_icon, bjsc01_number, bjsc02_number, bjsc03_number, bjsc04_number, bjsc05_number, bjsc06_number, bjsc07_number, bjsc08_number, bjsc09_number, bjsc10_number;
@@ -91,7 +87,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
         this.mContext = context;
         this.mHomePagerEntity = homePagerEntity;
 
-        settingPicOptions();
         initData();
         init();// 初始化
         initEvent();// 初始化事件
@@ -129,25 +124,6 @@ public class HomeListBaseAdapter extends BaseAdapter {
         }
     }
 
-    /**
-     * 设置ImageLoader相关配置
-     */
-    private void settingPicOptions() {
-        optionsScore = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.home_score_item_icon_def).showImageOnFail(R.mipmap.home_score_item_icon_def)
-                .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
-                .cacheOnDisc(true).considerExifParams(true).build();
-
-        optionsDataInfo = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.home_data_info_def).showImageOnFail(R.mipmap.home_data_info_def)
-                .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
-                .cacheOnDisc(true).considerExifParams(true).build();
-
-        optionsLottery = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.home_number_item_icon_def).showImageOnFail(R.mipmap.home_number_item_icon_def)
-                .cacheInMemory(true).bitmapConfig(Bitmap.Config.ARGB_8888)
-                .cacheOnDisc(true).considerExifParams(true).build();
-    }
 
     /**
      * 初始化事件
@@ -626,13 +602,14 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (homeBodysEntity.getHomeLogoUrl() == null) {
                                 score01_home_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_score_item_icon_def));
                             } else {
-                                ImageLoader.getInstance().displayImage(homeBodysEntity.getHomeLogoUrl(), score01_home_icon, optionsScore);// 设置主队图标
+                                ImageLoader.load(mContext,homeBodysEntity.getHomeLogoUrl(),R.mipmap.home_score_item_icon_def).into(score01_home_icon);
+
                             }
                             score01_home_name.setText(homeBodysEntity.getHometeam());// 设置主队队名
                             if (homeBodysEntity.getGuestLogoUrl() == null) {
                                 score01_guest_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_score_item_icon_def));
                             } else {
-                                ImageLoader.getInstance().displayImage(homeBodysEntity.getGuestLogoUrl(), score01_guest_icon, optionsScore);// 设置客队图标
+                                ImageLoader.load(mContext,homeBodysEntity.getGuestLogoUrl(),R.mipmap.home_score_item_icon_def).into(score01_guest_icon);
                             }
                             score01_guest_name.setText(homeBodysEntity.getGuestteam());// 设置客队队名
                         }
@@ -647,7 +624,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             if (homeBodysEntity.getPicUrl() == null) {
                                 data_info_icon01.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_data_info_def));
                             } else {
-                                ImageLoader.getInstance().displayImage(homeBodysEntity.getPicUrl(), data_info_icon01, optionsDataInfo);// 设置图标
+                                ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_data_info_def).into(data_info_icon01);
                             }
                             Date curDate = new Date(System.currentTimeMillis());// 获取当前日期
                             String mDate = DateUtil.formatDate(curDate);
@@ -778,7 +755,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             ks_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.getInstance().displayImage(homeBodysEntity.getPicUrl(), ks_icon, optionsLottery);// 设置图标
+            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(ks_icon);
+
         }
         ks_name.setText(lotteryName);
         ks_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -803,7 +781,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             klsf_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.getInstance().displayImage(homeBodysEntity.getPicUrl(), klsf_icon, optionsLottery);// 设置图标
+            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(klsf_icon);
+
         }
         klsf_name.setText(lotteryName);
         klsf_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -842,7 +821,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             bjsc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.getInstance().displayImage(homeBodysEntity.getPicUrl(), bjsc_icon, optionsLottery);// 设置图标
+            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(bjsc_icon);
+
         }
         bjsc_name.setText(lotteryName);
         bjsc_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -867,7 +847,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             qxc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.getInstance().displayImage(homeBodysEntity.getPicUrl(), qxc_icon, optionsLottery);// 设置图标
+            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(qxc_icon);
+
         }
         qxc_name.setText(lotteryName);
         qxc_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -900,7 +881,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             hk_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.getInstance().displayImage(homeBodysEntity.getPicUrl(), hk_icon, optionsLottery);// 设置图标
+            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(hk_icon);
+
         }
         hk_name.setText(lotteryName);
         hk_issue.setText(homeBodysEntity.getIssue());// 设置期号
@@ -1039,7 +1021,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
         if (homeBodysEntity.getPicUrl() == null) {
             ssc_icon.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.home_number_item_icon_def));
         } else {
-            ImageLoader.getInstance().displayImage(homeBodysEntity.getPicUrl(), ssc_icon, optionsLottery);// 设置图标
+            ImageLoader.load(mContext,homeBodysEntity.getPicUrl(),R.mipmap.home_number_item_icon_def).into(ssc_icon);
+
         }
         ssc_name.setText(lotteryName);
         ssc_issue.setText(homeBodysEntity.getIssue());// 设置期号

@@ -9,20 +9,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballDatabaseDetailsActivity;
 import com.hhly.mlottery.activity.ForeignInfomationDetailsActivity;
 import com.hhly.mlottery.activity.PLVideoTextureActivity;
 import com.hhly.mlottery.activity.PicturePreviewActivity;
 import com.hhly.mlottery.bean.foreigninfomation.OverseasInformationListBean;
 import com.hhly.mlottery.bean.foreigninfomation.TightBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.CircleImageView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,41 +38,13 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     private List<OverseasInformationListBean> list;
 
 
-    private DisplayImageOptions optionsLogo; //
-
-
-    private DisplayImageOptions options; //
-    private com.nostra13.universalimageloader.core.ImageLoader universalImageLoader;
-
-
     public ForeignInfomationAdapter(Context context, List<OverseasInformationListBean> data) {
         super(R.layout.item_foreign_infomation, data);
         this.mContext = context;
         this.list = data;
 
-        optionsLogo = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.center_head)   //默认图片
-                .showImageForEmptyUri(R.mipmap.center_head)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.center_head)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
 
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)// 防止内存溢出的，多图片使用565
-                .showImageOnLoading(R.mipmap.counsel_depth)   //默认图片
-                .showImageForEmptyUri(R.mipmap.counsel_depth)    //url爲空會显示该图片，自己放在drawable里面的
-                .showImageOnFail(R.mipmap.counsel_depth)// 加载失败显示的图片
-                .resetViewBeforeLoading(true)
-                .build();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
-        universalImageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance(); //初始化
-        universalImageLoader.init(config);
     }
 
 
@@ -84,9 +56,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
     @Override
     protected void convert(final BaseViewHolder viewHolder, final OverseasInformationListBean o) {
         LinearLayout linearLayout = viewHolder.getView(R.id.item_ll);
-
-
-        universalImageLoader.displayImage(o.getAvatar(), (CircleImageView) viewHolder.getView(R.id.civ_logo), optionsLogo);
+        ImageLoader.load(mContext,o.getAvatar(),R.mipmap.center_head).into((CircleImageView) viewHolder.getView(R.id.civ_logo));
 
         long mNumberTime = o.getCurrentTimestamp() - o.getTimestamp();
 
@@ -144,7 +114,8 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             viewHolder.getView(R.id.iv_video).setVisibility(View.GONE);
         } else {
             viewHolder.getView(R.id.iv_photo).setVisibility(View.VISIBLE);
-            universalImageLoader.displayImage(o.getPhoto(), (ImageView) viewHolder.getView(R.id.iv_photo), options);
+            ImageLoader.load(mContext,o.getPhoto(),R.mipmap.counsel_depth).into((ImageView) viewHolder.getView(R.id.iv_photo));
+
             if ("2".equals(o.getInfoType())) {
                 viewHolder.getView(R.id.iv_video).setVisibility(View.VISIBLE);
             } else {
