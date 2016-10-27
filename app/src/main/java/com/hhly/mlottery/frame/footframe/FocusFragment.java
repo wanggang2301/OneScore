@@ -296,7 +296,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
       /*  ImageView unfocusImage = (ImageView) mView.findViewById(R.id.football_immediate_unfocus_coffee);
         TextView nodataTv = (TextView) mView.findViewById(R.id.football_immediate_no_data_tv);
         nodataTv.setText(R.string.unfocus2);
-        /
+        */
 
         mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);

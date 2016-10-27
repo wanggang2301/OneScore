@@ -675,14 +675,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 if (mMatchs.size() == 1) {// size == 1
                     // 表示除所选日期之外没有其他数据
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
-
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 }
                 updateAdapter();
-
                 currentDatePosition = position;
-                // mListView.setSelection(0);
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -691,7 +688,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             }
         }, ResultMatch.class);
     }
-
 
     @Override
     public void onResume() {
@@ -716,7 +712,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 if (mItems == -1) {//无dialog选择 --加载当前页
                     initData();
                 } else {
