@@ -40,7 +40,6 @@ import java.util.Map;
 public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformationListBean> {
     private Context mContext;
     private List<OverseasInformationListBean> list;
-    private int gone;
 
 
     public ForeignInfomationAdapter(Context context, List<OverseasInformationListBean> data) {
@@ -135,7 +134,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             if ("2".equals(o.getInfoType())) {
                 viewHolder.getView(R.id.iv_video).setVisibility(View.VISIBLE);
             } else {
-                viewHolder.getView(R.id.iv_video).setVisibility(gone);
+                viewHolder.getView(R.id.iv_video).setVisibility(View.GONE);
             }
         }
 
