@@ -281,6 +281,14 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
     private ImageView iv_back;
     private ImageView iv_setting;
     private TextView head_score;
+
+
+
+
+
+
+
+
     private TextView head_home_name;
     private TextView head_guest_name;
     private View iv_share;
@@ -435,7 +443,6 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.refresh_layout_details);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
-
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
 

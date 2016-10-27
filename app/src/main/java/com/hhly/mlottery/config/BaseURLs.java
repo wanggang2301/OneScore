@@ -854,6 +854,10 @@ public class BaseURLs {
 
 
     public final static String URL_FOOTBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/footballodds_graphic.html";
+
+    public final static String URL_BASKETBALLDETAIL_H5 = HTTP + HOST + URL_SPLITTER + "live/basket_graphic.html";
+
+
     /*模糊搜索*/
     public final static String FUZZYSEARCH = "/basketballData.fuzzySearch.do";
 
