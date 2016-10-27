@@ -296,11 +296,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
       /*  ImageView unfocusImage = (ImageView) mView.findViewById(R.id.football_immediate_unfocus_coffee);
         TextView nodataTv = (TextView) mView.findViewById(R.id.football_immediate_no_data_tv);
         nodataTv.setText(R.string.unfocus2);
-        if (AppConstants.isGOKeyboard) {
-            unfocusImage.setImageResource(R.mipmap.inter_unfocus);
-        } else {
-            unfocusImage.setImageResource(R.mipmap.unfocus);
-        }*/
+        /
 
         mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);
@@ -556,17 +552,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
 
-                if (AppConstants.isGOKeyboard) {
-                           /* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
-                            // mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                            getActivity().runOnUiThread(new Runnable() {
 
-                                @Override
-                                public void run() {
-                                    mRecyclerView.setAdapter(mInternationalAdapter);
-                                }
-                            });*/
-                } else {
 
                     if(mAdapter==null){
                         mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
@@ -586,7 +572,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     }else{
                         updateAdapter();
                     }
-                }
+
 
                 isLoadedData = true;
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
@@ -1052,19 +1038,13 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     }
 
     public void updateAdapter() {
-        if (AppConstants.isGOKeyboard) {
-            if (mInternationalAdapter == null) {
-                return;
-            }
-            mInternationalAdapter.updateDatas(mMatchs);
-            mInternationalAdapter.notifyDataSetChanged();
-        } else {
+
             if (mAdapter == null) {
                 return;
             }
             mAdapter.updateDatas(mMatchs);
             mAdapter.notifyDataSetChanged();
-        }
+
     }
 
     @Override
