@@ -40,6 +40,7 @@ import java.util.Map;
 public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformationListBean> {
     private Context mContext;
     private List<OverseasInformationListBean> list;
+    private int gone;
 
 
     public ForeignInfomationAdapter(Context context, List<OverseasInformationListBean> data) {
@@ -123,9 +124,9 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
                     int imageWidth = resource.getWidth();
                     int imageHeight = resource.getHeight();
                     int height = ScreenUtils.getScreenWidth(mContext) * imageHeight / imageWidth;
-                    ViewGroup.LayoutParams para = ((ImageView) viewHolder.getView(R.id.iv_photo)).getLayoutParams();
+                    ViewGroup.LayoutParams para = ( viewHolder.getView(R.id.iv_photo)).getLayoutParams();
                     para.height = height;
-                    ((ImageView) viewHolder.getView(R.id.iv_photo)).setLayoutParams(para);
+                    (viewHolder.getView(R.id.iv_photo)).setLayoutParams(para);
                     Glide.with(mContext).load(o.getPhoto()).asBitmap().into((ImageView) viewHolder.getView(R.id.iv_photo));
                 }
             });
@@ -134,7 +135,7 @@ public class ForeignInfomationAdapter extends BaseQuickAdapter<OverseasInformati
             if ("2".equals(o.getInfoType())) {
                 viewHolder.getView(R.id.iv_video).setVisibility(View.VISIBLE);
             } else {
-                viewHolder.getView(R.id.iv_video).setVisibility(View.GONE);
+                viewHolder.getView(R.id.iv_video).setVisibility(gone);
             }
         }
 
