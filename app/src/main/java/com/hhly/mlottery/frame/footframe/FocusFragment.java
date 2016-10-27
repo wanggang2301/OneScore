@@ -543,6 +543,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
                 PreferenceUtil.commitString(FOCUS_ISD, sb.toString());
+                Log.e("BBB","存进去时"+sb.toString());
                 ((ScoresFragment) getParentFragment()).focusCallback();
 
 
@@ -556,17 +557,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
 
-                if (AppConstants.isGOKeyboard) {
-                           /* mInternationalAdapter = new ImmediateInternationalAdapter(mContext, mMatchs, R.layout.item_football_international);
-                            // mInternationalAdapter.setFocusClickListener(mFocusClickListener);
-                            getActivity().runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    mRecyclerView.setAdapter(mInternationalAdapter);
-                                }
-                            });*/
-                } else {
 
                     if(mAdapter==null){
                         mAdapter = new ImmediateAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
@@ -586,7 +576,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                     }else{
                         updateAdapter();
                     }
-                }
+
 
                 isLoadedData = true;
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
@@ -1052,19 +1042,13 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
     }
 
     public void updateAdapter() {
-        if (AppConstants.isGOKeyboard) {
-            if (mInternationalAdapter == null) {
-                return;
-            }
-            mInternationalAdapter.updateDatas(mMatchs);
-            mInternationalAdapter.notifyDataSetChanged();
-        } else {
+
             if (mAdapter == null) {
                 return;
             }
             mAdapter.updateDatas(mMatchs);
             mAdapter.notifyDataSetChanged();
-        }
+
     }
 
     @Override
@@ -1180,11 +1164,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
 
     public void reLoadData(){
-        String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
-        if ("".equals(fucus_id) || ",".equals(fucus_id)) {
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-            return;
-        }
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         mLoadHandler.post(mLoadingDataThread);
     }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
@@ -247,7 +248,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                     PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
                     request(); //推送需要
 
-                    finish();
+//                    getFootballUserFocus(""); //注销时把未登录状态的用户id请求过来 .篮球不需要是因为篮球进行了预加载，会直接请求关注页面。足球没有。
+//
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                 }
@@ -268,7 +270,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     private void request() {
         String url="http://192.168.31.73:8080/mlottery/core/pushSetting.exitUpdateOnlile.do";
         Map<String ,String> params=new HashMap<>();
-        params.put("deviceToken",AppConstants.deviceToken);
+        params.put("deviceId",AppConstants.deviceToken);
         VolleyContentFast.requestJsonByPost(BaseURLs.EXIT_PUSH_ONLINE, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
             @Override
             public void onResponse(ConcernBean jsonObject) {
@@ -277,17 +279,65 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                     Log.e("AAA","注销成功");
 
                 }
+                finish();
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
+                finish();
             }
         },ConcernBean.class);
+    }
+    /**
+     * 获取用户足球关注列表
+     */
+    private void getFootballUserFocus(String userId) {
+
+        //devideID;
+        String deviceId=AppConstants.deviceToken;
+        //devicetoken 友盟。
+        String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
+        String appNo="11";
+        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.loginUserFindMatch.do";
+        Map<String,String> params=new HashMap<>();
+        params.put("appNo",appNo);
+        params.put("userId",userId);
+        params.put("deviceToken",umengDeviceToken);
+        params.put("deviceId",deviceId);
+
+        Log.e("CCC",umengDeviceToken);
+        //volley请求
+        VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
+            @Override
+            public void onResponse(BasketballConcernListBean jsonObject) {
+                if(jsonObject.getResult().equals("200")){
+                    Log.e("AAA","登陆后请求的足球关注列表");
+                    //将关注写入文件
+                    StringBuffer sb=new StringBuffer();
+                    for(String thirdId:jsonObject.getConcerns()){
+                        if("".equals(sb.toString())){
+                            sb.append(thirdId);
+                        }else {
+                            sb.append(","+thirdId);
+                        }
+                    }
+                    PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,sb.toString());
+                    finish();
+                }else{
+                    finish();
+                }
 
 
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                finish();
 
+            }
+        },BasketballConcernListBean.class);
 
     }
 

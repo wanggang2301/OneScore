@@ -215,7 +215,6 @@ public class ScoresFragment extends BaseWebSocketFragment {
 
         pureViewPagerAdapter = new PureViewPagerAdapter(fragments, titles, getChildFragmentManager());
 
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

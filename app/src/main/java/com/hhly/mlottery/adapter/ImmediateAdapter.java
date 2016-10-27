@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -885,6 +886,7 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         String focusIds = PreferenceUtil.getString(FocusFragment.FOCUS_ISD, "");
+        Log.e("BBB","取得时候"+focusIds);
         String[] idArray = focusIds.split("[,]");
 
         for (String id : idArray) {
