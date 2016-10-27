@@ -539,6 +539,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
 
                 PreferenceUtil.commitString(FOCUS_ISD, sb.toString());
+                Log.e("BBB","存进去时"+sb.toString());
                 ((ScoresFragment) getParentFragment()).focusCallback();
 
 
@@ -1160,11 +1161,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
 
     public void reLoadData(){
-        String fucus_id = PreferenceUtil.getString(FOCUS_ISD, "");
-        if ("".equals(fucus_id) || ",".equals(fucus_id)) {
-            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
-            return;
-        }
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         mLoadHandler.post(mLoadingDataThread);
     }
