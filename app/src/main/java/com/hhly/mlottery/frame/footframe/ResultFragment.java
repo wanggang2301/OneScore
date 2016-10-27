@@ -47,7 +47,6 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -323,8 +322,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 boolean isCheck = (Boolean) view.getTag();// 检查之前是否被选中
 
                 if (!isCheck) {// 插入数据
-                    Log.e("AAA","有调用啊");
-                   FocusFragment.addFocusId(third);
+                    Log.e("AAA", "有调用啊");
+                    FocusFragment.addFocusId(third);
 
                     ((ImageView) view).setImageResource(R.mipmap.football_focus);
                     view.setTag(true);
@@ -458,7 +457,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             return;
         }
 
-        ((ScoresFragment) getParentFragment()).getFootballUserConcern();
+        if (getParentFragment() != null) {
+            ((ScoresFragment) getParentFragment()).getFootballUserConcern();
+        }
 
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_ResultMatchs, new VolleyContentFast.ResponseSuccessListener<ResultMatch>() {
             @Override
