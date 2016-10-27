@@ -43,7 +43,6 @@ import com.hhly.mlottery.callback.RecyclerViewItemClickListener;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ScoresFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -69,11 +68,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    //private SlideListView mListView;
-
     private RecyclerView mRecyclerView;
-
     private View mView;
     private Context mContext;
 
@@ -83,9 +78,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     private ArrayList<ResultMatchDto> mAllMatchs;// 所有的
     private ArrayList<ResultMatchDto> mMatchs;// 显示的
-
-    private boolean isGJB = AppConstants.isGOKeyboard;//判断是否是国际版
-
 
     public static List<LeagueCup> mCups;
     public static LeagueCup[] mCheckedCups; // 联赛筛选
@@ -248,23 +240,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        /*if (mView == null) {
-            mView = inflater.inflate(R.layout.football_result, container, false);
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                mCurIndex = bundle.getInt(FRAGMENT_INDEX);
-            }
-            isPrepared = true;
-            initView();
-
-            lazyLoad();
-        }
-
-        ViewGroup parent = (ViewGroup) mView.getParent();
-        if (parent != null) {
-            parent.removeView(mView);
-        }
-*/
         mContext = getActivity();
 
         mView = inflater.inflate(R.layout.football_result, container, false);
@@ -281,15 +256,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
             initData();
         }
     };
-
-
-   /* protected void lazyLoad() {
-        if (!isPrepared || !isVisible || mHasLoadedOnce) {
-            return;
-        }
-        new Handler().postDelayed(mLoadingDataThread, 0);
-
-    }*/
 
     public void initView() {
         layoutManager = new LinearLayoutManager(getActivity());
@@ -309,10 +275,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
-        //mListView.setSwipeRefreshLayout(mSwipeRefreshLayout);
-
         mRecyclerView.setLayoutManager(layoutManager);
-
 
         // 实现 监听 （实例化） 关注监听
         mFocusMatchClickListener = new FocusMatchClickListener() {// 关注按钮事件
@@ -345,14 +308,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         /**
          * 国际版判断
          */
-        //初始化 dialog
-
-      /*  if (isGJB) { //否则  显示国际版 界面
-            setDialog_internation();
-        } else {*/    //如果是中文 或繁体--  则用中文ui显示
         setDialog();
-        //}
-
     }
 
     /**
@@ -396,58 +352,11 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         };
     }
 
-    public void setDialog_internation() {
-        mDateOnClickListener_internation = new DateOnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Dialog 设置
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(mContext, R.style.AlertDialog);
-                LayoutInflater infla = LayoutInflater.from(mContext);
-                View view = infla.inflate(R.layout.alertdialog, null);
-                TextView titleView = (TextView) view.findViewById(R.id.titleView);
-                titleView.setText(R.string.tip);
-                ListView listview = (ListView) view.findViewById(R.id.listdate);
-                ScheduleDateAdapter dateAdapter = ResultDateUtil.initListDateAndWeek(getActivity(), mDateList, mCurrentDate, currentDatePosition);
-                listview.setAdapter(dateAdapter);
-                final AlertDialog mAlertDialog = mBuilder.create();
-                listview.setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                        mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-                        //重新选择日期后  默认 未做过筛选
-//						mType = 0;
-                        isCheckedDefualt = true;
-                        // 加载 历史数据
-                        historyInitData(position);
-                        // 关闭 dialog弹窗
-                        mAlertDialog.dismiss();
-                        // 记录点击的 item_share 位置
-                        mItems = position;
-                        // System.out.println("position=========="+position);
-                    }
-                });
-                mAlertDialog.show();
-                mAlertDialog.getWindow().setContentView(view);
-
-
-            }
-        };
-
-    }
-
     public void updateAdapter() {
-
-        /*if (isGJB) { //国际版样式
-            if (mInternationAdapter != null) {
-                mInternationAdapter.updateDatas(mMatchs); //默认 显示 热门
-                mInternationAdapter.notifyDataSetChanged();
-            }
-        } else {// 中文版样式*/
         if (mAdapter != null) {
             mAdapter.updateDatas(mMatchs); //默认 显示 热门
             mAdapter.notifyDataSetChanged();
         }
-        //}
     }
 
     // 加载数据
@@ -563,31 +472,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     mCheckedCups = mCups.toArray(new LeagueCup[mCups.size()]);
                 }
 
-                /**
-                 * 国际版判断
-                 */
-                /*if (isGJB) { //国际版 样式
-                    mInternationAdapter = new ResultMultiInternationAdapter(getActivity(), mMatchs,new ResultMultiInternationAdapter.ResultMultiItemTypeSupport());
-                    mInternationAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                    mInternationAdapter.setFocusClickListener(mFocusClickListener);
-                    mInternationAdapter.setDateOnClickListener(mDateOnClickListener_internation);
-                    mListView.setAdapter(mInternationAdapter);
-
-                } else { //中文版样式*/
-                   /* ResultMultiAdapter.ResultMultiItemTypeSupport resultMultiItemTypeSupport = new ResultMultiAdapter.ResultMultiItemTypeSupport();
-                    mAdapter = new ResultMultiAdapter(getActivity(), mMatchs, resultMultiItemTypeSupport);
-                    mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                    mAdapter.setFocusClickListener(mFocusClickListener);
-                    mAdapter.setDateOnClickListener(mDateOnClickListener);
-                    mListView.setAdapter(mAdapter);*/
-
-                // }
-
-
                 mAdapter = new ResultMultiAdapter(mContext, mMatchs, teamLogoPre, teamLogoSuff);
-                //  mAdapter.setItemPaddingRight(mListView.getItemPaddingRight());
-                //  mAdapter.setSchfocusClickListener(mSchfocusClickListener);
-
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setmFocusMatchClickListener(mFocusMatchClickListener);
                 mAdapter.setDateOnClickListener(mDateOnClickListener);
@@ -603,7 +488,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                         getParentFragment().startActivityForResult(intent, REQUEST_DETAIL_CODE);
                     }
                 });
-
 
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 isLoadedData = true;
@@ -706,7 +590,6 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     public void onEventMainThread(Integer currentFragmentId) {
         updateAdapter();
     }
-
 
     /**
      * EventBus 赛场比赛详情返回FootballMatchDetailActivity
