@@ -97,7 +97,6 @@ public class BasketAnimLiveFragment extends Fragment {
                 tv_nopage.setVisibility(View.VISIBLE);
             }
         });
-
         mWebView.loadUrl(url);
     }
 
@@ -131,7 +130,6 @@ public class BasketAnimLiveFragment extends Fragment {
             // 如果是越南语
             lang = BaseURLs.LANGUAGE_SWITCHING_VI;
         }
-
         return lang.trim();
     }
 }
