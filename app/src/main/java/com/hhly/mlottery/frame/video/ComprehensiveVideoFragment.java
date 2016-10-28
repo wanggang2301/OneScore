@@ -158,6 +158,7 @@ public class ComprehensiveVideoFragment extends Fragment  implements View.OnClic
                     childDataList = new ArrayList<>();
                 }
                 if (json != null) {
+                    if(json.matchVideo!=null){
                     //前缀
                     String stPreurl = json.preurl;
                     //后缀
@@ -241,6 +242,7 @@ public class ComprehensiveVideoFragment extends Fragment  implements View.OnClic
                                     }
 
                                 }
+
                             }
                         }
 
@@ -252,7 +254,7 @@ public class ComprehensiveVideoFragment extends Fragment  implements View.OnClic
                             explistview_live.expandGroup(i); //设置 默认打开的 group
                         }
                     }
-
+                    }
                 }
 
             }
