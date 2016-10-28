@@ -768,6 +768,9 @@
     <string name="basket_database_details_statistic_gp_num">已賽場次</string>
     <string name="basket_database_details_statistic_average">平均得分</string>
 
+    <string name="basket_database_details_statistic_all_scoreA">總進球</string>
+    <string name="basket_database_details_statistic_averageA">平均進球</string>
+
     <string name="basket_database_details_statistic_home_win">主勝 :</string>
     <string name="basket_database_details_statistic_guest_win">客勝 :</string>
     <string name="basket_database_details_statistic_draw">走水 :</string>
