@@ -28,17 +28,14 @@ import com.hhly.mlottery.widget.ProgressWebView;
  */
 public class BasketAnimLiveFragment extends Fragment {
 
-    private static final String TAG = "AnimHeadLiveFragment";
+    private static final String TAG = "BasketAnimLiveFragment";
     private static final String THIRDID = "thirdId";
     private String thirdId;
     private Context context;
     private View mView;
     private ProgressWebView mWebView;
-
     private TextView tv_nopage;
-
     private String url;
-
 
     public static BasketAnimLiveFragment newInstance(String thirdId) {
         Bundle bundle = new Bundle();
@@ -51,8 +48,6 @@ public class BasketAnimLiveFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
@@ -61,20 +56,16 @@ public class BasketAnimLiveFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_basket_anim_live, container, false);
         if (getArguments() != null) {
             thirdId = getArguments().getString(THIRDID);
-            L.d("fff", thirdId);
-
+            L.d(TAG, thirdId);
         }
         context = getActivity();
         tv_nopage = (TextView) mView.findViewById(R.id.tv_nopage);
         mWebView = (ProgressWebView) mView.findViewById(R.id.webview);
 
-        //url = "http://192.168.31.89:9000/live/basket_graphic.html?thirdId=" + thirdId + "&lang=" + appendLanguage();
-
         url = BaseURLs.URL_BASKETBALLDETAIL_H5 + "?thirdId=" + thirdId + "&lang=" + appendLanguage();
-        L.d("fff", url);
+        L.d(TAG, url);
         loadAnim();
         return mView;
-
     }
 
 
