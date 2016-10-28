@@ -25,6 +25,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
@@ -42,6 +45,7 @@ import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.ScreenUtils;
 import com.hhly.mlottery.util.ToastTools;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.view.PullUpRefreshListView;
@@ -212,7 +216,21 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
             ivVideo.setVisibility(View.GONE);
         } else {
             ivPhone.setVisibility(View.VISIBLE);
-            ImageLoader.load(mContext,oilBean.getPhoto(),R.mipmap.counsel_depth).into(ivPhone);
+
+            Glide.with(mContext).load(oilBean.getPhoto()).asBitmap().into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    int imageWidth = resource.getWidth();
+                    int imageHeight = resource.getHeight();
+                    int height = ScreenUtils.getScreenWidth(mContext) * imageHeight / imageWidth;
+                    ViewGroup.LayoutParams para = ivPhone.getLayoutParams();
+                    para.height = height;
+                    ivPhone.setLayoutParams(para);
+                    Glide.with(mContext).load(oilBean.getPhoto()).asBitmap().into(ivPhone);
+                }
+            });
+
+            //ImageLoader.load(mContext,oilBean.getPhoto(),R.mipmap.counsel_depth).into(ivPhone);
             if ("2".equals(oilBean.getInfoType())) {
                 ivVideo.setVisibility(View.VISIBLE);
             } else {
