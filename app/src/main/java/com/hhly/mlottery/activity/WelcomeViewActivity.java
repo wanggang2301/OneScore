@@ -100,7 +100,7 @@ public class WelcomeViewActivity extends BaseActivity implements OnViewChangeLis
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(params);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            ImageLoader.loadFitCenter(mContext,imageView[i]).into(iv);
+            ImageLoader.load(mContext,imageView[i]).into(iv);
 //            iv.setImageResource(imageView[i]);
             list.add(iv);
         }
