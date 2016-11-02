@@ -55,7 +55,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     // private int[] sorts = new int[] { 1, 6, 15, 8, 11, 19, 2, 4, 5, 23, 3, 7,
     // 20, 22, 10, 16, 18 };// 默认排序彩种Name
 
-    private List<Integer> sortDef1 = new ArrayList<Integer>(17);
+    private List<Integer> sortDef1 = new ArrayList<Integer>(23);
     private List<NumberCurrentInfo> numberSortList = new ArrayList<NumberCurrentInfo>();// 系统默认排序的彩种对象集合
 
     private static final int STARTLOADING = 0;// 开始加载状态
@@ -147,9 +147,17 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         if (null != sortDef1) {
             sortDef1.clear();
         }
-        // 1, 6, 15, 8, 11, 19, 2, 4, 5, 23, 3, 7, 20, 22, 10, 16, 18
+        // 1, 6, 24,29,28,27,25,26, 15, 8, 11, 19, 2, 4, 5, 23, 3, 7, 20, 22, 10, 16, 18  按需求排列彩种
         sortDef1.add(1);
         sortDef1.add(6);
+
+        sortDef1.add(24);
+        sortDef1.add(29);
+        sortDef1.add(28);
+        sortDef1.add(27);
+        sortDef1.add(25);
+        sortDef1.add(26);
+
         sortDef1.add(15);
         sortDef1.add(8);
         sortDef1.add(11);
