@@ -126,6 +126,10 @@
     <string name="odd_dish_txt">盤口</string>
     <string name="odd_guest_txt">客隊</string>
     <string name="odd_time_txt">时间</string>
+    <string name="symbol_times" translatable="false">×</string>
+    <string name="symbol_plus" translatable="false">+</string>
+    <string name="symbol_equal" translatable="false">=</string>
+    <string name="label_line" translatable="false">-</string>
     <!--欧赔-->
     <string name="odd_home_op_txt">主勝</string>
     <string name="odd_dish_op_txt">平局</string>
@@ -434,6 +438,12 @@
     <string name="number_cz_jx_syxw">江西十一選五</string>
     <string name="number_cz_sd_syxw">山東十一選五</string>
     <string name="number_cz_tj_ssc">天津時時彩</string>
+    <string name="number_cz_ssq">雙色球</string>
+    <string name="number_cz_pl3">排列3</string>
+    <string name="number_cz_pl5">排列5</string>
+    <string name="number_cz_f3d">福彩3D</string>
+    <string name="number_cz_qlc">七樂彩</string>
+    <string name="number_cz_dlt">大樂透</string>
     <!-- 描述信息 -->
     <string name="number_code_desc_qxc">每週二、五、日晚20:30開獎</string>
     <string name="number_code_desc_bj_sc">每天179期，5分鐘一期，9:00-0:00</string>
@@ -451,6 +461,12 @@
     <string name="number_code_desc_ah_ks">每天80期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_js_ks">每天82期，10分鐘一期，8:30-22:00</string>
     <string name="number_code_desc_gx_ks">每天78期，10分鐘一期，9:30-22:30</string>
+    <string name="number_code_desc_ssq">每周二、四、日21:15開獎</string>
+    <string name="number_code_desc_dlt">每周一、三、六20:30開獎</string>
+    <string name="number_code_desc_qlc">每周一、三、五21:15開獎</string>
+    <string name="number_code_desc_f3d">每日20:30開獎</string>
+    <string name="number_code_desc_pl3">每日20:30開獎</string>
+    <string name="number_code_desc_pl5">每日20:30開獎</string>
 
     <string name="number_7">週日</string>
     <string name="number_1">週一</string>

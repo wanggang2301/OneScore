@@ -47,7 +47,6 @@
     <string name="basket_info_zhouji2">国际赛事</string>
     <string name="basket_info_shatan">沙滩赛事</string>
 
-
     <string name="football_info_title">足球资料库</string>
     <string name="football_info_oceania">大洋洲</string>
 
@@ -77,7 +76,6 @@
     <string name="foot_details_focus">关注</string>
     <string name="foot_details_focused">已关注</string>
     <string name="foot_details_share">分享</string>
-
     <!--亚盘-->
     <string name="foot_odds_alet_left">主队</string>
     <string name="foot_odds_alet_middle">让球</string>
@@ -93,7 +91,6 @@
     <string name="foot_odds_eu_left">胜</string>
     <string name="foot_odds_eu_middle">平</string>
     <string name="foot_odds_eu_right">负</string>
-
 
     <!--分享-->
     <string name="errcode_success">发送成功</string>
@@ -126,6 +123,10 @@
     <string name="odd_dish_txt">盘口</string>
     <string name="odd_guest_txt">客队</string>
     <string name="odd_time_txt">时间</string>
+    <string name="symbol_times" translatable="false">×</string>
+    <string name="symbol_plus" translatable="false">+</string>
+    <string name="symbol_equal" translatable="false">=</string>
+    <string name="label_line" translatable="false">-</string>
     <!--欧赔-->
     <string name="odd_home_op_txt">主胜</string>
     <string name="odd_dish_op_txt">平局</string>
@@ -448,6 +449,12 @@
     <string name="number_cz_jx_syxw">江西十一选五</string>
     <string name="number_cz_sd_syxw">山东十一选五</string>
     <string name="number_cz_tj_ssc">天津时时彩</string>
+    <string name="number_cz_ssq">双色球</string>
+    <string name="number_cz_pl3">排列3</string>
+    <string name="number_cz_pl5">排列5</string>
+    <string name="number_cz_f3d">福彩3D</string>
+    <string name="number_cz_qlc">七乐彩</string>
+    <string name="number_cz_dlt">大乐透</string>
     <!-- 描述信息 -->
     <string name="number_code_desc_qxc">每周二、五、日晚20:30开奖</string>
     <string name="number_code_desc_bj_sc">每天179期，5分钟一期，9:00-0:00</string>
@@ -465,6 +472,12 @@
     <string name="number_code_desc_ah_ks">每天80期，10分钟一期，8:30-22:00</string>
     <string name="number_code_desc_js_ks">每天82期，10分钟一期，8:30-22:00</string>
     <string name="number_code_desc_gx_ks">每天78期，10分钟一期，9:30-22:30</string>
+    <string name="number_code_desc_ssq">每周二、四、日21:15开奖</string>
+    <string name="number_code_desc_dlt">每周一、三、六20:30开奖</string>
+    <string name="number_code_desc_qlc">每周一、三、五21:15开奖</string>
+    <string name="number_code_desc_f3d">每日20:30开奖</string>
+    <string name="number_code_desc_pl3">每日20:30开奖</string>
+    <string name="number_code_desc_pl5">每日20:30开奖</string>
 
     <string name="number_code_di">第</string>
     <string name="number_code_qi">期</string>
@@ -756,7 +769,13 @@
     <string name="basket_database_details_yzs">赢/走/输</string>
     <string name="basket_database_details_toast">稍候，获取数据中</string>
 
-    <!--******************-->
+    <string name="basket_database_details_ranking_title">排名/球队</string>
+    <string name="basket_database_details_match_num_title">赛</string>
+    <string name="basket_database_details_win_lose_title">胜/负</string>
+    <string name="basket_database_details_winrate_title">胜率</string>
+    <string name="basket_database_details_win_offset_title">胜差</string>
+    <string name="basket_database_details_recent_title">近况</string>
+
     <string name="basket_database_details_statistic">统计</string>
     <string name="basket_database_details_league_statistic">联赛统计</string>
     <string name="basket_database_details_leagueMost">联赛之最</string>
@@ -797,14 +816,6 @@
     <string name="basket_database_details_leagueMost_homematch">主场</string>
     <string name="basket_database_details_leagueMost_guestmatch">客场</string>
 
-
-    <string name="basket_database_details_ranking_title">排名/球队</string>
-    <string name="basket_database_details_match_num_title">赛</string>
-    <string name="basket_database_details_win_lose_title">胜/负</string>
-    <string name="basket_database_details_winrate_title">胜率</string>
-    <string name="basket_database_details_win_offset_title">胜差</string>
-    <string name="basket_database_details_recent_title">近况</string>
-
     <!--足球资料库-->
     <string name="football_database_details_integral">积分</string>
     <string name="football_database_details_stage">阶段</string>
@@ -827,7 +838,6 @@
     <string name="football_database_details_statistic_w_avgnum">获胜</string>
     <string name="football_database_details_statistic_d_avgnum">打平</string>
     <string name="football_database_details_statistic_l_avgnum">输球</string>
-
 
     <string name="football_database_details_wdl_statistic">胜平负统计</string>
     <string name="football_database_details_goal_statistic">进球统计</string>
@@ -955,7 +965,7 @@
     <string name="network_suck">网络不给力......</string>
     <string name="find_search">正在查找......</string>
     <string name="skip">"秒 | 跳过"</string>
-    <!--1.1.2 begin-->Login / register
+    <!--1.1.2 begin-->
     <string name="weixin_installed">请先安装微信客户端!</string>
     <string name="Login_register">登录/注册</string>
     <string name="personal_center">个人中心</string>
@@ -1013,13 +1023,14 @@
     <string name="new_analyze_player_info">球员信息</string>
     <string name="new_analyze_recommend">心水推荐</string>
 
+
     <string name="immediate_status_end">完</string>
     <string name="foot_rollball_txt">滚球</string>
     <string name="only_five_eachday">同一个手机号每天只能发送5次短信</string>
     <string name="login_username">请输入账号或者注册手机号</string>
+    <string name="server_busy">系统繁忙</string>
     <string name="forty_five_plus">45+</string>
     <string name="ninety_plus">90+</string>
-    <string name="server_busy">系统繁忙</string>
     <string name="at_least_one_company">至少选择一家公司</string>
 
     <string name="home_win_rate">主胜率</string>
@@ -1030,25 +1041,20 @@
     <string name="asia_lose_rate">输盘率</string>
     <string name="title_big_data_predict">大数据预测</string>
     <string name="diy_compute_method">DIY算法</string>
-    <string name="diy_custom_compute_method">DIY自定义算法</string>
     <string name="foot_details_info">情报</string>
+    <string name="diy_custom_compute_method">DIY自定义算法</string>
+    <string name="action_close">关闭</string>
+    <string name="action_compute">计算</string>
+    <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
     <string name="diy_compute_method_message1">概率=交锋概率×%1$s+主胜概率×%2$s+客负概率×%3$s</string>
     <string name="diy_compute_method_message2">概率=交锋概率×%1$s+主队概率×%2$s+客队概率×%3$s</string>
     <string name="diy_compute_method_message3">概率=交锋概率×%1$s+主赢概率×%2$s+客输概率×%3$s</string>
     <string name="diy_combat_rate">交锋概率</string>
     <string name="diy_host_rate">主队概率</string>
     <string name="diy_guest_rate">客队概率</string>
-    <string name="symbol_times" translatable="false">×</string>
-    <string name="symbol_plus" translatable="false">+</string>
-    <string name="symbol_equal" translatable="false">=</string>
-    <string name="action_close">关闭</string>
-    <string name="action_compute">计算</string>
-    <string name="big_data_check_alert">结果无法计算，请输入合理数字(0~1)</string>
     <string name="insufficient_sampling">采样不足</string>
     <string name="probability">概率</string>
     <string name="percent_factor">比例因子</string>
-    <string name="intelligence_host_recent">主队近期</string>
-    <string name="intelligence_guest_recent">客队近期</string>
     <string name="new_analyze_let">亚盘走势</string>
     <string name="new_analyze_home">主场</string>
     <string name="new_analyze_guest">客场</string>
@@ -1070,6 +1076,8 @@
     <string name="new_analyze_cidaqiu">次大球</string>
     <string name="new_analyze_cixiaoqiu">次小球</string>
     <string name="new_analyze_daqiulv">大球率</string>
+    <string name="intelligence_host_recent">主队近期</string>
+    <string name="intelligence_guest_recent">客队近期</string>
     <string name="new_analyze_description">(比分红色为主队)</string>
     <string name="new_analyze_recent_game">6场近期各自比赛</string>
     <string name="new_analyze_changci">场次</string>
@@ -1109,8 +1117,6 @@
     <string name="intelligent_qiupinglv">球平率</string>
     <string name="intelligent_qiufulv">球负率</string>
     <string name="version_update_title">升级包下载中，请稍后...</string>
-    <string name="label_line" translatable="false">-</string>
-
 
     <string name="rong_comment">评论</string>
     <string name="rong_chart_room">聊天</string>
@@ -1129,12 +1135,13 @@
     <string name="chose_for_telephone">从手机相册选择</string>
     <string name="avatar_settings">头像</string>
     <string name="photograph">拍照</string>
-    <string name="is_uploading">努力上传中..........</string>
 
     <string name="welcome_chart_room">欢迎进入聊天室!</string>
     <string name="to_update_kindly_reminder">温馨提示</string>
     <string name="kindly_reminder_comment">您正在使用流量，是否继续下载？</string>
     <string name="continue_download">继续下载</string>
+
+    <string name="is_uploading">努力上传中..........</string>
     <!--情报中心 start-->
     <string name="title_info_center">情报中心</string>
     <string name="info_center_end_index">今日完场盘指数</string>
@@ -1216,7 +1223,6 @@
     <string name="info_center_txt_def">采样不足</string>
     <!--情报中心 end-->
 
-
     <!--今日赛事提点-->
     <string name="league_statistics_today_title">今日赛事提点</string>
     <string name="league_statistics_today_tab1">胜平负</string>
@@ -1271,5 +1277,4 @@
     <!--墙外-->
 
     <string name="foreign_pic">已保存图片到SD卡文件夹下</string>
-
 </resources>

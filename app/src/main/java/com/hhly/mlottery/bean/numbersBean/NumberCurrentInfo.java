@@ -19,7 +19,16 @@ public class NumberCurrentInfo implements Serializable {
 	private String numbers;// 开奖号码
 	private String time;// 时间
 	private String zodiac;// 开奖生肖
+	private String jackpot;// 奖金池
 	private boolean isOpen = false;// 是否发生改变了
+
+	public String getJackpot() {
+		return jackpot;
+	}
+
+	public void setJackpot(String jackpot) {
+		this.jackpot = jackpot;
+	}
 
 	public boolean isOpen() {
 		return isOpen;
@@ -88,6 +97,6 @@ public class NumberCurrentInfo implements Serializable {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "彩种：" + getName() + "-号码 ：" + getNumbers();
+		return "彩种：" + getName() + "-号码 ：" + getNumbers() + "-奖金池：" + getJackpot();
 	}
 }

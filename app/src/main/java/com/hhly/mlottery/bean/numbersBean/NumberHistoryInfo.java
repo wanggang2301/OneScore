@@ -15,6 +15,15 @@ public class NumberHistoryInfo implements Serializable {
 	private String issue;// 开奖期号
 	private String numbers;// 开奖号码
 	private String time;// 时间
+	private String jackpot;// 奖金池
+
+	public String getJackpot() {
+		return jackpot;
+	}
+
+	public void setJackpot(String jackpot) {
+		this.jackpot = jackpot;
+	}
 
 	public String getIssue() {
 		return issue;
@@ -44,6 +53,6 @@ public class NumberHistoryInfo implements Serializable {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "开奖期号：" + getIssue() + "-开奖号码 ：" + getNumbers() + "--时间："
-				+ getTime();
+				+ getTime() + "--奖金池：" + getJackpot();
 	}
 }

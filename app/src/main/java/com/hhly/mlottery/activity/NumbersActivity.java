@@ -782,7 +782,9 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             // 发送消息，开始加载数据
             mHandler.sendEmptyMessage(STARTLOADING);
         }
-        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+        // AppConstants.numberHistoryURLs[0]
+        String url = "http://192.168.31.73:8080/mlottery/core/lastLotteryResults.findNewAndroidLastLotteryResults.do?timeZone=8&lang=zh";
+        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
             @Override
             public synchronized void onResponse(final NumbersOpenBean jsonObject) {
                 if (null != jsonObject) {// 判断数据是否为空

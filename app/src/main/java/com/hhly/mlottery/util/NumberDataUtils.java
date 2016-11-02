@@ -1539,6 +1539,27 @@ public class NumberDataUtils {
             case "18":// 广西快3
                 tv.setText(mContext.getResources().getString(R.string.number_cz_gx_ks));
                 break;
+            case "24":// 双色球
+                tv.setText(mContext.getResources().getString(R.string.number_cz_ssq));
+                break;
+            case "25":// 排列3
+                tv.setText(mContext.getResources().getString(R.string.number_cz_pl3));
+                break;
+            case "26":// 排列5
+                tv.setText(mContext.getResources().getString(R.string.number_cz_pl5));
+                break;
+            case "27":// 福彩3D
+                tv.setText(mContext.getResources().getString(R.string.number_cz_f3d));
+                break;
+            case "28":// 七乐彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_qlc));
+                break;
+            case "29":// 大乐透
+                tv.setText(mContext.getResources().getString(R.string.number_cz_dlt));
+                break;
+            default:
+                tv.setText("-");
+                break;
         }
     }
 }
