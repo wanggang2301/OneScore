@@ -225,6 +225,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mIndicator.setVisibility(View.GONE);
         }*/
 
+
         mHeadviewpager.setAdapter(basePagerAdapter);
         mHeadviewpager.setOffscreenPageLimit(1);
         mIndicator.setViewPager(mHeadviewpager);
