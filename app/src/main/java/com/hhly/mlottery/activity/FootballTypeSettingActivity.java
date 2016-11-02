@@ -94,7 +94,7 @@ public class FootballTypeSettingActivity extends BaseActivity implements OnClick
         sb_goal.setOnCheckedChangeListener(this);
         sb_red.setOnCheckedChangeListener(this);
         sb_shake.setOnCheckedChangeListener(this);
-        sb_shake.setOnCheckedChangeListener(this);
+        sb_sound.setOnCheckedChangeListener(this);
         sb_push.setOnCheckedChangeListener(this);
 
 
