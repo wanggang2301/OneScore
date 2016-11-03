@@ -377,7 +377,6 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
                 }
             }
         };
-
     }
 
     private final static int VIEW_STATUS_LOADING = 1;
