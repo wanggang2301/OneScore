@@ -1,7 +1,6 @@
 package com.hhly.mlottery.frame.footframe;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,7 +17,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseStaticBean;
 import com.hhly.mlottery.bean.footballDetails.footballdatabasebean.DatabaseTopBean;
@@ -352,7 +350,11 @@ public class FootballDatabaseStatisticsFragment extends Fragment implements View
             awayPre = Double.parseDouble(toDouble.substring(0,toDouble.length()-1));
 //            awayPre = 100.00-homePre-equalPre;
         }
-        mWinLostProgress.setProgressAll((int)homePre, (int)equalPre , (int)awayPre+2); // 最后一条进度 +2 为了处理总进度值不足时出现间隙情况（父progressbar方法中的+2处理）
+        if(awayPre == 0){
+            mWinLostProgress.setProgressAll((int)homePre, (int)equalPre , (int)awayPre);
+        }else{
+            mWinLostProgress.setProgressAll((int)homePre, (int)equalPre , (int)awayPre+2); // 最后一条进度 +2 为了处理总进度值不足时出现间隙情况（父progressbar方法中的+2处理）
+        }
         mWinLostProgress.setCircleProgressColor(getResources().getColor(R.color.basket_database_statistics_background_h));
         mWinLostProgress.setCircleProgressColor2(getResources().getColor(R.color.basket_database_statistics_progress));
         mWinLostProgress.setCircleProgressColor3(getResources().getColor(R.color.basket_database_statistics_background_g));
