@@ -403,7 +403,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:background="@color/basket_database_statistics_background_h"
                                     android:layout_gravity="center"
                                     />
 
@@ -425,7 +425,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_h"
+                                    android:background="@color/basket_database_statistics_background_g"
                                     android:layout_gravity="center"
                                     />
 
