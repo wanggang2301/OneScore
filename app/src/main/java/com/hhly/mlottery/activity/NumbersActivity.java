@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
@@ -40,7 +41,7 @@ import java.util.List;
  * 彩票开奖列表
  * Created by hhly107 on 2016/4/6.
  */
-public class NumbersActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class NumbersActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private ImageView public_img_back;// 返回到菜单
     private Context mContext;
     private TextView public_txt_title;// 开奖列表标题展示
@@ -84,6 +85,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     private boolean isQXCHttps = true;// 七星彩正在开奖中的状态true
 
     private boolean isNextNumber = false;// 正在获取下一期开奖号码false
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +143,6 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             }
         }
     }*/
-
     private void initData() {
 
         if (null != sortDef1) {
@@ -425,7 +426,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (isExit) {
-                    MobclickAgent.onEvent(mContext,"Lottery_Info");
+                    MobclickAgent.onEvent(mContext, "Lottery_Info");
                     // 跳转到详情页面
                     Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
                     intent.putExtra("numberName", numberSortList.get(position).getName());
@@ -782,43 +783,72 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             // 发送消息，开始加载数据
             mHandler.sendEmptyMessage(STARTLOADING);
         }
-        // AppConstants.numberHistoryURLs[0]
-        String url = "http://192.168.31.73:8080/mlottery/core/lastLotteryResults.findNewAndroidLastLotteryResults.do?timeZone=8&lang=zh";
-        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-            @Override
-            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
-                if (null != jsonObject) {// 判断数据是否为空
 
-                    if (numberlist != null) {
-                        numberlist.clear();
-                        numberlist = null;
-                    }
-                    numberlist = jsonObject.getNumLotteryResults();
+        /**测试数据用*/
+        if (null != AppConstants.getTestData()) {// 判断数据是否为空
 
-                    serverTime = null;
-                    serverTime = jsonObject.getServerTime();
-
-                    L.d("xxx", "请求后台数据。。。");
-                    if (num == 1) {
-                        // 发送自动刷新和手动刷新加载数据成功消息
-                        mHandler.sendEmptyMessage(AUTOREFRESH);
-                    } else if (num == 5) {
-                        // 界面重新显示时,刷新界面数据
-                        mHandler.sendEmptyMessage(RENOTIFY);
-                    } else {
-                        // 发送加载数据成功消息
-                        mHandler.sendEmptyMessage(SUCCESSLOADING);
-                    }
-                } else {
-                    mHandler.sendEmptyMessage(ERRORLOADING);
-                }
+            if (numberlist != null) {
+                numberlist.clear();
+                numberlist = null;
             }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                mHandler.sendEmptyMessage(ERRORLOADING);
+
+            NumbersOpenBean json = JSON.parseObject(AppConstants.getTestData(),NumbersOpenBean.class);
+
+            numberlist = json.getNumLotteryResults();
+
+            serverTime = null;
+            serverTime = json.getServerTime();
+
+            L.d("xxx", "请求后台数据。。。");
+            if (num == 1) {
+                // 发送自动刷新和手动刷新加载数据成功消息
+                mHandler.sendEmptyMessage(AUTOREFRESH);
+            } else if (num == 5) {
+                // 界面重新显示时,刷新界面数据
+                mHandler.sendEmptyMessage(RENOTIFY);
+            } else {
+                // 发送加载数据成功消息
+                mHandler.sendEmptyMessage(SUCCESSLOADING);
             }
-        }, NumbersOpenBean.class);
+        } else {
+            mHandler.sendEmptyMessage(ERRORLOADING);
+        }
+        /**测试数据用  end*/
+//        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+//            @Override
+//            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
+//                if (null != jsonObject) {// 判断数据是否为空
+//
+//                    if (numberlist != null) {
+//                        numberlist.clear();
+//                        numberlist = null;
+//                    }
+//                    numberlist = jsonObject.getNumLotteryResults();
+//
+//                    serverTime = null;
+//                    serverTime = jsonObject.getServerTime();
+//
+//                    L.d("xxx", "请求后台数据。。。");
+//                    if (num == 1) {
+//                        // 发送自动刷新和手动刷新加载数据成功消息
+//                        mHandler.sendEmptyMessage(AUTOREFRESH);
+//                    } else if (num == 5) {
+//                        // 界面重新显示时,刷新界面数据
+//                        mHandler.sendEmptyMessage(RENOTIFY);
+//                    } else {
+//                        // 发送加载数据成功消息
+//                        mHandler.sendEmptyMessage(SUCCESSLOADING);
+//                    }
+//                } else {
+//                    mHandler.sendEmptyMessage(ERRORLOADING);
+//                }
+//            }
+//        }, new VolleyContentFast.ResponseErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+//                mHandler.sendEmptyMessage(ERRORLOADING);
+//            }
+//        }, NumbersOpenBean.class);
     }
 
     /**
@@ -880,7 +910,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             }
 
 //            holder.tv_numbers_name.setText(AppConstants.numberNames[Integer.parseInt(mNumberInfo.getName()) - 1]);
-            NumberDataUtils.setTextTitle(mContext,holder.tv_numbers_name,mNumberInfo.getName());// 设置彩票名称
+            NumberDataUtils.setTextTitle(mContext, holder.tv_numbers_name, mNumberInfo.getName());// 设置彩票名称
             holder.tv_numbers_issue.setText(mContext.getResources().getString(R.string.number_code_di) + mNumberInfo.getIssue() + mContext.getResources().getString(R.string.number_code_qi));
 
             numbers.clear();// 清除上次数据
@@ -955,52 +985,13 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
 
         // 显示隐藏倒计时控件
         if ("1".equals(mNumberInfo.getName())) {
-
             // 香港彩
-            holder.tv_numbers_time.setText(Dates[0] + " " + weekDate);// 设置日期
-            holder.tv_number_time_name.setText(mContext.getResources().getString(R.string.number_hk_hint));
-
             if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             } else {
                 holder.tv_number_time_name2.setText(mContext.getResources().getString(R.string.number_hk_hint2));
             }
-            long mHKTime = (HKnumberTime / 1000 / 60 / 60);// 获取总共小时数
-            if (mHKTime >= 0 && mHKTime < 8) {
-
-                long hh = HKnumberTime / (3600 * 1000);// 获取相差小时
-                long mm = (HKnumberTime % (3600 * 1000)) / (60 * 1000);// 获取相差分
-                long ss = ((HKnumberTime % (3600 * 1000)) % (60 * 1000)) / 1000;// 获取相差秒
-
-                holder.ll_numbers_time.setVisibility(View.VISIBLE);
-                holder.ll_lastTime.setVisibility(View.VISIBLE);
-                holder.ll_startOpenNumber.setVisibility(View.GONE);
-
-                String h = "";
-                if (hh < 10) {
-                    h = "0" + hh;
-                } else {
-                    h = "" + hh;
-                }
-                holder.tv_number_time_hh.setText(h);
-
-                String m = "";
-                if (mm < 10) {
-                    m = "0" + mm;
-                } else {
-                    m = "" + mm;
-                }
-                holder.tv_number_time_mm.setText(m);
-
-                String s = "";
-                if (ss < 10) {
-                    s = "0" + ss;
-                } else {
-                    s = "" + ss;
-                }
-                holder.tv_number_time_ss.setText(s);
-            } else {
-                holder.ll_numbers_time.setVisibility(View.GONE);
-            }
+            // 显示倒计时和日期
+            settingTime(holder, Dates, weekDate, HKnumberTime, R.string.number_hk_hint);
 
             if (isHKOpenNumberStartNF) {// 显示正在开奖中
                 holder.ll_numbers_time.setVisibility(View.VISIBLE);
@@ -1032,67 +1023,17 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
 
         } else if ("6".equals(mNumberInfo.getName())) {
             // 七星彩
-            holder.tv_numbers_time.setText(Dates[0] + " " + weekDate);// 设置日期
-            holder.tv_number_time_name.setText(mContext.getResources().getString(R.string.number_qxc_hint));
-
             if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
             } else {
-                holder.tv_number_time_name2.setText(mContext.getResources().getString(R.string.number_hk_hint2));
+                holder.tv_number_time_name2.setText(mContext.getResources().getString(R.string.number_qxc_hint2));
             }
-            long mQXCTime = (QXCnumberTime / 1000 / 60 / 60);// 获取总共小时数
-            if (mQXCTime >= 0 && mQXCTime < 8) {
+            // 显示倒计时和日期
+            settingTime(holder, Dates, weekDate, QXCnumberTime, R.string.number_qxc_hint);
 
-                long hh = QXCnumberTime / (3600 * 1000);// 获取相差小时
-                long mm = (QXCnumberTime % (3600 * 1000)) / (60 * 1000);// 获取相差分
-                long ss = ((QXCnumberTime % (3600 * 1000)) % (60 * 1000)) / 1000;// 获取相差秒
-
-                holder.ll_numbers_time.setVisibility(View.VISIBLE);
-                holder.ll_lastTime.setVisibility(View.VISIBLE);
-                holder.ll_startOpenNumber.setVisibility(View.GONE);
-
-                String h = "";
-                if (hh < 10) {
-                    h = "0" + hh;
-                } else {
-                    h = "" + hh;
-                }
-                holder.tv_number_time_hh.setText(h);
-
-                String m = "";
-                if (mm < 10) {
-                    m = "0" + mm;
-                } else {
-                    m = "" + mm;
-                }
-                holder.tv_number_time_mm.setText(m);
-
-                String s = "";
-                if (ss < 10) {
-                    s = "0" + ss;
-                } else {
-                    s = "" + ss;
-                }
-                holder.tv_number_time_ss.setText(s);
-            } else {
-                // isQXCCnumberTime = false;
-                holder.ll_numbers_time.setVisibility(View.GONE);
+            if (isQXCOpenNumberStartNF) {
+                // 显示正在开奖中
+                showTheLottery(holder, mNumberInfo);
             }
-            if (isQXCOpenNumberStartNF) {// 显示正在开奖中
-
-                holder.ll_numbers_time.setVisibility(View.VISIBLE);
-                holder.ll_lastTime.setVisibility(View.GONE);
-                holder.ll_startOpenNumber.setVisibility(View.VISIBLE);
-                // 显示下一期号和时间
-                holder.tv_numbers_issue.setText(mContext.getResources().getString(R.string.number_code_di) + mNumberInfo.getNextIssue()
-                        + mContext.getResources().getString(R.string.number_code_qi));
-
-                String weekDate2 = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getNextTime()));
-                String[] Dates2 = mNumberInfo.getNextTime().split(" ");
-
-                holder.tv_numbers_time.setText(Dates2[0] + " " + weekDate2);
-
-            }
-
         } else {
             String mTime = Dates[1].substring(0, Dates[1].lastIndexOf(":"));
 
@@ -1101,15 +1042,86 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    /**
+     * 设置倒计时和开奖日期
+     *
+     * @param holder        显示的控件
+     * @param Dates         日期
+     * @param weekDate      周期
+     * @param CnumberTime   离开奖总时间
+     * @param resourcesName 彩种名称
+     */
+    private void settingTime(ViewHolder holder, String[] Dates, String weekDate, long CnumberTime, int resourcesName) {
+
+        holder.tv_numbers_time.setText(Dates[0] + " " + weekDate);// 设置日期
+        holder.tv_number_time_name.setText(mContext.getResources().getString(resourcesName));
+
+        long mTime = (CnumberTime / 1000 / 60 / 60);// 获取总共小时数
+        if (mTime >= 0 && mTime < 8) {
+
+            long hh = CnumberTime / (3600 * 1000);// 获取相差小时
+            long mm = (CnumberTime % (3600 * 1000)) / (60 * 1000);// 获取相差分
+            long ss = ((CnumberTime % (3600 * 1000)) % (60 * 1000)) / 1000;// 获取相差秒
+
+            holder.ll_numbers_time.setVisibility(View.VISIBLE);
+            holder.ll_lastTime.setVisibility(View.VISIBLE);
+            holder.ll_startOpenNumber.setVisibility(View.GONE);
+
+            String h;
+            if (hh < 10) {
+                h = "0" + hh;
+            } else {
+                h = "" + hh;
+            }
+            holder.tv_number_time_hh.setText(h);
+
+            String m;
+            if (mm < 10) {
+                m = "0" + mm;
+            } else {
+                m = "" + mm;
+            }
+            holder.tv_number_time_mm.setText(m);
+
+            String s;
+            if (ss < 10) {
+                s = "0" + ss;
+            } else {
+                s = "" + ss;
+            }
+            holder.tv_number_time_ss.setText(s);
+        } else {
+            holder.ll_numbers_time.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 显示开奖中
+     *
+     * @param holder      显示控件
+     * @param mNumberInfo 开奖对象
+     */
+    private void showTheLottery(ViewHolder holder, NumberCurrentInfo mNumberInfo) {
+        holder.ll_numbers_time.setVisibility(View.VISIBLE);
+        holder.ll_lastTime.setVisibility(View.GONE);
+        holder.ll_startOpenNumber.setVisibility(View.VISIBLE);
+        // 显示下一期号和时间
+        holder.tv_numbers_issue.setText(mContext.getResources().getString(R.string.number_code_di) + mNumberInfo.getNextIssue()
+                + mContext.getResources().getString(R.string.number_code_qi));
+        String weekDate2 = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getNextTime()));
+        String[] Dates2 = mNumberInfo.getNextTime().split(" ");
+        holder.tv_numbers_time.setText(Dates2[0] + " " + weekDate2);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_img_back:// 点击返回菜单栏
-                MobclickAgent.onEvent(mContext,"Lottery_List_Exit");
+                MobclickAgent.onEvent(mContext, "Lottery_List_Exit");
                 finish();
                 break;
             case R.id.public_btn_set:// 点击进入定制彩种
-                MobclickAgent.onEvent(mContext,"Lottery_Customize");
+                MobclickAgent.onEvent(mContext, "Lottery_Customize");
                 // 跳 转到定制彩种页面
                 Intent intent = new Intent(mContext, NumberCustomizeActivity.class);
                 intent.putExtra("DefSortList", (Serializable) sortDef1);
@@ -1118,7 +1130,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 break;
 
             case R.id.reLoading:// 重新加载数据
-                MobclickAgent.onEvent(mContext,"Lottery_Refresh");
+                MobclickAgent.onEvent(mContext, "Lottery_Refresh");
                 numbersDataShow(0);
                 break;
             default:
@@ -1202,6 +1214,30 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             case 18:// 广西快三
                 holder.tv_number_desc.setVisibility(View.VISIBLE);
                 holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_gx_ks));
+                break;
+            case 24:// 双色球
+                holder.tv_number_desc.setVisibility(View.VISIBLE);
+                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_ssq));
+                break;
+            case 25:// 排列3
+                holder.tv_number_desc.setVisibility(View.VISIBLE);
+                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_pl3));
+                break;
+            case 26:// 排列5
+                holder.tv_number_desc.setVisibility(View.VISIBLE);
+                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_pl5));
+                break;
+            case 27:// 福彩3D
+                holder.tv_number_desc.setVisibility(View.VISIBLE);
+                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_f3d));
+                break;
+            case 28:// 七乐彩
+                holder.tv_number_desc.setVisibility(View.VISIBLE);
+                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_qlc));
+                break;
+            case 29:// 大乐透
+                holder.tv_number_desc.setVisibility(View.VISIBLE);
+                holder.tv_number_desc.setText(mContext.getResources().getString(R.string.number_code_desc_dlt));
                 break;
             default:
                 holder.tv_number_desc.setVisibility(View.VISIBLE);

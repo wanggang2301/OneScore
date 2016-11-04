@@ -5,6 +5,8 @@
     android:orientation="vertical" >
 
     <!-- 七星彩 -->
+    <include layout="@layout/number_bonus"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

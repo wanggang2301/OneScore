@@ -494,6 +494,14 @@
     <string name="number_exp__check_txt">请检查后</string>
     <string name="number_exp_refresh_txt">刷新</string>
 
+    <string name="number_ssq_hqtj">红球统计</string>
+    <string name="number_ssq_kd">跨度</string>
+    <string name="number_ssq_job">奇偶比</string>
+    <string name="number_ssq_dxb">大小比</string>
+    <string name="number_ssq_zhb">质合比</string>
+    <string name="number_ssq_qjb">区间比</string>
+    <string name="number_ssq_bonus">奖金滚存：</string>
+
     <!-- 彩票 End-->
 
     <string name="number_xq7">周日</string>

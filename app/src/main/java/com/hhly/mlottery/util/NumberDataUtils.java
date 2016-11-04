@@ -148,9 +148,14 @@ public class NumberDataUtils {
                 }
 
             } else {
-
+                String num;
+                if(mNumberInfo.getNumbers().contains("#")){
+                    num = mNumberInfo.getNumbers().replace('#',',');
+                }else{
+                    num = mNumberInfo.getNumbers();
+                }
                 // 46,15,38,39,7,11#25
-                String[] nums = mNumberInfo.getNumbers().split(",");
+                String[] nums = num.split(",");
 
                 // 将号码添加到集合中
                 for (int i = 0; i < nums.length; i++) {
@@ -469,44 +474,107 @@ public class NumberDataUtils {
                         } else {
                             ll.setPadding(0, 0, 0, 0);
                         }
-
                         ll.addView(tv_number);
                         ll.addView(tv_zodiac);
                     }
-
                 }
             } else if ("6".equals(mNumberInfo.getName())) {
                 // 七星彩
-
-                // 添加
                 if (isQXCOpenNumberStart) {
                     // 正在开奖中时显示的内容
                     ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
-
-//                    iv.setImageResource(AppConstants.numberQXCOpenGIF[i]);
                     ImageLoader.loadFitCenter(context,AppConstants.numberQXCOpenGIF[i],R.mipmap.number_kj_icon_def).into(iv);
-
                     ll.addView(iv);
                 } else {
                     TextView tv_number = new TextView(context);
                     tv_number.setLayoutParams(params);
                     tv_number.setGravity(Gravity.CENTER);
                     tv_number.setTextColor(context.getResources().getColor(R.color.numberinfo_text_color));
-
                     tv_number.setText(numbers.get(i));
-
                     if (i >= 4) {
-
                         tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
                     } else {
-
                         tv_number.setBackgroundResource(R.mipmap.number_bg_red);
                     }
-
                     ll.addView(tv_number);
                 }
-
+            } else if ("24".equals(mNumberInfo.getName())) {// 双色球
+                if (false) { // TODO  待UI设计GIF图
+                    ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                    iv.setLayoutParams(params);
+                    if(i <= 5){
+                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_red,R.mipmap.number_kj_icon_def).into(iv);
+                    }else{
+                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
+                    }
+                    ll.addView(iv);
+                } else {
+                    TextView tv_number = new TextView(context);
+                    tv_number.setLayoutParams(params);
+                    tv_number.setGravity(Gravity.CENTER);
+                    tv_number.setTextColor(context.getResources().getColor(R.color.numberinfo_text_color));
+                    tv_number.setText(numbers.get(i));
+                    if (i > 5) {
+                        tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                    } else {
+                        tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                    }
+                    ll.addView(tv_number);
+                }
+            } else if ("29".equals(mNumberInfo.getName())) {// 大乐透
+                if (false) { // TODO  待UI设计GIF图
+                    ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                    iv.setLayoutParams(params);
+                    if(i <= 4){
+                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_red,R.mipmap.number_kj_icon_def).into(iv);
+                    }else{
+                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
+                    }
+                    ll.addView(iv);
+                } else {
+                    TextView tv_number = new TextView(context);
+                    tv_number.setLayoutParams(params);
+                    tv_number.setGravity(Gravity.CENTER);
+                    tv_number.setTextColor(context.getResources().getColor(R.color.numberinfo_text_color));
+                    tv_number.setText(numbers.get(i));
+                    if (i > 4) {
+                        tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                    } else {
+                        tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                    }
+                    ll.addView(tv_number);
+                }
+            } else if ("28".equals(mNumberInfo.getName())) {// 七乐彩
+                if (false) { // TODO  待UI设计GIF图
+                    ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                    iv.setLayoutParams(params);
+                    if(i <= 6){
+                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_red,R.mipmap.number_kj_icon_def).into(iv);
+                    }else{
+                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
+                    }
+                    ll.addView(iv);
+                } else {
+                    TextView tv_number = new TextView(context);
+                    tv_number.setLayoutParams(params);
+                    tv_number.setGravity(Gravity.CENTER);
+                    tv_number.setTextColor(context.getResources().getColor(R.color.numberinfo_text_color));
+                    tv_number.setText(numbers.get(i));
+                    if (i > 6) {
+                        tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                    } else {
+                        tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                    }
+                    ll.addView(tv_number);
+                }
+                params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                if (i == 0) {
+                    params.setMargins(DisplayUtil.dip2px(context, 10), 0, 0, 0);
+                } else {
+                    params.setMargins(DisplayUtil.dip2px(context, 8), 0, 0, 0);
+                }
+                ll.setLayoutParams(params);
             } else if ("8".equals(mNumberInfo.getName()) || "11".equals(mNumberInfo.getName())) {
                 // 广东快乐十分,湖南快乐十分
                 if (isGravity == 1 && isQXCOpenNumberStart) {

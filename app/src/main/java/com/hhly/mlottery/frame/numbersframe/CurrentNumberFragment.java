@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
@@ -200,41 +201,66 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
             // 发送消息，开始加载数据
             mHandler.sendEmptyMessage(STARTLOADING);
         }
-        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-            @Override
-            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
-                if (null != jsonObject) {// 判断数据是否为空
+        /**测试数据用*/
+        numberlist = new ArrayList<NumberCurrentInfo>();
 
-                    numberlist = new ArrayList<NumberCurrentInfo>();
+        NumbersOpenBean json = JSON.parseObject(AppConstants.getTestData(),NumbersOpenBean.class);
 
-                    serverTime = jsonObject.getServerTime();
-                    numberlist = jsonObject.getNumLotteryResults();
+        serverTime = json.getServerTime();
+        numberlist = json.getNumLotteryResults();
 
-                    if (num == 1) {
-                        // 发送自动刷新和手动刷新加载数据成功消息
-                        mHandler.sendEmptyMessage(AUTOREFRESH);
-                    } else if (num == 2) {
-                        // 开奖时间到了，再次请求下后台数据
-                        mHandler.sendEmptyMessage(OPENSTART);
+        if (num == 1) {
+            // 发送自动刷新和手动刷新加载数据成功消息
+            mHandler.sendEmptyMessage(AUTOREFRESH);
+        } else if (num == 2) {
+            // 开奖时间到了，再次请求下后台数据
+            mHandler.sendEmptyMessage(OPENSTART);
 
-                    } else if (num == 6) {
-                        // 开完奖了，重新请求下后台数据
-                        mHandler.sendEmptyMessage(OPENNUMBEROVER);
+        } else if (num == 6) {
+            // 开完奖了，重新请求下后台数据
+            mHandler.sendEmptyMessage(OPENNUMBEROVER);
 
-                    } else {
-                        // 发送加载数据成功消息
-                        mHandler.sendEmptyMessage(SUCCESSLOADING);
-                    }
-                } else {
-                    mHandler.sendEmptyMessage(ERRORLOADING);
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                mHandler.sendEmptyMessage(ERRORLOADING);
-            }
-        }, NumbersOpenBean.class);
+        } else {
+            // 发送加载数据成功消息
+            mHandler.sendEmptyMessage(SUCCESSLOADING);
+        }
+        /**测试数据用  end*/
+
+//        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+//            @Override
+//            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
+//                if (null != jsonObject) {// 判断数据是否为空
+//
+//                    numberlist = new ArrayList<NumberCurrentInfo>();
+//
+//                    serverTime = jsonObject.getServerTime();
+//                    numberlist = jsonObject.getNumLotteryResults();
+//
+//                    if (num == 1) {
+//                        // 发送自动刷新和手动刷新加载数据成功消息
+//                        mHandler.sendEmptyMessage(AUTOREFRESH);
+//                    } else if (num == 2) {
+//                        // 开奖时间到了，再次请求下后台数据
+//                        mHandler.sendEmptyMessage(OPENSTART);
+//
+//                    } else if (num == 6) {
+//                        // 开完奖了，重新请求下后台数据
+//                        mHandler.sendEmptyMessage(OPENNUMBEROVER);
+//
+//                    } else {
+//                        // 发送加载数据成功消息
+//                        mHandler.sendEmptyMessage(SUCCESSLOADING);
+//                    }
+//                } else {
+//                    mHandler.sendEmptyMessage(ERRORLOADING);
+//                }
+//            }
+//        }, new VolleyContentFast.ResponseErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+//                mHandler.sendEmptyMessage(ERRORLOADING);
+//            }
+//        }, NumbersOpenBean.class);
     }
 
     /**
