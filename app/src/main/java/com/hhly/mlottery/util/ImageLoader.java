@@ -11,6 +11,7 @@ import android.support.annotation.DrawableRes;
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.hhly.mlottery.MyApp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,6 +45,9 @@ public class ImageLoader {
     public static ImageRequestBuilder load(Context context,
                                            String url,
                                            @DrawableRes int defaultImg) {
+        if(context==null){
+            context= MyApp.getContext();
+        }
         DrawableRequestBuilder<String> builder = Glide.with(context)
                 .load(url)
                 .placeholder(defaultImg)
