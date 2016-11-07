@@ -115,6 +115,7 @@ public class PreHeadInfoFrament extends Fragment {
         int random = new Random().nextInt(20);
         String url = baseUrl + random + ".png";
         ImageLoader.load(mContext,url,R.color.colorPrimary).into(iv_bg);
+//        Glide.with(this).load(url).into(iv_bg);
 
         // }
 

@@ -174,39 +174,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    /*// 启动动画
-    public void setHideTranslateAnimation() {
-        if (!isToHome) {
-            return;
-        }
-        isToHome = false;
-        // 防止闪屏
-        AlphaAnimation aa = new AlphaAnimation(1.0f, 1.0f);
-        aa.setDuration(1000);
-        aa.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                //判断更新
-                //gotoHomeActivity();
-                cancelCountDown();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-                //动画加载完  判断是否更新
-//                thread = new Thread(new CheckVersionTask());
-//                thread.start();
-               // gotoHomeActivity();
-
-            }
-        });
-        imageAD.startAnimation(aa);
-    }*/
-
     private void gotoHomeActivity() {
         //判断是否是第一次启动
         //如果是已经启动了 是“YES”
@@ -221,7 +188,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
             startActivity(new Intent(this, WelcomeViewActivity.class));
             this.finish();
         }
-
 
     }
 
@@ -372,7 +338,6 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                     //判断本地缓存是否存在该图片  是显示 不是替换
                     mCount_down.setVisibility(View.VISIBLE);
 
-
                     Glide.with(mContext)
                             .load(mStartimageUrl)
                             .error(R.mipmap.home_menu_icon_def)
@@ -400,22 +365,8 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
                             });
 
                     PreferenceUtil.commitString(MyConstants.START_IMAGE_URL, mStartimageUrl);
-                 /*   new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            setHideTranslateAnimation();
-                        }
-                    }, 2000);*/
-             /*       new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            cancelCountDown();
-                        }
-                    }, 3000);
-*/
                     break;
                 case GET_IMAGE_NODATA://无图片显示
-                    //setHideTranslateAnimation();
                     mCount_down.setVisibility(View.GONE);
                     gotoHomeActivity();
                     break;
@@ -428,57 +379,12 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         }
     };
 
-    /**
-     * 保存端口id到sd卡
-     *
-     * @param
-     */
-    /*public void fileSave(String treID) {
-        // 保存在本地
-        try {
-            // 通过openFileOutput方法得到一个输出流，方法参数为创建的文件名（不能有斜杠），操作模式
-            FileOutputStream fos = this.openFileOutput(".TERID.out", Context.MODE_WORLD_READABLE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(treID);// 写入
-            fos.close(); // 关闭输出流
-            // Toast.makeText(this, "保存umengID成功", Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            // Toast.makeText(this, "出现异常1", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Toast.makeText(this, "出现异常2", Toast.LENGTH_LONG).show();
-        }
-
-        // 保存在sd卡
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-
-            File sdCardDir = Environment.getExternalStorageDirectory();// 获取SDCard目录
-            File sdFile = new File(sdCardDir, ".TERID.out");
-            try {
-                FileOutputStream fos = new FileOutputStream(sdFile);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(treID);// 写入
-                fos.close(); // 关闭输出流
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            // Toast.makeText(this, "成功保存到sd卡", Toast.LENGTH_LONG).show();
-
-        }
-    }*/
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (httpHandler != null) {
             httpHandler.cancel();
         }
-        // universalImageLoader.clearDiskCache();
-
     }
 
     @Override
@@ -497,37 +403,4 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         }
 
     }
-
-    /**
-     * 从SD卡中取得保存的对象
-     *
-     * @return
-     */
-    /*public String readOAuth2() {
-        String oAuth_1 = null;
-        File sdCardDir = Environment.getExternalStorageDirectory();// 获取SDCard目录
-        File sdFile = new File(sdCardDir, ".TERID.out");
-        try {
-            FileInputStream fis = new FileInputStream(sdFile); // 获得输入流
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            oAuth_1 = (String) ois.readObject();
-            ois.close();
-        } catch (StreamCorruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (OptionalDataException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return oAuth_1;
-    }*/
 }

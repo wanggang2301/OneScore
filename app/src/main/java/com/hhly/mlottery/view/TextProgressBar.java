@@ -61,14 +61,22 @@ public class TextProgressBar extends ProgressBar {
         int x = ((getWidth()*mProgress/100) / 2) - rect.centerX(); // 前进度的中间值
         int y = (getHeight() / 2) - (rect.centerY()*2);// 让显示的字体处于中心位置;
         this.mPaint.setTextSize(getResources().getDimensionPixelOffset(R.dimen.text_size_10));
-        canvas.drawText(this.str, x, y, this.mPaint);
+        if (mProgress == 0){
+            canvas.drawText("", x, y, this.mPaint);
+        }else{
+            canvas.drawText(this.str, x, y, this.mPaint);
+        }
 
         Rect rectTo = new Rect();
         this.mPaintTo.getTextBounds(this.strTo,0,this.strTo.length(),rectTo);
         int xTo = (getWidth()*mProgress/100) + ((getWidth() - getWidth()*mProgress/100)/2)- rect.centerX();//后进度的中间值（前进度+后进度一半=后值位置）
         int yTo = (getHeight() / 2) - (rect.centerY()*2);
         this.mPaintTo.setTextSize(getResources().getDimensionPixelOffset(R.dimen.text_size_10));
-        canvas.drawText(this.strTo , xTo , yTo , this.mPaintTo);
+        if (mProgress == 0) {
+            canvas.drawText("" , xTo , yTo , this.mPaintTo);
+        }else{
+            canvas.drawText(this.strTo , xTo , yTo , this.mPaintTo);
+        }
 
     }
 

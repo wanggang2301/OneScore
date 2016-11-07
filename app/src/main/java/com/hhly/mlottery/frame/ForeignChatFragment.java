@@ -247,11 +247,10 @@ public class ForeignChatFragment extends Fragment implements View.OnClickListene
         mAdapter = new CounselComentLvAdapter(getActivity());
         mListView.setAdapter(mAdapter);
 
+
     }
 
     private void initView() {
-
-
         mNoData = (TextView) mView.findViewById(R.id.nodata);
         mListView = (PullUpRefreshListView) mView.findViewById(R.id.comment_lv);
         mListView.setItemsCanFocus(true);

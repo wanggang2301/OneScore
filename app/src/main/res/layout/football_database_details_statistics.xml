@@ -332,7 +332,7 @@
                             android:gravity="center"
                             android:textSize="10sp"
                             android:textColor="#666666"
-                            android:text="@string/basket_database_details_statistic_all_score"/>
+                            android:text="@string/basket_database_details_statistic_all_scoreA"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -366,7 +366,7 @@
                             android:gravity="center"
                             android:textSize="10sp"
                             android:textColor="#666666"
-                            android:text="@string/basket_database_details_statistic_average"/>
+                            android:text="@string/basket_database_details_statistic_averageA"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -403,7 +403,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_g"
+                                    android:background="@color/basket_database_statistics_background_h"
                                     android:layout_gravity="center"
                                     />
 
@@ -425,7 +425,7 @@
                                 <View
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:background="@color/basket_database_statistics_background_h"
+                                    android:background="@color/basket_database_statistics_background_g"
                                     android:layout_gravity="center"
                                     />
 

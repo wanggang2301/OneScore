@@ -39,8 +39,8 @@ android {
         applicationId "com.hhly.mlottery"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 21
-        versionName "1.1.8.1028"
+        versionCode 22
+        versionName "1.1.9.1101"
         multiDexEnabled true
     }
 
@@ -56,6 +56,7 @@ android {
         }
         release {
             minifyEnabled true
+            shrinkResources true  // 打开资源压缩
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

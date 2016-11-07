@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.football.BasePagerAdapter;
@@ -43,10 +41,8 @@ import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ScheduleBasketballFragment;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CommonUtils;
 import com.hhly.mlottery.util.CyUtils;
-import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.RongYunUtils;
@@ -215,17 +211,21 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mBasketDetailsHeadFragment = BasketDetailsHeadFragment.newInstance();
 
 
-        if (LEAGUEID_NBA.equals(mLeagueId)) {
+        //篮球动画直播暂时取掉
+       /* if (LEAGUEID_NBA.equals(mLeagueId)) {
             mBasketAnimLiveFragment = BasketAnimLiveFragment.newInstance(mThirdId);
-        }
+        }*/
         basePagerAdapter.addFragments(mBasketDetailsHeadFragment);
+        mIndicator.setVisibility(View.GONE);
 
-        if (LEAGUEID_NBA.equals(mLeagueId)) {
+        /*if (LEAGUEID_NBA.equals(mLeagueId)) {
             basePagerAdapter.addFragments(mBasketAnimLiveFragment);
             mIndicator.setVisibility(View.VISIBLE);
         } else {
             mIndicator.setVisibility(View.GONE);
-        }
+        }*/
+
+
         mHeadviewpager.setAdapter(basePagerAdapter);
         mHeadviewpager.setOffscreenPageLimit(1);
         mIndicator.setViewPager(mHeadviewpager);
