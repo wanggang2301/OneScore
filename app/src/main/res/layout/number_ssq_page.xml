@@ -6,12 +6,10 @@
 
     <!-- 双色球 -->
 
-    <include layout="@layout/number_bonus"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
         <LinearLayout

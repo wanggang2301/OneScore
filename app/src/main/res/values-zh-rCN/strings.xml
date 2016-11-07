@@ -502,6 +502,7 @@
     <string name="number_ssq_zhb">质合比</string>
     <string name="number_ssq_qjb">区间比</string>
     <string name="number_ssq_bonus">奖金滚存：</string>
+    <string name="number_bonus_type">￥</string>
 
     <!-- 彩票 End-->
 

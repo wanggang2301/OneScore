@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <!-- 大乐透 -->
-    <include layout="@layout/number_bonus" />
 
     <LinearLayout
         android:layout_width="match_parent"

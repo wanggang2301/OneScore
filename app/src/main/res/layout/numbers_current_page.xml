@@ -329,6 +329,12 @@
 
                             <!-- 统计数据显示 -->
 
+                            <!--奖金池-->
+                            <include
+                                android:id="@+id/layout_lottery_bonus"
+                                layout="@layout/number_bonus"
+                                android:visibility="gone"/>
+
                             <FrameLayout
                                 android:id="@+id/fl_not_touch"
                                 android:layout_width="match_parent"
