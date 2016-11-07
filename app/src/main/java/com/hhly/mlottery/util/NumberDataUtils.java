@@ -19,7 +19,11 @@ import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.hhly.mlottery.R.id.number_ks_ds;
+import static com.hhly.mlottery.R.id.number_ks_dx;
 
 /**
  * @author Tenney
@@ -45,6 +49,10 @@ public class NumberDataUtils {
     private FrameLayout fl_number_syxw;
     private FrameLayout fl_number_ks;
     private FrameLayout fl_number_bjsc;
+    private FrameLayout fl_number_ssq;
+    private FrameLayout fl_number_dlt;
+    private FrameLayout fl_number_qlc;
+    private FrameLayout fl_number_f3d;
     private Context context;
     private View mView;
     private NumberCurrentInfo mNumberInfo;
@@ -53,6 +61,8 @@ public class NumberDataUtils {
     private List<String> zodiacs = new ArrayList<String>();// 存放六合彩生肖
 
     private SwipeRefreshLayout mSwipeRefreshLayout;// 下拉刷新
+
+    private int[] zhis = {1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31};// 1~33所有质数
 
     /**
      * 拆分开奖号码
@@ -149,9 +159,9 @@ public class NumberDataUtils {
 
             } else {
                 String num;
-                if(mNumberInfo.getNumbers().contains("#")){
-                    num = mNumberInfo.getNumbers().replace('#',',');
-                }else{
+                if (mNumberInfo.getNumbers().contains("#")) {
+                    num = mNumberInfo.getNumbers().replace('#', ',');
+                } else {
                     num = mNumberInfo.getNumbers();
                 }
                 // 46,15,38,39,7,11#25
@@ -231,7 +241,7 @@ public class NumberDataUtils {
                     iv.setLayoutParams(params);
 
 //                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
-                    ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
+                    ImageLoader.loadFitCenter(context, R.mipmap.number_anim_klsf_blue, R.mipmap.number_kj_icon_def).into(iv);
 
                     ll.addView(iv);
                 } else {
@@ -303,7 +313,7 @@ public class NumberDataUtils {
                         // 显示动态的gif图
                         ImageView iv = new ImageView(context);
 //                        iv.setImageResource(AppConstants.numberHKOpenGIF[i]);
-                        ImageLoader.loadFitCenter(context,AppConstants.numberHKOpenGIF[i],R.mipmap.number_kj_icon_def).into(iv);
+                        ImageLoader.loadFitCenter(context, AppConstants.numberHKOpenGIF[i], R.mipmap.number_kj_icon_def).into(iv);
 
                         // 设置GIF图的大小和左右的外边距
                         params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(context, 26), DisplayUtil.dip2px(context, 26));
@@ -484,7 +494,7 @@ public class NumberDataUtils {
                     // 正在开奖中时显示的内容
                     ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
-                    ImageLoader.loadFitCenter(context,AppConstants.numberQXCOpenGIF[i],R.mipmap.number_kj_icon_def).into(iv);
+                    ImageLoader.loadFitCenter(context, AppConstants.numberQXCOpenGIF[i], R.mipmap.number_kj_icon_def).into(iv);
                     ll.addView(iv);
                 } else {
                     TextView tv_number = new TextView(context);
@@ -500,13 +510,13 @@ public class NumberDataUtils {
                     ll.addView(tv_number);
                 }
             } else if ("24".equals(mNumberInfo.getName())) {// 双色球
-                if (false) { // TODO  待UI设计GIF图
+                if (false) {
                     ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
                     iv.setLayoutParams(params);
-                    if(i <= 5){
-                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_red,R.mipmap.number_kj_icon_def).into(iv);
-                    }else{
-                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
+                    if (i <= 5) {
+                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_ssq, R.mipmap.number_kj_icon_def).into(iv);
+                    } else {
+                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_ssq, R.mipmap.number_kj_icon_def).into(iv);
                     }
                     ll.addView(iv);
                 } else {
@@ -523,13 +533,13 @@ public class NumberDataUtils {
                     ll.addView(tv_number);
                 }
             } else if ("29".equals(mNumberInfo.getName())) {// 大乐透
-                if (false) { // TODO  待UI设计GIF图
+                if (false) {
                     ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
                     iv.setLayoutParams(params);
-                    if(i <= 4){
-                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_red,R.mipmap.number_kj_icon_def).into(iv);
-                    }else{
-                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
+                    if (i <= 4) {
+                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_dlt, R.mipmap.number_kj_icon_def).into(iv);
+                    } else {
+                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_dlt, R.mipmap.number_kj_icon_def).into(iv);
                     }
                     ll.addView(iv);
                 } else {
@@ -546,13 +556,13 @@ public class NumberDataUtils {
                     ll.addView(tv_number);
                 }
             } else if ("28".equals(mNumberInfo.getName())) {// 七乐彩
-                if (false) { // TODO  待UI设计GIF图
+                if (false) {
                     ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
                     iv.setLayoutParams(params);
-                    if(i <= 6){
-                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_red,R.mipmap.number_kj_icon_def).into(iv);
-                    }else{
-                        ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
+                    if (i <= 6) {
+                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_qlc, R.mipmap.number_kj_icon_def).into(iv);
+                    } else {
+                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_qlc, R.mipmap.number_kj_icon_def).into(iv);
                     }
                     ll.addView(iv);
                 } else {
@@ -582,7 +592,7 @@ public class NumberDataUtils {
                     ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
 //                    iv.setImageResource(R.mipmap.number_anim_klsf_blue);// 蓝球
-                    ImageLoader.loadFitCenter(context,R.mipmap.number_anim_klsf_blue,R.mipmap.number_kj_icon_def).into(iv);
+                    ImageLoader.loadFitCenter(context, R.mipmap.number_anim_klsf_blue, R.mipmap.number_kj_icon_def).into(iv);
                     ll.addView(iv);
                 } else {
                     TextView tv_number = new TextView(context);
@@ -632,7 +642,7 @@ public class NumberDataUtils {
                     ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
 //                    iv.setImageResource(AppConstants.numberQXCOpenGIF[0]);
-                    ImageLoader.loadFitCenter(context,AppConstants.numberQXCOpenGIF[0],R.mipmap.number_kj_icon_def).into(iv);
+                    ImageLoader.loadFitCenter(context, AppConstants.numberQXCOpenGIF[0], R.mipmap.number_kj_icon_def).into(iv);
                     ll.addView(iv);
                 } else {
                     // 添加号码布局
@@ -677,6 +687,10 @@ public class NumberDataUtils {
         fl_number_syxw = (FrameLayout) mView.findViewById(R.id.fl_number_syxw);
         fl_number_ks = (FrameLayout) mView.findViewById(R.id.fl_number_ks);
         fl_number_bjsc = (FrameLayout) mView.findViewById(R.id.fl_number_bjsc);
+        fl_number_ssq = (FrameLayout) mView.findViewById(R.id.fl_number_ssq);
+        fl_number_dlt = (FrameLayout) mView.findViewById(R.id.fl_number_dlt);
+        fl_number_qlc = (FrameLayout) mView.findViewById(R.id.fl_number_qlc);
+        fl_number_f3d = (FrameLayout) mView.findViewById(R.id.fl_number_f3d);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.number_current_swiperefreshlayout);// 下拉刷新控件
 
@@ -808,6 +822,10 @@ public class NumberDataUtils {
                 fl_number_syxw.setVisibility(View.GONE);
                 fl_number_ks.setVisibility(View.GONE);
                 fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
 
                 if (!isOpenNumberStartHistory) {
                     processingMethodHK(numbersInfo, zodiacsInfo);
@@ -823,6 +841,10 @@ public class NumberDataUtils {
                 fl_number_syxw.setVisibility(View.GONE);
                 fl_number_ks.setVisibility(View.GONE);
                 fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
 
                 if (!isOpenNumberStartHistory) {
                     processingMethodQXC(numbersInfo);
@@ -838,6 +860,11 @@ public class NumberDataUtils {
                 fl_number_syxw.setVisibility(View.GONE);
                 fl_number_ks.setVisibility(View.GONE);
                 fl_number_bjsc.setVisibility(View.VISIBLE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
+
                 if (!isOpenNumberStartHistory) {
                     processingMethodBJSC(numbersInfo);
                 } else {
@@ -854,6 +881,11 @@ public class NumberDataUtils {
                 fl_number_syxw.setVisibility(View.GONE);
                 fl_number_ks.setVisibility(View.GONE);
                 fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
+
                 if (!isOpenNumberStartHistory) {
                     processingMethodKLSF(numbersInfo);
                 } else {
@@ -872,6 +904,11 @@ public class NumberDataUtils {
                 fl_number_syxw.setVisibility(View.GONE);
                 fl_number_ks.setVisibility(View.GONE);
                 fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
+
                 if (!isOpenNumberStartHistory) {
                     processingMethodSSC(numbersInfo);
                 } else {
@@ -889,6 +926,11 @@ public class NumberDataUtils {
                 fl_number_syxw.setVisibility(View.VISIBLE);
                 fl_number_ks.setVisibility(View.GONE);
                 fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
+
                 if (!isOpenNumberStartHistory) {
                     processingMethodSYXW(numbersInfo);
                 } else {
@@ -905,12 +947,436 @@ public class NumberDataUtils {
                 fl_number_syxw.setVisibility(View.GONE);
                 fl_number_ks.setVisibility(View.VISIBLE);
                 fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
+
                 if (!isOpenNumberStartHistory) {
                     processingMethodKS(numbersInfo);
                 } else {
                     processingMethodKS(null);
                 }
                 break;
+            case 24:// 双色球
+                fl_number_hk.setVisibility(View.GONE);
+                fl_number_qxc.setVisibility(View.GONE);
+                fl_number_ssc.setVisibility(View.GONE);
+                fl_number_klsf.setVisibility(View.GONE);
+                fl_number_syxw.setVisibility(View.GONE);
+                fl_number_ks.setVisibility(View.GONE);
+                fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.VISIBLE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
+
+                if (!isOpenNumberStartHistory) {
+                    processingMethodSSQ(numbersInfo);
+                } else {
+                    processingMethodSSQ(null);
+                }
+                break;
+            case 28:// 七乐彩
+                fl_number_hk.setVisibility(View.GONE);
+                fl_number_qxc.setVisibility(View.GONE);
+                fl_number_ssc.setVisibility(View.GONE);
+                fl_number_klsf.setVisibility(View.GONE);
+                fl_number_syxw.setVisibility(View.GONE);
+                fl_number_ks.setVisibility(View.GONE);
+                fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.VISIBLE);
+                fl_number_f3d.setVisibility(View.GONE);
+
+                if (!isOpenNumberStartHistory) {
+                    processingMethodQLC(numbersInfo);
+                } else {
+                    processingMethodQLC(null);
+                }
+                break;
+            case 29:// 大乐透
+                fl_number_hk.setVisibility(View.GONE);
+                fl_number_qxc.setVisibility(View.GONE);
+                fl_number_ssc.setVisibility(View.GONE);
+                fl_number_klsf.setVisibility(View.GONE);
+                fl_number_syxw.setVisibility(View.GONE);
+                fl_number_ks.setVisibility(View.GONE);
+                fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.VISIBLE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.GONE);
+
+                if (!isOpenNumberStartHistory) {
+                    processingMethodDLT(numbersInfo);
+                } else {
+                    processingMethodDLT(null);
+                }
+                break;
+            case 25:// 排列3
+            case 26:// 排列5
+            case 27:// 福彩3D
+                fl_number_hk.setVisibility(View.GONE);
+                fl_number_qxc.setVisibility(View.GONE);
+                fl_number_ssc.setVisibility(View.GONE);
+                fl_number_klsf.setVisibility(View.GONE);
+                fl_number_syxw.setVisibility(View.GONE);
+                fl_number_ks.setVisibility(View.GONE);
+                fl_number_bjsc.setVisibility(View.GONE);
+                fl_number_ssq.setVisibility(View.GONE);
+                fl_number_dlt.setVisibility(View.GONE);
+                fl_number_qlc.setVisibility(View.GONE);
+                fl_number_f3d.setVisibility(View.VISIBLE);
+
+                if (!isOpenNumberStartHistory) {
+                    processingMethodF3D(numbersInfo);
+                } else {
+                    processingMethodF3D(null);
+                }
+                break;
+        }
+    }
+
+    /**
+     * 福彩3D、排列3、排列5
+     *
+     * @param numbers
+     */
+    private void processingMethodF3D(List<String> numbers) {
+        TextView number_f3d_fz = (TextView) mView.findViewById(R.id.number_f3d_fz);
+        TextView number_f3d_dx = (TextView) mView.findViewById(R.id.number_f3d_dx);
+        TextView number_f3d_ds = (TextView) mView.findViewById(R.id.number_f3d_ds);
+        TextView number_f3d_job = (TextView) mView.findViewById(R.id.number_f3d_job);
+        TextView number_f3d_dxb = (TextView) mView.findViewById(R.id.number_f3d_dxb);
+        TextView number_f3d_zhb = (TextView) mView.findViewById(R.id.number_f3d_zhb);
+
+        if (null == numbers) {
+            number_f3d_fz.setText(context.getResources().getString(R.string.number_info_default));
+            number_f3d_dx.setText(context.getResources().getString(R.string.number_info_default));
+            number_f3d_ds.setText(context.getResources().getString(R.string.number_info_default));
+            number_f3d_job.setText(context.getResources().getString(R.string.number_info_default));
+            number_f3d_dxb.setText(context.getResources().getString(R.string.number_info_default));
+            number_f3d_zhb.setText(context.getResources().getString(R.string.number_info_default));
+        } else {
+            int sum = 0; // 和
+            int odd = 0; // 奇
+            int even = 0;// 偶
+            int max = 0;// 大
+            int min = 0;// 小
+            int zhi = 0;// 质
+            int he = 0;// 合
+            for (int i = 0; i < numbers.size(); i++) {
+                int num = Integer.parseInt(numbers.get(i));
+                sum += num;
+
+                if(num == 0){
+                    even++;
+                } else if (num % 2 == 0) {
+                    even++;
+                } else {
+                    odd++;
+                }
+                if (num > 4) {
+                    max++;
+                } else {
+                    min++;
+                }
+                if (Arrays.binarySearch(zhis, num) < 0) {
+                    he++;
+                } else {
+                    zhi++;
+                }
+            }
+            number_f3d_fz.setText(String.valueOf(sum));
+            number_f3d_dx.setText(sum > 14 ? context.getResources().getString(R.string.number_bjsc_da):context.getResources().getString(R.string.number_bjsc_xiao));
+            if (sum == 0) {
+                number_f3d_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
+            } else if (sum % 2 == 0) {
+                number_f3d_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
+            } else {
+                number_f3d_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));
+            }
+            number_f3d_job.setText(odd + ":" + even);
+            number_f3d_dxb.setText(max + ":" + min);
+            number_f3d_zhb.setText(zhi + ":" + he);
+        }
+    }
+
+    /**
+     * 大乐透
+     *
+     * @param numbers
+     */
+    private void processingMethodDLT(List<String> numbers) {
+        TextView number_dlt_fz = (TextView) mView.findViewById(R.id.number_dlt_fz);
+        TextView number_dlt_ds = (TextView) mView.findViewById(R.id.number_dlt_ds);
+        TextView number_dlt_kd_r = (TextView) mView.findViewById(R.id.number_dlt_kd_r);
+        TextView number_dlt_job_r = (TextView) mView.findViewById(R.id.number_dlt_job_r);
+        TextView number_dlt_dxb_r = (TextView) mView.findViewById(R.id.number_dlt_dxb_r);
+        TextView number_dlt_zhb_r = (TextView) mView.findViewById(R.id.number_dlt_zhb_r);
+        TextView number_dlt_qjb_r = (TextView) mView.findViewById(R.id.number_dlt_qjb_r);
+        TextView number_dlt_kd_b = (TextView) mView.findViewById(R.id.number_dlt_kd_b);
+        TextView number_dlt_job_b = (TextView) mView.findViewById(R.id.number_dlt_job_b);
+        TextView number_dlt_dxb_b = (TextView) mView.findViewById(R.id.number_dlt_dxb_b);
+        TextView number_dlt_zhb_b = (TextView) mView.findViewById(R.id.number_dlt_zhb_b);
+        TextView number_dlt_qjb_b = (TextView) mView.findViewById(R.id.number_dlt_qjb_b);
+
+        if (null == numbers) {
+            number_dlt_fz.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_ds.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_kd_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_job_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_dxb_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_zhb_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_qjb_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_kd_b.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_job_b.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_dxb_b.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_zhb_b.setText(context.getResources().getString(R.string.number_info_default));
+            number_dlt_qjb_b.setText(context.getResources().getString(R.string.number_info_default));
+        } else {
+            int sum = 0; // 和
+            int odd_r = 0; // 奇
+            int odd_b = 0; // 奇
+            int even_r = 0;// 偶
+            int even_b = 0;// 偶
+            int max_r = 0;// 大
+            int max_b = 0;// 大
+            int min_r = 0;// 小
+            int min_b = 0;// 小
+            int zhi_r = 0;// 质
+            int zhi_b = 0;// 质
+            int he_r = 0;// 合
+            int he_b = 0;// 合
+            int one_r = 0;// 1区
+            int one_b = 0;// 1区
+            int two_r = 0;// 2区
+            int two_b = 0;// 2区
+            int three_r = 0;// 3区
+            int three_b = 0;// 3区
+            for (int i = 0; i < numbers.size(); i++) {
+                int num = Integer.parseInt(numbers.get(i));
+                sum += num;
+                if (i < numbers.size() - 2 && num > 0) {
+                    if (num % 2 == 0) {
+                        even_r++;
+                    } else {
+                        odd_r++;
+                    }
+                    if (num > 17) {
+                        max_r++;
+                    } else {
+                        min_r++;
+                    }
+                    if (Arrays.binarySearch(zhis, num) < 0) {
+                        he_r++;
+                    } else {
+                        zhi_r++;
+                    }
+                    if (num <= 12) {
+                        one_r++;
+                    } else if (num <= 24) {
+                        two_r++;
+                    } else {
+                        three_r++;
+                    }
+                } else {
+                    if (num % 2 == 0) {
+                        even_b++;
+                    } else {
+                        odd_b++;
+                    }
+                    if (num > 6) {
+                        max_b++;
+                    } else {
+                        min_b++;
+                    }
+                    if (Arrays.binarySearch(zhis, num) < 0) {
+                        he_b++;
+                    } else {
+                        zhi_b++;
+                    }
+                    if (num <= 4) {
+                        one_b++;
+                    } else if (num <= 8) {
+                        two_b++;
+                    } else {
+                        three_b++;
+                    }
+                }
+            }
+            number_dlt_fz.setText(String.valueOf(sum));
+            if (sum % 2 == 0) {
+                number_dlt_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
+            } else {
+                number_dlt_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));
+            }
+            int kd_r = Integer.parseInt(numbers.get(numbers.size() - 3)) - Integer.parseInt(numbers.get(0));
+            int kd_b = Integer.parseInt(numbers.get(numbers.size() - 1)) - Integer.parseInt(numbers.get(numbers.size() - 2));
+            number_dlt_kd_r.setText(String.valueOf(kd_r));
+            number_dlt_kd_b.setText(String.valueOf(kd_b));
+            number_dlt_job_r.setText(odd_r + ":" + even_r);
+            number_dlt_job_b.setText(odd_b + ":" + even_b);
+            number_dlt_dxb_r.setText(max_r + ":" + min_r);
+            number_dlt_dxb_b.setText(max_b + ":" + min_b);
+            number_dlt_zhb_r.setText(zhi_r + ":" + he_r);
+            number_dlt_zhb_b.setText(zhi_b + ":" + he_b);
+            number_dlt_qjb_r.setText(one_r + ":" + two_r + ":" + three_r);
+            number_dlt_qjb_b.setText(one_b + ":" + two_b + ":" + three_b);
+        }
+    }
+
+    /**
+     * 七乐彩
+     *
+     * @param numbers
+     */
+    private void processingMethodQLC(List<String> numbers) {
+        TextView number_qlc_fz = (TextView) mView.findViewById(R.id.number_qlc_fz);
+        TextView number_qlc_ds = (TextView) mView.findViewById(R.id.number_qlc_ds);
+        TextView number_qlc_kd_r = (TextView) mView.findViewById(R.id.number_qlc_kd_r);
+        TextView number_qlc_job_r = (TextView) mView.findViewById(R.id.number_qlc_job_r);
+        TextView number_qlc_dxb_r = (TextView) mView.findViewById(R.id.number_qlc_dxb_r);
+        TextView number_qlc_zhb_r = (TextView) mView.findViewById(R.id.number_qlc_zhb_r);
+        TextView number_qlc_qjb_r = (TextView) mView.findViewById(R.id.number_qlc_qjb_r);
+
+        if (null == numbers) {
+            number_qlc_fz.setText(context.getResources().getString(R.string.number_info_default));
+            number_qlc_ds.setText(context.getResources().getString(R.string.number_info_default));
+            number_qlc_kd_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_qlc_job_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_qlc_dxb_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_qlc_zhb_r.setText(context.getResources().getString(R.string.number_info_default));
+            number_qlc_qjb_r.setText(context.getResources().getString(R.string.number_info_default));
+        } else {
+            int sum = 0; // 和
+            int odd = 0; // 奇
+            int even = 0;// 偶
+            int max = 0;// 大
+            int min = 0;// 小
+            int zhi = 0;// 质
+            int he = 0;// 合
+            int one = 0;// 1区
+            int two = 0;// 2区
+            int three = 0;// 3区
+            for (int i = 0; i < numbers.size(); i++) {
+                int num = Integer.parseInt(numbers.get(i));
+                sum += num;
+                if (i < numbers.size() - 1 && num > 0) {
+                    if (num % 2 == 0) {
+                        even++;
+                    } else {
+                        odd++;
+                    }
+                    if (num > 15) {
+                        max++;
+                    } else {
+                        min++;
+                    }
+                    if (Arrays.binarySearch(zhis, num) < 0) {
+                        he++;
+                    } else {
+                        zhi++;
+                    }
+                    if (num <= 10) {
+                        one++;
+                    } else if (num <= 20) {
+                        two++;
+                    } else {
+                        three++;
+                    }
+                }
+            }
+            number_qlc_fz.setText(String.valueOf(sum));
+            if (sum % 2 == 0) {
+                number_qlc_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
+            } else {
+                number_qlc_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));
+            }
+            int kd = Integer.parseInt(numbers.get(numbers.size() - 2)) - Integer.parseInt(numbers.get(0));
+            number_qlc_kd_r.setText(String.valueOf(kd));
+            number_qlc_job_r.setText(odd + ":" + even);
+            number_qlc_dxb_r.setText(max + ":" + min);
+            number_qlc_zhb_r.setText(zhi + ":" + he);
+            number_qlc_qjb_r.setText(one + ":" + two + ":" + three);
+        }
+    }
+
+    /**
+     * 双色球
+     *
+     * @param numbers
+     */
+    private void processingMethodSSQ(List<String> numbers) {
+        TextView number_ssq_fz = (TextView) mView.findViewById(R.id.number_ssq_fz);
+        TextView number_ssq_ds = (TextView) mView.findViewById(R.id.number_ssq_ds);
+        TextView number_ssq_kd = (TextView) mView.findViewById(R.id.number_ssq_kd);
+        TextView number_ssq_job = (TextView) mView.findViewById(R.id.number_ssq_job);
+        TextView number_ssq_dxb = (TextView) mView.findViewById(R.id.number_ssq_dxb);
+        TextView number_ssq_zhb = (TextView) mView.findViewById(R.id.number_ssq_zhb);
+        TextView number_ssq_qjb = (TextView) mView.findViewById(R.id.number_ssq_qjb);
+
+        if (null == numbers) {
+            number_ssq_fz.setText(context.getResources().getString(R.string.number_info_default));
+            number_ssq_ds.setText(context.getResources().getString(R.string.number_info_default));
+            number_ssq_kd.setText(context.getResources().getString(R.string.number_info_default));
+            number_ssq_job.setText(context.getResources().getString(R.string.number_info_default));
+            number_ssq_dxb.setText(context.getResources().getString(R.string.number_info_default));
+            number_ssq_zhb.setText(context.getResources().getString(R.string.number_info_default));
+            number_ssq_qjb.setText(context.getResources().getString(R.string.number_info_default));
+        } else {
+            int sum = 0; // 和
+            int odd = 0; // 奇
+            int even = 0;// 偶
+            int max = 0;// 大
+            int min = 0;// 小
+            int zhi = 0;// 质
+            int he = 0;// 合
+            int one = 0;// 1区
+            int two = 0;// 2区
+            int three = 0;// 3区
+            for (int i = 0; i < numbers.size(); i++) {
+                int num = Integer.parseInt(numbers.get(i));
+                sum += num;
+                if (i < numbers.size() - 1 && num > 0) {
+                    if (num % 2 == 0) {
+                        even++;
+                    } else {
+                        odd++;
+                    }
+                    if (num > 16) {
+                        max++;
+                    } else {
+                        min++;
+                    }
+                    if (Arrays.binarySearch(zhis, num) < 0) {
+                        he++;
+                    } else {
+                        zhi++;
+                    }
+                    if (num <= 11) {
+                        one++;
+                    } else if (num <= 22) {
+                        two++;
+                    } else {
+                        three++;
+                    }
+                }
+            }
+            number_ssq_fz.setText(String.valueOf(sum));
+            if (sum % 2 == 0) {
+                number_ssq_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
+            } else {
+                number_ssq_ds.setText(context.getResources().getString(R.string.number_bjsc_dan));
+            }
+            int kd = Integer.parseInt(numbers.get(numbers.size() - 2)) - Integer.parseInt(numbers.get(0));
+            number_ssq_kd.setText(String.valueOf(kd));
+            number_ssq_job.setText(odd + ":" + even);
+            number_ssq_dxb.setText(max + ":" + min);
+            number_ssq_zhb.setText(zhi + ":" + he);
+            number_ssq_qjb.setText(one + ":" + two + ":" + three);
         }
     }
 

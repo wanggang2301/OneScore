@@ -410,6 +410,50 @@
 
                                     <include layout="@layout/number_bjsc_page"/>
                                 </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_ssq"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 8.双色球 -->
+
+                                    <include layout="@layout/number_ssq_page"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_qlc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 9.七乐彩 -->
+
+                                    <include layout="@layout/number_qlc_page"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_dlt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 10.大乐透 -->
+
+                                    <include layout="@layout/number_dlt_page"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_f3d"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 11.福彩3D、排列3、排列5 -->
+
+                                    <include layout="@layout/number_f3d_page"/>
+                                </FrameLayout>
                             </FrameLayout>
                         </LinearLayout>
                     </FrameLayout>

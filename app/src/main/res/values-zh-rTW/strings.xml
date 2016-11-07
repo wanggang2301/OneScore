@@ -483,6 +483,15 @@
     <string name="number_exp__check_txt">請檢查后</string>
     <string name="number_exp_refresh_txt">刷新</string>
 
+    <string name="number_ssq_hqtj">紅球統計</string>
+    <string name="number_ssq_lqtj">藍球統計</string>
+    <string name="number_ssq_kd">跨度</string>
+    <string name="number_ssq_job">奇偶比</string>
+    <string name="number_ssq_dxb">大小比</string>
+    <string name="number_ssq_zhb">質合比</string>
+    <string name="number_ssq_qjb">區間比</string>
+    <string name="number_ssq_bonus">獎金滾存：</string>
+
     <!-- 彩票End -->
 
     <string name="number_xq7">週日</string>
