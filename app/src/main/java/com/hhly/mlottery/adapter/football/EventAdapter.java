@@ -34,7 +34,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
     private static final String SUBSTITUTION = "1055";
     private static final String CORNER = "1025";
     private static final String YTORED = "1045";//两黄变一红
-    private static final String DIANQIU = "1031";//两黄变一红
+    private static final String DIANQIU = "1031";//点球
 
     //客队事件
     private static final String SCORE1 = "2053";//客队进球
@@ -43,7 +43,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
     private static final String SUBSTITUTION1 = "2079";
     private static final String CORNER1 = "2049";
     private static final String YTORED1 = "2069";//两黄变一红
-    private static final String DIANQIU1 = "2055";//两黄变一红
+    private static final String DIANQIU1 = "2055";//点球
 
 
     /**

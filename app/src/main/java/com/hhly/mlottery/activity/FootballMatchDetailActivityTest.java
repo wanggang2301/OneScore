@@ -283,12 +283,6 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
     private TextView head_score;
 
 
-
-
-
-
-
-
     private TextView head_home_name;
     private TextView head_guest_name;
     private View iv_share;
@@ -365,7 +359,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         mHeadviewpager.setOffscreenPageLimit(2);
         mIndicator.setViewPager(mHeadviewpager);
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
-        mHeadviewpager.setCurrentItem(0,false);
+        mHeadviewpager.setCurrentItem(0, false);
 
         mHeadviewpager.setIsScrollable(false);
         mIndicator.setVisibility(View.GONE);
@@ -1846,6 +1840,16 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                 mStatisticsFragment.updateRecycleView(matchTextLiveBean.getState());
                 mStatisticsFragment.cancelTrendChartEvent(matchTextLiveBean);
 
+                break;
+
+            case "1031"://主队点球
+                mStatisticsFragment.addFootBallEvent(matchTextLiveBean);
+                mStatisticsFragment.updateRecycleView(matchTextLiveBean.getState());
+                break;
+
+            case "2055"://客队点球
+                mStatisticsFragment.addFootBallEvent(matchTextLiveBean);
+                mStatisticsFragment.updateRecycleView(matchTextLiveBean.getState());
                 break;
 
             case "1034":   //主队黄牌
