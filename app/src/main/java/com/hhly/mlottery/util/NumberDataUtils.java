@@ -53,6 +53,7 @@ public class NumberDataUtils {
     private FrameLayout fl_number_dlt;
     private FrameLayout fl_number_qlc;
     private FrameLayout fl_number_f3d;
+    private TextView tv_lottery_bonus;
     private Context context;
     private View mView;
     private NumberCurrentInfo mNumberInfo;
@@ -691,6 +692,7 @@ public class NumberDataUtils {
         fl_number_dlt = (FrameLayout) mView.findViewById(R.id.fl_number_dlt);
         fl_number_qlc = (FrameLayout) mView.findViewById(R.id.fl_number_qlc);
         fl_number_f3d = (FrameLayout) mView.findViewById(R.id.fl_number_f3d);
+        tv_lottery_bonus = (TextView) mView.findViewById(R.id.tv_lottery_bonus);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.number_current_swiperefreshlayout);// 下拉刷新控件
 
@@ -713,8 +715,8 @@ public class NumberDataUtils {
         disposeSubNumbers(mNumberInfo, numbers, zodiacs);// 拆分开奖号码
         isOpenNumberStartShow(context, mNumberInfo, isOpenNumberStartHistory, isOpenNumberStartHistory, isGravity);// 按开奖状态显示对应的标题
         numberAddInfo(context, mNumberInfo, ll_Currentnumber_numbers, numbers, zodiacs, isOpenNumberStartHistory, isOpenNumberStartHistory, isNextNumber, isGravity, index);// 动态添加数据
-
-        numberAddInfo(isOpenNumberStartHistory);// 详情数据显示
+        System.out.println("xxxxx getJackpot: " + mNumberInfo.getJackpot());
+        numberAddInfo(isOpenNumberStartHistory , mNumberInfo.getJackpot());// 详情数据显示
 
     }
 
@@ -753,7 +755,7 @@ public class NumberDataUtils {
                     tv_Currentnumber_time.setText(Dates[0] + " " + weekDate);// 显示日期和周
                     tv_number_title.setText(context.getResources().getString(R.string.number_code_di) + mNumberInfo.getIssue() + context.getResources().getString(R.string.number_code_qi));
                 }
-            } else if ("6".equals(mNumberInfo.getName())) {// 七星彩正在开奖状态
+            } else if ("6".equals(mNumberInfo.getName()) || "24".equals(mNumberInfo.getName()) || "28".equals(mNumberInfo.getName()) || "29".equals(mNumberInfo.getName())) {// 七星彩、双色球、七乐彩、大乐透正在开奖状态
                 if (isQXCOpenNumberStart) {
                     number_new_icon.setVisibility(View.GONE);
 
@@ -805,7 +807,7 @@ public class NumberDataUtils {
     /**
      * 详情数据显示
      */
-    private void numberAddInfo(boolean isOpenNumberStartHistory) {
+    private void numberAddInfo(boolean isOpenNumberStartHistory ,String lotteryBonus) {
 
         List<String> numbersInfo = new ArrayList<String>();// 存放开奖号码
         List<String> zodiacsInfo = new ArrayList<String>();// 存放六合彩生肖
@@ -847,9 +849,9 @@ public class NumberDataUtils {
                 fl_number_f3d.setVisibility(View.GONE);
 
                 if (!isOpenNumberStartHistory) {
-                    processingMethodQXC(numbersInfo);
+                    processingMethodQXC(numbersInfo,lotteryBonus);
                 } else {
-                    processingMethodQXC(null);
+                    processingMethodQXC(null,"");
                 }
                 break;
             case 15:// 北京赛车
@@ -972,9 +974,9 @@ public class NumberDataUtils {
                 fl_number_f3d.setVisibility(View.GONE);
 
                 if (!isOpenNumberStartHistory) {
-                    processingMethodSSQ(numbersInfo);
+                    processingMethodSSQ(numbersInfo,lotteryBonus);
                 } else {
-                    processingMethodSSQ(null);
+                    processingMethodSSQ(null,"");
                 }
                 break;
             case 28:// 七乐彩
@@ -991,9 +993,9 @@ public class NumberDataUtils {
                 fl_number_f3d.setVisibility(View.GONE);
 
                 if (!isOpenNumberStartHistory) {
-                    processingMethodQLC(numbersInfo);
+                    processingMethodQLC(numbersInfo , lotteryBonus);
                 } else {
-                    processingMethodQLC(null);
+                    processingMethodQLC(null , "");
                 }
                 break;
             case 29:// 大乐透
@@ -1010,9 +1012,9 @@ public class NumberDataUtils {
                 fl_number_f3d.setVisibility(View.GONE);
 
                 if (!isOpenNumberStartHistory) {
-                    processingMethodDLT(numbersInfo);
+                    processingMethodDLT(numbersInfo , lotteryBonus);
                 } else {
-                    processingMethodDLT(null);
+                    processingMethodDLT(null,"");
                 }
                 break;
             case 25:// 排列3
@@ -1109,7 +1111,7 @@ public class NumberDataUtils {
      *
      * @param numbers
      */
-    private void processingMethodDLT(List<String> numbers) {
+    private void processingMethodDLT(List<String> numbers , String lotteryBonus) {
         TextView number_dlt_fz = (TextView) mView.findViewById(R.id.number_dlt_fz);
         TextView number_dlt_ds = (TextView) mView.findViewById(R.id.number_dlt_ds);
         TextView number_dlt_kd_r = (TextView) mView.findViewById(R.id.number_dlt_kd_r);
@@ -1122,6 +1124,7 @@ public class NumberDataUtils {
         TextView number_dlt_dxb_b = (TextView) mView.findViewById(R.id.number_dlt_dxb_b);
         TextView number_dlt_zhb_b = (TextView) mView.findViewById(R.id.number_dlt_zhb_b);
         TextView number_dlt_qjb_b = (TextView) mView.findViewById(R.id.number_dlt_qjb_b);
+        tv_lottery_bonus.setText(lotteryBonus);
 
         if (null == numbers) {
             number_dlt_fz.setText(context.getResources().getString(R.string.number_info_default));
@@ -1233,7 +1236,7 @@ public class NumberDataUtils {
      *
      * @param numbers
      */
-    private void processingMethodQLC(List<String> numbers) {
+    private void processingMethodQLC(List<String> numbers ,String lotteryBonus) {
         TextView number_qlc_fz = (TextView) mView.findViewById(R.id.number_qlc_fz);
         TextView number_qlc_ds = (TextView) mView.findViewById(R.id.number_qlc_ds);
         TextView number_qlc_kd_r = (TextView) mView.findViewById(R.id.number_qlc_kd_r);
@@ -1241,6 +1244,7 @@ public class NumberDataUtils {
         TextView number_qlc_dxb_r = (TextView) mView.findViewById(R.id.number_qlc_dxb_r);
         TextView number_qlc_zhb_r = (TextView) mView.findViewById(R.id.number_qlc_zhb_r);
         TextView number_qlc_qjb_r = (TextView) mView.findViewById(R.id.number_qlc_qjb_r);
+        tv_lottery_bonus.setText(lotteryBonus);
 
         if (null == numbers) {
             number_qlc_fz.setText(context.getResources().getString(R.string.number_info_default));
@@ -1309,7 +1313,7 @@ public class NumberDataUtils {
      *
      * @param numbers
      */
-    private void processingMethodSSQ(List<String> numbers) {
+    private void processingMethodSSQ(List<String> numbers ,String lotteryBonus) {
         TextView number_ssq_fz = (TextView) mView.findViewById(R.id.number_ssq_fz);
         TextView number_ssq_ds = (TextView) mView.findViewById(R.id.number_ssq_ds);
         TextView number_ssq_kd = (TextView) mView.findViewById(R.id.number_ssq_kd);
@@ -1317,6 +1321,8 @@ public class NumberDataUtils {
         TextView number_ssq_dxb = (TextView) mView.findViewById(R.id.number_ssq_dxb);
         TextView number_ssq_zhb = (TextView) mView.findViewById(R.id.number_ssq_zhb);
         TextView number_ssq_qjb = (TextView) mView.findViewById(R.id.number_ssq_qjb);
+        tv_lottery_bonus.setText(lotteryBonus);
+        System.out.println("xxxxx 双色球：" + lotteryBonus);
 
         if (null == numbers) {
             number_ssq_fz.setText(context.getResources().getString(R.string.number_info_default));
@@ -1673,7 +1679,7 @@ public class NumberDataUtils {
      *
      * @param numbers
      */
-    private void processingMethodQXC(List<String> numbers) {
+    private void processingMethodQXC(List<String> numbers , String lotteryBonus) {
         TextView number_qxc_dx_1 = (TextView) mView.findViewById(R.id.number_qxc_dx_1);
         TextView number_qxc_dx_2 = (TextView) mView.findViewById(R.id.number_qxc_dx_2);
         TextView number_qxc_dx_3 = (TextView) mView.findViewById(R.id.number_qxc_dx_3);
@@ -1688,7 +1694,7 @@ public class NumberDataUtils {
         TextView number_qxc_ds_5 = (TextView) mView.findViewById(R.id.number_qxc_ds_5);
         TextView number_qxc_ds_6 = (TextView) mView.findViewById(R.id.number_qxc_ds_6);
         TextView number_qxc_ds_7 = (TextView) mView.findViewById(R.id.number_qxc_ds_7);
-
+        tv_lottery_bonus.setText(lotteryBonus);
         if (null == numbers) {
             number_qxc_dx_1.setText(context.getResources().getString(R.string.number_info_default));
             number_qxc_ds_1.setText(context.getResources().getString(R.string.number_info_default));
