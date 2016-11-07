@@ -2,7 +2,6 @@ package com.hhly.mlottery.util;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -19,12 +18,11 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.hhly.mlottery.R.id.number_ks_ds;
-import static com.hhly.mlottery.R.id.number_ks_dx;
 
 /**
  * @author Tenney
@@ -719,7 +717,8 @@ public class NumberDataUtils {
         isOpenNumberStartShow(context, mNumberInfo, isOpenNumberStartHistory, isOpenNumberStartHistory, isGravity);// 按开奖状态显示对应的标题
         numberAddInfo(context, mNumberInfo, ll_Currentnumber_numbers, numbers, zodiacs, isOpenNumberStartHistory, isOpenNumberStartHistory, isNextNumber, isGravity, index);// 动态添加数据
         numberAddInfo(isOpenNumberStartHistory);// 详情数据显示
-        tv_lottery_bonus.setText(context.getResources().getString(R.string.number_bonus_type) + mNumberInfo.getJackpot());// 设置奖金滚存
+//        tv_lottery_bonus.setText(context.getResources().getString(R.string.number_bonus_type) + DecimalFormat.getNumberInstance().format(mNumberInfo.getJackpot()));// 设置奖金滚存
+        tv_lottery_bonus.setText(NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));// 设置奖金滚存
     }
 
     /**
