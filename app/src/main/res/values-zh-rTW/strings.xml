@@ -408,6 +408,12 @@
     <string name="number_hk_hint2"></string>
     <string name="number_qxc_hint">七星彩開獎倒計時：</string>
     <string name="number_qxc_hint2"></string>
+    <string name="number_ssq_hint">雙色球開獎倒計時：</string>
+    <string name="number_ssq_hint2"></string>
+    <string name="number_qlc_hint">七樂彩開獎倒計時：</string>
+    <string name="number_qlc_hint2"></string>
+    <string name="number_dlt_hint">大樂透開獎倒計時：</string>
+    <string name="number_dlt_hint2"></string>
     <string name="number_hk_dd">天</string>
     <string name="number_hk_hh">時</string>
     <string name="number_hk_mm">分</string>

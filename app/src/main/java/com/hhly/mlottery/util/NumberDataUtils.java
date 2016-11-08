@@ -191,7 +191,7 @@ public class NumberDataUtils {
      * @param index                快乐十分的红球显示下标
      */
     public static void numberAddInfo(Context context, NumberCurrentInfo mNumberInfo, View view, List<String> numbers, List<String> zodiacs, boolean isHKOpenNumberStart, boolean isQXCOpenNumberStart,
-                                     boolean isNextNumber, int isGravity, String index) {
+                                     boolean isSSQOpenNumberStart,boolean isQLCOpenNumberStart,boolean isDLTOpenNumberStart,boolean isNextNumber, int isGravity, String index) {
 
         if (view != null) {
             ((ViewGroup) view).removeAllViews();
@@ -511,7 +511,7 @@ public class NumberDataUtils {
                     ll.addView(tv_number);
                 }
             } else if ("24".equals(mNumberInfo.getName())) {// 双色球
-                if (false) {
+                if (isSSQOpenNumberStart) {
                     ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
                     iv.setLayoutParams(params);
                     if (i <= 5) {
@@ -534,7 +534,7 @@ public class NumberDataUtils {
                     ll.addView(tv_number);
                 }
             } else if ("29".equals(mNumberInfo.getName())) {// 大乐透
-                if (false) {
+                if (isDLTOpenNumberStart) {
                     ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
                     iv.setLayoutParams(params);
                     if (i <= 4) {
@@ -557,7 +557,7 @@ public class NumberDataUtils {
                     ll.addView(tv_number);
                 }
             } else if ("28".equals(mNumberInfo.getName())) {// 七乐彩
-                if (false) {
+                if (isQLCOpenNumberStart) {
                     ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
                     iv.setLayoutParams(params);
                     if (i <= 6) {
@@ -715,7 +715,7 @@ public class NumberDataUtils {
 
         disposeSubNumbers(mNumberInfo, numbers, zodiacs);// 拆分开奖号码
         isOpenNumberStartShow(context, mNumberInfo, isOpenNumberStartHistory, isOpenNumberStartHistory, isGravity);// 按开奖状态显示对应的标题
-        numberAddInfo(context, mNumberInfo, ll_Currentnumber_numbers, numbers, zodiacs, isOpenNumberStartHistory, isOpenNumberStartHistory, isNextNumber, isGravity, index);// 动态添加数据
+        numberAddInfo(context, mNumberInfo, ll_Currentnumber_numbers, numbers, zodiacs, isOpenNumberStartHistory, isOpenNumberStartHistory,isOpenNumberStartHistory,isOpenNumberStartHistory,isOpenNumberStartHistory, isNextNumber, isGravity, index);// 动态添加数据
         numberAddInfo(isOpenNumberStartHistory);// 详情数据显示
 //        tv_lottery_bonus.setText(context.getResources().getString(R.string.number_bonus_type) + DecimalFormat.getNumberInstance().format(mNumberInfo.getJackpot()));// 设置奖金滚存
         tv_lottery_bonus.setText(mNumberInfo.getJackpot() == null ?"":NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));// 设置奖金滚存

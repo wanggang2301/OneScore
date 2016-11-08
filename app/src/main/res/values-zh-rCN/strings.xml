@@ -418,6 +418,12 @@
     <string name="number_hk_hint2"></string>
     <string name="number_qxc_hint">七星彩开奖倒计时：</string>
     <string name="number_qxc_hint2"></string>
+    <string name="number_ssq_hint">双色球开奖倒计时：</string>
+    <string name="number_ssq_hint2"></string>
+    <string name="number_qlc_hint">七乐彩开奖倒计时：</string>
+    <string name="number_qlc_hint2"></string>
+    <string name="number_dlt_hint">大乐透开奖倒计时：</string>
+    <string name="number_dlt_hint2"></string>
     <string name="number_hk_dd">天</string>
     <string name="number_hk_hh">时</string>
     <string name="number_hk_mm">分</string>

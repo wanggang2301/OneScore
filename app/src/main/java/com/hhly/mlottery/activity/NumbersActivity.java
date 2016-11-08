@@ -69,6 +69,9 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     public static String serverTime;// 服务器时间
     private long HKnumberTime;// 香港彩开奖时间
     private long QXCnumberTime;// 七星彩开奖时间
+    private long SSQnumberTime;// 双色球开奖时间
+    private long QLCnumberTime;// 七乐彩开奖时间
+    private long DLTnumberTime;// 大乐透开奖时间
 
     private List<String> numbers = new ArrayList<String>();// 存放开奖号码
     private List<String> zodiacs = new ArrayList<String>();// 存放六合彩生肖
@@ -76,13 +79,28 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     private numbersAdapter mAdapter;
     private boolean isHKCnumberTime = false;// 香港彩是否在倒计时false
     private boolean isQXCCnumberTime = false;// 七星彩是否在倒计时false
+    private boolean isSSQCnumberTime = false;// 双色球是否在倒计时false
+    private boolean isQLCCnumberTime = false;// 七乐彩是否在倒计时false
+    private boolean isDLTCnumberTime = false;// 大乐透是否在倒计时false
 
     private boolean isHKOpenNumberStartNF = false; // 香港彩是否正在开奖中false
     private boolean isQXCOpenNumberStartNF = false; // 七星彩是否正在开奖中false
+    private boolean isSSQOpenNumberStartNF = false; // 双色球是否正在开奖中false
+    private boolean isQLCOpenNumberStartNF = false; // 七乐彩是否正在开奖中false
+    private boolean isDLTOpenNumberStartNF = false; // 大乐透是否正在开奖中false
     private boolean isOtherOpenNumberStartNF = false; // 其它彩种是否正在开奖中false
 
     private boolean isHKHttps = true;// 香港彩正在开奖中的状态true
     private boolean isQXCHttps = true;// 七星彩正在开奖中的状态true
+    private boolean isSSQHttps = true;// 双色球正在开奖中的状态true
+    private boolean isQLCHttps = true;// 七乐彩正在开奖中的状态true
+    private boolean isDLTHttps = true;// 大乐透正在开奖中的状态true
+
+    private boolean isHKReqDataState = false;// 香港彩请求数据状态
+    private boolean isQXCReqDataState = false;// 七星彩请求数据状态
+    private boolean isSSQReqDataState = false;// 双色球请求数据状态
+    private boolean isQLCReqDataState = false;// 七乐彩请求数据状态
+    private boolean isDLTReqDataState = false;// 大乐透请求数据状态
 
     private boolean isNextNumber = false;// 正在获取下一期开奖号码false
 
@@ -91,8 +109,6 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frage_numbers);
         mContext = NumbersActivity.this;
-        //initHomeInfo();// 从首页直接跳转
-        //view = inflater.inflate(R.layout.frage_numbers, container, false);
 
         initView();
         initEnver();
@@ -111,8 +127,6 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             isOnResume = true;
         }
         super.onResume();
-//        MobclickAgent.onResume(this);
-//        MobclickAgent.onPageStart("NumbersActivity");
     }
 
     private boolean isExit = true;
@@ -121,28 +135,8 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     public void onPause() {
         isExit = false;
         super.onPause();
-//        MobclickAgent.onPause(this);
-//        MobclickAgent.onPageEnd("NumbersActivity");
     }
 
-    /**
-     * 直接从首页跳转到详情页面
-     */
-    /*private void initHomeInfo() {
-        Bundle bundle = getArguments();
-        if (null != bundle) {
-            String numberName = bundle.getString("numberName");
-
-            if (!TextUtils.isEmpty(numberName)) {
-                // 跳转到详情页面
-                Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("numberName", numberName);
-                intent.putExtras(mBundle);
-                startActivity(intent);
-            }
-        }
-    }*/
     private void initData() {
 
         if (null != sortDef1) {
@@ -207,7 +201,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
 
         final long dateTime = updateTime;
         // 如果七星彩或香港彩正在开奖中，则不请求数据
-        if (!isHKOpenNumberStartNF && !isQXCOpenNumberStartNF) {
+        if (!isHKOpenNumberStartNF && !isQXCOpenNumberStartNF && !isSSQOpenNumberStartNF && !isQLCOpenNumberStartNF && !isDLTOpenNumberStartNF) {
             if (isOtherOpenNumberStartNF) {
                 // 如果有其它高频彩种正在开奖中，则第隔一秒请求数据
                 if (isThreadRequestData && isExit) {
@@ -216,7 +210,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                         public void run() {
                             try {
                                 isThreadRequestData = false;
-                                while (isOtherOpenNumberStartNF && isExit && !isHKOpenNumberStartNF && !isQXCOpenNumberStartNF) {
+                                while (isOtherOpenNumberStartNF && isExit && !isHKOpenNumberStartNF && !isQXCOpenNumberStartNF && !isSSQOpenNumberStartNF && !isQLCOpenNumberStartNF && !isDLTOpenNumberStartNF) {
                                     sleep(1000);
                                     numbersDataShow(1);
                                     L.d("xxx", "高频彩请求数据。。。");
@@ -266,6 +260,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                     HKnumberTime = num;// 香港彩开奖时间
 
                     if (!isHKCnumberTime && !isHKOpenNumberStartNF) {
+                        isHKReqDataState = false;
                         new Thread() {
                             @Override
                             public void run() {
@@ -308,10 +303,14 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                                         while ((isHKOpenNumberStartNF || NumberDataUtils.isDynamicNumber) && isExit) {
 
                                             sleep(1000);
-                                            numbersDataShow(1);
-                                            L.d("xxx", "香港彩请求数据。。。");
+                                            if (!isQXCReqDataState && !isSSQReqDataState && !isQLCReqDataState && !isDLTReqDataState) {
+                                                isHKReqDataState = true;
+                                                numbersDataShow(1);
+                                                L.d("xxx", "香港彩请求数据。。。");
+                                            }
                                         }
                                         isHKHttps = true;
+                                        isHKReqDataState = false;
                                     } catch (Exception e) {
                                         L.e("香港彩请求最新开奖号码时,休眠异常-->" + e.getMessage());
                                     }
@@ -345,6 +344,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                     QXCnumberTime = num;
 
                     if (!isQXCCnumberTime && !isQXCOpenNumberStartNF) {
+                        isQXCReqDataState = false;
                         new Thread() {
                             @Override
                             public void run() {
@@ -386,15 +386,15 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                                         while (isQXCOpenNumberStartNF && isExit) {// 需要加个循环请求
 
                                             sleep(1000);
-
-                                            // 如果香港彩正在开奖中，这里就不重复请求数据了
-                                            if (!isHKOpenNumberStartNF) {
+                                            // 如果其它调频彩正在开奖中，这里就不重复请求数据了
+                                            if (!isHKReqDataState && !isSSQReqDataState && !isQLCReqDataState && !isDLTReqDataState) {
+                                                isQXCReqDataState = true;
                                                 numbersDataShow(1);
                                                 L.d("xxx", "七星彩请求数据。。。");
                                             }
                                         }
-
                                         isQXCHttps = true;
+                                        isQXCReqDataState = false;
                                     } catch (Exception e) {
                                         L.e("七星彩请求最新开奖号码时,休眠异常-->" + e.getMessage());
                                     }
@@ -405,6 +405,234 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                         if (num > 0) {
                             isQXCOpenNumberStartNF = false;// 隐藏正在开奖中
                             isQXCHttps = true;
+
+                            numbersDataShow(1);
+                        }
+                    }
+                } else if ("24".equals(numberSortList.get(i).getName())) {
+
+                    // 获取下一期开奖时间
+                    String nextTime = numberSortList.get(i).getNextTime();
+                    long num = DateUtil.getCurrentTime(nextTime) - Long.parseLong(serverTime);// 获取每个彩种下一期开奖时间
+
+                    // 双色球开奖时间
+                    SSQnumberTime = num;
+
+                    if (!isSSQCnumberTime && !isSSQOpenNumberStartNF) {
+                        isSSQReqDataState = false;
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                isSSQCnumberTime = true;
+                                try {
+                                    while (SSQnumberTime > 0 && isExit && !isSSQOpenNumberStartNF) {
+                                        SystemClock.sleep(1000);
+                                        SSQnumberTime -= 1000;
+
+                                        long hh = SSQnumberTime / (3600 * 1000);// 获取相差小时
+
+                                        if (hh <= 8) {// 如何香港彩没有在倒计时，同时倒计时已显示，则通知ListView更新
+                                            mHandler.sendEmptyMessage(COUNTDOWN);
+                                        }
+
+                                    }
+                                } catch (Exception e) {
+                                    L.e("自动请求休眠异常-->" + e.getMessage());
+                                }
+                                isSSQCnumberTime = false;
+
+                                if (isExit) {
+                                    numbersDataShow(1);
+                                }
+                            }
+                        }.start();
+                    } else if (isSSQOpenNumberStartNF) {
+                        // 如果倒计时结束后下一期还未开奖时，不断请求数据
+                        // 走到这里应该让Item显示正在 开奖中.....
+                        // -->请求时间太快，次数太频繁，容易挂掉。需要加上休眠
+                        if (isSSQHttps) {// 判断有没有开启线程请求数据，如果有，就不开启了
+
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        isSSQHttps = false;
+
+                                        while (isSSQOpenNumberStartNF && isExit) {// 需要加个循环请求
+
+                                            sleep(1000);
+
+                                            // 如果其它高频彩正在开奖中，这里就不重复请求数据了
+                                            if (!isHKReqDataState && !isQXCReqDataState && !isQLCReqDataState && !isDLTReqDataState) {
+                                                isSSQReqDataState = true;
+                                                numbersDataShow(1);
+                                                L.d("xxx", "双色球请求数据。。。");
+                                            }
+                                        }
+                                        isSSQHttps = true;
+                                        isSSQReqDataState = false;
+                                    } catch (Exception e) {
+                                        L.e("双色球请求最新开奖号码时,休眠异常-->" + e.getMessage());
+                                    }
+                                }
+                            }.start();
+                        }
+
+                        if (num > 0) {
+                            isSSQOpenNumberStartNF = false;// 隐藏正在开奖中
+                            isSSQHttps = true;
+
+                            numbersDataShow(1);
+                        }
+                    }
+                } else if ("28".equals(numberSortList.get(i).getName())) {
+
+                    // 获取下一期开奖时间
+                    String nextTime = numberSortList.get(i).getNextTime();
+                    long num = DateUtil.getCurrentTime(nextTime) - Long.parseLong(serverTime);// 获取每个彩种下一期开奖时间
+
+                    // 七乐彩开奖时间
+                    QLCnumberTime = num;
+
+                    if (!isQLCCnumberTime && !isQLCOpenNumberStartNF) {
+                        isQLCReqDataState = false;
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                isQLCCnumberTime = true;
+                                try {
+                                    while (QLCnumberTime > 0 && isExit && !isQLCOpenNumberStartNF) {
+                                        SystemClock.sleep(1000);
+                                        QLCnumberTime -= 1000;
+
+                                        long hh = QLCnumberTime / (3600 * 1000);// 获取相差小时
+
+                                        if (hh <= 8) {// 如何香港彩没有在倒计时，同时倒计时已显示，则通知ListView更新
+                                            mHandler.sendEmptyMessage(COUNTDOWN);
+                                        }
+
+                                    }
+                                } catch (Exception e) {
+                                    L.e("自动请求休眠异常-->" + e.getMessage());
+                                }
+                                isQLCCnumberTime = false;
+
+                                if (isExit) {
+                                    numbersDataShow(1);
+                                }
+                            }
+                        }.start();
+                    } else if (isQLCOpenNumberStartNF) {
+                        // 如果倒计时结束后下一期还未开奖时，不断请求数据
+                        // 走到这里应该让Item显示正在 开奖中.....
+                        // -->请求时间太快，次数太频繁，容易挂掉。需要加上休眠
+                        if (isQLCHttps) {// 判断有没有开启线程请求数据，如果有，就不开启了
+
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        isQLCHttps = false;
+
+                                        while (isQLCOpenNumberStartNF && isExit) {// 需要加个循环请求
+
+                                            sleep(1000);
+
+                                            // 如果其它高频彩正在开奖中，这里就不重复请求数据了
+                                            if (!isHKReqDataState && !isQXCReqDataState && !isSSQReqDataState && !isDLTReqDataState) {
+                                                isQLCReqDataState = true;
+                                                numbersDataShow(1);
+                                                L.d("xxx", "七乐彩请求数据。。。");
+                                            }
+                                        }
+                                        isQLCHttps = true;
+                                        isQLCReqDataState = false;
+                                    } catch (Exception e) {
+                                        L.e("七乐彩请求最新开奖号码时,休眠异常-->" + e.getMessage());
+                                    }
+                                }
+                            }.start();
+                        }
+
+                        if (num > 0) {
+                            isQLCOpenNumberStartNF = false;// 隐藏正在开奖中
+                            isQLCHttps = true;
+
+                            numbersDataShow(1);
+                        }
+                    }
+                } else if ("29".equals(numberSortList.get(i).getName())) {
+
+                    // 获取下一期开奖时间
+                    String nextTime = numberSortList.get(i).getNextTime();
+                    long num = DateUtil.getCurrentTime(nextTime) - Long.parseLong(serverTime);// 获取每个彩种下一期开奖时间
+
+                    // 大乐透开奖时间
+                    DLTnumberTime = num;
+
+                    if (!isDLTCnumberTime && !isDLTOpenNumberStartNF) {
+                        isDLTReqDataState = false;
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                isDLTCnumberTime = true;
+                                try {
+                                    while (DLTnumberTime > 0 && isExit && !isDLTOpenNumberStartNF) {
+                                        SystemClock.sleep(1000);
+                                        DLTnumberTime -= 1000;
+
+                                        long hh = DLTnumberTime / (3600 * 1000);// 获取相差小时
+
+                                        if (hh <= 8) {// 如何香港彩没有在倒计时，同时倒计时已显示，则通知ListView更新
+                                            mHandler.sendEmptyMessage(COUNTDOWN);
+                                        }
+
+                                    }
+                                } catch (Exception e) {
+                                    L.e("自动请求休眠异常-->" + e.getMessage());
+                                }
+                                isDLTCnumberTime = false;
+
+                                if (isExit) {
+                                    numbersDataShow(1);
+                                }
+                            }
+                        }.start();
+                    } else if (isDLTOpenNumberStartNF) {
+                        // 如果倒计时结束后下一期还未开奖时，不断请求数据
+                        // 走到这里应该让Item显示正在 开奖中.....
+                        // -->请求时间太快，次数太频繁，容易挂掉。需要加上休眠
+                        if (isDLTHttps) {// 判断有没有开启线程请求数据，如果有，就不开启了
+
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        isDLTHttps = false;
+
+                                        while (isDLTOpenNumberStartNF && isExit) {// 需要加个循环请求
+
+                                            sleep(1000);
+
+                                            // 如果其它高频彩正在开奖中，这里就不重复请求数据了
+                                            if (!isHKReqDataState && !isQXCReqDataState && !isSSQReqDataState && !isQLCReqDataState) {
+                                                isDLTReqDataState = true;
+                                                numbersDataShow(1);
+                                                L.d("xxx", "大乐透请求数据。。。");
+                                            }
+                                        }
+                                        isDLTHttps = true;
+                                        isDLTReqDataState = false;
+                                    } catch (Exception e) {
+                                        L.e("大乐透请求最新开奖号码时,休眠异常-->" + e.getMessage());
+                                    }
+                                }
+                            }.start();
+                        }
+
+                        if (num > 0) {
+                            isDLTOpenNumberStartNF = false;// 隐藏正在开奖中
+                            isDLTHttps = true;
 
                             numbersDataShow(1);
                         }
@@ -514,6 +742,9 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 sb.append(numberlist.get(i).getNextTime());
                 sb.append(isHKOpenNumberStartNF);
                 sb.append(isQXCOpenNumberStartNF);
+                sb.append(isSSQOpenNumberStartNF);
+                sb.append(isQLCOpenNumberStartNF);
+                sb.append(isDLTOpenNumberStartNF);
             }
         }
 
@@ -680,8 +911,23 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
 
                 } else if ("6".equals(numberSortList.get(i).getName())) {
                     long numTime = DateUtil.getCurrentTime(numberSortList.get(i).getNextTime()) - Long.parseLong(serverTime);
-                    // 正在开奖中...
+                    // 七星彩正在开奖中...
                     isQXCOpenNumberStartNF = numTime <= 0;
+
+                } else if ("24".equals(numberSortList.get(i).getName())) {
+                    long numTime = DateUtil.getCurrentTime(numberSortList.get(i).getNextTime()) - Long.parseLong(serverTime);
+                    // 双色球正在开奖中...
+                    isSSQOpenNumberStartNF = numTime <= 0;
+
+                } else if ("28".equals(numberSortList.get(i).getName())) {
+                    long numTime = DateUtil.getCurrentTime(numberSortList.get(i).getNextTime()) - Long.parseLong(serverTime);
+                    // 七乐彩正在开奖中...
+                    isQLCOpenNumberStartNF = numTime <= 0;
+
+                } else if ("29".equals(numberSortList.get(i).getName())) {
+                    long numTime = DateUtil.getCurrentTime(numberSortList.get(i).getNextTime()) - Long.parseLong(serverTime);
+                    // 大乐透正在开奖中...
+                    isDLTOpenNumberStartNF = numTime <= 0;
 
                 } else {// 其它彩种是否正在开奖中
                     long numTime = DateUtil.getCurrentTime(numberSortList.get(i).getNextTime()) - Long.parseLong(serverTime);
@@ -792,7 +1038,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 numberlist = null;
             }
 
-            NumbersOpenBean json = JSON.parseObject(AppConstants.getTestData(),NumbersOpenBean.class);
+            NumbersOpenBean json = JSON.parseObject(AppConstants.getTestData(), NumbersOpenBean.class);
 
             numberlist = json.getNumLotteryResults();
 
@@ -922,7 +1168,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             NumberDataUtils.disposeSubNumbers(mNumberInfo, numbers, zodiacs);
 
             /** ----------------------------设置显示开奖号码内容------------------------- */
-            NumberDataUtils.numberAddInfo(mContext, mNumberInfo, holder.ll_numbers_container, numbers, zodiacs, isHKOpenNumberStartNF, isQXCOpenNumberStartNF, isNextNumber, 0, null);
+            NumberDataUtils.numberAddInfo(mContext, mNumberInfo, holder.ll_numbers_container, numbers, zodiacs, isHKOpenNumberStartNF, isQXCOpenNumberStartNF, isSSQOpenNumberStartNF, isQLCOpenNumberStartNF, isDLTOpenNumberStartNF, isNextNumber, 0, null);
 
             /** ----------------------------设置显示开奖描述信息-------------------------- */
             numberAddDesc(holder, mNumberInfo);
@@ -1031,6 +1277,45 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             settingTime(holder, Dates, weekDate, QXCnumberTime, R.string.number_qxc_hint);
 
             if (isQXCOpenNumberStartNF) {
+                // 显示正在开奖中
+                showTheLottery(holder, mNumberInfo);
+            }
+        } else if ("24".equals(mNumberInfo.getName())) {
+            // 双色球
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            } else {
+                holder.tv_number_time_name2.setText(mContext.getResources().getString(R.string.number_ssq_hint2));
+            }
+            // 显示倒计时和日期
+            settingTime(holder, Dates, weekDate, SSQnumberTime, R.string.number_ssq_hint);
+
+            if (isSSQOpenNumberStartNF) {
+                // 显示正在开奖中
+                showTheLottery(holder, mNumberInfo);
+            }
+        } else if ("28".equals(mNumberInfo.getName())) {
+            // 七乐彩
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            } else {
+                holder.tv_number_time_name2.setText(mContext.getResources().getString(R.string.number_qlc_hint2));
+            }
+            // 显示倒计时和日期
+            settingTime(holder, Dates, weekDate, QLCnumberTime, R.string.number_qlc_hint);
+
+            if (isQLCOpenNumberStartNF) {
+                // 显示正在开奖中
+                showTheLottery(holder, mNumberInfo);
+            }
+        } else if ("29".equals(mNumberInfo.getName())) {
+            // 大乐透
+            if ("rCN".equals(MyApp.isLanguage) || "rTW".equals(MyApp.isLanguage)) {
+            } else {
+                holder.tv_number_time_name2.setText(mContext.getResources().getString(R.string.number_dlt_hint2));
+            }
+            // 显示倒计时和日期
+            settingTime(holder, Dates, weekDate, DLTnumberTime, R.string.number_dlt_hint);
+
+            if (isDLTOpenNumberStartNF) {
                 // 显示正在开奖中
                 showTheLottery(holder, mNumberInfo);
             }
