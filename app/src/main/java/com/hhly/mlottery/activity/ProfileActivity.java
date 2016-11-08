@@ -376,9 +376,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    if (photo!=null){
+                    if (photo!=null)
+
+                    {
                         photo.compress(Bitmap.CompressFormat.PNG, 75, stream);// (0-100)压缩文件
-                    }
+
                     //此处可以把Bitmap保存到sd卡中，具体请看：http://www.cnblogs.com/linjiqin/archive/2011/12/28/2304940.html
                     try {
 
@@ -424,6 +426,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                     mHead_portrait.setImageBitmap(photo); //把图片显示在ImageView控件上
                     photo.recycle();
                     System.gc();
+                   }
                 }
                 break;
             default:
