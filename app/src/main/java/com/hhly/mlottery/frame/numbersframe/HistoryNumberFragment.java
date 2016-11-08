@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.numbersBean.NumberCurrentInfo;
@@ -189,33 +190,47 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             // 发送消息，开始加载数据
             mHandler.sendEmptyMessage(STARTLOADING);
         }
-        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-            @Override
-            public synchronized void onResponse(final NumbersOpenBean json) {
-                if (null != json) {// 判断数据是否为空
+        numberlist = new ArrayList<NumberCurrentInfo>();
 
-                    numberlist = new ArrayList<NumberCurrentInfo>();
+        NumbersOpenBean json = JSON.parseObject(AppConstants.getTestData(),NumbersOpenBean.class);
 
-                    serverTime = json.getServerTime();// 获取服务器当前时间
-                    numberlist = json.getNumLotteryResults();
+        serverTime = json.getServerTime();// 获取服务器当前时间
+        numberlist = json.getNumLotteryResults();
 
-                    if (num == 1) {
-                        mHandler.sendEmptyMessage(ANEWREFRESH);
-                    } else if (num == 2) {
-                        mHandler.sendEmptyMessage(OPENNUMBER);
-                    } else {
-                        mHandler.sendEmptyMessage(REFRESH);
-                    }
-                } else {
-                    mHandler.sendEmptyMessage(ERRORLOADING);
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                mHandler.sendEmptyMessage(ERRORLOADING);
-            }
-        }, NumbersOpenBean.class);
+        if (num == 1) {
+            mHandler.sendEmptyMessage(ANEWREFRESH);
+        } else if (num == 2) {
+            mHandler.sendEmptyMessage(OPENNUMBER);
+        } else {
+            mHandler.sendEmptyMessage(REFRESH);
+        }
+//        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+//            @Override
+//            public synchronized void onResponse(final NumbersOpenBean json) {
+//                if (null != json) {// 判断数据是否为空
+//
+//                    numberlist = new ArrayList<NumberCurrentInfo>();
+//
+//                    serverTime = json.getServerTime();// 获取服务器当前时间
+//                    numberlist = json.getNumLotteryResults();
+//
+//                    if (num == 1) {
+//                        mHandler.sendEmptyMessage(ANEWREFRESH);
+//                    } else if (num == 2) {
+//                        mHandler.sendEmptyMessage(OPENNUMBER);
+//                    } else {
+//                        mHandler.sendEmptyMessage(REFRESH);
+//                    }
+//                } else {
+//                    mHandler.sendEmptyMessage(ERRORLOADING);
+//                }
+//            }
+//        }, new VolleyContentFast.ResponseErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+//                mHandler.sendEmptyMessage(ERRORLOADING);
+//            }
+//        }, NumbersOpenBean.class);
     }
 
     /**
@@ -709,7 +724,14 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     holder.tv_time.setText(mTime);// 设置日期
                 }
 
-                String[] nums1 = historyInfo.getNumbers().split(",");
+                String num;
+                if (mNumberInfo.getNumbers().contains("#")) {
+                    num = mNumberInfo.getNumbers().replace('#', ',');
+                } else {
+                    num = mNumberInfo.getNumbers();
+                }
+
+                String[] nums1 = num.split(",");
 
                 // 将号码添加到集合中
                 for (int i = 0; i < nums1.length; i++) {
@@ -981,6 +1003,51 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                         ll.addView(tv_number);
                     }
                     break;
+                    case 24:// 双色球
+                    {
+                        TextView tv_number = new TextView(mContext);
+                        tv_number.setLayoutParams(params);
+                        tv_number.setGravity(Gravity.CENTER);
+                        tv_number.setText(numbers.get(i));
+                        tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
+                        if (i > 5) {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                        } else {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                        }
+                        ll.addView(tv_number);
+                    }
+                    break;
+                    case 28:// 七乐彩
+                    {
+                        TextView tv_number = new TextView(mContext);
+                        tv_number.setLayoutParams(params);
+                        tv_number.setGravity(Gravity.CENTER);
+                        tv_number.setText(numbers.get(i));
+                        tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
+                        if (i > 6) {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                        } else {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                        }
+                        ll.addView(tv_number);
+                    }
+                    break;
+                    case 29:// 大乐透
+                    {
+                        TextView tv_number = new TextView(mContext);
+                        tv_number.setLayoutParams(params);
+                        tv_number.setGravity(Gravity.CENTER);
+                        tv_number.setText(numbers.get(i));
+                        tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
+                        if (i > 4) {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                        } else {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                        }
+                        ll.addView(tv_number);
+                    }
+                    break;
                     case 8:// 快乐十分
                     case 11: {
                         TextView tv_number = new TextView(mContext);
@@ -1147,6 +1214,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                 mNumber.setIssue(numberHistoryInfo.getIssue());
                 mNumber.setNumbers(numberHistoryInfo.getNumbers());
                 mNumber.setTime(numberHistoryInfo.getTime());
+                mNumber.setJackpot(numberHistoryInfo.getJackpot());
             }
 
             NumberDataUtils utils = new NumberDataUtils();

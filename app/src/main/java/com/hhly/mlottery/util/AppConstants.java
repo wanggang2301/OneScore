@@ -180,7 +180,13 @@ public class AppConstants {
             BaseURLs.URL_JS11X5DetailedResults,// 20江苏11选5
             BaseURLs.URL_JX11X5DetailedResults,// 21江西11选5
             BaseURLs.URL_SD11X5DetailedResults,// 22山东11选5
-            BaseURLs.URL_TJSSCDetailedResults // 23天津时时彩
+            BaseURLs.URL_TJSSCDetailedResults,// 23天津时时彩
+            BaseURLs.URL_SSQDetailedResults,// 24双色球
+            BaseURLs.URL_PL3DetailedResults,// 25排列3
+            BaseURLs.URL_PL5DetailedResults,// 26排列5
+            BaseURLs.URL_F3DDetailedResults,// 27福彩3D
+            BaseURLs.URL_QLCDetailedResults,// 28七乐彩
+            BaseURLs.URL_DLTDetailedResults // 29大乐透
     };
 
     // 香港彩和七星彩的下一期开奖URL

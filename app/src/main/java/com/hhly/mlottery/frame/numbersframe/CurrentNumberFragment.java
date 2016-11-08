@@ -317,23 +317,33 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
             try {
                 mNumberTime = DateUtil.getCurrentTime(mNumberInfo.getNextTime()) - Long.parseLong(serverTime);// 获取下一期开奖时间
                 long mm = (mNumberTime / 1000 / 60);// 获取相差分
-                if (!"1".equals(mNumberName) && !"6".equals(mNumberName)) {// 低频彩种
-                    if (mm > 10 || ("15".equals(mNumberName) && mm > 5)) {// 判断截止销售时间
-                        // 显示截止销售字样
-                        ll_info_lastTime.setVisibility(View.GONE);
-                        ll_info_startOpenNumber.setVisibility(View.VISIBLE);
-                        ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
-                        tv_info_numberStart_desc.setText(mContext.getResources().getString(R.string.number_info_stopSell));
-                    } else {
-                        // 显示开奖倒计时
+                switch (mNumberName){
+                    case "1":
+                    case "6":
+                    case "24":
+                    case "25":
+                    case "26":
+                    case "27":
+                    case "28":
+                    case "29":
                         ll_info_lastTime.setVisibility(View.VISIBLE);
                         ll_info_startOpenNumber.setVisibility(View.GONE);
                         ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
-                    }
-                } else {
-                    ll_info_lastTime.setVisibility(View.VISIBLE);
-                    ll_info_startOpenNumber.setVisibility(View.GONE);
-                    ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
+                        break;
+                    default:
+                        if (mm > 10 || ("15".equals(mNumberName) && mm > 5)) {// 判断截止销售时间
+                            // 显示截止销售字样
+                            ll_info_lastTime.setVisibility(View.GONE);
+                            ll_info_startOpenNumber.setVisibility(View.VISIBLE);
+                            ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
+                            tv_info_numberStart_desc.setText(mContext.getResources().getString(R.string.number_info_stopSell));
+                        } else {
+                            // 显示开奖倒计时
+                            ll_info_lastTime.setVisibility(View.VISIBLE);
+                            ll_info_startOpenNumber.setVisibility(View.GONE);
+                            ll_Currentnumber_numbers_copy.setVisibility(View.GONE);
+                        }
+                        break;
                 }
             } catch (Exception e) {
                 L.d("时间转换异常: " + e.getMessage());
@@ -383,16 +393,31 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
         tv_number_info_time_mm = (TextView) mView.findViewById(R.id.tv_number_info_time_mm);
         tv_number_info_time_ss = (TextView) mView.findViewById(R.id.tv_number_info_time_ss);
 
-        if ("1".equals(mNumberName) || "6".equals(mNumberName)) {// 低频彩
-            tv_number_info_time_dd.setVisibility(View.VISIBLE);
-            tv_number_info_dd_des.setVisibility(View.VISIBLE);
-            tv_number_info_time_hh.setVisibility(View.VISIBLE);
-            tv_number_info_hh_des.setVisibility(View.VISIBLE);
-        } else {// 高频彩
-            tv_number_info_time_dd.setVisibility(View.GONE);
-            tv_number_info_dd_des.setVisibility(View.GONE);
-            tv_number_info_time_hh.setVisibility(View.GONE);
-            tv_number_info_hh_des.setVisibility(View.GONE);
+        switch (mNumberName){
+            case "1":
+            case "6":
+            case "24":
+            case "28":
+            case "29":
+                tv_number_info_time_dd.setVisibility(View.VISIBLE);
+                tv_number_info_dd_des.setVisibility(View.VISIBLE);
+                tv_number_info_time_hh.setVisibility(View.VISIBLE);
+                tv_number_info_hh_des.setVisibility(View.VISIBLE);
+                break;
+            case "25":
+            case "26":
+            case "27":
+                tv_number_info_time_dd.setVisibility(View.GONE);
+                tv_number_info_dd_des.setVisibility(View.GONE);
+                tv_number_info_time_hh.setVisibility(View.VISIBLE);
+                tv_number_info_hh_des.setVisibility(View.VISIBLE);
+                break;
+            default:
+                tv_number_info_time_dd.setVisibility(View.GONE);
+                tv_number_info_dd_des.setVisibility(View.GONE);
+                tv_number_info_time_hh.setVisibility(View.GONE);
+                tv_number_info_hh_des.setVisibility(View.GONE);
+                break;
         }
     }
    private boolean isOneShow = true;// 首次加载

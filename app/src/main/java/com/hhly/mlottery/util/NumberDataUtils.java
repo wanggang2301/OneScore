@@ -718,7 +718,7 @@ public class NumberDataUtils {
         numberAddInfo(context, mNumberInfo, ll_Currentnumber_numbers, numbers, zodiacs, isOpenNumberStartHistory, isOpenNumberStartHistory, isNextNumber, isGravity, index);// 动态添加数据
         numberAddInfo(isOpenNumberStartHistory);// 详情数据显示
 //        tv_lottery_bonus.setText(context.getResources().getString(R.string.number_bonus_type) + DecimalFormat.getNumberInstance().format(mNumberInfo.getJackpot()));// 设置奖金滚存
-        tv_lottery_bonus.setText(NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));// 设置奖金滚存
+        tv_lottery_bonus.setText(mNumberInfo.getJackpot() == null ?"":NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));// 设置奖金滚存
     }
 
     /**

@@ -183,7 +183,8 @@ public class BaseURLs {
     private final static String URL_YNSSCDetailed = "detailedLotteryResults.findYNSSCDetailedResults.do";
 
     // 七星彩
-    private final static String URL_QXCDetailed = "detailedLotteryResults.findQXCDetailedResults.do";
+//    private final static String URL_QXCDetailed = "detailedLotteryResults.findQXCDetailedResults.do";
+    private final static String URL_QXCDetailed = "detailedLotteryResults.findNewQXCAndroidDetailedResults.do";// 此接口新增了奖金池
 
     // 广东11选5
     private final static String URL_D11X5Detailed = "detailedLotteryResults.findD11X5DetailedResults.do";
@@ -235,6 +236,24 @@ public class BaseURLs {
 
     // 天津时时彩
     private final static String URL_TJSSCDetailed = "detailedLotteryResults.findTJSSCDetailedResults.do";
+
+    // 双色球
+    private final static String URL_SSQDetailed = "detailedLotteryResults.findSSQAndroidDetailedResults.do";
+
+    // 排列3
+    private final static String URL_PL3Detailed = "detailedLotteryResults.findPL3AndroidDetailedResults.do";
+
+    // 排列5
+    private final static String URL_PL5Detailed = "detailedLotteryResults.findPL5AndroidDetailedResults.do";
+
+    // 福彩3D
+    private final static String URL_F3DDetailed = "detailedLotteryResults.findF3DAndroidDetailedResults.do";
+
+    // 七乐彩
+    private final static String URL_QLCDetailed = "detailedLotteryResults.findQLCAndroidDetailedResults.do";
+
+    // 大乐透
+    private final static String URL_DLTDetailed = "detailedLotteryResults.findDLTAndroidDetailedResults.do";
 
     /*
      *
@@ -441,6 +460,24 @@ public class BaseURLs {
 
     // 天津时时彩
     public final static String URL_TJSSCDetailedResults = URL_API_HOST + URL_TJSSCDetailed;
+
+    // 双色球
+    public final static String URL_SSQDetailedResults = URL_API_HOST + URL_SSQDetailed;
+
+    // 排列3
+    public final static String URL_PL3DetailedResults = URL_API_HOST + URL_PL3Detailed;
+
+    // 排列5
+    public final static String URL_PL5DetailedResults = URL_API_HOST + URL_PL5Detailed;
+
+    // 福彩3D
+    public final static String URL_F3DDetailedResults = URL_API_HOST + URL_F3DDetailed;
+
+    // 七乐彩
+    public final static String URL_QLCDetailedResults = URL_API_HOST + URL_QLCDetailed;
+
+    // 大乐透
+    public final static String URL_DLTDetailedResults = URL_API_HOST + URL_DLTDetailed;
 
     /*
      *
