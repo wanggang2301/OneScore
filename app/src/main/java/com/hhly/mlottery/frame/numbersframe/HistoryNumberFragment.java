@@ -190,47 +190,34 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
             // 发送消息，开始加载数据
             mHandler.sendEmptyMessage(STARTLOADING);
         }
-        numberlist = new ArrayList<NumberCurrentInfo>();
 
-        NumbersOpenBean json = JSON.parseObject(AppConstants.getTestData(),NumbersOpenBean.class);
+        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+            @Override
+            public synchronized void onResponse(final NumbersOpenBean json) {
+                if (null != json) {// 判断数据是否为空
 
-        serverTime = json.getServerTime();// 获取服务器当前时间
-        numberlist = json.getNumLotteryResults();
+                    numberlist = new ArrayList<NumberCurrentInfo>();
 
-        if (num == 1) {
-            mHandler.sendEmptyMessage(ANEWREFRESH);
-        } else if (num == 2) {
-            mHandler.sendEmptyMessage(OPENNUMBER);
-        } else {
-            mHandler.sendEmptyMessage(REFRESH);
-        }
-//        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-//            @Override
-//            public synchronized void onResponse(final NumbersOpenBean json) {
-//                if (null != json) {// 判断数据是否为空
-//
-//                    numberlist = new ArrayList<NumberCurrentInfo>();
-//
-//                    serverTime = json.getServerTime();// 获取服务器当前时间
-//                    numberlist = json.getNumLotteryResults();
-//
-//                    if (num == 1) {
-//                        mHandler.sendEmptyMessage(ANEWREFRESH);
-//                    } else if (num == 2) {
-//                        mHandler.sendEmptyMessage(OPENNUMBER);
-//                    } else {
-//                        mHandler.sendEmptyMessage(REFRESH);
-//                    }
-//                } else {
-//                    mHandler.sendEmptyMessage(ERRORLOADING);
-//                }
-//            }
-//        }, new VolleyContentFast.ResponseErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//                mHandler.sendEmptyMessage(ERRORLOADING);
-//            }
-//        }, NumbersOpenBean.class);
+                    serverTime = json.getServerTime();// 获取服务器当前时间
+                    numberlist = json.getNumLotteryResults();
+
+                    if (num == 1) {
+                        mHandler.sendEmptyMessage(ANEWREFRESH);
+                    } else if (num == 2) {
+                        mHandler.sendEmptyMessage(OPENNUMBER);
+                    } else {
+                        mHandler.sendEmptyMessage(REFRESH);
+                    }
+                } else {
+                    mHandler.sendEmptyMessage(ERRORLOADING);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mHandler.sendEmptyMessage(ERRORLOADING);
+            }
+        }, NumbersOpenBean.class);
     }
 
     /**

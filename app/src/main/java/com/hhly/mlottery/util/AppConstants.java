@@ -116,32 +116,6 @@ public class AppConstants {
     public static final int FORTY_EIGHT = 48;
     public static final int FORTY_NINE = 49;
 
-    // 彩票种类名称
-    /*public static String[] numberNames = { MyApp.getContext().getResources().getString(R.string.number_cz_hk), // "香港彩"
-            MyApp.getContext().getResources().getString(R.string.number_cz_cq_ssc), // "重庆时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jx_ssc), // "江西时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_xj_ssc),// "新疆时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_yn_ssc), // "云南时时彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_qxc),// "七星彩"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gd_syxw), // "广东十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gd_klsf), // "广东快乐十分"
-			MyApp.getContext().getResources().getString(R.string.number_cz_hb_syxw), // "湖北十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ah_ks), // "安徽快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_hn_klsf),// "湖南快乐十分"
-			MyApp.getContext().getResources().getString(R.string.number_cz_kl8),// "快乐8奖"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jl_ks),// "吉林快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ln_xyxw),// "辽宁十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_bj_sc),// "北京赛车"
-			MyApp.getContext().getResources().getString(R.string.number_cz_js_ks),// "江苏快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_ssl),// "时时乐"
-			MyApp.getContext().getResources().getString(R.string.number_cz_gx_ks),// "广西快三"
-			MyApp.getContext().getResources().getString(R.string.number_cz_xylc),// "幸运农场"
-			MyApp.getContext().getResources().getString(R.string.number_cz_js_syxw),// "江苏十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_jx_syxw),// "江西十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_sd_syxw),// "山东十一选五"
-			MyApp.getContext().getResources().getString(R.string.number_cz_tj_ssc) // "天津时时彩"
-	};*/
-
     // 北京赛车开奖号码
     public static int[] numberCarNos = {R.mipmap.car_no1, R.mipmap.car_no2, R.mipmap.car_no3, R.mipmap.car_no4, R.mipmap.car_no5, R.mipmap.car_no6, R.mipmap.car_no7,
             R.mipmap.car_no8, R.mipmap.car_no9, R.mipmap.car_no10};
@@ -287,32 +261,32 @@ public class AppConstants {
      *
      * @return
      */
-    public static String getTestData() {
-        return "{\"serverTime\":\"1478591171393\",\"numLotteryResults\":[" +
-                "{\"name\":\"24\",\"issue\":\"2016122\",\"nextIssue\":\"2016123\",\"nextTime\":\"2016-11-05 13:15:00\",\"time\":\"2016-10-18 13:15:00\",\"numbers\":\"15,22,23,24,28,29#08\",\"jackpot\":\"1089129612\"}," +
-                "{\"name\":\"29\",\"issue\":\"2016123\",\"nextIssue\":\"2016124\",\"nextTime\":\"2016-11-08 20:30:00\",\"time\":\"2016-10-19 12:30:00\",\"numbers\":\"04,05,13,20,32#01,10\",\"jackpot\":\"3651000000\"}," +
-                "{\"name\":\"28\",\"issue\":\"2016122\",\"nextIssue\":\"2016123\",\"nextTime\":\"2016-11-05 13:15:00\",\"time\":\"2016-10-17 13:15:00\",\"numbers\":\"01,09,14,16,17,19,21#13\",\"jackpot\":\"4176721\"}," +
-                "{\"name\":\"27\",\"issue\":\"2016286\",\"nextIssue\":\"2016287\",\"nextTime\":\"2016-12-05 12:30:00\",\"time\":\"2016-10-19 12:30:00\",\"numbers\":\"9,0,7\"}," +
-                "{\"name\":\"25\",\"issue\":\"2016286\",\"nextIssue\":\"2016287\",\"nextTime\":\"2016-12-05 12:30:00\",\"time\":\"2016-10-19 12:30:00\",\"numbers\":\"6,2,3\"}," +
-                "{\"name\":\"26\",\"issue\":\"2016286\",\"nextIssue\":\"2016287\",\"nextTime\":\"2016-12-05 12:30:00\",\"time\":\"2016-10-19 12:30:00\",\"numbers\":\"6,2,3,3,2\"}," +
-                "{\"name\":\"1\",\"issue\":\"2016121\",\"nextIssue\":\"2016121\",\"nextTime\":\"2016-11-08 18:30:00\",\"time\":\"2016-10-20 13:30:00\",\"numbers\":\"01,02,03,04,05,06#07\",\"zodiac\":\"猴,猴,猴,猴,猴,猴#猴\"}," +
-                "{\"name\":\"2\",\"issue\":\"20161027076\",\"nextIssue\":\"20161027077\",\"nextTime\":\"2016-12-05 10:50:40\",\"time\":\"2016-10-27 10:40:44\",\"numbers\":\"4,2,0,0,1\"}," +
-                "{\"name\":\"3\",\"issue\":\"20160222084\",\"nextIssue\":\"20160318084\",\"nextTime\":\"2016-12-05 15:13:07\",\"time\":\"2016-02-22 15:14:40\",\"numbers\":\"3,1,6,6,8\"}," +
-                "{\"name\":\"4\",\"issue\":\"2016102752\",\"nextIssue\":\"2016102753\",\"nextTime\":\"2016-12-05 10:50:11\",\"time\":\"2016-10-27 10:40:23\",\"numbers\":\"6,8,6,9,4\"}," +
-                "{\"name\":\"5\",\"issue\":\"20161027053\",\"nextIssue\":\"20161027054\",\"nextTime\":\"2016-12-05 10:41:30\",\"time\":\"2016-10-27 10:41:33\",\"numbers\":\"6,8,6,7,8\"}," +
-                "{\"name\":\"6\",\"issue\":\"2016123\",\"nextIssue\":\"2016124\",\"nextTime\":\"2016-11-08 19:30:00\",\"time\":\"2016-10-18 12:30:00\",\"numbers\":\"6,5,2,1,9,7,7\",\"jackpot\":\"9058157\"}," +
-                "{\"name\":\"7\",\"issue\":\"2016102758\",\"nextIssue\":\"2016102759\",\"nextTime\":\"2016-12-05 10:51:00\",\"time\":\"2016-10-27 10:42:01\",\"numbers\":\"02,08,03,11,04\"}," +
-                "{\"name\":\"8\",\"issue\":\"2016102758\",\"nextIssue\":\"2016102759\",\"nextTime\":\"2016-12-05 10:52:09\",\"time\":\"2016-10-27 10:42:21\",\"numbers\":\"01,17,11,03,15,12,04,16\"}," +
-                "{\"name\":\"20\",\"issue\":\"2016102761\",\"nextIssue\":\"2016102762\",\"nextTime\":\"2016-12-05 10:46:47\",\"time\":\"2016-10-27 10:37:17\",\"numbers\":\"07,08,01,06,02\"}," +
-                "{\"name\":\"10\",\"issue\":\"20161027060\",\"nextIssue\":\"20161027061\",\"nextTime\":\"2016-12-05 10:51:51\",\"time\":\"2016-10-27 10:42:03\",\"numbers\":\"1,1,5\"}," +
-                "{\"name\":\"11\",\"issue\":\"20161027058\",\"nextIssue\":\"20161027059\",\"nextTime\":\"2016-12-05 10:49:29\",\"time\":\"2016-10-27 10:39:41\",\"numbers\":\"20,04,09,05,17,07,10,11\"}," +
-                "{\"name\":\"15\",\"issue\":\"583463\",\"nextIssue\":\"583464\",\"nextTime\":\"2016-12-05 10:47:43\",\"time\":\"2016-10-27 10:42:48\",\"numbers\":\"08,05,10,04,07,02,06,01,09,03\"}," +
-                "{\"name\":\"16\",\"issue\":\"20161027061\",\"nextIssue\":\"20161027062\",\"nextTime\":\"2016-12-05 10:52:06\",\"time\":\"2016-10-27 10:42:18\",\"numbers\":\"2,3,6\"}," +
-                "{\"name\":\"17\",\"issue\":\"2016102717\",\"nextIssue\":\"2016102718\",\"nextTime\":\"2016-12-05 11:00:30\",\"time\":\"2016-10-27 10:31:18\",\"numbers\":\"9,1,3\"}," +
-                "{\"name\":\"18\",\"issue\":\"20161027055\",\"nextIssue\":\"20161027056\",\"nextTime\":\"2016-12-05 10:47:11\",\"time\":\"2016-10-27 10:37:23\",\"numbers\":\"2,6,6\"}," +
-                "{\"name\":\"19\",\"issue\":\"20161027066\",\"nextIssue\":\"20161027067\",\"nextTime\":\"2016-12-05 10:53:50\",\"time\":\"2016-10-27 10:44:02\",\"numbers\":\"02,18,09,13,12,07,15,16\"}," +
-                "{\"name\":\"22\",\"issue\":\"2016102759\",\"nextIssue\":\"2016102760\",\"nextTime\":\"2016-12-05 10:56:00\",\"time\":\"2016-10-27 10:45:50\",\"numbers\":\"01,10,04,09,03\"}," +
-                "{\"name\":\"23\",\"issue\":\"20161027058\",\"nextIssue\":\"20161027059\",\"nextTime\":\"2016-12-05 10:49:19\",\"time\":\"2016-10-27 10:39:31\",\"numbers\":\"1,7,7,4,6\"}]}";
-    }
+//    public static String getTestData() {
+//        return "{\"serverTime\":\"1478591171393\",\"numLotteryResults\":[" +
+//                "{\"name\":\"24\",\"issue\":\"2016122\",\"nextIssue\":\"2016123\",\"nextTime\":\"2016-11-05 13:15:00\",\"time\":\"2016-10-18 13:15:00\",\"numbers\":\"15,22,23,24,28,29#08\",\"jackpot\":\"1089129612\"}," +
+//                "{\"name\":\"29\",\"issue\":\"2016123\",\"nextIssue\":\"2016124\",\"nextTime\":\"2016-11-08 20:30:00\",\"time\":\"2016-10-19 12:30:00\",\"numbers\":\"04,05,13,20,32#01,10\",\"jackpot\":\"3651000000\"}," +
+//                "{\"name\":\"28\",\"issue\":\"2016122\",\"nextIssue\":\"2016123\",\"nextTime\":\"2016-11-05 13:15:00\",\"time\":\"2016-10-17 13:15:00\",\"numbers\":\"01,09,14,16,17,19,21#13\",\"jackpot\":\"4176721\"}," +
+//                "{\"name\":\"27\",\"issue\":\"2016286\",\"nextIssue\":\"2016287\",\"nextTime\":\"2016-12-05 12:30:00\",\"time\":\"2016-10-19 12:30:00\",\"numbers\":\"9,0,7\"}," +
+//                "{\"name\":\"25\",\"issue\":\"2016286\",\"nextIssue\":\"2016287\",\"nextTime\":\"2016-12-05 12:30:00\",\"time\":\"2016-10-19 12:30:00\",\"numbers\":\"6,2,3\"}," +
+//                "{\"name\":\"26\",\"issue\":\"2016286\",\"nextIssue\":\"2016287\",\"nextTime\":\"2016-12-05 12:30:00\",\"time\":\"2016-10-19 12:30:00\",\"numbers\":\"6,2,3,3,2\"}," +
+//                "{\"name\":\"1\",\"issue\":\"2016121\",\"nextIssue\":\"2016121\",\"nextTime\":\"2016-11-08 18:30:00\",\"time\":\"2016-10-20 13:30:00\",\"numbers\":\"01,02,03,04,05,06#07\",\"zodiac\":\"猴,猴,猴,猴,猴,猴#猴\"}," +
+//                "{\"name\":\"2\",\"issue\":\"20161027076\",\"nextIssue\":\"20161027077\",\"nextTime\":\"2016-12-05 10:50:40\",\"time\":\"2016-10-27 10:40:44\",\"numbers\":\"4,2,0,0,1\"}," +
+//                "{\"name\":\"3\",\"issue\":\"20160222084\",\"nextIssue\":\"20160318084\",\"nextTime\":\"2016-12-05 15:13:07\",\"time\":\"2016-02-22 15:14:40\",\"numbers\":\"3,1,6,6,8\"}," +
+//                "{\"name\":\"4\",\"issue\":\"2016102752\",\"nextIssue\":\"2016102753\",\"nextTime\":\"2016-12-05 10:50:11\",\"time\":\"2016-10-27 10:40:23\",\"numbers\":\"6,8,6,9,4\"}," +
+//                "{\"name\":\"5\",\"issue\":\"20161027053\",\"nextIssue\":\"20161027054\",\"nextTime\":\"2016-12-05 10:41:30\",\"time\":\"2016-10-27 10:41:33\",\"numbers\":\"6,8,6,7,8\"}," +
+//                "{\"name\":\"6\",\"issue\":\"2016123\",\"nextIssue\":\"2016124\",\"nextTime\":\"2016-11-08 19:30:00\",\"time\":\"2016-10-18 12:30:00\",\"numbers\":\"6,5,2,1,9,7,7\",\"jackpot\":\"9058157\"}," +
+//                "{\"name\":\"7\",\"issue\":\"2016102758\",\"nextIssue\":\"2016102759\",\"nextTime\":\"2016-12-05 10:51:00\",\"time\":\"2016-10-27 10:42:01\",\"numbers\":\"02,08,03,11,04\"}," +
+//                "{\"name\":\"8\",\"issue\":\"2016102758\",\"nextIssue\":\"2016102759\",\"nextTime\":\"2016-12-05 10:52:09\",\"time\":\"2016-10-27 10:42:21\",\"numbers\":\"01,17,11,03,15,12,04,16\"}," +
+//                "{\"name\":\"20\",\"issue\":\"2016102761\",\"nextIssue\":\"2016102762\",\"nextTime\":\"2016-12-05 10:46:47\",\"time\":\"2016-10-27 10:37:17\",\"numbers\":\"07,08,01,06,02\"}," +
+//                "{\"name\":\"10\",\"issue\":\"20161027060\",\"nextIssue\":\"20161027061\",\"nextTime\":\"2016-12-05 10:51:51\",\"time\":\"2016-10-27 10:42:03\",\"numbers\":\"1,1,5\"}," +
+//                "{\"name\":\"11\",\"issue\":\"20161027058\",\"nextIssue\":\"20161027059\",\"nextTime\":\"2016-12-05 10:49:29\",\"time\":\"2016-10-27 10:39:41\",\"numbers\":\"20,04,09,05,17,07,10,11\"}," +
+//                "{\"name\":\"15\",\"issue\":\"583463\",\"nextIssue\":\"583464\",\"nextTime\":\"2016-12-05 10:47:43\",\"time\":\"2016-10-27 10:42:48\",\"numbers\":\"08,05,10,04,07,02,06,01,09,03\"}," +
+//                "{\"name\":\"16\",\"issue\":\"20161027061\",\"nextIssue\":\"20161027062\",\"nextTime\":\"2016-12-05 10:52:06\",\"time\":\"2016-10-27 10:42:18\",\"numbers\":\"2,3,6\"}," +
+//                "{\"name\":\"17\",\"issue\":\"2016102717\",\"nextIssue\":\"2016102718\",\"nextTime\":\"2016-12-05 11:00:30\",\"time\":\"2016-10-27 10:31:18\",\"numbers\":\"9,1,3\"}," +
+//                "{\"name\":\"18\",\"issue\":\"20161027055\",\"nextIssue\":\"20161027056\",\"nextTime\":\"2016-12-05 10:47:11\",\"time\":\"2016-10-27 10:37:23\",\"numbers\":\"2,6,6\"}," +
+//                "{\"name\":\"19\",\"issue\":\"20161027066\",\"nextIssue\":\"20161027067\",\"nextTime\":\"2016-12-05 10:53:50\",\"time\":\"2016-10-27 10:44:02\",\"numbers\":\"02,18,09,13,12,07,15,16\"}," +
+//                "{\"name\":\"22\",\"issue\":\"2016102759\",\"nextIssue\":\"2016102760\",\"nextTime\":\"2016-12-05 10:56:00\",\"time\":\"2016-10-27 10:45:50\",\"numbers\":\"01,10,04,09,03\"}," +
+//                "{\"name\":\"23\",\"issue\":\"20161027058\",\"nextIssue\":\"20161027059\",\"nextTime\":\"2016-12-05 10:49:19\",\"time\":\"2016-10-27 10:39:31\",\"numbers\":\"1,7,7,4,6\"}]}";
+//    }
 
 }
