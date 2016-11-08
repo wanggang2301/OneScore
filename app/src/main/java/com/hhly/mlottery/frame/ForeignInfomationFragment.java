@@ -111,9 +111,7 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
     private void loadData() {
         Map<String, String> params = new HashMap<>();
         params.put("pageNum", pageSize + "");
-
         String url = BaseURLs.URL_FOREIGN_INFOMATION;
-
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<ForeignInfomationBean>() {
                     @Override
                     public void onResponse(ForeignInfomationBean foreignInfomationBean) {
@@ -167,7 +165,6 @@ public class ForeignInfomationFragment extends Fragment implements ExactSwipeRef
                     refresh.setRefreshing(false);
                     refresh.setVisibility(View.VISIBLE);
                     networkExceptionLayout.setVisibility(View.GONE);
-
                     break;
                 case DATA_STATUS_ERROR:
                     refresh.setRefreshing(false);

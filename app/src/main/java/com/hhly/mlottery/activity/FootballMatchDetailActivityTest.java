@@ -131,6 +131,9 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
     private static final String SUBSTITUTION = "1055";
     private static final String CORNER = "1025";
     private static final String YTORED = "1045";//两黄变一红
+    private static final String DIANQIU = "1031";
+
+
     //客队事件
     private static final String SCORE1 = "2053";//客队进球
     private static final String RED_CARD1 = "2056";
@@ -138,6 +141,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
     private static final String SUBSTITUTION1 = "2079";
     private static final String CORNER1 = "2049";
     private static final String YTORED1 = "2069";//两黄变一红
+    private static final String DIANQIU1 = "2055";
 
 
     //走势图
@@ -1203,7 +1207,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
         Iterator<MatchTextLiveBean> iterator1 = matchLive.iterator();
         while (iterator1.hasNext()) {
             MatchTextLiveBean bean1 = iterator1.next();
-            if (bean1.getCode().equals(SCORE) || bean1.getCode().equals(SCORE1) ||
+            if (bean1.getCode().equals(SCORE) || bean1.getCode().equals(SCORE1) || bean1.getCode().equals(DIANQIU) || bean1.getCode().equals(DIANQIU1) ||
                     bean1.getCode().equals(RED_CARD) || bean1.getCode().equals(RED_CARD1) ||
                     bean1.getCode().equals(YTORED) || bean1.getCode().equals(YTORED1) ||
                     bean1.getCode().equals(YELLOW_CARD) || bean1.getCode().equals(YELLOW_CARD1) ||

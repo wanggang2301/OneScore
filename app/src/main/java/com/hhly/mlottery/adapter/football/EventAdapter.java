@@ -9,6 +9,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewAdapter;
 import com.hhly.mlottery.adapter.core.BaseRecyclerViewHolder;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.StadiumUtils;
 
 import java.util.List;
@@ -173,6 +174,7 @@ public class EventAdapter extends BaseRecyclerViewAdapter {
                 msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_ychanger));
                 iv_left.setImageResource(R.mipmap.event_ytor);
             }else if (DIANQIU.equals(m.getCode())){
+
                 msg_left.setText(m.getPlayInfo() + mContext.getResources().getString(R.string.foot_event_di) + m.getEventnum() + mContext.getResources().getString(R.string.foot_event_ge));
                 iv_left.setImageResource(R.mipmap.event_penalty);
             }
