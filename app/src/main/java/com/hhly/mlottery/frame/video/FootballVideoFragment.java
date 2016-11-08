@@ -154,6 +154,7 @@ public class FootballVideoFragment extends Fragment implements View.OnClickListe
                     childDataList = new ArrayList<>();
                 }
                 if (json != null) {
+                    if(json.matchVideo!=null){
                     //前缀
                     String stPreurl = json.preurl;
                     //后缀
@@ -250,7 +251,7 @@ public class FootballVideoFragment extends Fragment implements View.OnClickListe
                         }
 
                     }
-
+                    }
                 }
 
             }

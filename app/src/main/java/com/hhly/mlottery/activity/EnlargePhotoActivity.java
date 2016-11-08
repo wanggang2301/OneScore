@@ -302,7 +302,9 @@ public class EnlargePhotoActivity extends  BaseActivity implements View.OnClickL
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.PNG, 75, stream);// (0-100)压缩文件
+                    if (photo!=null){
+                        photo.compress(Bitmap.CompressFormat.PNG, 75, stream);// (0-100)压缩文件
+                    }
                     //此处可以把Bitmap保存到sd卡中，具体请看：http://www.cnblogs.com/linjiqin/archive/2011/12/28/2304940.html
                     try {
                         String state = Environment.getExternalStorageState();
