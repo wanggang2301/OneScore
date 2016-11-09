@@ -712,7 +712,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                 isNextNumber = false;
             }
             long mIssue = Long.parseLong(mNumberInfo.getIssue());
-            if (cruuentIssue == -1 || ((cruuentIssue == mIssue) && isOpenNumberStartHistory) || cruuentIssue < mIssue || "1".equals(mNumberInfo.getName()) || "6".equals(mNumberInfo.getName())) {
+            if (cruuentIssue == -1 || ((cruuentIssue == mIssue) && isOpenNumberStartHistory) || cruuentIssue < mIssue || "1".equals(mNumberInfo.getName()) || "6".equals(mNumberInfo.getName()) || "24".equals(mNumberInfo.getName()) || "28".equals(mNumberInfo.getName()) || "29".equals(mNumberInfo.getName())) {
 
                 StringBuilder sb = new StringBuilder();
                 sb.append(mNumberInfo.getNumbers());
