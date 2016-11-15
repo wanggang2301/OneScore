@@ -1,6 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
-
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,25 +16,20 @@ import com.hhly.mlottery.R;
  * @Created on:2016/11/15.
  */
 
-
 public class BasketLiveFragment extends Fragment {
 
-
-    public BasketLiveFragment() {
-        // Required empty public constructor
-    }
+    private View mView;
+    private Context mContext;
 
     public static BasketLiveFragment newInstance() {
         BasketLiveFragment basketLiveFragment = new BasketLiveFragment();
         return basketLiveFragment;
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_basket_live, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_basket_live, container, false);
+        mContext = getActivity();
+        return mView;
     }
-
 }
