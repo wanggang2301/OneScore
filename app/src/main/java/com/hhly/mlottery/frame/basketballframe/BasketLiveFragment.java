@@ -10,8 +10,13 @@ import android.view.ViewGroup;
 import com.hhly.mlottery.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * @author: Wangg
+ * @Name：BasketLiveFragment
+ * @Description: 籃球內頁文字直播Fragment
+ * @Created on:2016/11/15.
  */
+
+
 public class BasketLiveFragment extends Fragment {
 
 
