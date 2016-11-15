@@ -35,6 +35,7 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsHeadFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
@@ -103,12 +104,16 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private String mMatchStatus;
     private Context mContext;
 
+
+    BasketLiveFragment mBasketLiveFragment;
+
     BasketAnalyzeFragment mAnalyzeFragment = new BasketAnalyzeFragment();
     TalkAboutBallFragment mTalkAboutBallFragment;
 
     BasketOddsFragment mOddsEuro;
     BasketOddsFragment mOddsLet;
     BasketOddsFragment mOddsSize;
+
 
     private ViewPager mViewPager;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -172,7 +177,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     private static final String LEAGUEID_NBA = "1";
 
-  //  private int matchStatus;
+    //  private int matchStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +187,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mMatchType = getIntent().getExtras().getInt(BASKET_MATCH_MATCHTYPE);
 
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
+
+            mBasketLiveFragment = BasketLiveFragment.newInstance();
 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
             mOddsLet = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
@@ -232,7 +239,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         basePagerAdapter.registerDataSetObserver(mIndicator.getDataSetObserver());
 
         mHeadviewpager.setCurrentItem(0, false);
-       // mHeadviewpager.setIsScrollable(false);
+        // mHeadviewpager.setIsScrollable(false);
 
         setListener();
         loadData();
@@ -273,7 +280,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         iv_join_room_basket = (ImageView) findViewById(R.id.iv_join_room_basket);
         iv_join_room_basket.setOnClickListener(this);
 
-        TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
+        TITLES = new String[]{getResources().getString(R.string.basket_live), getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
@@ -293,8 +300,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
 
         // TODO
-        mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
-        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
+        mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
+        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -313,7 +320,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             @Override
             public void onPageSelected(int position) {
                 isHindShow(position);
-                if (position == 4) {
+                if (position == 5) {
                     appBarLayout.setExpanded(false);
                 }
             }
@@ -732,7 +739,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     }
 
     /**
-     * 分析、欧赔、亚盘、大小、聊球Fragment页面统计
+     * 直播、分析、欧赔、亚盘、大小、聊球Fragment页面统计
      */
     private boolean isFragment0 = true;
     private boolean is0 = false;
@@ -745,44 +752,75 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private boolean isFragment4 = false;
     private boolean is4 = false;
 
+    private boolean isFragment5 = false;
+    private boolean is5 = false;
+
     private void isHindShow(int position) {
         switch (position) {
-            case 0:// 分析
+
+            case 0: //直播
+                isFragment0 = false;
+                isFragment1 = false;
+                isFragment2 = false;
+                isFragment3 = false;
+                isFragment4 = false;
+                isFragment5 = true;
+                break;
+
+            case 1:// 分析
                 isFragment0 = true;
                 isFragment1 = false;
                 isFragment2 = false;
                 isFragment3 = false;
                 isFragment4 = false;
+                isFragment5 = false;
+
                 break;
-            case 3:// 欧赔
+            case 4:// 欧赔
                 isFragment0 = false;
                 isFragment1 = true;
                 isFragment2 = false;
                 isFragment3 = false;
                 isFragment4 = false;
+                isFragment5 = false;
+
                 break;
-            case 1:// 亚盘
+            case 2:// 亚盘
                 isFragment0 = false;
                 isFragment1 = false;
                 isFragment2 = true;
                 isFragment3 = false;
                 isFragment4 = false;
+                isFragment5 = false;
+
                 break;
-            case 2:// 大小
+            case 3:// 大小
                 isFragment0 = false;
                 isFragment1 = false;
                 isFragment2 = false;
                 isFragment3 = true;
                 isFragment4 = false;
+                isFragment5 = false;
+
                 break;
-            case 4:// 聊球
+            case 5:// 聊球
                 isFragment0 = false;
                 isFragment1 = false;
                 isFragment2 = false;
                 isFragment3 = false;
                 isFragment4 = true;
+                isFragment5 = false;
+
                 break;
         }
+
+        if (is5) {
+            MobclickAgent.onPageEnd("BasketBall_Info_ZB");
+            is5 = false;
+            L.d("xxx", "直播隐藏");
+        }
+
+
         if (is0) {
             MobclickAgent.onPageEnd("BasketBall_Info_FX");
             is0 = false;
@@ -807,6 +845,13 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             MobclickAgent.onPageEnd("BasketBall_Info_LQ");
             is4 = false;
             L.d("xxx", "聊球隐藏");
+        }
+
+
+        if (isFragment5) {
+            MobclickAgent.onPageStart("BasketBall_Info_ZB");
+            is5 = true;
+            L.d("xxx", "直播显示");
         }
 
         if (isFragment0) {
@@ -865,6 +910,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             is4 = true;
             L.d("xxx", "聊球显示");
         }
+        if (isFragment5) {
+            MobclickAgent.onPageStart("BasketBall_Info_ZB");
+            is5 = true;
+            L.d("xxx", "聊球显示");
+        }
     }
 
     @Override
@@ -895,6 +945,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             MobclickAgent.onPageEnd("BasketBall_Info_LQ");
             is4 = false;
             L.d("xxx", "聊球隐藏");
+        }
+
+        if (is5) {
+            MobclickAgent.onPageEnd("BasketBall_Info_ZB");
+            is5 = false;
+            L.d("xxx", "直播隐藏");
         }
     }
 }

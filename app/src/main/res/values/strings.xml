@@ -647,6 +647,7 @@
     <!--篮球设置-->
     <string name="basket_odd_setting">赔率提示</string>
     <string name="basket_scort_setting">赛事提示</string>
+    <string name="basket_live">直播</string>
     <string name="basket_analyze">分析</string>
     <string name="basket_alet">亚盘</string>
     <string name="basket_eur">欧赔</string>

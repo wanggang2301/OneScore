@@ -492,6 +492,8 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
         }
     }
 
+    //wsdkf 
+
 
     IUiListener qqShareListener = new IUiListener() {
         @Override
