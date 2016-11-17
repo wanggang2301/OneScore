@@ -1,12 +1,58 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hhly.mlottery.frame.basketballframe.BasketLiveFragment">
+    android:orientation="vertical">
 
-    <TextView
+    <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="25dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginTop="13dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="4">
 
-</FrameLayout>
+        <RadioButton
+            android:id="@+id/text_live"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/radio_button_left"
+            android:checked="true"
+            android:text="文字直播"
+            android:textColor="@drawable/info_text_color" />
+
+        <RadioButton
+            android:id="@+id/statistics_team"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:layout_marginRight="-0.25dp"
+            android:background="@drawable/radio_button_center"
+            android:checked="false"
+            android:text="球队统计"
+            android:textColor="@drawable/info_text_color" />
+
+        <RadioButton
+            android:id="@+id/statistics_players"
+            style="@style/odds_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-0.25dp"
+            android:background="@drawable/radio_button_right"
+            android:checked="false"
+            android:text="球员统计"
+            android:textColor="@drawable/info_text_color" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+</LinearLayout>
+
+

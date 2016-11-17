@@ -30,6 +30,7 @@ import com.hhly.mlottery.adapter.football.BasePagerAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
 import com.hhly.mlottery.bean.FirstEvent;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.frame.basketballframe.BasketAnalyzeFragment;
@@ -177,6 +178,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     private static final String LEAGUEID_NBA = "1";
 
+
+    private boolean isNBA = false;
+
     //  private int matchStatus;
 
     @Override
@@ -188,7 +192,13 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             mMatchStatus = getIntent().getExtras().getString(BASKET_MATCH_STATUS);
 
-            mBasketLiveFragment = BasketLiveFragment.newInstance();
+            if (LEAGUEID_NBA.equals(mLeagueId)) {
+                isNBA = true;
+            }
+
+            if (isNBA) {
+                mBasketLiveFragment = BasketLiveFragment.newInstance();
+            }
 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
             mOddsLet = BasketOddsFragment.newInstance(mThirdId, ODDS_LET);
@@ -198,7 +208,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             mCurrentId = getIntent().getExtras().getInt("currentfragment");
         }
         setWebSocketUri(BaseURLs.WS_SERVICE);
-        setTopic("USER.topic.basketball.score." + mThirdId);
+        setTopic("USER.topic.basketball.score." + mThirdId + ".zh");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_details_activity_test);
         /**不统计当前的Activity界面，只统计Fragment界面*/
@@ -280,7 +290,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         iv_join_room_basket = (ImageView) findViewById(R.id.iv_join_room_basket);
         iv_join_room_basket.setOnClickListener(this);
 
-        TITLES = new String[]{getResources().getString(R.string.basket_live), getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
+        if (isNBA) {
+            TITLES = new String[]{getResources().getString(R.string.basket_live), getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
+        } else {
+            TITLES = new String[]{getResources().getString(R.string.basket_analyze), getResources().getString(R.string.basket_alet), getResources().getString(R.string.basket_analyze_sizeof), getResources().getString(R.string.basket_eur), getResources().getString(R.string.basket_details_talkable)};
+        }
 
         toolbar = (Toolbar) findViewById(R.id.basket_details_toolbar);
         setSupportActionBar(toolbar);
@@ -299,8 +313,12 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mTabsAdapter.setTitles(TITLES);
 
 
-        // TODO
-        mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
+        if (isNBA) {  //是NBA
+            mTabsAdapter.addFragments(mBasketLiveFragment, mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
+        } else {
+            mTabsAdapter.addFragments(mAnalyzeFragment, mOddsLet, mOddsSize, mOddsEuro, mTalkAboutBallFragment);
+        }
+
         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -366,6 +384,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     @Override
     protected void onTextResult(String text) {
+
+        L.d("123456", text);
+
         String type = "";
         try {
             JSONObject jsonObject = new JSONObject(text);
@@ -379,6 +400,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             msg.obj = text;
             msg.arg1 = Integer.parseInt(type);
             L.e(TAG, type + "____________________");
+
+            L.d("socket", "type=" + type);
+            L.d("socket", "text=" + text);
 
             mSocketHandler.sendMessage(msg);
         }
@@ -431,6 +455,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         isRquestSuccess = false;
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
+        L.d("456789", mThirdId);
         VolleyContentFast.requestJsonByGet(BaseURLs.URL_BASKET_DETAILS, params, new VolleyContentFast.ResponseSuccessListener<BasketballDetailsBean>() {
             @Override
             public void onResponse(BasketballDetailsBean basketDetailsBean) {
@@ -648,6 +673,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             L.e(TAG, "__handleMessage__");
             L.e(TAG, "msg.arg1 = " + msg.arg1);
             if (msg.arg1 == 100) {  //type 为100 ==> 比分推送
+
                 String ws_json = (String) msg.obj;
                 L.e(TAG, "ws_json = " + ws_json);
                 WebSocketBasketBallDetails mBasketDetails = null;
@@ -660,6 +686,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 }
                 //  L.e();
                 updateData(mBasketDetails);
+
+                //文字直播推送
+                if (mBasketDetails.getData().getTextLiveEntity() != null) {
+                    updateTextLive(mBasketDetails.getData().getTextLiveEntity());
+                }
             }
         }
     };
@@ -671,9 +702,14 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * @param basketBallDetails 推送过来消息封装的实体类
      */
     private void updateData(WebSocketBasketBallDetails basketBallDetails) {
-
         mBasketDetailsHeadFragment.updateData(basketBallDetails, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
+    }
 
+    /**
+     * 接受文字直播推送，更新数据
+     */
+    private void updateTextLive(BasketEachTextLiveBean basketEachTextLiveBean) {
+        mBasketLiveFragment.updateTextLive(basketEachTextLiveBean);
     }
 
     private void eventBusPost() {
