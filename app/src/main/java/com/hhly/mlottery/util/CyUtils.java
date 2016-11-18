@@ -33,7 +33,7 @@ public class CyUtils {
     public static final int RESULT_CODE = 5;
     public static final int RESULT_BACK = 11;
     public static final int JUMP_QUESTCODE = 1;//跳转全部评论页面的请求码
-    public static final int SINGLE_PAGE_COMMENT = 30;//一页获取的评论数
+    public static final int SINGLE_PAGE_COMMENT = 30;//一页获取的评论数  30
     public static final int JUMP_RESULTCODE = 2;//一页获取的评论数
     public static final int RESULT_OK = -1;//登录界面返回的结果码
     public static final String ISHIDDENCOMMENTCOUNT = "isHiddenCommentCount";
