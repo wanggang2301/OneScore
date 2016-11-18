@@ -461,6 +461,9 @@
     <string name="number_cz_f3d">福彩3D</string>
     <string name="number_cz_qlc">七乐彩</string>
     <string name="number_cz_dlt">大乐透</string>
+    <string name="number_cz_sfc">胜负彩</string>
+    <string name="number_item_name">一键查询开奖结果</string>
+    <string name="number_item_name_desc">快速 便捷 准确</string>
     <!-- 描述信息 -->
     <string name="number_code_desc_qxc">每周二、五、日晚20:30开奖</string>
     <string name="number_code_desc_bj_sc">每天179期，5分钟一期，9:00-0:00</string>

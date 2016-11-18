@@ -450,6 +450,9 @@
     <string name="number_cz_f3d">福彩3D</string>
     <string name="number_cz_qlc">七樂彩</string>
     <string name="number_cz_dlt">大樂透</string>
+    <string name="number_cz_sfc">勝負彩</string>
+    <string name="number_item_name">壹鍵查詢開獎結果</string>
+    <string name="number_item_name_desc">快速 便捷 準確</string>
     <!-- 描述信息 -->
     <string name="number_code_desc_qxc">每週二、五、日晚20:30開獎</string>
     <string name="number_code_desc_bj_sc">每天179期，5分鐘一期，9:00-0:00</string>

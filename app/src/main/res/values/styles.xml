@@ -906,7 +906,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <!--首页彩票入口条目样式-->
+    <!--首页彩票入口条目样式 start -->
     <style name="home_item_lottery_name">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -928,6 +928,41 @@
         <item name="android:layout_width">30dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">5dp</item>
+    </style>
+    <!--首页彩票入口条目样式 end -->
+
+    <!--彩票详情页-->
+    <style name="lottery_info_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/number_tab_solid_all</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textColor">@color/content_txt_black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="lottery_info_content_left">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/number_tab_solid_all_l_b_r</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="lottery_info_content_right">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lines">1</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
 </resources>

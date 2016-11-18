@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="horizontal">
+
+    <!-- 双色球 -->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/lottery_info_title"
+            android:text="奖等"
+            />
+
+        <TextView
+            style="@style/lottery_info_content_left"
+            android:text="一等奖" />
+
+        <TextView
+            style="@style/lottery_info_content_left"
+            android:text="其中：一等奖复式投注" />
+
+        <TextView
+            style="@style/lottery_info_content_left"
+            android:text="二等奖" />
+
+        <TextView
+            style="@style/lottery_info_content_left"
+            android:text="三等奖"/>
+
+        <TextView
+            style="@style/lottery_info_content_left"
+            android:text="四等奖"/>
+
+        <TextView
+            style="@style/lottery_info_content_left"
+            android:text="五等奖" />
+
+        <TextView
+            style="@style/lottery_info_content_left"
+            android:text="六等奖" />
+
+        <TextView
+            style="@style/lottery_info_content_left"
+            android:text="其中：六等奖复式投注"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/lottery_info_title"
+            android:text="中奖注数（注）"/>
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="3"/>
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="2" />
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="127"/>
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="1619" />
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="63501" />
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="1329019"/>
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="8932453" />
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="3485024" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/lottery_info_title"
+            android:text="单注中奖金额（元）"/>
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="10,000,000"/>
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="15000000(含派奖5000000)" />
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="219,909"/>
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="3,000" />
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="200" />
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="10" />
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="5"/>
+
+        <TextView
+            style="@style/lottery_info_content_right"
+            android:text="10(含派奖5)"/>
+    </LinearLayout>
+
+</LinearLayout>

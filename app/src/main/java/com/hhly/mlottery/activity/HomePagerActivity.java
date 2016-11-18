@@ -25,6 +25,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -389,6 +390,16 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
         home_page_list = (ListView) findViewById(R.id.home_page_list);// 首页列表
+
+        // TODO
+        View lotteryItemView = View.inflate(mContext, R.layout.home_page_item_lottery, null);
+        lotteryItemView.findViewById(R.id.rl_lottery_item_title).setOnClickListener(this);
+        lotteryItemView.findViewById(R.id.rl_lottery_item_sfc).setOnClickListener(this);
+        lotteryItemView.findViewById(R.id.ll_lottery_item_ssq).setOnClickListener(this);
+        lotteryItemView.findViewById(R.id.ll_lottery_item_dlt).setOnClickListener(this);
+        lotteryItemView.findViewById(R.id.ll_lottery_item_pl3).setOnClickListener(this);
+        lotteryItemView.findViewById(R.id.ll_lottery_item_pl5).setOnClickListener(this);
+        home_page_list.addFooterView(lotteryItemView);
     }
 
     /**
@@ -790,15 +801,25 @@ public class HomePagerActivity extends BaseActivity implements SwipeRefreshLayou
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_account:
-
-             /*   if (CommonUtils.isLogin()) {
-                    goToAccountActivity();
-                } else {
-                    goToUserOptionsActivity();
-                }*/
                 goToUserOptionsActivity();
-
-
+                break;
+            case R.id.rl_lottery_item_title:
+                UiUtils.toast(this,"一健查询开奖信息");
+                break;
+            case R.id.rl_lottery_item_sfc:
+                UiUtils.toast(this,"胜负彩");
+                break;
+            case R.id.ll_lottery_item_ssq:
+                UiUtils.toast(this,"双色球");
+                break;
+            case R.id.ll_lottery_item_dlt:
+                UiUtils.toast(this,"大乐透");
+                break;
+            case R.id.ll_lottery_item_pl3:
+                UiUtils.toast(this,"排列三");
+                break;
+            case R.id.ll_lottery_item_pl5:
+                UiUtils.toast(this,"排列五");
                 break;
             default:
                 break;
