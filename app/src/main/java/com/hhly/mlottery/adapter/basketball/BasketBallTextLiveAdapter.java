@@ -1,6 +1,6 @@
 package com.hhly.mlottery.adapter.basketball;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -18,14 +18,13 @@ import java.util.List;
 
 public class BasketBallTextLiveAdapter extends BaseQuickAdapter<String> {
 
-    private List<String> list;
+    private Context mContext;
     private BasketBallTextLiveAdapter.PullUpLoading mPullUpLoading;
 
 
-    public BasketBallTextLiveAdapter(int layoutResId, List<String> data, Activity activity) {
+    public BasketBallTextLiveAdapter(int layoutResId, List<String> data, Context context) {
         super(layoutResId, data);
-        list = data;
-
+        mContext = context;
     }
 
     @Override
