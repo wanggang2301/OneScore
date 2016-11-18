@@ -4,6 +4,7 @@ package com.hhly.mlottery.frame.basketballframe;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -16,9 +17,14 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketBallTextLiveAdapter;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
+import com.hhly.mlottery.bean.basket.basketdetails.BasketTextLiveBean;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangg
@@ -33,8 +39,6 @@ public class BasketTextLiveFragment extends Fragment {
 
     private BasketBallTextLiveAdapter mBasketBallTextLiveAdapter;
 
-    private List<String> list = new ArrayList<>();
-
     private View listfooter_more;
     private View emptyView;
     private TextView mLoadMore;//加载更多
@@ -47,9 +51,25 @@ public class BasketTextLiveFragment extends Fragment {
 
     private boolean isFirstRequestData = false;
 
-    public static BasketTextLiveFragment newInstance() {
+    private String mThirdId;
+
+    private List<BasketEachTextLiveBean> data;
+
+
+    public static BasketTextLiveFragment newInstance(String thirdId) {
         BasketTextLiveFragment basketTextLiveFragment = new BasketTextLiveFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("thirdId", thirdId);
+        basketTextLiveFragment.setArguments(bundle);
         return basketTextLiveFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mThirdId = getArguments().getString("thirdId");
+        }
     }
 
     @Override
@@ -60,9 +80,9 @@ public class BasketTextLiveFragment extends Fragment {
 
         emptyView = getActivity().getLayoutInflater().inflate(R.layout.layout_nodata, container, false);
 
-        initView();
+      //  initView();
 
-        loadData();
+       // loadData();
 
         return mView;
     }
@@ -95,8 +115,8 @@ public class BasketTextLiveFragment extends Fragment {
 
             mBasketBallTextLiveAdapter.setPullUpLoading(new BasketBallTextLiveAdapter.PullUpLoading() {
                 @Override
-                public void onPullUpLoading() {
-                    pullUpLoadMore();
+                public void onPullUpLoading(String id) {
+                    pullUpLoadMore(id);
                 }
             });
         }
@@ -106,7 +126,7 @@ public class BasketTextLiveFragment extends Fragment {
             public void onClick(View v) {
                 if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
                     if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
-                        getRequestTextLiveData();
+                        // getRequestTextLiveData();
                     }
                 }
             }
@@ -118,11 +138,11 @@ public class BasketTextLiveFragment extends Fragment {
     /**
      * 上拉加载更多文字直播数据
      */
-    public void pullUpLoadMore() {
+    public void pullUpLoadMore(String id) {
         if (isRequestFinish) {//上一个请求完成才执行这个 不然一直往上拉，会连续发多个请求
             //请求下一页数据
             if (!mLoadMore.getText().equals(getResources().getString(R.string.foot_nomoredata))) {//没有更多数据的时候，上拉不再发起请求
-                getRequestTextLiveData();
+                //  getRequestTextLiveData(id);
             }
         }
     }
@@ -136,7 +156,7 @@ public class BasketTextLiveFragment extends Fragment {
                 mProgressBar.setVisibility(View.GONE);
                 mLoadMore.setText(R.string.foot_loadmore);
                 mBasketBallTextLiveAdapter.getData().clear();
-                mBasketBallTextLiveAdapter.addData(list);
+                mBasketBallTextLiveAdapter.addData(data);
                 mBasketBallTextLiveAdapter.notifyDataSetChanged();
             }
 
@@ -146,32 +166,43 @@ public class BasketTextLiveFragment extends Fragment {
     /**
      * 分页查询文字直播数据
      */
-    public void getRequestTextLiveData() {
+    public void getRequestTextLiveData(String id) {
         mProgressBar.setVisibility(View.VISIBLE);
         isRequestFinish = false;
         mLoadMore.setText(R.string.foot_loadingmore);  //正在加载更多...
 
-        //  if (isFirstRequestData) {
-        textLiveHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                //请求数据成功
-                for (int i = 0; i < 15; i++) {
-                    list.add("大家好=====" + i);
+        if (isFirstRequestData) {
+            Map<String, String> params = new HashMap<>();
+            params.put("thirdId", "3666697");
+            params.put("id", id); //首次请求id
+            VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_DETAIL_TEXTLIVE, params, new VolleyContentFast.ResponseSuccessListener<BasketTextLiveBean>() {
+                @Override
+                public void onResponse(BasketTextLiveBean basketTextLiveBean) {
+                    if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult()) {
+                        return;
+                    }
+
+                    // data = basketTextLiveBean.getData();
+                    // L.d(TAG, "请求成功");
+                    // L.d(TAG, basketTextLiveBean.getData().get(0).getEventContent());
+                    textLiveHandler.sendEmptyMessage(0);
+
                 }
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                }
+            }, BasketTextLiveBean.class);
 
-                textLiveHandler.sendEmptyMessage(0);
-            }
-        });
-
-      /*  } else {
+        } else {
             isFirstRequestData = true;
             isRequestFinish = true;
             mProgressBar.setVisibility(View.GONE);
             mLoadMore.setText(R.string.foot_neterror);
-        }*/
+        }
 
     }
+
 
     /**
      * 首次进入请求文字直播
@@ -179,41 +210,41 @@ public class BasketTextLiveFragment extends Fragment {
     public void loadData() {
         mProgressBarRefresh.setVisibility(View.VISIBLE);  //请求转圈圈正在请求数据
 
+        Map<String, String> params = new HashMap<>();
+        params.put("thirdId", "3666697");
+        params.put("id", "0"); //首次请求id=0
+        VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_DETAIL_TEXTLIVE, params, new VolleyContentFast.ResponseSuccessListener<BasketTextLiveBean>() {
+            @Override
+            public void onResponse(BasketTextLiveBean basketTextLiveBean) {
+                if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult()) {
+                    return;
+                }
 
-        //请求成功
-        //成功
+                data = basketTextLiveBean.getData();
 
-        mProgressBarRefresh.setVisibility(View.GONE);
-        mLoadMore.setText(R.string.foot_loadmore);   //加载更多
+                mProgressBarRefresh.setVisibility(View.GONE);
+                mLoadMore.setText(R.string.foot_loadmore);   //加载更多
 
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
-        list.add("123");
+                if (data != null && data.size() > 4) {
+                    listfooter_more.setVisibility(View.VISIBLE);
+                } else {
+                    listfooter_more.setVisibility(View.GONE);
+                }
+                if (data.size() == 0) {//，没请求到数据 mNoData显示
+                    mBasketBallTextLiveAdapter.setEmptyView(emptyView);
+                } else {
+                    mBasketBallTextLiveAdapter.getData().clear();
+                    mBasketBallTextLiveAdapter.addData(data);
+                    mBasketBallTextLiveAdapter.notifyDataSetChanged();
+                    mRecyclerView.smoothScrollToPosition(0);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+            }
+        }, BasketTextLiveBean.class);
 
-        if (list != null && list.size() > 4) {
-            listfooter_more.setVisibility(View.VISIBLE);
-        } else {
-            listfooter_more.setVisibility(View.GONE);
-        }
-        if (list.size() == 0) {//，没请求到数据 mNoData显示
-            mBasketBallTextLiveAdapter.setEmptyView(emptyView);
-        } else {
-            mBasketBallTextLiveAdapter.getData().clear();
-            mBasketBallTextLiveAdapter.addData(list);
-            mBasketBallTextLiveAdapter.notifyDataSetChanged();
-            mRecyclerView.smoothScrollToPosition(0);
-        }
     }
+
 }

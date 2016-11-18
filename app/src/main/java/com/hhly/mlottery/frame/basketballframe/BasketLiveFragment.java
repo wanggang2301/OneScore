@@ -2,6 +2,7 @@ package com.hhly.mlottery.frame.basketballframe;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -48,9 +49,23 @@ public class BasketLiveFragment extends Fragment {
 
     private Fragment currentFramnet;
 
-    public static BasketLiveFragment newInstance() {
+    private String mThirdId;
+
+    public static BasketLiveFragment newInstance(String mThirdId) {
         BasketLiveFragment basketLiveFragment = new BasketLiveFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("thirdId", mThirdId);
+        basketLiveFragment.setArguments(bundle);
+
         return basketLiveFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mThirdId = getArguments().getString("thirdId");
+        }
     }
 
     @Override
@@ -68,7 +83,7 @@ public class BasketLiveFragment extends Fragment {
 
         fragmentManager = getChildFragmentManager();
 
-        mBasketTextLiveFragment = BasketTextLiveFragment.newInstance();
+        mBasketTextLiveFragment = BasketTextLiveFragment.newInstance(mThirdId);
         mBasketTeamStatisticsFragment = BasketTeamStatisticsFragment.newInstance();
         mBasketPlayersStatisticsFragment = BasketPlayersStatisticsFragment.newInstance();
 
@@ -95,26 +110,7 @@ public class BasketLiveFragment extends Fragment {
         });
     }
 
-    /*private void firstLoadTextLive() {
-        Map<String, String> params = new HashMap<>();
-        params.put("thirdId", "3666697");
-        params.put("id", "0"); //首次请求id
-        VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_DETAIL_TEXTLIVE, params, new VolleyContentFast.ResponseSuccessListener<BasketTextLiveBean>() {
-            @Override
-            public void onResponse(BasketTextLiveBean basketTextLiveBean) {
-                if (200 != basketTextLiveBean.getResult()) {
-                    return;
-                }
-                data = basketTextLiveBean.getData();
-                L.d(TAG, "请求成功");
-                L.d(TAG, basketTextLiveBean.getData().get(0).getEventContent());
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-            }
-        }, BasketTextLiveBean.class);
-    }*/
+
 
     /**
      * 文字直播推送更新

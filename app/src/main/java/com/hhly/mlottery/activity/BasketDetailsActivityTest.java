@@ -197,7 +197,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
 
             if (isNBA) {
-                mBasketLiveFragment = BasketLiveFragment.newInstance();
+                mBasketLiveFragment = BasketLiveFragment.newInstance(mThirdId);
             }
 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
