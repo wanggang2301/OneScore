@@ -29,11 +29,9 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
     private Context mContext;
     private BasketBallTextLiveAdapter.PullUpLoading mPullUpLoading;
 
-
     public BasketBallTextLiveAdapter(int layoutResId, List<BasketEachTextLiveBean> data, Context context) {
         super(layoutResId, data);
         mContext = context;
-
     }
 
     @Override
@@ -41,10 +39,6 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
         super.onBindViewHolder(holder, positions);
         if (positions == getItemCount() - 1) {//已经到达列表的底部
             if (mPullUpLoading != null) {
-
-                L.d("ccvvbb", positions + "---" + getItemCount());
-                L.d("ccvvbb", "data" + "---" + "");
-
                 //获取id
                 mPullUpLoading.onPullUpLoading();
             }
@@ -65,7 +59,6 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
         }
 
         CircleImageView circleImageView = baseViewHolder.getView(R.id.ci_icon);
-
         String text = b.getEventContent();
 
         if ((b.getEventId() + "").startsWith("1", 0)) {  //公共事件 1开头
@@ -75,13 +68,10 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
             baseViewHolder.getView(R.id.iv_topsanjiao).setVisibility(View.GONE);
             baseViewHolder.getView(R.id.tv_eventContent).setBackgroundResource(0);
             ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.black_details_textcolor));
-
         } else {
-
             text += "  " + "<font color='#21b11e'><b>" + b.getGuestScore() + "-" + b.getHomeScore() + "</b></font>";
-
-
             circleImageView.setVisibility(View.VISIBLE);
+
             if (1 == b.getTeamType()) {
                 //主队
                 ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
@@ -92,31 +82,21 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
 
             if (b.getRemainTime() == null || "".equals(b.getRemainTime())) {
                 baseViewHolder.getView(R.id.iv_topsanjiao).setVisibility(View.GONE);
+                baseViewHolder.getView(R.id.tv_remainTime).setVisibility(View.GONE);
                 baseViewHolder.setText(R.id.tv_remainTime, "");
-
             } else {
                 baseViewHolder.getView(R.id.iv_topsanjiao).setVisibility(View.VISIBLE);
-
                 baseViewHolder.getView(R.id.tv_remainTime).setVisibility(View.VISIBLE);
                 baseViewHolder.setText(R.id.tv_remainTime, b.getRemainTime());
             }
 
             baseViewHolder.getView(R.id.tv_eventContent).setBackgroundResource(R.drawable.item_basket_eventontent_bg);
             ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.content_txt_black));
-
-
         }
-
-
         baseViewHolder.setText(R.id.tv_eventContent, Html.fromHtml(text));
     }
-
 
     public interface PullUpLoading {
         void onPullUpLoading();
     }
-
-
-    //
-
 }
