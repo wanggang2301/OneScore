@@ -451,6 +451,8 @@
     <string name="number_cz_qlc">七樂彩</string>
     <string name="number_cz_dlt">大樂透</string>
     <string name="number_cz_sfc">勝負彩</string>
+    <string name="number_cz_lcbqc">六場半全場</string>
+    <string name="number_cz_scjq">4場進球</string>
     <string name="number_item_name">壹鍵查詢開獎結果</string>
     <string name="number_item_name_desc">快速 便捷 準確</string>
     <!-- 描述信息 -->

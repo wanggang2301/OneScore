@@ -249,58 +249,72 @@
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
-                        android:text="15000000(含派奖5000000)" />
+                        android:background="@drawable/number_tab_solid_all_r_b2"
+                        android:text="2" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="219,909" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3,000" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
                         style="@style/lottery_info_content_right"
+                        android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                 </LinearLayout>

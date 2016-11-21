@@ -311,7 +311,7 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                MobclickAgent.onEvent(mContext,"Lottery_History_List");
+                MobclickAgent.onEvent(mContext, "Lottery_History_List");
                 fl_number_history_list.setVisibility(View.GONE);
                 fl_numbner_history_info.setVisibility(View.VISIBLE);
                 viewPagerIndex = arg2;
@@ -722,6 +722,12 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
 
                 // 将号码添加到集合中
                 for (int i = 0; i < nums1.length; i++) {
+                    if ("24".equals(mNumberInfo.getName()) && i == 6) {
+                        numbers.add("88");
+                    }
+                    if ("29".equals(mNumberInfo.getName()) && i == 5) {
+                        numbers.add("88");
+                    }
                     numbers.add(nums1[i]);
                 }
             }
@@ -992,17 +998,27 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     break;
                     case 24:// 双色球
                     {
-                        TextView tv_number = new TextView(mContext);
-                        tv_number.setLayoutParams(params);
-                        tv_number.setGravity(Gravity.CENTER);
-                        tv_number.setText(numbers.get(i));
-                        tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
-                        if (i > 5) {
-                            tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                        if (i == 6) {
+                            params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                            params.gravity = Gravity.CENTER;
+                            ImageView iv = new ImageView(mContext);
+                            iv.setLayoutParams(params);
+                            iv.setImageResource(R.mipmap.number_tiema_icon);
+                            iv.setPadding(0, DisplayUtil.dip2px(mContext, 8), 0, 0);
+                            ll.addView(iv);
                         } else {
-                            tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                            TextView tv_number = new TextView(mContext);
+                            tv_number.setLayoutParams(params);
+                            tv_number.setGravity(Gravity.CENTER);
+                            tv_number.setText(numbers.get(i));
+                            tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
+                            if (i > 5) {
+                                tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                            } else {
+                                tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                            }
+                            ll.addView(tv_number);
                         }
-                        ll.addView(tv_number);
                     }
                     break;
                     case 28:// 七乐彩
@@ -1022,17 +1038,27 @@ public class HistoryNumberFragment extends Fragment implements OnClickListener, 
                     break;
                     case 29:// 大乐透
                     {
-                        TextView tv_number = new TextView(mContext);
-                        tv_number.setLayoutParams(params);
-                        tv_number.setGravity(Gravity.CENTER);
-                        tv_number.setText(numbers.get(i));
-                        tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
-                        if (i > 4) {
-                            tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                        if (i == 5) {
+                            params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                            params.gravity = Gravity.CENTER;
+                            ImageView iv = new ImageView(mContext);
+                            iv.setLayoutParams(params);
+                            iv.setImageResource(R.mipmap.number_tiema_icon);
+                            iv.setPadding(0, DisplayUtil.dip2px(mContext, 8), 0, 0);
+                            ll.addView(iv);
                         } else {
-                            tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                            TextView tv_number = new TextView(mContext);
+                            tv_number.setLayoutParams(params);
+                            tv_number.setGravity(Gravity.CENTER);
+                            tv_number.setText(numbers.get(i));
+                            tv_number.setTextColor(getResources().getColor(R.color.numberinfo_text_color));
+                            if (i > 4) {
+                                tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                            } else {
+                                tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                            }
+                            ll.addView(tv_number);
                         }
-                        ll.addView(tv_number);
                     }
                     break;
                     case 8:// 快乐十分

@@ -462,6 +462,8 @@
     <string name="number_cz_qlc">七乐彩</string>
     <string name="number_cz_dlt">大乐透</string>
     <string name="number_cz_sfc">胜负彩</string>
+    <string name="number_cz_lcbqc">六场半全场</string>
+    <string name="number_cz_scjq">4场进球</string>
     <string name="number_item_name">一键查询开奖结果</string>
     <string name="number_item_name_desc">快速 便捷 准确</string>
     <!-- 描述信息 -->

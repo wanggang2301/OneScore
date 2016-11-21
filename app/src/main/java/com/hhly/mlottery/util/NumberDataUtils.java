@@ -170,6 +170,12 @@ public class NumberDataUtils {
 
                 // 将号码添加到集合中
                 for (int i = 0; i < nums.length; i++) {
+                    if("24".equals(mNumberInfo.getName()) && i == 6){
+                        numbers.add("88");
+                    }
+                    if("29".equals(mNumberInfo.getName()) && i == 5){
+                        numbers.add("88");
+                    }
                     numbers.add(nums[i]);
                 }
             }
@@ -191,7 +197,7 @@ public class NumberDataUtils {
      * @param index                快乐十分的红球显示下标
      */
     public static void numberAddInfo(Context context, NumberCurrentInfo mNumberInfo, View view, List<String> numbers, List<String> zodiacs, boolean isHKOpenNumberStart, boolean isQXCOpenNumberStart,
-                                     boolean isSSQOpenNumberStart,boolean isQLCOpenNumberStart,boolean isDLTOpenNumberStart,boolean isNextNumber, int isGravity, String index) {
+                                     boolean isSSQOpenNumberStart, boolean isQLCOpenNumberStart, boolean isDLTOpenNumberStart, boolean isNextNumber, int isGravity, String index) {
 
         if (view != null) {
             ((ViewGroup) view).removeAllViews();
@@ -511,50 +517,74 @@ public class NumberDataUtils {
                     ll.addView(tv_number);
                 }
             } else if ("24".equals(mNumberInfo.getName())) {// 双色球
-                if (isSSQOpenNumberStart) {
-                    ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+
+                if (i == 6) {
+                    params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    params.gravity = Gravity.CENTER;
+                    ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
-                    if (i <= 5) {
-                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_ssq, R.mipmap.number_kj_icon_def).into(iv);
-                    } else {
-                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_ssq, R.mipmap.number_kj_icon_def).into(iv);
-                    }
+                    iv.setImageResource(R.mipmap.number_tiema_icon);
+                    iv.setPadding(0, DisplayUtil.dip2px(context, 8), 0, 0);
                     ll.addView(iv);
                 } else {
-                    TextView tv_number = new TextView(context);
-                    tv_number.setLayoutParams(params);
-                    tv_number.setGravity(Gravity.CENTER);
-                    tv_number.setTextColor(context.getResources().getColor(R.color.numberinfo_text_color));
-                    tv_number.setText(numbers.get(i));
-                    if (i > 5) {
-                        tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+
+                    if (isSSQOpenNumberStart) {
+                        ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                        iv.setLayoutParams(params);
+                        if (i <= 5) {
+                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_ssq, R.mipmap.number_kj_icon_def).into(iv);
+                        } else {
+                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_ssq, R.mipmap.number_kj_icon_def).into(iv);
+                        }
+                        ll.addView(iv);
                     } else {
-                        tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                        TextView tv_number = new TextView(context);
+                        tv_number.setLayoutParams(params);
+                        tv_number.setGravity(Gravity.CENTER);
+                        tv_number.setTextColor(context.getResources().getColor(R.color.numberinfo_text_color));
+                        tv_number.setText(numbers.get(i));
+                        if (i > 5) {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                        } else {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                        }
+                        ll.addView(tv_number);
                     }
-                    ll.addView(tv_number);
                 }
             } else if ("29".equals(mNumberInfo.getName())) {// 大乐透
-                if (isDLTOpenNumberStart) {
-                    ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+
+                if (i == 5) {
+                    params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    params.gravity = Gravity.CENTER;
+                    ImageView iv = new ImageView(context);
                     iv.setLayoutParams(params);
-                    if (i <= 4) {
-                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_dlt, R.mipmap.number_kj_icon_def).into(iv);
-                    } else {
-                        ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_dlt, R.mipmap.number_kj_icon_def).into(iv);
-                    }
+                    iv.setImageResource(R.mipmap.number_tiema_icon);
+                    iv.setPadding(0, DisplayUtil.dip2px(context, 8), 0, 0);
                     ll.addView(iv);
                 } else {
-                    TextView tv_number = new TextView(context);
-                    tv_number.setLayoutParams(params);
-                    tv_number.setGravity(Gravity.CENTER);
-                    tv_number.setTextColor(context.getResources().getColor(R.color.numberinfo_text_color));
-                    tv_number.setText(numbers.get(i));
-                    if (i > 4) {
-                        tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+
+                    if (isDLTOpenNumberStart) {
+                        ImageView iv = new ImageView(context);// 正在开奖中时显示的内容
+                        iv.setLayoutParams(params);
+                        if (i <= 4) {
+                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_red_dlt, R.mipmap.number_kj_icon_def).into(iv);
+                        } else {
+                            ImageLoader.loadFitCenter(context, R.mipmap.number_anim_blue_dlt, R.mipmap.number_kj_icon_def).into(iv);
+                        }
+                        ll.addView(iv);
                     } else {
-                        tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                        TextView tv_number = new TextView(context);
+                        tv_number.setLayoutParams(params);
+                        tv_number.setGravity(Gravity.CENTER);
+                        tv_number.setTextColor(context.getResources().getColor(R.color.numberinfo_text_color));
+                        tv_number.setText(numbers.get(i));
+                        if (i > 4) {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_blue);
+                        } else {
+                            tv_number.setBackgroundResource(R.mipmap.number_bg_red);
+                        }
+                        ll.addView(tv_number);
                     }
-                    ll.addView(tv_number);
                 }
             } else if ("28".equals(mNumberInfo.getName())) {// 七乐彩
                 if (isQLCOpenNumberStart) {
@@ -715,10 +745,10 @@ public class NumberDataUtils {
 
         disposeSubNumbers(mNumberInfo, numbers, zodiacs);// 拆分开奖号码
         isOpenNumberStartShow(context, mNumberInfo, isOpenNumberStartHistory, isOpenNumberStartHistory, isGravity);// 按开奖状态显示对应的标题
-        numberAddInfo(context, mNumberInfo, ll_Currentnumber_numbers, numbers, zodiacs, isOpenNumberStartHistory, isOpenNumberStartHistory,isOpenNumberStartHistory,isOpenNumberStartHistory,isOpenNumberStartHistory, isNextNumber, isGravity, index);// 动态添加数据
+        numberAddInfo(context, mNumberInfo, ll_Currentnumber_numbers, numbers, zodiacs, isOpenNumberStartHistory, isOpenNumberStartHistory, isOpenNumberStartHistory, isOpenNumberStartHistory, isOpenNumberStartHistory, isNextNumber, isGravity, index);// 动态添加数据
         numberAddInfo(isOpenNumberStartHistory);// 详情数据显示
 //        tv_lottery_bonus.setText(context.getResources().getString(R.string.number_bonus_type) + DecimalFormat.getNumberInstance().format(mNumberInfo.getJackpot()));// 设置奖金滚存
-        tv_lottery_bonus.setText(mNumberInfo.getJackpot() == null ?"":NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));// 设置奖金滚存
+        tv_lottery_bonus.setText(mNumberInfo.getJackpot() == null ? "" : NumberFormat.getCurrencyInstance().format(Long.parseLong(mNumberInfo.getJackpot())));// 设置奖金滚存
     }
 
     /**
@@ -1085,7 +1115,7 @@ public class NumberDataUtils {
                 int num = Integer.parseInt(numbers.get(i));
                 sum += num;
 
-                if(num == 0){
+                if (num == 0) {
                     even++;
                 } else if (num % 2 == 0) {
                     even++;
@@ -1104,7 +1134,7 @@ public class NumberDataUtils {
                 }
             }
             number_f3d_fz.setText(String.valueOf(sum));
-            number_f3d_dx.setText(sum > 14 ? context.getResources().getString(R.string.number_bjsc_da):context.getResources().getString(R.string.number_bjsc_xiao));
+            number_f3d_dx.setText(sum > 14 ? context.getResources().getString(R.string.number_bjsc_da) : context.getResources().getString(R.string.number_bjsc_xiao));
             if (sum == 0) {
                 number_f3d_ds.setText(context.getResources().getString(R.string.number_bjsc_suang));
             } else if (sum % 2 == 0) {
@@ -1171,6 +1201,7 @@ public class NumberDataUtils {
             int three_r = 0;// 3区
             int three_b = 0;// 3区
             for (int i = 0; i < numbers.size(); i++) {
+                if(i == 5){continue;}
                 int num = Integer.parseInt(numbers.get(i));
                 sum += num;
                 if (i < numbers.size() - 2 && num > 0) {
@@ -1352,6 +1383,7 @@ public class NumberDataUtils {
             int two = 0;// 2区
             int three = 0;// 3区
             for (int i = 0; i < numbers.size(); i++) {
+                if(i == 6){continue;}
                 int num = Integer.parseInt(numbers.get(i));
                 sum += num;
                 if (i < numbers.size() - 1 && num > 0) {
@@ -2104,6 +2136,15 @@ public class NumberDataUtils {
                 break;
             case "29":// 大乐透
                 tv.setText(mContext.getResources().getString(R.string.number_cz_dlt));
+                break;
+            case "30":// 胜负彩
+                tv.setText(mContext.getResources().getString(R.string.number_cz_sfc));
+                break;
+            case "31":// 六场半全场
+                tv.setText(mContext.getResources().getString(R.string.number_cz_lcbqc));
+                break;
+            case "32":// 4场进球
+                tv.setText(mContext.getResources().getString(R.string.number_cz_scjq));
                 break;
             default:
                 tv.setText("-");

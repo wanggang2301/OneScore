@@ -452,23 +452,22 @@ public class HomeMuenFragment extends Fragment {
                                             intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.TWENTY_SIX));
                                             mContext.startActivity(intent);
                                         }
-                                        // TODO 其它三个彩种的name 未知－－〉 等后台给出
                                         case "328":// 胜负彩
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-                                            intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf("胜负彩的name"));
+                                            intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY));
                                             mContext.startActivity(intent);
                                         }
                                         case "329":// 六场半全场
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-                                            intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf("六场半全场 name"));
+                                            intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY_ONE));
                                             mContext.startActivity(intent);
                                         }
                                         case "330":// 四场进球彩
                                         {
                                             Intent intent = new Intent(mContext, NumbersInfoBaseActivity.class);
-                                            intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf("四场进球彩 name"));
+                                            intent.putExtra(AppConstants.LOTTERY_KEY, String.valueOf(AppConstants.THIRTY_TWO));
                                             mContext.startActivity(intent);
                                         }
                                         case "331":// 福彩3D
