@@ -81,6 +81,7 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
             text += "  " + "<font color='#21b11e'><b>" + b.getGuestScore() + "-" + b.getHomeScore() + "</b></font>";
 
 
+            circleImageView.setVisibility(View.VISIBLE);
             if (1 == b.getTeamType()) {
                 //主队
                 ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
