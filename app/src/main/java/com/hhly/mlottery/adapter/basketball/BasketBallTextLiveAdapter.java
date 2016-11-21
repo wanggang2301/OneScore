@@ -12,7 +12,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.util.ImageLoader;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.List;
 /**
  * @author: Wangg
  * @Name：BasketBallTextLiveAdapter
- * @Description:
+ * @Description:篮球文字直播
  * @Created on:2016/11/16  16:05.
  */
 
