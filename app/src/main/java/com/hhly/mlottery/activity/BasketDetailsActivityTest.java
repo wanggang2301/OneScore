@@ -101,7 +101,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * 大小球
      */
     public final static String ODDS_SIZE = "asiaSize";
-    private String mThirdId = "936707";
+    public static String mThirdId = "936707";
     private String mMatchStatus;
     private Context mContext;
 
@@ -182,6 +182,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private boolean isNBA = false;
 
     //  private int matchStatus;
+
+    public static String homeIconUrl;
+    public static String guestIconUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -466,7 +470,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 //                    initData(basketDetailsBean);
                     mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
 
-
+                    homeIconUrl = basketDetailsBean.getMatch().getHomeLogoUrl();
+                    guestIconUrl = basketDetailsBean.getMatch().getGuestLogoUrl();
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         connectWebSocket();
                     }

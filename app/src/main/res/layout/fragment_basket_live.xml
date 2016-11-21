@@ -7,11 +7,12 @@
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginTop="13dp"
+        android:layout_height="60dp"
+        android:background="#18181a"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         android:weightSum="4">
 
         <RadioButton
@@ -20,10 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="-0.25dp"
-            android:background="@drawable/radio_button_left"
+            android:background="@drawable/basket_radio_button_left"
             android:checked="true"
             android:text="文字直播"
-            android:textColor="@drawable/info_text_color" />
+            android:textColor="@drawable/basket_info_text_color" />
 
         <RadioButton
             android:id="@+id/statistics_team"
@@ -32,10 +33,10 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="-0.25dp"
             android:layout_marginRight="-0.25dp"
-            android:background="@drawable/radio_button_center"
+            android:background="@drawable/basket_radio_button_center"
             android:checked="false"
             android:text="球队统计"
-            android:textColor="@drawable/info_text_color" />
+            android:textColor="@drawable/basket_info_text_color" />
 
         <RadioButton
             android:id="@+id/statistics_players"
@@ -43,16 +44,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="-0.25dp"
-            android:background="@drawable/radio_button_right"
+            android:background="@drawable/basket_radio_button_right"
             android:checked="false"
             android:text="球员统计"
-            android:textColor="@drawable/info_text_color" />
+            android:textColor="@drawable/basket_info_text_color" />
     </RadioGroup>
 
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
+
 </LinearLayout>
 
 

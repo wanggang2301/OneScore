@@ -16,6 +16,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.util.FragmentUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,6 +52,12 @@ public class BasketLiveFragment extends Fragment {
 
     private String mThirdId;
 
+
+    private String homeIconUrl;
+    private String guestIconUrl;
+    private List<Fragment> fragments = new ArrayList<>();
+
+
     public static BasketLiveFragment newInstance(String mThirdId) {
         BasketLiveFragment basketLiveFragment = new BasketLiveFragment();
         Bundle bundle = new Bundle();
@@ -81,13 +88,19 @@ public class BasketLiveFragment extends Fragment {
 
     private void initView() {
 
-        fragmentManager = getChildFragmentManager();
+        //fragmentManager = getChildFragmentManager();
 
-        mBasketTextLiveFragment = BasketTextLiveFragment.newInstance(mThirdId);
+        mBasketTextLiveFragment = BasketTextLiveFragment.newInstance();
         mBasketTeamStatisticsFragment = BasketTeamStatisticsFragment.newInstance();
         mBasketPlayersStatisticsFragment = BasketPlayersStatisticsFragment.newInstance();
 
-        FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTextLiveFragment);
+        //FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTextLiveFragment);
+
+        fragments.add(mBasketTextLiveFragment);
+        fragments.add(mBasketTeamStatisticsFragment);
+        fragments.add(mBasketPlayersStatisticsFragment);
+
+        switchFragment(0);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -95,13 +108,16 @@ public class BasketLiveFragment extends Fragment {
                 int radioButtonId = radioGroup.getCheckedRadioButtonId();
                 switch (radioButtonId) {
                     case R.id.text_live:
-                        FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTextLiveFragment);
+                        // FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTextLiveFragment);
+                        switchFragment(0);
                         break;
                     case R.id.statistics_team:
-                        FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTeamStatisticsFragment);
+                        //  FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketTeamStatisticsFragment);
+                        switchFragment(1);
                         break;
                     case R.id.statistics_players:
-                        FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketPlayersStatisticsFragment);
+                        //FragmentUtils.replaceFragment(fragmentManager, R.id.fl_content, mBasketPlayersStatisticsFragment);
+                        switchFragment(2);
                         break;
                     default:
                         break;
@@ -111,6 +127,10 @@ public class BasketLiveFragment extends Fragment {
     }
 
 
+    public void switchFragment(int position) {
+        fragmentManager = getChildFragmentManager();
+        currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
+    }
 
     /**
      * 文字直播推送更新
