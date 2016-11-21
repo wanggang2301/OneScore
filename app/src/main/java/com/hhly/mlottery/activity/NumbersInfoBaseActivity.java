@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.frame.numbersframe.CurrentNumberFragment;
 import com.hhly.mlottery.frame.numbersframe.HistoryNumberFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.NumberDataUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -50,7 +51,7 @@ public class NumbersInfoBaseActivity extends BaseActivity implements
 		
 		// 获取传递的数据
 		mNumberName = null;
-		mNumberName = getIntent().getStringExtra("numberName");
+		mNumberName = getIntent().getStringExtra(AppConstants.LOTTERY_KEY);
 		/**不统计当前Activity*/
 		MobclickAgent.openActivityDurationTrack(false);
 

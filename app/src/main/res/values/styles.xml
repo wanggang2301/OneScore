@@ -962,4 +962,14 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="lottery_info_content_add">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/content_txt_dark_grad</item>
+        <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
+    </style>
+
 </resources>
