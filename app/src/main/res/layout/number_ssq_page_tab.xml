@@ -2,143 +2,451 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <!-- 双色球 -->
 
+    <!--中奖注数-->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:background="@drawable/number_tab_solid_all2"
+                android:text="奖等" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="一等奖" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="其中：一等奖复式投注" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="二等奖" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="三等奖" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="四等奖" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="五等奖" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="六等奖" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="其中：六等奖复式投注" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="中奖注数（注）" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="3" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="2" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="127" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="1619" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="63501" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="1329019" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="8932453" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="3485024" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="单注中奖金额（元）" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="10,000,000" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="15000000(含派奖5000000)" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="219,909" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="3,000" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="200" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="10" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="5" />
+
+            <TextView
+                style="@style/lottery_info_content_right"
+                android:text="10(含派奖5)" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--本期销售额-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
         <TextView
-            style="@style/lottery_info_title"
-            android:text="奖等"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本期销售额：" />
 
         <TextView
-            style="@style/lottery_info_content_left"
-            android:text="一等奖" />
-
-        <TextView
-            style="@style/lottery_info_content_left"
-            android:text="其中：一等奖复式投注" />
-
-        <TextView
-            style="@style/lottery_info_content_left"
-            android:text="二等奖" />
-
-        <TextView
-            style="@style/lottery_info_content_left"
-            android:text="三等奖"/>
-
-        <TextView
-            style="@style/lottery_info_content_left"
-            android:text="四等奖"/>
-
-        <TextView
-            style="@style/lottery_info_content_left"
-            android:text="五等奖" />
-
-        <TextView
-            style="@style/lottery_info_content_left"
-            android:text="六等奖" />
-
-        <TextView
-            style="@style/lottery_info_content_left"
-            android:text="其中：六等奖复式投注"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥354,586,076元"
+            android:textColor="@color/number_red" />
 
     </LinearLayout>
 
+    <!--奖金滚池-->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
         <TextView
-            style="@style/lottery_info_title"
-            android:text="中奖注数（注）"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="奖金滚存：" />
 
         <TextView
-            style="@style/lottery_info_content_right"
-            android:text="3"/>
-
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="2" />
-
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="127"/>
-
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="1619" />
-
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="63501" />
-
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="1329019"/>
-
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="8932453" />
-
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="3485024" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥354,586,076元"
+            android:textColor="@color/number_red" />
 
     </LinearLayout>
 
+    <!--详情统计-->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="20dp">
 
-        <TextView
-            style="@style/lottery_info_title"
-            android:text="单注中奖金额（元）"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
 
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="10,000,000"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/number_tab_solid_all"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="15000000(含派奖5000000)" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="综合"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/number_title" />
+            </LinearLayout>
 
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="219,909"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="3,000" />
+                <TextView
+                    style="@style/number_text_style4"
+                    android:text="和值"
+                    android:textColor="@color/title" />
+            </LinearLayout>
 
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="200" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
 
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="10" />
+                <TextView
+                    android:id="@+id/number_ssq_fz"
+                    style="@style/number_text_style3" />
 
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="5"/>
+            </LinearLayout>
+        </LinearLayout>
 
-        <TextView
-            style="@style/lottery_info_content_right"
-            android:text="10(含派奖5)"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/number_tab_solid_all_l_b_r"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="红球"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/number_title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="大小"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="奇偶"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    style="@style/number_text_style5"
+                    android:text="区间"
+                    android:textColor="@color/title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/number_tab_solid_all_r_b"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="--"
+                        android:textSize="@dimen/number_title" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

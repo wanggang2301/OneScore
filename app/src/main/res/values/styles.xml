@@ -934,33 +934,30 @@
     <!--彩票详情页-->
     <style name="lottery_info_title">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@drawable/number_tab_solid_all</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/number_tab_s_y_x2</item>
         <item name="android:gravity">center</item>
         <item name="android:lines">1</item>
-        <item name="android:padding">5dp</item>
         <item name="android:textColor">@color/content_txt_black</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="lottery_info_content_left">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:background">@drawable/number_tab_solid_all_l_b_r</item>
         <item name="android:gravity">center</item>
         <item name="android:lines">1</item>
-        <item name="android:padding">3dp</item>
         <item name="android:textColor">@color/content_txt_dark_grad</item>
         <item name="android:textSize">10sp</item>
     </style>
 
     <style name="lottery_info_content_right">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
         <item name="android:gravity">center</item>
         <item name="android:lines">1</item>
-        <item name="android:padding">3dp</item>
         <item name="android:textColor">@color/content_txt_dark_grad</item>
         <item name="android:textSize">10sp</item>
     </style>
