@@ -124,10 +124,7 @@ public class BasketLiveFragment extends Fragment {
         });
     }
 
-
     public void switchFragment(int position) {
-        // fragmentManager = getChildFragmentManager();
         currentFramnet = FragmentUtils.switchFragment(fragmentManager, R.id.fl_content, currentFramnet, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
     }
-
 }
