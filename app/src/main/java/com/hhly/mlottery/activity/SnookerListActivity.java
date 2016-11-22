@@ -29,6 +29,7 @@ import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
+
 /**
  * Created by yixq on 2016/11/15.
  * mail：yixq@13322.com
@@ -51,8 +52,6 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
     private static final int SHOW_STATUS_NO_DATA = 3;//暂无数据
     private ExactSwipeRefrashLayout mRefresh;
 
-   // public static EventBus SnookerListEventBus;
-
     private ImageView mBackImage;
     private List<SnookerMatchesBean> currentAllData;
 
@@ -63,7 +62,7 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
         setContentView(R.layout.snooker_list_activity);
 
         //注册
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(SnookerListActivity.this);
 
         initView();
 
@@ -71,21 +70,21 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
 
     }
 
-    private void initView(){
+    private void initView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SnookerListActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         //网络异常
-        mErrorLayout = (LinearLayout)findViewById(R.id.snooker_error_layout);
+        mErrorLayout = (LinearLayout) findViewById(R.id.snooker_error_layout);
         //点击刷新
         mRefreshText = (TextView) findViewById(R.id.snooker_reloading_txt);
         mRefreshText.setOnClickListener(this);
         //暂无数据
         mNoData = (TextView) findViewById(R.id.snooker_nodata_txt);
 
-        mRefresh = (ExactSwipeRefrashLayout)findViewById(R.id.snooker_refresh_layout);
+        mRefresh = (ExactSwipeRefrashLayout) findViewById(R.id.snooker_refresh_layout);
         mRefresh.setColorSchemeResources(R.color.tabhost);
         mRefresh.setOnRefreshListener(this);
 
@@ -101,18 +100,17 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
 
     }
 
-    private void setStatus(int status){
+    private void setStatus(int status) {
         mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
         mNoData.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
 
     }
 
 
-
-    private void initData(){
+    private void initData() {
         mRefresh.setRefreshing(true);
         String url = "http://192.168.31.33:8080/mlottery/core/snookerMatch.getFirstSnookerMatch.do";
-        Map<String , String > map = new HashMap();
+        Map<String, String> map = new HashMap();
 
         VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<SnookerListBean>() {
             @Override
@@ -129,14 +127,15 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mRefresh.setRefreshing(false);
-                Toast.makeText(mContext, "yxq>>>>>> " + "---" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "yxq>>>>>> " + "---", Toast.LENGTH_SHORT).show();
             }
-        },SnookerListBean.class);
+        }, SnookerListBean.class);
     }
 
     private String currentDate = "";
     private String currentLeaguesId = "";
-    private void setData(List<SnookerLeaguesBean> dataBean){
+
+    private void setData(List<SnookerLeaguesBean> dataBean) {
 
         currentAllData = new ArrayList<>();
         for (int i = 0; i < dataBean.size(); i++) {
@@ -181,15 +180,15 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
         }
 
         if (mAdapter == null) {
-            mAdapter = new SnookerRecyclerAdapter(mContext , currentAllData);
+            mAdapter = new SnookerRecyclerAdapter(mContext, currentAllData);
             mRecyclerView.setAdapter(mAdapter);
-        }else{
+        } else {
             updateAdapter();
         }
     }
 
-    /**\
-     *
+    /**
+     * \
      */
     public void updateAdapter() {
         if (mAdapter == null) {
@@ -213,9 +212,9 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.snooker_reloading_txt:
-                MobclickAgent.onEvent(mContext , "Snooker_refresh");
+                MobclickAgent.onEvent(mContext, "Snooker_refresh");
                 Toast.makeText(mContext, "点击了刷新···", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.public_img_back:
@@ -223,9 +222,9 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
                 finish();
                 break;
             case R.id.public_btn_set:
-                MobclickAgent.onEvent(mContext , "Snooker_Setting");
+                MobclickAgent.onEvent(mContext, "Snooker_Setting");
 
-                Intent intent = new Intent(SnookerListActivity.this , SnookerSettingActivity.class);
+                Intent intent = new Intent(SnookerListActivity.this, SnookerSettingActivity.class);
                 startActivity(intent);
                 SnookerListActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
                 break;
@@ -235,8 +234,8 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
     /**
      * 设置返回
      */
-    public void onEventMainThread(SnookerSettingEvent snookerSettingEvent){
-        Toast.makeText(mContext, snookerSettingEvent.getmMsg()+" = yxq------", Toast.LENGTH_SHORT).show();
+    public void onEventMainThread(SnookerSettingEvent snookerSettingEvent) {
+        Toast.makeText(mContext, snookerSettingEvent.getmMsg() + " = yxq------", Toast.LENGTH_SHORT).show();
         updateAdapter();
     }
 

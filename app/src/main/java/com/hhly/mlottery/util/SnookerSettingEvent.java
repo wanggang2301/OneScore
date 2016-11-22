@@ -9,9 +9,11 @@ package com.hhly.mlottery.util;
 public class SnookerSettingEvent {
 
     private String mMsg;
-    public SnookerSettingEvent(String msg){
-        mMsg = msg;
+
+    public SnookerSettingEvent(String mMsg) {
+        this.mMsg = mMsg;
     }
+
     public String getmMsg(){
         return mMsg;
     }
