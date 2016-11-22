@@ -17,6 +17,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/lottery_sfc_issue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="第16095期"
@@ -110,58 +111,72 @@
                         android:text="对阵" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs1"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs2"
                         style="@style/lottery_info_content_right"
                         android:text="2" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs3"
                         style="@style/lottery_info_content_right"
                         android:text="127" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs4"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs5"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs6"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs7"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs8"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs9"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs10"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs11"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs12"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs13"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_vs14"
                         style="@style/lottery_info_content_right"
                         android:text="法国 3:1 冰岛" />
 
@@ -179,58 +194,72 @@
                         android:text="开赛时间" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time1"
                         style="@style/lottery_info_content_right"
                         android:text="07-04 03:00" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time2"
                         style="@style/lottery_info_content_right"
                         android:text="2" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time3"
                         style="@style/lottery_info_content_right"
                         android:text="127" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time4"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time5"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time6"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time7"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time8"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time9"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time10"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time11"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time12"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time13"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_time14"
                         style="@style/lottery_info_content_right"
                         android:text="1619" />
 
@@ -248,71 +277,85 @@
                         android:text="彩果" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result1"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result2"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="2" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result3"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="219,909" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result4"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3,000" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result5"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result6"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result7"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result8"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result9"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result10"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result11"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result12"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result13"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
 
                     <TextView
+                        android:id="@+id/lottery_sfc_result14"
                         style="@style/lottery_info_content_right"
                         android:background="@drawable/number_tab_solid_all_r_b2"
                         android:text="3" />
@@ -340,6 +383,7 @@
                     android:text="本期销量：" />
 
                 <TextView
+                    android:id="@+id/lottery_sfssc_sales_volume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥354,586,076元"
@@ -360,6 +404,7 @@
                     android:text="奖金滚存：" />
 
                 <TextView
+                    android:id="@+id/lottery_sfc_bonus_sum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥354,586,076元"
@@ -407,10 +452,12 @@
                         android:text="中奖注数(注)" />
 
                     <TextView
+                        android:id="@+id/lottery_sfssc_count1"
                         style="@style/lottery_info_content_right"
                         android:text="108" />
 
                     <TextView
+                        android:id="@+id/lottery_sfssc_count2"
                         style="@style/lottery_info_content_right"
                         android:text="108" />
 
@@ -428,10 +475,12 @@
                         android:text="单注奖金(元)" />
 
                     <TextView
+                        android:id="@+id/lottery_sfssc_bouns1"
                         style="@style/lottery_info_content_right"
                         android:text="236,873" />
 
                     <TextView
+                        android:id="@+id/lottery_sfssc_bouns2"
                         style="@style/lottery_info_content_right"
                         android:text="236,873" />
 
@@ -450,10 +499,12 @@
                         android:text="中奖条件" />
 
                     <TextView
+                        android:id="@+id/lottery_sfssc_condition1"
                         style="@style/lottery_info_content_right"
                         android:text="8队全中" />
 
                     <TextView
+                        android:id="@+id/lottery_sfssc_condition2"
                         style="@style/lottery_info_content_right"
                         android:text="8队全中" />
 
@@ -480,6 +531,7 @@
                     android:text="本期销量：" />
 
                 <TextView
+                    android:id="@+id/lottery_rxjc_sales_volume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥354,586,076元"
@@ -523,6 +575,7 @@
                         android:text="中奖注数(注)" />
 
                     <TextView
+                        android:id="@+id/lottery_rxjc_count"
                         style="@style/lottery_info_content_right"
                         android:text="108" />
 
@@ -540,6 +593,7 @@
                         android:text="单注奖金(元)" />
 
                     <TextView
+                        android:id="@+id/lottery_rxjc_bouns"
                         style="@style/lottery_info_content_right"
                         android:text="236,873" />
 
@@ -558,6 +612,7 @@
                         android:text="中奖条件" />
 
                     <TextView
+                        android:id="@+id/lottery_rxjc_condition"
                         style="@style/lottery_info_content_right"
                         android:text="8队全中" />
 

@@ -8,6 +8,7 @@
     <!-- 六场半全场 -->
 
     <TextView
+        android:id="@+id/lottery_lcbqc_issue"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="第16095期"
@@ -69,26 +70,32 @@
                 android:text="对阵" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_vs1"
                 style="@style/lottery_info_content_right"
                 android:text="法国 3:1 冰岛" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_vs2"
                 style="@style/lottery_info_content_right"
                 android:text="2" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_vs3"
                 style="@style/lottery_info_content_right"
                 android:text="127" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_vs4"
                 style="@style/lottery_info_content_right"
                 android:text="1619" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_vs5"
                 style="@style/lottery_info_content_right"
                 android:text="法国 3:1 冰岛" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_vs6"
                 style="@style/lottery_info_content_right"
                 android:text="法国 3:1 冰岛" />
 
@@ -106,26 +113,32 @@
                 android:text="开赛时间" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_time1"
                 style="@style/lottery_info_content_right"
                 android:text="07-04 03:00" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_time2"
                 style="@style/lottery_info_content_right"
                 android:text="2" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_time3"
                 style="@style/lottery_info_content_right"
                 android:text="127" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_time4"
                 style="@style/lottery_info_content_right"
                 android:text="1619" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_time5"
                 style="@style/lottery_info_content_right"
                 android:text="1619" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_time6"
                 style="@style/lottery_info_content_right"
                 android:text="1619" />
 
@@ -163,6 +176,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_half1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -186,6 +200,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_full1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -215,6 +230,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_half2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -238,6 +254,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_full2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -267,6 +284,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_half3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -290,6 +308,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_full3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -319,6 +338,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_half4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -342,6 +362,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_full4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -371,6 +392,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_half5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -394,6 +416,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_full5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -423,6 +446,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_half6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -446,6 +470,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/lottery_lcbqc_full6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
@@ -473,6 +498,7 @@
             android:text="本期销量：" />
 
         <TextView
+            android:id="@+id/lottery_lcbqc_sales_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥354,586,076元"
@@ -493,6 +519,7 @@
             android:text="奖金滚存：" />
 
         <TextView
+            android:id="@+id/lottery_lcbqc_bonus_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥354,586,076元"
@@ -536,6 +563,7 @@
                 android:text="中奖注数(注)" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_count"
                 style="@style/lottery_info_content_right"
                 android:text="108" />
 
@@ -553,6 +581,7 @@
                 android:text="单注奖金(元)" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_bonus"
                 style="@style/lottery_info_content_right"
                 android:text="236,873" />
 
@@ -571,6 +600,7 @@
                 android:text="中奖条件" />
 
             <TextView
+                android:id="@+id/lottery_lcbqc_condition"
                 style="@style/lottery_info_content_right"
                 android:text="8队全中" />
 

@@ -329,12 +329,6 @@
 
                             <!-- 统计数据显示 -->
 
-                            <!--奖金池-->
-                            <include
-                                android:id="@+id/layout_lottery_bonus"
-                                layout="@layout/number_bonus"
-                                android:visibility="gone"/>
-
                             <FrameLayout
                                 android:id="@+id/fl_not_touch"
                                 android:layout_width="match_parent"
@@ -425,7 +419,7 @@
 
                                     <!-- 8.双色球 -->
 
-                                    <include layout="@layout/number_ssq_page"/>
+                                    <include layout="@layout/number_ssq_page_tab"/>
                                 </FrameLayout>
 
                                 <FrameLayout
@@ -447,7 +441,7 @@
 
                                     <!-- 10.大乐透 -->
 
-                                    <include layout="@layout/number_dlt_page"/>
+                                    <include layout="@layout/number_dlt_page_tab"/>
                                 </FrameLayout>
 
                                 <FrameLayout
@@ -456,9 +450,64 @@
                                     android:layout_height="wrap_content"
                                     android:visibility="gone">
 
-                                    <!-- 11.福彩3D、排列3、排列5 -->
+                                    <!-- 11.福彩3D -->
 
                                     <include layout="@layout/number_f3d_page"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_pl3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 12.排列3 -->
+
+                                    <include layout="@layout/number_pl3_page_tab"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_pl5"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 12.排列5 -->
+
+                                    <include layout="@layout/number_pl5_page_tab"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_sfc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 13.胜负彩 -->
+
+                                    <include layout="@layout/number_sfc_page_tab"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_lcbqc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 14.六场半全场 -->
+
+                                    <include layout="@layout/number_lcbqc_page_tab"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/fl_number_scjq"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <!-- 15.4场进球 -->
+
+                                    <include layout="@layout/number_scjq_page_tab"/>
                                 </FrameLayout>
                             </FrameLayout>
                         </LinearLayout>

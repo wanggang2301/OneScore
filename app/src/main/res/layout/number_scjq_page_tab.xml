@@ -8,6 +8,7 @@
     <!-- 四场进球 -->
 
     <TextView
+        android:id="@+id/lottery_scjq_issue"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textColor="@color/content_txt_black"
@@ -61,18 +62,22 @@
                 android:text="对阵" />
 
             <TextView
+                android:id="@+id/lottery_scjq_vs1"
                 style="@style/lottery_info_content_right"
                 android:text="法国 3:1 冰岛" />
 
             <TextView
+                android:id="@+id/lottery_scjq_vs2"
                 style="@style/lottery_info_content_right"
                 android:text="2" />
 
             <TextView
+                android:id="@+id/lottery_scjq_vs3"
                 style="@style/lottery_info_content_right"
                 android:text="127" />
 
             <TextView
+                android:id="@+id/lottery_scjq_vs4"
                 style="@style/lottery_info_content_right"
                 android:text="1619" />
 
@@ -90,18 +95,22 @@
                 android:text="开赛时间" />
 
             <TextView
+                android:id="@+id/lottery_scjq_time1"
                 style="@style/lottery_info_content_right"
                 android:text="07-04 03:00" />
 
             <TextView
+                android:id="@+id/lottery_scjq_time2"
                 style="@style/lottery_info_content_right"
                 android:text="15000000(含派奖5000000)" />
 
             <TextView
+                android:id="@+id/lottery_scjq_time3"
                 style="@style/lottery_info_content_right"
                 android:text="219,909" />
 
             <TextView
+                android:id="@+id/lottery_scjq_time4"
                 style="@style/lottery_info_content_right"
                 android:text="3,000" />
 
@@ -121,6 +130,7 @@
             android:text="本期销量：" />
 
         <TextView
+            android:id="@+id/lottery_scjq_sales_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥354,586,076元"
@@ -141,6 +151,7 @@
             android:text="奖金滚存：" />
 
         <TextView
+            android:id="@+id/lottery_scjq_bonus_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥354,586,076元"
@@ -184,6 +195,7 @@
                 android:text="中奖注数(注)" />
 
             <TextView
+                android:id="@+id/lottery_scjq_count"
                 style="@style/lottery_info_content_right"
                 android:text="108" />
 
@@ -201,6 +213,7 @@
                 android:text="单注奖金(元)" />
 
             <TextView
+                android:id="@+id/lottery_scjq_bonus"
                 style="@style/lottery_info_content_right"
                 android:text="236,873" />
 
@@ -219,6 +232,7 @@
                 android:text="中奖条件" />
 
             <TextView
+                android:id="@+id/lottery_scjq_condition"
                 style="@style/lottery_info_content_right"
                 android:text="8队全中" />
 

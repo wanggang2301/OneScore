@@ -42,6 +42,7 @@
                 android:text="单注奖金(元)" />
 
             <TextView
+                android:id="@+id/lottery_pl5_bonus"
                 style="@style/lottery_info_content_right"
                 android:text="108,888元" />
 
@@ -59,6 +60,7 @@
                 android:text="中奖注数(注)" />
 
             <TextView
+                android:id="@+id/lottery_pl5_count"
                 style="@style/lottery_info_content_right"
                 android:text="108注" />
 
@@ -78,6 +80,7 @@
             android:text="全国销量：" />
 
         <TextView
+            android:id="@+id/lottery_pl5_sales_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥354,586,076元"
@@ -98,6 +101,7 @@
             android:text="奖金滚存：" />
 
         <TextView
+            android:id="@+id/lottery_pl5_bonus_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥354,586,076元"

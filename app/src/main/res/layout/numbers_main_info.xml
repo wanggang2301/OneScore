@@ -108,13 +108,13 @@
             android:id="@+id/fl_numberContext_current"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"></FrameLayout>
+            android:visibility="gone"/>
 
         <FrameLayout
             android:id="@+id/fl_numberContext_historyh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"></FrameLayout>
+            android:visibility="gone"/>
     </FrameLayout>
 
 </LinearLayout>

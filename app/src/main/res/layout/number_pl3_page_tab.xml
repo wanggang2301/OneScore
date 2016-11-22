@@ -50,14 +50,17 @@
                 android:text="单注奖金(元)" />
 
             <TextView
+                android:id="@+id/lottery_pl3_bonus1"
                 style="@style/lottery_info_content_right"
                 android:text="108,888元" />
 
             <TextView
+                android:id="@+id/lottery_pl3_bonus2"
                 style="@style/lottery_info_content_right"
                 android:text="108,888元" />
 
             <TextView
+                android:id="@+id/lottery_pl3_bonus3"
                 style="@style/lottery_info_content_right"
                 android:text="108,888元" />
         </LinearLayout>
@@ -74,14 +77,17 @@
                 android:text="中奖注数(注)" />
 
             <TextView
+                android:id="@+id/lottery_pl3_count1"
                 style="@style/lottery_info_content_right"
                 android:text="108注" />
 
             <TextView
+                android:id="@+id/lottery_pl3_count2"
                 style="@style/lottery_info_content_right"
                 android:text="108注" />
 
             <TextView
+                android:id="@+id/lottery_pl3_count3"
                 style="@style/lottery_info_content_right"
                 android:text="108注" />
 
@@ -101,6 +107,7 @@
             android:text="全国销量：" />
 
         <TextView
+            android:id="@+id/lottery_pl3_sales_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥354,586,076元"
@@ -118,7 +125,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/home_item_lottery_icon_pl5"/>
+            android:src="@mipmap/lottery_pl3_help_icon"/>
         
         <TextView
             android:layout_width="wrap_content"

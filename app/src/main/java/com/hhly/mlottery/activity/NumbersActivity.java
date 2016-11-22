@@ -56,7 +56,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
     // private int[] sorts = new int[] { 1, 6, 15, 8, 11, 19, 2, 4, 5, 23, 3, 7,
     // 20, 22, 10, 16, 18 };// 默认排序彩种Name
 
-    private List<Integer> sortDef1 = new ArrayList<Integer>(23);
+    private List<Integer> sortDef1 = new ArrayList<Integer>(26);
     private List<NumberCurrentInfo> numberSortList = new ArrayList<NumberCurrentInfo>();// 系统默认排序的彩种对象集合
 
     private static final int STARTLOADING = 0;// 开始加载状态
@@ -142,7 +142,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         if (null != sortDef1) {
             sortDef1.clear();
         }
-        // 1, 6, 24,29,28,27,25,26, 15, 8, 11, 19, 2, 4, 5, 23, 3, 7, 20, 22, 10, 16, 18  按需求排列彩种
+        // 1, 6, 24,29,28,27,25,26, 15, 8, 11, 19, 2, 4, 5, 23, 3, 7, 20, 22, 10, 16, 18, 30, 31, 32  按需求排列彩种
         sortDef1.add(1);
         sortDef1.add(6);
 
@@ -168,6 +168,10 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         sortDef1.add(10);
         sortDef1.add(16);
         sortDef1.add(18);
+
+        sortDef1.add(30);
+        sortDef1.add(31);
+        sortDef1.add(32);
 
         numbersDataShow(0);// 开奖列表显示
 
@@ -1030,41 +1034,63 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             mHandler.sendEmptyMessage(STARTLOADING);
         }
 
-        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
-            @Override
-            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
-                if (null != jsonObject) {// 判断数据是否为空
+        if (numberlist != null) {
+            numberlist.clear();
+            numberlist = null;
+        }
+        NumbersOpenBean jsonObject = JSON.parseObject(AppConstants.getTestData(), NumbersOpenBean.class);
+        numberlist = jsonObject.getNumLotteryResults();
 
-                    if (numberlist != null) {
-                        numberlist.clear();
-                        numberlist = null;
-                    }
-                    numberlist = jsonObject.getNumLotteryResults();
+        serverTime = null;
+        serverTime = jsonObject.getServerTime();
 
-                    serverTime = null;
-                    serverTime = jsonObject.getServerTime();
+        L.d("xxx", "请求后台数据。。。");
+        if (num == 1) {
+            // 发送自动刷新和手动刷新加载数据成功消息
+            mHandler.sendEmptyMessage(AUTOREFRESH);
+        } else if (num == 5) {
+            // 界面重新显示时,刷新界面数据
+            mHandler.sendEmptyMessage(RENOTIFY);
+        } else {
+            // 发送加载数据成功消息
+            mHandler.sendEmptyMessage(SUCCESSLOADING);
+        }
 
-                    L.d("xxx", "请求后台数据。。。");
-                    if (num == 1) {
-                        // 发送自动刷新和手动刷新加载数据成功消息
-                        mHandler.sendEmptyMessage(AUTOREFRESH);
-                    } else if (num == 5) {
-                        // 界面重新显示时,刷新界面数据
-                        mHandler.sendEmptyMessage(RENOTIFY);
-                    } else {
-                        // 发送加载数据成功消息
-                        mHandler.sendEmptyMessage(SUCCESSLOADING);
-                    }
-                } else {
-                    mHandler.sendEmptyMessage(ERRORLOADING);
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                mHandler.sendEmptyMessage(ERRORLOADING);
-            }
-        }, NumbersOpenBean.class);
+//        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+//            @Override
+//            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
+//                if (null != jsonObject) {// 判断数据是否为空
+//
+//                    if (numberlist != null) {
+//                        numberlist.clear();
+//                        numberlist = null;
+//                    }
+//                    numberlist = jsonObject.getNumLotteryResults();
+//
+//                    serverTime = null;
+//                    serverTime = jsonObject.getServerTime();
+//
+//                    L.d("xxx", "请求后台数据。。。");
+//                    if (num == 1) {
+//                        // 发送自动刷新和手动刷新加载数据成功消息
+//                        mHandler.sendEmptyMessage(AUTOREFRESH);
+//                    } else if (num == 5) {
+//                        // 界面重新显示时,刷新界面数据
+//                        mHandler.sendEmptyMessage(RENOTIFY);
+//                    } else {
+//                        // 发送加载数据成功消息
+//                        mHandler.sendEmptyMessage(SUCCESSLOADING);
+//                    }
+//                } else {
+//                    mHandler.sendEmptyMessage(ERRORLOADING);
+//                }
+//            }
+//        }, new VolleyContentFast.ResponseErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+//                mHandler.sendEmptyMessage(ERRORLOADING);
+//            }
+//        }, NumbersOpenBean.class);
     }
 
     /**
@@ -1197,7 +1223,10 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         holder.tv_number_time_ss.setText("");
 
         String weekDate = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getTime()));// 根据日期获取星期
-        String[] Dates = mNumberInfo.getTime().split(" ");
+        String[] Dates = {null, null};
+        if (mNumberInfo.getTime() != null) {
+            Dates = mNumberInfo.getTime().split(" ");
+        }
 
         // 显示隐藏倒计时控件
         if ("1".equals(mNumberInfo.getName())) {
@@ -1221,7 +1250,10 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                             + mContext.getResources().getString(R.string.number_code_qi));
 
                     String weekDate2 = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getNextTime()));
-                    String[] Dates2 = mNumberInfo.getNextTime().split(" ");
+                    String[] Dates2 = {null, null};
+                    if (mNumberInfo.getNextTime() != null) {
+                        Dates2 = mNumberInfo.getNextTime().split(" ");
+                    }
 
                     holder.tv_numbers_time.setText(Dates2[0] + " " + weekDate2);
                 } else {
@@ -1231,7 +1263,10 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                             + mContext.getResources().getString(R.string.number_code_qi));
 
                     String weekDate2 = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getTime()));
-                    String[] Dates2 = mNumberInfo.getTime().split(" ");
+                    String[] Dates2 = {null, null};
+                    if (mNumberInfo.getNextTime() != null) {
+                        Dates2 = mNumberInfo.getNextTime().split(" ");
+                    }
 
                     holder.tv_numbers_time.setText(Dates2[0] + " " + weekDate2);
                 }
@@ -1290,7 +1325,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
                 showTheLottery(holder, mNumberInfo);
             }
         } else {
-            String mTime = Dates[1].substring(0, Dates[1].lastIndexOf(":"));
+            String mTime = Dates[1] == null ? "" : Dates[1].substring(0, Dates[1].lastIndexOf(":"));
 
             holder.tv_numbers_time.setText(mTime);// 设置日期
             holder.ll_numbers_time.setVisibility(View.GONE);
@@ -1364,7 +1399,10 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         holder.tv_numbers_issue.setText(mContext.getResources().getString(R.string.number_code_di) + mNumberInfo.getNextIssue()
                 + mContext.getResources().getString(R.string.number_code_qi));
         String weekDate2 = DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(mNumberInfo.getNextTime()));
-        String[] Dates2 = mNumberInfo.getNextTime().split(" ");
+        String[] Dates2 = {null, null};
+        if (mNumberInfo.getNextTime() != null) {
+            Dates2 = mNumberInfo.getNextTime().split(" ");
+        }
         holder.tv_numbers_time.setText(Dates2[0] + " " + weekDate2);
     }
 
