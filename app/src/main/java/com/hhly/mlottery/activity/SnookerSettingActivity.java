@@ -2,8 +2,6 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.inputmethodservice.Keyboard;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,7 +14,6 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.SnookerSettingEvent;
-import com.umeng.analytics.MobclickAgent;
 
 import de.greenrobot.event.EventBus;
 
@@ -176,6 +173,7 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
                 Intent intent = new Intent();
 
                 intent.putExtra("result" , result);
+                EventBus.getDefault().post(new SnookerSettingEvent("111"));
 
                 setResult(Activity.RESULT_OK , intent);
                 finish();

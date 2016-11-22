@@ -17,6 +17,7 @@ import com.hhly.mlottery.adapter.snooker.SnookerRecyclerAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerLeaguesBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerListBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchesBean;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.SnookerSettingEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
@@ -235,6 +236,7 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
      * 设置返回
      */
     public void onEventMainThread(SnookerSettingEvent snookerSettingEvent) {
+        L.d("zxcvbn", "=======" + snookerSettingEvent.getmMsg());
         Toast.makeText(mContext, snookerSettingEvent.getmMsg() + " = yxq------", Toast.LENGTH_SHORT).show();
         updateAdapter();
     }

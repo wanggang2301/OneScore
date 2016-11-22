@@ -100,7 +100,6 @@ public class DebugConfigActivity extends BaseActivity {
                 startActivity(intent);
 
 
-
             }
         });
 
