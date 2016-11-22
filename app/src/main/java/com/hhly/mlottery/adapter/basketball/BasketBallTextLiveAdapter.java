@@ -38,7 +38,6 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
         super.onBindViewHolder(holder, positions);
         if (positions == getItemCount() - 1) {//已经到达列表的底部
             if (mPullUpLoading != null) {
-                //获取id
                 mPullUpLoading.onPullUpLoading();
             }
         }
@@ -68,7 +67,7 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
             baseViewHolder.getView(R.id.tv_eventContent).setBackgroundResource(0);
             ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.black_details_textcolor));
         } else {
-            text += "  " + "<font color='#21b11e'><b>" + b.getGuestScore() + "-" + b.getHomeScore() + "</b></font>";
+            text += "  " + "<font color='#21b11e'>" + b.getGuestScore() + "-" + b.getHomeScore() + "</font>";
             circleImageView.setVisibility(View.VISIBLE);
 
             if (1 == b.getTeamType()) { //主队

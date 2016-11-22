@@ -38,6 +38,7 @@ import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsHeadFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketTextLiveEvent;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
@@ -714,7 +715,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * 接受文字直播推送，更新数据
      */
     private void updateTextLive(BasketEachTextLiveBean basketEachTextLiveBean) {
-        mBasketLiveFragment.updateTextLive(basketEachTextLiveBean);
+        //EventBus.getDefault().post(new BasketTextLiveEvent(new BasketEachTextLiveBean("11", "", "", "", "谢谢", 2001, 2, "", 50, 60, 1, "456", "", "", 1, "", "", "")));
+        EventBus.getDefault().post(new BasketTextLiveEvent(basketEachTextLiveBean));
     }
 
     private void eventBusPost() {

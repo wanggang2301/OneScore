@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author wangg
@@ -54,9 +57,12 @@ public class BasketTextLiveFragment extends Fragment {
 
     private String mThirdId;
 
-    private List<BasketEachTextLiveBean> data;
+    public List<BasketEachTextLiveBean> basketEachTextLiveBeanList;
 
-    private long lastId;
+    private String lastId;
+
+    private LinearLayout ll_error;
+    private TextView network_exception_reload_btn;
 
     public static BasketTextLiveFragment newInstance() {
         BasketTextLiveFragment basketTextLiveFragment = new BasketTextLiveFragment();
@@ -67,14 +73,14 @@ public class BasketTextLiveFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mThirdId = getArguments().getString("thirdId");
-
         }
+
+        EventBus.getDefault().register(this);
 
         // mThirdId="3755657";
 
@@ -83,14 +89,10 @@ public class BasketTextLiveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_basket_text_live, container, false);
-
         listfooter_more = getActivity().getLayoutInflater().inflate(R.layout.listfooter_more, container, false);
         emptyView = getActivity().getLayoutInflater().inflate(R.layout.layout_nodata, container, false);
-
         initView();
-
         loadData();
-
         return mView;
     }
 
@@ -103,6 +105,11 @@ public class BasketTextLiveFragment extends Fragment {
         //加载更多控件初始化
         mLoadMore = (TextView) listfooter_more.findViewById(R.id.load_more);
         mProgressBar = (ProgressBar) listfooter_more.findViewById(R.id.pull_to_refresh_progress);
+
+
+        ll_error = (LinearLayout) mView.findViewById(R.id.ll_error);
+        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
+        ll_error.setVisibility(View.GONE);
 
         TextView bottomline = (TextView) listfooter_more.findViewById(R.id.bottomline);
         bottomline.setVisibility(View.GONE);
@@ -139,6 +146,17 @@ public class BasketTextLiveFragment extends Fragment {
             }
         });
 
+
+        //出错加载
+        network_exception_reload_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ll_error.setVisibility(View.GONE);
+                loadData();
+
+            }
+        });
+
         mBasketBallTextLiveAdapter.addFooterView(listfooter_more);
     }
 
@@ -164,7 +182,7 @@ public class BasketTextLiveFragment extends Fragment {
                 mLoadMore.setText(R.string.foot_loadmore);
 
                 mBasketBallTextLiveAdapter.getData().clear();
-                mBasketBallTextLiveAdapter.addData(data);
+                mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
                 mBasketBallTextLiveAdapter.notifyDataSetChanged();
             }
 
@@ -198,7 +216,7 @@ public class BasketTextLiveFragment extends Fragment {
                         mLoadMore.setText(R.string.foot_nomoredata);
                     } else {
                         lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
-                        data.addAll(basketTextLiveBean.getData());
+                        basketEachTextLiveBeanList.addAll(basketTextLiveBean.getData());
                         textLiveHandler.sendEmptyMessage(0);
                     }
 
@@ -231,28 +249,31 @@ public class BasketTextLiveFragment extends Fragment {
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", BasketDetailsActivityTest.mThirdId);
         params.put("id", "0"); //首次请求id=0
-        VolleyContentFast.requestJsonByPost(BaseURLs.BASKET_DETAIL_TEXTLIVE, params, new VolleyContentFast.ResponseSuccessListener<BasketTextLiveBean>() {
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_DETAIL_TEXTLIVE, params, new VolleyContentFast.ResponseSuccessListener<BasketTextLiveBean>() {
             @Override
             public void onResponse(BasketTextLiveBean basketTextLiveBean) {
                 if (basketTextLiveBean == null || 200 != basketTextLiveBean.getResult()) {
                     return;
                 }
-                data = basketTextLiveBean.getData();
+
+                basketEachTextLiveBeanList = basketTextLiveBean.getData();
+
                 mProgressBarRefresh.setVisibility(View.GONE);
                 mLoadMore.setText(R.string.foot_loadmore);   //加载更多
 
-                if (data != null && data.size() > 4) {
+                if (basketEachTextLiveBeanList != null && basketEachTextLiveBeanList.size() > 4) {
                     listfooter_more.setVisibility(View.VISIBLE);
                 } else {
                     listfooter_more.setVisibility(View.GONE);
                 }
-                if (data.size() == 0) {//，没请求到数据 mNoData显示
+                if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
                     mBasketBallTextLiveAdapter.setEmptyView(emptyView);
                 } else {
 
                     lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
                     mBasketBallTextLiveAdapter.getData().clear();
-                    mBasketBallTextLiveAdapter.addData(data);
+                    mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
                     mBasketBallTextLiveAdapter.notifyDataSetChanged();
                     mRecyclerView.smoothScrollToPosition(0);
                 }
@@ -260,10 +281,34 @@ public class BasketTextLiveFragment extends Fragment {
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mProgressBarRefresh.setVisibility(View.GONE);
+                ll_error.setVisibility(View.VISIBLE);
             }
         }, BasketTextLiveBean.class);
+    }
 
+    Handler pushHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                mBasketBallTextLiveAdapter.getData().clear();
+                mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
+                mBasketBallTextLiveAdapter.notifyDataSetChanged();
+            }
+
+        }
+    };
+
+
+    public void onEventMainThread(BasketTextLiveEvent basketTextLiveEvent) {
+        basketEachTextLiveBeanList.add(0, basketTextLiveEvent.getBasketEachTextLiveBean());
+        pushHandler.sendEmptyMessage(1);
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }
