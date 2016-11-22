@@ -1262,4 +1262,13 @@
     <!--墙外-->
 
     <string name="foreign_pic">已保存图片到SD卡文件夹下</string>
+
+    <!--斯洛克-->
+    <string name="snooker_setting_title">斯洛克设置</string>
+    <string name="snooker_setting_alet">亚盘</string>
+    <string name="snooker_setting_eur">欧赔</string>
+    <string name="snooker_setting_asize">大小盘</string>
+    <string name="snooker_setting_single_twins">单双</string>
+    <string name="snooker_setting_nos_show">无</string>
+
 </resources>

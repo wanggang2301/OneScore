@@ -1247,4 +1247,13 @@
     <!--墙外-->
 
     <string name="foreign_pic">已保存圖片到SD卡文件夾下</string>
+
+    <!--斯洛克-->
+    <string name="snooker_setting_title">斯洛克設置</string>
+    <string name="snooker_setting_alet">亞盤</string>
+    <string name="snooker_setting_eur">歐賠</string>
+    <string name="snooker_setting_asize">大小盤</string>
+    <string name="snooker_setting_single_twins">單雙</string>
+    <string name="snooker_setting_nos_show">無</string>
+
 </resources>

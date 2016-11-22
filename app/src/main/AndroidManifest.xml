@@ -311,5 +311,15 @@
         <activity
             android:name=".activity.FootballDatabaseActivity"
             android:screenOrientation="portrait" />
+        <!--斯洛克列表-->
+        <activity
+            android:name=".activity.SnookerListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.SnookerSettingActivity"
+            android:screenOrientation="portrait" />
+
+
     </application>
 </manifest>

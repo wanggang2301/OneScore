@@ -1,44 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yxq="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/snooker_card_view"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:paddingTop="10dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/football_cardview_margin"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="@dimen/football_cardview_margin"
+    android:clickable="true"
+    yxq:cardBackgroundColor="@color/white"
+    yxq:cardCornerRadius="5dp"
+    yxq:cardElevation="0.5dp"
     >
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="第一轮"
-            android:id="@+id/textView10" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="22:00"
-            android:id="@+id/textView" />
-
-    </LinearLayout>
-    <View
-        android:layout_width="0.5dp"
-        android:layout_height="match_parent"
-        android:background="@color/buttom_centre"/>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:gravity="center">
-
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -46,112 +26,206 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <View
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/snooker_round"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                >
-            </View>
+                android:textSize="@dimen/text_size_13"
+                android:textColor="@color/snooker_round_textcolor"
+                android:text="第一轮"
+                />
+
             <TextView
-                android:id="@+id/selected_name_a"
-                android:layout_width="match_parent"
+                android:id="@+id/snooker_time"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="奥沙利文"/>
+                android:layout_weight="1"
+                android:text="22:00"
+                android:textSize="@dimen/text_size_13"
+                android:textColor="@color/snooker_time_textcolor"
+                />
+
         </LinearLayout>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/buttom_centre"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="6"
+            android:gravity="center">
 
-            >
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-                <TextView
+                android:layout_weight="1.2"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="完场"/>
-                <LinearLayout
+                    >
+                </View>
+                <TextView
+                    android:id="@+id/snooker_name_left"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="2"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:text="奥沙利文"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/snooker_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:paddingTop="5dp"
-                        android:text="10"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingTop="5dp"
-                        android:text="(10)"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingTop="5dp"
-                        android:text="10"/>
+                        android:textColor="@color/snooker_fulltime_textcolor"
+                        android:text="完场"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:padding="5dp"
+                            android:background="@mipmap/snooker_desk">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                >
+                                <TextView
+                                    android:id="@+id/snooker_score_left"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:gravity="center"
+                                    android:background="@mipmap/snooker_red_ball"
+                                    android:textColor="@color/snooker_score_textcolor"
+                                    android:textSize="@dimen/text_size_11"
+                                    android:text="999"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                >
+                                <TextView
+                                    android:id="@+id/snooker_inning"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:textColor="@color/snooker_score_textcolor"
+                                    android:textSize="@dimen/text_size_10"
+                                    android:text="(999)"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                >
+                                <TextView
+                                    android:id="@+id/snooker_score_right"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:gravity="center"
+                                    android:background="@mipmap/snooker_black_ball"
+                                    android:textColor="@color/snooker_score_textcolor"
+                                    android:textSize="@dimen/text_size_11"
+                                    android:text="999"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_below="@+id/selected_name_b"
-                >
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.3"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_below="@+id/selected_name_b"
+                    >
+                    <TextView
+                        android:id="@+id/snooker_odds_left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/snooker_odds_textcolor"
+                        android:text="1.05"
+                        />
+                    <TextView
+                        android:id="@+id/snooker_odds_middle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/snooker_odds_textcolor"
+                        android:text="总:1.3"
+                        />
+                    <TextView
+                        android:id="@+id/snooker_odds_right"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_size_13"
+                        android:textColor="@color/snooker_odds_textcolor"
+                        android:text="1.53"
+                        />
+                </LinearLayout>
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="赔率"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="赔率"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="赔率"
-                    />
+                    android:id="@+id/snooker_name_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="奥沙利文"/>
             </LinearLayout>
-            <TextView
-                android:id="@+id/selected_name_b"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="奥沙利文"/>
+
+
         </LinearLayout>
-
-
     </LinearLayout>
 
 
-</LinearLayout>
+
+</android.support.v7.widget.CardView>
