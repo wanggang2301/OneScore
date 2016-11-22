@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-    <TextView
+  <!--  <TextView
         android:id="@+id/tv_photograph"
         style="@style/login_textview_logout"
         android:layout_height="55dp"
@@ -32,9 +32,19 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_football_footer"/>
+        android:background="@color/line_football_footer"/>-->
 
-
+    <TextView
+        android:id="@+id/tv_chose_start_photo"
+        style="@style/login_textview_logout"
+        android:layout_gravity="center"
+        android:layout_height="55dp"
+        android:textSize="@dimen/home_pager_user_title"
+        android:text="选择球星头像"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_football_footer"/>-->
     <TextView
         android:layout_marginTop="10dp"
         android:id="@+id/tv_cancel"

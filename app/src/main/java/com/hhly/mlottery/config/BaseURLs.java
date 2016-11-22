@@ -918,11 +918,9 @@ public class BaseURLs {
 
     //用户注销
     public final static String EXIT_PUSH_ONLINE=URL_API_HOST+"pushSetting.exitUpdateOnlile.do";
-
-
-
-
-
-
+    //上传性别的公用接口
+    public final static String UPDATEUSERINFO=URL_API_HOST+"androidUserCenter.updateUserInfo.do";
+    //明星头像
+    public final static String  FINDHEADICONS=URL_API_HOST+"systemSettings.findHeadIcons.do";
 
 }

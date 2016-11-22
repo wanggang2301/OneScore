@@ -159,8 +159,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             public void onResponse(IsTestLoginBean register) {
 
 
-                if(register==null){
+                if(register.data==null){
 
+                   return;
                 }else {
 
                     if (register.data.qq == 1) {

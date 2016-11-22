@@ -217,6 +217,7 @@
     <string name="language_frame_txt">语言切换</string>
     <string name="version_update_txt">版本更新</string>
     <string name="about_frame_txt">关于我们</string>
+    <string name="more_setting">更多设置</string>
     <!-- 侧滑栏字体 -->
     <string name="foot_jishi_txt">即时</string>
     <string name="foot_saiguo_txt">赛果</string>
@@ -278,7 +279,6 @@
     <string name="immediate_status_mesomere">中断</string>
     <string name="immediate_status_postpone">推迟</string>
     <string name="immediate_unconection">当前数据不在实时更新状态，请下拉尝试连接或检查网络。</string>
-
     <string name="favourite">关注</string>
     <string name="cancel_favourite">取消关注</string>
 
@@ -917,7 +917,7 @@
     <string name="phone_error">请输入正确手机号码</string>
     <string name="verify_code">请输入验证码</string>
     <string name="verify_code_send">发送验证码</string>
-    <string name="logout">退出登录</string>
+    <string name="logout">退出当前账户</string>
     <string name="logouting">正在注销...</string>
     <string name="logout_fail">注销失败</string>
     <string name="logout_succ">注销成功</string>
@@ -949,6 +949,8 @@
     <string name="username_pass_error">登录名或者密码错误</string>
     <string name="username_original_pass_error">请输入正确的原始密码</string>
     <string name="logout_check">确认退出登录?</string>
+    <string name="can_only_choose_a_picture">亲，只能选择一张图片</string>
+    <string name="confirm_the_selected_sex">确认保存选中的性别?</string>
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">对不起,找不到相关信息</string>
@@ -994,6 +996,12 @@
     <string name="pwd_format_just_length">密码长度为6-16位</string>
     <string name="verify_time_limit">两次发送间隔不得小于60秒</string>
     <string name="nickname_sensitive">昵称包含敏感词语</string>
+    <string name="man_sex">汉子</string>
+    <string name="woman_sex">妹子</string>
+    <string name="noon_sex">不告诉你</string>
+    <string name="chose_head_phot">选择头像</string>
+    <string name="complete">完成</string>
+
     <!--1.1.2 end-->
 
 
@@ -1127,9 +1135,11 @@
     <string name="picture_save">图片已保存至:</string>
     <string name="picture_save_telephone">保存到手机</string>
     <string name="chose_for_telephone">从手机相册选择</string>
+    <string name="choice_of_players_head">选择球星头像</string>
     <string name="avatar_settings">头像</string>
     <string name="photograph">拍照</string>
     <string name="is_uploading">努力上传中..........</string>
+
 
     <string name="welcome_chart_room">欢迎进入聊天室!</string>
     <string name="to_update_kindly_reminder">温馨提示</string>

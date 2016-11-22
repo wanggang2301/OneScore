@@ -311,5 +311,14 @@
         <activity
             android:name=".activity.FootballDatabaseActivity"
             android:screenOrientation="portrait" />
+        <activity
+        android:name=".activity.AvatarSelectionActivity"
+        android:screenOrientation="portrait" />
+        <!--更多设置-->
+        <activity
+            android:name=".activity.MoreSettingsActivity"
+            android:screenOrientation="portrait" />
+
     </application>
+
 </manifest>

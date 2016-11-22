@@ -49,8 +49,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
 
     /**语言切换**/
     private RelativeLayout rl_language_frame;
-    /**关于我们**/
-    private RelativeLayout rl_about_frame;
+    /**更多设置**/
+    private RelativeLayout rl_setting_frame;
     /**反馈**/
     private RelativeLayout rl_user_feedback;
     private ProgressDialog progressBar;
@@ -73,11 +73,11 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 case LOGGED_ON:
                     //mTv_nickname.setVisibility(View.VISIBLE);
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-
+                    ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mUser_image);
                     mTv_nickname.setEnabled(false);
-                    mTv_logout.setVisibility(View.VISIBLE);
-                    findViewById(R.id.view_top).setVisibility(View.VISIBLE);
-                    findViewById(R.id.view_botom).setVisibility(View.VISIBLE);
+                   // mTv_logout.setVisibility(View.VISIBLE);
+                   // findViewById(R.id.view_top).setVisibility(View.VISIBLE);
+                   // findViewById(R.id.view_botom).setVisibility(View.VISIBLE);
                     break;
                 default:
                     break;
@@ -103,8 +103,8 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
 
 
         setContentView(R.layout.home_user_options_mian);
-        mTv_logout = (TextView) findViewById(R.id.tv_logout);
-        mTv_logout.setOnClickListener(this);
+      /*  mTv_logout = (TextView) findViewById(R.id.tv_logout);
+        mTv_logout.setOnClickListener(this);*/
         findViewById(R.id.public_img_back).setOnClickListener(this);
         //昵称
         mTv_nickname = (TextView) findViewById(R.id.tv_nickname);
@@ -114,11 +114,14 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         //头像
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
+             /*判断登录状态*/
 
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
-        rl_about_frame = (RelativeLayout) findViewById(R.id.rl_about_frame);
-        rl_about_frame.setOnClickListener(this);
+        rl_setting_frame = (RelativeLayout) findViewById(R.id.rl_setting_frame);
+        rl_setting_frame.setOnClickListener(this);
+
+
         rl_user_feedback = (RelativeLayout) findViewById(R.id.rl_user_feedback);
         rl_user_feedback.setOnClickListener(this);
 
@@ -135,10 +138,14 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 startActivity(intent);
                 MobclickAgent.onEvent(mContext, "LanguageChanger");
                 break;
-            case R.id.rl_about_frame:// 关于我们
+          /*  case R.id.rl_about_frame:// 关于我们
                 Intent intent2 = new Intent(HomeUserOptionsActivity.this, HomeAboutActivity.class);
                 startActivity(intent2);
                 MobclickAgent.onEvent(mContext, "AboutWe");
+                break;*/
+            case R.id.rl_setting_frame://更多設置
+                Intent intent2 = new Intent(HomeUserOptionsActivity.this, MoreSettingsActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.rl_user_feedback:// 反馈
                 startActivity(new Intent(HomeUserOptionsActivity.this, FeedbackActivity.class));
@@ -154,10 +161,10 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 goToLoginActivity();
 
                 break;
-            case R.id.tv_logout: // 退出登录
+          /*  case R.id.tv_logout: // 退出登录
                 MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
                 showDialog();
-                break;
+                break;*/
             case R.id.user_info_image: //用户信息
                 MobclickAgent.onEvent(mContext, "ProfileActivity_Start");
                 if (CommonUtils.isLogin()) {
@@ -199,9 +206,12 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         alertDialog.show();
     }
 
-    /**
+
+
+/**
      * 注销
      */
+
     private void logout() {
 
         progressBar.show();
@@ -247,8 +257,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
             }
         }, Register.class);
     }
-
-    /**
+   /* *//**
      * 用户注销把用户状态改成0
      */
     private void request() {
@@ -336,6 +345,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
         } else {
+            mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
         }
     }
@@ -346,7 +356,6 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd("HomeUserOptionsActivity");
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
