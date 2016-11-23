@@ -40,7 +40,7 @@
         android:layout_gravity="center"
         android:layout_height="55dp"
         android:textSize="@dimen/home_pager_user_title"
-        android:text="选择球星头像"/>
+        android:text="@string/chose_start_photo"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"

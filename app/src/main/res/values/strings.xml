@@ -951,6 +951,12 @@
     <string name="logout_check">确认退出登录?</string>
     <string name="can_only_choose_a_picture">亲，只能选择一张图片</string>
     <string name="confirm_the_selected_sex">确认保存选中的性别?</string>
+    <string name="chose_start_photo">选择球星头像</string>
+    <string name="chose_start_text">伴随你的，不仅有球星的风采；</string>
+    <string name="only_chose_start_text">还有一比分。</string>
+    <string name="star_style">球星风采</string>
+    <string name="football_baby">足球宝贝</string>
+
     <!--模糊搜索-->
     <string name="fuzzy_search">请输入联赛名</string>
     <string name="not_find_search">对不起,找不到相关信息</string>
@@ -973,7 +979,7 @@
     <string name="input_nickname">请输入昵称</string>
     <string name="nickname_hint">好的名字可以让您的朋友更容易记住您</string>
     <string name="profile">个人资料</string>
-    <string name="modify_nickname">更改名字</string>
+    <string name="modify_nickname">更改昵称</string>
     <string name="modify_nickname_succ">修改昵称成功</string>
     <string name="nickname_format">昵称:格式为1-15个字符(不超过七个中文),由中英文数字和字符组成</string>
     <string name="modify_password">修改密码</string>

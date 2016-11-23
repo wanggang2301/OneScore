@@ -15,17 +15,30 @@
         android:background="@mipmap/login_new_center"
         android:orientation="vertical">
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/public_img_back"
+        style="@style/RippleBackgroudBorderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="25dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/back"/>
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:paddingTop="25dp"
+        android:textSize="18sp"
+        android:text="个人中心"/>
 
-        <ImageView
-            android:id="@+id/public_img_back"
-            style="@style/RippleBackgroudBorderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="25dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/back"/>
+</RelativeLayout>
 
         <com.hhly.mlottery.view.CircleImageView
             android:id="@+id/user_info_image"
@@ -226,7 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/center_setting"
             android:padding="15dp"
-            android:text="更多设置"
+            android:text="@string/more_setting"
             android:textColor="@color/res_name_color"
             android:textSize="@dimen/home_pager_user_title"/>
 

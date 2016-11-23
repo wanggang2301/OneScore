@@ -20,7 +20,7 @@
             android:textColor="@color/res_time_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="伴随你的不仅有球星的风采；"/>
+            android:text="@string/chose_start_text"/>
         <TextView
             android:paddingTop="5dp"
             android:background="@color/white"
@@ -29,16 +29,10 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_15"
             android:textColor="@color/res_time_color"
-            android:text="还有一比分。"/>
+            android:text="@string/only_chose_start_text"/>
 
     </LinearLayout>
-    <ImageView
-        android:paddingTop="10dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:src="@mipmap/layer_32x"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -46,6 +40,7 @@
 
 
         <LinearLayout
+            android:paddingTop="10dp"
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +60,7 @@
                     android:background="@color/white"
                     android:textSize="@dimen/text_size_15"
                     android:textColor="@color/res_name_color"
-                    android:text="球星风采 "/>
+                    android:text="@string/star_style"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -141,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:background="#f5f5f5"
+                android:background="@color/white"
                 android:textSize="@dimen/text_size_15"
                 android:textColor="@color/res_name_color"
                 android:text="("/>
@@ -151,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:background="#f5f5f5"
+                android:background="@color/white"
                 android:textSize="@dimen/text_size_15"
                 android:textColor="@color/res_name_color"
                 android:text="3"

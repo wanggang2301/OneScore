@@ -66,6 +66,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.greenrobot.event.EventBus;
+
 
 /**
  * 登录界面
@@ -613,6 +615,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             UiUtils.toast(MyApp.getInstance(), R.string.login_succ);
                             CommonUtils.saveRegisterInfo(register);
                             PreferenceUtil.commitBoolean("three_login", false);
+                            EventBus.getDefault().post(register);
                             setResult(RESULT_OK);
                             //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                             sendUserInfoToServer(register);

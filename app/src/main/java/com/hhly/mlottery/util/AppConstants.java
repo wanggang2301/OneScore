@@ -236,7 +236,8 @@ public class AppConstants {
     public static final String LOTTERY_KEY = "numberName";// 彩票界面跳转Key
     public static final String HOME_PAGER_DATA_KEY = "homePagerDataKey";// 首页缓存数据key
     public static final String HOME_PAGER_VERSION_UPDATE_KEY = "homePagerVersionUpdate";// 首页忽略此版本
-
+    /**保存SEX*/
+    public static final int INTSEX=0;
 
 
 	// ============= account begin ==============
@@ -252,6 +253,8 @@ public class AppConstants {
 	public static final String SPKEY_LOGINACCOUNT = "loginAccount";
     /**保存友盟的deviceToken*/
     public static final String uMengDeviceToken="uMengDeviceToken";
+    /**保存SEX*/
+    public static final String SEX="sex";
 	/**应用启动的时候初始化*/
 	public static String deviceToken ="";
 	/**应用启动的时候初始化*/

@@ -123,7 +123,7 @@ public class MoreSettingsActivity extends BaseActivity  implements View.OnClickL
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
         builder.setCancelable(false);// 设置对话框以外不可点击
         builder.setTitle("");// 提示标题
-        builder.setMessage(R.string.logout_check);// 提示内容
+        builder.setMessage(R.string.logout);// 提示内容
         builder.setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
             //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override

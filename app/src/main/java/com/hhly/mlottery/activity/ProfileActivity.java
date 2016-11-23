@@ -29,6 +29,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
@@ -56,6 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -138,26 +140,14 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        System.out.print("sex>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+AppConstants.register.getData().getUser().getSex());
+        EventBus.getDefault().register(this);
         initView();
     }
 
- /*   @Override
-    protected void onStart() {
-        super.onStart();
-        tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-        ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, "")).into(mHead_portrait);
-        UiUtils.toast(getApplicationContext(),"走了ReSume方法"+PreferenceUtil.getString("startHeadIcon", ""));
-        System.out.print("URL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+PreferenceUtil.getString(AppConstants.HEADICON, ""));
-    }*/
-
-    public  void setHeadPhoto(String s){
-        ImageLoader.load(mContext,s).into(mHead_portrait);
-    }
     @Override
     protected void onResume() {
         super.onResume();
-        if(AppConstants.register.getData().getUser().getSex()!=null){
+     /*   if(AppConstants.register.getData().getUser().getSex()!=null){
             if(AppConstants.register.getData().getUser().getSex().equals("1")){
                 sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
             }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
@@ -166,10 +156,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
             }
         }
+        Log.i("smsdas","getSex"+AppConstants.register.getData().getUser().getSex());*/
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-       // ImageLoader.load(mContext,AppConstants.register.getData().getUser().getHeadIcon()).into(mHead_portrait);
-       // UiUtils.toast(getApplicationContext(),"走了ReSume方法"+PreferenceUtil.getString("startHeadIcon", ""));
-        System.out.print("URL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+PreferenceUtil.getString(AppConstants.HEADICON, ""));
+
     }
 
     private void initView() {
@@ -182,6 +171,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         mHead_portrait = (ImageView) findViewById(R.id.head_portrait);
         mHead_portrait.setOnClickListener(this);
         findViewById(R.id.modify_avatar).setOnClickListener(this);
+       if (CommonUtils.isLogin()){
+            ImageLoader.load(mContext,AppConstants.register.getData().getUser().getHeadIcon()).into(mHead_portrait);
+        }
         //universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mHead_portrait, options);
 
       /*  if (Environment
@@ -207,7 +199,16 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         woman_sex = (ImageView) findViewById(R.id.woman_sex);
         man_sex = (ImageView) findViewById(R.id.man_sex);
         noon_sex = (ImageView) findViewById(R.id.noon_sex);
-
+     if(AppConstants.register.getData().getUser().getSex()!=null){
+            if(AppConstants.register.getData().getUser().getSex().equals("1")){
+                sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+            }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
+                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.woman_sex,R.mipmap.woman_sex);
+            }else {
+                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+            }
+        }
+        Log.i("smsdas","getSex"+AppConstants.register.getData().getUser().getSex());
 
         //第三方登录时隐藏修改密码栏
         if(PreferenceUtil.getBoolean("three_login",false)){
@@ -226,7 +227,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 if(sexDatas.size()==0){
                     finish();
                 }else{
-                    showDialog();
+                    modifyGender();
                 }
 
                 break;
@@ -296,34 +297,9 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 break;
         }
     }
-    private void showDialog() {
-
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
-        builder.setCancelable(false);// 设置对话框以外不可点击
-        builder.setTitle("");// 提示标题
-        builder.setMessage(R.string.confirm_the_selected_sex);// 提示内容
-        builder.setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
-            //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                 //logout();
-                modifyGender();
-            }
-        });
-        builder.setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                finish();
-            }
-        });
-        alertDialog = builder.create();
-        alertDialog.show();
-    }
    //修改性别
     private void modifyGender() {
-                progressBar.show();
+
                 String url = BaseURLs.UPDATEUSERINFO;
                 Map<String, String> param = new HashMap<>();
                 param.put("loginToken", AppConstants.register.getData().getLoginToken());
@@ -332,34 +308,28 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
                 VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
                     @Override
-                    public void onResponse(Register bean) {
-
-                        progressBar.dismiss();
-
-                        if (bean.getResult() == AccountResultCode.SUCC) {
-                           //UiUtils.toast(MyApp.getInstance(), R.string.modify_nickname_succ);
+                    public void onResponse(Register register) {
+                        if (register.getResult() == AccountResultCode.SUCC) {
+                            CommonUtils.saveRegisterInfo(register);
                             AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
-                            // CommonUtils.saveRegisterInfo(AppConstants.register);
-                           // PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, bean.getData().getUser().getNickName());
+                            Log.i("smsdas","getSex>>>>>>>"+register.getData().getUser().getSex());
                             finish();
-                        } else if (bean.getResult() == AccountResultCode.USER_NOT_LOGIN) {
+                        } else if (register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
                             UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
                             Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                             startActivity(intent);
                         } else {
-                            CommonUtils.handlerRequestResult(bean.getResult(), bean.getMsg());
+                            CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
                         }
                     }
                 }, new VolleyContentFast.ResponseErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                        progressBar.dismiss();
                         L.e(TAG, "上传性别失败");
-                        UiUtils.toast(ProfileActivity.this, R.string.foot_neterror);
+                      //UiUtils.toast(ProfileActivity.this, R.string.foot_neterror);
+                        finish();
                     }
                 }, Register.class);
-
-
 
     }
 
@@ -405,6 +375,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         return file;
     }
 
+    public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
+
+        ImageLoader.load(mContext,choseHeadStartBean.startUrl).into(mHead_portrait);
+    }
     /**
      * 开启从相册获得图片功能
      */
@@ -461,22 +435,6 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     File outFile = null;
     Bitmap bitmap = null;
     File outDir = null;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("我进来了>>>>>>>>>>>>>>>");
-        ImageLoader.load(mContext,AppConstants.register.getData().getUser().getHeadIcon()).into(mHead_portrait );
-        if(resultCode==RESULT_OK){
-            if (requestCode==REQUESTCODE_CHOSE){
-                Bundle bundle=data.getExtras();
-                String photoUrl=bundle.getString("imgUrl");
-                System.out.println("imgUrl>>>>>>>>>>>>>>>"+photoUrl);
-
-            }
-
-        }
-    }
 
     /**
      * 1取出拍照的结果存储到手机内存则指定的文件夹， 再从文件加下取出展示到界面
@@ -736,5 +694,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         super.onDestroy();
         // 刷新本地用户缓存
         RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx"))));
+        EventBus.getDefault().unregister(this);
     }
+
 }

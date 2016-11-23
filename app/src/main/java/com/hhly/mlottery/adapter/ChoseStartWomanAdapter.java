@@ -2,7 +2,6 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
@@ -15,38 +14,37 @@ import com.hhly.mlottery.util.adapter.ViewHolder;
 import java.util.List;
 
 /**
- * Created by yuely198 on 2016/11/18.
+ * Created by yuely198 on 2016/11/17.
  */
 
-public class ChoseStartManAdapter extends CommonAdapter<ChoseStartBean.DataBean.MaleBean> {
+public class ChoseStartWomanAdapter extends CommonAdapter<ChoseStartBean.DataBean.FemaleBean> {
 
 
     private ImageView chose_head_child;
     private ImageView imageView4;
     Context mContext;
     private int clickStatus = -1;
-    private ViewHolder holder;
-    List<ChoseStartBean.DataBean.MaleBean> datas;
-
-    public ChoseStartManAdapter(Context context, List<ChoseStartBean.DataBean.MaleBean> datas, int layoutId) {
+    private  ViewHolder holder;
+    List<ChoseStartBean.DataBean.FemaleBean> datas;
+    public ChoseStartWomanAdapter(Context context, List<ChoseStartBean.DataBean.FemaleBean> datas, int layoutId) {
         super(context, datas, layoutId);
-        this.mContext = context;
-        this.datas = datas;
+        this.mContext=context;
+        this.datas=datas;
     }
-
-
+  //定义一个判断postion的公共方法
     public void setSeclection(int position) {
         clickStatus = position;
     }
-   public void  reshSeclection(){
 
-       holder.setBackgroundRes(R.id.imageView4, R.color.transparency);
-       UiUtils.toast(mContext,"清除男头像");
-   }
+    public void  reshSeclection(){
+        UiUtils.toast(mContext,"清除女头像");
+        holder.setBackgroundRes(R.id.imageView4, R.color.transparency);
+
+    }
 
     @Override
-    public void newconvert(ViewHolder holder, ChoseStartBean.DataBean.MaleBean femaleBean, int position) {
-       this.holder=holder;
+    public void newconvert(ViewHolder holder, ChoseStartBean.DataBean.FemaleBean femaleBean, int position) {
+         this.holder=holder;
         chose_head_child = holder.getView(R.id.chose_head_child);
         imageView4 = holder.getView(R.id.imageView4);
         ImageLoader.load(mContext, femaleBean.getHeadIcon(), R.mipmap.center_head).into(chose_head_child);
@@ -57,11 +55,10 @@ public class ChoseStartManAdapter extends CommonAdapter<ChoseStartBean.DataBean.
             holder.setBackgroundRes(R.id.imageView4, R.color.transparency);
         }
 
-
     }
 
     @Override
-    public void convert(final ViewHolder holder, final ChoseStartBean.DataBean.MaleBean femaleBean) {
+    public void convert(final ViewHolder holder, final ChoseStartBean.DataBean.FemaleBean femaleBean) {
 
     }
 }

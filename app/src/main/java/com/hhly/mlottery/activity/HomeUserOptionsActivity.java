@@ -1,9 +1,11 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.bean.focusAndPush.BasketballConcernListBean;
 import com.hhly.mlottery.bean.focusAndPush.ConcernBean;
@@ -36,7 +39,9 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 
 /**
@@ -45,8 +50,9 @@ import io.rong.imkit.RongIM;
  * @Description:  用户中心首页
  * @data: 2016/4/8 15:04
  */
-public class HomeUserOptionsActivity extends BaseActivity implements View.OnClickListener {
+public class HomeUserOptionsActivity extends Activity implements View.OnClickListener {
 
+    public static String TAG = "HomeUserOptionsActivity";
     /**语言切换**/
     private RelativeLayout rl_language_frame;
     /**更多设置**/
@@ -71,15 +77,9 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
 
                     break;
                 case LOGGED_ON:
-                    //mTv_nickname.setVisibility(View.VISIBLE);
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-                   // ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mUser_image);
-                    ImageLoader.load(mContext,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
-                    System.out.println("加载头像的URL"+AppConstants.register.getData().getUser().getHeadIcon());
+                    ImageLoader.load(HomeUserOptionsActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
                     mTv_nickname.setEnabled(false);
-                   // mTv_logout.setVisibility(View.VISIBLE);
-                   // findViewById(R.id.view_top).setVisibility(View.VISIBLE);
-                   // findViewById(R.id.view_botom).setVisibility(View.VISIBLE);
                     break;
                 default:
                     break;
@@ -91,7 +91,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        EventBus.getDefault().register(this);
         initView();
 
     }
@@ -117,7 +117,12 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         mUser_image = (ImageView) findViewById(R.id.user_info_image);
         mUser_image.setOnClickListener(this);
              /*判断登录状态*/
-
+        if (CommonUtils.isLogin()) {
+            mViewHandler.sendEmptyMessage(LOGGED_ON);
+        } else {
+            mTv_nickname.setText(R.string.Login_register);
+            mUser_image.setImageResource(R.mipmap.center_head);
+        }
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
         rl_setting_frame = (RelativeLayout) findViewById(R.id.rl_setting_frame);
@@ -138,7 +143,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
             case R.id.rl_language_frame:// 语言切换
                 Intent intent = new Intent(HomeUserOptionsActivity.this, HomeLanguageActivity.class);
                 startActivity(intent);
-                MobclickAgent.onEvent(mContext, "LanguageChanger");
+                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LanguageChanger");
                 break;
           /*  case R.id.rl_about_frame:// 关于我们
                 Intent intent2 = new Intent(HomeUserOptionsActivity.this, HomeAboutActivity.class);
@@ -151,14 +156,14 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.rl_user_feedback:// 反馈
                 startActivity(new Intent(HomeUserOptionsActivity.this, FeedbackActivity.class));
-                MobclickAgent.onEvent(mContext, "UserFeedback");
+                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "UserFeedback");
                 break;
             case R.id.public_img_back:// 返回
                 finish();
-                MobclickAgent.onEvent(mContext, "HomePagerUserSetting_Exit");
+                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "HomePagerUserSetting_Exit");
                 break;
             case R.id.tv_nickname:// 登录
-                MobclickAgent.onEvent(mContext, "LoginActivity_Start");
+                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "LoginActivity_Start");
 
                 goToLoginActivity();
 
@@ -168,7 +173,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 showDialog();
                 break;*/
             case R.id.user_info_image: //用户信息
-                MobclickAgent.onEvent(mContext, "ProfileActivity_Start");
+                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "ProfileActivity_Start");
                 if (CommonUtils.isLogin()) {
                     startActivity(new Intent(this, ProfileActivity.class));
                 } else {
@@ -186,7 +191,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
 
     private void showDialog() {
 
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(HomeUserOptionsActivity.this, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
         builder.setCancelable(false);// 设置对话框以外不可点击
         builder.setTitle("");// 提示标题
         builder.setMessage(R.string.logout_check);// 提示内容
@@ -254,7 +259,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 progressBar.dismiss();
-                L.e(TAG, " 注销失败");
+                //L.e(TAG, " 注销失败");
                 UiUtils.toast(MyApp.getInstance(), R.string.immediate_unconection);
             }
         }, Register.class);
@@ -335,22 +340,20 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         },BasketballConcernListBean.class);
 
     }
+    public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
 
+        ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl).into(mUser_image);
+    }
+    public void onEventMainThread(Register register){
+
+        ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
+        mTv_nickname.setText(register.getData().getUser().getNickName());
+    }
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("HomeUserOptionsActivity");
-       // UiUtils.toast(MyApp.getInstance(), "我是个人用户页面");
-        //ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mUser_image);
-         /*判断登录状态*/
-        UiUtils.toast(getApplicationContext(),"onResume");
-        if (CommonUtils.isLogin()) {
-            mViewHandler.sendEmptyMessage(LOGGED_ON);
-        } else {
-            mTv_nickname.setText(R.string.Login_register);
-            mUser_image.setImageResource(R.mipmap.center_head);
-        }
     }
 
     @Override
@@ -366,13 +369,22 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
             if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回
                 L.d(TAG, "登录成功");
-                System.out.println("我登录后进来了！！！！！！！！》》》》》》》》》》》》》");
-                mViewHandler.sendEmptyMessage(LOGGED_ON);
                 // iv_account.setImageResource(R.mipmap.login);
             } else if (requestCode == REQUESTCODE_LOGOUT) {
                 L.d(TAG, "注销成功");
+                mTv_nickname.setText(R.string.Login_register);
+                mUser_image.setImageResource(R.mipmap.center_head);
                 // iv_account.setImageResource(R.mipmap.logout);
             }
         }
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 刷新本地用户缓存
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx"))));
+       // RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(AppConstants.register.getData().getUser().getHeadIcon())));
+        EventBus.getDefault().unregister(this);
+    }
+
 }

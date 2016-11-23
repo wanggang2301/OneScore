@@ -934,6 +934,11 @@
     <string name="username_original_pass_error">請輸入正確的原始密碼</string>
     <string name="logout_check">確認退出登錄?</string>
     <string name="confirm_the_selected_sex">確認保存選中的性別?</string>
+    <string name="chose_start_photo">選擇球星頭像</string>
+    <string name="chose_start_text">伴隨你的，不僅有球星的風采；</string>
+    <string name="only_chose_start_text">還有一比分。</string>
+    <string name="star_style">球星風采</string>
+    <string name="football_baby">足球寶貝</string>
     <!--模糊搜索-->
     <string name="fuzzy_search">請輸入聯賽名</string>
     <string name="not_find_search">對不起,找不到相關資訊</string>
@@ -956,7 +961,7 @@
     <string name="input_nickname">請輸入昵稱</string>
     <string name="nickname_hint">好的名字可以讓您的朋友更容易記住您</string>
     <string name="profile">個人資料</string>
-    <string name="modify_nickname">更改名字</string>
+    <string name="modify_nickname">更改昵稱</string>
     <string name="modify_nickname_succ">修改昵稱成功</string>
     <string name="nickname_format">昵稱:格式爲1-15個字符(不超過七個中文),由中英文數字和字符組成</string>
     <string name="modify_password">修改密碼</string>

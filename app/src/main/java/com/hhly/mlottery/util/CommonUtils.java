@@ -42,7 +42,7 @@ public class CommonUtils {
      * @param register
      */
     public static void saveRegisterInfo(Register register) {
-
+android.util.Log.i("smsdas","register>>>>>>>"+register.getData().getUser().getSex());
 
         if (register == null) {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID, "");
@@ -50,13 +50,18 @@ public class CommonUtils {
             PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, "");
             PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, "");
             PreferenceUtil.commitString(AppConstants.HEADICON, "");
+            PreferenceUtil.commitString(AppConstants.SEX,"");
+          //PreferenceUtil.commitInt(AppConstants.SEX,0);
             AppConstants.register = new Register();
+
 
         } else {
             PreferenceUtil.commitString(AppConstants.SPKEY_USERID, register.getData().getUser().getUserId());
             PreferenceUtil.commitString(AppConstants.SPKEY_NICKNAME, register.getData().getUser().getNickName());
             PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getData().getUser().getLoginAccount());
             PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon());
+            PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
+            android.util.Log.i("smsdas","comGetSex>>>>>>>"+   PreferenceUtil.getString(AppConstants.SEX, "aa"));
             String token = register.getData().getLoginToken();
             L.d(TAG, " saveRegisterInfo   token = " + token);
             PreferenceUtil.commitString(AppConstants.SPKEY_TOKEN, token);
@@ -97,6 +102,7 @@ public class CommonUtils {
         userBean.setNickName(PreferenceUtil.getString(AppConstants.SPKEY_NICKNAME, ""));
         userBean.setLoginAccount(PreferenceUtil.getString(AppConstants.SPKEY_LOGINACCOUNT, ""));
         userBean.setHeadIcon(PreferenceUtil.getString(AppConstants.HEADICON, ""));
+        userBean.setSex(PreferenceUtil.getString(AppConstants.SEX, ""));
         Register.DataBean dataBean = new Register.DataBean();
 
         String token = PreferenceUtil.getString(AppConstants.SPKEY_TOKEN, "");
