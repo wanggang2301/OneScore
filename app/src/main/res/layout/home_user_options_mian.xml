@@ -36,7 +36,7 @@
         android:textColor="@color/white"
         android:paddingTop="25dp"
         android:textSize="18sp"
-        android:text="个人中心"/>
+        android:text="@string/personal_center"/>
 
 </RelativeLayout>
 
