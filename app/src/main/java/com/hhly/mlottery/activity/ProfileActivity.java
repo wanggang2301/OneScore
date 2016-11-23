@@ -27,7 +27,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.account.Register;
@@ -41,7 +40,6 @@ import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.sina.weibo.sdk.utils.Utility;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -51,10 +49,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.umeng.analytics.MobclickAgent;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,8 +138,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-
+        System.out.print("sex>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+AppConstants.register.getData().getUser().getSex());
         initView();
     }
 
@@ -163,8 +157,17 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
+        if(AppConstants.register.getData().getUser().getSex()!=null){
+            if(AppConstants.register.getData().getUser().getSex().equals("1")){
+                sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+            }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
+                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.woman_sex,R.mipmap.woman_sex);
+            }else {
+                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
+            }
+        }
         tv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-        ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, "")).into(mHead_portrait);
+       // ImageLoader.load(mContext,AppConstants.register.getData().getUser().getHeadIcon()).into(mHead_portrait);
        // UiUtils.toast(getApplicationContext(),"走了ReSume方法"+PreferenceUtil.getString("startHeadIcon", ""));
         System.out.print("URL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+PreferenceUtil.getString(AppConstants.HEADICON, ""));
     }
@@ -204,15 +207,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         woman_sex = (ImageView) findViewById(R.id.woman_sex);
         man_sex = (ImageView) findViewById(R.id.man_sex);
         noon_sex = (ImageView) findViewById(R.id.noon_sex);
-        if(AppConstants.register.getData().getUser().getSex()!=null){
-            if(AppConstants.register.getData().getUser().getSex().equals("1")){
-                sexChange(R.color.home_logo_color,R.mipmap.man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
-            }else if(AppConstants.register.getData().getUser().getSex().equals("2")){
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.res_pl_color,R.mipmap.default_noon_sex,R.color.woman_sex,R.mipmap.woman_sex);
-            }else {
-                sexChange(R.color.res_pl_color,R.mipmap.default_man_sex,R.color.noon_sex,R.mipmap.noon_sex,R.color.res_pl_color,R.mipmap.default_woman_sex);
-            }
-        }
+
+
         //第三方登录时隐藏修改密码栏
         if(PreferenceUtil.getBoolean("three_login",false)){
             findViewById(R.id.rl_modifypass).setVisibility(View.GONE);
@@ -470,6 +466,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("我进来了>>>>>>>>>>>>>>>");
+        ImageLoader.load(mContext,AppConstants.register.getData().getUser().getHeadIcon()).into(mHead_portrait );
         if(resultCode==RESULT_OK){
             if (requestCode==REQUESTCODE_CHOSE){
                 Bundle bundle=data.getExtras();

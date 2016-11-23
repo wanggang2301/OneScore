@@ -11,8 +11,8 @@
     <ImageView
         android:padding="10dp"
         android:id="@+id/chose_head_child"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@mipmap/luni2x"
         />
 

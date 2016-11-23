@@ -46,20 +46,23 @@
 
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingLeft="5dp"
                     android:paddingBottom="8dp"
-                    android:background="#f5f5f5"
+                    android:background="@color/white"
                     android:textSize="@dimen/text_size_15"
                     android:textColor="@color/res_name_color"
                     android:text="球星风采 "/>
@@ -69,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:background="#f5f5f5"
+                    android:background="@color/white"
                     android:textSize="@dimen/text_size_15"
                     android:textColor="@color/res_name_color"
                     android:text="("/>
@@ -79,17 +82,17 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:background="#f5f5f5"
+                    android:background="@color/white"
                     android:textSize="@dimen/text_size_15"
                     android:textColor="@color/res_name_color"
-                    android:text="0"
+                    android:text="9"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:background="#f5f5f5"
+                    android:background="@color/white"
                     android:textSize="@dimen/text_size_15"
                     android:textColor="@color/res_name_color"
                     android:text=")"/>
@@ -119,12 +122,14 @@
 
              </GridView>-->
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#f5f5f5"
+                android:background="@color/white"
+
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="5dp"
@@ -149,14 +154,14 @@
                 android:background="#f5f5f5"
                 android:textSize="@dimen/text_size_15"
                 android:textColor="@color/res_name_color"
-                android:text="0"
+                android:text="3"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:background="#f5f5f5"
+                android:background="@color/white"
                 android:textSize="@dimen/text_size_15"
                 android:textColor="@color/res_name_color"
                 android:text=")"/>

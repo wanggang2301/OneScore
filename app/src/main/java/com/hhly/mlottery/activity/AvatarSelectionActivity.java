@@ -71,7 +71,7 @@ public class AvatarSelectionActivity extends  BaseActivity implements  View.OnCl
                 if(json.getResult()==200){
 
                         mMaleDatas = json.getData().getMale();
-                        start_male_size.setText(mMaleDatas.size());
+                        //start_male_size.setText(mMaleDatas.size());
 
                     //足球风采
                     for (int i = 0; i< mMaleDatas.size(); i++){
@@ -85,7 +85,7 @@ public class AvatarSelectionActivity extends  BaseActivity implements  View.OnCl
 
                     //足球宝贝
                     mFemaleDatas = json.getData().getFemale();
-                    start_famle_size.setText(mFemaleDatas.size());
+                   // start_famle_size.setText(mFemaleDatas.size());
                     for (int i = 0; i< mFemaleDatas.size(); i++){
                         mFemaleDatas.get(i).setIsChecked(false);
                     }
@@ -200,7 +200,7 @@ public class AvatarSelectionActivity extends  BaseActivity implements  View.OnCl
 
     /*上传图片url  后台绑定*/
 
-    private void putPhotoUrl(String headerUrl) {
+    private void putPhotoUrl(final String headerUrl) {
 
         //final String url = BaseURLs.UPDATEHEADICON;
 
@@ -221,11 +221,11 @@ public class AvatarSelectionActivity extends  BaseActivity implements  View.OnCl
                 if (register.getResult() == AccountResultCode.SUCC) {
                     UiUtils.toast(MyApp.getInstance(), R.string.picture_put_success);
                     // CommonUtils.saveRegisterInfo(register);
-
                     PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
+                    AppConstants.register.getData().getUser().setHeadIcon(headerUrl);
                     Intent intent=new Intent();
                     intent.putExtra("imgUrl",register.getData().getUser().getHeadIcon().toString());
-                    setResult(Activity.RESULT_OK,intent);
+                    setResult(RESULT_OK,intent);
                     System.out.print("ChoseURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+register.getData().getUser().getHeadIcon().toString());
                  //  ImageLoader.load(mContext,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
 

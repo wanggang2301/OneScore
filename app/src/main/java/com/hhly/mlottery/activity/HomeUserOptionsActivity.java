@@ -73,7 +73,9 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
                 case LOGGED_ON:
                     //mTv_nickname.setVisibility(View.VISIBLE);
                     mTv_nickname.setText(AppConstants.register.getData().getUser().getNickName());
-                    ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mUser_image);
+                   // ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mUser_image);
+                    ImageLoader.load(mContext,AppConstants.register.getData().getUser().getHeadIcon()).into(mUser_image);
+                    System.out.println("加载头像的URL"+AppConstants.register.getData().getUser().getHeadIcon());
                     mTv_nickname.setEnabled(false);
                    // mTv_logout.setVisibility(View.VISIBLE);
                    // findViewById(R.id.view_top).setVisibility(View.VISIBLE);
@@ -340,8 +342,9 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("HomeUserOptionsActivity");
        // UiUtils.toast(MyApp.getInstance(), "我是个人用户页面");
-        ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mUser_image);
+        //ImageLoader.load(mContext,PreferenceUtil.getString(AppConstants.HEADICON, ""),R.mipmap.center_head).into(mUser_image);
          /*判断登录状态*/
+        UiUtils.toast(getApplicationContext(),"onResume");
         if (CommonUtils.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
         } else {
@@ -363,6 +366,7 @@ public class HomeUserOptionsActivity extends BaseActivity implements View.OnClic
             if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回
                 L.d(TAG, "登录成功");
+                System.out.println("我登录后进来了！！！！！！！！》》》》》》》》》》》》》");
                 mViewHandler.sendEmptyMessage(LOGGED_ON);
                 // iv_account.setImageResource(R.mipmap.login);
             } else if (requestCode == REQUESTCODE_LOGOUT) {
