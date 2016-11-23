@@ -316,6 +316,8 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
     private Handler preGotoliveHandler;
     private Runnable runnable;
 
+    private String matchStartTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().getExtras() != null) {
@@ -612,6 +614,7 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                     //下拉刷新
                     if ("0".equals(mPreStatus) && "0".equals(matchDetail.getLiveStatus()) && !isFinishing()) { //赛前
 
+
                         mPreHeadInfoFrament.initData(matchDetail, true);
                         mPreHeadInfoFrament.setScoreText("VS");
 
@@ -829,6 +832,8 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
 
             mHeadviewpager.setIsScrollable(false);
             mIndicator.setVisibility(View.GONE);
+
+            matchStartTime = matchDetail.getMatchInfo().getStartTime();
 
             mPreHeadInfoFrament.initData(matchDetail, false);
             mPreHeadInfoFrament.setScoreText("VS");
@@ -2707,9 +2712,22 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                     return;
                 }
 
-                ShareBean shareBean = new ShareBean();
                 String title = mMatchDetail.getHomeTeamInfo().getName() + " VS " + mMatchDetail.getGuestTeamInfo().getName();
-                String summary = getString(R.string.share_summary);
+                String summary = getString(R.string.share_summary_new);
+
+                if ("0".equals(mPreStatus)) {  //赛前
+                    title += matchStartTime.split(" ")[1] + getString(R.string.football_analyze_details_game);
+                    summary = "[" + getString(R.string.share_match_pre) + "]" + summary;
+                } else if ("1".equals(mPreStatus)) {//赛中
+                    title += getString(R.string.share_match_live2);
+                    summary = "[" + getString(R.string.share_match_live) + "]" + summary;
+                } else if ("-1".equals(mPreStatus)) {//赛后
+                    title += getString(R.string.share_match_browse);
+                    summary = "[" + getString(R.string.share_match_over) + "]" + summary;
+                }
+
+                ShareBean shareBean = new ShareBean();
+
                 shareBean.setTitle(title != null ? title : getString(R.string.share_to_qq_app_name));
                 shareBean.setSummary(summary);
                 shareBean.setTarget_url(BaseURLs.URL_FOOTBALL_DETAIL_INFO_SHARE + mThirdId);
