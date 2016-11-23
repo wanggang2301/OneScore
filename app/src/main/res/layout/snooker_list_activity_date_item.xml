@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
     >
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/football_date"/>
     <TextView
         android:id="@+id/snooker_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textColor="@color/colorAccent"
         android:text="2016-11-16 星期三"
 
         />

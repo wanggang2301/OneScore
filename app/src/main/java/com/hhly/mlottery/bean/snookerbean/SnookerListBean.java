@@ -8,9 +8,10 @@ package com.hhly.mlottery.bean.snookerbean;
 
 public class SnookerListBean {
 
+    /**
+     * 区分item类型
+     */
     int itemType;
-    String Dates;
-    String Round;
 
     public int getItemType() {
         return itemType;
@@ -18,22 +19,6 @@ public class SnookerListBean {
 
     public void setItemType(int itemType) {
         this.itemType = itemType;
-    }
-
-    public String getDates() {
-        return Dates;
-    }
-
-    public void setDates(String date) {
-        Dates = date;
-    }
-
-    public String getRound() {
-        return Round;
-    }
-
-    public void setRound(String round) {
-        Round = round;
     }
 
     /**

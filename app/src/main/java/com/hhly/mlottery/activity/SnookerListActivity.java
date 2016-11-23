@@ -1,8 +1,10 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,16 +14,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.snooker.SnookerRecyclerAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerLeaguesBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerListBean;
+import com.hhly.mlottery.bean.snookerbean.SnookerMatchOddsBean;
+import com.hhly.mlottery.bean.snookerbean.SnookerMatchScoreBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchesBean;
+import com.hhly.mlottery.bean.snookerbean.SnookerOddsSocketBean;
+import com.hhly.mlottery.bean.snookerbean.SnookerScoreSocketBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.SnookerSettingEvent;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefrashLayout;
 import com.umeng.analytics.MobclickAgent;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +48,7 @@ import de.greenrobot.event.EventBus;
  * describe:
  */
 
-public class SnookerListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class SnookerListActivity extends BaseWebSocketActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private SnookerRecyclerAdapter mAdapter;
@@ -62,8 +73,14 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
 
         setContentView(R.layout.snooker_list_activity);
 
+        /**
+         * 推送
+         */
+        setWebSocketUri(BaseURLs.WS_SERVICE);
+        setTopic("USER.topic.snooker");
+
         //注册
-        EventBus.getDefault().register(SnookerListActivity.this);
+        EventBus.getDefault().register(this);
 
         initView();
 
@@ -110,10 +127,10 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
 
     private void initData() {
         mRefresh.setRefreshing(true);
-        String url = "http://192.168.31.33:8080/mlottery/core/snookerMatch.getFirstSnookerMatch.do";
-        Map<String, String> map = new HashMap();
+//        String url = "http://192.168.31.33:8080/mlottery/core/snookerMatch.getFirstSnookerMatch.do";
+//        Map<String, String> map = new HashMap();
 
-        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<SnookerListBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.SNOOKER_LIST_URL, new VolleyContentFast.ResponseSuccessListener<SnookerListBean>() {
             @Override
             public void onResponse(SnookerListBean jsonBean) {
                 mRefresh.setRefreshing(false);
@@ -121,14 +138,16 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
 
                 //数据加载
                 setData(dataBean);
-                Toast.makeText(mContext, "yxq>>>>>> " + dataBean.get(0).getDate() + "---" + dataBean.get(0).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "yxq>>>>>> " + dataBean.get(0).getDate() + "---" + dataBean.get(0).getLeaguesName(), Toast.LENGTH_SHORT).show();
+
+                connectWebSocket();
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mRefresh.setRefreshing(false);
-                Toast.makeText(mContext, "yxq>>>>>> " + "---", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "yxq>>>>>> " + "---", Toast.LENGTH_SHORT).show();
             }
         }, SnookerListBean.class);
     }
@@ -158,17 +177,12 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
             /**
              * Type = 1 类型二， Item == 赛事
              */
-            if (currentLeaguesId.equals("") || !currentLeaguesId.equals(dataBean.get(i).getLeaguesId())) {
-
-                SnookerMatchesBean mLeaguesData = new SnookerMatchesBean();
-                mLeaguesData.setItemType(1);
-                mLeaguesData.setItemDate("--");
-                mLeaguesData.setItemLeaguesName(dataBean.get(i).getName());
-                mLeaguesData.setItemLeaguesId("--");
-                currentAllData.add(mLeaguesData);
-
-                currentLeaguesId = dataBean.get(i).getLeaguesId();
-            }
+            SnookerMatchesBean mLeaguesData = new SnookerMatchesBean();
+            mLeaguesData.setItemType(1);
+            mLeaguesData.setItemDate("--");
+            mLeaguesData.setItemLeaguesName(dataBean.get(i).getLeaguesName());
+            mLeaguesData.setItemLeaguesId("--");
+            currentAllData.add(mLeaguesData);
 
             /**
              * Type = 2 类型三， Item == 比赛
@@ -181,7 +195,7 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
         }
 
         if (mAdapter == null) {
-            mAdapter = new SnookerRecyclerAdapter(mContext, currentAllData);
+            mAdapter = new SnookerRecyclerAdapter(getApplicationContext(), currentAllData);
             mRecyclerView.setAdapter(mAdapter);
         } else {
             updateAdapter();
@@ -189,7 +203,7 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
     }
 
     /**
-     * \
+     * 更新数据
      */
     public void updateAdapter() {
         if (mAdapter == null) {
@@ -205,8 +219,7 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
             @Override
             public void run() {
                 mRefresh.setRefreshing(false);
-
-
+                initData();
             }
         }, 1000);
     }
@@ -215,15 +228,12 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.snooker_reloading_txt:
-                MobclickAgent.onEvent(mContext, "Snooker_refresh");
-                Toast.makeText(mContext, "点击了刷新···", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "点击了刷新···", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.public_img_back:
-                MobclickAgent.onEvent(mContext, "Snooker_Exit");
                 finish();
                 break;
             case R.id.public_btn_set:
-                MobclickAgent.onEvent(mContext, "Snooker_Setting");
 
                 Intent intent = new Intent(SnookerListActivity.this, SnookerSettingActivity.class);
                 startActivity(intent);
@@ -237,7 +247,7 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
      */
     public void onEventMainThread(SnookerSettingEvent snookerSettingEvent) {
         L.d("zxcvbn", "=======" + snookerSettingEvent.getmMsg());
-        Toast.makeText(mContext, snookerSettingEvent.getmMsg() + " = yxq------", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), snookerSettingEvent.getmMsg() + " = yxq------", Toast.LENGTH_SHORT).show();
         updateAdapter();
     }
 
@@ -246,5 +256,184 @@ public class SnookerListActivity extends BaseActivity implements SwipeRefreshLay
         super.onDestroy();
         //反注册
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onTextResult(String text) {
+
+        if (mAdapter == null) {
+            return;
+        }
+        String type = "";
+        try {
+            JSONObject jsonObject = new JSONObject(text);
+            type = jsonObject.getString("type");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!"".equals(type)) {
+            Message msg = Message.obtain();
+            msg.obj = text;
+            msg.arg1 = Integer.parseInt(type);
+            mWebSocketHandler.sendMessage(msg);
+        }
+
+    }
+
+    @Override
+    protected void onConnectFail() {
+
+    }
+
+    @Override
+    protected void onDisconnected() {
+
+    }
+
+    @Override
+    protected void onConnected() {
+
+    }
+
+    Handler mWebSocketHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            L.e(TAG, "__handleMessage__");
+            L.e(TAG, "msg.arg1 = " + msg.arg1);
+            if (msg.arg1 == 300) {  // 比分推送
+                String ws_json = (String) msg.obj;
+                L.e(TAG, "ws_json_snooker_score = " + ws_json);
+                SnookerScoreSocketBean mSnookerScore = null;
+                try {
+                    mSnookerScore = JSON.parseObject(ws_json , SnookerScoreSocketBean.class);
+                } catch (Exception e) {
+                    ws_json = ws_json.substring(0, ws_json.length() - 1);
+                    mSnookerScore = JSON.parseObject(ws_json , SnookerScoreSocketBean.class);
+                }
+                    updataScore(mSnookerScore);
+            }else if (msg.arg1 == 301) {  // 赔率推送
+                    String ws_json = (String) msg.obj;
+                    L.e(TAG, "ws_json_snooker_odds = " + ws_json);
+                    SnookerOddsSocketBean mSnookerOdds = null;
+                    try {
+                         mSnookerOdds = JSON.parseObject(ws_json , SnookerOddsSocketBean.class);
+                    } catch (Exception e) {
+                        ws_json = ws_json.substring(0, ws_json.length() - 1);
+                        mSnookerOdds = JSON.parseObject(ws_json , SnookerOddsSocketBean.class);
+                    }
+                    updataOdds(mSnookerOdds);
+                }
+        }
+    };
+
+    /**
+     * 比分更新
+     * @param mScoreData
+     */
+    private void updataScore(SnookerScoreSocketBean mScoreData){
+        L.d("yxq123456===>>" , "asdfasdfasdf");
+        SnookerScoreSocketBean.SnookerScoreDataBean scoreData = mScoreData.getData();
+
+        synchronized (currentAllData){
+            for (SnookerMatchesBean match : currentAllData) {
+                if (match.getThirdId().equals(mScoreData.getThirdId())) {
+                    if (match.getMatchScore() != null) {
+                        SnookerMatchScoreBean matchData = match.getMatchScore();
+                        updataItemData(matchData , scoreData);
+                    }else{
+                        SnookerMatchScoreBean newMatchData = new SnookerMatchScoreBean();
+                        updataItemData(newMatchData , scoreData);
+                    }
+                    updateAdapter();
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * 赔率更新
+     * @param mOddsData
+     */
+    private void updataOdds(SnookerOddsSocketBean mOddsData){
+        L.d("yxq123456===>>" , "ASDFASDFASDF");
+        SnookerMatchOddsBean socketOddsData = mOddsData.getData().getMatchOdds();
+        synchronized (currentAllData){
+            for (SnookerMatchesBean match : currentAllData) {
+                if (match.getThirdId().equals(mOddsData.getThirdId())) {
+                    SnookerMatchOddsBean currentOddsData =  match.getMatchOdds();
+                    updataOddsData(currentOddsData , socketOddsData);
+                    updateAdapter();
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * 更新单条item的内容
+     */
+    private void updataItemData(SnookerMatchScoreBean matchData , SnookerScoreSocketBean.SnookerScoreDataBean data){
+
+        if (data.getStatus() != null) {
+            matchData.setStatus(data.getStatus());
+        }
+        if (data.getBall() != null) {
+            matchData.setBall(data.getBall());
+        }
+        if (data.getLeagueId() != null) {
+            matchData.setLeagueId(data.getLeagueId());
+        }
+        if (data.getMatchId() != null) {
+            matchData.setMatchId(data.getMatchId());
+        }
+        if (data.getPlayerOnewin() != null) {
+            matchData.setPlayerOnewin(data.getPlayerOnewin());
+        }
+        if (data.getPlayerTwowin() != null) {
+            matchData.setPlayerTwowin(data.getPlayerTwowin());
+        }
+        if (data.getPoId() != null) {
+            matchData.setPoId(data.getPoId());
+        }
+        if (data.getPoScore() != null) {
+            matchData.setPoScore(data.getPoScore());
+        }
+        if (data.getPoSingleShot() != null) {
+            matchData.setPoSingleShot(data.getPoSingleShot());
+        }
+        if (data.getPtId() != null) {
+            matchData.setPtId(data.getPtId());
+        }
+        if (data.getPtScore() != null) {
+            matchData.setPtScore(data.getPtScore());
+        }
+        if (data.getPtSingleShot() != null) {
+            matchData.setPtSingleShot(data.getPtSingleShot());
+        }
+    }
+
+    /**
+     * 赔率更新
+     */
+    private void updataOddsData(SnookerMatchOddsBean currentOddsData , SnookerMatchOddsBean socketOddsData){
+
+        if (socketOddsData.getAllow() != null){
+            currentOddsData.setAllow(socketOddsData.getAllow());
+        }
+        if (socketOddsData.getBigsmall() != null) {
+            currentOddsData.setBigsmall(socketOddsData.getBigsmall());
+        }
+        if (socketOddsData.getOnetwo() != null) {
+            currentOddsData.setOnetwo(socketOddsData.getOnetwo());
+        }
+        if (socketOddsData.getOnlywin() != null) {
+            currentOddsData.setOnlywin(socketOddsData.getOnlywin());
+        }
+        if (socketOddsData.getStandard() != null) {
+            currentOddsData.setStandard(socketOddsData.getStandard());
+        }
     }
 }

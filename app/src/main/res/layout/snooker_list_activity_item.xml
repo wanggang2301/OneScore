@@ -34,7 +34,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/text_size_13"
                 android:textColor="@color/snooker_round_textcolor"
-                android:text="第一轮"
+                android:text="--"
                 />
 
             <TextView
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="22:00"
+                android:text="--"
                 android:textSize="@dimen/text_size_13"
                 android:textColor="@color/snooker_time_textcolor"
                 />
@@ -79,7 +79,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="奥沙利文"/>
+                    android:textColor="@color/res_name_color"
+                    android:text="--"/>
             </LinearLayout>
 
             <LinearLayout
@@ -100,7 +101,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="@color/snooker_fulltime_textcolor"
-                        android:text="完场"/>
+                        android:text="--"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -126,7 +127,7 @@
                                     android:background="@mipmap/snooker_red_ball"
                                     android:textColor="@color/snooker_score_textcolor"
                                     android:textSize="@dimen/text_size_11"
-                                    android:text="999"/>
+                                    android:text="--"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -142,7 +143,7 @@
                                     android:gravity="center"
                                     android:textColor="@color/snooker_score_textcolor"
                                     android:textSize="@dimen/text_size_10"
-                                    android:text="(999)"/>
+                                    android:text="(--)"/>
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -158,7 +159,7 @@
                                     android:background="@mipmap/snooker_black_ball"
                                     android:textColor="@color/snooker_score_textcolor"
                                     android:textSize="@dimen/text_size_11"
-                                    android:text="999"/>
+                                    android:text="--"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -190,7 +191,7 @@
                         android:gravity="center"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/snooker_odds_textcolor"
-                        android:text="1.05"
+                        android:text="--"
                         />
                     <TextView
                         android:id="@+id/snooker_odds_middle"
@@ -200,7 +201,7 @@
                         android:gravity="center"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/snooker_odds_textcolor"
-                        android:text="总:1.3"
+                        android:text="--"
                         />
                     <TextView
                         android:id="@+id/snooker_odds_right"
@@ -210,7 +211,7 @@
                         android:gravity="center"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="@color/snooker_odds_textcolor"
-                        android:text="1.53"
+                        android:text="--"
                         />
                 </LinearLayout>
                 <TextView
@@ -219,7 +220,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="奥沙利文"/>
+                    android:textColor="@color/res_name_color"
+                    android:text="--"/>
             </LinearLayout>
 
 

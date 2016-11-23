@@ -10,22 +10,24 @@ import java.util.List;
 
 public class SnookerMatchesBean {
 
-//    leaguesId: "125358",
-//    leaguesName: "北爱尔兰公开赛",
-//    thirdId: "569599",
-//    subLgName: "六十四强",
-//    date: "2016-11-17",
-//    time: "03:00",
-//    homeTeam: "利索夫斯基",
-//    guestTeam: "J.阿斯特利",
-//    homeId: 348,
-//    guestId: 1369,
+//    leaguesId: "125387",
+//    leaguesName: "英国锦标赛",
+//    thirdId: "570805",
+//    subLgName: "128强",
+//    date: "2016-11-23",
+//    time: "17:30",
+//    homeTeam: "K.多赫迪",
+//    guestTeam: "N.萨恩卡姆",
+//    homeId: 80,
+//    guestId: 354,
 //    dataType: "3",
-//    matchStyle: "7",
+//    matchStyle: "11",
 //    delps: "",
-//    status: "3",
-//    matchScore: {},
-//    games: null
+//    status: "1",
+//    destoryDateTime: null,
+//    matchScore: null,
+//    games: null,
+//    matchOdds: null
 
     private String leaguesId;
     private String leaguesName;
@@ -43,6 +45,8 @@ public class SnookerMatchesBean {
     private String status;
     private SnookerMatchScoreBean matchScore;
     private List<SnookerGanesBean> games;
+    private String destoryDateTime;
+    private SnookerMatchOddsBean matchOdds;
 
     /**
      * date	2016-11-16
@@ -55,6 +59,7 @@ public class SnookerMatchesBean {
     private String itemDate;
     private String itemLeaguesId;
     private String itemLeaguesName;
+
 
     public int getItemType() {
         return itemType;
@@ -214,5 +219,21 @@ public class SnookerMatchesBean {
 
     public void setGames(List<SnookerGanesBean> games) {
         this.games = games;
+    }
+
+    public String getDestoryDateTime() {
+        return destoryDateTime;
+    }
+
+    public void setDestoryDateTime(String destoryDateTime) {
+        this.destoryDateTime = destoryDateTime;
+    }
+
+    public SnookerMatchOddsBean getMatchOdds() {
+        return matchOdds;
+    }
+
+    public void setMatchOdds(SnookerMatchOddsBean matchOdds) {
+        this.matchOdds = matchOdds;
     }
 }

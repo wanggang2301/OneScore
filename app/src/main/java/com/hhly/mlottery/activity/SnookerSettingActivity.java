@@ -49,6 +49,7 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.snooker_setting_layout);
 
         initView();
+        setStatus();
 
     }
 
@@ -104,13 +105,13 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Intent intent = new Intent();
-            intent.putExtra("result", result);
+//            Intent intent = new Intent();
+//            intent.putExtra("result", result);
 
 //            SnookerListActivity.SnookerListEventBus.post(0);
-            EventBus.getDefault().post(new SnookerSettingEvent("111"));
+            EventBus.getDefault().post(new SnookerSettingEvent(result));
 
-            setResult(Activity.RESULT_OK,intent);
+//            setResult(Activity.RESULT_OK,intent);
             finish();
             overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
             return true;
@@ -124,7 +125,6 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_snooker_alet:
-//                MobclickAgent.onEvent(mContext , "Snooker_Setting_Alet");
                 mAletRb.setChecked(true);
                 mEurRb.setChecked(false);
                 mAsizeRb.setChecked(false);
@@ -133,7 +133,6 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
                 save();
                 break;
             case R.id.rl_snooker_eur:
-//                MobclickAgent.onEvent(mContext , "Snooker_Setting_Eur");
                 mAletRb.setChecked(false);
                 mEurRb.setChecked(true);
                 mAsizeRb.setChecked(false);
@@ -142,7 +141,6 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
                 save();
                 break;
             case R.id.rl_snooker_asize:
-//                MobclickAgent.onEvent(mContext , "Snooker_Setting_Asize");
                 mAletRb.setChecked(false);
                 mEurRb.setChecked(false);
                 mAsizeRb.setChecked(true);
@@ -151,7 +149,6 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
                 save();
                 break;
             case R.id.rl_snooker_single_twins:
-//                MobclickAgent.onEvent(mContext , "Snooker_Setting_Twins");
                 mAletRb.setChecked(false);
                 mEurRb.setChecked(false);
                 mAsizeRb.setChecked(false);
@@ -160,7 +157,6 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
                 save();
                 break;
             case R.id.rl_snooker_noshow:
-//                MobclickAgent.onEvent(mContext , "Snooker_Setting_Noshow");
                 mAletRb.setChecked(false);
                 mEurRb.setChecked(false);
                 mAsizeRb.setChecked(false);
@@ -169,13 +165,8 @@ public class SnookerSettingActivity extends BaseActivity implements View.OnClick
                 save();
                 break;
             case R.id.public_img_back:
-//                MobclickAgent.onEvent(mContext , "Snooker_Setting_Exit");
-                Intent intent = new Intent();
+                EventBus.getDefault().post(new SnookerSettingEvent(result));
 
-                intent.putExtra("result" , result);
-                EventBus.getDefault().post(new SnookerSettingEvent("111"));
-
-                setResult(Activity.RESULT_OK , intent);
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
 

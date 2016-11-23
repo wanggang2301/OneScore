@@ -919,8 +919,10 @@ public class BaseURLs {
     //用户注销
     public final static String EXIT_PUSH_ONLINE=URL_API_HOST+"pushSetting.exitUpdateOnlile.do";
 
-
-
+    /**
+     * 斯洛克
+     */
+    public final static String SNOOKER_LIST_URL = URL_API_HOST+"snookerMatch.getFirstSnookerMatch.do";
 
 
 

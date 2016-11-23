@@ -10,12 +10,12 @@ import java.util.List;
 
 public class SnookerLeaguesBean {
 //    leaguesId: "125358",
-//    name: "北爱尔兰公开赛",
+//    leaguesName: "北爱尔兰公开赛",
 //    date: "2016-11-17",
 //    matches: []
 
     private String leaguesId;
-    private String name;
+    private String leaguesName;
     private String date;
     private List<SnookerMatchesBean> matches;
 
@@ -27,12 +27,12 @@ public class SnookerLeaguesBean {
         this.leaguesId = leaguesId;
     }
 
-    public String getName() {
-        return name;
+    public String getLeaguesName() {
+        return leaguesName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLeaguesName(String leaguesName) {
+        this.leaguesName = leaguesName;
     }
 
     public String getDate() {
