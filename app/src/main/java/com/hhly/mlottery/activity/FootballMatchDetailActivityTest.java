@@ -2716,13 +2716,13 @@ public class FootballMatchDetailActivityTest extends BaseWebSocketActivity imple
                 String summary = getString(R.string.share_summary_new);
 
                 if ("0".equals(mPreStatus)) {  //赛前
-                    title += matchStartTime.split(" ")[1] + getString(R.string.football_analyze_details_game);
+                    title += " " + matchStartTime.split(" ")[1] + getString(R.string.football_analyze_details_game);
                     summary = "[" + getString(R.string.share_match_pre) + "]" + summary;
                 } else if ("1".equals(mPreStatus)) {//赛中
-                    title += getString(R.string.share_match_live2);
+                    title += " " + getString(R.string.share_match_live2);
                     summary = "[" + getString(R.string.share_match_live) + "]" + summary;
                 } else if ("-1".equals(mPreStatus)) {//赛后
-                    title += getString(R.string.share_match_browse);
+                    title += " " + getString(R.string.share_match_browse);
                     summary = "[" + getString(R.string.share_match_over) + "]" + summary;
                 }
 
