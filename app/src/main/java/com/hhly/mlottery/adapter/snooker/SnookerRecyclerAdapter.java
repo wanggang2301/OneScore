@@ -113,16 +113,17 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
                  */
                 switch(DetailsData.getStatus()){
                     case "0":
-                        viewHolderList.mSnookerStatus.setText("暂停");
+//                        viewHolderList.mSnookerStatus.setText("暂停");
+                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_pause));
                         break;
                     case "1":
-                        viewHolderList.mSnookerStatus.setText("未开赛");
+                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_no_start));
                         break;
                     case "2":
-                        viewHolderList.mSnookerStatus.setText("结束");
+                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_over_game));
                         break;
                     case "3":
-                        viewHolderList.mSnookerStatus.setText("进行中");
+                        viewHolderList.mSnookerStatus.setText(mContext.getString(R.string.snooker_state_have_ing));
                         break;
                     default:
                         viewHolderList.mSnookerStatus.setText("待定 :" + DetailsData.getStatus()); // TODO********
@@ -177,7 +178,7 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
                         }else{
                             SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean eurOdds = mOdds.getOnlywin().getHb();
                             viewHolderList.mSnookerOddsLeft.setText(eurOdds.getLeftOdds());
-                            viewHolderList.mSnookerOddsMiddle.setText("胜负");
+                            viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_victory_defeat));
                             viewHolderList.mSnookerOddsRight.setText(eurOdds.getRightOdds());
                         }
 //                        SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean eurOdds = mOdds.getOnlywin().getHb();
@@ -196,7 +197,7 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
                         }else{
                             SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean asizeOdds = mOdds.getBigsmall().getHb();
                             viewHolderList.mSnookerOddsLeft.setText(asizeOdds.getLeftOdds());
-                            viewHolderList.mSnookerOddsMiddle.setText("总" + asizeOdds.getHandicapValue());
+                            viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_zong) + asizeOdds.getHandicapValue());
                             viewHolderList.mSnookerOddsRight.setText(asizeOdds.getRightOdds());
                         }
                     }
@@ -212,7 +213,7 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
                             }else{
                                 SnookerMatchOddsBean.SnookerMatchOddsDetailsBean.SnookerMatchOddsDataBean onetwoLj = mOdds.getOnetwo().getLj();
                                 viewHolderList.mSnookerOddsLeft.setText(onetwoLj.getLeftOdds());
-                                viewHolderList.mSnookerOddsMiddle.setText("单双");
+                                viewHolderList.mSnookerOddsMiddle.setText(mContext.getString(R.string.snooker_state_single_double));
                                 viewHolderList.mSnookerOddsRight.setText(onetwoLj.getRightOdds());
                             }
                         }else{

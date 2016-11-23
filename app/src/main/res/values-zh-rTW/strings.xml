@@ -1256,4 +1256,12 @@
     <string name="snooker_setting_single_twins">單雙</string>
     <string name="snooker_setting_nos_show">無</string>
 
+    <string name="snooker_state_pause">暫停</string>
+    <string name="snooker_state_no_start">未開賽</string>
+    <string name="snooker_state_over_game">結束</string>
+    <string name="snooker_state_have_ing">進行中</string>
+    <string name="snooker_state_victory_defeat">勝負</string>
+    <string name="snooker_state_zong">總</string>
+    <string name="snooker_state_single_double">單雙</string>
+
 </resources>
