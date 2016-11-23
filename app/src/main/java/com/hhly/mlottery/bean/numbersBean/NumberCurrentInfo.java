@@ -44,6 +44,8 @@ public class NumberCurrentInfo implements Serializable {
 	private String fifthAddBonus;//
 	private String sixthCount;//
 	private String sixthBonus;//
+	private String sixthAddCount;//
+	private String sixthAddBonus;//
 	private String dirCount;// 直选中奖注数
 	private String dirBonus;// 直选单注奖金
 	private String groupCount;// 组选中奖注数
@@ -56,6 +58,22 @@ public class NumberCurrentInfo implements Serializable {
 	private FootballSecLottery footballSecLottery;
 	private FootballFirlottery footballFirlottery;
 	private boolean isOpen = false;// 是否发生改变了
+
+	public String getSixthAddCount() {
+		return sixthAddCount;
+	}
+
+	public void setSixthAddCount(String sixthAddCount) {
+		this.sixthAddCount = sixthAddCount;
+	}
+
+	public String getSixthAddBonus() {
+		return sixthAddBonus;
+	}
+
+	public void setSixthAddBonus(String sixthAddBonus) {
+		this.sixthAddBonus = sixthAddBonus;
+	}
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;

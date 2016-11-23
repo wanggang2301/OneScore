@@ -22,7 +22,7 @@
             <TextView
                 style="@style/lottery_info_title"
                 android:background="@drawable/number_tab_solid_all2"
-                android:text="奖级" />
+                android:text="@string/number_info_prize" />
 
 
             <LinearLayout
@@ -36,7 +36,7 @@
                     android:layout_weight="3"
                     android:background="@drawable/number_tab_solid_all_l_b_r"
                     android:gravity="center"
-                    android:text="一等奖"
+                    android:text="@string/number_info_bonus_1"
                     android:textColor="@color/content_txt_dark_grad"
                     android:textSize="10sp" />
 
@@ -48,11 +48,11 @@
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="基本" />
+                        android:text="@string/number_info_basic" />
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="追加" />
+                        android:text="@string/number_info_basic_add" />
 
                 </LinearLayout>
 
@@ -69,7 +69,7 @@
                     android:layout_weight="3"
                     android:background="@drawable/number_tab_solid_all_l_b_r"
                     android:gravity="center"
-                    android:text="二等奖"
+                    android:text="@string/number_info_bonus_2"
                     android:textColor="@color/content_txt_dark_grad"
                     android:textSize="10sp" />
 
@@ -81,11 +81,11 @@
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="基本" />
+                        android:text="@string/number_info_basic" />
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="追加" />
+                        android:text="@string/number_info_basic_add" />
 
                 </LinearLayout>
 
@@ -102,7 +102,7 @@
                     android:layout_weight="3"
                     android:background="@drawable/number_tab_solid_all_l_b_r"
                     android:gravity="center"
-                    android:text="三等奖"
+                    android:text="@string/number_info_bonus_3"
                     android:textColor="@color/content_txt_dark_grad"
                     android:textSize="10sp" />
 
@@ -114,11 +114,11 @@
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="基本" />
+                        android:text="@string/number_info_basic" />
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="追加" />
+                        android:text="@string/number_info_basic_add" />
 
                 </LinearLayout>
 
@@ -135,7 +135,7 @@
                     android:layout_weight="3"
                     android:background="@drawable/number_tab_solid_all_l_b_r"
                     android:gravity="center"
-                    android:text="四等奖"
+                    android:text="@string/number_info_bonus_4"
                     android:textColor="@color/content_txt_dark_grad"
                     android:textSize="10sp" />
 
@@ -147,11 +147,11 @@
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="基本" />
+                        android:text="@string/number_info_basic" />
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="追加" />
+                        android:text="@string/number_info_basic_add" />
 
                 </LinearLayout>
 
@@ -168,7 +168,7 @@
                     android:layout_weight="3"
                     android:background="@drawable/number_tab_solid_all_l_b_r"
                     android:gravity="center"
-                    android:text="五等奖"
+                    android:text="@string/number_info_bonus_5"
                     android:textColor="@color/content_txt_dark_grad"
                     android:textSize="10sp" />
 
@@ -180,11 +180,11 @@
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="基本" />
+                        android:text="@string/number_info_basic" />
 
                     <TextView
                         style="@style/lottery_info_content_add"
-                        android:text="追加" />
+                        android:text="@string/number_info_basic_add" />
 
                 </LinearLayout>
 
@@ -193,7 +193,7 @@
             <TextView
                 style="@style/lottery_info_content_left"
                 android:layout_height="20dp"
-                android:text="六等奖" />
+                android:text="@string/number_info_bonus_6" />
 
 
         </LinearLayout>
@@ -207,73 +207,62 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="中奖注数(注)" />
+                android:text="@string/number_info_count" />
 
             <TextView
                 android:id="@+id/lottery_dlt_count1"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="3" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_add_count1"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="2" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_count2"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="127" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_add_count2"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="1619" />
+                android:layout_height="20dp"/>
 
             <TextView
                 android:id="@+id/lottery_dlt_count3"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="63501" />
+                android:layout_height="20dp"/>
 
             <TextView
                 android:id="@+id/lottery_dlt_add_count3"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="1329019" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_count4"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="1619" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_add_count4"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="63501" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_count5"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="63501" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_add_count5"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="63501" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_count6"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="1329019" />
+                android:layout_height="20dp" />
 
         </LinearLayout>
 
@@ -286,74 +275,63 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="每注奖金(元)"
+                android:text="@string/number_info_bonus"
                 android:id="@+id/textView" />
 
             <TextView
                 android:id="@+id/lottery_dlt_bonus1"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="10,000,000" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_add_bonus1"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="15000000(含派奖5000000)" />
+                android:layout_height="20dp"/>
 
             <TextView
                 android:id="@+id/lottery_dlt_bonus2"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="219,909" />
+                android:layout_height="20dp"/>
 
             <TextView
                 android:id="@+id/lottery_dlt_add_bonus2"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="3,000" />
+                android:layout_height="20dp"/>
 
             <TextView
                 android:id="@+id/lottery_dlt_bonus3"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="200" />
+                android:layout_height="20dp"/>
 
             <TextView
                 android:id="@+id/lottery_dlt_add_bonus3"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="200" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_bonus4"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="200" />
+                android:layout_height="20dp"/>
 
             <TextView
                 android:id="@+id/lottery_dlt_add_bonus4"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="200" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_bonus5"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="200" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_add_bonus5"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="200" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/lottery_dlt_bonus6"
                 style="@style/lottery_info_content_right"
-                android:layout_height="20dp"
-                android:text="10" />
+                android:layout_height="20dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -367,13 +345,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="本期销售额：" />
+            android:text="@string/number_info_sale" />
 
         <TextView
             android:id="@+id/lottery_dlt_sales_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥354,586,076元"
             android:textColor="@color/number_red" />
 
     </LinearLayout>
@@ -388,13 +365,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="奖金滚存：" />
+            android:text="@string/number_info_bonus_sum" />
 
         <TextView
             android:id="@+id/lottery_dlt_bonus_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥354,586,076元"
             android:textColor="@color/number_red" />
 
     </LinearLayout>
@@ -423,7 +399,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="综合"
+                    android:text="@string/number_info_comprehensive"
                     android:textColor="@color/title"
                     android:textSize="@dimen/number_title" />
             </LinearLayout>
@@ -436,7 +412,7 @@
 
                 <TextView
                     style="@style/number_text_style4"
-                    android:text="和值"
+                    android:text="@string/number_info_value_sum"
                     android:textColor="@color/title" />
             </LinearLayout>
 
@@ -470,7 +446,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="红球"
+                    android:text="@string/number_info_boll_red"
                     android:textColor="@color/title"
                     android:textSize="@dimen/number_title" />
             </LinearLayout>
@@ -483,12 +459,12 @@
 
                 <TextView
                     style="@style/number_text_style5"
-                    android:text="大小"
+                    android:text="@string/number_info_dx"
                     android:textColor="@color/title" />
 
                 <TextView
                     style="@style/number_text_style5"
-                    android:text="奇偶"
+                    android:text="@string/number_info_jo"
                     android:textColor="@color/title" />
             </LinearLayout>
 

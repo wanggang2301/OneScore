@@ -22,19 +22,19 @@
             <TextView
                 style="@style/lottery_info_title"
                 android:background="@drawable/number_tab_solid_all2"
-                android:text="奖项" />
+                android:text="@string/number_info_prize" />
 
             <TextView
                 style="@style/lottery_info_content_left"
-                android:text="直选" />
+                android:text="@string/number_info_pl3_count1" />
 
             <TextView
                 style="@style/lottery_info_content_left"
-                android:text="组三" />
+                android:text="@string/number_info_pl3_count2" />
 
             <TextView
                 style="@style/lottery_info_content_left"
-                android:text="组六" />
+                android:text="@string/number_info_pl3_count3" />
 
         </LinearLayout>
 
@@ -47,22 +47,19 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="单注奖金(元)" />
+                android:text="@string/number_info_count" />
 
             <TextView
-                android:id="@+id/lottery_pl3_bonus1"
-                style="@style/lottery_info_content_right"
-                android:text="108,888元" />
+                android:id="@+id/lottery_pl3_count1"
+                style="@style/lottery_info_content_right" />
 
             <TextView
-                android:id="@+id/lottery_pl3_bonus2"
-                style="@style/lottery_info_content_right"
-                android:text="108,888元" />
+                android:id="@+id/lottery_pl3_count2"
+                style="@style/lottery_info_content_right" />
 
             <TextView
-                android:id="@+id/lottery_pl3_bonus3"
-                style="@style/lottery_info_content_right"
-                android:text="108,888元" />
+                android:id="@+id/lottery_pl3_count3"
+                style="@style/lottery_info_content_right" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,22 +71,19 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="中奖注数(注)" />
+                android:text="@string/number_info_bonus" />
 
             <TextView
-                android:id="@+id/lottery_pl3_count1"
-                style="@style/lottery_info_content_right"
-                android:text="108注" />
+                android:id="@+id/lottery_pl3_bonus1"
+                style="@style/lottery_info_content_right" />
 
             <TextView
-                android:id="@+id/lottery_pl3_count2"
-                style="@style/lottery_info_content_right"
-                android:text="108注" />
+                android:id="@+id/lottery_pl3_bonus2"
+                style="@style/lottery_info_content_right" />
 
             <TextView
-                android:id="@+id/lottery_pl3_count3"
-                style="@style/lottery_info_content_right"
-                android:text="108注" />
+                android:id="@+id/lottery_pl3_bonus3"
+                style="@style/lottery_info_content_right"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -104,13 +98,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="全国销量：" />
+            android:text="@string/number_info_sale" />
 
         <TextView
             android:id="@+id/lottery_pl3_sales_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥354,586,076元"
             android:textColor="@color/number_red" />
 
     </LinearLayout>
@@ -131,17 +124,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="直选：所选号码与开奖号码按位数全部相同"/>
+            android:text="@string/number_info_pl3_desc1"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="组三：开奖号码中有[对子]，且包含任选号中"/>
+            android:text="@string/number_info_pl3_desc2"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="组六：三个开奖号码[均不相同]，且包含任选号中"/>
+            android:text="@string/number_info_pl3_desc3"/>
         
     </LinearLayout>
 </LinearLayout>

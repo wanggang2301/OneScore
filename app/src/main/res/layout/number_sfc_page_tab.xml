@@ -7,617 +7,555 @@
 
     <!-- 胜负彩 -->
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/lottery_sfc_issue"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="第16095期"
-                android:textColor="@color/content_txt_black" />
-
-            <!--场次统计-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:background="@drawable/number_tab_solid_all2"
-                        android:text="场次" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="1" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="2" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="3" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="4" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="5" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="6" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="7" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="8" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="9" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="10" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="11" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="12" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="13" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="14" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="对阵" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs1"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs2"
-                        style="@style/lottery_info_content_right"
-                        android:text="2" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs3"
-                        style="@style/lottery_info_content_right"
-                        android:text="127" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs4"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs5"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs6"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs7"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs8"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs9"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs10"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs11"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs12"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs13"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_vs14"
-                        style="@style/lottery_info_content_right"
-                        android:text="法国 3:1 冰岛" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="开赛时间" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time1"
-                        style="@style/lottery_info_content_right"
-                        android:text="07-04 03:00" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time2"
-                        style="@style/lottery_info_content_right"
-                        android:text="2" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time3"
-                        style="@style/lottery_info_content_right"
-                        android:text="127" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time4"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time5"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time6"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time7"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time8"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time9"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time10"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time11"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time12"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time13"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_time14"
-                        style="@style/lottery_info_content_right"
-                        android:text="1619" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2.5"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="彩果" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result1"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result2"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="2" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result3"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="219,909" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result4"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3,000" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result5"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result6"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result7"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result8"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result9"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result10"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result11"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result12"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result13"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfc_result14"
-                        style="@style/lottery_info_content_right"
-                        android:background="@drawable/number_tab_solid_all_r_b2"
-                        android:text="3" />
-
-                </LinearLayout>
-            </LinearLayout>
+                style="@style/lottery_info_title"
+                android:background="@drawable/number_tab_solid_all2"
+                android:text="@string/number_info_sc_round" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                android:text="胜负十四场"
-                android:textColor="@color/content_txt_black" />
-
-            <!--本期销量-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="本期销量：" />
-
-                <TextView
-                    android:id="@+id/lottery_sfssc_sales_volume"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥354,586,076元"
-                    android:textColor="@color/number_red" />
-
-            </LinearLayout>
-
-            <!--奖金滚存-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="奖金滚存：" />
-
-                <TextView
-                    android:id="@+id/lottery_sfc_bonus_sum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥354,586,076元"
-                    android:textColor="@color/number_red" />
-
-            </LinearLayout>
-
-            <!--奖项统计-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:background="@drawable/number_tab_solid_all2"
-                        android:text="奖项" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="一等奖" />
-
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="二等奖" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="中奖注数(注)" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfssc_count1"
-                        style="@style/lottery_info_content_right"
-                        android:text="108" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfssc_count2"
-                        style="@style/lottery_info_content_right"
-                        android:text="108" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="单注奖金(元)" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfssc_bouns1"
-                        style="@style/lottery_info_content_right"
-                        android:text="236,873" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfssc_bouns2"
-                        style="@style/lottery_info_content_right"
-                        android:text="236,873" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="中奖条件" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfssc_condition1"
-                        style="@style/lottery_info_content_right"
-                        android:text="8队全中" />
-
-                    <TextView
-                        android:id="@+id/lottery_sfssc_condition2"
-                        style="@style/lottery_info_content_right"
-                        android:text="8队全中" />
-
-                </LinearLayout>
-            </LinearLayout>
+                style="@style/lottery_info_content_left"
+                android:text="1" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                android:text="任选九场"
-                android:textColor="@color/content_txt_black" />
+                style="@style/lottery_info_content_left"
+                android:text="2" />
 
-            <!--本期销量-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="3" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="本期销量：" />
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="4" />
 
-                <TextView
-                    android:id="@+id/lottery_rxjc_sales_volume"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥354,586,076元"
-                    android:textColor="@color/number_red" />
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="5" />
 
-            </LinearLayout>
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="6" />
 
-            <!--奖项统计-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="7" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="8" />
 
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:background="@drawable/number_tab_solid_all2"
-                        android:text="奖项" />
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="9" />
 
-                    <TextView
-                        style="@style/lottery_info_content_left"
-                        android:text="一等奖" />
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="10" />
 
-                </LinearLayout>
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="11" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:gravity="center"
-                    android:orientation="vertical">
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="12" />
 
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="中奖注数(注)" />
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="13" />
 
-                    <TextView
-                        android:id="@+id/lottery_rxjc_count"
-                        style="@style/lottery_info_content_right"
-                        android:text="108" />
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="14" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="单注奖金(元)" />
-
-                    <TextView
-                        android:id="@+id/lottery_rxjc_bouns"
-                        style="@style/lottery_info_content_right"
-                        android:text="236,873" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/lottery_info_title"
-                        android:text="中奖条件" />
-
-                    <TextView
-                        android:id="@+id/lottery_rxjc_condition"
-                        style="@style/lottery_info_content_right"
-                        android:text="8队全中" />
-
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_vs" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs1"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs2"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs3"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs4"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs5"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs6"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs7"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs8"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs9"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs10"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs11"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs12"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs13"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_vs14"
+                style="@style/lottery_info_content_right" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_start_time" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time1"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time2"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time3"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time4"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time5"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time6"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time7"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time8"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time9"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time10"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time11"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time12"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time13"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_time14"
+                style="@style/lottery_info_content_right" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_result" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result1"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result2"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result3"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result4"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result5"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result6"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result7"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result8"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result9"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result10"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result11"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result12"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result13"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+            <TextView
+                android:id="@+id/lottery_sfc_result14"
+                style="@style/lottery_info_content_right"
+                android:background="@drawable/number_tab_solid_all_r_b2" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lottery_sfc_issue"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/content_txt_black" />
+
+    <!--场次统计-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:text="@string/number_info_name_sfssc"
+        android:textColor="@color/content_txt_black" />
+
+    <!--本期销量-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_info_sale" />
+
+        <TextView
+            android:id="@+id/lottery_sfssc_sales_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/number_red" />
+
+    </LinearLayout>
+
+    <!--奖金滚存-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_info_bonus_sum" />
+
+        <TextView
+            android:id="@+id/lottery_sfc_bonus_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/number_red" />
+
+    </LinearLayout>
+
+    <!--奖项统计-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:background="@drawable/number_tab_solid_all2"
+                android:text="@string/number_info_prize" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="@string/number_info_bonus_1" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="@string/number_info_bonus_2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_count" />
+
+            <TextView
+                android:id="@+id/lottery_sfssc_count1"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfssc_count2"
+                style="@style/lottery_info_content_right" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_bonus" />
+
+            <TextView
+                android:id="@+id/lottery_sfssc_bouns1"
+                style="@style/lottery_info_content_right" />
+
+            <TextView
+                android:id="@+id/lottery_sfssc_bouns2"
+                style="@style/lottery_info_content_right" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_condition" />
+
+            <TextView
+                android:id="@+id/lottery_sfssc_condition1"
+                style="@style/lottery_info_content_right"
+                android:text="@string/number_info_full_14" />
+
+            <TextView
+                android:id="@+id/lottery_sfssc_condition2"
+                style="@style/lottery_info_content_right"
+                android:text="@string/number_info_full_wrong1" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:text="@string/number_info_name_rxjc"
+        android:textColor="@color/content_txt_black" />
+
+    <!--本期销量-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_info_sale" />
+
+        <TextView
+            android:id="@+id/lottery_rxjc_sales_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/number_red" />
+
+    </LinearLayout>
+
+    <!--奖项统计-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:background="@drawable/number_tab_solid_all2"
+                android:text="@string/number_info_prize" />
+
+            <TextView
+                style="@style/lottery_info_content_left"
+                android:text="@string/number_info_bonus_1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_count" />
+
+            <TextView
+                android:id="@+id/lottery_rxjc_count"
+                style="@style/lottery_info_content_right" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_bonus" />
+
+            <TextView
+                android:id="@+id/lottery_rxjc_bouns"
+                style="@style/lottery_info_content_right" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_condition" />
+
+            <TextView
+                android:id="@+id/lottery_rxjc_condition"
+                style="@style/lottery_info_content_right"
+                android:text="@string/number_info_full_9" />
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

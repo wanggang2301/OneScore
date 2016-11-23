@@ -22,11 +22,11 @@
             <TextView
                 style="@style/lottery_info_title"
                 android:background="@drawable/number_tab_solid_all2"
-                android:text="奖项" />
+                android:text="@string/number_info_prize" />
 
             <TextView
                 style="@style/lottery_info_content_left"
-                android:text="排列五直选" />
+                android:text="@string/number_info_pl5_count" />
 
         </LinearLayout>
 
@@ -39,12 +39,11 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="单注奖金(元)" />
+                android:text="@string/number_info_count" />
 
             <TextView
-                android:id="@+id/lottery_pl5_bonus"
-                style="@style/lottery_info_content_right"
-                android:text="108,888元" />
+                android:id="@+id/lottery_pl5_count"
+                style="@style/lottery_info_content_right" />
 
         </LinearLayout>
 
@@ -57,12 +56,11 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="中奖注数(注)" />
+                android:text="@string/number_info_bonus" />
 
             <TextView
-                android:id="@+id/lottery_pl5_count"
-                style="@style/lottery_info_content_right"
-                android:text="108注" />
+                android:id="@+id/lottery_pl5_bonus"
+                style="@style/lottery_info_content_right" />
 
         </LinearLayout>
     </LinearLayout>
@@ -77,13 +75,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="全国销量：" />
+            android:text="@string/number_info_sale" />
 
         <TextView
             android:id="@+id/lottery_pl5_sales_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥354,586,076元"
             android:textColor="@color/number_red" />
 
     </LinearLayout>
@@ -98,13 +95,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="奖金滚存：" />
+            android:text="@string/number_info_bonus_sum" />
 
         <TextView
             android:id="@+id/lottery_pl5_bonus_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥354,586,076元"
             android:textColor="@color/number_red" />
 
     </LinearLayout>

@@ -501,8 +501,51 @@
     <string name="number_ssq_dxb">大小比</string>
     <string name="number_ssq_zhb">質合比</string>
     <string name="number_ssq_qjb">區間比</string>
-    <string name="number_ssq_bonus">獎金滾存：</string>
     <string name="number_bonus_type">¥</string>
+
+    <string name="number_info_sc_round">場次</string>
+    <string name="number_info_vs">對陣</string>
+    <string name="number_info_start_time">開賽時間</string>
+    <string name="number_info_sale">本期全國銷量：</string>
+    <string name="number_info_bonus_sum">獎金滾存：</string>
+    <string name="number_info_prize">獎項</string>
+    <string name="number_info_bonus_1">壹等獎</string>
+    <string name="number_info_bonus_1_1">其中：壹等獎複式投注</string>
+    <string name="number_info_bonus_2">二等獎</string>
+    <string name="number_info_bonus_3">三等獎</string>
+    <string name="number_info_bonus_4">四等獎</string>
+    <string name="number_info_bonus_5">五等獎</string>
+    <string name="number_info_bonus_6">六等獎</string>
+    <string name="number_info_bonus_6_1">其中：六等獎複式投注</string>
+    <string name="number_info_count">中獎注數(注)</string>
+    <string name="number_info_bonus">單注獎金(元)</string>
+    <string name="number_info_condition">中獎條件</string>
+    <string name="number_info_full_6">6半全全對</string>
+    <string name="number_info_full_8">8隊全對</string>
+    <string name="number_info_full_9">9場全對</string>
+    <string name="number_info_full_14">14場全對</string>
+    <string name="number_info_full_wrong1">錯1場</string>
+    <string name="number_info_full">全</string>
+    <string name="number_info_half">半</string>
+    <string name="number_info_result">彩果</string>
+    <string name="number_info_qj">區間</string>
+    <string name="number_info_jo">奇偶</string>
+    <string name="number_info_dx">大小</string>
+    <string name="number_info_boll_red">紅球</string>
+    <string name="number_info_comprehensive">綜合</string>
+    <string name="number_info_value_sum">和值</string>
+    <string name="number_info_name_sfssc">勝負十四場</string>
+    <string name="number_info_name_rxjc">任選九場</string>
+    <string name="number_info_basic">基本</string>
+    <string name="number_info_basic_add">追加</string>
+
+    <string name="number_info_pl3_desc1">直選：所選號碼與開獎號碼按位數全部相同</string>
+    <string name="number_info_pl3_desc2">組三：開獎號碼中有[對子]，且包含任選號中</string>
+    <string name="number_info_pl3_desc3">組六：三個開獎號碼[均不相同]，且包含任選號中</string>
+    <string name="number_info_pl3_count1">直選</string>
+    <string name="number_info_pl3_count2">組三</string>
+    <string name="number_info_pl3_count3">組六</string>
+    <string name="number_info_pl5_count">排列五直選</string>
 
     <!-- 彩票End -->
 

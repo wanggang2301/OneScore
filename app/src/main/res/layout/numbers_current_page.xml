@@ -41,6 +41,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/ll_number_info_content"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
@@ -318,14 +319,13 @@
                                         </LinearLayout>
                                     </FrameLayout>
                                 </FrameLayout>
+
+                                <!-- 分隔线 -->
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/linecolor"/>
                             </LinearLayout>
-
-                            <!-- 分隔线 -->
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/linecolor"/>
 
                             <!-- 统计数据显示 -->
 

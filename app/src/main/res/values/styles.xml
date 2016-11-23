@@ -931,7 +931,7 @@
     </style>
     <!--首页彩票入口条目样式 end -->
 
-    <!--彩票详情页-->
+    <!--彩票详情页 start -->
     <style name="lottery_info_title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">30dp</item>
@@ -940,6 +940,7 @@
         <item name="android:lines">1</item>
         <item name="android:textColor">@color/content_txt_black</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:text">@string/number_info_default</item>
     </style>
 
     <style name="lottery_info_content_left">
@@ -950,6 +951,7 @@
         <item name="android:lines">1</item>
         <item name="android:textColor">@color/content_txt_dark_grad</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
     </style>
 
     <style name="lottery_info_content_right">
@@ -960,6 +962,7 @@
         <item name="android:lines">1</item>
         <item name="android:textColor">@color/content_txt_dark_grad</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:text">@string/number_info_default</item>
     </style>
 
     <style name="lottery_info_content_add">
@@ -970,6 +973,8 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/content_txt_dark_grad</item>
         <item name="android:background">@drawable/number_tab_solid_all_r_b</item>
+        <item name="android:text">@string/number_info_default</item>
     </style>
+    <!--彩票详情页 end -->
 
 </resources>

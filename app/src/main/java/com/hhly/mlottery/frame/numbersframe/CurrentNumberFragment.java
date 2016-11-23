@@ -131,32 +131,33 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
      */
     private void getStartCountDown() {
         try {
-            mNumberTime = DateUtil.getCurrentTime(mNumberInfo.getNextTime()) - Long.parseLong(serverTime);// 获取下一期开奖时间
-            if (!isCountDown && isExit) {
-                new Thread() {
-                    public void run() {
-                        try {
-                            isCountDown = true;
-                            while (!isOpenNumberStartHistory && mNumberTime >= 0 && isExit) {
+            if (mNumberInfo.getNextTime() != null) {
+                mNumberTime = DateUtil.getCurrentTime(mNumberInfo.getNextTime()) - Long.parseLong(serverTime);// 获取下一期开奖时间
+                if (!isCountDown && isExit) {
+                    new Thread() {
+                        public void run() {
+                            try {
+                                isCountDown = true;
+                                while (!isOpenNumberStartHistory && mNumberTime >= 0 && isExit) {
 
-                                mHandler.sendEmptyMessage(UPDATECOUNTDOWN);// 更新倒计时
+                                    mHandler.sendEmptyMessage(UPDATECOUNTDOWN);// 更新倒计时
 
-                                sleep(1000);
-                                mNumberTime -= 1000;
+                                    sleep(1000);
+                                    mNumberTime -= 1000;
+                                }
+                                if (isExit) {
+                                    allNumbers = null;
+                                    numbersDataShow(2);// 开奖时重新获取开奖状态
+                                }
+                                isCountDown = false;
+                            } catch (InterruptedException e) {
+                                L.d("倒计时子线程休眠异常！ " + e.getMessage());
                             }
-                            if (isExit) {
-                                allNumbers = null;
-                                numbersDataShow(2);// 开奖时重新获取开奖状态
-                            }
-                            isCountDown = false;
-                        } catch (InterruptedException e) {
-                            L.d("倒计时子线程休眠异常！ " + e.getMessage());
                         }
-                    }
 
-                }.start();
+                    }.start();
+                }
             }
-
         } catch (Exception e) {
             L.d("时间日期转换异常！ " + e.getMessage());
         }
@@ -201,7 +202,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
 
         numberlist = new ArrayList<NumberCurrentInfo>();
 
-        NumbersOpenBean jsonObject = JSON.parseObject(AppConstants.getTestData(),NumbersOpenBean.class);
+        NumbersOpenBean jsonObject = JSON.parseObject(AppConstants.getTestData(), NumbersOpenBean.class);
         serverTime = jsonObject.getServerTime();
         numberlist = jsonObject.getNumLotteryResults();
 
@@ -221,7 +222,9 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
             mHandler.sendEmptyMessage(SUCCESSLOADING);
         }
 
-//        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+//        String url = "http://m.1332255.com:81/mlottery/core/lastLotteryResults.findNewIOSLastLotteryResults.do";
+////        AppConstants.numberHistoryURLs[0]
+//        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
 //            @Override
 //            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
 //                if (null != jsonObject) {// 判断数据是否为空
@@ -312,7 +315,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
             try {
                 mNumberTime = DateUtil.getCurrentTime(mNumberInfo.getNextTime()) - Long.parseLong(serverTime);// 获取下一期开奖时间
                 long mm = (mNumberTime / 1000 / 60);// 获取相差分
-                switch (mNumberName){
+                switch (mNumberName) {
                     case "1":
                     case "6":
                     case "24":
@@ -401,7 +404,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
         tv_number_info_time_mm = (TextView) mView.findViewById(R.id.tv_number_info_time_mm);
         tv_number_info_time_ss = (TextView) mView.findViewById(R.id.tv_number_info_time_ss);
 
-        switch (mNumberName){
+        switch (mNumberName) {
             case "1":
             case "6":
             case "24":
@@ -428,14 +431,16 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
                 break;
         }
     }
-   private boolean isOneShow = true;// 首次加载
+
+    private boolean isOneShow = true;// 首次加载
+
     @Override
     public void onResume() {
         isExit = true;
-        if(isOneShow){
+        if (isOneShow) {
             initData();
             isOneShow = false;
-        }else{
+        } else {
             numbersDataShow(1);
         }
         super.onResume();
@@ -540,7 +545,7 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
 
                     if (j == index) {
 //                        iv.setImageResource(R.mipmap.number_anim_klsf_red);// 红球
-                        ImageLoader.loadFitCenter(mContext,R.mipmap.number_anim_klsf_red,R.mipmap.number_kj_icon_def).into(iv);// 红球
+                        ImageLoader.loadFitCenter(mContext, R.mipmap.number_anim_klsf_red, R.mipmap.number_kj_icon_def).into(iv);// 红球
                     }
 
                     ll.addView(iv);
@@ -684,8 +689,14 @@ public class CurrentNumberFragment extends Fragment implements SwipeRefreshLayou
      */
     private void obtainNewStart() {
         getCurrentBean();// 获取当前对象
-        initIsHKOpenNumberStart();// 判断开奖状态
-        animationPlay();
+        if ("30".equals(mNumberName) || "31".equals(mNumberName) || "32".equals(mNumberName)) {
+//TODO
+            // 直接显示详情页
+            utils.numberHistoryShow(mContext, mView, mNumberInfo, 1, false, isNextNumber, null);
+        } else {
+            initIsHKOpenNumberStart();// 判断开奖状态
+            animationPlay();
+        }
     }
 
     /**

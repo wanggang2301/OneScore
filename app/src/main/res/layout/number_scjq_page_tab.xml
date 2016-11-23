@@ -11,8 +11,7 @@
         android:id="@+id/lottery_scjq_issue"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/content_txt_black"
-        android:text="第16095期" />
+        android:textColor="@color/content_txt_black" />
 
     <!--场次统计-->
     <LinearLayout
@@ -30,7 +29,7 @@
             <TextView
                 style="@style/lottery_info_title"
                 android:background="@drawable/number_tab_solid_all2"
-                android:text="场次" />
+                android:text="@string/number_info_sc_round" />
 
             <TextView
                 style="@style/lottery_info_content_left"
@@ -59,27 +58,23 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="对阵" />
+                android:text="@string/number_info_vs" />
 
             <TextView
                 android:id="@+id/lottery_scjq_vs1"
-                style="@style/lottery_info_content_right"
-                android:text="法国 3:1 冰岛" />
+                style="@style/lottery_info_content_right"/>
 
             <TextView
                 android:id="@+id/lottery_scjq_vs2"
-                style="@style/lottery_info_content_right"
-                android:text="2" />
+                style="@style/lottery_info_content_right" />
 
             <TextView
                 android:id="@+id/lottery_scjq_vs3"
-                style="@style/lottery_info_content_right"
-                android:text="127" />
+                style="@style/lottery_info_content_right"/>
 
             <TextView
                 android:id="@+id/lottery_scjq_vs4"
-                style="@style/lottery_info_content_right"
-                android:text="1619" />
+                style="@style/lottery_info_content_right"/>
 
         </LinearLayout>
 
@@ -92,27 +87,23 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="开赛时间" />
+                android:text="@string/number_info_start_time" />
 
             <TextView
                 android:id="@+id/lottery_scjq_time1"
-                style="@style/lottery_info_content_right"
-                android:text="07-04 03:00" />
+                style="@style/lottery_info_content_right" />
 
             <TextView
                 android:id="@+id/lottery_scjq_time2"
-                style="@style/lottery_info_content_right"
-                android:text="15000000(含派奖5000000)" />
+                style="@style/lottery_info_content_right" />
 
             <TextView
                 android:id="@+id/lottery_scjq_time3"
-                style="@style/lottery_info_content_right"
-                android:text="219,909" />
+                style="@style/lottery_info_content_right"/>
 
             <TextView
                 android:id="@+id/lottery_scjq_time4"
-                style="@style/lottery_info_content_right"
-                android:text="3,000" />
+                style="@style/lottery_info_content_right"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -127,13 +118,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="本期销量：" />
+            android:text="@string/number_info_sale" />
 
         <TextView
             android:id="@+id/lottery_scjq_sales_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥354,586,076元"
+            android:text="@string/number_info_default"
             android:textColor="@color/number_red" />
 
     </LinearLayout>
@@ -148,13 +139,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="奖金滚存：" />
+            android:text="@string/number_info_bonus_sum" />
 
         <TextView
             android:id="@+id/lottery_scjq_bonus_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥354,586,076元"
             android:textColor="@color/number_red" />
 
     </LinearLayout>
@@ -169,54 +159,17 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:orientation="vertical">
 
             <TextView
                 style="@style/lottery_info_title"
                 android:background="@drawable/number_tab_solid_all2"
-                android:text="奖项" />
+                android:text="@string/number_info_prize" />
 
             <TextView
                 style="@style/lottery_info_content_left"
-                android:text="一等奖" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/lottery_info_title"
-                android:text="中奖注数(注)" />
-
-            <TextView
-                android:id="@+id/lottery_scjq_count"
-                style="@style/lottery_info_content_right"
-                android:text="108" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/lottery_info_title"
-                android:text="单注奖金(元)" />
-
-            <TextView
-                android:id="@+id/lottery_scjq_bonus"
-                style="@style/lottery_info_content_right"
-                android:text="236,873" />
-
+                android:text="@string/number_info_bonus_1" />
 
         </LinearLayout>
 
@@ -229,12 +182,46 @@
 
             <TextView
                 style="@style/lottery_info_title"
-                android:text="中奖条件" />
+                android:text="@string/number_info_count" />
 
             <TextView
-                android:id="@+id/lottery_scjq_condition"
+                android:id="@+id/lottery_scjq_count"
+                style="@style/lottery_info_content_right"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_bonus" />
+
+            <TextView
+                android:id="@+id/lottery_scjq_bonus"
+                style="@style/lottery_info_content_right" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/lottery_info_title"
+                android:text="@string/number_info_condition" />
+
+            <TextView
                 style="@style/lottery_info_content_right"
-                android:text="8队全中" />
+                android:text="@string/number_info_full_8" />
 
         </LinearLayout>
     </LinearLayout>

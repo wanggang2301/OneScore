@@ -1056,7 +1056,9 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
             mHandler.sendEmptyMessage(SUCCESSLOADING);
         }
 
-//        VolleyContentFast.requestJsonByGet(AppConstants.numberHistoryURLs[0], new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
+        String url = "http://m.1332255.com:81/mlottery/core/lastLotteryResults.findNewIOSLastLotteryResults.do";
+//        AppConstants.numberHistoryURLs[0]
+//        VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<NumbersOpenBean>() {
 //            @Override
 //            public synchronized void onResponse(final NumbersOpenBean jsonObject) {
 //                if (null != jsonObject) {// 判断数据是否为空
