@@ -61,12 +61,14 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
 
         if ((b.getEventId() + "").startsWith("1", 0)) {  //公共事件 1开头
             circleImageView.setVisibility(View.GONE);
+
             baseViewHolder.getView(R.id.tv_remainTime).setVisibility(View.GONE);
             baseViewHolder.setText(R.id.tv_remainTime, "");
             baseViewHolder.getView(R.id.iv_topsanjiao).setVisibility(View.GONE);
             baseViewHolder.getView(R.id.tv_eventContent).setBackgroundResource(0);
             ((TextView) baseViewHolder.getView(R.id.tv_eventContent)).setTextColor(mContext.getResources().getColor(R.color.black_details_textcolor));
         } else {
+
             text += "  " + "<font color='#21b11e'>" + b.getGuestScore() + "-" + b.getHomeScore() + "</font>";
             circleImageView.setVisibility(View.VISIBLE);
 
@@ -74,6 +76,8 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
                 ImageLoader.load(mContext, BasketDetailsActivityTest.homeIconUrl, R.mipmap.basket_default).into(circleImageView);
             } else if (2 == b.getTeamType()) { //客队
                 ImageLoader.load(mContext, BasketDetailsActivityTest.guestIconUrl, R.mipmap.basket_default).into(circleImageView);
+            } else {
+                circleImageView.setVisibility(View.GONE);  //既不是主队也不是客队
             }
 
             if (b.getRemainTime() == null || "".equals(b.getRemainTime())) {
@@ -91,6 +95,7 @@ public class BasketBallTextLiveAdapter extends BaseQuickAdapter<BasketEachTextLi
         }
         baseViewHolder.setText(R.id.tv_eventContent, Html.fromHtml(text));
     }
+
 
     public interface PullUpLoading {
         void onPullUpLoading();

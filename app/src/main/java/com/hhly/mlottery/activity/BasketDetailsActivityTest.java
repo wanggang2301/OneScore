@@ -202,7 +202,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             }
 
             if (isNBA) {
-                mBasketLiveFragment = BasketLiveFragment.newInstance(mThirdId);
+                mBasketLiveFragment = BasketLiveFragment.newInstance();
             }
 
             mOddsEuro = BasketOddsFragment.newInstance(mThirdId, ODDS_EURO);
@@ -390,8 +390,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     @Override
     protected void onTextResult(String text) {
 
-        L.d("123456", text);
-
         String type = "";
         try {
             JSONObject jsonObject = new JSONObject(text);
@@ -405,9 +403,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             msg.obj = text;
             msg.arg1 = Integer.parseInt(type);
             L.e(TAG, type + "____________________");
-
-            L.d("socket", "type=" + type);
-            L.d("socket", "text=" + text);
 
             mSocketHandler.sendMessage(msg);
         }
@@ -772,10 +767,16 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void run() {
                 mRefreshLayout.setRefreshing(false);
                 loadData();
+
+                //直播刷新
+                mBasketLiveFragment.refresh();
+
+
                 mAnalyzeFragment.initData();
                 mOddsEuro.initData();
                 mOddsLet.initData();
                 mOddsSize.initData();
+
                 mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }, 1000);
