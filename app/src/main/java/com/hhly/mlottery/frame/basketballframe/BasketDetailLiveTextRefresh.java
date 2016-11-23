@@ -11,6 +11,7 @@ public class BasketDetailLiveTextRefresh {
 
     private String msg;
 
+
     public BasketDetailLiveTextRefresh(String msg) {
         this.msg = msg;
     }

@@ -303,6 +303,7 @@ public class BasketTextLiveFragment extends Fragment {
      * @param basketTextLiveEvent
      */
     public void onEventMainThread(BasketTextLiveEvent basketTextLiveEvent) {
+
         basketEachTextLiveBeanList.add(0, basketTextLiveEvent.getBasketEachTextLiveBean());
         pushHandler.sendEmptyMessage(1);
     }
