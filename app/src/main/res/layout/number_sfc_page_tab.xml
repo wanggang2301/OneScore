@@ -7,6 +7,12 @@
 
     <!-- 胜负彩 -->
 
+    <TextView
+        android:id="@+id/lottery_sfc_issue"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/content_txt_black" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -303,12 +309,6 @@
 
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/lottery_sfc_issue"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/content_txt_black" />
 
     <!--场次统计-->
 
