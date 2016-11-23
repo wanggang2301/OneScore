@@ -81,9 +81,6 @@ public class BasketTextLiveFragment extends Fragment {
         }
 
         EventBus.getDefault().register(this);
-
-        // mThirdId="3755657";
-
     }
 
     @Override
@@ -301,6 +298,8 @@ public class BasketTextLiveFragment extends Fragment {
 
 
     /**
+     * 籃球推送接收
+     *
      * @param basketTextLiveEvent
      */
     public void onEventMainThread(BasketTextLiveEvent basketTextLiveEvent) {
@@ -309,6 +308,11 @@ public class BasketTextLiveFragment extends Fragment {
     }
 
 
+    /**
+     * 下拉刷新
+     *
+     * @param basketDetailLiveTextRefreshEventBus
+     */
     public void onEventMainThread(BasketDetailLiveTextRefresh basketDetailLiveTextRefreshEventBus) {
         loadData();
     }
