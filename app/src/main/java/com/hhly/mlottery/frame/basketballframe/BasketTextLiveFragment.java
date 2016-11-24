@@ -267,7 +267,6 @@ public class BasketTextLiveFragment extends Fragment {
                 if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
                     mBasketBallTextLiveAdapter.setEmptyView(emptyView);
                 } else {
-
                     lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
                     mBasketBallTextLiveAdapter.getData().clear();
                     mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
@@ -292,7 +291,6 @@ public class BasketTextLiveFragment extends Fragment {
                 mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
                 mBasketBallTextLiveAdapter.notifyDataSetChanged();
             }
-
         }
     };
 
@@ -308,7 +306,6 @@ public class BasketTextLiveFragment extends Fragment {
         pushHandler.sendEmptyMessage(1);
     }
 
-
     /**
      * 下拉刷新
      *
@@ -317,7 +314,6 @@ public class BasketTextLiveFragment extends Fragment {
     public void onEventMainThread(BasketDetailLiveTextRefresh basketDetailLiveTextRefreshEventBus) {
         loadData();
     }
-
 
     @Override
     public void onDestroy() {
