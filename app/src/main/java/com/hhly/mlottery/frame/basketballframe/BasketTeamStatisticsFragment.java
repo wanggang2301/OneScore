@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.bean.basket.basketstatistics.BasketTeamStatisticsBean;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -159,8 +160,8 @@ public class BasketTeamStatisticsFragment extends Fragment {
     private void initData() {
         String url="http://m.13322.com/mlottery/core/IOSBasketballDetail.findTeamStats.do";
         Map<String ,String > params=new HashMap<>();
-        mThirdId="3666697";
-        params.put("thirdId",mThirdId);
+
+        params.put("thirdId", BasketDetailsActivityTest.mThirdId);
         VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketTeamStatisticsBean>() {
             @Override
             public void onResponse(BasketTeamStatisticsBean jsonObject) {
@@ -184,38 +185,43 @@ public class BasketTeamStatisticsFragment extends Fragment {
         BasketTeamStatisticsBean.DataEntity.GuestTeamStatsEntity guestEntity=mData.getData().getGuestTeamStats();
         BasketTeamStatisticsBean.DataEntity.HomeTeamStatsEntity homeEntity=mData.getData().getHomeTeamStats();
 
-        guestShoot.setText(guestEntity.getShootHitRate()+"");
-        homeShoot.setText(homeEntity.getShootHitRate()+"");
-        guestThree.setText(guestEntity.getThreePointShotHitRate()+"");
-        homeThree.setText(homeEntity.getThreePointShotHitRate()+"");
+        if(guestEntity!=null){
+            guestShoot.setText(guestEntity.getShootHitRate()+"");
+            guestThree.setText(guestEntity.getThreePointShotHitRate()+"");
+            guestFree.setText(guestEntity.getFreeThrowHitRate()+"");
+            guestRebound.setText(guestEntity.getRebound()+"");
+            guestAssist.setText(guestEntity.getAssist()+"");
+            guestFoul.setText(guestEntity.getFoul()+"");
+            guestSteal.setText(guestEntity.getSteal()+"");
+            guestTurnover.setText(guestEntity.getTurnover()+"");
+            guestBlockShoot.setText(guestEntity.getBlockShot()+"");
+        }
+       if(homeEntity!=null){
+           homeThree.setText(homeEntity.getThreePointShotHitRate()+"");
+           homeShoot.setText(homeEntity.getShootHitRate()+"");
+           homeFree.setText(homeEntity.getFreeThrowHitRate()+"");
+           homeRebound.setText(homeEntity.getRebound()+"");
+           homeAssist.setText(homeEntity.getAssist()+"");
+           homeFoul.setText(homeEntity.getFoul()+"");
+           homeSteal.setText(homeEntity.getSteal()+"");
+           homeTurnover.setText(homeEntity.getTurnover()+"");
+           homeBlockShoot.setText(homeEntity.getBlockShot()+"");
+       }
 
-        guestFree.setText(guestEntity.getFreeThrowHitRate()+"");
-        guestRebound.setText(guestEntity.getRebound()+"");
-        guestAssist.setText(guestEntity.getAssist()+"");
-        guestFoul.setText(guestEntity.getFoul()+"");
-        guestSteal.setText(guestEntity.getSteal()+"");
-        guestTurnover.setText(guestEntity.getTurnover()+"");
-        guestBlockShoot.setText(guestEntity.getBlockShot()+"");
-
-        homeFree.setText(homeEntity.getFreeThrowHitRate()+"");
-        homeRebound.setText(homeEntity.getRebound()+"");
-        homeAssist.setText(homeEntity.getAssist()+"");
-        homeFoul.setText(homeEntity.getFoul()+"");
-        homeSteal.setText(homeEntity.getSteal()+"");
-        homeTurnover.setText(homeEntity.getTurnover()+"");
-        homeBlockShoot.setText(homeEntity.getBlockShot()+"");
 
         //设置进度
-        progressShoot.setProgress( getProgress(guestEntity.getShootHitRate(),homeEntity.getShootHitRate()));
-        progressThree.setProgress(getProgress(guestEntity.getThreePointShotHitRate(),homeEntity.getThreePointShotHitRate()));
-        progressFree.setProgress(getProgress(guestEntity.getFreeThrowHitRate(),homeEntity.getFreeThrowHitRate()));
-        progressRebound.setProgress(getProgress(guestEntity.getRebound(),homeEntity.getRebound()));
-        progressAssist.setProgress(getProgress(guestEntity.getAssist(),homeEntity.getAssist()));
-        progressFoul.setProgress(getProgress(guestEntity.getFoul(),homeEntity.getFoul()));
-        progressSteal.setProgress(getProgress(guestEntity.getSteal(),homeEntity.getSteal()));
-        progressTurnover.setProgress(getProgress(guestEntity.getTurnover(),homeEntity.getTurnover()));
-        progressBlockShoot.setProgress(getProgress(guestEntity.getBlockShot(),homeEntity.getBlockShot()));
+        if(homeEntity!=null&&guestEntity!=null){
+            progressShoot.setProgress( getProgress(guestEntity.getShootHitRate(),homeEntity.getShootHitRate()));
+            progressThree.setProgress(getProgress(guestEntity.getThreePointShotHitRate(),homeEntity.getThreePointShotHitRate()));
+            progressFree.setProgress(getProgress(guestEntity.getFreeThrowHitRate(),homeEntity.getFreeThrowHitRate()));
+            progressRebound.setProgress(getProgress(guestEntity.getRebound(),homeEntity.getRebound()));
+            progressAssist.setProgress(getProgress(guestEntity.getAssist(),homeEntity.getAssist()));
+            progressFoul.setProgress(getProgress(guestEntity.getFoul(),homeEntity.getFoul()));
+            progressSteal.setProgress(getProgress(guestEntity.getSteal(),homeEntity.getSteal()));
+            progressTurnover.setProgress(getProgress(guestEntity.getTurnover(),homeEntity.getTurnover()));
+            progressBlockShoot.setProgress(getProgress(guestEntity.getBlockShot(),homeEntity.getBlockShot()));
 
+        }
 
     }
 

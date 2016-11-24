@@ -134,9 +134,11 @@ public class BasketLiveFragment extends Fragment {
             EventBus.getDefault().post(new BasketDetailLiveTextRefresh("BasketTextLiveFragment"));
             L.d("zxcvbn", "文字直播");
         } else if (currentFrag == 1) {
+            EventBus.getDefault().post(new BasketDetailTeamStatisticsRefresh(""));
             L.d("zxcvbn", "球队统计");
 
         } else if (currentFrag == 2) {
+            EventBus.getDefault().post(new BasketDetailPlayersStatisticsRefresh(""));
             L.d("zxcvbn", "球员统计");
         }
     }

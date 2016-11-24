@@ -42,9 +42,9 @@ public class BasketPlayerStatisticsBean {
         private String homeLogoUrl;
         private String guestLogoUrl;
 
-        private List<HomePlayerStatsEntity> homePlayerStats;
+        private List<PlayerStatsEntity> homePlayerStats;
 
-        private List<GuestPlayerStatsEntity> guestPlayerStats;
+        private List<PlayerStatsEntity> guestPlayerStats;
 
         public String getHomeTeamId() {
             return homeTeamId;
@@ -94,350 +94,189 @@ public class BasketPlayerStatisticsBean {
             this.guestLogoUrl = guestLogoUrl;
         }
 
-        public List<HomePlayerStatsEntity> getHomePlayerStats() {
+        public List<PlayerStatsEntity> getHomePlayerStats() {
             return homePlayerStats;
         }
 
-        public void setHomePlayerStats(List<HomePlayerStatsEntity> homePlayerStats) {
+        public void setHomePlayerStats(List<PlayerStatsEntity> homePlayerStats) {
             this.homePlayerStats = homePlayerStats;
         }
 
-        public List<GuestPlayerStatsEntity> getGuestPlayerStats() {
+        public List<PlayerStatsEntity> getGuestPlayerStats() {
             return guestPlayerStats;
         }
 
-        public void setGuestPlayerStats(List<GuestPlayerStatsEntity> guestPlayerStats) {
+        public void setGuestPlayerStats(List<PlayerStatsEntity> guestPlayerStats) {
             this.guestPlayerStats = guestPlayerStats;
         }
 
-        public static class HomePlayerStatsEntity{
-            private String playerId;
-            private String playerName;
-            private String position;
-            private int playTime;
-            private int shootHit;
-            private int shoot;
-            private int threePointShotHit;
-            private int threePointShot;
-            private int freeThrowHit;
-            private int freeThrow;
-            private int offensiveRebound;
-            private int defensiveRebound;
-            private int assist;
-            private int foul;
-            private int steal;
-            private int turnover;
-            private int blockShot;
-            private int score;
 
-            public String getPlayerId() {
-                return playerId;
-            }
 
-            public void setPlayerId(String playerId) {
-                this.playerId = playerId;
-            }
+    }
 
-            public String getPlayerName() {
-                return playerName;
-            }
+    public static class PlayerStatsEntity{
+        private String playerId;
+        private String playerName;
+        private String position;
+        private int playTime;
+        private int shootHit;
+        private int shoot;
+        private int threePointShotHit;
+        private int threePointShot;
+        private int freeThrowHit;
+        private int freeThrow;
+        private int offensiveRebound;
+        private int defensiveRebound;
+        private int assist;
+        private int foul;
+        private int steal;
+        private int turnover;
+        private int blockShot;
+        private int score;
 
-            public void setPlayerName(String playerName) {
-                this.playerName = playerName;
-            }
-
-            public String getPosition() {
-                return position;
-            }
-
-            public void setPosition(String position) {
-                this.position = position;
-            }
-
-            public int getPlayTime() {
-                return playTime;
-            }
-
-            public void setPlayTime(int playTime) {
-                this.playTime = playTime;
-            }
-
-            public int getShootHit() {
-                return shootHit;
-            }
-
-            public void setShootHit(int shootHit) {
-                this.shootHit = shootHit;
-            }
-
-            public int getShoot() {
-                return shoot;
-            }
-
-            public void setShoot(int shoot) {
-                this.shoot = shoot;
-            }
-
-            public int getThreePointShotHit() {
-                return threePointShotHit;
-            }
-
-            public void setThreePointShotHit(int threePointShotHit) {
-                this.threePointShotHit = threePointShotHit;
-            }
-
-            public int getThreePointShot() {
-                return threePointShot;
-            }
-
-            public void setThreePointShot(int threePointShot) {
-                this.threePointShot = threePointShot;
-            }
-
-            public int getFreeThrowHit() {
-                return freeThrowHit;
-            }
-
-            public void setFreeThrowHit(int freeThrowHit) {
-                this.freeThrowHit = freeThrowHit;
-            }
-
-            public int getFreeThrow() {
-                return freeThrow;
-            }
-
-            public void setFreeThrow(int freeThrow) {
-                this.freeThrow = freeThrow;
-            }
-
-            public int getOffensiveRebound() {
-                return offensiveRebound;
-            }
-
-            public void setOffensiveRebound(int offensiveRebound) {
-                this.offensiveRebound = offensiveRebound;
-            }
-
-            public int getDefensiveRebound() {
-                return defensiveRebound;
-            }
-
-            public void setDefensiveRebound(int defensiveRebound) {
-                this.defensiveRebound = defensiveRebound;
-            }
-
-            public int getAssist() {
-                return assist;
-            }
-
-            public void setAssist(int assist) {
-                this.assist = assist;
-            }
-
-            public int getFoul() {
-                return foul;
-            }
-
-            public void setFoul(int foul) {
-                this.foul = foul;
-            }
-
-            public int getSteal() {
-                return steal;
-            }
-
-            public void setSteal(int steal) {
-                this.steal = steal;
-            }
-
-            public int getTurnover() {
-                return turnover;
-            }
-
-            public void setTurnover(int turnover) {
-                this.turnover = turnover;
-            }
-
-            public int getBlockShot() {
-                return blockShot;
-            }
-
-            public void setBlockShot(int blockShot) {
-                this.blockShot = blockShot;
-            }
-
-            public int getScore() {
-                return score;
-            }
-
-            public void setScore(int score) {
-                this.score = score;
-            }
+        public String getPlayerId() {
+            return playerId;
         }
 
-        public static class GuestPlayerStatsEntity {
-            private String playerId;
-            private String playerName;
-            private String position;
-            private int playTime;
-            private int shootHit;
-            private int shoot;
-            private int threePointShotHit;
-            private int threePointShot;
-            private int freeThrowHit;
-            private int freeThrow;
-            private int offensiveRebound;
-            private int defensiveRebound;
-            private int assist;
-            private int foul;
-            private int steal;
-            private int turnover;
-            private int blockShot;
-            private int score;
+        public void setPlayerId(String playerId) {
+            this.playerId = playerId;
+        }
 
-            public String getPlayerId() {
-                return playerId;
-            }
+        public String getPlayerName() {
+            return playerName;
+        }
 
-            public void setPlayerId(String playerId) {
-                this.playerId = playerId;
-            }
+        public void setPlayerName(String playerName) {
+            this.playerName = playerName;
+        }
 
-            public String getPlayerName() {
-                return playerName;
-            }
+        public String getPosition() {
+            return position;
+        }
 
-            public void setPlayerName(String playerName) {
-                this.playerName = playerName;
-            }
+        public void setPosition(String position) {
+            this.position = position;
+        }
 
-            public String getPosition() {
-                return position;
-            }
+        public int getPlayTime() {
+            return playTime;
+        }
 
-            public void setPosition(String position) {
-                this.position = position;
-            }
+        public void setPlayTime(int playTime) {
+            this.playTime = playTime;
+        }
 
-            public int getPlayTime() {
-                return playTime;
-            }
+        public int getShootHit() {
+            return shootHit;
+        }
 
-            public void setPlayTime(int playTime) {
-                this.playTime = playTime;
-            }
+        public void setShootHit(int shootHit) {
+            this.shootHit = shootHit;
+        }
 
-            public int getShootHit() {
-                return shootHit;
-            }
+        public int getShoot() {
+            return shoot;
+        }
 
-            public void setShootHit(int shootHit) {
-                this.shootHit = shootHit;
-            }
+        public void setShoot(int shoot) {
+            this.shoot = shoot;
+        }
 
-            public int getShoot() {
-                return shoot;
-            }
+        public int getThreePointShotHit() {
+            return threePointShotHit;
+        }
 
-            public void setShoot(int shoot) {
-                this.shoot = shoot;
-            }
+        public void setThreePointShotHit(int threePointShotHit) {
+            this.threePointShotHit = threePointShotHit;
+        }
 
-            public int getThreePointShotHit() {
-                return threePointShotHit;
-            }
+        public int getThreePointShot() {
+            return threePointShot;
+        }
 
-            public void setThreePointShotHit(int threePointShotHit) {
-                this.threePointShotHit = threePointShotHit;
-            }
+        public void setThreePointShot(int threePointShot) {
+            this.threePointShot = threePointShot;
+        }
 
-            public int getThreePointShot() {
-                return threePointShot;
-            }
+        public int getFreeThrowHit() {
+            return freeThrowHit;
+        }
 
-            public void setThreePointShot(int threePointShot) {
-                this.threePointShot = threePointShot;
-            }
+        public void setFreeThrowHit(int freeThrowHit) {
+            this.freeThrowHit = freeThrowHit;
+        }
 
-            public int getFreeThrowHit() {
-                return freeThrowHit;
-            }
+        public int getFreeThrow() {
+            return freeThrow;
+        }
 
-            public void setFreeThrowHit(int freeThrowHit) {
-                this.freeThrowHit = freeThrowHit;
-            }
+        public void setFreeThrow(int freeThrow) {
+            this.freeThrow = freeThrow;
+        }
 
-            public int getFreeThrow() {
-                return freeThrow;
-            }
+        public int getOffensiveRebound() {
+            return offensiveRebound;
+        }
 
-            public void setFreeThrow(int freeThrow) {
-                this.freeThrow = freeThrow;
-            }
+        public void setOffensiveRebound(int offensiveRebound) {
+            this.offensiveRebound = offensiveRebound;
+        }
 
-            public int getOffensiveRebound() {
-                return offensiveRebound;
-            }
+        public int getDefensiveRebound() {
+            return defensiveRebound;
+        }
 
-            public void setOffensiveRebound(int offensiveRebound) {
-                this.offensiveRebound = offensiveRebound;
-            }
+        public void setDefensiveRebound(int defensiveRebound) {
+            this.defensiveRebound = defensiveRebound;
+        }
 
-            public int getDefensiveRebound() {
-                return defensiveRebound;
-            }
+        public int getAssist() {
+            return assist;
+        }
 
-            public void setDefensiveRebound(int defensiveRebound) {
-                this.defensiveRebound = defensiveRebound;
-            }
+        public void setAssist(int assist) {
+            this.assist = assist;
+        }
 
-            public int getAssist() {
-                return assist;
-            }
+        public int getFoul() {
+            return foul;
+        }
 
-            public void setAssist(int assist) {
-                this.assist = assist;
-            }
+        public void setFoul(int foul) {
+            this.foul = foul;
+        }
 
-            public int getFoul() {
-                return foul;
-            }
+        public int getSteal() {
+            return steal;
+        }
 
-            public void setFoul(int foul) {
-                this.foul = foul;
-            }
+        public void setSteal(int steal) {
+            this.steal = steal;
+        }
 
-            public int getSteal() {
-                return steal;
-            }
+        public int getTurnover() {
+            return turnover;
+        }
 
-            public void setSteal(int steal) {
-                this.steal = steal;
-            }
+        public void setTurnover(int turnover) {
+            this.turnover = turnover;
+        }
 
-            public int getTurnover() {
-                return turnover;
-            }
+        public int getBlockShot() {
+            return blockShot;
+        }
 
-            public void setTurnover(int turnover) {
-                this.turnover = turnover;
-            }
+        public void setBlockShot(int blockShot) {
+            this.blockShot = blockShot;
+        }
 
-            public int getBlockShot() {
-                return blockShot;
-            }
+        public int getScore() {
+            return score;
+        }
 
-            public void setBlockShot(int blockShot) {
-                this.blockShot = blockShot;
-            }
-
-            public int getScore() {
-                return score;
-            }
-
-            public void setScore(int score) {
-                this.score = score;
-            }
+        public void setScore(int score) {
+            this.score = score;
         }
     }
+
 }

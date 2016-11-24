@@ -1290,5 +1290,16 @@
     <string name="basket_blockshoot">盖帽</string>
     <string name="basket_foul">犯规</string>
     <string name="basket_turnover">失误</string>
+    <string name="basket_player_qiuyuan">球员</string>
+    <string name="basket_player_time">时间</string>
+    <string name="basket_player_score">得分</string>
+    <string name="basket_player_shoot">投篮</string>
+    <string name="basket_player_rebound">篮板</string>
+    <string name="basket_player_assist">助攻</string>
+    <string name="basket_player_three">三分</string>
+    <string name="basket_player_steal">抢断</string>
+    <string name="basket_player_blockshoot">盖帽</string>
+    <string name="basket_player_turnover">失误</string>
+    <string name="basket_player_foul">犯规</string>
 
 </resources>

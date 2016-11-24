@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.basketball;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 
 import java.util.List;
@@ -18,6 +19,12 @@ public class BasketPlayerNameAdapter extends BaseQuickAdapter<String> {
 
     @Override
     protected void convert(BaseViewHolder holder, String s) {
+        if(getViewHolderPosition(holder)%2==0){
+            holder.setBackgroundColor(R.id.basket_player_name, MyApp.getContext().getResources().getColor(R.color.black_grounding));
+        }else{
+            holder.setBackgroundColor(R.id.basket_player_name,MyApp.getContext().getResources().getColor(R.color.usercenter_body_bg));
+        }
+
         holder.setText(R.id.basket_player_name,s);
 
 

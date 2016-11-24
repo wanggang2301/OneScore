@@ -2,9 +2,11 @@ package com.hhly.mlottery.frame.basketballframe;
 
 
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +15,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.adapter.basketball.BasketPlayerNameAdapter;
 import com.hhly.mlottery.adapter.basketball.BasketPlayerStatisticsAdapter;
 import com.hhly.mlottery.bean.basket.basketstatistics.BasketPlayerStatisticsBean;
@@ -35,6 +40,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * 球员统计fragmemt
@@ -58,10 +64,36 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     private boolean isCheckedGuest=true;
     BasketPlayerStatisticsBean mData;
 
+    /**
+     * 异常界面
+     */
+    @BindView(R.id.basket_odds_net_error)
+     LinearLayout mExceptionLayout;
+    /**
+     * 无数据的界面
+     */
+    @BindView(R.id.odds_nodata_container)
+     LinearLayout mNodataLayout;
+    /**
+     * 点击刷新
+     */
+    @BindView(R.id.network_exception_reload_btn)
+     TextView mBtnRefresh;
+    /**
+     * 加载中
+     */
+    @BindView(R.id.basket_player_progressbar)
+     FrameLayout mProgressBarLayout;
+    /**
+     * 数据界面
+     */
+    @BindView(R.id.ll_basket_player_data)
+    LinearLayout mDataLayout;
+
 
 
     BasketPlayerStatisticsAdapter mAdapter;
-    List<BasketPlayerStatisticsBean.DataEntity.HomePlayerStatsEntity> list=new ArrayList<>();
+    List<BasketPlayerStatisticsBean.PlayerStatsEntity> list=new ArrayList<>();
 
     View mView;
     LinearLayoutManager mLinearLayoutManager;
@@ -80,6 +112,11 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
         return basketPlayersStatisticsFragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,10 +134,22 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
+                case VIEW_STATUS_LOADING:
+                    mExceptionLayout.setVisibility(View.GONE);
+                    mProgressBarLayout.setVisibility(View.VISIBLE);
+                    mNodataLayout.setVisibility(View.GONE);
+                    mDataLayout.setVisibility(View.GONE);
+                    break;
                 case VIEW_STATUS_SUCCESS:
-
+                    mProgressBarLayout.setVisibility(View.GONE);
+                    mExceptionLayout.setVisibility(View.GONE);
+                    mDataLayout.setVisibility(View.VISIBLE);
                     break;
                 case VIEW_STATUS_NET_ERROR:
+                    mProgressBarLayout.setVisibility(View.GONE);
+                    mNodataLayout.setVisibility(View.GONE);
+                    mExceptionLayout.setVisibility(View.VISIBLE);
+                    mDataLayout.setVisibility(View.GONE);
                     // 展示错误界面
                     break;
             }
@@ -108,7 +157,9 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     };
 
     private void initView() {
-
+        mProgressBarLayout.setVisibility(View.GONE);
+        mNodataLayout.setVisibility(View.GONE);
+        mExceptionLayout.setVisibility(View.GONE);
 
         mAdapter=new BasketPlayerStatisticsAdapter(list);
 
@@ -137,39 +188,27 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     private void setListener() {
         mGuestName.setOnClickListener(this);
         mHomeName.setOnClickListener(this);
+        mBtnRefresh.setOnClickListener(this);
 
     }
 
     private void initData() {
+
+        handler.sendEmptyMessage(VIEW_STATUS_LOADING);
+
         Map<String,String> params=new HashMap<>();
-        params.put("thirdId","3666697");
+        params.put("thirdId", BasketDetailsActivityTest.mThirdId);
         String url="http://m.13322.com/mlottery/core/IOSBasketballDetail.findPlayerStats.do";
         VolleyContentFast.requestJsonByGet(url,params, new VolleyContentFast.ResponseSuccessListener<BasketPlayerStatisticsBean>() {
             @Override
             public void onResponse(BasketPlayerStatisticsBean jsonObject) {
 
                 if(jsonObject.getResult()==200){
+                    handler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     mData=jsonObject;
                     loadData();
 
                 }
-
-                mData=jsonObject;
-
-                list.clear();
-
-                list.addAll(jsonObject.getData().getHomePlayerStats());
-/*                list.addAll(jsonObject.getData().getHomePlayerStats());
-                list.addAll(jsonObject.getData().getHomePlayerStats());*/
-                Log.e("???????",list.size()+"");
-                mAdapter.notifyDataSetChanged();
-                mNames.clear();
-                for(BasketPlayerStatisticsBean.DataEntity.HomePlayerStatsEntity entity:list){
-                    mNames.add(entity.getPlayerName());
-                }
-                mNameAdapter.notifyDataSetChanged();
-
-
             }
 
 
@@ -189,7 +228,19 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     private void loadData() {
         mGuestName.setText(mData.getData().getGuestTeam());
         mHomeName.setText(mData.getData().getHomeTeam());
-        ImageLoader.load(MyApp.getContext(),mData.getData().getGuestLogoUrl(),R.mipmap.basket_default).into(mGuestIcon);
+        ImageLoader.load(getActivity(),mData.getData().getGuestLogoUrl(),R.mipmap.basket_default).into(mGuestIcon);
+        ImageLoader.load(getActivity(),mData.getData().getHomeLogoUrl(),R.mipmap.basket_default).into(mHomeIcon);
+
+        list.clear();
+
+        list.addAll(mData.getData().getGuestPlayerStats());
+        mAdapter.notifyDataSetChanged();
+        mNames.clear();
+        for(BasketPlayerStatisticsBean.PlayerStatsEntity entity:list){
+            mNames.add(entity.getPlayerName());
+        }
+        mNameAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -197,11 +248,55 @@ public class BasketPlayersStatisticsFragment extends Fragment implements View.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.basket_player_guest_team_name:
+                if(!isCheckedGuest){ //防止不停的点击就不停的设置颜色
+                    mGuestName.setTextColor(MyApp.getContext().getResources().getColor(R.color.tabtitle));
+                    mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.black_details_textcolor));
+                    list.clear();
+                    list.addAll(mData.getData().getGuestPlayerStats());
+                    mAdapter.notifyDataSetChanged();
+                    mNames.clear();
+                    for(BasketPlayerStatisticsBean.PlayerStatsEntity entity:list){
+                        mNames.add(entity.getPlayerName());
+                    }
+                    mNameAdapter.notifyDataSetChanged();
+                }
+               isCheckedGuest=true;
 
                 break;
             case R.id.basket_player_home_team_name:
+                if(isCheckedGuest){
+                    mGuestName.setTextColor(MyApp.getContext().getResources().getColor(R.color.black_details_textcolor));
+                    mHomeName.setTextColor(MyApp.getContext().getResources().getColor(R.color.tabtitle));
+                    list.clear();
+                    list.addAll( mData.getData().getHomePlayerStats());
+                    mAdapter.notifyDataSetChanged();
+                    mNames.clear();
+                    for(BasketPlayerStatisticsBean.PlayerStatsEntity entity:list){
+                        mNames.add(entity.getPlayerName());
+                    }
+                    mNameAdapter.notifyDataSetChanged();
+                }
+               isCheckedGuest=false;
+                break;
+            case R.id.network_exception_reload_btn:
+                handler.sendEmptyMessage(VIEW_STATUS_LOADING);
+                initData();
                 break;
         }
 
+    }
+
+    /**
+     * eventbus
+     * @param basketDetailLiveTextRefreshEventBus
+     */
+    public void onEventMainThread(BasketDetailPlayersStatisticsRefresh basketDetailLiveTextRefreshEventBus) {
+        initData();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

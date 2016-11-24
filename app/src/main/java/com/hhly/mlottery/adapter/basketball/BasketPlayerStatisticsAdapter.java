@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.basketball;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketstatistics.BasketPlayerStatisticsBean;
 
@@ -12,17 +13,24 @@ import java.util.List;
  * 作    者：mady@13322.com
  * 时    间：2016/11/17
  */
-public class BasketPlayerStatisticsAdapter extends BaseQuickAdapter<BasketPlayerStatisticsBean.DataEntity.HomePlayerStatsEntity> {
+public class BasketPlayerStatisticsAdapter extends BaseQuickAdapter<BasketPlayerStatisticsBean.PlayerStatsEntity> {
 
 
-    public BasketPlayerStatisticsAdapter(List<BasketPlayerStatisticsBean.DataEntity.HomePlayerStatsEntity> data) {
+    public BasketPlayerStatisticsAdapter(List<BasketPlayerStatisticsBean.PlayerStatsEntity> data) {
         super(R.layout.item_player_layout, data);
     }
 
 
 
+
     @Override
-    protected void convert(BaseViewHolder holder, BasketPlayerStatisticsBean.DataEntity.HomePlayerStatsEntity entity) {
+    protected void convert(BaseViewHolder holder, BasketPlayerStatisticsBean.PlayerStatsEntity entity) {
+
+        if(getViewHolderPosition(holder)%2==0){
+            holder.setBackgroundColor(R.id.ll_basket_player, MyApp.getContext().getResources().getColor(R.color.black_grounding));
+        }else{
+            holder.setBackgroundColor(R.id.ll_basket_player,MyApp.getContext().getResources().getColor(R.color.usercenter_body_bg));
+        }
 
         holder.setText(R.id.basket_player_score1,entity.getPlayTime()+"");
         holder.setText(R.id.basket_player_score2,entity.getScore()+"");

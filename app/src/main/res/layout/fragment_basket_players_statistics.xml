@@ -1,8 +1,9 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black_grounding"
     tools:context="com.hhly.mlottery.frame.basketballframe.BasketPlayersStatisticsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,178 +14,198 @@
         android:padding="10dp"
         >
         <LinearLayout
+            android:id="@+id/ll_basket_player_data"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                >
-                <ImageView
-                    android:id="@+id/basket_player_guest_team_icon"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
-                    android:src="@mipmap/basket_default"
-                    />
-                <TextView
-                    android:id="@+id/basket_player_guest_team_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="骑士队"
-                    android:textSize="13sp"
-                    android:textColor="@color/tabtitle"
-                    android:layout_marginLeft="5dp"
-                    android:clickable="true"
-                    android:layout_toRightOf="@+id/basket_player_guest_team_icon"
-                    />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                >
-                <ImageView
-                    android:id="@+id/basket_player_home_team_icon"
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
-                    android:src="@mipmap/basket_default"
-                    />
-                <TextView
-                    android:id="@+id/basket_player_home_team_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:text="热火队"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/black_details_textcolor"
-                    android:layout_toRightOf="@+id/basket_player_home_team_icon"
-                    />
-
-            </RelativeLayout>
-        </LinearLayout>
-
-
-
-   <!--球员数据-->
-     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <!--球员一列-->
-        <LinearLayout
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            >
-            <TextView
-                style="@style/Style_basket_player_title"
-                android:layout_width="75dp"
-                android:text="球员"
-                />
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_basket_player_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
-
-
-        <!--球员具体数据-->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
+            android:visibility="gone"
             >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
                 >
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/usercenter_body_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     >
-                    <LinearLayout
+                    <ImageView
+                        android:id="@+id/basket_player_guest_team_icon"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:src="@mipmap/basket_default"
+                        />
+                    <TextView
+                        android:id="@+id/basket_player_guest_team_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-                        <TextView
-                            android:id="@+id/basket_player_score1"
-                            android:text="时间"
-                            style="@style/Style_basket_player_title"
-                            />
-
-                        <TextView
-                            android:id="@+id/basket_player_score2"
-                            style="@style/Style_basket_player_title"
-                            android:text="得分"
-                            />
-                        <TextView
-                            android:id="@+id/basket_player_score3"
-                            style="@style/Style_basket_player_title"
-                            android:text="投篮"
-                            />
-                        <TextView
-                            android:id="@+id/basket_player_score4"
-                            style="@style/Style_basket_player_title"
-                            android:text="篮板"
-                            />
-                        <TextView
-                            android:id="@+id/basket_player_score5"
-                            style="@style/Style_basket_player_title"
-                            android:text="助攻"
-                            />
-                        <TextView
-                            android:id="@+id/basket_player_score6"
-                            style="@style/Style_basket_player_title"
-                            android:text="三分"
-                            />
-                        <TextView
-                            android:id="@+id/basket_player_score7"
-                            style="@style/Style_basket_player_title"
-                            android:text="抢断"
-                            />
-                        <TextView
-                            android:id="@+id/basket_player_score8"
-                            style="@style/Style_basket_player_title"
-                            android:text="盖帽"
-                            />
-                        <TextView
-                            android:id="@+id/basket_player_score9"
-                            style="@style/Style_basket_player_title"
-                            android:text="失误"
-                            />
-                        <TextView
-                            android:id="@+id/basket_player_score10"
-                            style="@style/Style_basket_player_title"
-                            android:text="犯规"
-                            />
-
-                    </LinearLayout>
+                        android:text=""
+                        android:textSize="13sp"
+                        android:textColor="@color/tabtitle"
+                        android:layout_marginLeft="5dp"
+                        android:clickable="true"
+                        android:layout_toRightOf="@+id/basket_player_guest_team_icon"
+                        />
                 </RelativeLayout>
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_basket_player"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     >
+                    <ImageView
+                        android:id="@+id/basket_player_home_team_icon"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:src="@mipmap/basket_default"
+                        />
+                    <TextView
+                        android:id="@+id/basket_player_home_team_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:text=""
+                        android:textSize="13sp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/black_details_textcolor"
+                        android:layout_toRightOf="@+id/basket_player_home_team_icon"
+                        />
 
-                </android.support.v7.widget.RecyclerView>
+                </RelativeLayout>
             </LinearLayout>
 
-        </HorizontalScrollView>
-      </LinearLayout>
+
+
+            <!--球员数据-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <!--球员一列-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        style="@style/Style_basket_player_title"
+                        android:layout_width="75dp"
+                        android:text="@string/basket_player_qiuyuan"
+                        android:background="@color/usercenter_body_bg"
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_basket_player_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+
+                <!--球员具体数据-->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/usercenter_body_bg"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+                                <TextView
+                                    android:text="@string/basket_player_time"
+                                    style="@style/Style_basket_player_title"
+                                    />
+
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_score"
+                                    />
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_shoot"
+                                    />
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_rebound"
+                                    />
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_assist"
+                                    />
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_three"
+                                    />
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_steal"
+                                    />
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_blockshoot"
+                                    />
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_turnover"
+                                    />
+                                <TextView
+                                    style="@style/Style_basket_player_title"
+                                    android:text="@string/basket_player_foul"
+                                    />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycler_basket_player"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                            >
+
+                        </android.support.v7.widget.RecyclerView>
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--内容加载进度条_正在加载中-->
+        <FrameLayout
+            android:id="@+id/basket_player_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="50dp"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <include layout="@layout/basket_odds_nodata" />
+
+        <include layout="@layout/basket_odds_new_error" />
 
     </LinearLayout>
-
 
 </android.support.v4.widget.NestedScrollView>
