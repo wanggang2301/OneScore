@@ -118,6 +118,12 @@
     <string name="share_summary_default">壹比分,專業的足球比分直播平台</string>
 
 
+    <string name="share_summary_new">一比分邀您一起去觀看</string>
+    <string name="share_match_pre">比賽前</string>
+    <string name="share_match_live">比賽中</string>
+    <string name="share_match_over">比賽后</string>
+    <string name="share_match_live2">正在比賽中</string>
+    <string name="share_match_browse">賽事一覽</string>
     <!--指数-->
     <string name="odd_plate_rb_txt">亞盤</string>
     <string name="odd_op_rb_txt">歐賠</string>

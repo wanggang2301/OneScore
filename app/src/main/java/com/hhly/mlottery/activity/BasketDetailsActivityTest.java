@@ -38,6 +38,7 @@ import com.hhly.mlottery.frame.basketballframe.BasketAnimLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketDetailsHeadFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketLiveFragment;
 import com.hhly.mlottery.frame.basketballframe.BasketOddsFragment;
+import com.hhly.mlottery.frame.basketballframe.BasketTextLiveEvent;
 import com.hhly.mlottery.frame.basketballframe.FocusBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ImmedBasketballFragment;
 import com.hhly.mlottery.frame.basketballframe.ResultBasketballFragment;
@@ -101,7 +102,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * 大小球
      */
     public final static String ODDS_SIZE = "asiaSize";
-    private String mThirdId = "936707";
+    public static String mThirdId = "936707";
     private String mMatchStatus;
     private Context mContext;
 
@@ -182,6 +183,10 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     private boolean isNBA = false;
 
     //  private int matchStatus;
+
+    public static String homeIconUrl;
+    public static String guestIconUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -385,8 +390,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     @Override
     protected void onTextResult(String text) {
 
-        L.d("123456", text);
-
         String type = "";
         try {
             JSONObject jsonObject = new JSONObject(text);
@@ -400,9 +403,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             msg.obj = text;
             msg.arg1 = Integer.parseInt(type);
             L.e(TAG, type + "____________________");
-
-            L.d("socket", "type=" + type);
-            L.d("socket", "text=" + text);
 
             mSocketHandler.sendMessage(msg);
         }
@@ -466,7 +466,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 //                    initData(basketDetailsBean);
                     mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
 
-
+                    homeIconUrl = basketDetailsBean.getMatch().getHomeLogoUrl();
+                    guestIconUrl = basketDetailsBean.getMatch().getGuestLogoUrl();
                     if (basketDetailsBean.getMatch().getMatchStatus() != END) {
                         connectWebSocket();
                     }
@@ -709,7 +710,8 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * 接受文字直播推送，更新数据
      */
     private void updateTextLive(BasketEachTextLiveBean basketEachTextLiveBean) {
-        mBasketLiveFragment.updateTextLive(basketEachTextLiveBean);
+        //EventBus.getDefault().post(new BasketTextLiveEvent(new BasketEachTextLiveBean("11", "", "", "", "谢谢", 2001, 2, "", 50, 60, 1, "456", "", "", 1, "", "", "")));
+        EventBus.getDefault().post(new BasketTextLiveEvent(basketEachTextLiveBean));
     }
 
     private void eventBusPost() {
@@ -765,10 +767,16 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
             public void run() {
                 mRefreshLayout.setRefreshing(false);
                 loadData();
+
+                //直播刷新
+                mBasketLiveFragment.refresh();
+
+
                 mAnalyzeFragment.initData();
                 mOddsEuro.initData();
                 mOddsLet.initData();
                 mOddsSize.initData();
+
                 mTalkAboutBallFragment.loadTopic(mThirdId, mThirdId, CyUtils.SINGLE_PAGE_COMMENT);
             }
         }, 1000);

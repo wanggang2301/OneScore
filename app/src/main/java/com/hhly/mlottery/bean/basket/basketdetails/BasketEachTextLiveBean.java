@@ -12,6 +12,27 @@ import android.os.Parcelable;
 
 public class BasketEachTextLiveBean implements Parcelable {
 
+    public BasketEachTextLiveBean(String id, String teamName, String playerName, String playerName1, String eventContent, int eventId, int eventId1, String scheduleId, int guestScore, int homeScore, int matchStatus, String remainTime, String teamId, String logoUrl, int teamType, String playerId, String playerId1, String lang) {
+        this.id = id;
+        this.teamName = teamName;
+        this.playerName = playerName;
+        this.playerName1 = playerName1;
+        this.eventContent = eventContent;
+        this.eventId = eventId;
+        this.eventId1 = eventId1;
+        this.scheduleId = scheduleId;
+        this.guestScore = guestScore;
+        this.homeScore = homeScore;
+        this.matchStatus = matchStatus;
+        this.remainTime = remainTime;
+        this.teamId = teamId;
+        this.logoUrl = logoUrl;
+        this.teamType = teamType;
+        this.playerId = playerId;
+        this.playerId1 = playerId1;
+        this.lang = lang;
+    }
+
     /**
      * id : 404051
      * teamName : null
@@ -24,6 +45,7 @@ public class BasketEachTextLiveBean implements Parcelable {
      * guestScore : 95
      * homeScore : 127
      * matchStatus : -1
+
      * remainTime :
      * teamId : null
      * logoUrl : null
@@ -33,14 +55,14 @@ public class BasketEachTextLiveBean implements Parcelable {
      * lang : zh
      */
 
-    private long id;
+    private String id;
     private String teamName;
     private String playerName;
     private String playerName1;
     private String eventContent;
     private int eventId;
     private int eventId1;
-    private long scheduleId;
+    private String scheduleId;
     private int guestScore;
     private int homeScore;
     private int matchStatus;
@@ -52,11 +74,11 @@ public class BasketEachTextLiveBean implements Parcelable {
     private String playerId1;
     private String lang;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -108,11 +130,11 @@ public class BasketEachTextLiveBean implements Parcelable {
         this.eventId1 = eventId1;
     }
 
-    public long getScheduleId() {
+    public String getScheduleId() {
         return scheduleId;
     }
 
-    public void setScheduleId(int scheduleId) {
+    public void setScheduleId(String scheduleId) {
         this.scheduleId = scheduleId;
     }
 
@@ -203,14 +225,14 @@ public class BasketEachTextLiveBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
+        dest.writeString(this.id);
         dest.writeString(this.teamName);
         dest.writeString(this.playerName);
         dest.writeString(this.playerName1);
         dest.writeString(this.eventContent);
         dest.writeInt(this.eventId);
         dest.writeInt(this.eventId1);
-        dest.writeLong(this.scheduleId);
+        dest.writeString(this.scheduleId);
         dest.writeInt(this.guestScore);
         dest.writeInt(this.homeScore);
         dest.writeInt(this.matchStatus);
@@ -227,14 +249,14 @@ public class BasketEachTextLiveBean implements Parcelable {
     }
 
     protected BasketEachTextLiveBean(Parcel in) {
-        this.id = in.readInt();
+        this.id = in.readString();
         this.teamName = in.readString();
         this.playerName = in.readString();
         this.playerName1 = in.readString();
         this.eventContent = in.readString();
         this.eventId = in.readInt();
         this.eventId1 = in.readInt();
-        this.scheduleId = in.readInt();
+        this.scheduleId = in.readString();
         this.guestScore = in.readInt();
         this.homeScore = in.readInt();
         this.matchStatus = in.readInt();
