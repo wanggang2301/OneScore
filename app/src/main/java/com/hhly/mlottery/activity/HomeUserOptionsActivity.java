@@ -354,6 +354,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onResume();
         MobclickAgent.onResume(this);
         MobclickAgent.onPageStart("HomeUserOptionsActivity");
+        if(CommonUtils.isLogin()){
+
+        }else {
+            mTv_nickname.setText(R.string.Login_register);
+            mUser_image.setImageResource(R.mipmap.center_head);
+        }
     }
 
     @Override
@@ -382,7 +388,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     protected void onDestroy() {
         super.onDestroy();
         // 刷新本地用户缓存
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx"))));
+       // RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(PreferenceUtil.getString(AppConstants.HEADICON, "xxx"))));
        // RongIM.getInstance().refreshUserInfoCache(new UserInfo(AppConstants.register.getData().getUser().getUserId(), AppConstants.register.getData().getUser().getNickName(), Uri.parse(AppConstants.register.getData().getUser().getHeadIcon())));
         EventBus.getDefault().unregister(this);
     }
