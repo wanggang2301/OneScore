@@ -79,8 +79,5 @@
             android:text="文字直播"
             android:textColor="@color/content_txt_black"
             android:textSize="@dimen/text_size_13" />
-
     </LinearLayout>
-
-
 </LinearLayout>
