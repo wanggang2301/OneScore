@@ -1,13 +1,370 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black_grounding"
     tools:context="com.hhly.mlottery.frame.basketballframe.BasketTeamStatisticsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="球队统计" />
+        android:orientation="vertical"
+        android:padding="5dp"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/guest_team_shoot"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_shoot" />
+
+            <TextView
+                android:id="@+id/home_team_shoot"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_shoot"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guest_team_three"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_three_shoot" />
+
+            <TextView
+                android:id="@+id/home_team_three"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_three"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--罚球-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guest_team_free"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_free_shoot" />
+
+            <TextView
+                android:id="@+id/home_team_free"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_free"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--篮板-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guest_team_rebound"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_rebound" />
+
+            <TextView
+                android:id="@+id/home_team_rebound"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_rebound"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--助攻-->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                android:id="@+id/guest_team_assist"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_assist" />
+
+            <TextView
+                android:id="@+id/home_team_assist"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_assist"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--抢断-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guest_team_steal"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_steal" />
+
+            <TextView
+                android:id="@+id/home_team_steal"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_steal"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--盖帽-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guest_team_blockshoot"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_blockshoot" />
+
+            <TextView
+                android:id="@+id/home_team_blockshoot"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_blockshoot"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--犯规-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guest_team_foul"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_foul" />
+
+            <TextView
+                android:id="@+id/home_team_foul"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_foul"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--失误-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/guest_team_turnover"
+                style="@style/Style_basket_txt1"
+                android:gravity="left" />
+
+            <TextView
+                style="@style/Style_basket_text"
+                android:gravity="center"
+                android:text="@string/basket_turnover" />
+
+            <TextView
+                android:id="@+id/home_team_turnover"
+                style="@style/Style_basket_txt1"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ProgressBar
+                android:id="@+id/pro_basket_turnover"
+                style="@style/StyleProgressBarguest_statics" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

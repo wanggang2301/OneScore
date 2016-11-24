@@ -1247,4 +1247,14 @@
     <!--墙外-->
 
     <string name="foreign_pic">已保存圖片到SD卡文件夾下</string>
+    <!--篮球球队统计-->
+    <string name="basket_shoot">投籃(%)</string>
+    <string name="basket_three_shoot">三分(%)</string>
+    <string name="basket_free_shoot">罰球(%)</string>
+    <string name="basket_rebound">籃板</string>
+    <string name="basket_assist">助攻</string>
+    <string name="basket_steal">搶斷</string>
+    <string name="basket_blockshoot">蓋帽</string>
+    <string name="basket_foul">犯規</string>
+    <string name="basket_turnover">失誤</string>
 </resources>
