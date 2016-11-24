@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchOddsBean;
 import com.hhly.mlottery.bean.snookerbean.SnookerMatchesBean;
@@ -22,7 +24,7 @@ import java.util.List;
  * describe:
  */
 
-public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
+public class SnookerRecyclerAdapter extends BaseQuickAdapter<SnookerMatchesBean> {
 
     private Context mContext;
     private List<SnookerMatchesBean> mData;
@@ -30,6 +32,7 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
 
 
     public SnookerRecyclerAdapter(Context context ,List<SnookerMatchesBean> data){
+        super(R.layout.snooker_list_activity_item, data);
         this.mContext = context;
         this.mData = data;
     }
@@ -48,10 +51,10 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = null;
-        RecyclerView.ViewHolder holder = null;
+        BaseViewHolder holder = null;
         switch(viewType){
             case 0:
                     //日期
@@ -231,6 +234,10 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
         }
     }
 
+    @Override
+    protected void convert(BaseViewHolder baseViewHolder, SnookerMatchesBean snookerMatchesBean) {
+    }
+
     /**
      * 无赔率时设值
      * @param left 左赔率
@@ -248,14 +255,14 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
         return mData == null ? 0 : mData.size();
     }
 
-    class ViewHolderDate extends RecyclerView.ViewHolder{
+    class ViewHolderDate extends BaseViewHolder{
         TextView mSnookerDate;
         public ViewHolderDate(View itemView) {
             super(itemView);
             mSnookerDate = (TextView) itemView.findViewById(R.id.snooker_date);
         }
     }
-    class ViewHolderList extends RecyclerView.ViewHolder{
+    class ViewHolderList extends BaseViewHolder{
         private final CardView cardView;
         private final TextView mSnookerRound;
         private final TextView mSnookerTime;
@@ -286,7 +293,7 @@ public class SnookerRecyclerAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class ViewHolderTitle extends RecyclerView.ViewHolder{
+    class ViewHolderTitle extends BaseViewHolder{
         TextView mSnookerTitle;
         public ViewHolderTitle(View itemView) {
             super(itemView);

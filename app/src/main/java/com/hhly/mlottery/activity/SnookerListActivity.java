@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.snooker.SnookerRecyclerAdapter;
 import com.hhly.mlottery.bean.snookerbean.SnookerLeaguesBean;
@@ -86,6 +89,11 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
 
         initData();
 
+    }
+
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(parent, name, context, attrs);
     }
 
     private void initView() {
@@ -200,6 +208,17 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
         } else {
             updateAdapter();
         }
+
+        mAdapter.openLoadMore(0,true);
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                Toast.makeText(SnookerListActivity.this, "加载更多.....", Toast.LENGTH_SHORT).show();
+                L.d("yxq123456==","aaaaaaaaaaaaaaaaaaa");
+
+            }
+        });
+
     }
 
     /**
@@ -365,6 +384,11 @@ public class SnookerListActivity extends BaseWebSocketActivity implements SwipeR
                 if (match.getThirdId().equals(mOddsData.getThirdId())) {
                     SnookerMatchOddsBean currentOddsData =  match.getMatchOdds();
                     updataOddsData(currentOddsData , socketOddsData);
+
+                    /*
+                     http://m.1332255.com:81/mlottery/core/snookerMatch.getSnookerLeagues.do?dateLeaguesId=2016-11-20_125358,2016-11-19_125358
+                     */
+
                     updateAdapter();
                     break;
                 }
