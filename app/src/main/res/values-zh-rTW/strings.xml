@@ -1288,4 +1288,8 @@
     <string name="basket_player_blockshoot">蓋帽</string>
     <string name="basket_player_turnover">失誤</string>
     <string name="basket_player_foul">犯規</string>
+
+    <string name="basket_text_live">文字直播</string>
+    <string name="basket_team_statictics">球隊統計</string>
+    <string name="basket_players_statictics">球員統計</string>
 </resources>

@@ -1318,4 +1318,8 @@
     <string name="basket_player_turnover">失误</string>
     <string name="basket_player_foul">犯规</string>
 
+    <string name="basket_text_live">文字直播</string>
+    <string name="basket_team_statictics">球队统计</string>
+    <string name="basket_players_statictics">球员统计</string>
+
 </resources>
