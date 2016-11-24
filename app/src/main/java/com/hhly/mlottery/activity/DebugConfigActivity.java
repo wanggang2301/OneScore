@@ -33,15 +33,12 @@ public class DebugConfigActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_config);
-
         /**当前Activity界面不统计*/
         MobclickAgent.openActivityDurationTrack(false);
 
         Button config_submit = (Button) findViewById(R.id.config_submit);
         Button bt_ok = (Button) findViewById(R.id.bt_ok);
-
 
         //开发环境
         findViewById(R.id.config_rb5).setOnClickListener(new OnClickListener() {
@@ -69,7 +66,6 @@ public class DebugConfigActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-
                 RadioGroup config_rg1 = (RadioGroup) findViewById(R.id.config_rg1);
 
                 if (config_rg1.getCheckedRadioButtonId() == R.id.config_rb1) {
@@ -81,7 +77,6 @@ public class DebugConfigActivity extends BaseActivity {
                 } else if (config_rg1.getCheckedRadioButtonId() == R.id.config_rb7) {
                     PreferenceUtil.commitInt(MyConstants.URL_HOME_CONFIG, URL_93);
                 }
-
 
                 RadioGroup config_rg2 = (RadioGroup) findViewById(R.id.config_rg2);
                 if (config_rg2.getCheckedRadioButtonId() == R.id.config_rb3) {
