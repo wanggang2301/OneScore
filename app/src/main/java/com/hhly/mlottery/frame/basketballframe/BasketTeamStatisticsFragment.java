@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketDetailsActivityTest;
 import com.hhly.mlottery.bean.basket.basketstatistics.BasketTeamStatisticsBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import org.w3c.dom.Text;
@@ -158,11 +159,10 @@ public class BasketTeamStatisticsFragment extends Fragment {
     }
 
     private void initData() {
-        String url="http://m.13322.com/mlottery/core/IOSBasketballDetail.findTeamStats.do";
         Map<String ,String > params=new HashMap<>();
 
         params.put("thirdId", BasketDetailsActivityTest.mThirdId);
-        VolleyContentFast.requestJsonByGet(url, params, new VolleyContentFast.ResponseSuccessListener<BasketTeamStatisticsBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.BASKET_DETAIL_TEAM, params, new VolleyContentFast.ResponseSuccessListener<BasketTeamStatisticsBean>() {
             @Override
             public void onResponse(BasketTeamStatisticsBean jsonObject) {
                 if(jsonObject.getResult()==200){

@@ -925,5 +925,9 @@ public class BaseURLs {
 
     //篮球内页文字直播
     public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "IOSBasketballDetail.findTextLive.do";
+    //篮球内页球队统计
+    public final static String BASKET_DETAIL_TEAM=URL_API_HOST+"IOSBasketballDetail.findTeamStats.do";
+    //篮球内页球员统计
+    public final static String BASKET_DETAIL_PLAYER=URL_API_HOST+"IOSBasketballDetail.findPlayerStats.do";
 
 }

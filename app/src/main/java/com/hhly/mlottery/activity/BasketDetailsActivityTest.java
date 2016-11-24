@@ -141,19 +141,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      */
     private RelativeLayout mTitleScore;
 
-    private TextView mHomeScore;
-    private TextView mGuestScore;
-
     private TextView mTitleHome;//主队比分/队名
     private TextView mTitleGuest;//客队比分/队名
     private TextView mTitleVS;//冒号  VS
 
     LinearLayout headLayout;// 小头部
-    //显示加时比分的三个布局
-    private LinearLayout mLayoutOt1;
-    private LinearLayout mLayoutOt2;
-    private LinearLayout mLayoutOt3;
-
     private int mCurrentId;
     private final int IMMEDIA_FRAGMENT = 0;
     private final int RESULT_FRAGMENT = 1;
@@ -175,7 +167,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
     private BasePagerAdapter basePagerAdapter;
     private FragmentManager fragmentManager;
-    private boolean isRquestSuccess = true;
 
     private static final String LEAGUEID_NBA = "1";
 
@@ -356,17 +347,9 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         mRefreshLayout = (ExactSwipeRefrashLayout) findViewById(R.id.basket_details_refresh_layout);
         mRefreshLayout.setColorSchemeResources(R.color.tabhost);
         mRefreshLayout.setOnRefreshListener(this);
-        mHomeScore = (TextView) this.findViewById(R.id.basket_details_home_all_score);
-        mGuestScore = (TextView) this.findViewById(R.id.basket_details_guest_all_score);
-
         mTitleHome = (TextView) this.findViewById(R.id.title_home_score);
         mTitleGuest = (TextView) this.findViewById(R.id.title_guest_score);
         mTitleVS = (TextView) this.findViewById(R.id.title_vs);
-
-        mLayoutOt1 = (LinearLayout) this.findViewById(R.id.basket_details_llot1);
-        mLayoutOt2 = (LinearLayout) this.findViewById(R.id.basket_details_llot2);
-        mLayoutOt3 = (LinearLayout) this.findViewById(R.id.basket_details_llot3);
-
         mBack = (ImageView) this.findViewById(R.id.basket_details_back);
 
         mTitleScore = (RelativeLayout) this.findViewById(R.id.ll_basket_title_score);
@@ -452,7 +435,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
      * 请求网络数据
      */
     public void loadData() {
-        isRquestSuccess = false;
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
         L.d("456789", mThirdId);
@@ -462,7 +444,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                 if (basketDetailsBean.getMatch() != null) {
 
 
-                    isRquestSuccess = true;
 //                    initData(basketDetailsBean);
                     mBasketDetailsHeadFragment.initData(basketDetailsBean, mTalkAboutBallFragment, mTitleGuest, mTitleHome, mTitleVS);
 
@@ -476,7 +457,6 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                isRquestSuccess = false;
             }
         }, BasketballDetailsBean.class);
     }
@@ -751,11 +731,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         if (mCollapsingToolbarLayout.getHeight() + verticalOffset < mHeadviewpager.getHeight()) {
             mRefreshLayout.setEnabled(false);   //收缩
         } else {
-            if (isRquestSuccess) {
                 mRefreshLayout.setEnabled(true); //展开
-            } else {
-                mRefreshLayout.setEnabled(false); //展开
-            }
         }
 
     }
