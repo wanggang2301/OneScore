@@ -922,7 +922,6 @@ public class BaseURLs {
     public final static String UPDATEUSERINFO=URL_API_HOST+"androidUserCenter.updateUserInfo.do";
     //明星头像
     public final static String  FINDHEADICONS=URL_API_HOST+"systemSettings.findHeadIcons.do";
-    public final static String EXIT_PUSH_ONLINE = URL_API_HOST + "pushSetting.exitUpdateOnlile.do";
 
     //篮球内页文字直播
     public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "IOSBasketballDetail.findTextLive.do";
