@@ -1,13 +1,11 @@
 package com.hhly.mlottery.bean.numbersBean;
 
-import java.io.Serializable;
-
 /**
  * desc:
- * Created by 107_tangrr on 2016/11/22 0022.
+ * Created by 107_tangrr on 2016/11/24 0024.
  */
 
-public class FootballSecLottery implements Serializable{
+public class FootballSecLottery2 {
 
     private String rsales; // 任选9场全国销量
     private String rfirCount; // 一等奖中奖注数

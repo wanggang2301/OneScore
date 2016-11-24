@@ -55,7 +55,7 @@ public class NumberCurrentInfo implements Serializable {
 	private String stopTime;// 停售日期
 	private String lotteryTime;// 开奖日期
 	private List<FootIssueResultData> footballLotteryIssueResultData;//
-	private FootballSecLottery footballSecLottery;
+	private FootballSecLottery2 footballSecLottery;
 	private FootballFirlottery footballFirlottery;
 	private boolean isOpen = false;// 是否发生改变了
 
@@ -335,11 +335,11 @@ public class NumberCurrentInfo implements Serializable {
 		this.footballLotteryIssueResultData = footballLotteryIssueResultData;
 	}
 
-	public FootballSecLottery getFootballSecLottery() {
+	public FootballSecLottery2 getFootballSecLottery() {
 		return footballSecLottery;
 	}
 
-	public void setFootballSecLottery(FootballSecLottery footballSecLottery) {
+	public void setFootballSecLottery(FootballSecLottery2 footballSecLottery) {
 		this.footballSecLottery = footballSecLottery;
 	}
 
