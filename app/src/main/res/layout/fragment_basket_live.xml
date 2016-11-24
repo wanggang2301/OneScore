@@ -23,7 +23,7 @@
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/basket_radio_button_left"
             android:checked="true"
-            android:text="文字直播"
+            android:text="@string/basket_text_live"
             android:textColor="@drawable/basket_info_text_color" />
 
         <RadioButton
@@ -35,7 +35,7 @@
             android:layout_marginRight="-0.25dp"
             android:background="@drawable/basket_radio_button_center"
             android:checked="false"
-            android:text="球队统计"
+            android:text="@string/basket_team_statictics"
             android:textColor="@drawable/basket_info_text_color" />
 
         <RadioButton
@@ -46,10 +46,10 @@
             android:layout_marginLeft="-0.25dp"
             android:background="@drawable/basket_radio_button_right"
             android:checked="false"
-            android:text="球员统计"
+            android:text="@string/basket_players_statictics"
             android:textColor="@drawable/basket_info_text_color" />
     </RadioGroup>
-    
+
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
