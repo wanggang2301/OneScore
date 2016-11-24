@@ -15,17 +15,30 @@
         android:background="@mipmap/login_new_center"
         android:orientation="vertical">
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/public_img_back"
+        style="@style/RippleBackgroudBorderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="25dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/back"/>
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:paddingTop="25dp"
+        android:textSize="18sp"
+        android:text="@string/personal_center"/>
 
-        <ImageView
-            android:id="@+id/public_img_back"
-            style="@style/RippleBackgroudBorderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="25dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/back"/>
+</RelativeLayout>
 
         <com.hhly.mlottery.view.CircleImageView
             android:id="@+id/user_info_image"
@@ -157,7 +170,7 @@
         android:layout_marginTop="13dp"
         android:background="@color/linecolor"/>
 
-    <RelativeLayout
+   <!-- <RelativeLayout
         android:id="@+id/rl_about_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -190,6 +203,54 @@
             android:paddingRight="15dp"
             android:src="@mipmap/unconection_next"/>
     </RelativeLayout>
+    &lt;!&ndash;分割线&ndash;&gt;
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/linecolor"/>
+    </LinearLayout>-->
+
+    <!----> 分割线
+
+    <RelativeLayout
+        android:id="@+id/rl_setting_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/channel_title_front"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/center_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/moresetting"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/center_setting"
+            android:padding="15dp"
+            android:text="@string/more_setting"
+            android:textColor="@color/res_name_color"
+            android:textSize="@dimen/home_pager_user_title"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@mipmap/unconection_next"/>
+    </RelativeLayout>
     <!--分割线-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -203,10 +264,7 @@
             android:background="@color/linecolor"/>
     </LinearLayout>
 
-    <!----> 分割线
-
-
-
+<!--
 
     <View
         android:visibility="gone"
@@ -230,6 +288,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/linecolor"/>
+-->
 
 
 </LinearLayout>

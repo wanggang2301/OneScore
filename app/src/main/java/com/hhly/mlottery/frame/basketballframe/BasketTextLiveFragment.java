@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -64,6 +65,8 @@ public class BasketTextLiveFragment extends Fragment {
     private LinearLayout ll_error;
     private TextView network_exception_reload_btn;
 
+    private FrameLayout fl_comment;
+
     public static BasketTextLiveFragment newInstance() {
         BasketTextLiveFragment basketTextLiveFragment = new BasketTextLiveFragment();
        /* Bundle bundle = new Bundle();
@@ -98,6 +101,7 @@ public class BasketTextLiveFragment extends Fragment {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         mProgressBarRefresh = (ProgressBar) mView.findViewById(R.id.pull_to_refresh_progress);
         mProgressBarRefresh.setVisibility(View.GONE);
+        fl_comment = (FrameLayout) mView.findViewById(R.id.fl_comment);
 
         //加载更多控件初始化
         mLoadMore = (TextView) listfooter_more.findViewById(R.id.load_more);
@@ -257,6 +261,8 @@ public class BasketTextLiveFragment extends Fragment {
                 basketEachTextLiveBeanList = basketTextLiveBean.getData();
 
                 mProgressBarRefresh.setVisibility(View.GONE);
+                fl_comment.setVisibility(View.VISIBLE);
+
                 mLoadMore.setText(R.string.foot_loadmore);   //加载更多
 
                 if (basketEachTextLiveBeanList != null && basketEachTextLiveBeanList.size() > 4) {
@@ -267,7 +273,6 @@ public class BasketTextLiveFragment extends Fragment {
                 if (basketEachTextLiveBeanList.size() == 0) {//，没请求到数据 mNoData显示
                     mBasketBallTextLiveAdapter.setEmptyView(emptyView);
                 } else {
-
                     lastId = basketTextLiveBean.getData().get(basketTextLiveBean.getData().size() - 1).getId();
                     mBasketBallTextLiveAdapter.getData().clear();
                     mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
@@ -280,6 +285,7 @@ public class BasketTextLiveFragment extends Fragment {
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 mProgressBarRefresh.setVisibility(View.GONE);
                 ll_error.setVisibility(View.VISIBLE);
+                fl_comment.setVisibility(View.GONE);
             }
         }, BasketTextLiveBean.class);
     }
@@ -292,7 +298,6 @@ public class BasketTextLiveFragment extends Fragment {
                 mBasketBallTextLiveAdapter.addData(basketEachTextLiveBeanList);
                 mBasketBallTextLiveAdapter.notifyDataSetChanged();
             }
-
         }
     };
 
@@ -308,7 +313,6 @@ public class BasketTextLiveFragment extends Fragment {
         pushHandler.sendEmptyMessage(1);
     }
 
-
     /**
      * 下拉刷新
      *
@@ -317,7 +321,6 @@ public class BasketTextLiveFragment extends Fragment {
     public void onEventMainThread(BasketDetailLiveTextRefresh basketDetailLiveTextRefreshEventBus) {
         loadData();
     }
-
 
     @Override
     public void onDestroy() {

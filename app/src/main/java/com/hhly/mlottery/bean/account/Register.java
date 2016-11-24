@@ -87,6 +87,7 @@ public class Register {
             private String nickName;
             private String userId;
             private String loginAccount;
+            private String sex;
             private  String headIcon;
             public String getHeadIcon() {
                 return headIcon;}
@@ -109,7 +110,13 @@ public class Register {
             public void setNickName(String nickName) {
                 this.nickName = nickName;
             }
+            public String getSex() {
+                return sex;
+            }
 
+            public void setSex(String sex) {
+                this.sex = sex;
+            }
             public String getUserId() {
                 return userId;
             }

@@ -207,6 +207,8 @@
     <string name="language_frame_txt">語言切換</string>
     <string name="version_update_txt">版本更新</string>
     <string name="about_frame_txt">關於我們</string>
+    <string name="more_setting">更多設定</string>
+    <string name="can_only_choose_a_picture">親，只能選擇一張圖片</string>
     <string name="foot_jishi_txt">即時</string>
     <string name="foot_saiguo_txt">賽果</string>
     <string name="foot_saicheng_txt">賽程</string>
@@ -906,7 +908,7 @@
     <string name="phone_error">請輸入正確手機號碼</string>
     <string name="verify_code">請輸入驗證碼</string>
     <string name="verify_code_send">發送驗證碼</string>
-    <string name="logout">退出登錄</string>
+    <string name="logout">退出當前帳號</string>
     <string name="logouting">正在注銷...</string>
     <string name="logout_fail">注銷失敗</string>
     <string name="logout_succ">注銷成功</string>
@@ -938,6 +940,12 @@
     <string name="username_pass_error">登錄名或者密碼錯誤</string>
     <string name="username_original_pass_error">請輸入正確的原始密碼</string>
     <string name="logout_check">確認退出登錄?</string>
+    <string name="confirm_the_selected_sex">確認保存選中的性別?</string>
+    <string name="chose_start_photo">選擇球星頭像</string>
+    <string name="chose_start_text">伴隨你的，不僅有球星的風采；</string>
+    <string name="only_chose_start_text">還有一比分。</string>
+    <string name="star_style">球星風采</string>
+    <string name="football_baby">足球寶貝</string>
     <!--模糊搜索-->
     <string name="fuzzy_search">請輸入聯賽名</string>
     <string name="not_find_search">對不起,找不到相關資訊</string>
@@ -960,7 +968,7 @@
     <string name="input_nickname">請輸入昵稱</string>
     <string name="nickname_hint">好的名字可以讓您的朋友更容易記住您</string>
     <string name="profile">個人資料</string>
-    <string name="modify_nickname">更改名字</string>
+    <string name="modify_nickname">更改昵稱</string>
     <string name="modify_nickname_succ">修改昵稱成功</string>
     <string name="nickname_format">昵稱:格式爲1-15個字符(不超過七個中文),由中英文數字和字符組成</string>
     <string name="modify_password">修改密碼</string>
@@ -983,6 +991,11 @@
     <string name="pwd_format_just_length">密碼長度爲6-16位</string>
     <string name="verify_time_limit">兩次發送間隔不得小于60秒</string>
     <string name="nickname_sensitive">昵稱包含敏感詞語</string>
+    <string name="man_sex">漢子</string>
+    <string name="woman_sex">妹子</string>
+    <string name="noon_sex">不告訴你</string>
+    <string name="chose_head_phot">選擇頭像</string>
+    <string name="complete">完成</string>
     <!--1.1.2 end-->
 
 
@@ -1111,6 +1124,7 @@
     <string name="picture_save">圖片已保存至:</string>
     <string name="picture_save_telephone">保存到手機</string>
     <string name="chose_for_telephone">從手機相册選擇</string>
+    <string name="choice_of_players_head">選擇球星頭像</string>
     <string name="avatar_settings">頭像</string>
     <string name="photograph">拍照</string>
     <string name="is_uploading">努力上傳中..........</string>
