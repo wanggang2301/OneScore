@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -67,8 +68,9 @@ import io.rong.imlib.model.UserInfo;
  * @Description:   个人中心
  * @data: 2016/7/11 17:53
  */
-public class ProfileActivity extends BaseActivity implements View.OnClickListener {
+public class ProfileActivity extends Activity implements View.OnClickListener {
 
+    public static String TAG = "ProfileActivity";
     /*昵称*/
     private TextView tv_nickname;
 
@@ -172,7 +174,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         mHead_portrait.setOnClickListener(this);
         findViewById(R.id.modify_avatar).setOnClickListener(this);
        if (CommonUtils.isLogin()){
-            ImageLoader.load(mContext,AppConstants.register.getData().getUser().getHeadIcon()).into(mHead_portrait);
+            ImageLoader.load(ProfileActivity.this,AppConstants.register.getData().getUser().getHeadIcon()).into(mHead_portrait);
         }
         //universalImageLoader.displayImage(AppConstants.register.getData().getUser().getHeadIcon(), mHead_portrait, options);
 
@@ -223,7 +225,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.public_img_back: // 返回
-                MobclickAgent.onEvent(mContext, "ProfileActivity_Exit");
+                MobclickAgent.onEvent(ProfileActivity.this, "ProfileActivity_Exit");
                 if(sexDatas.size()==0){
                     finish();
                 }else{
@@ -232,14 +234,14 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.rl_nickname: // 昵称栏
-                MobclickAgent.onEvent(mContext, "ModifyNicknameActivity_Start");
+                MobclickAgent.onEvent(ProfileActivity.this, "ModifyNicknameActivity_Start");
                 // startActivity(new Intent(this, ModifyNicknameActivity.class));
                 Intent intent = new Intent(ProfileActivity.this, ModifyNicknameActivity.class);
                 intent.putExtra("nickname", tv_nickname.getText().toString());
                 startActivity(intent);
                 break;
             case R.id.rl_modifypass: // 修改密码
-                MobclickAgent.onEvent(mContext, "ModifyPasswordActivity_Start");
+                MobclickAgent.onEvent(ProfileActivity.this, "ModifyPasswordActivity_Start");
                 startActivity(new Intent(this, ModifyPasswordActivity.class));
                 break;
            /* case R.id.head_portrait:///显示全图
@@ -335,7 +337,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     //统一选择性别状态
     private void sexChange(int home_logo_color, int default_woman_sex, int res_pl_color, int default_noon_sex, int res_pl_color1, int default_woman_sex1) {
-        text_man.setTextColor(mContext.getResources().getColor(home_logo_color));
+        text_man.setTextColor(ProfileActivity.this.getResources().getColor(home_logo_color));
         man_sex.setImageResource(default_woman_sex);
         text_noon.setTextColor(getResources().getColor(res_pl_color));
         noon_sex.setImageResource(default_noon_sex);
@@ -377,7 +379,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean){
 
-        ImageLoader.load(mContext,choseHeadStartBean.startUrl).into(mHead_portrait);
+        ImageLoader.load(ProfileActivity.this,choseHeadStartBean.startUrl).into(mHead_portrait);
     }
     /**
      * 开启从相册获得图片功能
@@ -624,7 +626,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                    // CommonUtils.saveRegisterInfo(register);
 
                     PreferenceUtil.commitString(AppConstants.HEADICON, register.getData().getUser().getHeadIcon().toString());
-                    ImageLoader.load(mContext,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
+                    ImageLoader.load(ProfileActivity.this,register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
 
                 } else {
                     CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
