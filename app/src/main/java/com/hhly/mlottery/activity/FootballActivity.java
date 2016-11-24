@@ -171,9 +171,7 @@ public class FootballActivity extends BaseActivity {
         fragmentIndex = position;// 当前fragment下标
         L.d("xxx", "当前Fragment下标：" + fragmentIndex);
         fragmentManager = getSupportFragmentManager();
-        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content, currentFragment,
-                fragments.get(position).getClass(), null, false,
-                fragments.get(position).getClass().getSimpleName() + position, false);
+        currentFragment = FragmentUtils.switchFragment(fragmentManager, R.id.ly_content, currentFragment, fragments.get(position).getClass(), null, false, fragments.get(position).getClass().getSimpleName() + position, false);
     }
 
     @Override

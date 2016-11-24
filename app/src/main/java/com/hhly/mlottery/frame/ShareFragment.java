@@ -317,13 +317,13 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
                 req.scene = flag;
                 boolean flg = api.sendReq(req);
 
-                if (flg) {
+               /* if (flg) {
                     writeLogtoFile(MYLOG_TYPE, "shareFragment", "微信成功");
 
                 } else {
                     writeLogtoFile(MYLOG_TYPE, "shareFragment", "微信失败");
 
-                }
+                }*/
             }
         }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
@@ -477,14 +477,14 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
         if (baseResp != null) {
             switch (baseResp.errCode) {
                 case WBConstants.ErrorCode.ERR_OK:
-                    writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博成功");
+                    //writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博成功");
                     break;
                 case WBConstants.ErrorCode.ERR_CANCEL:
-                    writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博取消");
+                    //writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博取消");
 
                     break;
                 case WBConstants.ErrorCode.ERR_FAIL:
-                    writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博失败");
+                   // writeLogtoFile(MYLOG_TYPE, "shareFragment", "微博失败");
 
 
                     break;
@@ -492,21 +492,23 @@ public class ShareFragment extends BottomSheetDialogFragment implements IWeiboHa
         }
     }
 
+    //wsdkf 
+
 
     IUiListener qqShareListener = new IUiListener() {
         @Override
         public void onCancel() {
-            writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
+           // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
         }
 
         @Override
         public void onComplete(Object response) {
-            writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
+           // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ取消");
         }
 
         @Override
         public void onError(UiError e) {
-            writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ失败");
+           // writeLogtoFile(MYLOG_TYPE, "shareFragment", "QQ失败");
         }
     };
 

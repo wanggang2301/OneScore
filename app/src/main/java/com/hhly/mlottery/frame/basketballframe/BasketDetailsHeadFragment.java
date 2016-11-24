@@ -1,8 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.BasketballDetailsBean;
+import com.hhly.mlottery.bean.websocket.DataEntity;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
 import com.hhly.mlottery.frame.footframe.TalkAboutBallFragment;
 import com.hhly.mlottery.util.ImageLoader;
@@ -750,7 +749,7 @@ public class BasketDetailsHeadFragment extends Fragment {
     }
 
     public void updateData(WebSocketBasketBallDetails basketBallDetails, TalkAboutBallFragment mTalkAboutBallFragment, TextView mTitleGuest, TextView mTitleHome, TextView mTitleVS) {
-        WebSocketBasketBallDetails.DataEntity score = basketBallDetails.getData();
+        DataEntity score = basketBallDetails.getData();
 
         switch (basketBallDetails.getData().getMatchStatus()) {
             case DETERMINED://待定

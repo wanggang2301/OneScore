@@ -898,23 +898,23 @@ public class BaseURLs {
      * 关注绑定用户与推送
      */
     //足球关注界面url
-    public final static String FOCUS_FRAGMENT_CONCERN=URL_API_HOST+"pushSetting.findFocusMatchs.do";
+    public final static String FOCUS_FRAGMENT_CONCERN = URL_API_HOST + "pushSetting.findFocusMatchs.do";
     //足球界面点击关注跟取消关注
-    public final static String FOOTBALL_ADD_FOCUS=URL_API_HOST+"pushSetting.followMatch.do";
+    public final static String FOOTBALL_ADD_FOCUS = URL_API_HOST + "pushSetting.followMatch.do";
     //是否接受推送通知
-    public final static String FOOTBALL_USER_SET=URL_API_HOST+"pushSetting.followUserPushSetting.do";
+    public final static String FOOTBALL_USER_SET = URL_API_HOST + "pushSetting.followUserPushSetting.do";
     //获取足球关注列表
-    public final static String FOOTBALL_FIND_MATCH=URL_API_HOST+"pushSetting.loginUserFindMatch.do";
+    public final static String FOOTBALL_FIND_MATCH = URL_API_HOST + "pushSetting.loginUserFindMatch.do";
     //篮球关注页面url
-    public final static String BASKET_FOCUS=URL_API_HOST+"androidBasketballMatch.findCancelAfterConcernList.do";
+    public final static String BASKET_FOCUS = URL_API_HOST + "androidBasketballMatch.findCancelAfterConcernList.do";
     //篮球点击关注
-    public final static String BASKETBALL_ADD_FOCUS=URL_API_HOST+"androidBasketballMatch.customConcernVS.do";
+    public final static String BASKETBALL_ADD_FOCUS = URL_API_HOST + "androidBasketballMatch.customConcernVS.do";
     //取消
-    public final static String BASKETBALL_DELETE_FOCUS=URL_API_HOST+"androidBasketballMatch.cancelCustomConcernVS.do";
+    public final static String BASKETBALL_DELETE_FOCUS = URL_API_HOST + "androidBasketballMatch.cancelCustomConcernVS.do";
     //是否接受通知
-    public final static String BASKET_USER_SET=URL_API_HOST+"androidBasketballMatch.updatePushStatus.do";
+    public final static String BASKET_USER_SET = URL_API_HOST + "androidBasketballMatch.updatePushStatus.do";
     //获取篮球关注列表
-    public final static String BASKET_FIND_MATCH=URL_API_HOST+"androidBasketballMatch.findConcernVsThirdIds.do";
+    public final static String BASKET_FIND_MATCH = URL_API_HOST + "androidBasketballMatch.findConcernVsThirdIds.do";
 
     //用户注销
     public final static String EXIT_PUSH_ONLINE=URL_API_HOST+"pushSetting.exitUpdateOnlile.do";
@@ -922,5 +922,9 @@ public class BaseURLs {
     public final static String UPDATEUSERINFO=URL_API_HOST+"androidUserCenter.updateUserInfo.do";
     //明星头像
     public final static String  FINDHEADICONS=URL_API_HOST+"systemSettings.findHeadIcons.do";
+    public final static String EXIT_PUSH_ONLINE = URL_API_HOST + "pushSetting.exitUpdateOnlile.do";
+
+    //篮球内页文字直播
+    public final static String BASKET_DETAIL_TEXTLIVE = URL_API_HOST + "IOSBasketballDetail.findTextLive.do";
 
 }

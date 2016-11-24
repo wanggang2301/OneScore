@@ -118,6 +118,14 @@
     <string name="share_summary_default">一比分,专业的足球比分直播平台</string>
 
 
+    <string name="share_summary_new">一比分邀您一起去观看</string>
+    <string name="share_match_pre">比赛前</string>
+    <string name="share_match_live">比赛中</string>
+    <string name="share_match_over">比赛后</string>
+    <string name="share_match_live2">正在比赛中</string>
+    <string name="share_match_browse">赛事一览</string>
+
+
     <!--指数-->
     <string name="odd_plate_rb_txt">亚盘</string>
     <string name="odd_op_rb_txt">欧赔</string>
@@ -647,6 +655,7 @@
     <!--篮球设置-->
     <string name="basket_odd_setting">赔率提示</string>
     <string name="basket_scort_setting">赛事提示</string>
+    <string name="basket_live">直播</string>
     <string name="basket_analyze">分析</string>
     <string name="basket_alet">亚盘</string>
     <string name="basket_eur">欧赔</string>

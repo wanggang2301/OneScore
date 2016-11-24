@@ -49,6 +49,7 @@
                     app:ci_drawable="@color/white"
                     app:ci_height="2dp"
                     app:ci_width="8dp" />
+
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/basket_details_toolbar"
                     android:layout_width="match_parent"
@@ -75,6 +76,7 @@
                 app:tabSelectedTextColor="@color/basket_text_color"
                 app:tabTextColor="@color/unselected_tab_color" />
         </android.support.design.widget.AppBarLayout>
+
 
         <android.support.v4.view.ViewPager
             android:id="@+id/basket_details_view_pager"
